@@ -11,6 +11,7 @@
     "buffer": "5",
     "buffer-reverse": "^1.0.1",
     "ethereumjs-tx": "^2.1.2",
+    "ethereumjs-util": "^6.2.0",
     "events": "^1.1.1",
     "expo": "^33.0.0",
     "node-libs-browser": "^2.2.0",
