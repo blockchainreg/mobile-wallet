@@ -1,4 +1,6 @@
 // Inject node globals into React Native global scope.
+import {getRandomBytesAsync} from 'expo-random';
+
 global.Buffer = require('buffer').Buffer;
 global.process = require('process');
 
@@ -22,10 +24,7 @@ if (typeof Buffer.prototype.reverse === 'undefined') {
   };
 }
 
-import { asyncRandomBytes } from 'react-native-secure-randombytes'
-import safeCrypto from 'react-native-safe-crypto'
 
-window.randomBytes = asyncRandomBytes
-window.scryptsy = safeCrypto.scrypt
+window.randomBytes = getRandomBytesAsync;
 
 //require('crypto');

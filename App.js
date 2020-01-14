@@ -1,26 +1,32 @@
-import './global';
+import "./global.js";
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-const Web3 = require('web3');
-const Tx = require('ethereumjs-tx');
-const { BN } = require('ethereumjs-util');
-const hdkey = require('ethereumjs-wallet-react-native/hdkey.js');
-//const bip39 = require('react-native-bip39');
-//const bitcoinlib = require('rn-bitcoinjs-lib');
+import prngReady from "./prng-sync.js";
+import appReady from "./App-ready.js";
 
 export default class App extends React.Component {
-  componentWillMount() {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider('https://mainnet.infura.io/')
-    );
-  
-    web3.eth.getBlock('latest').then(console.log)
+  constructor(props) {
+    super(props);
+    this.state = {
+      isPrngInited: false
+    };
   }
-  
+
+  componentWillMount() {
+    prngReady.then(() => {
+      this.setState({isPrngInited: true});
+    });
+  }
+
   render() {
+    const {isPrngInited} = this.state;
+    if (isPrngInited) {
+      const AppReady = appReady();
+      return <AppReady />;
+    }
     return (
       <View style={styles.container}>
-        <Text>Check your console</Text>
+        <Text>Waiting for prng</Text>
       </View>
     );
   }
