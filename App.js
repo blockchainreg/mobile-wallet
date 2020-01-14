@@ -2,6 +2,7 @@ import './global';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 const Web3 = require('web3');
+const Tx = require('ethereumjs-tx');
 //const bitcoinlib = require('rn-bitcoinjs-lib');
 
 export default class App extends React.Component {
