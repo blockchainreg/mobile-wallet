@@ -69,6 +69,7 @@ export default class TransactionSend extends React.Component {
     }
     this.setState({sending: true});
     web3t[currency].sendTransaction({to: addressTo, amount: parseFloat(amount), account}, (err, tx) => {
+      console.log(`Send transaction completed ${err ? err.message : "no error"} / ${tx}`);
       if (err) {
         this.setState({error: err.message});
         return;
@@ -103,8 +104,9 @@ export default class TransactionSend extends React.Component {
   }
 
   renderSendButton() {
-    const {addressValid, amount, sending} = this.state;
-    if (!addressValid || !parseFloat(amount) || sending) {
+    const {addressValid, amount, sending, balance, fee, addressTo} = this.state;
+    const amountf = parseFloat(amount);
+    if (!addressTo || !addressValid || sending || !amountf || !balance || !fee || balance < amountf + fee) {
       return null;
     }
     return <Button
@@ -130,30 +132,31 @@ export default class TransactionSend extends React.Component {
     if (sending) {
       return (
         <View style={styles.container}>
+          <Button title="Back" onPress={this.props.onReturn} />
           <Text>Sending...</Text>
+          <Text>{error}</Text>
         </View>
       );
     }
     return (
       <View style={styles.container}>
-        <Button
-            title="Back"
-            onPress={this.props.onReturn}
-        />
+        <Button title="Back" onPress={this.props.onReturn} />
 
         <Text>Destination address</Text>
         <TextInput
+            style={styles.textInput}
             value={addressTo}
             onChangeText={this.onChangeAddressTo}
         />
         <Text>Fee: {fee === null ? "..." : fee}</Text>
         <Text>Balance: {balance === null ? "..." : balance}</Text>
         <Button
-          title="Refresh balance"
-          onPress={this.queryBalance}
+            title="Refresh balance"
+            onPress={this.queryBalance}
         />
         <Text>Amount</Text>
         <TextInput
+        style={styles.textInput}
             value={amount+""}
             onChangeText={this.onChangeAmount}
         />
@@ -171,4 +174,8 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
+  textInput: {
+    borderColor: '#000000',
+    borderWidth: 1,
+  }
 });

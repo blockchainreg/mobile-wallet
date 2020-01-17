@@ -24,6 +24,10 @@ export default class MnemonicSelection extends React.Component {
     const {mnemonic} = this.state;
     return (
       <View style={styles.container}>
+        <Button
+            title="Back"
+            onPress={this.props.onReturn}
+        />
         <Text>Your mnemonic phrase:</Text>
         <TextInput
             style={styles.textInput}
@@ -47,6 +51,10 @@ export default class MnemonicSelection extends React.Component {
     const {error} = this.state;
     return (
       <View style={styles.container}>
+        <Button
+            title="Back"
+            onPress={this.props.onReturn}
+        />
         <Text>{error}</Text>
       </View>
     );

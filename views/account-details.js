@@ -114,8 +114,8 @@ export default class IndexSelection extends React.Component {
         <Text onPress={this.copyAddress}>Address: {account ? account.address : "..."}</Text>
         <Text>Balance: {balance !== null? balance : "..."}</Text>
         <Button
-          title="Refresh balance"
-          onPress={this.queryBalance}
+            title="Refresh balance"
+            onPress={this.queryBalance}
         />
         <Text>{error}</Text>
         {this.renderMessages()}

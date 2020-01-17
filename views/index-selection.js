@@ -47,6 +47,7 @@ export default class IndexSelection extends React.Component {
         />
         <Text>Select address index</Text>
         <TextInput
+            style={styles.textInput}
             autoFocus
             value={index + ""}
             onChangeText={this.onChangeIndex}
@@ -67,4 +68,8 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
+  textInput: {
+    borderColor: '#000000',
+    borderWidth: 1,
+  }
 });
