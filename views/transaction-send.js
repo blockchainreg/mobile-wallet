@@ -4,23 +4,61 @@ import { StyleSheet, Text, View, Button, TextInput, Clipboard, Alert } from 'rea
 export default class TransactionSend extends React.Component {
   state = {
     addressTo: "",
-    amount: 0,
+    amount: "0",
     sending: false,
     addressValid: true,
+    isCalculatingFee: false,
+    isNeedUpdateFee: false,
     balance: null,
+    fee: null,
     error: null
   }
 
   onChangeAddressTo = (addressTo) => {
     this.setState({addressTo, addressValid: true});
+    this.updateFee();
   }
 
   onChangeAmount = (amountString) => {
     let amount = parseFloat(amountString);
     if (isNaN(amount) || amount < 0) {
-      amount = 0;
+      this.setState({amount: "0"});
+      return;
     }
-    this.setState({amount});
+    this.setState({amount: amountString});
+    this.updateFee();
+  }
+
+  updateFee = () => {
+    const {web3t, currency, account} = this.props;
+    const {addressTo, amount, isCalculatingFee} = this.state;
+    if (isCalculatingFee) {
+      this.setState({isNeedUpdateFee: true});
+      return;
+    }
+
+    this.setState({isCalculatingFee: true});
+
+    web3t[currency].calcFee({ account, addressTo, amount: parseFloat(amount) | 0}, (err, fee) => {
+      console.log(`CalcFee: ${err && err.message} ${fee}`);
+      if (err) {
+        this.setState({error: err.message, isCalculatingFee: false});
+        return;
+      }
+      if (this.state.isNeedUpdateFee) {
+        this.setState({
+          isCalculatingFee: false,
+          isNeedUpdateFee: false,
+          fee
+        }, this.updateFee);
+        return;
+      }
+      this.setState({
+        isCalculatingFee: false,
+        isNeedUpdateFee: false,
+        fee
+      });
+    });
   }
 
   confirmSend = () => {
@@ -30,7 +68,7 @@ export default class TransactionSend extends React.Component {
       return;
     }
     this.setState({sending: true});
-    web3t[currency].sendTransaction({to: addressTo, amount, account}, (err, tx) => {
+    web3t[currency].sendTransaction({to: addressTo, amount: parseFloat(amount), account}, (err, tx) => {
       if (err) {
         this.setState({error: err.message});
         return;
@@ -59,13 +97,14 @@ export default class TransactionSend extends React.Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.queryBalance();
+    this.updateFee();
   }
 
   renderSendButton() {
     const {addressValid, amount, sending} = this.state;
-    if (!addressValid || !amount || sending) {
+    if (!addressValid || !parseFloat(amount) || sending) {
       return null;
     }
     return <Button
@@ -75,7 +114,7 @@ export default class TransactionSend extends React.Component {
   }
 
   render() {
-    const {addressTo, amount, error, tx, balance} = this.state;
+    const {addressTo, amount, error, tx, balance, fee, sending} = this.state;
     if (tx) {
       return (
         <View style={styles.container}>
@@ -107,7 +146,8 @@ export default class TransactionSend extends React.Component {
             value={addressTo}
             onChangeText={this.onChangeAddressTo}
         />
-        <Text>Balance: {balance}</Text>
+        <Text>Fee: {fee === null ? "..." : fee}</Text>
+        <Text>Balance: {balance === null ? "..." : balance}</Text>
         <Button
           title="Refresh balance"
           onPress={this.queryBalance}
