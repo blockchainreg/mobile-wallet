@@ -43,27 +43,20 @@ function getRandomBytesSync(length) {
   return result;
 }
 
-if (!global.crypto) {
-  global.crypto = {};
-}
-
 isSyncPrngRequestingAsyncBytes = true;
 
-export default getRandomBytesAsync(32).then((ui8a) => {
+export default getRandomBytesAsync(32)
+.then(() => new Promise((resolve) => {setTimeout(resolve, 15000);}) )
+.then((ui8a) => {
   isSyncPrngRequestingAsyncBytes = false;
   reseed(Buffer.alloc(32, ui8a));
 
   global.crypto.getRandomValues = (typedArray) => {
-    if (typedArray instanceof Uint8Array) {
-      const randomBytes = getRandomBytesSync(typedArray.length);
-      // Requires buffer as a parameter
-      // randomBytes.copy(typedArray);
-      for(let i = 0; i < typedArray.length; i++) {
-        typedArray[i] = randomBytes[i];
-      }
-      randomBytes.fill(0);
-      return;
+    const dv = new DataView(typedArray.buffer, typedArray.byteOffset, typedArray.byteLength);
+    const randomBytes = getRandomBytesSync(dv.byteLength);
+    for(let i = 0; i < randomBytes.length; i++) {
+      dv.setUint8(i, randomBytes[i]);
     }
-    throw new Error("Only Uint8Array is supported");
+    randomBytes.fill(0);
   }
 });

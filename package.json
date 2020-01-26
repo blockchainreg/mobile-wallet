@@ -19,6 +19,7 @@
     "events": "^1.1.1",
     "expo": "^33.0.0",
     "expo-random": "~5.0.1",
+    "libsodium-wrappers-sumo": "^0.7.6",
     "node-libs-browser": "^2.2.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
