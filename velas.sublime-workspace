@@ -1,0 +1,419 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cons",
+				"console"
+			],
+			[
+				"tab",
+				"tabs"
+			],
+			[
+				"in",
+				"install"
+			],
+			[
+				"send",
+				"sendTransaction"
+			],
+			[
+				"web",
+				"web3t"
+			],
+			[
+				"rece",
+				"receiver"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/andreystehno/Downloads/w3w_mobile/shim.js",
+			"settings":
+			{
+				"buffer_size": 1037,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "App.js",
+			"settings":
+			{
+				"buffer_size": 859,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "App-ready.js",
+			"settings":
+			{
+				"buffer_size": 1722,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"be",
+				"Javascript Beautify"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/andreystehno/Downloads/expo-web3"
+	],
+	"file_history":
+	[
+		"/Users/andreystehno/Downloads/w3w_mobile/package.json",
+		"/Users/andreystehno/Downloads/expo-web3/global.js",
+		"/Users/andreystehno/Downloads/expo-web3/package-lock.json",
+		"/Users/andreystehno/Downloads/expo-web3/App.js",
+		"/Users/andreystehno/Downloads/expo-web3/package.json",
+		"/Users/andreystehno/Downloads/w3w_mobile/App.js",
+		"/Users/andreystehno/Downloads/expo-web3/app.json",
+		"/Users/andreystehno/Downloads/expo-web3/node_modules/rn-bitcoinjs-lib/src/ecpair.js",
+		"/Users/andreystehno/Downloads/w3w_mobile/shim.js",
+		"/Users/andreystehno/Downloads/jbdaocneiiinmjbjlgalhcelgbejmnid/background.js",
+		"/Users/andreystehno/Downloads/nkbihfbeogaeaoehlefnkodbefgpgknn/background.js",
+		"/Users/andreystehno/Downloads/nkbihfbeogaeaoehlefnkodbefgpgknn/inpage.js",
+		"/Users/andreystehno/Downloads/nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html",
+		"/Users/andreystehno/Downloads/nkbihfbeogaeaoehlefnkodbefgpgknn/home.html",
+		"/Users/andreystehno/Downloads/install.sh",
+		"/Users/andreystehno/Downloads/СХЕМА-бп Обменника.svg",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/upgrade",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/manifest.json",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/popup.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/window.html",
+		"/Users/andreystehno/Downloads/wallet (6).svg",
+		"/Users/andreystehno/Downloads/wallet (3).svg",
+		"/Users/andreystehno/Downloads/wallet-outline-in-a-circle.svg",
+		"/Users/andreystehno/Downloads/wallet (2).svg",
+		"/Users/andreystehno/Downloads/wallet-closed.svg",
+		"/Users/andreystehno/Downloads/wallet.svg",
+		"/Users/andreystehno/Downloads/wallet (1).svg",
+		"/Users/andreystehno/Downloads/Web3 Wallet.htm",
+		"/Users/andreystehno/Downloads/merchants/coinpay/class.php",
+		"/Users/andreystehno/Downloads/levelapp/Footer.js",
+		"/Users/andreystehno/Downloads/levelapp/App.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/desktop/package.json",
+		"/Users/andreystehno/Desktop/w3w_2/Styles.js",
+		"/Users/andreystehno/react-gantt-demo/src/App.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/main-bundle.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/desktop/index.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/desktop/test.ls",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/desktop/node_modules/whitebox/wallet.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/desktop/app/web3t/providers/eos.ls",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/desktop/dist/web3-wallet-1.0.0.dmg",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/Ethnamed.zip",
+		"/Users/andreystehno/Downloads/kyc/object-recogniser/coco.data",
+		"/Users/andreystehno/Downloads/kyc/data/README.md",
+		"/Users/andreystehno/Downloads/kyc/recognize.ls",
+		"/Users/andreystehno/Downloads/kyc/main.ls",
+		"/Users/andreystehno/Downloads/kyc/object-recogniser/coco.names",
+		"/Users/andreystehno/Downloads/kyc/train.ls",
+		"/Users/andreystehno/Downloads/kyc/object-recognition/object-rec.ls",
+		"/Users/andreystehno/Downloads/kyc/setup.sh",
+		"/Users/andreystehno/Downloads/kyc/opencv.ls",
+		"/Users/andreystehno/Downloads/kyc/object-rec.ls",
+		"/Users/andreystehno/Downloads/kyc/resize.ls",
+		"/Users/andreystehno/Downloads/opencv.ls",
+		"/Users/andreystehno/Downloads/out_first.png",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/res/open-sans.css",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/background.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/inject.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/README.md",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/mobile/Web3 Wallet/README.md",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/mobile/Web3 Wallet/config.xml",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/dist/builder-effective-config.yaml",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/package.json",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/app/wallet/navigate.ls",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/main.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/package-lock.json",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/main-bundle.css",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/index.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/dist/electron-quick-start-1.0.0-mac.zip",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/mobile/Web3 Wallet/www/index.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/app/wallet/wallets.ls",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/node_modules/hdkey/lib/hdkey.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/desktop/app/wallet/data-scheme.ls",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/index.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/res/background.jade",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/main-bundle.css",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/inject.ls",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/inject.ls\r",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/main-bundle.js\r",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/todoapp.bundle.js",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/popup1.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/background.html",
+		"/Users/andreystehno/react-chrome-extension-boilerplate/dev/background.jade"
+	],
+	"find":
+	{
+		"height": 31.0
+	},
+	"find_in_files":
+	{
+		"height": 113.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"randomBytes",
+			"link",
+			"crypto"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/Users/andreystehno/Downloads/w3w_mobile"
+		},
+		{
+			"path": "/Users/andreystehno/Downloads/react-native-web3-sample"
+		},
+		{
+			"path": "/Users/andreystehno/Downloads/expo-web3"
+		},
+		{
+			"path": "/Users/andreystehno/Downloads/lib"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/andreystehno/Downloads/w3w_mobile/shim.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1037,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								888,
+								888
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "App.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 859,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "App-ready.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1722,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								396,
+								403
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 304.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

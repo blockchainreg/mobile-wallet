@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://wg-5tm.askucher.expo-web3.exp.direct",
+  "packagerNgrokUrl": "https://packager.wg-5tm.askucher.expo-web3.exp.direct",
+  "ngrokPid": 59517
 }

@@ -1,42 +1,65 @@
 import "./global.js";
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import prngReady from "./prng-sync.js";
-import appReady from "./App-ready.js";
+
+import * as React from "react";
+import { View, StatusBar, SafeAreaView } from "react-native";
+import { observable } from "mobx";
+import { observer } from "mobx-react";
+//import Store from "./Store.js";
+import pages from "./Pages.js";
+import styles from "./Styles.js";
+import StartPage from "./pages/StartPage";
+//import web3t from './web3t.js';
+import Store from './wallet/data-scheme.js';
+import { saved } from './wallet/seed.js';
+import web3 from './wallet/web3.js'; 
+
+//console.log(web3);
+
+
+
+const store = observable(Store);
+
+web3t = web3(store);
+
+const Main = observer(({ store }) => {
+  return pages[store.current.page]({ store, web3t });
+});
+
+const footerVisible = () => {
+  store.footerVisible = false;
+};
+
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPrngInited: false
+      ready: true
     };
   }
 
-  componentWillMount() {
-    prngReady.then(() => {
-      this.setState({isPrngInited: true});
-    });
+  componentDidMount() {  
+
+
+      store.current.page = saved === true ? "locked" : "register";
+
+
+      if (true)  { // debug
+
+        store.signUpInputMailField = "a.stegno@gmail.com";
+        store.signUpInputPasswordField = "asdfasdf234234WWW";
+
+      }
+
   }
+  
 
   render() {
-    const {isPrngInited} = this.state;
-    if (isPrngInited) {
-      const AppReady = appReady();
-      return <AppReady />;
+    if (this.state.ready === false) {
+      return <StartPage store={store} />;
     }
     return (
-      <View style={styles.container}>
-        <Text>Waiting for prng</Text>
-      </View>
+      <Main store={store} />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
