@@ -1,5 +1,5 @@
 import "./global.js";
-
+import prngSync from './prng-sync.js';
 import * as React from "react";
 import { View, StatusBar, SafeAreaView } from "react-native";
 import { observable } from "mobx";
@@ -10,16 +10,13 @@ import styles from "./Styles.js";
 import StartPage from "./pages/StartPage";
 //import web3t from './web3t.js';
 import Store from './wallet/data-scheme.js';
-import { saved } from './wallet/seed.js';
-import web3 from './wallet/web3.js'; 
-
 //console.log(web3);
 
 
 
 const store = observable(Store);
+let web3t = null;
 
-web3t = web3(store);
 
 const Main = observer(({ store }) => {
   return pages[store.current.page]({ store, web3t });
@@ -34,25 +31,28 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: true
+      ready: false
     };
   }
 
-  componentDidMount() {  
+  componentDidMount() {
+      prngSync.then(() => {
+        this.setState({ready: true});
+        web3 = require('./wallet/web3.js');
+        const { saved } = require('./wallet/seed.js');
+        web3t = web3(store);
+        store.current.page = saved === true ? "locked" : "register";
 
 
-      store.current.page = saved === true ? "locked" : "register";
+        if (true)  { // debug
 
+          store.signUpInputMailField = "a.stegno@gmail.com";
+          store.signUpInputPasswordField = "asdfasdf234234WWW";
 
-      if (true)  { // debug
-
-        store.signUpInputMailField = "a.stegno@gmail.com";
-        store.signUpInputPasswordField = "asdfasdf234234WWW";
-
-      }
-
+        }
+      });
   }
-  
+
 
   render() {
     if (this.state.ready === false) {

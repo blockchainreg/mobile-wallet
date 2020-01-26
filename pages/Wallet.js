@@ -29,8 +29,8 @@ import moment from "moment";
 import Toast from "@rimiti/react-native-toastify";
 import RefreshControl from "../components/RefreshControl.js";
 import LoadMoreDate from "../components/LoadMoreDate.js";
-import walletFuncs from '../wallet/wallet-funcs.js';
-import walletsFuncs from '../wallet/wallets-funcs.js';
+// import walletFuncs from '../wallet/wallet-funcs.js';
+// import walletsFuncs from '../wallet/wallets-funcs.js';
 
 const { width, height } = Dimensions.get("window");
 
@@ -247,8 +247,8 @@ onClick = () => {
 export default ({ store, web3t }) => {
 
 
-  
-  
+
+
   //const wallets = walletsFuncs(store, web3t).wallets;
   const wallet = store.current.wallet;
   //const { active, balance, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
@@ -342,7 +342,7 @@ export default ({ store, web3t }) => {
               </View>
 
               <View style={styles.viewTouchablesWallet}>
-                
+
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
                     onPress={changePage("send")}

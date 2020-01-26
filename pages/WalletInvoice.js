@@ -27,7 +27,7 @@ const showToast = message => {
 const buttonCopy = store => {
   const DURATION = 10000;
   const writeToClipboardAddr = async () => {
-    await Clipboard.setString(store.wallets.BTC.address);
+    await Clipboard.setString(store.current.wallet.address);
     Vibration.vibrate(DURATION);
     Alert.alert("Copied to clipboard", "", [{ text: "OK" }]);
   };

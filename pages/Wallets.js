@@ -21,11 +21,12 @@ import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
 import StatusBar from "../components/StatusBar.js";
 import Footer from "./Footer.js";
-import walletsFuncs from '../wallet/wallets-funcs.js';
-import walletFuncs from '../wallet/wallet-funcs.js';
 
 const wallets = (store, web3t) => {
-  
+  //Require crypto modules here to postpone crypto random requirement
+  const walletsFuncs = require('../wallet/wallets-funcs.js');
+  const walletFuncs = require('../wallet/wallet-funcs.js');
+
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
@@ -33,7 +34,7 @@ const wallets = (store, web3t) => {
 
 
   const wallets = walletsFuncs(store, web3t).wallets;
-  
+
   const listItem =  (wallet) => {
 
     const chooseWallet = () => {
@@ -95,7 +96,7 @@ export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
     store.tab = tab;
   };
-      
+
   const calcUsd = store.current.balanceUsd;
 
   const refreshBalance = () => {
@@ -119,7 +120,7 @@ export default ({ store, web3t }) => {
               <Text style={styles.textCurrency}>
                 <Text style={styles.textCurrency}>$</Text>
               </Text>
-              {" "}{calcUsd} 
+              {" "}{calcUsd}
             </Text>
           </RefreshControl>
         </StandardLinearGradient>

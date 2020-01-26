@@ -48,8 +48,15 @@ function getRandomBytesSync(length) {
 //}
 
 isSyncPrngRequestingAsyncBytes = true;
-
-export default getRandomBytesAsync(32).then((ui8a) => {
+// Pausing to attach debugger
+// const startAt = Date.now();
+// console.log('Starting timer');
+// while(Date.now() - 15000 < startAt);
+// console.log('Ending timer');
+export default getRandomBytesAsync(32)
+// Pausing to attach debugger
+// .then(() => new Promise((resolve) => {setTimeout(resolve, 15000);}))
+.then((ui8a) => {
   isSyncPrngRequestingAsyncBytes = false;
   reseed(Buffer.alloc(32, ui8a));
 

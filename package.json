@@ -20,6 +20,7 @@
     "events": "^1.1.1",
     "expo": "^33.0.0",
     "expo-random": "~5.0.1",
+    "libsodium-wrappers-sumo": "^0.7.6",
     "localStorage": "^1.0.4",
     "mobx": "5.9.0",
     "mobx-react": "5.4.3",
@@ -102,7 +103,7 @@
   },
   "private": true,
   "react-native": {
-    "crypto": "react-native-crypto",
+    "crypto": "crypto-browserify",
     "_stream_transform": "readable-stream/transform",
     "_stream_readable": "readable-stream/readable",
     "_stream_writable": "readable-stream/writable",
