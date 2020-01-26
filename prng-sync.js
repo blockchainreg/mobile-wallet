@@ -53,6 +53,9 @@ isSyncPrngRequestingAsyncBytes = true;
 // console.log('Starting timer');
 // while(Date.now() - 15000 < startAt);
 // console.log('Ending timer');
+global.crypto.getRandomValues = () => {
+  throw new Error('Crypto.getRandomValues called too early. We have no good random data yet. This usually happens when you import crypto library without waiting for prng-sync to finish initializing. Do things like this: import prngSync from "./prng-sync.js"; prngSync.then(() => { web3 = require("./wallet/web3.js").. do anything with web3');
+};
 export default getRandomBytesAsync(32)
 // Pausing to attach debugger
 // .then(() => new Promise((resolve) => {setTimeout(resolve, 15000);}))
@@ -61,24 +64,11 @@ export default getRandomBytesAsync(32)
   reseed(Buffer.alloc(32, ui8a));
 
   global.crypto.getRandomValues = (typedArray) => {
-    //if (typedArray instanceof Uint8Array) {
-    //  const randomBytes = getRandomBytesSync(typedArray.length);
-    //  // Requires buffer as a parameter
-    //  // randomBytes.copy(typedArray);
-    //  for(let i = 0; i < typedArray.length; i++) {
-    //    typedArray[i] = randomBytes[i];
-    //  }
-    //  randomBytes.fill(0);
-    //  return;
-    //}
-    //throw new Error("Only Uint8Array is supported");
-
     const dv = new DataView(typedArray.buffer, typedArray.byteOffset, typedArray.byteLength);
     const randomBytes = getRandomBytesSync(dv.byteLength);
     for(let i = 0; i < randomBytes.length; i++) {
        dv.setUint8(i, randomBytes[i]);
     }
     randomBytes.fill(0);
-
   }
 });

@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://wg-5tm.kpogromskiy.expo-web3.exp.direct",
-  "packagerNgrokUrl": "https://packager.wg-5tm.kpogromskiy.expo-web3.exp.direct",
-  "ngrokPid": 50266,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
