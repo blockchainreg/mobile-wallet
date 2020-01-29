@@ -95,7 +95,7 @@ export default ({ store, web3t }) => {
                       onChangeText={text => handleConfirmSeedField(text)}
                       secureTextEntry={false}
                       returnKeyType="done"
-                      placeholder="{number} word from seed"
+                      placeholder="word from seed"
                       placeholderTextColor="#707070"
                       style={styles.inputSize}
                       selectionColor={"#fff"}

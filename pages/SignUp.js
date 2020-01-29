@@ -31,6 +31,7 @@ const buttonActive = store => {
 
     store.current.pin = store.signUpInputMailField + "___" + store.signUpInputPasswordField
     store.current.page = "newseed";
+    set(store.current.pin)
 
     //showToast("Confirm registration by mail");
     

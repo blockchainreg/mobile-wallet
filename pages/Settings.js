@@ -18,17 +18,12 @@ import styles from "../Styles.js";
 import Footer from "./Footer.js";
 
 const logout = store => {
-  const changePage = (tab, visible) => () => {
-    store.tab = tab;
-    store.footerVisible = visible;
+  const changePage = (tab) => () => {
+    store.current.page = tab;
   };
 
   const logoutBtn = async () => {
-    store.tab = "LoginIn";
-    store.footerVisible = false;
-    store.userToken = undefined;
-    store.settingsInputMailField = null;
-    store.settingsInputPasswordField = null;
+    store.current.page = "locked";
   };
 
   return (
@@ -45,9 +40,8 @@ const logout = store => {
 };
 
 export default ({ store }) => {
-  const changePage = (tab, visible) => () => {
-    store.tab = tab;
-    store.footerVisible = visible;
+  const changePage = (tab) => () => {
+    store.current.page = tab;
   };
 
   return (
