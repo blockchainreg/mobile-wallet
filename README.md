@@ -4,6 +4,7 @@ Boiler plate
 
 Based on https://gist.github.com/dougbacelar/29e60920d8fa1982535247563eb63766
 
+Warning: tested and working on node v10.15.3
 1. Create expo app
 ```
 expo init

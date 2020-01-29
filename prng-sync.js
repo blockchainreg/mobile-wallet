@@ -43,6 +43,7 @@ function getRandomBytesSync(length) {
   return result;
 }
 
+<<<<<<< HEAD
 //if (!global.crypto) {
 //  global.crypto = {};
 //}
@@ -59,6 +60,12 @@ global.crypto.getRandomValues = () => {
 export default getRandomBytesAsync(32)
 // Pausing to attach debugger
 // .then(() => new Promise((resolve) => {setTimeout(resolve, 15000);}))
+=======
+isSyncPrngRequestingAsyncBytes = true;
+
+export default getRandomBytesAsync(32)
+.then(() => new Promise((resolve) => {setTimeout(resolve, 15000);}) )
+>>>>>>> 00682ee5ae99ebea9ff94fdc46870d705c20bf38
 .then((ui8a) => {
   isSyncPrngRequestingAsyncBytes = false;
   reseed(Buffer.alloc(32, ui8a));
@@ -67,7 +74,11 @@ export default getRandomBytesAsync(32)
     const dv = new DataView(typedArray.buffer, typedArray.byteOffset, typedArray.byteLength);
     const randomBytes = getRandomBytesSync(dv.byteLength);
     for(let i = 0; i < randomBytes.length; i++) {
+<<<<<<< HEAD
        dv.setUint8(i, randomBytes[i]);
+=======
+      dv.setUint8(i, randomBytes[i]);
+>>>>>>> 00682ee5ae99ebea9ff94fdc46870d705c20bf38
     }
     randomBytes.fill(0);
   }

@@ -25,7 +25,6 @@ if (typeof Buffer.prototype.reverse === 'undefined') {
   };
 }
 
-
 window.randomBytes = getRandomBytesAsync;
 
 //console.log('Implementing randomBytes');
