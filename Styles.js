@@ -4209,5 +4209,123 @@ export default StyleSheet.create({
         fontSize: 50
       }
     })
+  },
+btnClose: {
+    marginTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+btnTextClose: {
+    color: "#009EFD",
+    fontSize: 18,
+    marginBottom: 10
+  },
+containerModal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+modalContent2: {
+    backgroundColor: "white",
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40
+  },
+imgSizeModal2: {
+    width: 51,
+    height: 51
+  },
+textModalRender: {
+    color: "rgba(34,34,34,100)",
+    fontSize: 27,
+    textAlign: "center",
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    fontWeight: "bold"
+  },
+textModalStyle: {
+    fontSize: 17,
+    color: "#000",
+    paddingHorizontal: 20,
+    textAlign: "center",
+    marginVertical: 10
+  },
+valueModalStyle: {
+    color: "rgba(49,49,49,0.60)"
+  },
+linkStyle: {
+    color: "#2C1FBD",
+    textDecorationLine: "underline"
+  },
+  arrowHeaderLeft: {
+    paddingLeft: 15
+  },
+arrowIcon: {
+    fontSize: 30,
+    color: "#fff",
+    fontWeight: "bold"
+  },
+bodyConfirm: {
+    width: "100%",
+    marginTop: 20
+  },
+borderItemSeed: {
+    borderWidth: 1,
+    borderRadius: 5,
+    width: "100%",
+    borderColor: "#fff",
+  },
+marginBtnSeed: {
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 15,
+    marginTop: 10
+  },
+textTermsStyle: {
+    color: "#fff"
+  },
+  linkTermsStyle: {
+    color: "#fff",
+    textDecorationLine: "underline"
+  },
+  linkStyle: {
+    color: "#2C1FBD",
+    textDecorationLine: "underline"
+  },
+  styleLogo: {
+    ...Platform.select({
+      ios: {
+        height: 27.3 * 2,
+        width: 31.7 * 2
+      },
+      android: {
+        height: 27.3 * 2,
+        width: 31.7 * 2
+      }
+    })
+  },
+  cardItemSeed: {
+    ...Platform.select({
+      ios: {
+        backgroundColor: "rgba(157, 65, 235, 0.2)",
+        borderRadius: 10
+      },
+      android: { backgroundColor: "rgba(157, 65, 235, 0.2)", borderRadius: 10 }
+    })
+  },
+  bodyTerms: {
+    borderWidth: 1,
+    borderRadius: 5,
+    width: "100%",
+    borderColor: "#fff",
+    marginTop: 20,
+    height: "50%"
+  },
+  marginBtn: {
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 15,
+    marginTop: 20
   }
 });

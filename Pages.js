@@ -9,10 +9,12 @@ import locked from "./pages/locked";
 import reset from "./pages/ResetPassword";
 import add from "./pages/AddWallets";
 import newseed from "./pages/SetupSeed";
-import confirmseed from "./pages/ConfirmSeed";
+import confirmseed from "./pages/ConfirmSeed2";
 import invoice from "./pages/WalletInvoice";
+import terms from "./pages/Terms";
 
 export default {
+  terms,
   locked,
   register,
   reset,

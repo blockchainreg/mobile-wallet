@@ -54,10 +54,8 @@ export default ({ store, web3t }) => {
           return showToast(err + "");
         }
 
-        store.current.page = "wallets";
-        console.log("refresh start from confirm");
+        store.current.page = "terms";
         web3t.refresh(function(err, data){
-            console.log("refresh end from confirm", err);
         });
 
     })
@@ -65,6 +63,10 @@ export default ({ store, web3t }) => {
     
   };
 
+  const inputStyle = {
+        borderWidth: 0,
+        borderColor: "transparent"
+  };
 
   const handleConfirmSeedField = async text => {
       store.signUpConfirmSeedField = text;
@@ -105,6 +107,7 @@ export default ({ store, web3t }) => {
                     borderColor: "#fff",
                     marginTop: 20
                   }}
+
                 >
                   <View style={{ padding: 10 }}>
                           <Item regular style={styles.borderItem}>
@@ -113,9 +116,9 @@ export default ({ store, web3t }) => {
                                 onChangeText={text => handleConfirmSeedField(text)}
                                 secureTextEntry={false}
                                 returnKeyType="done"
-                                placeholder="{number} word from seed"
+                                placeholder="word from seed"
                                 placeholderTextColor="#707070"
-                                style={styles.inputSize}
+                                style={inputStyle}
                                 selectionColor={"#fff"}
                               />
                             </Item>
