@@ -2,32 +2,33 @@
 (function(){
   var toJS, ref$, times, minus, div, createTransaction, pushTx, changeAmount, calcCryptoFromEur, calcCryptoFromUsd, notifyFormResult, getNameMask, resolveAddress, window, navigate, close, round, round5, round5edit, topup, getPrimaryInfo, createPendingTx, rebuildHistory, map, getAddressLink, getAddressTitle, web3, calcFee, confirm, getLang, applyTransactions;
   toJS = require('mobx').toJS;
-  ref$ = require('./math.ls'), times = ref$.times, minus = ref$.minus, div = ref$.div;
-  ref$ = require('./api.ls'), createTransaction = ref$.createTransaction, pushTx = ref$.pushTx;
-  ref$ = require('./calc-amount.ls'), changeAmount = ref$.changeAmount, calcCryptoFromEur = ref$.calcCryptoFromEur, calcCryptoFromUsd = ref$.calcCryptoFromUsd;
-  notifyFormResult = require('./send-form.ls').notifyFormResult;
-  getNameMask = require('./get-name-mask.ls');
-  resolveAddress = require('./resolve-address.ls');
-  window = require('./browser/window.ls');
-  navigate = require('./navigate.ls');
-  close = require('./close.ls');
-  round = require('./round.ls');
-  round5 = require('./round5.ls');
-  round5edit = require('./round5edit.ls');
-  topup = require('./topup.ls');
-  getPrimaryInfo = require('./get-primary-info.ls');
-  createPendingTx = require('./pending-tx.ls').createPendingTx;
-  rebuildHistory = require('./transactions.ls').rebuildHistory;
+  ref$ = require('./math.js'), times = ref$.times, minus = ref$.minus, div = ref$.div;
+  ref$ = require('./api.js'), createTransaction = ref$.createTransaction, pushTx = ref$.pushTx;
+  ref$ = require('./calc-amount.js'), changeAmount = ref$.changeAmount, calcCryptoFromEur = ref$.calcCryptoFromEur, calcCryptoFromUsd = ref$.calcCryptoFromUsd;
+  notifyFormResult = require('./send-form.js').notifyFormResult;
+  getNameMask = require('./get-name-mask.js');
+  resolveAddress = require('./resolve-address.js');
+  window = require('./browser/window.js');
+  navigate = require('./navigate.js');
+  close = require('./close.js');
+  round = require('./round.js');
+  round5 = require('./round5.js');
+  round5edit = require('./round5edit.js');
+  topup = require('./topup.js');
+  getPrimaryInfo = require('./get-primary-info.js');
+  createPendingTx = require('./pending-tx.js').createPendingTx;
+  rebuildHistory = require('./transactions.js').rebuildHistory;
   map = require('prelude-ls').map;
-  ref$ = require('./address-link.ls'), getAddressLink = ref$.getAddressLink, getAddressTitle = ref$.getAddressTitle;
-  web3 = require('./web3.ls');
-  calcFee = require('./api.ls').calcFee;
-  confirm = require('./pages/confirmation.ls').confirm;
-  getLang = require('./get-lang.ls');
-  applyTransactions = require('./apply-transactions.ls');
+  ref$ = require('./address-link.js'), getAddressLink = ref$.getAddressLink, getAddressTitle = ref$.getAddressTitle;
+  web3 = require('./web3.js');
+  calcFee = require('./api.js').calcFee;
+  confirm = require('./pages/confirmation.js').confirm;
+  getLang = require('./get-lang.js');
+  applyTransactions = require('./apply-transactions.js');
   module.exports = function(store, web3t){
     var lang, sendTo, send, wallet, color, primaryButtonStyle, defaultButtonStyle, sendTx, performSendSafe, performSendUnsafe, checkEnough, sendMoney, sendEscrow, sendAnyway, sendTitle, cancel, recipientChange, getValue, amountChange, performAmountEurChange, performAmountUsdChange, amountEurChange, amountUsdChange, encodeDecode, showData, showLabel, whenEmpty, debug, history, network, invoice, token, feeToken, ref$, isData, chooseAuto, chooseCheap, chosenCheap, chosenAuto, sendOptions, pending, calcAmountAndFee, useMax, useMaxTryCatch, useMaxAmount;
     if (store == null || web3t == null) {
+      console.log("no store or web3t");
       return null;
     }
     lang = getLang(store);
@@ -35,6 +36,7 @@
     send = store.current.send;
     wallet = send.wallet;
     if (wallet == null) {
+      console.log("no wallet");
       return null;
     }
     color = getPrimaryInfo(store).color;

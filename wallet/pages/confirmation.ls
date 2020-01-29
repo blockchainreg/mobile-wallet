@@ -1,8 +1,9 @@
 require! {
     \react
-    \../get-primary-info.ls
-    \../get-lang.ls
+    \../get-primary-info.js
+    \../get-lang.js
 }
+/*
 .confirmation
     position: absolute
     z-index: 999999
@@ -37,6 +38,7 @@ require! {
                 margin: 15px 5px
                 padding: 5px 10px
                 line-height: 14px
+*/
 confirmation-modal = (store)->
     return null if typeof! store.current.confirmation isnt \String
     confirm = ->
@@ -66,6 +68,7 @@ confirmation-modal = (store)->
             .pug.buttons
                 .pug.button(on-click=confirm style=button-style) #{lang.confirm}
                 .pug.button(on-click=cancel style=button-style) #{lang.cancel}
+/*
 prompt-modal = (store)->
     return null if typeof! store.current.prompt isnt \String
     confirm = ->
@@ -103,10 +106,12 @@ prompt-modal = (store)->
             .pug.buttons
                 .pug.button(on-click=confirm style=button-style) #{lang.confirm}
                 .pug.button(on-click=cancel style=button-style) #{lang.cancel}
+
 export confirmation-control = (store)->
     .pug
         confirmation-modal store
         prompt-modal store
+*/
 state=
     callback: null
 export confirm = (store, text, cb)->

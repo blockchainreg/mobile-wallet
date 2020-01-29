@@ -1,5 +1,4 @@
 require! {
-    \./web3.ls
     \prelude-ls : { map, split, find, head, filter }
 }
 is-valid = (coin, network)-> (address)->

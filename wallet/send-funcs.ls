@@ -1,28 +1,28 @@
 require! {
     \mobx : { toJS }
-    \./math.ls : { times, minus, div }
-    \./api.ls : { create-transaction, push-tx }
-    \./calc-amount.ls : { change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
-    \./send-form.ls : { notify-form-result }
-    \./get-name-mask.ls
-    \./resolve-address.ls
-    \./browser/window.ls
-    \./navigate.ls
-    \./close.ls
-    \./round.ls
-    \./round5.ls
-    \./round5edit.ls
-    \./topup.ls
-    \./get-primary-info.ls
-    \./pending-tx.ls : { create-pending-tx }
-    \./transactions.ls : { rebuild-history }
+    \./math.js : { times, minus, div }
+    \./api.js : { create-transaction, push-tx }
+    \./calc-amount.js : { change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
+    \./send-form.js : { notify-form-result }
+    \./get-name-mask.js
+    \./resolve-address.js
+    \./browser/window.js
+    \./navigate.js
+    \./close.js
+    \./round.js
+    \./round5.js
+    \./round5edit.js
+    \./topup.js
+    \./get-primary-info.js
+    \./pending-tx.js : { create-pending-tx }
+    \./transactions.js : { rebuild-history }
     \prelude-ls : { map }
-    \./address-link.ls : { get-address-link, get-address-title }
-    \./web3.ls
-    \./api.ls : { calc-fee }
-    \./pages/confirmation.ls : { confirm }
-    \./get-lang.ls
-    \./apply-transactions.ls
+    \./address-link.js : { get-address-link, get-address-title }
+    \./web3.js
+    \./api.js : { calc-fee }
+    \./pages/confirmation.js : { confirm }
+    \./get-lang.js
+    \./apply-transactions.js
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?

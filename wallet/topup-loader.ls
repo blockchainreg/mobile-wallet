@@ -1,11 +1,11 @@
 require! {
     \prelude-ls : { filter, reverse, head, foldl, find }
-    \./install-plugin.ls : { get-install-list }
-    \./get-primary-coin.ls
+    \./install-plugin.js : { get-install-list }
+    \./get-primary-coin.js
 }
 common =
-    * require \../web3t/plugins/gobyte-topup.ls
-    * require \../web3t/plugins/trycrypto-topup.ls
+    * require \../web3t/plugins/gobyte-topup.js
+    * require \../web3t/plugins/trycrypto-topup.js
     ...
 verify-fields = (t)->
     return no if t.type isnt \topup

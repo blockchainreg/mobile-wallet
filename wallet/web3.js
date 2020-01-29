@@ -12,7 +12,7 @@
   ref$ = require('./install-plugin.js'), buildInstall = ref$.buildInstall, buildUninstall = ref$.buildUninstall, buildInstallByName = ref$.buildInstallByName, buildQuickInstall = ref$.buildQuickInstall;
   ref$ = require('./refresh-account.js'), backgroundRefreshAccount = ref$.backgroundRefreshAccount, setAccount = ref$.setAccount;
   //Web3 = require('web3');
-  ethnamed = ()=> {} //require('../api/ethnamed.js');
+  ethnamed = require('../api/ethnamed.js');
   getRecord = require('./get-record.js');
   setPageTheme = require('./set-page-theme.js');
   mirror = require('./mirror.js');

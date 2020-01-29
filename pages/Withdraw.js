@@ -18,21 +18,21 @@ import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
+import sendFuncs from '../wallet/send-funcs.js'
 
 const showToast = message => {
   console.log(message);
   this.toastify.show(message, 3000);
 };
 
-const btnWithdrawBtc = store => {
-  const withdrawBtc = async () => {
-    const params = {
-      currency: 'BTC',
-      amount: store.withdrawFieldBtc,
-      withdrawal_type: "GATEWAY",
-      wallet_to: store.withdrawAddrFieldBtc
-    };
+const btnWithdrawBtc = ({ store, web3t }) => {
 
+  const { token, feeToken, network, send, wallet, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
+    
+
+  const withdrawBtc = async () => {
+    
+      sendAnyway();
     
   };
 
@@ -54,7 +54,7 @@ const btnWithdrawBtc = store => {
   );
 };
 
-const buttonInactive = store => {
+const buttonInactive = ({ store }) => {
   return (
     <GradientButton
       style={styles.gradientBtn2}
@@ -72,23 +72,35 @@ const buttonInactive = store => {
   );
 };
 
-export default ({ store }) => {
+const wrap = (text) => {
+    return {
+      target: {
+        value: text
+      }
+    }
+}
+
+export default ({ store, web3t }) => {
+
+  const { token, feeToken, network, send, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
+  
 
   const wallet = store.current.wallet;
   const changePage = (tab) => () => {
     store.current.page = tab;
-    store.withdrawFieldBtc = null;
-    store.withdrawAddrFieldBtc = null;
+    //store.withdrawFieldBtc = null;
+    //store.withdrawAddrFieldBtc = null;
   };
-  const handleChangeWithdraw = async text => {
-    store.withdrawFieldBtc = text;
-  };
+  //const handleChangeWithdraw = async text => {
+  //  store.withdrawFieldBtc = text;
+  //};
+  
 
   const inputAmountWithdraw = store => {
     return (
       <Item regular style={styles.borderItemInput}>
         <Input
-          onChangeText={text => handleChangeWithdraw(text)}
+          onChangeText={text => amountChange(wrap(text) )}
           returnKeyType="done"
           style={styles.inputStyle}
           placeholder="0"
@@ -100,17 +112,17 @@ export default ({ store }) => {
     );
   };
 
-  const handleChangeWithdrawAddr = async text => {
-    store.withdrawAddrFieldBtc = text;
-  };
+  //const handleChangeWithdrawAddr = async text => {
+  //  store.withdrawAddrFieldBtc = text;
+  //};
 
   const inputAddressWithdrawBtc = store => {
     return (
       <Item regular style={styles.borderItemInput}>
         <Input
-          onChangeText={text => handleChangeWithdrawAddr(text)}
+          onChangeText={text => recipientChange(wrap(text))}
           returnKeyType="done"
-          placeholder="1F2tAdz5x1HUXrCNLbtMDqcw6o5GNn4xqX"
+          placeholder={wallet.network.mask}
           style={[styles.inputStyle, { fontSize: 18 }]}
           keyboardType={"default"}
           placeholderTextColor="rgba(255,255,255,0.50)"
@@ -120,23 +132,18 @@ export default ({ store }) => {
     );
   };
 
-  const buttonChangeWithdrawBtc =
-    store.withdrawFieldBtc && store.withdrawAddrFieldBtc
-      ? btnWithdrawBtc
-      : buttonInactive;
+  //const buttonChangeWithdrawBtc =
+  //  store.withdrawFieldBtc && store.withdrawAddrFieldBtc
+  //    ? btnWithdrawBtc
+  //    : buttonInactive;
+  const buttonChangeWithdrawBtc = btnWithdrawBtc;
+
   const refreshToken = async bool => {
-    if (bool === true) {
-      const params = {
-        email: store.settingsInputMailField,
-        password: store.settingsInputPasswordField
-      };
+    
+    web3t.refresh((err, data) => {
 
-      
+    });
 
-      console.log("userToken 😀", store.userToken);
-
-      
-    }
   };
   return (
     <View style={styles.viewFlex}>
@@ -158,10 +165,10 @@ export default ({ store }) => {
             </Button>
           </Left>
           <Body style={styles.viewFlex}>
-            <Title style={styles.titleBlack}>Withdraw</Title>
+            <Title style={styles.titleBlack}>Send</Title>
           </Body>
           <Right style={styles.viewFlex}>
-            <Thumbnail small source={require("../assets/btc-ethnamed.png")} />
+            <Thumbnail small source={{uri: wallet.coin.image}} />
           </Right>
         </Header>
         <RefreshControl swipeRefresh={refreshToken}>
@@ -187,7 +194,7 @@ export default ({ store }) => {
                 {inputAmountWithdraw(store)}
                 <View style={styles.viewTextInputDown}>
                   <Text note style={styles.textInputDownRight}>
-                    Commision 0.01 BTC
+                    Fee 0.01 {wallet.coin.token}
                     %
                   </Text>
                 </View>
@@ -195,7 +202,7 @@ export default ({ store }) => {
               <View style={styles.viewMt}>
                 <View>
                   <Text style={styles.titleHeader}>
-                    Enter the number of Btc wallet:
+                    Enter the number of {wallet.coin.token} wallet:
                   </Text>
                 </View>
                 {inputAddressWithdrawBtc(store)}
@@ -206,7 +213,7 @@ export default ({ store }) => {
       </StandardLinearGradient>
       <View style={styles.viewMonoBuy}>
         <View style={styles.containerScreen}>
-          <View style={styles.marginBtn}>{buttonChangeWithdrawBtc(store)}</View>
+          <View style={styles.marginBtn}>{buttonChangeWithdrawBtc({ store, web3t })}</View>
         </View>
       </View>
     </View>

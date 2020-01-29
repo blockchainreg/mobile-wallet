@@ -261,7 +261,15 @@ export default ({ store, web3t }) => {
         //value = 0
         //err <- send-transaction { to, value }
         //console.log err if err?
+        store.current.send.wallet = wallet;
+        store.current.send.coin = wallet.coin;
+        store.current.send.network = wallet.network;
+        console.log("wallet,", store.current.send.wallet)
         store.current.page = "send";
+
+  }
+
+  const explorer = (tab) => () => {
 
   }
 
@@ -345,7 +353,7 @@ export default ({ store, web3t }) => {
 
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
-                    onPress={changePage("send")}
+                    onPress={send}
                     style={styles.touchables}
                   >
                     <Image
@@ -358,7 +366,7 @@ export default ({ store, web3t }) => {
 
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
-                    onPress={send}
+                    onPress={explorer}
                     style={styles.touchables}
                   >
                     <Image
