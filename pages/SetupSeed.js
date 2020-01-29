@@ -27,11 +27,11 @@ import {
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import SaveSeedModal from "../components/SaveSeedModal.js";
-//import { generateMnemonic } from 'bip39';
+import { generateMnemonic } from "bip39";
 
-const generateMnemonic = () => {
-  return "one two three four five six";
-}
+// const generateMnemonic = () => {
+//   return "one two three four five six";
+// }
 
 export default ({ store }) => {
   const changePage = (tab) => () => {
