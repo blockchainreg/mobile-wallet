@@ -34,7 +34,7 @@
         wallet.balanceUsd = balanceUsd;
         wallet.usdRate = usdRate;
         wallet.mnemonic = mnemonic;
-        return cb(null, wallet);
+        return cb(null, JSON.parse(JSON.stringify(wallet)));
       });
     };
     generateCoinWallets = function(arg$, cb){

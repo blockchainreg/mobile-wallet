@@ -92,13 +92,16 @@ const wallets = (store, web3t) => {
 
 export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
-    store.tab = tab;
+    store.current.page = tab;
   };
 
   const calcUsd = store.current.balanceUsd;
 
   const refreshBalance = () => {
-
+      console.log("refresh start from wallets");
+      web3t.refresh((err,data) => {
+          console.log("refresh done from wallets");
+      })
   }
 
 

@@ -64,6 +64,7 @@ store =
         add-coin: no
         wallet-index: 0
         account-index: 1
+        account: {}
         manage-account: no
         filter-plugins: ""
         confirmation: null

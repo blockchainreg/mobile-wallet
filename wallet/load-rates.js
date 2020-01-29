@@ -56,7 +56,9 @@
           items: items
         });
       }
+      console.log(url);
       return get(url).end(function(err, data){
+        console.log(err);
         return cb({
           err: err,
           data: data,

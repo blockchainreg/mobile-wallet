@@ -49,7 +49,10 @@
       }
       transaction(function(){
         store.rates = bgStore.rates;
+        console.log(toJS(bgStore.current.account));
+
         store.current.account = bgStore.current.account;
+        //console.log("after", store.current.account);
         store.current.filter.length = 0;
         store.current.filter.push('IN');
         store.current.filter.push('OUT');

@@ -77,6 +77,7 @@
       addCoin: false,
       walletIndex: 0,
       accountIndex: 1,
+      account: {},
       manageAccount: false,
       filterPlugins: "",
       confirmation: null,

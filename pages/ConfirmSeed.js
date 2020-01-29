@@ -55,6 +55,11 @@ export default ({ store, web3t }) => {
         }
 
         store.current.page = "wallets";
+        console.log("refresh start from confirm");
+        web3t.refresh(function(err, data){
+            console.log("refresh end from confirm", err);
+        });
+
     })
 
     
