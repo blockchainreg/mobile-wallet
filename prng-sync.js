@@ -1,5 +1,5 @@
-import crypto from "crypto";
 import {getRandomBytesAsync} from 'expo-random';
+let crypto = null;
 
 let syncPrngSeed = null;
 let isSyncPrngRequestingAsyncBytes = false;
@@ -50,7 +50,7 @@ function getRandomBytesSync(length) {
 
 isSyncPrngRequestingAsyncBytes = true;
 // Pausing to attach debugger
-// const startAt = Date.now();
+const startAt = Date.now();
 // console.log('Starting timer');
 // while(Date.now() - 15000 < startAt);
 // console.log('Ending timer');
@@ -73,5 +73,6 @@ export default getRandomBytesAsync(32)
 
     }
     randomBytes.fill(0);
-  }
+  };
+  crypto = require("crypto");
 });
