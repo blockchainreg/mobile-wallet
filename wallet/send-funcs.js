@@ -167,6 +167,10 @@
           }
           notifyFormResult(send.id, null, data);
           store.current.lastTxUrl = send.network.api.url + "/tx/" + data;
+          store.current.transaction = {
+            hash: data
+          };
+
           navigate(store, web3t, 'sent');
           return web3t.refresh(function(){});
         });

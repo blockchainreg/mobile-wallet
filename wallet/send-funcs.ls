@@ -107,6 +107,7 @@ module.exports = (store, web3t)->
         return send.error = "#{err.message ? err}" if err?
         notify-form-result send.id, null, data
         store.current.last-tx-url = "#{send.network.api.url}/tx/#{data}"
+        store.current.transaction = {hash: data}
         navigate store, web3t, \sent
         <- web3t.refresh
     send-escrow = ->

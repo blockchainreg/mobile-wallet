@@ -4,30 +4,58 @@ import Modal from "react-native-modal";
 import { Image } from "react-native";
 import styles from "../Styles.js";
 
-export default ({ store }) => {
-  const handleOpenModalPress = store => {
-    return (
-      <TouchableOpacity onPress={() => (store.modal = true)}>
-        <Text>Show success modal</Text>
-      </TouchableOpacity>
-    );
-  };
-  const url = store.current.lastTxUrl;
-
+// export default ({ store }) => {
+//   const handleOpenModalPress = store => {
+//     return (
+//       <TouchableOpacity onPress={() => (store.modal = true)}>
+//         <Text>Show success modal</Text>
+//       </TouchableOpacity>
+//     );
+//   };
+//   const url = store.current.lastTxUrl;
+//
   const handleCloseModalPress = store => {
     return (
       <TouchableOpacity
         style={styles.btnClose}
-        onPress={() => (store.modal = false)}
+        onPress={() => (store.current.page = "wallet")}
       >
-        <Text style={styles.btnTextClose}>Cancel</Text>
+        <Text style={styles.btnTextClose}>Close</Text>
       </TouchableOpacity>
     );
   };
+//   return (
+//     <View style={styles.containerModal}>
+//       {handleOpenModalPress(store)}
+//       <Modal isVisible={store.modal} hasBackdrop={true}>
+//         <View style={styles.modalContent2}>
+//           <Image
+//             source={require("../assets/tick.png")}
+//             style={styles.imgSizeModal2}
+//           />
+//           <Text style={styles.textModalRender}>Successful transaction!</Text>
+//           <Text style={styles.textModalStyle}>
+//             Transaction Id:{" "}
+//             <Text
+//               style={styles.linkStyle}
+//               onPress={() => {
+//                 Linking.openURL(url);
+//               }}
+//             >
+//               {store.current.transaction.hash}
+//             </Text>
+//           </Text>
+//           {handleCloseModalPress(store)}
+//         </View>
+//       </Modal>
+//     </View>
+//   );
+// };
+
+export default ({ store }) => {
   return (
     <View style={styles.containerModal}>
-      {handleOpenModalPress(store)}
-      <Modal isVisible={store.modal} hasBackdrop={true}>
+      <Modal isVisible={true} hasBackdrop={true}>
         <View style={styles.modalContent2}>
           <Image
             source={require("../assets/tick.png")}
@@ -42,7 +70,7 @@ export default ({ store }) => {
                 Linking.openURL(url);
               }}
             >
-              {/*store.transaction.hash*/}
+              {store.current.transaction.hash}
             </Text>
           </Text>
           {handleCloseModalPress(store)}
@@ -51,7 +79,6 @@ export default ({ store }) => {
     </View>
   );
 };
-
 
 // add new styles
 
