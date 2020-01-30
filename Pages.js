@@ -12,6 +12,7 @@ import newseed from "./pages/SetupSeed";
 import confirmseed from "./pages/ConfirmSeed2";
 import invoice from "./pages/WalletInvoice";
 import terms from "./pages/Terms";
+import sent from "./pages/sent";
 
 export default {
   terms,
