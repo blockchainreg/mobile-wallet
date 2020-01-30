@@ -29,5 +29,6 @@ export default {
   add,
   newseed,
   confirmseed,
-  invoice
+  invoice,
+  sent
 };

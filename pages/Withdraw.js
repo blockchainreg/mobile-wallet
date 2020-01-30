@@ -28,12 +28,17 @@ const showToast = message => {
 const btnWithdrawBtc = ({ store, web3t }) => {
 
   const { token, feeToken, network, send, wallet, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
-    
+
 
   const withdrawBtc = async () => {
-    
-      sendAnyway();
-    
+    try {
+      sendAnyway(() => {
+        debugger;
+      });
+    }catch(e) {
+      console.error(e);
+      this.toastify.show(e.message, 3000);
+    }
   };
 
   return (
@@ -47,8 +52,8 @@ const btnWithdrawBtc = ({ store, web3t }) => {
         height={56}
         width={"100%"}
         radius={10}
-        
-        
+
+
         onPressAction={withdrawBtc}
       />
   );
@@ -66,8 +71,8 @@ const buttonInactive = ({ store }) => {
       height={56}
       width={"100%"}
       radius={10}
-      
-      
+
+
     />
   );
 };
@@ -83,7 +88,7 @@ const wrap = (text) => {
 export default ({ store, web3t }) => {
 
   const { token, feeToken, network, send, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
-  
+
 
   const wallet = store.current.wallet;
   const changePage = (tab) => () => {
@@ -94,7 +99,7 @@ export default ({ store, web3t }) => {
   //const handleChangeWithdraw = async text => {
   //  store.withdrawFieldBtc = text;
   //};
-  
+
 
   const inputAmountWithdraw = store => {
     return (
@@ -139,7 +144,7 @@ export default ({ store, web3t }) => {
   const buttonChangeWithdrawBtc = btnWithdrawBtc;
 
   const refreshToken = async bool => {
-    
+
     web3t.refresh((err, data) => {
 
     });

@@ -13,7 +13,7 @@ export default ({ store }) => {
     );
   };
   const url = store.current.lastTxUrl;
-  
+
   const handleCloseModalPress = store => {
     return (
       <TouchableOpacity
@@ -42,7 +42,7 @@ export default ({ store }) => {
                 Linking.openURL(url);
               }}
             >
-              {store.transaction.hash}
+              {/*store.transaction.hash*/}
             </Text>
           </Text>
           {handleCloseModalPress(store)}
@@ -69,4 +69,3 @@ export default {
 transaction: transaction,
 }
 */
-
