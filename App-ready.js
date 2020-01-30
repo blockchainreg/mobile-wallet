@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StatusBar, SafeAreaView } from "react-native";
+import { View, Text, StatusBar, SafeAreaView } from "react-native";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 //import Store from "./Store.js";
@@ -17,7 +17,15 @@ const web3t = web3(store);
 
 
 const Main = observer(({ store }) => {
-  return pages[store.current.page]({ store, web3t });
+  const page = pages[store.current.page];
+  if (!page) {
+    return (
+      <View style={{alignItems: 'stretch', justifyContent: 'center', flex: 1, backgroundColor: '#fff'}}>
+        <Text>Page {store.current.page} not found</Text>
+      </View>
+    );
+  }
+  return page({ store, web3t });
 });
 
 const footerVisible = () => {

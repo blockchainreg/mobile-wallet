@@ -1,5 +1,6 @@
 require! {
     \mobx : { toJS }
+    \react-native: {Alert}
     \./math.js : { times, minus, div }
     \./api.js : { create-transaction, push-tx }
     \./calc-amount.js : { change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
@@ -24,6 +25,23 @@ require! {
     \./get-lang.js
     \./apply-transactions.js
 }
+
+confirmrn = (store, message, yesButtonText, cb)->
+  Alert.alert(
+    "Confirmation",
+    message,
+    [
+      {
+        text: 'Cancel',
+        onPress: () => cb(false),
+        style: 'cancel',
+      },
+      {text: yesButtonText, onPress: () => cb(true)},
+    ],
+    {cancelable: false},
+  );
+
+
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
     lang = get-lang store
@@ -38,7 +56,7 @@ module.exports = (store, web3t)->
     send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type }, cb)->
         { token } = send.coin
         tx =
-            account: { wallet.address, wallet.private-key } 
+            account: { wallet.address, wallet.private-key }
             recipient: to
             network: network
             token: token
@@ -50,7 +68,8 @@ module.exports = (store, web3t)->
         err, data <- create-transaction tx
         #console.log 'after create tx', err
         return cb err if err?
-        agree <- confirm store, "Are you sure to send #{tx.amount} #{send.coin.token} to #{send.to}"
+        agree <- confirmrn store, "Are you sure to send #{tx.amount} #{send.coin.token} to #{send.to}", 'Yes, send!'
+
         #console.log 'after confirm', agree
         return cb "You are not agree" if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }
@@ -71,7 +90,7 @@ module.exports = (store, web3t)->
     perform-send-unsafe = (cb)->
         send-tx { wallet, ...send }, cb
     check-enough = (cb)->
-        try 
+        try
             amount = wallet.balance `minus` send.amount-send `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
             return cb "Not Enough funds" if +amount < 0
             cb null
@@ -97,7 +116,7 @@ module.exports = (store, web3t)->
     send-anyway = ->
         return send-escrow! if send.propose-escrow
         send-money!
-    send-title = 
+    send-title =
         | send.propose-escrow then 'SEND (Escrow)'
         | _ => lang.send
     cancel = (event)->
@@ -107,7 +126,7 @@ module.exports = (store, web3t)->
         send.to = event.target.value ? ""
     get-value = (event)->
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
-        value2 = 
+        value2 =
             | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
             | _ => value
         value2
@@ -116,7 +135,7 @@ module.exports = (store, web3t)->
         change-amount store, value
     perform-amount-eur-change = (value)->
         to-send = calc-crypto-from-eur store, value
-        change-amount store, to-send        
+        change-amount store, to-send
     perform-amount-usd-change = (value)->
         to-send = calc-crypto-from-usd store, value
         change-amount store, to-send
@@ -132,7 +151,7 @@ module.exports = (store, web3t)->
         amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 1000
     encode-decode = ->
         send.show-data-mode =
-            | send.show-data-mode is \decoded => \encoded 
+            | send.show-data-mode is \decoded => \encoded
             | _ => \decoded
     show-data = ->
         | send.show-data-mode is \decoded => send.decoded-data
@@ -156,7 +175,7 @@ module.exports = (store, web3t)->
         store.current.filter = [\IN, \OUT, send.coin.token]
         apply-transactions store
         navigate store, web3t, \history
-    network = 
+    network =
         | store.current.network is \testnet => " (TESTNET) "
         | _ => ""
     invoice = (wallet)->
@@ -189,7 +208,7 @@ module.exports = (store, web3t)->
         next = amount-send-fee ? ( 10 `div` (10 ^ send.network.decimals) )
         next-amount = amount-send `minus` next
         next-trials = trials - 1
-        calc-amount-and-fee next-amount, next-trials, cb 
+        calc-amount-and-fee next-amount, next-trials, cb
     use-max = (cb)->
         return cb "Data is not ready yet" if +(send.amount-send-fee ? 0) is 0
         amount = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee

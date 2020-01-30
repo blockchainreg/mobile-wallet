@@ -49,6 +49,7 @@ export default ({ store }) => {
 
   const generateRandom = async () => {
     store.current.seed = "demand time hero together space blur test fatal mistake leaf rigid that";//generateMnemonic();
+    //send to text address VLV8jDEudTEF6m3JGkjPAXrGWnHzwYHETsE - it is index 0 address of test mnemonic phrase
   };
 
   const changeSeed = async (seed) => {

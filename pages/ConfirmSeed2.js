@@ -91,6 +91,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.bodyConfirm}>
                   <Item regular style={styles.borderItemSeed}>
                     <Input
+                      autoFocus
                       value={store.signUpConfirmSeedField}
                       onChangeText={text => handleConfirmSeedField(text)}
                       autoCapitalize="none"
