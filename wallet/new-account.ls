@@ -2,7 +2,7 @@ require! {
     \prelude-ls : { obj-to-pairs, pairs-to-obj, map }
     \mobx : { toJS }
     \./api.js : { get-keys }
-    \./web3.js
+    # \./web3.js
     #\./ethnamed.ls
 }
 module.exports = (store, mnemonic="", cb)->
