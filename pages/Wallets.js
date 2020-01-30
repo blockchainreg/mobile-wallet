@@ -24,6 +24,7 @@ import Footer from "./Footer.js";
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import walletFuncs from '../wallet/wallet-funcs.js';
 
+
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
@@ -98,10 +99,7 @@ export default ({ store, web3t }) => {
   const calcUsd = store.current.balanceUsd;
 
   const refreshBalance = () => {
-      console.log("refresh start from wallets");
-      web3t.refresh((err,data) => {
-          console.log("refresh done from wallets");
-      })
+      web3t.refresh((err,data) => {})
   }
 
 

@@ -31,6 +31,11 @@ import RefreshControl from "../components/RefreshControl.js";
 import LoadMoreDate from "../components/LoadMoreDate.js";
 // import walletFuncs from '../wallet/wallet-funcs.js';
 // import walletsFuncs from '../wallet/wallets-funcs.js';
+import { Linking } from "react-native";
+
+import navigate from '../wallet/navigate.js';
+
+//navigate store, web3t, \sent
 
 const { width, height } = Dimensions.get("window");
 
@@ -251,10 +256,11 @@ export default ({ store, web3t }) => {
 
   //const wallets = walletsFuncs(store, web3t).wallets;
   const wallet = store.current.wallet;
-  //const { active, balance, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
 
   const usdRate = wallet.usdRate || 0;
-  const send = () => {
+  const sendLocal = () => {
+
+        //send wallet
         //web3t[]
         //{ send-transaction } = web3t[wallet.coin.token]
         //to = ""
@@ -264,14 +270,16 @@ export default ({ store, web3t }) => {
         store.current.send.wallet = wallet;
         store.current.send.coin = wallet.coin;
         store.current.send.network = wallet.network;
-        console.log("wallet,", store.current.send.wallet)
-        store.current.page = "send";
+        //console.log("wallet,", store.current.send.wallet)
+        //store.current.page = "send";
+        //the true way to use store.current.page = '...'
+        navigate(store, web3t, "send", x=> {
+
+        });
 
   }
 
-  const explorer = (tab) => () => {
 
-  }
 
   const changePage = (tab) => () => {
     store.current.page = tab;
@@ -294,7 +302,11 @@ export default ({ store, web3t }) => {
       </View>
     </View>
   );
-  const refreshToken = () => {}
+  const refreshToken = () => {
+    web3t.refresh((err,data) => {})
+  }
+  const addressExplorerLink = wallet.network.api.url + "/address/" + wallet.address;
+
 
   return (
     <ModalComponent
@@ -353,7 +365,7 @@ export default ({ store, web3t }) => {
 
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
-                    onPress={send}
+                    onPress={sendLocal}
                     style={styles.touchables}
                   >
                     <Image
@@ -366,7 +378,9 @@ export default ({ store, web3t }) => {
 
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
-                    onPress={explorer}
+                    onPress={() => {
+                        Linking.openURL(addressExplorerLink);
+                      }}
                     style={styles.touchables}
                   >
                     <Image
