@@ -37,20 +37,20 @@ const btnWithdrawBtc = ({ store, web3t }) => {
   };
 
   return (
-    <GradientButton
-      style={styles.gradientBtn2}
-      text="Continue"
-      textStyle={{ fontSize: 18 }}
-      gradientBegin="#9d41eb"
-      gradientEnd="#9d41eb"
-      gradientDirection="diagonal"
-      height={56}
-      width={"100%"}
-      radius={10}
-      
-      
-      onPressAction={withdrawBtc}
-    />
+      <GradientButton
+        style={styles.gradientBtn2}
+        text="Continue"
+        textStyle={{ fontSize: 18 }}
+        gradientBegin="#9d41eb"
+        gradientEnd="#9d41eb"
+        gradientDirection="diagonal"
+        height={56}
+        width={"100%"}
+        radius={10}
+        
+        
+        onPressAction={withdrawBtc}
+      />
   );
 };
 
@@ -194,8 +194,7 @@ export default ({ store, web3t }) => {
                 {inputAmountWithdraw(store)}
                 <View style={styles.viewTextInputDown}>
                   <Text note style={styles.textInputDownRight}>
-                    Fee 0.01 {wallet.coin.token}
-                    %
+                    Fee {store.current.send.amountSendFee} {wallet.coin.token}
                   </Text>
                 </View>
               </View>
@@ -213,7 +212,10 @@ export default ({ store, web3t }) => {
       </StandardLinearGradient>
       <View style={styles.viewMonoBuy}>
         <View style={styles.containerScreen}>
-          <View style={styles.marginBtn}>{buttonChangeWithdrawBtc({ store, web3t })}</View>
+          <View style={styles.marginBtn}>
+            {buttonChangeWithdrawBtc({ store, web3t })}
+            <Text>{store.current.send.error}</Text>
+          </View>
         </View>
       </View>
     </View>
