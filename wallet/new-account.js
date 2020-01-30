@@ -4,7 +4,7 @@
   ref$ = require('prelude-ls'), objToPairs = ref$.objToPairs, pairsToObj = ref$.pairsToObj, map = ref$.map;
   toJS = require('mobx').toJS;
   getKeys = require('./api.js').getKeys;
-  web3 = require('./web3.js');
+  // web3 = require('./web3.js');
   module.exports = function(store, mnemonic, cb){
     var generateCoinWallet, generateCoinWallets;
     mnemonic == null && (mnemonic = "");

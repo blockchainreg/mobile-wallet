@@ -6,6 +6,7 @@ require! {
     \../math.js : { plus, minus, times, div, from-hex }
     \bip39
     \big-integer
+    \moment
 }
 to-callback = (p, cb)->
     p.then (res)->
@@ -47,7 +48,7 @@ export get-transactions = ({ network, address }, cb)->
     txs = data.body?items
     return cb "expected array" if typeof! txs isnt \Array
     return cb null, [] if txs.length is 0
-    new-txs = 
+    new-txs =
         txs
             |> map transform-tx network
     console.log \velas, new-txs
@@ -88,7 +89,7 @@ export create-transaction = ({ network, account, recipient, amount, amount-fee, 
     amount-satoshi-big-int = bigInt(amount-satoshi)
     fee-satoshi = fee `times` (10^network.decimals)
     fee-bigInt = big-int fee-satoshi
-    #console.log do 
+    #console.log do
     #    unspents: unspents
     #    amount-satoshi-big-int: amount-satoshi-big-int
     #    hd-keys: hd-keys

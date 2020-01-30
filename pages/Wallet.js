@@ -256,7 +256,12 @@ export default ({ store, web3t }) => {
 
   //const wallets = walletsFuncs(store, web3t).wallets;
   const wallet = store.current.wallet;
+<<<<<<< HEAD
   //const { send } = walletFuncs(store, web3t, wallets, wallet);
+=======
+  debugger;
+  //const { active, balance, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
+>>>>>>> 90b91dc4915610eacb4571eaa5c54d85221ecbea
 
   const usdRate = wallet.usdRate || 0;
   const sendLocal = () => {

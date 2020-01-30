@@ -69,9 +69,9 @@ export default class App extends Component {
     super();
   }
 
-  
+
   componentDidMount() {
-  
+
   }
 
   onClick = transaction => {
@@ -105,16 +105,16 @@ export default class App extends Component {
                   }}
                   key={transaction.tx}
                 >
-                  <Left>{thumbnail(transaction.type)}</Left> 
+                  <Left>{thumbnail(transaction.type)}</Left>
                   <Body style={{ paddingRight: 10}}>
                 <Text style={styles.txtSizeHistory}>{checkType(transaction.type)}</Text>
                     <Text style={styles.constDate}>
-                      {moment(transaction.time).format("MMM D YYYY h:mm A")} 
+                      {moment(transaction.time * 1000).format("MMM D YYYY h:mm A")}
                     </Text>
                   </Body>
                   <Right>
                     <Text style={styles.txtSizeHistory}>
-                    {index(transaction.type)}{transaction.amount} (fee: {transaction.fee}) {transaction.currency}
+                    {console.log("Rendering transaction", transaction) || index(transaction.type)}{transaction.amount} (fee: {transaction.fee}) {transaction.currency}
                     </Text>
                   </Right>
                 </ListItem>
@@ -126,4 +126,3 @@ export default class App extends Component {
     );
   }
 }
-
