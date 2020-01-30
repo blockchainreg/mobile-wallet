@@ -33,8 +33,17 @@ import { generateMnemonic } from "bip39";
 //   return "one two three four five six";
 // }
 
+const badSeed = (seed) => {
+  blocks = (seed || "").split(' ')
+  return blocks.length < 10;
+}
+
 export default ({ store }) => {
   const changePage = (tab) => () => {
+    
+    if (badSeed(store.current.seed))
+      return;
+
     store.current.page = tab;
   };
 
