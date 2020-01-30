@@ -13,36 +13,21 @@ import {
   Separator,
   Button
 } from "native-base";
+import { Linking } from "react-native";
 import Switch from "react-native-switch-pro";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 
-const logout = store => {
-  const changePage = (tab) => () => {
-    store.current.page = tab;
-  };
 
+
+
+
+
+export default ({ store }) => {
   const logoutBtn = async () => {
     store.current.page = "locked";
   };
-
-  return (
-    <ListItem icon style={styles.heightListItem} last onPress={logoutBtn}>
-      <Left>
-        <Icon name="ios-log-out" />
-      </Left>
-      <Body style={styles.heightListItem}>
-        <Text style={styles.numbersFaq1}>Log Out</Text>
-      </Body>
-      <Right style={styles.heightListItem} />
-    </ListItem>
-  );
-};
-
-export default ({ store }) => {
-  const changePage = (tab) => () => {
-    store.current.page = tab;
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -57,49 +42,13 @@ export default ({ store }) => {
 
       <Content>
         <Separator bordered>
-          <Text>Account Settings</Text>
-        </Separator>
-        <ListItem icon style={styles.heightListItem}>
-          <Left>
-            <Icon name="ios-contact" />
-          </Left>
-          <Body style={styles.heightListItem}>
-            <Text style={styles.numbersFaq1}>{store.userName}</Text>
-          </Body>
-          <Right style={styles.heightListItem} />
-        </ListItem>
-        <ListItem icon style={styles.heightListItem}>
-          <Left>
-            <Icon name="ios-mail" />
-          </Left>
-          <Body style={styles.heightListItem}>
-            <Text style={styles.constMail1}>
-              {store.settingsInputMailField}
-            </Text>
-          </Body>
-          <Right style={styles.heightListItem} />
-        </ListItem>
-        <Separator bordered>
           <Text>Get Help</Text>
         </Separator>
         <ListItem
           icon
-          // onPress={changePage('FaqAll')}
-          style={styles.heightListItem}
-        >
-          <Left>
-            <Icon name="ios-help-circle-outline" />
-          </Left>
-          <Body style={styles.heightListItem}>
-            <Text style={styles.numbersFaq1}>FAQ</Text>
-          </Body>
-          <Right style={styles.heightListItem}>
-            <Icon name="ios-arrow-forward" />
-          </Right>
-        </ListItem>
-        <ListItem
-          icon
-          // onPress={changePage('Support')}
+           onPress={() => {
+                Linking.openURL(`https://t.me/VelasDevelopers`);
+              }}
           style={styles.heightListItem}
         >
           <Left>
@@ -117,23 +66,15 @@ export default ({ store }) => {
           <Text>Security</Text>
         </Separator>
 
-        
-
-        {/* <ListItem icon style={styles.heightListItem} 
-       onPress={changePage("SetupSeed")}
-        >
-          <Left>
-            <Icon name="ios-paper" />
-          </Left>
-          <Body style={styles.heightListItem}>
-            <Text>Edit Seed</Text>
-          </Body>
-          <Right style={styles.heightListItem}>
-            <Icon name="ios-arrow-forward" />
-          </Right>
-        </ListItem> */}
-
-        {logout(store)}
+        <ListItem icon style={styles.heightListItem} last onPress={logoutBtn}>
+      <Left>
+        <Icon name="ios-log-out" />
+      </Left>
+      <Body style={styles.heightListItem}>
+        <Text style={styles.numbersFaq1}>Log Out</Text>
+      </Body>
+      <Right style={styles.heightListItem} />
+    </ListItem>
       </Content>
     </View>
     <Footer store={store}></Footer>
