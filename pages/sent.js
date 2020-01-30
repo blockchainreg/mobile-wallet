@@ -12,7 +12,8 @@ export default ({ store }) => {
       </TouchableOpacity>
     );
   };
-
+  const url = store.current.lastTxUrl;
+  
   const handleCloseModalPress = store => {
     return (
       <TouchableOpacity
@@ -38,7 +39,7 @@ export default ({ store }) => {
             <Text
               style={styles.linkStyle}
               onPress={() => {
-                Linking.openURL(`https://etherscan.io/tx/${store.transaction.hash}`);
+                Linking.openURL(url);
               }}
             >
               {store.transaction.hash}

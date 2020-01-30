@@ -33,6 +33,10 @@ import LoadMoreDate from "../components/LoadMoreDate.js";
 // import walletsFuncs from '../wallet/wallets-funcs.js';
 import { Linking } from "react-native";
 
+import navigate from '../wallet/navigate.js';
+
+//navigate store, web3t, \sent
+
 const { width, height } = Dimensions.get("window");
 
 const showToast = message => {
@@ -267,8 +271,12 @@ export default ({ store, web3t }) => {
         store.current.send.wallet = wallet;
         store.current.send.coin = wallet.coin;
         store.current.send.network = wallet.network;
-        console.log("wallet,", store.current.send.wallet)
-        store.current.page = "send";
+        //console.log("wallet,", store.current.send.wallet)
+        //store.current.page = "send";
+        //the true way to use store.current.page = '...'
+        navigate(store, web3t, "send", x=> {
+            
+        });
 
   }
 
