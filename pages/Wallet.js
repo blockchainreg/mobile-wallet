@@ -251,6 +251,7 @@ export default ({ store, web3t }) => {
 
   //const wallets = walletsFuncs(store, web3t).wallets;
   const wallet = store.current.wallet;
+  debugger;
   //const { active, balance, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
 
   const usdRate = wallet.usdRate || 0;

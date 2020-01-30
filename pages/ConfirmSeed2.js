@@ -93,6 +93,7 @@ export default ({ store, web3t }) => {
                     <Input
                       value={store.signUpConfirmSeedField}
                       onChangeText={text => handleConfirmSeedField(text)}
+                      autoCapitalize="none"
                       secureTextEntry={false}
                       returnKeyType="done"
                       placeholder="word from seed"

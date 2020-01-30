@@ -8,6 +8,7 @@
   ref$ = require('../math.js'), plus = ref$.plus, minus = ref$.minus, times = ref$.times, div = ref$.div, fromHex = ref$.fromHex;
   bip39 = require('bip39');
   bigInteger = require('big-integer');
+  moment = require('moment');
   toCallback = function(p, cb){
     p.then(function(res){
       return cb(null, res);

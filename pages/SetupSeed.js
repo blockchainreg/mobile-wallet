@@ -40,7 +40,7 @@ const badSeed = (seed) => {
 
 export default ({ store }) => {
   const changePage = (tab) => () => {
-    
+
     if (badSeed(store.current.seed))
       return;
 
@@ -48,14 +48,24 @@ export default ({ store }) => {
   };
 
   const generateRandom = async () => {
-    store.current.seed = generateMnemonic();
+    store.current.seed = "demand time hero together space blur test fatal mistake leaf rigid that";//generateMnemonic();
   };
+
+  const changeSeed = async (seed) => {
+    store.current.seed = seed;
+  }
 
   const seedBlocks = store => {
     return (
-      <Text style={{ color: "#fff" }}>
-        {store.current.seed}
-      </Text>
+      <Textarea
+        rowSpan={3}
+        placeholder="Your mnemonic phrase"
+        style={styles.inputSize}
+        selectionColor={"#fff"}
+        autoCapitalize="none"
+        value={store.current.seed}
+        onChangeText={changeSeed}
+      />
     );
   };
 
