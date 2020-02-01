@@ -73,7 +73,6 @@ export default class IndexSelection extends React.Component {
         }
       }
     );
-    console.log('Component mounting');
   }
 
   renderMessages() {

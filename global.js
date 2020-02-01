@@ -28,7 +28,6 @@ if (typeof Buffer.prototype.reverse === 'undefined') {
 
 if (!global.crypto) {
    global.mycrypto = global.crypto = {};
-   console.log('Creating crypto object');
 }
 global.crypto.randomBytes = window.randomBytes = getRandomBytesAsync;
 global.self = global;

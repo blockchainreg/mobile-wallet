@@ -1,5 +1,6 @@
 import "./global.js";
 import prngSync from './prng-sync.js';
+import localStoragePromise from './localStorage.js';
 import * as React from "react";
 import { View, Text } from "react-native";
 
@@ -9,7 +10,9 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-      prngSync.then(() => {
+      Promise.all(
+        [prngSync, localStoragePromise]
+      ).then(() => {
         this.setState({AppReady: require("./App-ready.js").default});
       });
   }

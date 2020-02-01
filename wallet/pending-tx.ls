@@ -1,5 +1,4 @@
 require! {
-    \localStorage
     \./json-parse.js
     \./api.js
     \moment

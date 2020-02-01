@@ -42,15 +42,7 @@ export default class AppReady extends React.Component {
   }
 
   componentDidMount() {
-    store.current.page = saved === true ? "locked" : "register";
-
-
-    if (true)  { // debug
-
-      store.signUpInputMailField = "a.stegno@gmail.com";
-      store.signUpInputPasswordField = "asdfasdf234234WWW";
-
-    }
+    store.current.page = saved() === true ? "locked" : "register";
   }
 
 

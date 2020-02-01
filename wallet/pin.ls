@@ -1,10 +1,9 @@
 require! {
-    \localStorage
     \crypto-js/aes : aes
     \crypto-js/md5 : md5
     \./words-to-utf8.js
 }
-mem = 
+mem =
     encrypt: null
 get-key = (value)->
     value + 'cb562eb3-c442-4866-a1a9-70a9'

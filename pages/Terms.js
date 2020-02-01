@@ -15,9 +15,14 @@ import {
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import Hyperlink from "react-native-hyperlink";
+import {set} from "../wallet/seed.js";
 
 const buttonAccept = store => {
   const changePage = (tab) => () => {
+    if (!store.current.seed) {
+      return;
+    }
+    set(store.current.seed);
     store.current.page = tab;
   };
   return (
@@ -592,5 +597,3 @@ export default ({ store }) => {
     </View>
   );
 };
-
-

@@ -1,5 +1,4 @@
 require! {
-    \localStorage
     \./pin.js : { encrypt }
     \crypto-js/aes : aes
     \./words-to-utf8.js

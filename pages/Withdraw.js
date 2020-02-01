@@ -32,9 +32,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
 
   const withdrawBtc = async () => {
     try {
-      sendAnyway(() => {
-        debugger;
-      });
+      sendAnyway();
     }catch(e) {
       console.error(e);
       this.toastify.show(e.message, 3000);

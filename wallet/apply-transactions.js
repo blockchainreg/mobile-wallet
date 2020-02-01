@@ -16,8 +16,8 @@
     })(
     filter(filterTxs)(
     store.transactions.all)));
-    console.log('tx-length', store.transactions.all.length);
-    return console.log('atx-length', store.transactions.applied.length);
+    // console.log('tx-length', store.transactions.all.length);
+    // return console.log('atx-length', store.transactions.applied.length);
   };
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;

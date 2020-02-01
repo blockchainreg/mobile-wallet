@@ -5,10 +5,10 @@ import RNPickerSelect from "react-native-picker-select";
 export default ({ store }) => {
   const onValueChangeValue = async (value) => {
     store.selectedCoinsSell.selected = value;
-    await console.log('currency_to_spend 😁', store.selectedCoinsSell.selected )
-    
+    // await console.log('currency_to_spend 😁', store.selectedCoinsSell.selected )
+
   };
-  console.log("сurrency_to_spend", store.selectedCoinsSell.selected);
+  // console.log("сurrency_to_spend", store.selectedCoinsSell.selected);
 
 
 

@@ -21,11 +21,9 @@ const showToast = message => {
 
 const buttonActive = store => {
   const login = async () => {
-    
-
     store.userWallet = 200;
     //store.wallets = [];
-    store.tab = "Wallets";
+    store.current.page = "wallets";
     store.footerVisible = true;
     // store.tab = "SetupSeed";
     // store.footerVisible = false;
@@ -40,9 +38,8 @@ const buttonActive = store => {
       gradientEnd="#9d41eb"
       gradientDirection="diagonal"
       height={50}
-      width={"100%"}
+      width="100%"
       radius={10}
-      
       onPressAction={login}
     />
   );
@@ -58,49 +55,24 @@ const buttonInactive = store => {
       gradientEnd="rgba(221,181,255,0.30)"
       gradientDirection="diagonal"
       height={50}
-      width={"100%"}
+      width="100%"
       radius={10}
-      
-      
     />
   );
 };
-const signUp = store => {
-  const signUpBtn = async () => {
-    store.current.page = "register";
-
-    store.signUpInputMailField = "";
-    store.signUpInputPasswordField = "";
-  };
-  return (
-    <GradientButton
-      style={styles.gradientBtnBorder}
-      text="Signup"
-      textStyle={{ fontSize: 14, color: "#9d41eb" }}
-      gradientBegin="transparent"
-      gradientEnd="transparent"
-      gradientDirection="diagonal"
-      height={50}
-      width={"100%"}
-      radius={10}
-      
-      
-      onPressAction={signUpBtn}
-    />
+const unlock = store => {
+  // Validation start
+  const regexPin = /^\w{4}$/;
+  const validInputPin = (
+    !store.settingsInputPinField ||
+    regexPin.test(store.settingsInputPinField)
   );
-};
+  // Validation end
 
-const resetPas = store => {
-  const resetPasBtn = async () => {
-    store.tab = "ResetPassword";
-    store.footerVisible = false;
-    store.signUpInputMailField = "";
-    store.signUpInputPasswordField = "";
-  };
   return (
-    <TouchableOpacity onPress={resetPasBtn}>
-      <Text style={styles.textLoginStyle}>Forgot your password?</Text>
-    </TouchableOpacity>
+    store.settingsInputPinField && validInputPin
+    ? buttonActive(store)
+    : buttonInactive(store)
   );
 };
 
@@ -108,55 +80,30 @@ export default ({ store }) => {
   const changePage = (tab) => () => {
     store.tab = tab;
   };
-
   // Validation start
-  const regexMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const validInputMail =
-    store.settingsInputMailField && store.settingsInputMailField.length > 0
-      ? regexMail.test(store.settingsInputMailField)
-      : true;
+  const regexPin = /^\w{4}$/;
+  const validInputPin = (
+    !store.settingsInputPinField ||
+    regexPin.test(store.settingsInputPinField)
+  );
   // Validation end
 
-  const buttonChangeLoginIn =
-    validInputMail &&
-    // validInputPassword &&
-    store.settingsInputMailField &&
-    store.settingsInputPasswordField
-      ? buttonActive
-      : buttonInactive;
+  // Input pin start
 
-  // Input mail start
-
-  const handleChangeEmail = async text => {
-    store.settingsInputMailField = text;
+  const handleChangePin = async text => {
+    store.settingsInputPinField = text;
   };
-  const inputSuccessMail = store => {
+  const inputSuccessPin = store => {
     return (
       <Item regular style={styles.borderItem}>
         <Input
-          onChangeText={text => handleChangeEmail(text)}
-          returnKeyType="done"
-          placeholder="Email"
-          keyboardType={"email-address"}
-          placeholderTextColor="#707070"
-          style={styles.inputSize}
-          selectionColor={"#fff"}
-        />
-      </Item>
-    );
-  };
-
-  const handleChangePassword = async text => {
-    store.settingsInputPasswordField = text;
-  };
-  const inputSuccesPassword = store => {
-    return (
-      <Item regular style={styles.borderItem}>
-        <Input
-          onChangeText={text => handleChangePassword(text)}
+          onChangeText={text => handleChangePin(text)}
+          autoCompleteType="off"
+          autoFocus
           secureTextEntry={true}
           returnKeyType="done"
-          placeholder="Password"
+          placeholder="Pin"
+          keyboardType="numeric"
           placeholderTextColor="#707070"
           style={styles.inputSize}
           selectionColor={"#fff"}
@@ -164,8 +111,6 @@ export default ({ store }) => {
       </Item>
     );
   };
-
-  // Input password end
 
   return (
     <View style={styles.viewFlex}>
@@ -175,7 +120,7 @@ export default ({ store }) => {
       >
         <Toast
           ref={c => (this.toastify = c)}
-          position={"top"}
+          position="top"
           style={styles.toastStyle}
         />
         <Header transparent style={styles.mtIphoneX}>
@@ -190,15 +135,12 @@ export default ({ store }) => {
             style={styles.styleLogo}
           />
           <View style={styles.widthCard}>
-            {inputSuccessMail(store)}
-            {!validInputMail && (
-              <Text style={styles.error}>Enter a valid email</Text>
+            {inputSuccessPin(store)}
+            {!validInputPin && (
+              <Text style={styles.error}>Enter a valid pin</Text>
             )}
-            {inputSuccesPassword(store)}
-            <View style={styles.marginBtn}>{buttonChangeLoginIn(store)}</View>
           </View>
-          {signUp(store)}
-          {resetPas(store)}
+          {unlock(store)}
         </View>
       </ImageBackground>
     </View>

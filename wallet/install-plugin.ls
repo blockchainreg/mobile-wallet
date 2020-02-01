@@ -1,5 +1,4 @@
 require! {
-    \localStorage
     \prelude-ls : { any, map, filter }
     #react controls
     \./modal.js : { install, replace }
@@ -8,7 +7,7 @@ require! {
     \./providers.js
 }
 required-fields = <[ type token enabled ]>
-not-in = (arr, arr2)-> 
+not-in = (arr, arr2)->
     arr |> any -> arr2.index-of(it) is -1
 verify-plugin = (plugin, cb)->
     return cb "Expected Object" if typeof! plugin isnt \Object
