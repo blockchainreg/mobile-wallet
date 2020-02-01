@@ -13,91 +13,108 @@ import { Image, TouchableOpacity, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
+import {get} from "../wallet/seed.js";
+import {check, set} from "../wallet/pin.js";
 //import navigate from '../wallet/navigate.js';
 
-const showToast = message => {
-  this.toastify.show(message, 3000);
-};
-
-const buttonActive = store => {
-  const login = async () => {
-    store.userWallet = 200;
-    //store.wallets = [];
-    store.current.page = "wallets";
-    store.footerVisible = true;
-    // store.tab = "SetupSeed";
-    // store.footerVisible = false;
+export default ({ store, web3t }) => {
+  const showToast = message => {
+    this.toastify.show(message, 3000);
   };
 
-  return (
-    <GradientButton
-      style={styles.gradientBtnPh}
-      text="Login"
-      textStyle={{ fontSize: 14 }}
-      gradientBegin="#9d41eb"
-      gradientEnd="#9d41eb"
-      gradientDirection="diagonal"
-      height={50}
-      width="100%"
-      radius={10}
-      onPressAction={login}
-    />
-  );
-};
+  const buttonActive = store => {
+    const login = async () => {
+      if (!check(store.current.settingsInputPinField)) {
+        store.current.settingsInputPinField = "";
+        return;
+      }
+      store.userWallet = 200;
+      store.current.seed = get();
+      console.log(`Decrypted seed "${store.current.seed}"`);
+      web3t.init(function(err, data) {
+        //console.log("refresh", err, data);
 
-const buttonInactive = store => {
-  return (
-    <GradientButton
-      style={styles.gradientBtnPh}
-      text="Login"
-      textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
-      gradientBegin="rgba(221,181,255,0.30)"
-      gradientEnd="rgba(221,181,255,0.30)"
-      gradientDirection="diagonal"
-      height={50}
-      width="100%"
-      radius={10}
-    />
-  );
-};
-const unlock = store => {
-  // Validation start
-  const regexPin = /^\w{4}$/;
-  const validInputPin = (
-    !store.settingsInputPinField ||
-    regexPin.test(store.settingsInputPinField)
-  );
-  // Validation end
+        if (err) {
+          return showToast(err + "");
+        }
 
-  return (
-    store.settingsInputPinField && validInputPin
-    ? buttonActive(store)
-    : buttonInactive(store)
-  );
-};
+        store.current.page = "wallets";
+        store.footerVisible = true;
+        web3t.refresh(function(err, data){});
+      });
+      // store.tab = "SetupSeed";
+      // store.footerVisible = false;
+    };
 
-export default ({ store }) => {
+    return (
+      <GradientButton
+        style={styles.gradientBtnPh}
+        text="Login"
+        textStyle={{ fontSize: 14 }}
+        gradientBegin="#9d41eb"
+        gradientEnd="#9d41eb"
+        gradientDirection="diagonal"
+        height={50}
+        width="100%"
+        radius={10}
+        onPressAction={login}
+      />
+    );
+  };
+
+  const buttonInactive = store => {
+    return (
+      <GradientButton
+        style={styles.gradientBtnPh}
+        text="Login"
+        textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
+        gradientBegin="rgba(221,181,255,0.30)"
+        gradientEnd="rgba(221,181,255,0.30)"
+        gradientDirection="diagonal"
+        height={50}
+        width="100%"
+        radius={10}
+      />
+    );
+  };
+  const unlock = store => {
+    // Validation start
+    const regexPin = /^\w{4}$/;
+    const validInputPin = (
+      !store.current.settingsInputPinField ||
+      regexPin.test(store.current.settingsInputPinField)
+    );
+    // Validation end
+
+    return (
+      store.current.settingsInputPinField && validInputPin
+      ? buttonActive(store)
+      : buttonInactive(store)
+    );
+  };
+
   const changePage = (tab) => () => {
     store.tab = tab;
   };
   // Validation start
   const regexPin = /^\w{4}$/;
   const validInputPin = (
-    !store.settingsInputPinField ||
-    regexPin.test(store.settingsInputPinField)
+    !store.current.settingsInputPinField ||
+    regexPin.test(store.current.settingsInputPinField)
   );
   // Validation end
 
   // Input pin start
 
   const handleChangePin = async text => {
-    store.settingsInputPinField = text;
+    store.current.settingsInputPinField = text;
   };
   const inputSuccessPin = store => {
     return (
       <Item regular style={styles.borderItem}>
         <Input
           onChangeText={text => handleChangePin(text)}
+          value={store.current.settingsInputPinField}
           autoCompleteType="off"
           autoFocus
           secureTextEntry={true}

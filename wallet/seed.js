@@ -10,7 +10,7 @@
     key = encrypt(name);
     res = aes.encrypt(value, key).toString();
     console.log('Set seed', res);
-    return localStorage.setItem(name, res) || out$.saved();
+    return localStorage.setItem(name, res);
   };
   out$.saved = saved = function(){
     var ref$;

@@ -15,7 +15,7 @@ import { Image, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
-import { set } from '../wallet/pin.js';
+import { set, check } from '../wallet/pin.js';
 
 const showToast = message => {
   // console.log(message);
@@ -28,7 +28,8 @@ const buttonActive = store => {
   };
 
   const signup = async () => {
-    set(store.signUpInputPinField)
+    set(store.current.signUpInputPinField);
+    check(store.current.signUpInputPinField);
     store.current.page = "newseed";
     // store.current.page = "locked";
   };
@@ -67,8 +68,8 @@ const buttonInactive = store => {
 
 // const logIn = store => {
 //   const logInBtn = async () => {
-//     if (get() !== store.signUpInputPinField) {
-//       store.signUpInputPinField = "";
+//     if (get() !== store.current.signUpInputPinField) {
+//       store.current.signUpInputPinField = "";
 //       return;
 //     }
 //     store.current.page = "newseed";
@@ -84,30 +85,30 @@ export default ({ store }) => {
   const changePage = (tab, visible) => () => {
     store.tab = tab;
     store.footerVisible = visible;
-    store.signUpInputPinField = null;
+    store.current.signUpInputPinField = null;
   };
 
   const regexPin = /^\w{4}/;
   const validInputPinSignUp = (
-    !store.signUpInputPinField ||
-    regexPin.test(store.signUpInputPinField)
+    !store.current.signUpInputPinField ||
+    regexPin.test(store.current.signUpInputPinField)
   );
 
   const buttonsChangeSignUp = (
     validInputPinSignUp &&
-    store.signUpInputPinField
+    store.current.signUpInputPinField
       ? buttonActive
       : buttonInactive
   );
 
   const handleChangePin = async text => {
-    store.signUpInputPinField = text;
+    store.current.signUpInputPinField = text;
   };
   const inputSuccessPin = store => {
     return (
       <Item regular style={styles.borderItem}>
         <Input
-          value={store.signUpInputPinField}
+          value={store.current.signUpInputPinField}
           onChangeText={text => handleChangePin(text)}
           secureTextEntry={true}
           returnKeyType="done"
