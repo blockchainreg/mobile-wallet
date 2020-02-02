@@ -9,13 +9,11 @@
     var key, res;
     key = encrypt(name);
     res = aes.encrypt(value, key).toString();
-    console.log('Set seed', res);
     return localStorage.setItem(name, res);
   };
   out$.saved = saved = function(){
     var ref$;
     var res = ((ref$ = localStorage.getItem(name)) != null ? ref$ : "") !== "";
-    console.log('Saved', res);
     return res;
   };
   out$.get = get = function(){

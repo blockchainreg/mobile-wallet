@@ -30,7 +30,6 @@ export default ({ store, web3t }) => {
       }
       store.userWallet = 200;
       store.current.seed = get();
-      console.log(`Decrypted seed "${store.current.seed}"`);
       web3t.init(function(err, data) {
         //console.log("refresh", err, data);
 

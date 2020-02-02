@@ -24,9 +24,9 @@ const openInfoModal = (store, item) => {
 
 const checkType = (type) => {
   switch (type) {
-    case "DEPOSIT":
+    case "IN":
       return <Text style={styles.txtSizeHistory}>Receive</Text>;
-    case "WITHDRAWAL":
+    case "OUT":
       return <Text style={styles.txtSizeHistory}>Sent</Text>;
     case "EXCHANGE":
       return <Text style={styles.txtSizeHistory}>Exchange</Text>;
@@ -40,9 +40,9 @@ const checkType = (type) => {
 
 const thumbnail = type => {
   switch (type) {
-    case "DEPOSIT":
+    case "IN":
       return <Thumbnail small source={require('../assets/DEPOSIT-icon.png')} />
-    case "WITHDRAWAL":
+    case "OUT":
       return <Thumbnail small source={require('../assets/WITHDRAWAL-icon.png')} />
     case "EXCHANGE":
       return <Thumbnail small source={require('../assets/EXCHANGE-icon.png')} />
@@ -77,48 +77,49 @@ export default class App extends Component {
     return this.props.modalRef.show();
   };
 
-  
+
 
   render() {
-    
+    const {store} = this.props;
+    console.log(store.transactions.all);
     return (
       <View style={styles.container}>
-        {this.state.loading ? (
+        {!store.transactions || !store.transactions.all ? (
           <ActivityIndicator color="#707070" />
         ) : (
           <View>
-            {this.state.serverData.length <= 0 && (
+            {store.transactions.all.length <= 0 && (
               <View style={styles.footer}>
                   <Text style={styles.textContainer}>Oops! You have no more transactions</Text>
               </View>
             )}
             <List>
-              {this.state.serverData.map(transaction => (
+              {store.transactions.all.map(transaction => (
                 <ListItem
                   thumbnail
                   onPress={() => {
                     this.onClick(transaction);
                   }}
-                  key={transaction.id}
+                  key={transaction.tx}
                 >
-                  <Left>{thumbnail(transaction.order_type)}</Left> 
+                  <Left>{thumbnail(transaction.type)}</Left>
                   <Body style={{ paddingRight: 10}}>
-                  <Text style={styles.txtSizeHistory}>{checkType(transaction.order_type)}
+                  <Text style={styles.txtSizeHistory}>{checkType(transaction.type)}
                   {/* {transaction} */}
                   </Text>
                     <Text style={styles.constDate}>
-                      {moment(transaction.dt).format("MMM D YYYY h:mm A")}
+                      {moment(transaction.time * 1000).format("MMM D YYYY h:mm A")}
                     </Text>
                   </Body>
                   <Right>
                     <Text style={styles.txtSizeHistory}>
-                    {transaction.amount} {transaction.currency}
+                    {transaction.amount} {transaction.token}
                     </Text>
                   </Right>
                 </ListItem>
               ))}
             </List>
-            {this.state.serverData.length >= 10 && (
+            {/*store.transactions.all.length >= 10 && (
               <View style={styles.footer}>
                 <TouchableOpacity
                   activeOpacity={0.9}
@@ -131,11 +132,10 @@ export default class App extends Component {
                   ) : null}
                 </TouchableOpacity>
               </View>
-            )}
+            )*/}
           </View>
         )}
       </View>
     );
   }
 }
-

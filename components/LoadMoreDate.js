@@ -24,9 +24,9 @@ const openInfoModal = (store, item) => {
 
 const checkType = (type) => {
   switch (type) {
-    case "DEPOSIT":
+    case "IN":
       return <Text style={styles.txtSizeHistory}>Receive</Text>;
-    case "WITHDRAWAL":
+    case "OUT":
       return <Text style={styles.txtSizeHistory}>Sent</Text>;
     case "EXCHANGE":
       return <Text style={styles.txtSizeHistory}>Exchange</Text>;
