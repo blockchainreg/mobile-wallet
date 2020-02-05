@@ -47,17 +47,17 @@
     }
     confirm = function(){
       store.current.confirmation = true;
-      if (toString$.call(state.callback).slice(8, -1) === 'Function') {
-        state.callback(true);
+      if (toString$.call(store.current.confirmationCallback).slice(8, -1) === 'Function') {
+        store.current.confirmationCallback(true);
       }
-      return state.callback = null;
+      return store.current.confirmationCallback = null;
     };
     cancel = function(){
       store.current.confirmation = false;
-      if (toString$.call(state.callback).slice(8, -1) === 'Function') {
-        state.callback(false);
+      if (toString$.call(store.current.confirmationCallback).slice(8, -1) === 'Function') {
+        store.current.confirmationCallback(false);
       }
-      return state.callback = null;
+      return store.current.confirmationCallback = null;
     };
     style = getPrimaryInfo(store);
     confirmationStyle = {
@@ -114,21 +114,29 @@
               .pug.buttons
                   .pug.button(on-click=confirm style=button-style) #{lang.confirm}
                   .pug.button(on-click=cancel style=button-style) #{lang.cancel}
-  
+
   export confirmation-control = (store)->
       .pug
           confirmation-modal store
           prompt-modal store
   */
-  state = {
-    callback: null
-  };
+  // state = {
+  //   callback: null
+  // };
   out$.confirm = confirm = function(store, text, cb){
     store.current.confirmation = text;
-    return state.callback = cb;
+    return store.current.confirmationCallback = (result) => {
+      store.current.confirmation = false;
+      store.current.confirmationCallback = null;
+      cb(result);
+    };
   };
   out$.prompt = prompt = function(store, text, cb){
     store.current.prompt = text;
-    return state.callback = cb;
+    return store.current.confirmationCallback = (result) => {
+      store.current.confirmation = false;
+      store.current.confirmationCallback = null;
+      cb(result);
+    };
   };
 }).call(this);

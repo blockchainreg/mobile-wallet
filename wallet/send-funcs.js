@@ -85,7 +85,7 @@
         if (err != null) {
           return cb(err);
         }
-        return confirmrn(store, "Are you sure to send " + tx.amount + " " + send.coin.token + " to " + send.to, "Yes, Send!", function(agree){
+        return confirm(store, "Are you sure to send " + tx.amount + " " + send.coin.token + " to " + send.to/*, "Yes, Send!"*/, function(agree){
           if (!agree) {
             return cb("You are not agree");
           }

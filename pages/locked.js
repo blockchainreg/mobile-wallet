@@ -85,11 +85,11 @@ export default ({ store, web3t }) => {
     );
     // Validation end
 
-    return (
+    return <View style={styles.marginBtn}>{
       store.current.settingsInputPinField && validInputPin
       ? buttonActive(store)
       : buttonInactive(store)
-    );
+    }</View>;
   };
 
   const changePage = (tab) => () => {
@@ -155,8 +155,8 @@ export default ({ store, web3t }) => {
             {!validInputPin && (
               <Text style={styles.error}>Enter a valid pin</Text>
             )}
+            {unlock(store)}
           </View>
-          {unlock(store)}
         </View>
       </ImageBackground>
     </View>

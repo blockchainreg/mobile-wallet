@@ -43,12 +43,12 @@ confirmation-modal = (store)->
     return null if typeof! store.current.confirmation isnt \String
     confirm = ->
         store.current.confirmation = yes
-        state.callback yes if typeof! state.callback is \Function
-        state.callback = null
+        store.current.confirmation-callback yes if typeof! store.current.confirmation-callback is \Function
+        store.current.confirmation-callback = null
     cancel = ->
         store.current.confirmation = no
-        state.callback no if typeof! state.callback is \Function
-        state.callback = null
+        store.current.confirmation-callback no if typeof! store.current.confirmation-callback is \Function
+        store.current.confirmation-callback = null
     style = get-primary-info store
     confirmation-style =
         background: style.app.background
@@ -112,11 +112,11 @@ export confirmation-control = (store)->
         confirmation-modal store
         prompt-modal store
 */
-state=
-    callback: null
+# state=
+#     callback: null
 export confirm = (store, text, cb)->
     store.current.confirmation = text
-    state.callback = cb
+    store.current.confirmation-callback = cb
 export prompt = (store, text, cb)->
     store.current.prompt = text
-    state.callback = cb
+    store.current.confirmation-callback = cb

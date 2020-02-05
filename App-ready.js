@@ -10,6 +10,7 @@ import StartPage from "./pages/StartPage";
 import Store from './wallet/data-scheme.js';
 import web3 from './wallet/web3.js';
 import { saved } from './wallet/seed.js';
+import Confirm from './components/Confirm.js';
 //console.log(web3);
 
 const store = observable(Store);
@@ -23,6 +24,18 @@ const Main = observer(({ store }) => {
       <View style={{alignItems: 'stretch', justifyContent: 'center', flex: 1, backgroundColor: '#fff'}}>
         <Text>Page {store.current.page} not found</Text>
       </View>
+    );
+  }
+  if (store.current.confirmation) {
+    return (
+      <>
+        <Confirm
+          confirmation={store.current.confirmation}
+          onYes={() => {store.current.confirmationCallback(true)}}
+          onNo={() => {store.current.confirmationCallback(false)}}
+        />
+        {page( {store, web3t })}
+      </>
     );
   }
   return page({ store, web3t });
