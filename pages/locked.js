@@ -26,10 +26,11 @@ export default ({ store, web3t }) => {
 
   const buttonActive = store => {
     const login = async () => {
-      if (!check(store.current.settingsInputPinField)) {
-        store.current.settingsInputPinField = "";
+      if (!check(store.current.pin)) {
+        store.current.pin = "";
         return;
       }
+      store.current.pin = "";
       store.userWallet = 200;
       store.current.seed = get();
       web3t.init(function(err, data) {
@@ -111,14 +112,14 @@ export default ({ store, web3t }) => {
     // Validation start
     const regexPin = /^\w{4}$/;
     const validInputPin = (
-      !store.current.settingsInputPinField ||
-      regexPin.test(store.current.settingsInputPinField)
+      !store.current.pin ||
+      regexPin.test(store.current.pin)
     );
     // Validation end
 
     return (<View style={styles.marginBtn}>
       {
-      store.current.settingsInputPinField && validInputPin
+      store.current.pin && validInputPin
       ? buttonActive(store)
       : buttonInactive(store)}
       <View height={15}></View>
@@ -128,26 +129,27 @@ export default ({ store, web3t }) => {
 
   const changePage = (tab) => () => {
     store.tab = tab;
+    store.current.pin = "";
   };
   // Validation start
   const regexPin = /^\w{4}$/;
   const validInputPin = (
-    !store.current.settingsInputPinField ||
-    regexPin.test(store.current.settingsInputPinField)
+    !store.current.pin ||
+    regexPin.test(store.current.pin)
   );
   // Validation end
 
   // Input pin start
 
   const handleChangePin = async text => {
-    store.current.settingsInputPinField = text;
+    store.current.pin = text;
   };
   const inputSuccessPin = store => {
     return (
       <Item regular style={styles.borderItem}>
         <Input
           onChangeText={text => handleChangePin(text)}
-          value={store.current.settingsInputPinField}
+          value={store.current.pin}
           autoCompleteType="off"
           autoFocus
           secureTextEntry={true}
