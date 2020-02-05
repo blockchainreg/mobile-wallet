@@ -23,6 +23,7 @@ import StatusBar from "../components/StatusBar.js";
 import Footer from "./Footer.js";
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import walletFuncs from '../wallet/wallet-funcs.js';
+import applyTransactions from '../wallet/apply-transactions.js';
 
 
 const wallets = (store, web3t) => {
@@ -39,6 +40,11 @@ const wallets = (store, web3t) => {
     const chooseWallet = () => {
       store.current.wallet = wallet;
       store.current.page = "wallet";
+      store.current.filter.length = 0;
+      store.current.filter.push("IN");
+      store.current.filter.push("OUT");
+      store.current.filter.push(wallet.coin.token);
+      applyTransactions(store);
 
     }
 

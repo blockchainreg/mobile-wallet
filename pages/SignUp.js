@@ -145,6 +145,9 @@ export default ({ store }) => {
           />
           {/* <Text style={styles.textH1Sign}>SignUp</Text> */}
           <View style={styles.widthCard}>
+            <View style={{ alignItems: "center" }}>
+              <Text style={styles.textH1Seed}>Setup New PIN</Text>
+            </View>
             {inputSuccessPin(store)}
             {!validInputPinSignUp && (
               <Text style={styles.error}>Enter a valid pin</Text>

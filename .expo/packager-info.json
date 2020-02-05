@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 4120,
+  "packagerPid": 5080,
   "expoServerNgrokUrl": "https://vc-qka.askucher.mobile-wallet.exp.direct",
   "packagerNgrokUrl": "https://packager.vc-qka.askucher.mobile-wallet.exp.direct",
-  "ngrokPid": 4130,
+  "ngrokPid": 5092,
   "webpackServerPort": null
 }
