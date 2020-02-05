@@ -56,7 +56,7 @@ const wallets = (store, web3t) => {
           </Left>
           <Body>
             <Text style={styles.amountView}>
-              {wallet.coin.token}
+              {wallet.coin.token.toUpperCase()}
             </Text>
             <Text note>
               ({wallet.coin.token}{" "}{balance})
@@ -81,7 +81,7 @@ const wallets = (store, web3t) => {
           style={styles.touchableAdd}
         >
           <Icon
-            name="ios-add"
+            name="md-create"
             style={styles.iconAdd}
           />
         </TouchableOpacity>

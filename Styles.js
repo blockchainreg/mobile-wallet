@@ -4202,11 +4202,11 @@ export default StyleSheet.create({
       ios: {
         color: "#fff",
         top: 2,
-        fontSize: 50
+        fontSize: 25
       },
       android: {
         color: "#fff",
-        fontSize: 50
+        fontSize: 25
       }
     })
   },

@@ -28,60 +28,62 @@ import eth from '../registry/eth.json';
 import ltc from '../registry/ltc.json';
 import usdt from '../registry/usdt.json';
 import usdt_erc20 from '../registry/usdt_erc20.json';
+import walletsFuncs from '../wallet/wallets-funcs.js';
 //
 
 const coinItems = [ dash, etc, eth, ltc, usdt, usdt_erc20 ];
 
-const wallets = (store, web3t) => {
-  
-  const changePage = (tab) => () => {
-    store.current.page = tab;
-  };
-  
-  const renderCoin = item => {
-     const add = () => {
+
+const renderCoin = (store, web3t) => (item) => {
+
+     const tokens = walletsFuncs(store, web3t).wallets.map((x) => x.coin.token);
+
+     const addItem = () => {
         web3t.installQuick(item, (err, data) => {
             console.log("install", err, data);
             store.current.page = "wallets";
         })
      }
 
+     const deleteItem = () => {
+        web3t.uninstall(item.token, (err, data) => {
+            store.current.page = "wallets";
+        })  
+     }
+
+     const isAdded = tokens.indexOf(item.token) > -1;
+
+     const currentAction = isAdded ? deleteItem : addItem;
+     const currentIcon = isAdded ? "ios-remove" : "ios-add";
+
+
      return (
       <ListItem
           thumbnail
           style={styles.mbListItem}
-          onPress={add}
+          onPress={currentAction}
+          key={item.token}
         >
           <Left>
             <Thumbnail source={{uri: item.image}} />
           </Left>
           <Body>
           <Text note/>
-
             <Text style={styles.amountView}>
-              {item.token}
+              {item.token.toUpperCase()}
             </Text>
             <Text note/>
           </Body>
           <Right>
-          <Button transparent onPress={add}>
-              <Icon name="ios-add" style={styles.iconBtn} />
+            <Button transparent onPress={currentAction}>
+              <Icon name={currentIcon} style={styles.iconBtn} />
             </Button>
-            
           </Right>
         </ListItem>
     )
   }
 
-  
-  return (
-    <Content>
-      <List>
-        {coinItems.map(renderCoin)}
-      </List>
-    </Content>
-  );
-};
+
 
 export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
@@ -117,7 +119,7 @@ export default ({ store, web3t }) => {
             </Button>
           </Left>
             <Body style={styles.viewFlex}>
-              <Title style={styles.title1}>Add Wallets</Title>
+              <Title style={styles.title1}>Manage Wallets</Title>
             </Body>
             {/* <Right style={styles.viewFlex}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
             <Right style={styles.viewFlex} />
@@ -126,7 +128,13 @@ export default ({ store, web3t }) => {
       </StandardLinearGradient>
       <View style={styles.viewMonoWallets}>
         <View style={styles.viewPt} />
-        <ScrollView>{wallets(store, web3t)}</ScrollView>
+        <ScrollView>
+          <Content>
+            <List>
+              {coinItems.map(renderCoin(store, web3t))}
+            </List>
+          </Content>
+        </ScrollView>
       </View>
     </View>
   );

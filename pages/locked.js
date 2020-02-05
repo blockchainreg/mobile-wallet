@@ -7,7 +7,8 @@ import {
   Input,
   Body,
   Left,
-  Right
+  Right,
+  Button
 } from "native-base";
 import { Image, TouchableOpacity, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
@@ -76,6 +77,27 @@ export default ({ store, web3t }) => {
       />
     );
   };
+
+  const anotherAccount = store => {
+    const anotherAccount = () => {
+      store.current.page = "newseed";
+    }
+    return (
+      <GradientButton
+        style={styles.gradientBtnPh}
+        text="Another Account"
+        textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
+        gradientBegin="rgba(221,181,255,0.10)"
+        gradientEnd="rgba(221,181,255,0.10)"
+        gradientDirection="diagonal"
+        height={50}
+        width="100%"
+        radius={10}
+        onPressAction={anotherAccount}
+      />
+    );
+  };
+
   const unlock = store => {
     // Validation start
     const regexPin = /^\w{4}$/;
@@ -85,11 +107,14 @@ export default ({ store, web3t }) => {
     );
     // Validation end
 
-    return <View style={styles.marginBtn}>{
+    return (<View style={styles.marginBtn}>
+      {
       store.current.settingsInputPinField && validInputPin
       ? buttonActive(store)
-      : buttonInactive(store)
-    }</View>;
+      : buttonInactive(store)}
+      <View height={15}></View>
+      {anotherAccount(store)}
+    </View>);
   };
 
   const changePage = (tab) => () => {
@@ -151,6 +176,9 @@ export default ({ store, web3t }) => {
             style={styles.styleLogo}
           />
           <View style={styles.widthCard}>
+            <View style={{ alignItems: "center" }}>
+              <Text style={styles.textH1Seed}>Enter Your PIN</Text>
+            </View>
             {inputSuccessPin(store)}
             {!validInputPin && (
               <Text style={styles.error}>Enter a valid pin</Text>
