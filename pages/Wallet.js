@@ -368,7 +368,7 @@ export default ({ store, web3t }) => {
                     style={styles.touchables}
                   >
                     <Image
-                      source={require("../assets/WITHDRAWAL-btn.png")}
+                      source={{uri: wallet.coin.image}}
                       style={styles.sizeIconBtn}
                     />
                   </TouchableOpacity>
