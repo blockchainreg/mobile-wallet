@@ -38,7 +38,7 @@ const wallets = (store, web3t) => {
   const listItem =  (wallet) => {
 
     const chooseWallet = () => {
-      store.current.wallet = wallet;
+      store.current.wallet = wallet.coin.token;
       store.current.page = "wallet";
       store.current.filter.length = 0;
       store.current.filter.push("IN");

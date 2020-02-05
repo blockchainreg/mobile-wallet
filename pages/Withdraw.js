@@ -18,7 +18,8 @@ import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
-import sendFuncs from '../wallet/send-funcs.js'
+import sendFuncs from '../wallet/send-funcs.js';
+import walletsFuncs from '../wallet/wallets-funcs.js';
 
 const showToast = message => {
   console.log(message);
@@ -87,8 +88,10 @@ export default ({ store, web3t }) => {
 
   const { token, feeToken, network, send, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
 
+  const wallets = walletsFuncs(store, web3t).wallets;
 
-  const wallet = store.current.wallet;
+  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+
   const changePage = (tab) => () => {
     store.current.page = tab;
     //store.withdrawFieldBtc = null;
