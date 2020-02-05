@@ -27,7 +27,6 @@ export default {
   wallets,
   send,
   add,
-  newseed,
   confirmseed,
   invoice,
   sent

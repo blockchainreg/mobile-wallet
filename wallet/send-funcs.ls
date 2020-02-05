@@ -68,7 +68,7 @@ module.exports = (store, web3t)->
         err, data <- create-transaction tx
         #console.log 'after create tx', err
         return cb err if err?
-        agree <- confirmrn store, "Are you sure to send #{tx.amount} #{send.coin.token} to #{send.to}", 'Yes, send!'
+        agree <- confirm store, "Are you sure to send #{tx.amount} #{send.coin.token} to #{send.to}"#, 'Yes, send!'
 
         #console.log 'after confirm', agree
         return cb "You are not agree" if not agree

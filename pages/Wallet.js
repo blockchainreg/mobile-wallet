@@ -307,7 +307,6 @@ export default ({ store, web3t }) => {
   }
   const addressExplorerLink = wallet.network.api.url + "/address/" + wallet.address;
 
-
   return (
     <ModalComponent
       ref={modal => {

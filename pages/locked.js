@@ -15,6 +15,7 @@ import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
+import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
 //import navigate from '../wallet/navigate.js';
 
@@ -80,7 +81,15 @@ export default ({ store, web3t }) => {
 
   const anotherAccount = store => {
     const anotherAccount = () => {
-      store.current.page = "newseed";
+      confirm(
+        store,
+        "Your current data will be overridden. Please ensure your current mnemonic phrase is in a safe place. Open another account?",
+        (sure) => {
+          if (sure) {
+            store.current.page = "register";
+          }
+        }
+      );
     }
     return (
       <GradientButton
