@@ -342,7 +342,7 @@ export default ({ store, web3t }) => {
               </Title>
             </Body>
             <Right style={styles.viewFlex}>
-              <Thumbnail small source={require("../assets/btc-ethnamed.png")} />
+              <Thumbnail small source={{uri: wallet.coin.image}} />
             </Right>
           </Header>
 
@@ -368,7 +368,7 @@ export default ({ store, web3t }) => {
                     style={styles.touchables}
                   >
                     <Image
-                      source={{uri: wallet.coin.image}}
+                      source={require("../assets/WITHDRAWAL-btn.png")}
                       style={styles.sizeIconBtn}
                     />
                   </TouchableOpacity>
