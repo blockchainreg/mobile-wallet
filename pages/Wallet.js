@@ -261,7 +261,7 @@ export default ({ store, web3t }) => {
   const usdRate = wallet.usdRate || 0;
   const sendLocal = () => {
 
-        if(wallet.balance == "...") {
+        if(wallet.balance == "..") {
           return;
         }
 
