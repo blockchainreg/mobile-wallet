@@ -121,8 +121,11 @@ export calc-fee = (config, cb)->
     calc-fee = get-calc-fee-func network
     calc-fee config, cb
 export get-keys = ({ network, mnemonic, index }, cb)->
-    result = get-bitcoin-fullpair-by-index mnemonic, index, network
-    cb null, result
+    try
+        result = get-bitcoin-fullpair-by-index mnemonic, index, network
+        cb null, result
+    catch err 
+        cb err
 extend = (add, json)--> json <<< add
 get-dec = (network)->
     { decimals } = network

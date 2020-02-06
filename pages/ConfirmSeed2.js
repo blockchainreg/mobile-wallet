@@ -45,6 +45,7 @@ export default ({ store, web3t }) => {
       if (err) {
           store.current.page = "error";
           store.current.error = err + "";
+          return;
       }
 
       store.current.page = "terms";

@@ -17,12 +17,15 @@ export calc-fee = ({ network, fee-type, account, amount, to, data }, cb)->
     cb null, network.tx-fee
 export get-keys = ({ network, mnemonic, index }, cb)->
     err, vc <- to-callback VelasCrypto.init!
-    seedBuffer = bip39.mnemonicToSeed(mnemonic)
-    seed = seedBuffer.toString('hex')
-    res = vc.keysGen.fromSeed(seed, 'm/' + index + '\'')
-    address = res.to-wallet!.Base58Address
-    { private-key } = res
-    cb null, { address, private-key }
+    try 
+        seedBuffer = bip39.mnemonicToSeed(mnemonic)
+        seed = seedBuffer.toString('hex')
+        res = vc.keysGen.fromSeed(seed, 'm/' + index + '\'')
+        address = res.to-wallet!.Base58Address
+        { private-key } = res
+        cb null, { address, private-key }
+    catch err
+        cb err
 #amount: 1.01
 #block_hash: "9f7c65e4ce03eca9a697310f2b15f795e985ed44589a4c3412a9e1d57d28dd69"
 #commission: 0.01
