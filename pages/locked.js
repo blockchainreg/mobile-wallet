@@ -42,7 +42,14 @@ export default ({ store, web3t }) => {
 
         store.current.page = "wallets";
         store.footerVisible = true;
-        web3t.refresh(function(err, data){});
+        web3t.refresh(function(err, data){
+
+            if (err) {
+              store.current.page = "error";
+              store.current.error = err + "";
+            }
+
+        });
       });
       // store.tab = "SetupSeed";
       // store.footerVisible = false;

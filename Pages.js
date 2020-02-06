@@ -13,8 +13,10 @@ import confirmseed from "./pages/ConfirmSeed2";
 import invoice from "./pages/WalletInvoice";
 import terms from "./pages/Terms";
 import sent from "./pages/sent";
+import error from "./pages/error";
 
 export default {
+  error,
   terms,
   locked,
   register,

@@ -47,7 +47,14 @@ export default ({ store, web3t }) => {
       }
 
       store.current.page = "terms";
-      web3t.refresh(function(err, data){});
+      web3t.refresh(function(err, data){
+
+          if (err) {
+              store.current.page = "error";
+              store.current.error = err + "";
+          }
+
+      });
     });
   };
 
