@@ -40,13 +40,14 @@ const wallets = (store, web3t) => {
     const chooseWallet = () => {
 
       store.current.wallet = wallet.coin.token;
-      store.current.walletIndex = wallets.indexOf(wallet)
-      store.current.page = "wallet";
+      store.current.walletIndex = wallets.indexOf(wallet);
       store.current.filter.length = 0;
       store.current.filter.push("IN");
       store.current.filter.push("OUT");
       store.current.filter.push(wallet.coin.token);
       applyTransactions(store);
+      store.current.page = "wallet";
+      
 
     }
 

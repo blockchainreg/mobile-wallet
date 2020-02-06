@@ -43,7 +43,8 @@ export default ({ store, web3t }) => {
       //console.log("refresh", err, data);
 
       if (err) {
-        return showToast(err + "");
+          store.current.page = "error";
+          store.current.error = err + "";
       }
 
       store.current.page = "terms";
