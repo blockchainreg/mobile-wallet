@@ -43,26 +43,33 @@
     store.current.refreshing = true;
     bgStore = toJS(store);
     return refreshAccount(web3, bgStore, function(err){
+      var state;
       store.current.refreshing = false;
       if (err != null) {
         return cb(err);
       }
+      state = {
+        err: null,
+        data: null
+      };
       transaction(function(){
-        store.rates = bgStore.rates;
-        console.log(toJS(bgStore.current.account));
-
-        store.current.account = bgStore.current.account;
-        //console.log("after", store.current.account);
-        store.current.filter.length = 0;
-        store.current.filter.push('IN');
-        store.current.filter.push('OUT');
-        store.current.filter.push(bgStore.current.account.wallets[store.current.walletIndex].coin.token);
-        store.current.balanceUsd = bgStore.current.balanceUsd;
-        store.transactions = bgStore.transactions;
-        return applyTransactions(store);
+        var err;
+        try {
+          store.rates = bgStore.rates;
+          store.current.account = bgStore.current.account;
+          store.current.filter.length = 0;
+          store.current.filter.push('IN');
+          store.current.filter.push('OUT');
+          store.current.filter.push(bgStore.current.account.wallets[store.current.walletIndex].coin.token);
+          store.current.balanceUsd = bgStore.current.balanceUsd;
+          store.transactions = bgStore.transactions;
+          return applyTransactions(store);
+        } catch (e$) {
+          err = e$;
+          return state.err = err;
+        }
       });
-      console.log('s2');
-      return cb(null);
+      return cb(state.err);
     });
   };
   function curry$(f, bound){
