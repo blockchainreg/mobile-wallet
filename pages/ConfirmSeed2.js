@@ -22,6 +22,22 @@ import Toast from "@rimiti/react-native-toastify";
 //import { generateMnemonic } from 'bip39';
 //import { refreshAccount } from '../wallet/refresh-account.js';
 
+let isLoading = false;
+async function loadTerms(store) {
+  if (isLoading) {
+    return;
+  }
+  isLoading = true;
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/web3space/wallet/master/TERMS.md');
+    store.current.termsMarkdown = await response.text();
+    store.current.loading = false;
+  }catch(e) {
+    console.error(e);
+    setTimeout(loadTerms.bind(this, store), 1000);
+  }
+}
+
 const showToast = message => {
   this.toastify.show(message, 3000);
 };
@@ -29,6 +45,7 @@ const showToast = message => {
 const number = 4;
 
 export default ({ store, web3t }) => {
+  loadTerms(store);
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
@@ -39,6 +56,7 @@ export default ({ store, web3t }) => {
       return showToast("Your word does not match to expected word");
     }
 
+    store.current.loading = true;
     web3t.init(function(err, data) {
       //console.log("refresh", err, data);
 
@@ -50,6 +68,9 @@ export default ({ store, web3t }) => {
 
       store.current.page = "terms";
       web3t.refresh(function(err, data){
+        if (store.current.termsMarkdown) {
+          store.current.loading = false;
+        }
 
           if (err) {
               store.current.page = "error";

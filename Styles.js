@@ -636,16 +636,16 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         color: "#fff",
-        fontSize: 20,
-        fontWeight: "bold",
+        // fontSize: 20,
+        // fontWeight: "bold",
         alignSelf: "center",
-        height: 30
-        // marginTop: 10
+        height: 30,
+        marginTop: 10
       },
       {
         color: "#fff",
-        fontSize: 20,
-        fontWeight: "bold",
+        // fontSize: 20,
+        // fontWeight: "bold",
         alignSelf: "center"
       }
     )
@@ -657,8 +657,8 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center",
-        height: 30
-        // marginTop: 10
+        height: 30,
+        marginTop: 10
       },
       {
         color: "#000",
@@ -4332,5 +4332,8 @@ textTermsStyle: {
     width: "100%",
     marginBottom: 15,
     marginTop: 20
-  }
+  },
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
 });

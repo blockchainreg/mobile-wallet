@@ -11,6 +11,7 @@ import Store from './wallet/data-scheme.js';
 import web3 from './wallet/web3.js';
 import { saved } from './wallet/seed.js';
 import Confirm from './components/Confirm.js';
+import Spinner from 'react-native-loading-spinner-overlay';
 //console.log(web3);
 
 const store = observable(Store);
@@ -26,19 +27,25 @@ const Main = observer(({ store }) => {
       </View>
     );
   }
-  if (store.current.confirmation) {
     return (
       <>
-        <Confirm
-          confirmation={store.current.confirmation}
-          onYes={() => {store.current.confirmationCallback(true)}}
-          onNo={() => {store.current.confirmationCallback(false)}}
-        />
+      <Spinner
+        visible={store.current.loading}
+        textContent={'Loading...'}
+        textStyle={styles.spinnerTextStyle}
+      />
+
+        {store.current.confirmation
+          ?<Confirm
+            confirmation={store.current.confirmation}
+            onYes={() => {store.current.confirmationCallback(true)}}
+            onNo={() => {store.current.confirmationCallback(false)}}
+          />
+          :null
+        }
         {page( {store, web3t })}
       </>
     );
-  }
-  return page({ store, web3t });
 });
 
 const footerVisible = () => {

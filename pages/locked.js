@@ -33,6 +33,7 @@ export default ({ store, web3t }) => {
       store.current.pin = "";
       store.userWallet = 200;
       store.current.seed = get();
+      store.current.loading = true;
       web3t.init(function(err, data) {
         //console.log("refresh", err, data);
 
@@ -43,6 +44,7 @@ export default ({ store, web3t }) => {
         store.current.page = "wallets";
         store.footerVisible = true;
         web3t.refresh(function(err, data){
+            store.current.loading = false;
 
             if (err) {
               store.current.page = "error";
