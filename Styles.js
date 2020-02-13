@@ -127,6 +127,11 @@ export default StyleSheet.create({
     top: 0,
     height: "100%"
   },
+  introBackground: {
+    backgroundColor: "#290C64",
+    width: "100%",
+    height: "100%"
+  },
   viewFlex: {
     ...Platform.select({
       ios: {

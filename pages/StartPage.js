@@ -13,7 +13,7 @@ export default ({ store }) => {
         <View style={styles.containerCenter1}>
         <Image
             source={require("../assets/purpur-logo-velas.png")}
-            style={{ height: 250/1.5, width: 276/1.5 }}
+            style={{ height: 250/1.5, width: 276/1.5, backgroundColor: "#00FF00" }}
           />
         </View>
         </ImageBackground>

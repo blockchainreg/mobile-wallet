@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@rimiti/react-native-toastify": "^1.2.0",
+    "bip174": "^1.0.1",
+    "bip32": "^2.0.5",
     "bip39": "^2.6.0",
     "bitcoinjs-lib": "^3.3.2",
     "buffer": "5",

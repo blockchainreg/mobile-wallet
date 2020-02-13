@@ -48,8 +48,8 @@ const buttonActive = store => {
       height={50}
       width={"100%"}
       radius={10}
-      
-      
+
+
       onPressAction={resetPassword}
     />
   );
@@ -67,8 +67,8 @@ const buttonInactive = store => {
       height={50}
       width={"100%"}
       radius={10}
-      
-      
+
+
     />
   );
 };
@@ -131,7 +131,7 @@ export default ({ store }) => {
     <View style={styles.viewFlex}>
       <ImageBackground
         source={require("../assets/intro-bg.jpg")}
-        style={{ width: "100%", height: "100%" }}
+        style={styles.introBackground}
       >
         <Toast
           ref={c => (this.toastify = c)}

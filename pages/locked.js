@@ -175,7 +175,7 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       <ImageBackground
         source={require("../assets/intro-bg.jpg")}
-        style={{ width: "100%", height: "100%" }}
+        style={styles.introBackground}
       >
         <Toast
           ref={c => (this.toastify = c)}

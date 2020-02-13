@@ -75,7 +75,7 @@ export default ({ store }) => {
       {/* <View style={styles.viewLogin}> */}
       <ImageBackground
         source={require("../assets/intro-bg.jpg")}
-        style={{ width: "100%", height: "100%" }}
+        style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlex} />
