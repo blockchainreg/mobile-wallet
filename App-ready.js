@@ -31,7 +31,7 @@ const Main = observer(({ store }) => {
       <>
       <Spinner
         visible={store.current.loading}
-        textContent={'Loading...'}
+        textContent={''}
         textStyle={styles.spinnerTextStyle}
       />
 

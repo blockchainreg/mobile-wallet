@@ -1,10 +1,10 @@
 {
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 85296,
-  "expoServerNgrokUrl": "https://s6-jys.kpogromskiy.mobile-wallet.exp.direct",
-  "packagerNgrokUrl": "https://packager.s6-jys.kpogromskiy.mobile-wallet.exp.direct",
-  "ngrokPid": 85315,
+  "devToolsPort": 19003,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
