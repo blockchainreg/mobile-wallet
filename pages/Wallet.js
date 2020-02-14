@@ -21,7 +21,8 @@ import {
   Clipboard,
   Alert,
   Vibration,
-  Image
+  Image,
+  StatusBar
 } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
@@ -350,7 +351,7 @@ export default ({ store, web3t }) => {
               <Thumbnail small source={{uri: wallet.coin.image}} />
             </Right>
           </Header>
-
+          <StatusBar barStyle="light-content" />
           <RefreshControl transparent swipeRefresh={refreshToken}>
             <View style={styles.bodyBlockWallet}>
               <View style={styles.bodyBlock3}>

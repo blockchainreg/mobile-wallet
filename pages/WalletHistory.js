@@ -15,13 +15,13 @@ import {
   Badge
 } from "native-base";
 import Footer from "./Footer.js";
-import { View, ScrollView, Clipboard, Alert, Vibration } from "react-native";
+import { View, ScrollView, Clipboard, Alert, Vibration, StatusBar } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
 import moment from "moment";
 import LoadMoreAllDate from "../components/LoadMoreAllDate";
-import StatusBar from "../components/StatusBar.js"
+// import StatusBar from "../components/StatusBar.js"
 
 
 const openInfoModal = (store, transaction) => {
@@ -281,6 +281,7 @@ export default ({ store }) => {
             </Body>
             <Right style={styles.viewFlex} />
           </Header>
+          <StatusBar barStyle="light-content" />
         </StandardLinearGradient>
         <View style={styles.viewMonoWallets}>
           <View style={styles.viewPt} />

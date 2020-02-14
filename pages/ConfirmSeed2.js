@@ -2,7 +2,8 @@ import React from "react";
 import {
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  StatusBar
 } from "react-native";
 import {
   Text,
@@ -109,6 +110,7 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
+        <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
             source={require("../assets/velas-logo.png")}
@@ -121,7 +123,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.bodyConfirm}>
                   <Item regular style={styles.borderItemSeed}>
                     <Input
-                      autoFocus
+                      // autoFocus
                       value={store.signUpConfirmSeedField}
                       onChangeText={text => handleConfirmSeedField(text)}
                       autoCapitalize="none"

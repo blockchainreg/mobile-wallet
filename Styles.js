@@ -4215,33 +4215,33 @@ export default StyleSheet.create({
       }
     })
   },
-btnClose: {
+  btnClose: {
     marginTop: 10,
     paddingLeft: 20,
     paddingRight: 20
   },
-btnTextClose: {
+  btnTextClose: {
     color: "#009EFD",
     fontSize: 18,
     marginBottom: 10
   },
-containerModal: {
+  containerModal: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
-modalContent2: {
+  modalContent2: {
     backgroundColor: "white",
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 40
   },
-imgSizeModal2: {
+  imgSizeModal2: {
     width: 51,
     height: 51
   },
-textModalRender: {
+  textModalRender: {
     color: "rgba(34,34,34,100)",
     fontSize: 27,
     textAlign: "center",
@@ -4249,45 +4249,45 @@ textModalRender: {
     paddingVertical: 10,
     fontWeight: "bold"
   },
-textModalStyle: {
+  textModalStyle: {
     fontSize: 17,
     color: "#000",
     paddingHorizontal: 20,
     textAlign: "center",
     marginVertical: 10
   },
-valueModalStyle: {
+  valueModalStyle: {
     color: "rgba(49,49,49,0.60)"
   },
-linkStyle: {
+  linkStyle: {
     color: "#2C1FBD",
     textDecorationLine: "underline"
   },
   arrowHeaderLeft: {
     paddingLeft: 15
   },
-arrowIcon: {
+  arrowIcon: {
     fontSize: 30,
     color: "#fff",
     fontWeight: "bold"
   },
-bodyConfirm: {
+  bodyConfirm: {
     width: "100%",
     marginTop: 20
   },
-borderItemSeed: {
+  borderItemSeed: {
     borderWidth: 1,
     borderRadius: 5,
     width: "100%",
-    borderColor: "#fff",
+    borderColor: "#fff"
   },
-marginBtnSeed: {
+  marginBtnSeed: {
     alignItems: "center",
     width: "100%",
     marginBottom: 15,
     marginTop: 10
   },
-textTermsStyle: {
+  textTermsStyle: {
     color: "#fff"
   },
   linkTermsStyle: {
@@ -4334,6 +4334,14 @@ textTermsStyle: {
     marginTop: 20
   },
   spinnerTextStyle: {
-    color: '#FFF'
+    color: "#FFF"
   },
+  titleInput: {
+    alignItems: "center",
+    marginBottom: 25
+  },
+  bgMainPage: {
+    width: "100%",
+    height: "100%"
+  }
 });

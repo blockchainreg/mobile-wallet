@@ -10,7 +10,7 @@ import {
   Right,
   Button
 } from "native-base";
-import { Image, TouchableOpacity, ImageBackground } from "react-native";
+import { Image, StatusBar, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -160,7 +160,7 @@ export default ({ store, web3t }) => {
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
           autoCompleteType="off"
-          autoFocus
+          // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
           placeholder="Pin"
@@ -189,14 +189,14 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
-
+        <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
             source={require("../assets/velas-logo.png")}
             style={styles.styleLogo}
           />
           <View style={styles.widthCard}>
-            <View style={{ alignItems: "center" }}>
+            <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>Enter Your PIN</Text>
             </View>
             {inputSuccessPin(store)}

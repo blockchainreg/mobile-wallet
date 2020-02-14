@@ -1,30 +1,38 @@
 import "./global.js";
-import prngSync from './prng-sync.js';
-import localStoragePromise from './localStorage.js';
+import prngSync from "./prng-sync.js";
+import localStoragePromise from "./localStorage.js";
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
+import styles from "./Styles.js";
+
 
 export default class App extends React.Component {
   state = {
     AppReady: null
-  }
+  };
 
   componentDidMount() {
-      Promise.all(
-        [prngSync, localStoragePromise]
-      ).then(() => {
-        this.setState({AppReady: require("./App-ready.js").default});
+    setTimeout(() => {
+      Promise.all([prngSync, localStoragePromise]).then(() => {
+        this.setState({ AppReady: require("./App-ready.js").default });
       });
+    }, 1500);
   }
 
-
   render() {
-    const {AppReady} = this.state;
+    const { AppReady } = this.state;
     if (!AppReady) {
-      return <View><Text>...</Text></View>;
+      return (
+        <View>
+          <ImageBackground
+            source={require("./assets/start-page.png")}
+            style={styles.bgMainPage}
+          >
+            <Text>...</Text>
+          </ImageBackground>
+        </View>
+      );
     }
-    return (
-      <AppReady />
-    );
+    return <AppReady />;
   }
 }

@@ -15,11 +15,11 @@ import {
   Header
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, StatusBar } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
-import StatusBar from "../components/StatusBar.js";
+// import StatusBar from "../components/StatusBar.js";
 
 //
 import dash from '../registry/dash.json';
@@ -124,6 +124,7 @@ export default ({ store, web3t }) => {
             {/* <Right style={styles.viewFlex}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
             <Right style={styles.viewFlex} />
           </Header>
+          <StatusBar barStyle="light-content" />
         </RefreshControl>
       </StandardLinearGradient>
       <View style={styles.viewMonoWallets}>

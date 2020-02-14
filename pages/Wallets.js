@@ -15,11 +15,11 @@ import {
   Header
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity, StatusBar } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
-import StatusBar from "../components/StatusBar.js";
+// import StatusBar from "../components/StatusBar.js";
 import Footer from "./Footer.js";
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import walletFuncs from '../wallet/wallet-funcs.js';
@@ -124,6 +124,7 @@ export default ({ store, web3t }) => {
               </Body>
               <Right style={styles.viewFlex} />
             </Header>
+            <StatusBar barStyle="light-content" />
             <Text style={styles.textBalanceHeader}>
               <Text style={styles.textCurrency}>
                 <Text style={styles.textCurrency}>$</Text>

@@ -11,7 +11,7 @@ import {
   Left,
   Right
 } from "native-base";
-import { Image, ImageBackground } from "react-native";
+import { Image, ImageBackground, StatusBar } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -138,6 +138,7 @@ export default ({ store }) => {
           <Body  style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
+        <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
             source={require("../assets/velas-logo.png")}
@@ -145,7 +146,7 @@ export default ({ store }) => {
           />
           {/* <Text style={styles.textH1Sign}>SignUp</Text> */}
           <View style={styles.widthCard}>
-            <View style={{ alignItems: "center" }}>
+          <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>Setup New PIN</Text>
             </View>
             {inputSuccessPin(store)}

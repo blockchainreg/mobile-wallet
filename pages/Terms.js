@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, ImageBackground, ScrollView, Linking } from "react-native";
+import { Image, ImageBackground, ScrollView, StatusBar } from "react-native";
 import {
   Text,
   Button,
@@ -69,6 +69,7 @@ export default ({ store }) => {
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
+        <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
             source={require("../assets/velas-logo.png")}

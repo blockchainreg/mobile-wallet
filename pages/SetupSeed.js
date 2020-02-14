@@ -4,7 +4,8 @@ import {
   Clipboard,
   Keyboard,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  StatusBar
 } from "react-native";
 import {
   Text,
@@ -82,6 +83,7 @@ export default ({ store }) => {
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
+        <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
             source={require("../assets/velas-logo.png")}
