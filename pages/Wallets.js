@@ -26,6 +26,7 @@ import walletFuncs from '../wallet/wallet-funcs.js';
 import applyTransactions from '../wallet/apply-transactions.js';
 
 
+
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
