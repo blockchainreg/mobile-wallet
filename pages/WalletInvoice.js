@@ -18,6 +18,7 @@ import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
 import { QRCode } from 'react-native-custom-qr-codes-expo';
+import walletsFuncs from '../wallet/wallets-funcs.js';
 
 const showToast = message => {
   console.log(message);
@@ -47,8 +48,14 @@ const buttonCopy = store => {
   );
 };
 
-export default ({ store }) => {
-  const wallet = store.current.wallet;
+export default ({ store, web3t }) => {
+
+  const wallets = walletsFuncs(store, web3t).wallets;
+
+  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+
+
+  //const wallet = store.current.wallet;
   const changePage = (tab) => () => {
     store.current.page = tab;
   };

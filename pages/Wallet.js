@@ -156,7 +156,6 @@ export default ({ store, web3t }) => {
               <Thumbnail small source={{uri: wallet.coin.image}} />
             </Right>
           </Header>
-          <StatusBar barStyle="light-content" />
           <RefreshControl transparent swipeRefresh={refreshToken}>
             <View style={styles.bodyBlockWallet}>
               <View style={styles.bodyBlock3}>
