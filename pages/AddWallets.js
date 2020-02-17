@@ -122,7 +122,7 @@ export default ({ store, web3t }) => {
             {/* <Right style={styles.viewFlex}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
             <Right style={styles.viewFlex} />
           </Header>
-          <StatusBar barStyle="light-content" />
+          <StatusBar barStyle="light-content"/>
         </RefreshControl>
       </StandardLinearGradient>
       <View style={styles.viewMonoWallets}>
