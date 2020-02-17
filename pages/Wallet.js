@@ -149,7 +149,7 @@ export default ({ store, web3t }) => {
             </Left>
             <Body style={styles.viewFlex}>
               <Title style={styles.titleBlack}>
-                {wallet.coin.token}
+                {wallet.coin.name}
               </Title>
             </Body>
             <Right style={styles.viewFlex}>

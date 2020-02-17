@@ -5,6 +5,7 @@ require! {
     \./get-primary-info.js
     \./navigate.js
     \./apply-transactions.js
+    \./math.js : { times }
 }
 module.exports = (store, web3t, wallets, wallet)->
     return null if not store? or not web3t? or not wallets? or not wallet?
@@ -42,7 +43,9 @@ module.exports = (store, web3t, wallets, wallet)->
         | index is store.current.wallet-index => \big
         | wallets.length < 3 => \big
         | _ => ""
-    balance = round5(wallet.balance) + ' ' + wallet.coin.token.to-upper-case!
+    balanceOrigin = round5(wallet.balance)
+    balance = balanceOrigin + ' ' + wallet.coin.token.to-upper-case!
+    balanceUsd = round5(balanceOrigin `times` usdRate) + " USD"
     pending = round5(wallet.pending-sent) + ' ' + wallet.coin.token.to-upper-case!
     style = get-primary-info store
     button-style=
@@ -52,4 +55,4 @@ module.exports = (store, web3t, wallets, wallet)->
     last = 
         | wallets.length < 4 and index + 1 is wallets.length => \last
         | _ => ""
-    { button-style, wallet, active, big, balance, pending, send, expand, usd-rate, last, receive, uninstall }
+    { button-style, wallet, active, big, balance, balanceUsd, pending, send, expand, usd-rate, last, receive, uninstall }

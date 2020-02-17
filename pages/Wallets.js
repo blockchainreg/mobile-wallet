@@ -24,6 +24,7 @@ import Footer from "./Footer.js";
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import walletFuncs from '../wallet/wallet-funcs.js';
 import applyTransactions from '../wallet/apply-transactions.js';
+import { times } from "../wallet/math.js";
 
 
 
@@ -52,7 +53,8 @@ const wallets = (store, web3t) => {
 
     }
 
-    const { active, balance, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
+    const { active, balance, balanceUsd, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
+    
 
     return (
       <ListItem
@@ -66,10 +68,10 @@ const wallets = (store, web3t) => {
           </Left>
           <Body>
             <Text style={styles.amountView}>
-              {wallet.coin.token.toUpperCase()}
+              {wallet.coin.name}
             </Text>
             <Text note>
-              ({wallet.coin.token}{" "}{balance})
+              {balance} ({balanceUsd})
             </Text>
           </Body>
           <Right>
