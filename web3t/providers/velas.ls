@@ -75,6 +75,7 @@ get-unspents = ({ network, address }, cb)->
     cb null, res.body
 export create-transaction = ({ network, account, recipient, amount, amount-fee, data, fee-type, tx-type} , cb)-->
     #IsValidAddress
+    return cb "Given amount is not correct" if !(amount ? "").match(/^[0-9\.]+$/)? or +amount <= 0 
     return cb "Given address is not valid Velas address" if not Wallet.Is-valid-address account.address
     return cb "Recipient address is not valid Velas address" if not Wallet.Is-valid-address recipient
     err, unspents-native <- get-unspents { network, account.address }

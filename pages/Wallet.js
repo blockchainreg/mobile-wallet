@@ -27,7 +27,6 @@ import {
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
 import moment from "moment";
-import { isObservable, isObservableProp } from "mobx"
 import Toast from "@rimiti/react-native-toastify";
 import RefreshControl from "../components/RefreshControl.js";
 import LoadMoreDate from "../components/LoadMoreDate.js";
@@ -38,25 +37,39 @@ import { Linking } from "react-native";
 import navigate from '../wallet/navigate.js';
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 
+
+import Images from '../Images.js';
+
+
+
 //navigate store, web3t, \sent
 
 const { width, height } = Dimensions.get("window");
 
+const showToast = message => {
+  this.toastify.show(message, 3000);
+};
+
+
 class Wallet extends React.Component {
+  modal = React.createRef();
+
   onClick = () => {
     return this.modal.current.dismiss();
   };
 
-  modal = React.createRef();
+  render(){
+    const {web3t, store} = this.props;
+    //const wallets = walletsFuncs(store, web3t).wallets;
+    //const wallet = ;
 
-  render()
-  {
-    const wallets = walletsFuncs(this.props.store, this.props.web3t).wallets;
+    const wallets = walletsFuncs(store, web3t).wallets;
 
-    const wallet = wallets.find((x) => x.coin.token === this.props.store.current.wallet);
+    const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 
     const usdRate = wallet.usdRate || 0;
     const sendLocal = () => {
+
           if(wallet.balance == "..") {
             return;
           }
@@ -68,17 +81,22 @@ class Wallet extends React.Component {
           //value = 0
           //err <- send-transaction { to, value }
           //console.log err if err?
-          this.props.store.current.send.wallet = wallet;
-          this.props.store.current.send.coin = wallet.coin;
-          this.props.store.current.send.network = wallet.network;
+          store.current.send.wallet = wallet;
+          store.current.send.coin = wallet.coin;
+          store.current.send.network = wallet.network;
           //console.log("wallet,", store.current.send.wallet)
           //store.current.page = "send";
           //the true way to use store.current.page = '...'
-          navigate(store, this.props.web3t, "send", x=> {});
+          navigate(store, web3t, "send", x=> {
+
+          });
+
     }
 
+
+
     const changePage = (tab) => () => {
-      this.props.store.current.page = tab;
+      store.current.page = tab;
     };
 
     const content = (
@@ -93,15 +111,26 @@ class Wallet extends React.Component {
             <Text>Done</Text>
           </Button>
           <ScrollView style={{ paddingHorizontal: 20 }}>
-            {walletUserHistoryDetail(this.props.store)}
+            {walletUserHistoryDetail(store)}
           </ScrollView>
         </View>
       </View>
     );
     const refreshToken = () => {
-      this.props.web3t.refresh((err,data) => {})
+      web3t.refresh((err,data) => {})
     }
-    const addressExplorerLink = wallet.network.api.url + "/address/" + wallet.address;
+
+    //TODO: Refactor this piece of shit later.
+    const hardCodedStrategyGetAddessPrefix = () => {
+        const mapping = {
+          vlx: "wallet"
+        }
+        return mapping[wallet.coin.token] || 'address';
+    }
+
+    const prefix = hardCodedStrategyGetAddessPrefix();
+
+    const addressExplorerLink = wallet.network.api.url + "/" + prefix + "/" + wallet.address;
 
     return (
       <ModalComponent
@@ -161,7 +190,7 @@ class Wallet extends React.Component {
                       style={styles.touchables}
                     >
                       <Image
-                        source={require("../assets/WITHDRAWAL-btn.png")}
+                        source={Images.withdrawImage}
                         style={styles.sizeIconBtn}
                       />
                     </TouchableOpacity>
@@ -176,7 +205,7 @@ class Wallet extends React.Component {
                       style={styles.touchables}
                     >
                       <Image
-                        source={require("../assets/SEND-btn.png")}
+                        source={Images.sendImage}
                         style={styles.sizeIconBtn}
                       />
                     </TouchableOpacity>
@@ -189,7 +218,7 @@ class Wallet extends React.Component {
                       style={styles.touchables}
                     >
                       <Image
-                        source={require("../assets/RECEIVE-btn.png")}
+                        source={Images.receiveImage}
                         style={styles.sizeIconBtn}
                       />
                     </TouchableOpacity>
@@ -205,7 +234,7 @@ class Wallet extends React.Component {
             </View>
             <ScrollView>
               <View style={styles.viewPt} />
-              <LoadMoreDate store={this.props.store} modalRef={this.modal} currency={wallet.coin.token} />
+              <LoadMoreDate store={store} modalRef={this.modal} currency={wallet.coin.token} />
               <View style={{ paddingBottom: 150 }} />
             </ScrollView>
           </View>
@@ -215,9 +244,4 @@ class Wallet extends React.Component {
   }
 };
 
-export default ({ store, web3t }) => {
-  if (!isObservableProp(store, "infoTransaction")) {
-    throw new Error('Not observable store prop!!!!!!!!!!!!!!!!');
-  }
-  return <Wallet store={store} web3t={web3t}/>
-};
+export default ({ store, web3t }) => <Wallet store={store} web3t={web3t} />;
