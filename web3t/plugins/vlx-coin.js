@@ -8,6 +8,7 @@
       provider: 'velas',
       apiUrl: 'https://explorer.velas.com/api/v1',
       url: 'https://explorer.velas.com',
+      txSubUrl: 'transaction',
       historyUrl: 'https://api.velas.website/api/mainnet/history_pg/:address?limit=289&offset=0'
     }
   };
@@ -15,6 +16,7 @@
     decimals: 8,
     txFee: '0.001',
     api: {
+      txSubUrl: 'transaction',
       provider: 'velas',
       apiUrl: 'https://testnet.velas.website/api/v1',
       url: 'https://testnet.velas.website',

@@ -116,7 +116,18 @@ export default ({ store, web3t }) => {
   const refreshToken = () => {
     web3t.refresh((err,data) => {})
   }
-  const addressExplorerLink = wallet.network.api.url + "/address/" + wallet.address;
+
+  //TODO: Refactor this piece of shit later.
+  const hardCodedStrategyGetAddessPrefix = () => {
+      const mapping = {
+        vlx: "wallet"
+      }
+      return mapping[wallet.coin.token] || 'address';
+  }
+
+  const prefix = hardCodedStrategyGetAddessPrefix();
+
+  const addressExplorerLink = wallet.network.api.url + "/" + prefix + "/" + wallet.address;
 
   return (
     <ModalComponent

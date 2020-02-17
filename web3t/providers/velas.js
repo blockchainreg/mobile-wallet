@@ -110,6 +110,9 @@
   out$.createTransaction = createTransaction = curry$(function(arg$, cb){
     var network, account, recipient, amount, amountFee, data, feeType, txType;
     network = arg$.network, account = arg$.account, recipient = arg$.recipient, amount = arg$.amount, amountFee = arg$.amountFee, data = arg$.data, feeType = arg$.feeType, txType = arg$.txType;
+    if ((amount != null ? amount : "").match(/^[0-9\.]+$/) == null || +amount <= 0) {
+      return cb("Given amount is not correct");
+    }
     if (!Wallet.IsValidAddress(account.address)) {
       return cb("Given address is not valid Velas address");
     }
