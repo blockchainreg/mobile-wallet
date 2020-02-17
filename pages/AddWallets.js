@@ -123,7 +123,7 @@ export default ({ store, web3t }) => {
             </Button>
           </Left>
             <Body style={styles.viewFlex}>
-              <Title style={styles.title1}>Manage Wallets</Title>
+              <Text style={styles.title1}>Manage Wallets</Text>
             </Body>
             {/* <Right style={styles.viewFlex}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
             <Right style={styles.viewFlex} />
