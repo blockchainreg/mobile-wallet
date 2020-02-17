@@ -29,11 +29,11 @@ const Main = observer(({ store }) => {
   }
     return (
       <>
-      <Spinner
-        visible={store.current.loading}
-        textContent={''}
-        textStyle={styles.spinnerTextStyle}
-      />
+        <Spinner
+          visible={store.current.loading}
+          textContent={''}
+          textStyle={styles.spinnerTextStyle}
+        />
 
         {store.current.confirmation
           ?<Confirm

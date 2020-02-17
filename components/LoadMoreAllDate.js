@@ -74,14 +74,13 @@ export default class App extends Component {
 
   onClick = transaction => {
     this.props.store.infoTransaction = transaction;
-    return this.props.modalRef && this.props.modalRef.show();
+    return this.props.modalRef.current && this.props.modalRef.current.show();
   };
 
 
 
   render() {
     const {store} = this.props;
-    console.log(store.transactions.all);
     return (
       <View style={styles.container}>
         {!store.transactions || !store.transactions.all ? (

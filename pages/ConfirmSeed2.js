@@ -68,6 +68,9 @@ export default ({ store, web3t }) => {
       }
 
       store.current.page = "terms";
+      if (store.current.termsMarkdown) {
+        store.current.loading = false;
+      }
       web3t.refresh(function(err, data){
         if (store.current.termsMarkdown) {
           store.current.loading = false;

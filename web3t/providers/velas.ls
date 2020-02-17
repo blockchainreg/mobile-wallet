@@ -17,7 +17,7 @@ export calc-fee = ({ network, fee-type, account, amount, to, data }, cb)->
     cb null, network.tx-fee
 export get-keys = ({ network, mnemonic, index }, cb)->
     err, vc <- to-callback VelasCrypto.init!
-    try 
+    try
         seedBuffer = bip39.mnemonicToSeed(mnemonic)
         seed = seedBuffer.toString('hex')
         res = vc.keysGen.fromSeed(seed, 'm/' + index + '\'')
@@ -54,7 +54,7 @@ export get-transactions = ({ network, address }, cb)->
     new-txs =
         txs
             |> map transform-tx network
-    console.log \velas, new-txs
+    # console.log \velas, new-txs
     cb null, new-txs
     #err, data <- get "https://explorer.velas.com/api/v1/txs/tranlist2" .end
     #return cb err if err?

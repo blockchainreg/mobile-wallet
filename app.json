@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Expo Web3 sample",
+    "name": "Expo Web3 wallet",
     "slug": "expo-web3",
     "privacy": "public",
     "sdkVersion": "33.0.0",
@@ -22,6 +22,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Premium quality cryptocurrency wallet!"
   }
 }

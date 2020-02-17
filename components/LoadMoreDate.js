@@ -16,12 +16,6 @@ import {
 import styles from "../Styles.js";
 import moment from "moment";
 
-
-const openInfoModal = (store, item) => {
-  this.props.store.infoTransaction = item;
-  return this.modal.show();
-};
-
 const checkType = (type) => {
   switch (type) {
     case "IN":
@@ -76,7 +70,7 @@ export default class App extends Component {
 
   onClick = transaction => {
     this.props.store.infoTransaction = transaction;
-    return this.props.modalRef && this.props.modalRef.show();
+    return this.props.modalRef.current && this.props.modalRef.current.show();
   };
 
   render() {

@@ -81,7 +81,7 @@
       }
       newTxs = map(transformTx(network))(
       txs);
-      console.log('velas', newTxs);
+      // console.log('velas', newTxs);
       return cb(null, newTxs);
     });
   };

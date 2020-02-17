@@ -105,13 +105,14 @@
       filter: ['IN', 'OUT'],
       loading: false,
       send: createSend(),
-      invoice: createSend()
+      invoice: createSend(),
     },
     history: {
       filterOpen: false
     },
     rates: {},
-    coins: []
+    coins: [],
+    infoTransaction: null
   };
   module.exports = store;
 }).call(this);

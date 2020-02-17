@@ -273,6 +273,7 @@ export default ({ store }) => {
     <ModalComponent
       ref={modal => {
         this.modal = modal;
+        this.forceUpdate();
       }}
       content={content}
       showCloseButton={false}
@@ -323,7 +324,7 @@ export default ({ store }) => {
               </View>
 
               <View style={styles.viewTouchablesWallet}>
-                
+
 
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
