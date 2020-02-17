@@ -114,7 +114,10 @@ export default class App extends Component {
                   </Body>
                   <Right>
                     <Text style={styles.txtSizeHistory}>
-                    {index(transaction.type)}{transaction.amount} (fee: {transaction.fee}) {transaction.currency}
+                      {index(transaction.type)}{transaction.amount}
+                    </Text>
+                    <Text>
+                      (fee: {transaction.fee}) {transaction.currency}
                     </Text>
                   </Right>
                 </ListItem>
