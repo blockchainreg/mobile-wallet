@@ -37,6 +37,11 @@ import { Linking } from "react-native";
 import navigate from '../wallet/navigate.js';
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 
+
+import Images from '../Images.js';
+
+
+
 //navigate store, web3t, \sent
 
 const { width, height } = Dimensions.get("window");
@@ -189,7 +194,7 @@ export default ({ store, web3t }) => {
                     style={styles.touchables}
                   >
                     <Image
-                      source={require("../assets/WITHDRAWAL-btn.png")}
+                      source={Images.withdrawImage}
                       style={styles.sizeIconBtn}
                     />
                   </TouchableOpacity>
@@ -204,7 +209,7 @@ export default ({ store, web3t }) => {
                     style={styles.touchables}
                   >
                     <Image
-                      source={require("../assets/SEND-btn.png")}
+                      source={Images.sendImage}
                       style={styles.sizeIconBtn}
                     />
                   </TouchableOpacity>
@@ -217,7 +222,7 @@ export default ({ store, web3t }) => {
                     style={styles.touchables}
                   >
                     <Image
-                      source={require("../assets/RECEIVE-btn.png")}
+                      source={Images.receiveImage}
                       style={styles.sizeIconBtn}
                     />
                   </TouchableOpacity>

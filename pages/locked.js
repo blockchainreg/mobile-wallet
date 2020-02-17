@@ -18,6 +18,7 @@ import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
 //import navigate from '../wallet/navigate.js';
+import Images from '../Images.js';
 
 export default ({ store, web3t }) => {
   const showToast = message => {
@@ -176,7 +177,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={Images.backgroundImage}
         style={styles.introBackground}
       >
         <Toast
@@ -192,7 +193,7 @@ export default ({ store, web3t }) => {
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
-            source={require("../assets/velas-logo.png")}
+            source={Images.logo}
             style={styles.styleLogo}
           />
           <View style={styles.widthCard}>

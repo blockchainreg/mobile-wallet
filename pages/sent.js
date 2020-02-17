@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Linking } from "react-native";
 import Modal from "react-native-modal";
 import { Image } from "react-native";
 import styles from "../Styles.js";
+import Images from '../Images.js';
 
 // export default ({ store }) => {
 //   const handleOpenModalPress = store => {
@@ -30,7 +31,7 @@ import styles from "../Styles.js";
 //       <Modal isVisible={store.modal} hasBackdrop={true}>
 //         <View style={styles.modalContent2}>
 //           <Image
-//             source={require("../assets/tick.png")}
+//             source={Images.tick}
 //             style={styles.imgSizeModal2}
 //           />
 //           <Text style={styles.textModalRender}>Successful transaction!</Text>
@@ -58,7 +59,7 @@ export default ({ store }) => {
       <Modal isVisible={true} hasBackdrop={true}>
         <View style={styles.modalContent2}>
           <Image
-            source={require("../assets/tick.png")}
+            source={Images.tick}
             style={styles.imgSizeModal2}
           />
           <Text style={styles.textModalRender}>Successful transaction!</Text>

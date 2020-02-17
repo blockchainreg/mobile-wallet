@@ -29,6 +29,7 @@ import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
+import Images from '../Images.js';
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -75,7 +76,7 @@ export default ({ store }) => {
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={Images.backgroundImage}
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
@@ -86,7 +87,7 @@ export default ({ store }) => {
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
-            source={require("../assets/velas-logo.png")}
+            source={Images.logo}
             style={styles.styleLogo}
           />
           <Text style={styles.textH1Seed}>New Seed Phrase!</Text>
