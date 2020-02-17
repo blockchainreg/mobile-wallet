@@ -39,15 +39,19 @@ const renderCoin = (store, web3t) => (item) => {
      const tokens = walletsFuncs(store, web3t).wallets.map((x) => x.coin.token);
 
      const addItem = () => {
+        store.current.loading = true;
         web3t.installQuick(item, (err, data) => {
-            console.log("install", err, data);
-            store.current.page = "wallets";
+            //console.log("install", err, data);
+            //store.current.page = "wallets";
+            store.current.loading = false;
         })
      }
 
      const deleteItem = () => {
+        store.current.loading = true;
         web3t.uninstall(item.token, (err, data) => {
-            store.current.page = "wallets";
+            //store.current.page = "wallets";
+            store.current.loading = false;
         })  
      }
 
