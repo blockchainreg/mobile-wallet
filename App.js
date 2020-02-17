@@ -5,7 +5,6 @@ import * as React from "react";
 import { View, Text, ImageBackground } from "react-native";
 import styles from "./Styles.js";
 
-
 export default class App extends React.Component {
   state = {
     AppReady: null
@@ -25,7 +24,7 @@ export default class App extends React.Component {
       return (
         <View>
           <ImageBackground
-            source={require("./assets/start-page.png")}
+            source={require("./assets/start-page.jpg")}
             style={styles.bgMainPage}
           >
             <Text>...</Text>
