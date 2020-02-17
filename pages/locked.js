@@ -22,6 +22,7 @@ import Images from '../Images.js';
 
 export default ({ store, web3t }) => {
   const showToast = message => {
+    console.log('Trying to show toast', message);
     this.toastify.show(message, 3000);
   };
 
@@ -29,7 +30,7 @@ export default ({ store, web3t }) => {
     const login = async () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return;
+        return showToast("Incorrect pin");
       }
       store.current.pin = "";
       store.userWallet = 200;
