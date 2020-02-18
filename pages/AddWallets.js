@@ -36,6 +36,7 @@ const coinItems = [dash, etc, eth, ltc, usdt, usdt_erc20];
 const renderCoin = (store, web3t) => item => {
   const tokens = walletsFuncs(store, web3t).wallets.map(x => x.coin.token);
 
+
   const addItem = () => {
     store.current.loading = true;
     web3t.installQuick(item, (err, data) => {
@@ -57,6 +58,7 @@ const renderCoin = (store, web3t) => item => {
 
   const currentAction = isAdded ? deleteItem : addItem;
   const currentIcon = isAdded ? "ios-remove" : "ios-add";
+  const name = item.name || item.token.toUpperCase();
 
   return (
     <ListItem
@@ -70,7 +72,7 @@ const renderCoin = (store, web3t) => item => {
       </Left>
       <Body>
         <Text note />
-        <Text style={styles.amountView}>{item.token.toUpperCase()}</Text>
+        <Text style={styles.amountView}>{name}</Text>
         <Text note />
       </Body>
       <Right>

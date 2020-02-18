@@ -23,7 +23,7 @@ export default ({ children, swipeRefresh }) => {
    */
    refreshing =false
    const onRefresh = (err, data)=> {
-    
+      swipeRefresh();
    }
   return (
       <ScrollView
