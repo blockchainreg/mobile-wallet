@@ -15,6 +15,7 @@ import { Image, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
+import Images from '../Images.js';
 
 const showToast = message => {
   console.log(message);
@@ -130,7 +131,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={Images.backgroundImage}
         style={styles.introBackground}
       >
         <Toast
@@ -145,7 +146,7 @@ export default ({ store }) => {
         </Header>
         <View style={styles.containerFlexStart}>
         <Image
-            source={require("../assets/velas-logo.png")}
+            source={Images.logo}
             style={styles.styleLogo}
           />
           <View style={styles.widthCard}>

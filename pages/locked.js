@@ -21,17 +21,19 @@ import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import SvgUri from "react-native-svg-uri";
 
 //import navigate from '../wallet/navigate.js';
+import Images from '../Images.js';
 
 
 export default ({ store, web3t }) => {
   const showToast = message => {
+    console.log('Trying to show toast', message);
     this.toastify.show(message, 3000);
   };
   const buttonActive = store => {
     const login = async () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return;
+        return showToast("Incorrect pin");
       }
       store.current.pin = "";
       store.userWallet = 200;
@@ -180,7 +182,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
-        source={require("../assets/intro-bg1.jpg")}
+        source={Images.backgroundImage}
         style={styles.introBackground}
       >
         <Toast
@@ -196,7 +198,7 @@ export default ({ store, web3t }) => {
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
-            source={require("../assets/velas-logo.png")}
+            source={Images.logo}
             style={styles.styleLogo}
           />
           <View style={styles.widthCard}>

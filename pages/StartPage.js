@@ -2,12 +2,13 @@ import React from 'react';
 import { View } from 'native-base';
 import { Image, ImageBackground } from 'react-native';
 import styles from '../Styles.js';
+import Images from '../Images.js';
 
 export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={Images.backgroundImage}
         style={{ width: "100%", height: "100%" }}
       >
         <View style={styles.containerCenter1}>

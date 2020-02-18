@@ -6,10 +6,10 @@ module.exports = (store)->
     filter-txs = (tx)->
         { type, token } = tx
         type in filt and token in filt
-    store.transactions.applied = 
-        store.transactions.all 
-            |> filter filter-txs 
-            |> sort-by (.time) 
+    store.transactions.applied =
+        store.transactions.all
+            |> filter filter-txs
+            |> sort-by (.time)
             |> reverse
-    console.log \tx-length, store.transactions.all.length
-    console.log \atx-length, store.transactions.applied.length
+    # console.log \tx-length, store.transactions.all.length
+    # console.log \atx-length, store.transactions.applied.length

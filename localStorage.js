@@ -8,15 +8,12 @@ async function makeProxy() {
   ));
   // const inMemoryStorage = Object.fromEntries(pairs);
   const inMemoryStorage = {};
-  console.log('pairs', pairs);
   for(let pair of pairs) {
     const [key, value] = pair;
     inMemoryStorage[key] = value;
   }
-  console.log('stored localStorage', inMemoryStorage);
   function setItem(key, value) {
     AsyncStorage.setItem(key, value);
-    console.log('Setting localStorage value', key, value);
     inMemoryStorage[key] = value;
   }
   const prototype = {

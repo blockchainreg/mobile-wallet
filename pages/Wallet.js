@@ -34,6 +34,11 @@ import { Linking } from "react-native";
 import navigate from "../wallet/navigate.js";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 
+
+import Images from '../Images.js';
+
+
+
 //navigate store, web3t, \sent
 
 const { width, height } = Dimensions.get("window");
@@ -42,192 +47,198 @@ const showToast = message => {
   this.toastify.show(message, 3000);
 };
 
-const openInfoModal = (store, transaction) => {
-  store.infoTransaction = transaction;
-  return this.modal.show();
-};
 
-onClick = () => {
-  return this.modal.dismiss();
-};
+class Wallet extends React.Component {
+  modal = React.createRef();
 
-export default ({ store, web3t }) => {
-  //const wallets = walletsFuncs(store, web3t).wallets;
-  //const wallet = ;
+  onClick = () => {
+    return this.modal.current.dismiss();
+  };
 
-  const wallets = walletsFuncs(store, web3t).wallets;
+  render(){
+    const {web3t, store} = this.props;
+    //const wallets = walletsFuncs(store, web3t).wallets;
+    //const wallet = ;
 
-  const wallet = wallets.find(x => x.coin.token === store.current.wallet);
+    const wallets = walletsFuncs(store, web3t).wallets;
 
-  const usdRate = wallet.usdRate || 0;
-  const sendLocal = () => {
-    if (wallet.balance == "..") {
-      return;
+    const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+
+    const usdRate = wallet.usdRate || 0;
+    const sendLocal = () => {
+
+          if(wallet.balance == "..") {
+            return;
+          }
+
+          //send wallet
+          //web3t[]
+          //{ send-transaction } = web3t[wallet.coin.token]
+          //to = ""
+          //value = 0
+          //err <- send-transaction { to, value }
+          //console.log err if err?
+          store.current.send.wallet = wallet;
+          store.current.send.coin = wallet.coin;
+          store.current.send.network = wallet.network;
+          //console.log("wallet,", store.current.send.wallet)
+          //store.current.page = "send";
+          //the true way to use store.current.page = '...'
+          navigate(store, web3t, "send", x=> {
+
+          });
+
     }
 
-    //send wallet
-    //web3t[]
-    //{ send-transaction } = web3t[wallet.coin.token]
-    //to = ""
-    //value = 0
-    //err <- send-transaction { to, value }
-    //console.log err if err?
-    store.current.send.wallet = wallet;
-    store.current.send.coin = wallet.coin;
-    store.current.send.network = wallet.network;
-    //console.log("wallet,", store.current.send.wallet)
-    //store.current.page = "send";
-    //the true way to use store.current.page = '...'
-    navigate(store, web3t, "send", x => {});
-  };
 
-  const changePage = tab => () => {
-    store.current.page = tab;
-  };
 
-  const content = (
-    <View style={styles.viewMonoHistory}>
-      <View style={{ paddingTop: 50 }}>
-        <Button
-          onPress={() => {
-            this.onClick();
-          }}
-          transparent
-        >
-          <Text>Done</Text>
-        </Button>
-        <ScrollView style={{ paddingHorizontal: 20 }}>
-          {walletUserHistoryDetail(store)}
-        </ScrollView>
-      </View>
-    </View>
-  );
-  const refreshToken = () => {
-    web3t.refresh((err, data) => {});
-  };
-
-  //TODO: Refactor this piece of shit later.
-  const hardCodedStrategyGetAddessPrefix = () => {
-    const mapping = {
-      vlx: "wallet"
+    const changePage = (tab) => () => {
+      store.current.page = tab;
     };
-    return mapping[wallet.coin.token] || "address";
-  };
 
-  const prefix = hardCodedStrategyGetAddessPrefix();
-
-  const addressExplorerLink =
-    wallet.network.api.url + "/" + prefix + "/" + wallet.address;
-
-  return (
-    <ModalComponent
-      ref={modal => {
-        this.modal = modal;
-      }}
-      content={content}
-      showCloseButton={false}
-    >
-      <View style={styles.viewFlex}>
-        <StandardLinearGradient>
-          <Toast
-            ref={c => (this.toastify = c)}
-            position={"top"}
-            style={styles.toastStyle}
-          />
-
-          <Header style={styles.mtAndroid}>
-            <Left style={styles.viewFlex}>
-              <Button
-                transparent
-                style={styles.arrowHeaderLeft}
-                onPress={changePage("wallets")}
-              >
-                <Icon
-                  name="ios-arrow-back"
-                  style={styles.arrowHeaderIconBlack}
-                />
-              </Button>
-            </Left>
-            <Body style={styles.viewFlex}>
-              <Title style={styles.titleBlack}>{wallet.coin.name}</Title>
-            </Body>
-            <Right style={styles.viewFlex}>
-              <Thumbnail small source={{ uri: wallet.coin.image }} />
-            </Right>
-          </Header>
-          <StatusBar barStyle="dark-content" />
-          <RefreshControl transparent swipeRefresh={refreshToken}>
-            <View style={styles.bodyBlockWallet}>
-              <View style={styles.bodyBlock3}>
-                <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
-              </View>
-              <View style={styles.bodyBlock3}>
-                <Text style={styles.totalBalance}>
-                  {wallet.balance}{" "}
-                  <Text style={styles.nameToken}>{wallet.coin.token}</Text>
-                </Text>
-              </View>
-
-              <View style={styles.viewTouchablesWallet}>
-                <View style={{ alignItems: "center" }}>
-                  <TouchableOpacity
-                    onPress={sendLocal}
-                    style={styles.touchables}
-                  >
-                    <Image
-                      source={require("../assets/WITHDRAWAL-btn.png")}
-                      style={styles.sizeIconBtn}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.textTouchable}>Send</Text>
-                </View>
-
-                <View style={{ alignItems: "center" }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      Linking.openURL(addressExplorerLink);
-                    }}
-                    style={styles.touchables}
-                  >
-                    <Image
-                      source={require("../assets/SEND-btn.png")}
-                      style={styles.sizeIconBtn}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.textTouchable}>Explorer</Text>
-                </View>
-
-                <View style={{ alignItems: "center" }}>
-                  <TouchableOpacity
-                    onPress={changePage("invoice")}
-                    style={styles.touchables}
-                  >
-                    <Image
-                      source={require("../assets/RECEIVE-btn.png")}
-                      style={styles.sizeIconBtn}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.textTouchable}>Receive</Text>
-                </View>
-              </View>
-            </View>
-          </RefreshControl>
-        </StandardLinearGradient>
-        <View style={styles.viewMono}>
-          <View style={styles.bodyBlockTitle}>
-            <Text style={styles.titleHistory}>Last Transactions</Text>
-          </View>
-          <ScrollView>
-            <View style={styles.viewPt} />
-            <LoadMoreDate
-              store={store}
-              modalRef={this.modal}
-              currency={wallet.coin.token}
-            />
-            <View style={{ paddingBottom: 150 }} />
+    const content = (
+      <View style={styles.viewMonoHistory}>
+        <View style={{ paddingTop: 50 }}>
+          <Button
+            onPress={() => {
+              this.onClick();
+            }}
+            transparent
+          >
+            <Text>Done</Text>
+          </Button>
+          <ScrollView style={{ paddingHorizontal: 20 }}>
+            {walletUserHistoryDetail(store)}
           </ScrollView>
         </View>
       </View>
-    </ModalComponent>
-  );
+    );
+    const refreshToken = () => {
+      web3t.refresh((err,data) => {})
+    }
+
+    //TODO: Refactor this piece of shit later.
+    const hardCodedStrategyGetAddessPrefix = () => {
+        const mapping = {
+          vlx: "wallet"
+        }
+        return mapping[wallet.coin.token] || 'address';
+    }
+
+    const prefix = hardCodedStrategyGetAddessPrefix();
+
+    const addressExplorerLink = wallet.network.api.url + "/" + prefix + "/" + wallet.address;
+
+    return (
+      <ModalComponent
+        ref={this.modal}
+        content={content}
+        showCloseButton={false}
+      >
+        <View style={styles.viewFlex}>
+          <StandardLinearGradient>
+            <Toast
+              ref={c => (this.toastify = c)}
+              position={"top"}
+              style={styles.toastStyle}
+            />
+
+            <Header style={styles.mtAndroid}>
+              <Left style={styles.viewFlex}>
+                <Button
+                  transparent
+                  style={styles.arrowHeaderLeft}
+                  onPress={changePage("wallets")}
+                >
+                  <Icon
+                    name="ios-arrow-back"
+                    style={styles.arrowHeaderIconBlack}
+                  />
+                </Button>
+              </Left>
+              <Body style={styles.viewFlex}>
+                <Title style={styles.titleBlack}>
+                  {wallet.coin.name}
+                </Title>
+              </Body>
+              <Right style={styles.viewFlex}>
+                <Thumbnail small source={{uri: wallet.coin.image}} />
+              </Right>
+            </Header>
+            <RefreshControl transparent swipeRefresh={refreshToken}>
+              <View style={styles.bodyBlockWallet}>
+                <View style={styles.bodyBlock3}>
+                  <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
+                </View>
+                <View style={styles.bodyBlock3}>
+                  <Text style={styles.totalBalance}>
+                    {wallet.balance}{" "}
+                    <Text style={styles.nameToken}>
+                      {wallet.coin.token}
+                    </Text>
+                  </Text>
+                </View>
+
+                <View style={styles.viewTouchablesWallet}>
+
+                  <View style={{ alignItems: "center" }}>
+                    <TouchableOpacity
+                      onPress={sendLocal}
+                      style={styles.touchables}
+                    >
+                      <Image
+                        source={Images.withdrawImage}
+                        style={styles.sizeIconBtn}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.textTouchable}>Send</Text>
+                  </View>
+
+                  <View style={{ alignItems: "center" }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                          Linking.openURL(addressExplorerLink);
+                        }}
+                      style={styles.touchables}
+                    >
+                      <Image
+                        source={Images.sendImage}
+                        style={styles.sizeIconBtn}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.textTouchable}>Explorer</Text>
+                  </View>
+
+                  <View style={{ alignItems: "center" }}>
+                    <TouchableOpacity
+                      onPress={changePage("invoice")}
+                      style={styles.touchables}
+                    >
+                      <Image
+                        source={Images.receiveImage}
+                        style={styles.sizeIconBtn}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.textTouchable}>Receive</Text>
+                  </View>
+                </View>
+              </View>
+            </RefreshControl>
+          </StandardLinearGradient>
+          <View style={styles.viewMono}>
+            <View style={styles.bodyBlockTitle}>
+              <Text style={styles.titleHistory}>Last Transactions</Text>
+            </View>
+            <ScrollView>
+              <View style={styles.viewPt} />
+              <LoadMoreDate store={store} modalRef={this.modal} currency={wallet.coin.token} />
+              <View style={{ paddingBottom: 150 }} />
+            </ScrollView>
+          </View>
+        </View>
+      </ModalComponent>
+    );
+  }
 };
+
+export default ({ store, web3t }) => <Wallet store={store} web3t={web3t} />;

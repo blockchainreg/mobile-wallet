@@ -4,12 +4,7 @@ import { List, ListItem, Left, Body, Right, Thumbnail } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
 
-const openInfoModal = (store, item) => {
-  this.props.store.infoTransaction = item;
-  return this.modal.show();
-};
-
-const checkType = type => {
+const checkType = (type) => {
   switch (type) {
     case "IN":
       return <Text style={styles.txtSizeHistory}>Receive</Text>;
@@ -61,7 +56,7 @@ export default class App extends Component {
 
   onClick = transaction => {
     this.props.store.infoTransaction = transaction;
-    return this.props.modalRef && this.props.modalRef.show();
+    return this.props.modalRef.current && this.props.modalRef.current.show();
   };
 
   render() {
@@ -104,11 +99,10 @@ export default class App extends Component {
                   </Body>
                   <Right>
                     <Text style={styles.txtSizeHistory}>
-                      {index(transaction.type)}
-                      {transaction.amount}{" "}{transaction.token}
+                      {index(transaction.type)}{transaction.amount}
                     </Text>
-                    <Text style={styles.constDate}>
-                    (fee: {transaction.fee}{" "}{transaction.token})
+                    <Text>
+                      (fee: {transaction.fee}) {transaction.currency}
                     </Text>
                   </Right>
                 </ListItem>

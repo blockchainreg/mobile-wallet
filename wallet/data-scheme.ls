@@ -35,24 +35,25 @@ store =
     langs: { en, ru, ua }
     registry: []
     terms: "Loading..."
+    infoTransaction: null
     preference:
         settings-visible: yes
         invoice-visible: yes
         username-visible: no
         refresh-visible: yes
         lock-visible: yes
-    receive: 
+    receive:
         wallet: null
     menu:
         active: 's2'
-    ask: 
+    ask:
         text: ''
         enabled: no
         callback: null
         image: ""
         type: ''
     contract-address: ''
-    transactions: 
+    transactions:
         all: []
         applied: []
     current:
@@ -68,7 +69,7 @@ store =
         manage-account: no
         filter-plugins: ""
         confirmation: null
-        demo: location.href.index-of('web3.space/wallet') > -1 
+        demo: location.href.index-of('web3.space/wallet') > -1
         network: \mainnet
         pin: ""
         last-tx-url: ""

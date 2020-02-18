@@ -20,6 +20,7 @@ import {
 } from "native-base";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
+import Images from '../Images.js';
 //import { generateMnemonic } from 'bip39';
 //import { refreshAccount } from '../wallet/refresh-account.js';
 
@@ -68,6 +69,9 @@ export default ({ store, web3t }) => {
       }
 
       store.current.page = "terms";
+      if (store.current.termsMarkdown) {
+        store.current.loading = false;
+      }
       web3t.refresh(function(err, data){
         if (store.current.termsMarkdown) {
           store.current.loading = false;
@@ -94,7 +98,7 @@ export default ({ store, web3t }) => {
         style={styles.toastStyle}
       />
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={Images.backgroundImage}
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
@@ -113,7 +117,7 @@ export default ({ store, web3t }) => {
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
-            source={require("../assets/velas-logo.png")}
+            source={Images.logo}
             style={styles.styleLogo}
           />
           <Text style={styles.textH1Seed}>Confirmation!</Text>

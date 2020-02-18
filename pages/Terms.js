@@ -17,6 +17,7 @@ import GradientButton from "react-native-gradient-buttons";
 import Hyperlink from "react-native-hyperlink";
 import {set} from "../wallet/seed.js";
 import Markdown from 'react-native-markdown-display';
+import Images from '../Images.js';
 
 const buttonAccept = store => {
   const changePage = (tab) => () => {
@@ -48,6 +49,7 @@ const markdownStyle = {
   }
 };
 
+
 export default ({ store }) => {
   const terms = store => {
     return (
@@ -61,7 +63,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={Images.backgroundImage}
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>

@@ -66,9 +66,8 @@
         return it.tx.toUpperCase();
       })(
       data);
-      console.log(ids);
       dummy = function(err, data){
-        return console.log(err, data);
+        // return console.log(err, data);
       };
       return getPendingTxs({
         network: network,
@@ -123,7 +122,6 @@
           }))(
           map(transformPtx)(
           ptxs)));
-          console.log('tx-length', store.transactions.all.length);
           return cb();
         });
       });
