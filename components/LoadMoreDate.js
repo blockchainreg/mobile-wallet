@@ -4,7 +4,7 @@ import { List, ListItem, Left, Body, Right, Thumbnail } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
 
-const checkType = (type) => {
+const checkType = type => {
   switch (type) {
     case "IN":
       return <Text style={styles.txtSizeHistory}>Receive</Text>;
@@ -99,10 +99,11 @@ export default class App extends Component {
                   </Body>
                   <Right>
                     <Text style={styles.txtSizeHistory}>
-                      {index(transaction.type)}{transaction.amount}
+                      {index(transaction.type)}
+                      {transaction.amount} {transaction.token}
                     </Text>
-                    <Text>
-                      (fee: {transaction.fee}) {transaction.currency}
+                    <Text style={styles.constDate}>
+                    (fee: {transaction.fee}{" "}{transaction.token})
                     </Text>
                   </Right>
                 </ListItem>

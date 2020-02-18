@@ -1,8 +1,8 @@
 {
   "hostType": "lan",
   "lanType": "ip",
-  "dev": true,
-  "minify": false,
-  "urlRandomness": "zn-krb",
+  "dev": false,
+  "minify": true,
+  "urlRandomness": "ek-5r7",
   "https": false
 }
