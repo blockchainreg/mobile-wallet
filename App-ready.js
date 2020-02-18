@@ -1,6 +1,6 @@
 import * as React from "react";
-import { View, Text} from "react-native";
-import { observable } from "mobx";
+import { View, Text, PanResponder} from "react-native";
+import { observable, intercept } from "mobx";
 import { observer } from "mobx-react";
 //import Store from "./Store.js";
 import pages from "./Pages.js";
@@ -48,8 +48,31 @@ const Main = observer(({ store }) => {
     );
 });
 
-const footerVisible = () => {
-  store.footerVisible = false;
+
+const state = {
+  timer: null
+}
+
+intercept(store.current, "page", (x)=> {
+  resetTimer();
+  return x;
+})
+
+const resetTimer = () => {
+    console.log("reset timer");
+    clearTimeout(state.timer);
+    state.timer = setTimeout(lockWallet,20000)
+    return true;
+}
+
+
+const lockWallet = () => {
+      
+      if (store.current.page !== "wallets" || store.current.loading == true) {
+        return resetTimer();
+      }
+      store.current.page = "locked";
+      resetTimer();
 };
 
 
@@ -61,8 +84,25 @@ export default class AppReady extends React.Component {
     };
   }
 
+  
+  _panResponder = {};
+  
+  
+
   componentDidMount() {
     store.current.page = saved() === true ? "locked" : "register";
+
+    this._panResponder = PanResponder.create({
+
+      onStartShouldSetPanResponder: resetTimer,
+      onMoveShouldSetPanResponder: resetTimer,
+      onStartShouldSetPanResponderCapture: resetTimer,
+      onMoveShouldSetPanResponderCapture: resetTimer,
+      onPanResponderTerminationRequest: resetTimer,
+      onShouldBlockNativeResponder: resetTimer,
+    });
+    resetTimer();
+
   }
 
 

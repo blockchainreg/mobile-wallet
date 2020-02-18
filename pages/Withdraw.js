@@ -166,7 +166,7 @@ export default ({ store, web3t }) => {
           returnKeyType="done"
           style={styles.inputStyle}
           placeholder="0"
-          keyboardType="default"
+          keyboardType="number-pad"
           placeholderTextColor="rgba(255,255,255,0.50)"
           selectionColor={"rgba(255,255,255,0.60)"}
         />
