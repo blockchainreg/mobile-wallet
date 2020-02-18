@@ -114,7 +114,9 @@ class Wallet extends React.Component {
       </View>
     );
     const refreshToken = () => {
-      web3t.refresh((err,data) => {})
+      web3t.refresh((err,data) => {
+        console.log("refresh done");
+      })
     }
 
     //TODO: Refactor this piece of shit later.

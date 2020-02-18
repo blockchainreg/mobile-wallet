@@ -48,6 +48,7 @@ export default ({ store, web3t }) => {
 
         store.current.page = "wallets";
         store.footerVisible = true;
+        store.current.loading = true;
         web3t.refresh(function(err, data){
             store.current.loading = false;
 

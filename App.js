@@ -16,6 +16,9 @@ export default class App extends React.Component {
         this.setState({ AppReady: require("./App-ready.js").default });
       });
     }, 1500);  
+
+
+
   }
 
   render() {
