@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 import { Image } from "react-native";
 import styles from "../Styles.js";
 import Images from '../Images.js';
+import StandardLinearGradient from "../components/StandardLinearGradient.js";
 
 // export default ({ store }) => {
 //   const handleOpenModalPress = store => {
@@ -56,27 +57,29 @@ import Images from '../Images.js';
 export default ({ store }) => {
   return (
     <View style={styles.containerModal}>
-      <Modal isVisible={true} hasBackdrop={true}>
-        <View style={styles.modalContent2}>
-          <Image
-            source={Images.tick}
-            style={styles.imgSizeModal2}
-          />
-          <Text style={styles.textModalRender}>Successful transaction!</Text>
-          <Text style={styles.textModalStyle}>
-            Transaction Id:{" "}
-            <Text
-              style={styles.linkStyle}
-              onPress={() => {
-                Linking.openURL(url);
-              }}
-            >
-              {store.current.transaction.hash}
+      <StandardLinearGradient>
+        <Modal isVisible={true} hasBackdrop={false}>
+          <View style={styles.modalContent2}>
+            <Image
+              source={Images.tick}
+              style={styles.imgSizeModal2}
+            />
+            <Text style={styles.textModalRender}>Successful transaction!</Text>
+            <Text style={styles.textModalStyle}>
+              Transaction Id:{" "}
+              <Text
+                style={styles.linkStyle}
+                onPress={() => {
+                  Linking.openURL(url);
+                }}
+              >
+                {store.current.transaction.hash}
+              </Text>
             </Text>
-          </Text>
-          {handleCloseModalPress(store)}
-        </View>
-      </Modal>
+            {handleCloseModalPress(store)}
+          </View>
+        </Modal>
+      </StandardLinearGradient>
     </View>
   );
 };
