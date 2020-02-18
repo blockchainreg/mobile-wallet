@@ -17,13 +17,16 @@ import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
+import StandardLinearGradient from "../components/StandardLinearGradient.js";
+import SvgUri from "react-native-svg-uri";
+
 //import navigate from '../wallet/navigate.js';
+
 
 export default ({ store, web3t }) => {
   const showToast = message => {
     this.toastify.show(message, 3000);
   };
-
   const buttonActive = store => {
     const login = async () => {
       if (!check(store.current.pin)) {
@@ -165,18 +168,19 @@ export default ({ store, web3t }) => {
           returnKeyType="done"
           placeholder="Pin"
           keyboardType="numeric"
-          placeholderTextColor="#707070"
+          placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#fff"}
         />
       </Item>
     );
   };
+ 
 
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
-        source={require("../assets/intro-bg.jpg")}
+        source={require("../assets/intro-bg1.jpg")}
         style={styles.introBackground}
       >
         <Toast
@@ -207,6 +211,6 @@ export default ({ store, web3t }) => {
           </View>
         </View>
       </ImageBackground>
-    </View>
+      </View>
   );
 };

@@ -11,7 +11,7 @@ import {
   Icon,
   Thumbnail
 } from "native-base";
-import { Clipboard, Alert, Vibration, Image } from "react-native";
+import { Clipboard, Alert, Vibration, StatusBar } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -25,30 +25,30 @@ const showToast = message => {
   this.toastify.show(message, 3000);
 };
 
-const buttonCopy = store => {
-  const DURATION = 10000;
-  const writeToClipboardAddr = async () => {
-    await Clipboard.setString(store.current.wallet.address);
-    Vibration.vibrate(DURATION);
-    Alert.alert("Copied to clipboard", "", [{ text: "OK" }]);
-  };
-  return (
-    <GradientButton
-      style={styles.gradientBtn2}
-      text="Copy"
-      textStyle={{ fontSize: 18 }}
-      gradientBegin="#9d41eb"
-      gradientEnd="#9d41eb"
-      gradientDirection="diagonal"
-      height={56}
-      width={"100%"}
-      radius={10}
-      onPressAction={writeToClipboardAddr}
-    />
-  );
-};
 
 export default ({ store, web3t }) => {
+  const buttonCopy = store => {
+    const DURATION = 10000;
+    const writeToClipboardAddr = async () => {
+      await Clipboard.setString(wallet.address);
+      Vibration.vibrate(DURATION);
+      Alert.alert("Copied to clipboard", "", [{ text: "OK" }]);
+    };
+    return (
+      <GradientButton
+        style={styles.gradientBtn2}
+        text="Copy"
+        textStyle={{ fontSize: 18 }}
+        gradientBegin="#9d41eb"
+        gradientEnd="#9d41eb"
+        gradientDirection="diagonal"
+        height={56}
+        width={"100%"}
+        radius={10}
+        onPressAction={writeToClipboardAddr}
+      />
+    );
+  };
 
   const wallets = walletsFuncs(store, web3t).wallets;
 
@@ -87,9 +87,10 @@ export default ({ store, web3t }) => {
             <Title style={styles.titleBlack}>Receive</Title>
           </Body>
           <Right style={styles.viewFlex}>
-            <Thumbnail small source={require("../assets/btc-ethnamed.png")} />
+            <Thumbnail small source={{ uri: wallet.coin.image }} />
           </Right>
         </Header>
+      <StatusBar barStyle="dark-content" />
         <RefreshControl swipeRefresh={refreshToken}>
           <View style={styles.bodyBlock}>
             <View>

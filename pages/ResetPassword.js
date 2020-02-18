@@ -119,7 +119,7 @@ export default ({ store }) => {
           returnKeyType="done"
           placeholder="Enter your email"
           keyboardType={"email-address"}
-          placeholderTextColor="#707070"
+          placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#FFF"}
         />

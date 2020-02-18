@@ -15,7 +15,7 @@ export default class App extends React.Component {
       Promise.all([prngSync, localStoragePromise]).then(() => {
         this.setState({ AppReady: require("./App-ready.js").default });
       });
-    }, 1500);
+    }, 1500);  
   }
 
   render() {

@@ -13,13 +13,14 @@ import {
   Header,
   Thumbnail
 } from "native-base";
+import { StatusBar } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
-import sendFuncs from '../wallet/send-funcs.js';
-import walletsFuncs from '../wallet/wallets-funcs.js';
+import sendFuncs from "../wallet/send-funcs.js";
+import walletsFuncs from "../wallet/wallets-funcs.js";
 
 const showToast = message => {
   console.log(message);
@@ -27,34 +28,62 @@ const showToast = message => {
 };
 
 const btnWithdrawBtc = ({ store, web3t }) => {
-
-  const { token, feeToken, network, send, wallet, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
-
+  const {
+    token,
+    feeToken,
+    network,
+    send,
+    wallet,
+    pending,
+    recipientChange,
+    amountChange,
+    amountUsdChange,
+    amountEurChange,
+    useMaxAmount,
+    showData,
+    showLabel,
+    topup,
+    history,
+    cancel,
+    sendAnyway,
+    chooseAuto,
+    chooseCheap,
+    chosenAuto,
+    chosenCheap,
+    getAddressLink,
+    getAddressTitle,
+    round5edit,
+    round5,
+    sendOptions,
+    sendTitle,
+    isData,
+    encodeDecode,
+    changeAmount,
+    invoice
+  } = sendFuncs(store, web3t);
 
   const withdrawBtc = async () => {
     try {
       sendAnyway();
-    }catch(e) {
+    } catch (e) {
       console.error(e);
       this.toastify.show(e.message, 3000);
     }
   };
 
   return (
-      <GradientButton
-        style={styles.gradientBtn2}
-        text="Continue"
-        textStyle={{ fontSize: 18 }}
-        gradientBegin="#9d41eb"
-        gradientEnd="#9d41eb"
-        gradientDirection="diagonal"
-        height={56}
-        width={"100%"}
-        radius={10}
-
-
-        onPressAction={withdrawBtc}
-      />
+    <GradientButton
+      style={styles.gradientBtn2}
+      text="Continue"
+      textStyle={{ fontSize: 18 }}
+      gradientBegin="#9d41eb"
+      gradientEnd="#9d41eb"
+      gradientDirection="diagonal"
+      height={56}
+      width={"100%"}
+      radius={10}
+      onPressAction={withdrawBtc}
+    />
   );
 };
 
@@ -70,29 +99,57 @@ const buttonInactive = ({ store }) => {
       height={56}
       width={"100%"}
       radius={10}
-
-
     />
   );
 };
 
-const wrap = (text) => {
-    return {
-      target: {
-        value: text
-      }
+const wrap = text => {
+  return {
+    target: {
+      value: text
     }
-}
+  };
+};
 
 export default ({ store, web3t }) => {
-
-  const { token, feeToken, network, send, pending, recipientChange, amountChange, amountUsdChange, amountEurChange, useMaxAmount, showData, showLabel, topup, history, cancel, sendAnyway, chooseAuto, chooseCheap, chosenAuto, chosenCheap, getAddressLink, getAddressTitle, round5edit, round5, sendOptions, sendTitle, isData, encodeDecode, changeAmount, invoice } = sendFuncs(store, web3t);
+  const {
+    token,
+    feeToken,
+    network,
+    send,
+    pending,
+    recipientChange,
+    amountChange,
+    amountUsdChange,
+    amountEurChange,
+    useMaxAmount,
+    showData,
+    showLabel,
+    topup,
+    history,
+    cancel,
+    sendAnyway,
+    chooseAuto,
+    chooseCheap,
+    chosenAuto,
+    chosenCheap,
+    getAddressLink,
+    getAddressTitle,
+    round5edit,
+    round5,
+    sendOptions,
+    sendTitle,
+    isData,
+    encodeDecode,
+    changeAmount,
+    invoice
+  } = sendFuncs(store, web3t);
 
   const wallets = walletsFuncs(store, web3t).wallets;
 
-  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  const wallet = wallets.find(x => x.coin.token === store.current.wallet);
 
-  const changePage = (tab) => () => {
+  const changePage = tab => () => {
     store.current.page = tab;
     //store.withdrawFieldBtc = null;
     //store.withdrawAddrFieldBtc = null;
@@ -101,12 +158,11 @@ export default ({ store, web3t }) => {
   //  store.withdrawFieldBtc = text;
   //};
 
-
   const inputAmountWithdraw = store => {
     return (
       <Item regular style={styles.borderItemInput}>
         <Input
-          onChangeText={text => amountChange(wrap(text) )}
+          onChangeText={text => amountChange(wrap(text))}
           returnKeyType="done"
           style={styles.inputStyle}
           placeholder="0"
@@ -145,11 +201,7 @@ export default ({ store, web3t }) => {
   const buttonChangeWithdrawBtc = btnWithdrawBtc;
 
   const refreshToken = async bool => {
-
-    web3t.refresh((err, data) => {
-
-    });
-
+    web3t.refresh((err, data) => {});
   };
   return (
     <View style={styles.viewFlex}>
@@ -174,9 +226,10 @@ export default ({ store, web3t }) => {
             <Title style={styles.titleBlack}>Send</Title>
           </Body>
           <Right style={styles.viewFlex}>
-            <Thumbnail small source={{uri: wallet.coin.image}} />
+            <Thumbnail small source={{ uri: wallet.coin.image }} />
           </Right>
         </Header>
+        <StatusBar barStyle="dark-content" />
         <RefreshControl swipeRefresh={refreshToken}>
           <View style={styles.bodyBlock}>
             <View>
@@ -187,9 +240,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.bodyBlock3}>
                   <Text style={styles.totalBalance}>
                     {wallet.balance}{" "}
-                    <Text style={styles.nameToken}>
-                      {wallet.coin.token}
-                    </Text>
+                    <Text style={styles.nameToken}>{wallet.coin.token}</Text>
                   </Text>
                 </View>
               </View>

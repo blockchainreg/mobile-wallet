@@ -636,17 +636,21 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         color: "#fff",
-        // fontSize: 20,
-        // fontWeight: "bold",
+        fontSize: 20,
+        fontWeight: "bold",
         alignSelf: "center",
         height: 30,
-        marginTop: 10
+        marginTop: 10,
+        textAlign: 'center',
+        width: '150%'
       },
       {
         color: "#fff",
-        // fontSize: 20,
-        // fontWeight: "bold",
-        alignSelf: "center"
+        fontSize: 20,
+        fontWeight: "bold",
+        alignSelf: "center",
+        textAlign: 'center',
+        width: '150%'
       }
     )
   },

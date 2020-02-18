@@ -47,7 +47,7 @@ module.exports = ({ store }) ->
                             View.pug(style=card-item-style)
                                 View.pug(style=seed-style)
                                     Item.pug(regular="")
-                                        Input.pug(onChangeText=changePin returnKeyType="done" placeholder="Password" keyboardType="password" placeholderTextColor="#707070" style=styles.inputSize selectionColor=selectionColor)
+                                        Input.pug(onChangeText=changePin returnKeyType="done" placeholder="Password" keyboardType="password" placeholderTextColor="rgba(255,255,255,0.60)" style=styles.inputSize selectionColor=selectionColor)
                             View.pug(style=styles.marginBtn)
                                 GradientButton.pug(style=styles.gradientBtnPh text="Enter" textStyle=large gradientBegin="#9d41eb" gradientEnd="#9d41eb" gradientDirection="diagonal" height=50 width="100%" radius=10 onPressAction=generateRandom)
                 TouchableOpacity.pug(onPress=confirm-seed)

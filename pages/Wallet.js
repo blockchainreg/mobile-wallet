@@ -18,9 +18,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Clipboard,
-  Alert,
-  Vibration,
   Image,
   StatusBar
 } from "react-native";
@@ -31,10 +28,10 @@ import Toast from "@rimiti/react-native-toastify";
 import RefreshControl from "../components/RefreshControl.js";
 import LoadMoreDate from "../components/LoadMoreDate.js";
 // import walletFuncs from '../wallet/wallet-funcs.js';
-import walletsFuncs from '../wallet/wallets-funcs.js';
+import walletsFuncs from "../wallet/wallets-funcs.js";
 import { Linking } from "react-native";
 
-import navigate from '../wallet/navigate.js';
+import navigate from "../wallet/navigate.js";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 
 //navigate store, web3t, \sent
@@ -50,49 +47,41 @@ const openInfoModal = (store, transaction) => {
   return this.modal.show();
 };
 
-
 onClick = () => {
   return this.modal.dismiss();
 };
 
 export default ({ store, web3t }) => {
-
   //const wallets = walletsFuncs(store, web3t).wallets;
   //const wallet = ;
 
   const wallets = walletsFuncs(store, web3t).wallets;
 
-  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  const wallet = wallets.find(x => x.coin.token === store.current.wallet);
 
   const usdRate = wallet.usdRate || 0;
   const sendLocal = () => {
+    if (wallet.balance == "..") {
+      return;
+    }
 
-        if(wallet.balance == "..") {
-          return;
-        }
+    //send wallet
+    //web3t[]
+    //{ send-transaction } = web3t[wallet.coin.token]
+    //to = ""
+    //value = 0
+    //err <- send-transaction { to, value }
+    //console.log err if err?
+    store.current.send.wallet = wallet;
+    store.current.send.coin = wallet.coin;
+    store.current.send.network = wallet.network;
+    //console.log("wallet,", store.current.send.wallet)
+    //store.current.page = "send";
+    //the true way to use store.current.page = '...'
+    navigate(store, web3t, "send", x => {});
+  };
 
-        //send wallet
-        //web3t[]
-        //{ send-transaction } = web3t[wallet.coin.token]
-        //to = ""
-        //value = 0
-        //err <- send-transaction { to, value }
-        //console.log err if err?
-        store.current.send.wallet = wallet;
-        store.current.send.coin = wallet.coin;
-        store.current.send.network = wallet.network;
-        //console.log("wallet,", store.current.send.wallet)
-        //store.current.page = "send";
-        //the true way to use store.current.page = '...'
-        navigate(store, web3t, "send", x=> {
-
-        });
-
-  }
-
-
-
-  const changePage = (tab) => () => {
+  const changePage = tab => () => {
     store.current.page = tab;
   };
 
@@ -114,20 +103,21 @@ export default ({ store, web3t }) => {
     </View>
   );
   const refreshToken = () => {
-    web3t.refresh((err,data) => {})
-  }
+    web3t.refresh((err, data) => {});
+  };
 
   //TODO: Refactor this piece of shit later.
   const hardCodedStrategyGetAddessPrefix = () => {
-      const mapping = {
-        vlx: "wallet"
-      }
-      return mapping[wallet.coin.token] || 'address';
-  }
+    const mapping = {
+      vlx: "wallet"
+    };
+    return mapping[wallet.coin.token] || "address";
+  };
 
   const prefix = hardCodedStrategyGetAddessPrefix();
 
-  const addressExplorerLink = wallet.network.api.url + "/" + prefix + "/" + wallet.address;
+  const addressExplorerLink =
+    wallet.network.api.url + "/" + prefix + "/" + wallet.address;
 
   return (
     <ModalComponent
@@ -159,14 +149,13 @@ export default ({ store, web3t }) => {
               </Button>
             </Left>
             <Body style={styles.viewFlex}>
-              <Title style={styles.titleBlack}>
-                {wallet.coin.name}
-              </Title>
+              <Title style={styles.titleBlack}>{wallet.coin.name}</Title>
             </Body>
             <Right style={styles.viewFlex}>
-              <Thumbnail small source={{uri: wallet.coin.image}} />
+              <Thumbnail small source={{ uri: wallet.coin.image }} />
             </Right>
           </Header>
+          <StatusBar barStyle="dark-content" />
           <RefreshControl transparent swipeRefresh={refreshToken}>
             <View style={styles.bodyBlockWallet}>
               <View style={styles.bodyBlock3}>
@@ -175,14 +164,11 @@ export default ({ store, web3t }) => {
               <View style={styles.bodyBlock3}>
                 <Text style={styles.totalBalance}>
                   {wallet.balance}{" "}
-                  <Text style={styles.nameToken}>
-                    {wallet.coin.token}
-                  </Text>
+                  <Text style={styles.nameToken}>{wallet.coin.token}</Text>
                 </Text>
               </View>
 
               <View style={styles.viewTouchablesWallet}>
-
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
                     onPress={sendLocal}
@@ -199,8 +185,8 @@ export default ({ store, web3t }) => {
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity
                     onPress={() => {
-                        Linking.openURL(addressExplorerLink);
-                      }}
+                      Linking.openURL(addressExplorerLink);
+                    }}
                     style={styles.touchables}
                   >
                     <Image
@@ -233,7 +219,11 @@ export default ({ store, web3t }) => {
           </View>
           <ScrollView>
             <View style={styles.viewPt} />
-            <LoadMoreDate store={store} modalRef={this.modal} currency={wallet.coin.token} />
+            <LoadMoreDate
+              store={store}
+              modalRef={this.modal}
+              currency={wallet.coin.token}
+            />
             <View style={{ paddingBottom: 150 }} />
           </ScrollView>
         </View>

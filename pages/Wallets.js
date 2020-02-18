@@ -123,7 +123,7 @@ export default ({ store, web3t }) => {
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlex} />
               <Body style={styles.viewFlex}>
-                <Title style={styles.title1}>Total Balance</Title>
+                <Text style={styles.title1}>Total Balance</Text>
               </Body>
               <Right style={styles.viewFlex} />
             </Header>
