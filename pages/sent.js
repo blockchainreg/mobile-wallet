@@ -16,11 +16,20 @@ import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //   };
 //   const url = store.current.lastTxUrl;
 //
-  const handleCloseModalPress = store => {
+  const handleCloseModalPress = (store, web3t) => {
+    const refreshAndBack = () => {
+
+        store.current.page = "wallet";
+
+        web3t.refresh((err,data) => {
+          
+        });
+
+    }
     return (
       <TouchableOpacity
         style={styles.btnClose}
-        onPress={() => (store.current.page = "wallet")}
+        onPress={refreshAndBack}
       >
         <Text style={styles.btnTextClose}>Close</Text>
       </TouchableOpacity>
@@ -54,7 +63,8 @@ import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //   );
 // };
 
-export default ({ store }) => {
+export default ({ store, web3t }) => {
+  const url = store.current.lastTxUrl;
   return (
     <View style={styles.containerModal}>
       <StandardLinearGradient>
@@ -76,7 +86,7 @@ export default ({ store }) => {
                 {store.current.transaction.hash}
               </Text>
             </Text>
-            {handleCloseModalPress(store)}
+            {handleCloseModalPress(store, web3t)}
           </View>
         </Modal>
       </StandardLinearGradient>
