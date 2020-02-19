@@ -106,7 +106,7 @@ const buttonInactive = ({ store }) => {
 const wrapNumber = text => {
   return {
     target: {
-      value: text.replace(/[^0-9\.]/g, '')
+      value: text.replace(',','.').replace(/[^0-9\.]/g, '')
     }
   };
 };
