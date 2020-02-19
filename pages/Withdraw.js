@@ -70,11 +70,13 @@ const btnWithdrawBtc = ({ store, web3t }) => {
       this.toastify.show(e.message, 3000);
     }
   };
+  
+  const sendText = store.current.send.sending === yes ? "..." : "Send";
 
   return (
     <GradientButton
       style={styles.gradientBtn2}
-      text="Continue"
+      text={sendText}
       textStyle={{ fontSize: 18 }}
       gradientBegin="#9d41eb"
       gradientEnd="#9d41eb"
@@ -196,7 +198,6 @@ export default ({ store, web3t }) => {
     );
   };
 
-  const buttonChangeWithdrawBtc = btnWithdrawBtc;
 
   const refreshToken = async bool => {
     web3t.refresh((err, data) => {});
@@ -268,7 +269,7 @@ export default ({ store, web3t }) => {
       <View style={styles.viewMonoBuy}>
         <View style={styles.containerScreen}>
           <View style={styles.marginBtn}>
-            {buttonChangeWithdrawBtc({ store, web3t })}
+            {btnWithdrawBtc({ store, web3t })}
             <Text>{store.current.send.error}</Text>
           </View>
         </View>
