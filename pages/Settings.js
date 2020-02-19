@@ -17,6 +17,9 @@ import { Linking } from "react-native";
 import Switch from "react-native-switch-pro";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
+import {
+  StatusBar
+} from "react-native";
 
 
 
@@ -32,6 +35,7 @@ export default ({ store }) => {
   return (
     <View style={styles.container}>
     <View style={styles.viewFlex}>
+      <StatusBar hidden={true} />
       <Header style={styles.mtAndroid}>
         <Left style={styles.viewFlex} />
         <Body style={styles.viewFlex}>
