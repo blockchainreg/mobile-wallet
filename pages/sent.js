@@ -64,7 +64,7 @@ export default ({ store }) => {
               source={Images.tick}
               style={styles.imgSizeModal2}
             />
-            <Text style={styles.textModalRender}>Successful transaction!</Text>
+            <Text style={styles.textModalRender}>Your Transaction has been sent</Text>
             <Text style={styles.textModalStyle}>
               Transaction Id:{" "}
               <Text

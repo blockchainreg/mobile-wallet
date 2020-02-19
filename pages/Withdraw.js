@@ -256,7 +256,7 @@ export default ({ store, web3t }) => {
               <View style={styles.viewMt}>
                 <View>
                   <Text style={styles.titleHeader}>
-                    Enter the number of {wallet.coin.token} wallet:
+                    Enter the address of {wallet.coin.token} wallet:
                   </Text>
                 </View>
                 {inputAddressWithdrawBtc(store)}
