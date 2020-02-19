@@ -47,7 +47,7 @@ export default ({ store, web3t }) => {
         }
 
         store.current.page = "wallets";
-        store.footerVisible = true;
+        //store.footerVisible = true;
         store.current.loading = true;
         web3t.refresh(function(err, data){
             store.current.loading = false;
@@ -62,11 +62,11 @@ export default ({ store, web3t }) => {
       // store.tab = "SetupSeed";
       // store.footerVisible = false;
     };
-
+    const loginText = store.current.loading ? "..." : "Login";
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text="Login"
+        text={loginText}
         textStyle={{ fontSize: 14 }}
         gradientBegin="#9d41eb"
         gradientEnd="#9d41eb"
