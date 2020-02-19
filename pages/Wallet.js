@@ -98,7 +98,7 @@ class Wallet extends React.Component {
 
     const content = (
       <View style={styles.viewMonoHistory}>
-        <View style={{ paddingTop: 50 }}>
+        <View style={{ paddingTop: 30 }}>
           <Button
             onPress={() => {
               this.onClick();

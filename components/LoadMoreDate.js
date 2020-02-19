@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { List, ListItem, Left, Body, Right, Thumbnail } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
+import Images from "../Images.js";
 
 const checkType = type => {
   switch (type) {
@@ -10,10 +11,6 @@ const checkType = type => {
       return <Text style={styles.txtSizeHistory}>Receive</Text>;
     case "OUT":
       return <Text style={styles.txtSizeHistory}>Sent</Text>;
-    case "EXCHANGE":
-      return <Text style={styles.txtSizeHistory}>Exchange</Text>;
-    case "INTERNAL_MOVEMENT":
-      return <Text style={styles.txtSizeHistory}>Internal Movement</Text>;
     default:
       return null;
   }
@@ -26,21 +23,10 @@ const index = type => {
 const thumbnail = type => {
   switch (type) {
     case "IN":
-      return <Thumbnail small source={require("../assets/DEPOSIT-icon.png")} />;
+      return <Thumbnail small source={Images.depositImage} />;
     case "OUT":
       return (
-        <Thumbnail small source={require("../assets/WITHDRAWAL-icon.png")} />
-      );
-    case "EXCHANGE":
-      return (
-        <Thumbnail small source={require("../assets/EXCHANGE-icon.png")} />
-      );
-    case "INTERNAL_MOVEMENT":
-      return (
-        <Thumbnail
-          small
-          source={require("../assets/INTERNAL_MOVEMENT-icon.png")}
-        />
+        <Thumbnail small source={Images.withdrawImage2} />
       );
     default:
       return null;
