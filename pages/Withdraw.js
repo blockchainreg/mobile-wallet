@@ -103,6 +103,14 @@ const buttonInactive = ({ store }) => {
   );
 };
 
+const wrapNumber = text => {
+  return {
+    target: {
+      value: text.replace(/[^0-9\.]/g, '')
+    }
+  };
+};
+
 const wrap = text => {
   return {
     target: {
@@ -151,32 +159,25 @@ export default ({ store, web3t }) => {
 
   const changePage = tab => () => {
     store.current.page = tab;
-    //store.withdrawFieldBtc = null;
-    //store.withdrawAddrFieldBtc = null;
   };
-  //const handleChangeWithdraw = async text => {
-  //  store.withdrawFieldBtc = text;
-  //};
+
 
   const inputAmountWithdraw = store => {
     return (
       <Item regular style={styles.borderItemInput}>
         <Input
-          onChangeText={text => amountChange(wrap(text))}
+          onChangeText={text => amountChange(wrapNumber(text))}
           returnKeyType="done"
           style={styles.inputStyle}
           placeholder="0"
-          keyboardType="number-pad"
+          value={store.current.send.amountSend}
+          keyboardType="numeric"
           placeholderTextColor="rgba(255,255,255,0.50)"
           selectionColor={"rgba(255,255,255,0.60)"}
         />
       </Item>
     );
   };
-
-  //const handleChangeWithdrawAddr = async text => {
-  //  store.withdrawAddrFieldBtc = text;
-  //};
 
   const inputAddressWithdrawBtc = store => {
     return (
@@ -186,6 +187,7 @@ export default ({ store, web3t }) => {
           returnKeyType="done"
           placeholder={wallet.network.mask}
           style={[styles.inputStyle, { fontSize: 18 }]}
+          value={store.current.send.to}
           keyboardType={"default"}
           placeholderTextColor="rgba(255,255,255,0.50)"
           selectionColor={"rgba(255,255,255,0.60)"}
@@ -194,10 +196,6 @@ export default ({ store, web3t }) => {
     );
   };
 
-  //const buttonChangeWithdrawBtc =
-  //  store.withdrawFieldBtc && store.withdrawAddrFieldBtc
-  //    ? btnWithdrawBtc
-  //    : buttonInactive;
   const buttonChangeWithdrawBtc = btnWithdrawBtc;
 
   const refreshToken = async bool => {
