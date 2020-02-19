@@ -19,7 +19,13 @@ import StandardLinearGradient from "../components/StandardLinearGradient.js";
   const handleCloseModalPress = (store, web3t) => {
     const refreshAndBack = () => {
 
-        store.current.page = "wallet";
+        //store.current.wallet = wallet.coin.token;
+        //store.current.walletIndex = wallets.indexOf(wallet);
+        //store.current.filter.length = 0;
+        //store.current.filter.push("IN");
+        //store.current.filter.push("OUT");
+        //store.current.filter.push(wallet.coin.token);
+        store.current.page = "wallets";
 
         web3t.refresh((err,data) => {
           

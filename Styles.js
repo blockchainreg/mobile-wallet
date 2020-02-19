@@ -1528,6 +1528,10 @@ export default StyleSheet.create({
     fontWeight: "bold"
     // paddingLeft: 15,
   },
+  errorSend: {
+    fontSize: 12,
+    color: "#ff9999"
+  },
   error: {
     fontSize: 14,
     color: "red",

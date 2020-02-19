@@ -252,6 +252,9 @@ export default ({ store, web3t }) => {
                   <Text note style={styles.textInputDownRight}>
                     Fee {store.current.send.amountSendFee} {wallet.coin.token}
                   </Text>
+                  <Text style={styles.errorSend}>
+                    {store.current.send.error}
+                  </Text>
                 </View>
               </View>
               <View style={styles.viewMt}>
@@ -270,7 +273,6 @@ export default ({ store, web3t }) => {
         <View style={styles.containerScreen}>
           <View style={styles.marginBtn}>
             {btnWithdrawBtc({ store, web3t })}
-            <Text>{store.current.send.error}</Text>
           </View>
         </View>
       </View>
