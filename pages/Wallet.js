@@ -144,7 +144,7 @@ class Wallet extends React.Component {
               position={"top"}
               style={styles.toastStyle}
             />
-
+            <StatusBar hidden={true} />
             <Header style={styles.mtAndroid}>
               <Left style={styles.viewFlex}>
                 <Button
