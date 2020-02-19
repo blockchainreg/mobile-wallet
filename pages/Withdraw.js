@@ -70,8 +70,8 @@ const btnWithdrawBtc = ({ store, web3t }) => {
       this.toastify.show(e.message, 3000);
     }
   };
-  
-  const sendText = store.current.send.sending === yes ? "..." : "Send";
+
+  const sendText = store.current.send.sending === true ? "..." : "Send";
 
   return (
     <GradientButton
