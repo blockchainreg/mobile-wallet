@@ -4353,5 +4353,9 @@ export default StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  styleLogoHead: {
+    width: 277 / 2,
+    height: 241 / 2
   }
 });
