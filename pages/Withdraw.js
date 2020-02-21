@@ -14,6 +14,7 @@ import {
   Thumbnail
 } from "native-base";
 import { StatusBar } from "react-native";
+import { observe } from "mobx";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -21,6 +22,7 @@ import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
+import Spinner from "../utils/spinner.js";
 
 const showToast = message => {
   console.log(message);
@@ -64,6 +66,51 @@ const btnWithdrawBtc = ({ store, web3t }) => {
 
   const withdrawBtc = async () => {
     try {
+      let withdrawSpinner = null;
+      let checkingSpinner = new Spinner(store, "Checking balance", {displayDescription: true});
+      let disposerSend = null;
+      let disposerCurrent = null;
+//The next code is made to watch sending process and display spinners with adequate text
+//Store's data changes step-by-step in the following way
+//0. sending is true, confirmation is null - checking balance, we display Checking balance spinner
+//1. sending is true, confirmation is not null - user is asked to confirm transaction - we should hide all spinners
+//2. sending is true, confirmation is again null - user confirmed, so we display Sending funds spinner
+//   If the user declined confirmation, we will see this state for a short time
+//3. sending is false, confirmation is null - sending is completed and we must hide all spinners
+
+      const onChange = () => {
+        // console.log("Change detected", store.current.send.sending, !!store.current.confirmation);
+        if (store.current.send.sending && !withdrawSpinner && !store.current.confirmation && !checkingSpinner) {
+          // console.log("Making withdraw spinner");
+          withdrawSpinner = new Spinner(store, "Sending funds", {displayDescription: true});
+          return;
+        }
+        if (!store.current.send.sending && withdrawSpinner) {
+          withdrawSpinner.finish();
+          withdrawSpinner = null;
+        }
+        if (!store.current.send.sending && checkingSpinner) {
+          checkingSpinner.finish();
+          checkingSpinner = null;
+        }
+        if (!store.current.send.sending) {
+          // console.log("Disposing observers spinner");
+          disposerSend();
+          disposerCurrent();
+          return;
+        }
+
+        // console.log("Confirmation", store.current.confirmation);
+        if (store.current.confirmation && checkingSpinner) {
+          checkingSpinner.finish();
+          checkingSpinner = null;
+          return;
+        }
+      };
+
+      disposerSend = observe(store.current.send, onChange);
+      disposerCurrent = observe(store.current, onChange);
+
       sendAnyway();
     } catch (e) {
       console.error(e);

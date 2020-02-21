@@ -29,7 +29,8 @@
       data: "",
       decodedData: "",
       showDataMode: 'encoded',
-      error: ''
+      error: '',
+      sending: false
     };
   };
   store = {
@@ -108,6 +109,7 @@
       loadingSpinners: [],
       send: createSend(),
       invoice: createSend(),
+      transaction: null
     },
     history: {
       filterOpen: false

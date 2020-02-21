@@ -17,7 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const store = observable(Store);
 const web3t = web3(store);
 
-
+console.log("store.current.send.sending", Store.current.send.sending);
 const Main = observer(({ store }) => {
   const {current} = store;
   // console.log("current descriptions", current.loadingDescriptions);
