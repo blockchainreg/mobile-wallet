@@ -631,7 +631,7 @@
     return null;
   });
   transformIn = function(arg$, t){
-    var net, address, network, tx, time, fee, ref$, vout, pending, unspend, amount, to, url;
+    var net, address, network, tx, time, fee, ref$, vout, pending, unspend, amount, to, url, from;
     net = arg$.net, address = arg$.address;
     network = net.token;
     tx = t.txid;
@@ -647,6 +647,7 @@
     amount = unspend != null ? unspend.value : void 8;
     to = address;
     url = net.api.url + "/tx/" + tx;
+    from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
     return {
       network: network,
       tx: tx,
@@ -655,7 +656,8 @@
       time: time,
       url: url,
       to: to,
-      pending: pending
+      pending: pending,
+      from
     };
   };
   transformOut = function(arg$, t){
@@ -668,6 +670,7 @@
     vout = (ref$ = t.vout) != null
       ? ref$
       : [];
+    from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
     pending = t.confirmations === 0;
     outcoming = filter(function(it){
       return it != null;
@@ -691,7 +694,8 @@
       time: time,
       url: url,
       to: to,
-      pending: pending
+      pending: pending,
+      from
     };
   };
   transformTx = curry$(function(config, t){

@@ -96,6 +96,7 @@ store =
         loading-spinners: []
         send : create-send!
         invoice : create-send!
+        transaction: null
     history:
         filter-open: no
     rates: {}
