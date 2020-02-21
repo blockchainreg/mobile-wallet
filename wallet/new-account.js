@@ -73,6 +73,13 @@
         });
       });
     };
+    if (store.coins.length === 0) {
+      return cb(null, {
+        mnemonic: mnemonic,
+        wallets: []
+      });
+    }
+
     return generateCoinWallets(store.coins, function(err, wallets){
       if (err != null) {
         return cb(err);

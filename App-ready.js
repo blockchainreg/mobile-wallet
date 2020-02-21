@@ -69,7 +69,7 @@ intercept(store.current, "page", (x)=> {
 const resetTimer = () => {
     console.log("reset timer");
     clearTimeout(state.timer);
-    state.timer = setTimeout(lockWallet,20000)
+    state.timer = setTimeout(lockWallet, 60000)
     return true;
 }
 

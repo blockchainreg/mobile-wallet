@@ -19,6 +19,7 @@ import { ScrollView, StatusBar } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
+import Spinner from "../utils/spinner.js";
 // import StatusBar from "../components/StatusBar.js";
 
 //
@@ -35,30 +36,35 @@ const coinItems = [dash, etc, eth, ltc, usdt, usdt_erc20];
 
 const renderCoin = (store, web3t) => item => {
   const tokens = walletsFuncs(store, web3t).wallets.map(x => x.coin.token);
+  const isAdded = tokens.indexOf(item.token) > -1;
+
+  const name = item.name || item.token.toUpperCase();
 
 
   const addItem = () => {
-    store.current.loading = true;
-    web3t.installQuick(item, (err, data) => {
-      //console.log("install", err, data);
-      //store.current.page = "wallets";
-      store.current.loading = false;
-    });
+    const spinner = new Spinner(store, `Installing ${name}`, {displayDescription: "auto"});
+    setTimeout( () => {
+      web3t.installQuick(item, (err, data) => {
+        //console.log("install", err, data);
+        //store.current.page = "wallets";
+        spinner.finish();
+      });
+    }, 1);
   };
 
   const deleteItem = () => {
-    store.current.loading = true;
+    const spinner = new Spinner(store, `Uninstalling ${name}`, {displayDescription: "auto"});
+    console.log("Removing coin", name);
+    //BUG: This works unstable
     web3t.uninstall(item.token, (err, data) => {
+      console.log("Remove coin result", err, data);
       //store.current.page = "wallets";
-      store.current.loading = false;
+      spinner.finish();
     });
   };
-
-  const isAdded = tokens.indexOf(item.token) > -1;
-
   const currentAction = isAdded ? deleteItem : addItem;
   const currentIcon = isAdded ? "ios-remove" : "ios-add";
-  const name = item.name || item.token.toUpperCase();
+
 
   return (
     <ListItem
