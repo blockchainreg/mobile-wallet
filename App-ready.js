@@ -19,6 +19,20 @@ const web3t = web3(store);
 
 
 const Main = observer(({ store }) => {
+  const {current} = store;
+  // console.log("current descriptions", current.loadingDescriptions);
+  const renderSpinner = () => {
+    const text = current.loadingDescriptions.join(", ");
+    const isVisible = current.loading || current.loadingSpinners.length > 0;
+    return (
+      <Spinner
+        visible={isVisible}
+        textContent={text}
+        textStyle={styles.spinnerTextStyle}
+      />
+    );
+  };
+
   const page = pages[store.current.page];
   if (!page) {
     return (
@@ -27,25 +41,20 @@ const Main = observer(({ store }) => {
       </View>
     );
   }
-    return (
-      <>
-        <Spinner
-          visible={store.current.loading}
-          textContent={''}
-          textStyle={styles.spinnerTextStyle}
+  return (
+    <>
+      {renderSpinner()}
+      {store.current.confirmation
+        ?<Confirm
+          confirmation={store.current.confirmation}
+          onYes={() => {store.current.confirmationCallback(true)}}
+          onNo={() => {store.current.confirmationCallback(false)}}
         />
-
-        {store.current.confirmation
-          ?<Confirm
-            confirmation={store.current.confirmation}
-            onYes={() => {store.current.confirmationCallback(true)}}
-            onNo={() => {store.current.confirmationCallback(false)}}
-          />
-          :null
-        }
-        {page( {store, web3t })}
-      </>
-    );
+        :null
+      }
+      {page( {store, web3t })}
+    </>
+  );
 });
 
 
@@ -67,7 +76,7 @@ const resetTimer = () => {
 
 
 const lockWallet = () => {
-      
+
       if (store.current.page !== "wallets" || store.current.loading == true) {
         return resetTimer();
       }
@@ -84,10 +93,10 @@ export default class AppReady extends React.Component {
     };
   }
 
-  
+
   _panResponder = {};
-  
-  
+
+
 
   componentDidMount() {
     store.current.page = saved() === true ? "locked" : "register";

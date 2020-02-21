@@ -92,6 +92,8 @@ store =
         balance-usd: \...
         filter: <[ IN OUT ]>
         loading: no
+        loading-descriptions: []
+        loading-spinners: []
         send : create-send!
         invoice : create-send!
     history:

@@ -104,6 +104,8 @@
       balanceUsd: '...',
       filter: ['IN', 'OUT'],
       loading: false,
+      loadingDescriptions: [],
+      loadingSpinners: [],
       send: createSend(),
       invoice: createSend(),
     },

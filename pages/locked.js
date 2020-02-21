@@ -19,7 +19,7 @@ import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import SvgUri from "react-native-svg-uri";
-
+import Spinner from "../utils/spinner.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 
@@ -38,27 +38,41 @@ export default ({ store, web3t }) => {
       store.current.pin = "";
       store.userWallet = 200;
       store.current.seed = get();
-      store.current.loading = true;
-      web3t.init(function(err, data) {
-        //console.log("refresh", err, data);
+      const web3tInitSpinner = new Spinner(
+        store,
+        "Your wallet is being decrypting now",
+        {displayDescription: true}
+      );
+      //Following setTimeout code is needed because web3t.init seems to make a lot of work synchronously
+      //This prevents Spinner from appearing
+      //setImmediate does not help
+      setTimeout( () => {
+        web3t.init(function(err, data) {
+          //console.log("refresh", err, data);
 
-        if (err) {
-          return showToast(err + "");
-        }
+          if (err) {
+            return showToast(err + "");
+          }
 
-        store.current.page = "wallets";
-        //store.footerVisible = true;
-        store.current.loading = true;
-        web3t.refresh(function(err, data){
-            store.current.loading = false;
+          store.current.page = "wallets";
+          //store.footerVisible = true;
+          const balancesSpinner = new Spinner(
+            store,
+            "Loading your balances",
+            {displayDescription: "auto"}
+          );
+          web3tInitSpinner.finish();
+          web3t.refresh(function(err, data){
+              balancesSpinner.finish();
 
-            if (err) {
-              store.current.page = "error";
-              store.current.error = err + "";
-            }
+              if (err) {
+                store.current.page = "error";
+                store.current.error = err + "";
+              }
 
+          });
         });
-      });
+      }, 1);
       // store.tab = "SetupSeed";
       // store.footerVisible = false;
     };
@@ -178,7 +192,7 @@ export default ({ store, web3t }) => {
       </Item>
     );
   };
- 
+
 
   return (
     <View style={styles.viewFlex}>
