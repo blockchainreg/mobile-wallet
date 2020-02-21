@@ -4342,7 +4342,9 @@ export default StyleSheet.create({
     marginTop: 20
   },
   spinnerTextStyle: {
-    color: "#FFF"
+    color: "#FFF",
+    textShadowColor: "#000",
+    textShadowRadius: 5
   },
   titleInput: {
     alignItems: "center",
