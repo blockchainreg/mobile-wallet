@@ -15,6 +15,7 @@ import {
 } from "native-base";
 import { StatusBar } from "react-native";
 import { observe } from "mobx";
+import { observer } from "mobx-react";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -78,8 +79,10 @@ const btnWithdrawBtc = ({ store, web3t }) => {
 //   If the user declined confirmation, we will see this state for a short time
 //3. sending is false, confirmation is null - sending is completed and we must hide all spinners
 
+      store.current.send.error = "";
+// console.log("Before Change", store.current.send.sending, store.current.confirmation);
       const onChange = () => {
-        // console.log("Change detected", store.current.send.sending, !!store.current.confirmation);
+        // console.log("Change detected", store.current.send.sending, store.current.confirmation);
         if (store.current.send.sending && !withdrawSpinner && !store.current.confirmation && !checkingSpinner) {
           // console.log("Making withdraw spinner");
           withdrawSpinner = new Spinner(store, "Sending funds", {displayDescription: true});
@@ -118,7 +121,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
     }
   };
 
-  const sendText = store.current.send.sending === true ? "..." : "Send";
+  const sendText = /*store.current.send.sending === true ? "..." : */"Send";
 
   return (
     <GradientButton
@@ -168,161 +171,173 @@ const wrap = text => {
   };
 };
 
-export default ({ store, web3t }) => {
-  const {
-    token,
-    feeToken,
-    network,
-    send,
-    pending,
-    recipientChange,
-    amountChange,
-    amountUsdChange,
-    amountEurChange,
-    useMaxAmount,
-    showData,
-    showLabel,
-    topup,
-    history,
-    cancel,
-    sendAnyway,
-    chooseAuto,
-    chooseCheap,
-    chosenAuto,
-    chosenCheap,
-    getAddressLink,
-    getAddressTitle,
-    round5edit,
-    round5,
-    sendOptions,
-    sendTitle,
-    isData,
-    encodeDecode,
-    changeAmount,
-    invoice
-  } = sendFuncs(store, web3t);
+class Withdraw extends React.Component {
+  constructor(props) {
+    super(props);
+    const {store, web3t} = props;
+    store.current.send.amountSend = "";
+    store.current.send.to = "";
+  }
+  render() {
+    const {store, web3t} = this.props;
+    const {
+      token,
+      feeToken,
+      network,
+      send,
+      pending,
+      recipientChange,
+      amountChange,
+      amountUsdChange,
+      amountEurChange,
+      useMaxAmount,
+      showData,
+      showLabel,
+      topup,
+      history,
+      cancel,
+      sendAnyway,
+      chooseAuto,
+      chooseCheap,
+      chosenAuto,
+      chosenCheap,
+      getAddressLink,
+      getAddressTitle,
+      round5edit,
+      round5,
+      sendOptions,
+      sendTitle,
+      isData,
+      encodeDecode,
+      changeAmount,
+      invoice
+    } = sendFuncs(store, web3t);
 
-  const wallets = walletsFuncs(store, web3t).wallets;
+    const wallets = walletsFuncs(store, web3t).wallets;
 
-  const wallet = wallets.find(x => x.coin.token === store.current.wallet);
+    const wallet = wallets.find(x => x.coin.token === store.current.wallet);
 
-  const changePage = tab => () => {
-    store.current.page = tab;
-  };
+    const changePage = tab => () => {
+      store.current.page = tab;
+    };
 
 
-  const inputAmountWithdraw = store => {
-    return (
-      <Item regular style={styles.borderItemInput}>
-        <Input
-          onChangeText={text => amountChange(wrapNumber(text))}
-          returnKeyType="done"
-          style={styles.inputStyle}
-          placeholder="0"
-          value={store.current.send.amountSend}
-          keyboardType="numeric"
-          placeholderTextColor="rgba(255,255,255,0.50)"
-          selectionColor={"rgba(255,255,255,0.60)"}
-        />
-      </Item>
+    const InputAmountWithdraw = observer(({send}) =>
+        <Item regular style={styles.borderItemInput}>
+          <Input
+            onChangeText={text => amountChange(wrapNumber(text))}
+            returnKeyType="done"
+            style={styles.inputStyle}
+            placeholder="0"
+            value={send.amountSend}
+            keyboardType="numeric"
+            placeholderTextColor="rgba(255,255,255,0.50)"
+            selectionColor={"rgba(255,255,255,0.60)"}
+          />
+        </Item>
     );
-  };
 
-  const inputAddressWithdrawBtc = store => {
-    return (
+    const InputAddressWithdrawBtc = observer(({send}) =>
       <Item regular style={styles.borderItemInput}>
         <Input
           onChangeText={text => recipientChange(wrap(text))}
           returnKeyType="done"
           placeholder={wallet.network.mask}
           style={[styles.inputStyle, { fontSize: 18 }]}
-          value={store.current.send.to}
+          value={send.to}
           keyboardType={"default"}
           placeholderTextColor="rgba(255,255,255,0.50)"
           selectionColor={"rgba(255,255,255,0.60)"}
         />
       </Item>
     );
-  };
+
+    const SendButton = observer(({send}) =>
+      send.amountSend
+        ?btnWithdrawBtc({ store, web3t })
+        :buttonInactive({ store, web3t })
+    );
 
 
-  const refreshToken = async bool => {
-    web3t.refresh((err, data) => {});
-  };
-  return (
-    <View style={styles.viewFlex}>
-      <StandardLinearGradient>
-        <Toast
-          ref={c => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
+    const refreshToken = async bool => {
+      web3t.refresh((err, data) => {});
+    };
+    return (
+      <View style={styles.viewFlex}>
+        <StandardLinearGradient>
+          <Toast
+            ref={c => (this.toastify = c)}
+            position={"top"}
+            style={styles.toastStyle}
+          />
 
-        <Header style={styles.mtAndroid}>
-          <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("wallet", true)}
-            >
-              <Icon name="ios-arrow-back" style={styles.arrowHeaderIconBlack} />
-            </Button>
-          </Left>
-          <Body style={styles.viewFlex}>
-            <Title style={styles.titleBlack}>Send</Title>
-          </Body>
-          <Right style={styles.viewFlex}>
-            <Thumbnail small source={{ uri: wallet.coin.image }} />
-          </Right>
-        </Header>
-        <StatusBar hidden={true} />
-        <RefreshControl swipeRefresh={refreshToken}>
-          <View style={styles.bodyBlock}>
-            <View>
-              <View style={styles.bodyBalance}>
-                <View style={styles.bodyBlock3}>
-                  <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
+          <Header style={styles.mtAndroid}>
+            <Left style={styles.viewFlex}>
+              <Button
+                transparent
+                style={styles.arrowHeaderLeft}
+                onPress={changePage("wallet", true)}
+              >
+                <Icon name="ios-arrow-back" style={styles.arrowHeaderIconBlack} />
+              </Button>
+            </Left>
+            <Body style={styles.viewFlex}>
+              <Title style={styles.titleBlack}>Send</Title>
+            </Body>
+            <Right style={styles.viewFlex}>
+              <Thumbnail small source={{ uri: wallet.coin.image }} />
+            </Right>
+          </Header>
+          <StatusBar hidden={true} />
+          <RefreshControl swipeRefresh={refreshToken}>
+            <View style={styles.bodyBlock}>
+              <View>
+                <View style={styles.bodyBalance}>
+                  <View style={styles.bodyBlock3}>
+                    <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
+                  </View>
+                  <View style={styles.bodyBlock3}>
+                    <Text style={styles.totalBalance}>
+                      {wallet.balance}{" "}
+                      <Text style={styles.nameToken}>{wallet.coin.token}</Text>
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.bodyBlock3}>
-                  <Text style={styles.totalBalance}>
-                    {wallet.balance}{" "}
-                    <Text style={styles.nameToken}>{wallet.coin.token}</Text>
-                  </Text>
+                <View style={styles.viewMt}>
+                  <View>
+                    <Text style={styles.titleHeader}>Amount:</Text>
+                  </View>
+                  <InputAmountWithdraw send={store.current.send} />
+                  <View style={styles.viewTextInputDown}>
+                    <Text note style={styles.textInputDownRight}>
+                      Fee {store.current.send.amountSendFee} {wallet.coin.token}
+                    </Text>
+                    <Text style={styles.errorSend}>
+                      {store.current.send.error}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <View style={styles.viewMt}>
-                <View>
-                  <Text style={styles.titleHeader}>Amount:</Text>
+                <View style={styles.viewMt}>
+                  <View>
+                    <Text style={styles.titleHeader}>
+                      Enter the address of {wallet.coin.token} wallet:
+                    </Text>
+                  </View>
+                  <InputAddressWithdrawBtc send={store.current.send} />
                 </View>
-                {inputAmountWithdraw(store)}
-                <View style={styles.viewTextInputDown}>
-                  <Text note style={styles.textInputDownRight}>
-                    Fee {store.current.send.amountSendFee} {wallet.coin.token}
-                  </Text>
-                  <Text style={styles.errorSend}>
-                    {store.current.send.error}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.viewMt}>
-                <View>
-                  <Text style={styles.titleHeader}>
-                    Enter the address of {wallet.coin.token} wallet:
-                  </Text>
-                </View>
-                {inputAddressWithdrawBtc(store)}
               </View>
             </View>
-          </View>
-        </RefreshControl>
-      </StandardLinearGradient>
-      <View style={styles.viewMonoBuy}>
-        <View style={styles.containerScreen}>
-          <View style={styles.marginBtn}>
-            {btnWithdrawBtc({ store, web3t })}
+          </RefreshControl>
+        </StandardLinearGradient>
+        <View style={styles.viewMonoBuy}>
+          <View style={styles.containerScreen}>
+            <View style={styles.marginBtn}>
+              <SendButton send={store.current.send} />
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
+export default ({ store, web3t }) => <Withdraw store={store} web3t={web3t} />;
