@@ -70,6 +70,7 @@
       applied: []
     },
     current: {
+      account: {wallets:[]},
       device: getDevice(),
       list: 0,
       promptAnswer: "",

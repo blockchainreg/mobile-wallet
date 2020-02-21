@@ -13,6 +13,8 @@ import {
   Header,
   Badge
 } from "native-base";
+import {isObservable, isObservableProp} from "mobx";
+import {observer} from "mobx-react";
 import styles from "../Styles.js";
 import {
   ScrollView,
@@ -61,8 +63,8 @@ class Wallet extends React.Component {
     //const wallet = ;
 
     const wallets = walletsFuncs(store, web3t).wallets;
-
     const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+    console.log("wallets hope", isObservableProp(wallet, "balance"));
 
     const usdRate = wallet.usdRate || 0;
     const sendLocal = () => {
@@ -115,7 +117,8 @@ class Wallet extends React.Component {
     );
     const refreshToken = () => {
       web3t.refresh((err,data) => {
-        console.log("refresh done");
+        this.forceUpdate();
+        console.log("refresh done", err, data);
       })
     }
 
@@ -127,9 +130,19 @@ class Wallet extends React.Component {
         return mapping[wallet.coin.token] || 'address';
     }
 
+    const Balance = observer(({wallet}) =>
+      <Text style={styles.totalBalance}>
+        {wallet.balance}{" "}
+        <Text style={styles.nameToken}>
+          {wallet.coin.token}
+        </Text>
+      </Text>
+    );
+
     const prefix = hardCodedStrategyGetAddessPrefix();
 
     const addressExplorerLink = wallet.network.api.url + "/" + prefix + "/" + wallet.address;
+
 
     return (
       <ModalComponent
@@ -173,12 +186,7 @@ class Wallet extends React.Component {
                   <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
                 </View>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.totalBalance}>
-                    {wallet.balance}{" "}
-                    <Text style={styles.nameToken}>
-                      {wallet.coin.token}
-                    </Text>
-                  </Text>
+                  <Balance wallet={wallet}/>
                 </View>
 
                 <View style={styles.viewTouchablesWallet}>

@@ -57,6 +57,7 @@ store =
         all: []
         applied: []
     current:
+        account: {wallets:[]}
         device: get-device!
         list: 0
         prompt-answer: ""
