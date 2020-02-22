@@ -124,7 +124,7 @@ export default ({ store, web3t }) => {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text="Another Account"
+        text="Create an Account"
         textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
         gradientBegin="rgba(221,181,255,0.10)"
         gradientEnd="rgba(221,181,255,0.10)"

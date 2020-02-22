@@ -30,6 +30,10 @@ export default ({ store }) => {
   const logoutBtn = async () => {
     store.current.page = "locked";
   };
+
+  const termsBtn = async () => {
+    store.current.page = "terms";
+  };
   
 
   return (
@@ -65,6 +69,41 @@ export default ({ store }) => {
             <Icon name="ios-arrow-forward" />
           </Right>
         </ListItem>
+
+        <ListItem
+          icon
+           onPress={() => {
+                Linking.openURL(`https://velas.com/privacy.html`);
+              }}
+          style={styles.heightListItem}
+        >
+          <Left>
+            <Icon name="md-document" />
+          </Left>
+          <Body style={styles.heightListItem}>
+            <Text style={styles.numbersFaq1}>Privacy Policy</Text>
+          </Body>
+          <Right style={styles.heightListItem}>
+            <Icon name="ios-arrow-forward" />
+          </Right>
+        </ListItem>
+
+        <ListItem
+          icon
+           onPress={termsBtn}
+          style={styles.heightListItem}
+        >
+          <Left>
+            <Icon name="md-document" />
+          </Left>
+          <Body style={styles.heightListItem}>
+            <Text style={styles.numbersFaq1}>Terms and Conditions</Text>
+          </Body>
+          <Right style={styles.heightListItem}>
+            <Icon name="ios-arrow-forward" />
+          </Right>
+        </ListItem>
+
 
         <Separator bordered>
           <Text>Security</Text>

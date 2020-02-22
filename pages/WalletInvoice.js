@@ -96,15 +96,7 @@ export default ({ store, web3t }) => {
             <View>
               <View style={styles.bodyBalance}>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
-                </View>
-                <View style={styles.bodyBlock3}>
-                  <Text style={styles.totalBalance}>
-                    {wallet.balance}{" "}
-                    <Text style={styles.nameToken}>
-                      {wallet.coin.token}
-                    </Text>
-                  </Text>
+                  <Text style={styles.nameTokenSwiper1}>Your {wallet.coin.token} address</Text>
                 </View>
               </View>
 
