@@ -15,6 +15,7 @@ export default class Spinner {
       store.current.loadingDescriptions.push(description);
     }
     this.finishTimeout = setTimeout(() => {
+      //TODO: cannot use error here, maybe alert
       console.error("Spinner not finished in 60 seconds", description);
     }, 60000);
   }
