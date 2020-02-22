@@ -21,8 +21,12 @@ const checkType = type => {
   }
 };
 const index = type => {
-  if (type === "IN") return <Text>+</Text>;
+  if (type === "IN") return null;
   else if (type === "OUT") return <Text>-</Text>;
+};
+const amountStyle = type => {
+  if (type === "IN") return styles.styleCoinIn;
+  else if (type === "OUT") return styles.styleCoinOut;
 };
 const thumbnail = type => {
   switch (type) {
@@ -96,12 +100,12 @@ export default class App extends Component {
                     </Text>
                   </Body>
                   <Right>
-                    <Text style={styles.txtSizeHistory}>
-                    {index(transaction.type)}
-                      {transaction.amount} {transaction.token}
+                    <Text style={amountStyle(transaction.type)}>
+                      {index(transaction.type)}
+                      {transaction.amount} {transaction.token.toUpperCase()}
                     </Text>
                     <Text style={styles.constDate}>
-                    (fee: {transaction.fee}{" "}{transaction.token})
+                    (fee: {transaction.fee}{" "}{transaction.token.toUpperCase()})
                     </Text>
                   </Right>
                 </ListItem>
