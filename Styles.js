@@ -1355,7 +1355,7 @@ export default StyleSheet.create({
     paddingRight: 20
   },
   gradientBtn2: {
-    marginVertical: 30,
+    marginVertical: 15,
     paddingLeft: 20,
     paddingRight: 20
   },
