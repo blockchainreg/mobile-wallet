@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://pi-qga.dmitry602.expo-web3.exp.direct",
+  "packagerNgrokUrl": "https://packager.pi-qga.dmitry602.expo-web3.exp.direct",
+  "ngrokPid": 29031,
   "webpackServerPort": null
 }
