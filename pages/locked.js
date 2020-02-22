@@ -38,14 +38,28 @@ export default ({ store, web3t }) => {
       store.current.pin = "";
       store.userWallet = 200;
       store.current.seed = get();
+      
+      //in case when we already have built objects we can just show it
+      if(store.current.account.wallets && store.current.account.wallets.length > 0) {
+          store.current.page = "wallets";
+
+          web3t.refresh(function(){
+
+          });
+
+          return;
+      }
+
       const web3tInitSpinner = new Spinner(
         store,
         "Your wallet is being decrypting now",
         {displayDescription: true}
       );
+
       //Following setTimeout code is needed because web3t.init seems to make a lot of work synchronously
       //This prevents Spinner from appearing
       //setImmediate does not help
+
       setTimeout( () => {
         web3t.init(function(err, data) {
           //console.log("refresh", err, data);
