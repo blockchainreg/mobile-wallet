@@ -320,7 +320,7 @@ class Withdraw extends React.Component {
                 <View style={styles.viewMt}>
                   <View>
                     <Text style={styles.titleHeader}>
-                      Enter the address of {wallet.coin.token} wallet:
+                      Recipient {wallet.coin.token.toUpperCase()} address:
                     </Text>
                   </View>
                   <InputAddressWithdrawBtc send={store.current.send} />
