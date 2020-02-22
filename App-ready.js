@@ -26,8 +26,14 @@ const Main = observer(({ store }) => {
     return (
       <Spinner
         visible={isVisible}
+        overlayColor="rgba(41, 12, 100, 0.80)"
+        textStyle={{ color: 'white', textShadowColor: 'transparent' }}
+        indicatorStyle={{ color: 'white', justifyContent: 'start', top: 50 }}
+        size="large"
+        animation="fade"
         textContent={text}
         textStyle={styles.spinnerTextStyle}
+        cancelable={true}
       />
     );
   };
@@ -67,9 +73,9 @@ intercept(store.current, "page", (x)=> {
 })
 
 const resetTimer = () => {
-    console.log("reset timer");
+    //console.log("reset timer");
     clearTimeout(state.timer);
-    state.timer = setTimeout(lockWallet, 60000)
+    state.timer = setTimeout(lockWallet, 120000)
     return true;
 }
 
