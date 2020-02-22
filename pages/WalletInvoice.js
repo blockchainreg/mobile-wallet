@@ -96,7 +96,7 @@ export default ({ store, web3t }) => {
             <View>
               <View style={styles.bodyBalance}>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.nameTokenSwiper1}>Your {wallet.coin.token} address</Text>
+                  <Text style={styles.title1}>Your {wallet.coin.token} address</Text>
                 </View>
               </View>
 

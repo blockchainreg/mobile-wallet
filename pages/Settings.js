@@ -90,7 +90,9 @@ export default ({ store }) => {
 
         <ListItem
           icon
-           onPress={termsBtn}
+           onPress={() => {
+                Linking.openURL(`https://raw.githubusercontent.com/web3space/wallet/master/TERMS.md`);
+              }}
           style={styles.heightListItem}
         >
           <Left>

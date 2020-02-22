@@ -74,7 +74,7 @@ export default ({ store }) => {
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
-            source={require("../assets/velas-logo.png")}
+            source={Images.logo}
             style={styles.styleLogo}
           />
           <Text style={styles.textH1Seed}>Terms of Use</Text>
