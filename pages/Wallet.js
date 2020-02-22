@@ -133,7 +133,7 @@ class Wallet extends React.Component {
       <Text style={styles.totalBalance}>
         {wallet.balance}{" "}
         <Text style={styles.nameToken}>
-          {wallet.coin.token}
+          {wallet.coin.token.toUpperCase()}
         </Text>
       </Text>
     );
