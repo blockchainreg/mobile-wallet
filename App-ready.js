@@ -26,7 +26,7 @@ const Main = observer(({ store }) => {
     return (
       <Spinner
         visible={isVisible}
-        overlayColor="rgba(41, 12, 100, 0.80)"
+        overlayColor="rgba(41, 12, 100, 0.90)"
         textStyle={{ color: 'white', textShadowColor: 'transparent' }}
         indicatorStyle={{ color: 'white', justifyContent: 'start', top: 50 }}
         size="large"

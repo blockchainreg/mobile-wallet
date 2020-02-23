@@ -70,8 +70,9 @@ const wallets = (store, web3t) => {
             <Text style={styles.amountView}>
               {wallet.coin.name}
             </Text>
-            <Text note>
-              {balance} ({balanceUsd})
+            <Text>
+              <Text>{balance}</Text>
+              <Text note> ({balanceUsd})</Text>
             </Text>
           </Body>
           <Right>
