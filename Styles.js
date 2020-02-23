@@ -4366,7 +4366,7 @@ export default StyleSheet.create({
     fontWeight: "500"
   },
   styleCoinOut: {
-    color: 'black',
+    color: 'green',
     fontSize: 17,
     fontWeight: "500"
   }

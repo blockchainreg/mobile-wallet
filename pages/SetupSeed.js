@@ -51,6 +51,7 @@ export default ({ store }) => {
 
   const generateRandom = async () => {
     store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic();
+    store.current.seedGenerated = true;
     //send to text address VLV8jDEudTEF6m3JGkjPAXrGWnHzwYHETsE - it is index 0 address of test mnemonic phrase
   };
 
@@ -61,6 +62,7 @@ export default ({ store }) => {
   const seedBlocks = store => {
     return (
       <Textarea
+        readonly={store.current.seedGenerated}
         rowSpan={3}
         placeholder="Your mnemonic phrase"
         style={styles.inputSize}
