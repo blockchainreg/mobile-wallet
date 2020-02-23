@@ -299,7 +299,7 @@ class Withdraw extends React.Component {
                   <View style={styles.bodyBlock3}>
                     <Text style={styles.totalBalance}>
                       {wallet.balance}{" "}
-                      <Text style={styles.nameToken}>{wallet.coin.token}</Text>
+                      <Text style={styles.nameToken}>{wallet.coin.token.toUpperCase()}</Text>
                     </Text>
                   </View>
                 </View>
@@ -310,7 +310,7 @@ class Withdraw extends React.Component {
                   <InputAmountWithdraw send={store.current.send} />
                   <View style={styles.viewTextInputDown}>
                     <Text note style={styles.textInputDownRight}>
-                      Fee {store.current.send.amountSendFee} {wallet.coin.token}
+                      Fee {store.current.send.amountSendFee} {wallet.coin.token.toUpperCase()}
                     </Text>
                     <Text style={styles.errorSend}>
                       {store.current.send.error}

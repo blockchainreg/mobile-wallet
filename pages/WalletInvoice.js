@@ -11,7 +11,7 @@ import {
   Icon,
   Thumbnail
 } from "native-base";
-import { Clipboard, Alert, Vibration, StatusBar } from "react-native";
+import { Clipboard, Alert, Vibration, StatusBar, Share } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -46,6 +46,29 @@ export default ({ store, web3t }) => {
         width={"100%"}
         radius={10}
         onPressAction={writeToClipboardAddr}
+      />
+    );
+  };
+  const buttonShare = store => {
+    const onShare = async () => {
+      try {
+        const result = await Share.share({ message: wallet.address });
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    return (
+      <GradientButton
+        style={styles.gradientBtn2}
+        text="Share"
+        textStyle={{ fontSize: 18 }}
+        gradientBegin="#3CD5AF"
+        gradientEnd="#3CD5AF"
+        gradientDirection="diagonal"
+        height={56}
+        width={"100%"}
+        radius={10}
+        onPressAction={onShare}
       />
     );
   };
@@ -96,23 +119,25 @@ export default ({ store, web3t }) => {
             <View>
               <View style={styles.bodyBalance}>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.title1}>Your {wallet.coin.token} address</Text>
+                  <Text style={styles.title1}>Your {wallet.coin.token.toUpperCase()} address</Text>
                 </View>
               </View>
 
               <View style={styles.viewMt}>
                 <View style={styles.alignItemsQr}>
-                  <Text style={styles.titleQr}>Scan the QR code:</Text>
+                  {/* <Text style={styles.titleQr}>Scan the QR code:</Text> */}
                   <QRCode
                     color="#FFF"
                     content={wallet.address}
                   />
-                  <Text style={styles.titleQr}>Or click to copy:</Text>
-
+                  {/* <Text style={styles.titleQr}>Or click to copy:</Text> */}
+                  <View style={styles.viewMt}>
                   <Text style={styles.textAddrQr}>
                     {wallet.address}
                   </Text>
+                  </View>
                   {buttonCopy(store)}
+                  {buttonShare(store)}
                 </View>
               </View>
             </View>

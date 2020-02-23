@@ -73,7 +73,7 @@ export default walletUserHistoryDetail = store => {
             <View style={styles.lineMono} />
 
             <Text style={styles.detailInfoAmount}>
-              {store.infoTransaction.amount} {store.infoTransaction.token}
+              {store.infoTransaction.amount} {store.infoTransaction.token.toUpperCase()}
             </Text>
 
             <Text>

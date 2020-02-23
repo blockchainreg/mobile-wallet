@@ -1355,7 +1355,7 @@ export default StyleSheet.create({
     paddingRight: 20
   },
   gradientBtn2: {
-    marginVertical: 30,
+    marginVertical: 15,
     paddingLeft: 20,
     paddingRight: 20
   },
@@ -4359,5 +4359,15 @@ export default StyleSheet.create({
   styleLogoHead: {
     width: 277 / 2,
     height: 241 / 2
+  },
+  styleCoinIn: {
+    color: '#3FD4B2',
+    fontSize: 17,
+    fontWeight: "500"
+  },
+  styleCoinOut: {
+    color: 'black',
+    fontSize: 17,
+    fontWeight: "500"
   }
 });
