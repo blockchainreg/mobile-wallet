@@ -10,7 +10,7 @@ import {
   Right,
   Button
 } from "native-base";
-import { Image, StatusBar, ImageBackground } from "react-native";
+import { Image, StatusBar, ImageBackground, runAfterInteractions, InteractionManager } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -38,7 +38,7 @@ export default ({ store, web3t }) => {
       store.current.pin = "";
       store.userWallet = 200;
       store.current.seed = get();
-      
+
       //in case when we already have built objects we can just show it
       if(store.current.account.wallets && store.current.account.wallets.length > 0) {
           store.current.page = "wallets";
@@ -56,11 +56,7 @@ export default ({ store, web3t }) => {
         {displayDescription: true}
       );
 
-      //Following setTimeout code is needed because web3t.init seems to make a lot of work synchronously
-      //This prevents Spinner from appearing
-      //setImmediate does not help
-
-      setTimeout( () => {
+      InteractionManager.runAfterInteractions(() => {
         web3t.init(function(err, data) {
           //console.log("refresh", err, data);
 
@@ -86,7 +82,7 @@ export default ({ store, web3t }) => {
 
           });
         });
-      }, 1);
+      });
       // store.tab = "SetupSeed";
       // store.footerVisible = false;
     };
