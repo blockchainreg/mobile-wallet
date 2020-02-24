@@ -19,13 +19,10 @@ import styles from "../Styles.js";
 import StandardLinearGradient from "./StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
 import moment from "moment";
-import { observer } from "mobx-react"
-import { isObservable, isObservableProp } from "mobx"
-import LoadMoreAllDate from "./LoadMoreAllDate";
+//import LoadMoreAllDate from "./LoadMoreAllDate";
 
 
-
-export default walletUserHistoryDetail = store => {
+export default (store) => {
 
   const writeToClipboard = async (info) => {
     await Clipboard.setString(
@@ -50,16 +47,7 @@ export default walletUserHistoryDetail = store => {
     writeToClipboard(store.infoTransaction.from);
   };
 
-  //return (<View> <View style={styles.mbXScroll}/> </View>);
-  if (!isObservable(store)) {
-    throw new Error('Not observable store');
-  }
-  if (!isObservableProp(store, "infoTransaction")) {
-    throw new Error('Not observable store prop');
-  }
-  const ObservableDetails = observer(() => {
-    if (store && store.infoTransaction)
-      return (
+  return (
         <View>
 
           <View style={styles.detailsHistory}>
@@ -138,8 +126,5 @@ export default walletUserHistoryDetail = store => {
 
           <View style={styles.mbXScroll}/>
         </View>
-    );
-    return <View><Text>Not found???</Text></View>;
-  });
-  return <ObservableDetails />;
+  )
 };

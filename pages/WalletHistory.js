@@ -20,49 +20,22 @@ import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
 import moment from "moment";
-import LoadMoreAllDate from "../components/LoadMoreAllDate";
+import LoadMoreDate from "../components/LoadMoreDate";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 
-class WalletHistory extends React.Component {
-  onClick = () => {
-    return this.modal.current.dismiss();
+export default ({ store, web3t }) => {
+  const changePage = tab => () => {
+      store.tab = tab;
   };
-  modal = React.createRef();
 
-  render() {
-    const changePage = tab => () => {
-      this.props.store.tab = tab;
-    };
+  
+  const refreshToken = async bool => {
 
-    const content = (
-      <View style={styles.viewMonoHistory}>
-        <View style={{ paddingTop: 30 }}>
-          <Button
-            onPress={() => {
-              this.onClick();
-            }}
-            transparent
-          >
-            <Text>Done</Text>
-          </Button>
-          <ScrollView style={{ paddingHorizontal: 20 }}>
-            {walletUserHistoryDetail(this.props.store)}
-          </ScrollView>
-        </View>
-      </View>
-    );
-    const refreshToken = async bool => {
+      web3t.refresh((err,data) => {})
 
-      this.props.web3t.refresh((err,data) => {})
+  };
 
-    };
-
-    return (
-      <ModalComponent
-        ref={this.modal}
-        content={content}
-        showCloseButton={false}
-      >
+  return (
       <View style={styles.container}>
         <View style={styles.viewFlex}>
           <StandardLinearGradient>
@@ -79,19 +52,13 @@ class WalletHistory extends React.Component {
             <View style={styles.viewPt} />
             <ScrollView>
               <View style={styles.viewPt} />
-              <LoadMoreAllDate store={this.props.store} modalRef={this.modal} />
+              { LoadMoreDate({ store }) }
               <View style={{ paddingBottom: 100 }} />
             </ScrollView>
           </View>
         </View>
-        <Footer store={this.props.store}></Footer>
+        <Footer store={store}></Footer>
       </View>
-      </ModalComponent>
-
     );
-  }
 }
 
-export default ({ store, web3t }) => {
-  return <WalletHistory store={store} web3t={web3t}/>
-};

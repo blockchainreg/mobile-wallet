@@ -12,19 +12,19 @@ import web3 from './wallet/web3.js';
 import { saved } from './wallet/seed.js';
 import Confirm from './components/Confirm.js';
 import Spinner from 'react-native-loading-spinner-overlay';
+import HistoryDetail from './pages/HistoryDetail.js';
 //console.log(web3);
 
 //mobile specific defaults (start)
-Store.current.newseedstep = "";
+//Store.current.expanded = false;
 //module specific defaults (end)
 
 const store = observable(Store);
 const web3t = web3(store);
 
-const Main = observer(({ store }) => {
-  const {current} = store;
-  // console.log("current descriptions", current.loadingDescriptions);
-  const renderSpinner = () => {
+//TODO: Move to separate file
+const renderSpinner = ({ store }) => {
+    const {current} = store;
     const text = current.loadingDescriptions.join(", ");
     const isVisible = current.loading || current.loadingSpinners.length > 0;
     return (
@@ -40,7 +40,12 @@ const Main = observer(({ store }) => {
         cancelable={true}
       />
     );
-  };
+};
+
+const Main = observer(({ store }) => {
+  
+  // console.log("current descriptions", current.loadingDescriptions);
+  
 
   const page = pages[store.current.page];
   if (!page) {
@@ -52,7 +57,8 @@ const Main = observer(({ store }) => {
   }
   return (
     <>
-      {renderSpinner()}
+      {renderSpinner({ store })}
+      {HistoryDetail({ store })}
       {store.current.confirmation
         ?<Confirm
           confirmation={store.current.confirmation}

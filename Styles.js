@@ -273,6 +273,7 @@ export default StyleSheet.create({
   },
   viewMonoHistory: {
     flex: 1,
+    zIndex: 999,
     backgroundColor: "#fff",
     // borderTopLeftRadius: 16,
     // borderTopRightRadius: 16,

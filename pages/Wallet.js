@@ -13,18 +13,17 @@ import {
   Header,
   Badge
 } from "native-base";
-import {isObservable, isObservableProp} from "mobx";
+import { transaction } from "mobx";
 import {observer} from "mobx-react";
 import styles from "../Styles.js";
 import {
   ScrollView,
   TouchableOpacity,
-  Dimensions,
   Image,
   StatusBar
 } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import ModalComponent from "react-native-modal-component";
+//import ModalComponent from "react-native-modal-component";
 import moment from "moment";
 import Toast from "@rimiti/react-native-toastify";
 import RefreshControl from "../components/RefreshControl.js";
@@ -40,27 +39,7 @@ import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 import Images from '../Images.js';
 
 
-
-//navigate store, web3t, \sent
-
-const { width, height } = Dimensions.get("window");
-
-const showToast = message => {
-  this.toastify.show(message, 3000);
-};
-
-
-class Wallet extends React.Component {
-  modal = React.createRef();
-
-  onClick = () => {
-    return this.modal.current.dismiss();
-  };
-
-  render(){
-    const {web3t, store} = this.props;
-    //const wallets = walletsFuncs(store, web3t).wallets;
-    //const wallet = ;
+export default ({ store, web3t }) => {
 
     const wallets = walletsFuncs(store, web3t).wallets;
     const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
@@ -72,51 +51,21 @@ class Wallet extends React.Component {
             return;
           }
 
-          //send wallet
-          //web3t[]
-          //{ send-transaction } = web3t[wallet.coin.token]
-          //to = ""
-          //value = 0
-          //err <- send-transaction { to, value }
-          //console.log err if err?
           store.current.send.wallet = wallet;
           store.current.send.coin = wallet.coin;
           store.current.send.network = wallet.network;
-          //console.log("wallet,", store.current.send.wallet)
-          //store.current.page = "send";
-          //the true way to use store.current.page = '...'
           navigate(store, web3t, "send", x=> {
 
           });
 
     }
 
-
-
     const changePage = (tab) => () => {
       store.current.page = tab;
     };
 
-    const content = (
-      <View style={styles.viewMonoHistory}>
-        <View style={{ paddingTop: 30 }}>
-          <Button
-            onPress={() => {
-              this.onClick();
-            }}
-            transparent
-          >
-            <Text>Done</Text>
-          </Button>
-          <ScrollView style={{ paddingHorizontal: 20 }}>
-            {walletUserHistoryDetail(store)}
-          </ScrollView>
-        </View>
-      </View>
-    );
     const refreshToken = () => {
       web3t.refresh((err,data) => {
-        this.forceUpdate();
         console.log("refresh done", err, data);
       })
     }
@@ -143,19 +92,49 @@ class Wallet extends React.Component {
     const addressExplorerLink = wallet.network.api.url + "/" + prefix + "/" + wallet.address;
 
 
+    const expand = () => {
+          transaction(function() {
+            store.history.filterOpen = true;
+          })
+    }
+
+    const collapse = () => {
+          store.history.filterOpen = false;
+    }
+
+    const getTxContainer = () => {
+      if (store.history.filterOpen == true)
+        //return { ...styles.viewMono, height: '80%' }
+        return (
+            <View style={{ ...styles.viewMono, height: '80%' }}>
+              <View style={styles.bodyBlockTitle} onStartShouldSetResponder={collapse}>
+                <Text style={styles.titleHistory}>Last Transactions</Text>
+              </View>
+              <ScrollView>
+                <View style={styles.viewPt} />
+                {LoadMoreDate({ store })}
+                <View style={{ paddingBottom: 150 }} />
+              </ScrollView>
+            </View>
+        )
+
+      return (
+          <View style={styles.viewMono}>
+            <View style={styles.bodyBlockTitle} onStartShouldSetResponder={expand}>
+              <Text style={styles.titleHistory}>Last Transactions</Text>
+            </View>
+            <ScrollView>
+              <View style={styles.viewPt} />
+              {LoadMoreDate({ store })}
+              <View style={{ paddingBottom: 150 }} />
+            </ScrollView>
+          </View>
+        )
+    }
+
     return (
-      <ModalComponent
-        ref={this.modal}
-        content={content}
-        showCloseButton={false}
-      >
-        <View style={styles.viewFlex}>
+      <View style={styles.viewFlex}>
           <StandardLinearGradient>
-            <Toast
-              ref={c => (this.toastify = c)}
-              position={"top"}
-              style={styles.toastStyle}
-            />
             <StatusBar hidden={true} />
             <Header style={styles.mtAndroid}>
               <Left style={styles.viewFlex}>
@@ -234,20 +213,9 @@ class Wallet extends React.Component {
               </View>
             </RefreshControl>
           </StandardLinearGradient>
-          <View style={styles.viewMono}>
-            <View style={styles.bodyBlockTitle}>
-              <Text style={styles.titleHistory}>Last Transactions</Text>
-            </View>
-            <ScrollView>
-              <View style={styles.viewPt} />
-              <LoadMoreDate store={store} modalRef={this.modal} currency={wallet.coin.token} />
-              <View style={{ paddingBottom: 150 }} />
-            </ScrollView>
-          </View>
-        </View>
-      </ModalComponent>
+          {getTxContainer()}
+      </View>
     );
-  }
 };
 
-export default ({ store, web3t }) => <Wallet store={store} web3t={web3t} />;
+//export default ({ store, web3t }) => <Wallet store={store} web3t={web3t} />;

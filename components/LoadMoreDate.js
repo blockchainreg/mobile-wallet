@@ -37,25 +37,17 @@ const thumbnail = type => {
   }
 };
 
-export default class App extends Component {
-  constructor() {
-    super();
-  }
+export default ({ store, web3t }) => {
 
-  componentDidMount() {}
+    const txs = store.transactions.applied;
 
-  onClick = transaction => {
-    this.props.store.infoTransaction = transaction;
-    return this.props.modalRef.current && this.props.modalRef.current.show();
-  };
+    const showTransaction = (transaction) => {
+      store.infoTransaction = transaction;
+    };
 
-  render() {
-    const txs = this.props.store.transactions.applied;
-
-    //{ coins, cut-tx, arrow, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     return (
       <View style={styles.container}>
-        {this.props.store.current.refreshing ? (
+        {store.current.refreshing ? (
           <ActivityIndicator color="#707070" />
         ) : (
           <View>
@@ -72,7 +64,7 @@ export default class App extends Component {
                 <ListItem
                   thumbnail
                   onPress={() => {
-                    this.onClick(transaction);
+                    showTransaction(transaction);
                   }}
                   key={transaction.tx}
                 >
@@ -103,5 +95,4 @@ export default class App extends Component {
         )}
       </View>
     );
-  }
 }
