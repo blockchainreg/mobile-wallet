@@ -5,6 +5,8 @@ import history from "./pages/WalletHistory.js";
 import send from "./pages/Withdraw.js";
 import loading from "./pages/StartPage.js";
 import register from "./pages/SignUp.js";
+import generatedseed from "./pages/GeneratedSeed.js";
+import restoreseed from "./pages/RestoreSeed.js";
 import locked from "./pages/locked";
 import reset from "./pages/ResetPassword";
 import add from "./pages/AddWallets";
@@ -16,6 +18,8 @@ import sent from "./pages/sent";
 import error from "./pages/error";
 
 export default {
+  generatedseed,
+  restoreseed,
   error,
   terms,
   locked,

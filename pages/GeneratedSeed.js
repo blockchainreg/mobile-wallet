@@ -58,24 +58,14 @@ export default ({ store }) => {
     store.current.page = tab;
   };
 
-  const generateRandom = async () => {
-    store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic();
-    store.current.page = "generatedseed";
-    //store.curren.newseedstep = "ganarate";
-    //
-    //send to text address VLV8jDEudTEF6m3JGkjPAXrGWnHzwYHETsE - it is index 0 address of test mnemonic phrase
+
+  const seedPhrase = store => {
+      return (
+        <View style={seedContainerStyle}>
+          <Text style={styles.inputSize}>{store.current.seed}</Text>
+        </View>
+    );
   };
-
-  const restoreSeed = async () => {
-    store.current.seed = "";
-    store.current.page = "restoreseed";
-  }
-
-  const changeSeed = async (seed) => {
-    store.current.seed = seed;
-  }
-
-  
 
   return (
     <View style={styles.viewFlex}>
@@ -95,14 +85,15 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Choose The Option</Text>
+          <Text style={styles.textH1Seed}>New Seed Phrase!</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
+                {seedPhrase(store)}
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Restore Your Seed"
+                    text="Continue"
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
@@ -110,25 +101,20 @@ export default ({ store }) => {
                     height={50}
                     width={"100%"}
                     radius={10}
-                    onPressAction={restoreSeed}
+                    placeholderTextColor="rgba(255,255,255,0.60)"
+                    onPressAction={changePage("confirmseed")}
                   />
-                  <View style={{ padding: 10 }}></View>
-                  <GradientButton
-                    style={styles.gradientBtnPh}
-                    text="Generate"
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
-                    gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
-                    onPressAction={generateRandom}
-                  />
+                  <Text style={styles.textCard}>
+                    Do not pass the phrase to a third party and keep it in a
+                    safe place
+                  </Text>
                 </View>
               </Body>
             </CardItem>
           </View>
+          <TouchableOpacity onPress={changePage("newseed")}>
+            <Text style={styles.textLoginStyle}>Back</Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>

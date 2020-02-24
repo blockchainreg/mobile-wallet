@@ -5,6 +5,7 @@ import {
   ImageBackground,
   StatusBar
 } from "react-native";
+import GradientButton from "react-native-gradient-buttons";
 import {
   Text,
   Button,
@@ -21,6 +22,7 @@ import {
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
+import setupWallet from '../setupWallet.js';
 //import { generateMnemonic } from 'bip39';
 //import { refreshAccount } from '../wallet/refresh-account.js';
 
@@ -58,33 +60,12 @@ export default ({ store, web3t }) => {
       return showToast("Your word does not match to expected word");
     }
 
-    store.current.loading = true;
-    web3t.init(function(err, data) {
-      //console.log("refresh", err, data);
+    setupWallet(store, web3t);
 
-      if (err) {
-          store.current.page = "error";
-          store.current.error = err + "";
-          return;
-      }
 
-      store.current.page = "terms";
-      if (store.current.termsMarkdown) {
-        store.current.loading = false;
-      }
-      web3t.refresh(function(err, data){
-        if (store.current.termsMarkdown) {
-          store.current.loading = false;
-        }
-
-          if (err) {
-              store.current.page = "error";
-              store.current.error = err + "";
-          }
-
-      });
-    });
   };
+
+
 
   const handleConfirmSeedField = async text => {
     store.signUpConfirmSeedField = text;
@@ -102,15 +83,7 @@ export default ({ store, web3t }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("newseed")}
-            >
-              <Icon name="ios-arrow-back" style={styles.arrowIcon} />
-            </Button>
-          </Left>
+          <Left style={styles.viewFlex} />
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
@@ -120,7 +93,7 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Confirmation!</Text>
+          <Text style={styles.textH1Seed}>Confirmation</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
@@ -141,6 +114,19 @@ export default ({ store, web3t }) => {
                   </Item>
                 </View>
                 <View style={styles.marginBtnSeed}>
+                  <GradientButton
+                    style={styles.gradientBtnPh}
+                    text="Confirm"
+                    textStyle={{ fontSize: 14 }}
+                    gradientBegin="#9d41eb"
+                    gradientEnd="#9d41eb"
+                    gradientDirection="diagonal"
+                    height={50}
+                    width={"100%"}
+                    radius={10}
+                    placeholderTextColor="rgba(255,255,255,0.60)"
+                    onPressAction={continueProcess}
+                  />
                   <Text style={styles.textCard}>
                     Please enter the {number} word to confirm that you saved it
                     in a safe place
@@ -149,8 +135,8 @@ export default ({ store, web3t }) => {
               </Body>
             </CardItem>
           </View>
-          <TouchableOpacity onPress={continueProcess}>
-            <Text style={styles.textLoginStyle}>Continue</Text>
+          <TouchableOpacity onPress={changePage('generatedseed')}>
+            <Text style={styles.textLoginStyle}>Back</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

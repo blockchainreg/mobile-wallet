@@ -15,7 +15,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 //console.log(web3);
 
 //mobile specific defaults (start)
-Store.current.seedGenerated = false;
+Store.current.newseedstep = "";
 //module specific defaults (end)
 
 const store = observable(Store);

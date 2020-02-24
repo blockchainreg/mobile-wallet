@@ -30,6 +30,7 @@ import GradientButton from "react-native-gradient-buttons";
 import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
+import setupWallet from '../setupWallet.js';
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -52,30 +53,40 @@ const seedContainerStyle = {
 export default ({ store }) => {
   const changePage = (tab) => () => {
 
-    if (badSeed(store.current.seed))
-      return;
-
     store.current.page = tab;
   };
 
-  const generateRandom = async () => {
-    store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic();
-    store.current.page = "generatedseed";
-    //store.curren.newseedstep = "ganarate";
-    //
-    //send to text address VLV8jDEudTEF6m3JGkjPAXrGWnHzwYHETsE - it is index 0 address of test mnemonic phrase
-  };
+  
+  const done = () => {
+      if (badSeed(store.current.seed))
+        return;
 
-  const restoreSeed = async () => {
-    store.current.seed = "";
-    store.current.page = "restoreseed";
+      setupWallet(store, web3t);
+
+
   }
 
   const changeSeed = async (seed) => {
     store.current.seed = seed;
   }
 
-  
+  const seedPhrase = store => {
+      return (
+        <View style={seedContainerStyle}>
+          <Textarea
+            rowSpan={2}
+            placeholder="Your mnemonic phrase"
+            placeholderTextColor="rgba(255,255,255,0.60)"
+            style={styles.inputSize}
+            selectionColor={"#fff"}
+            autoCapitalize="none"
+            value={store.current.seed}
+            onChangeText={changeSeed}
+          />
+        </View>
+      );
+
+  };
 
   return (
     <View style={styles.viewFlex}>
@@ -95,14 +106,15 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Choose The Option</Text>
+          <Text style={styles.textH1Seed}>Restore Your Seed</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
+                {seedPhrase(store)}
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Restore Your Seed"
+                    text="Restore"
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
@@ -110,26 +122,18 @@ export default ({ store }) => {
                     height={50}
                     width={"100%"}
                     radius={10}
-                    onPressAction={restoreSeed}
-                  />
-                  <View style={{ padding: 10 }}></View>
-                  <GradientButton
-                    style={styles.gradientBtnPh}
-                    text="Generate"
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
-                    gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
-                    onPressAction={generateRandom}
+                    onPressAction={done}
                   />
                 </View>
               </Body>
             </CardItem>
           </View>
+          {/* {SaveSeedModal({ store })} */}
+          <TouchableOpacity onPress={changePage("newseed")}>
+            <Text style={styles.textLoginStyle}>Back</Text>
+          </TouchableOpacity>
         </View>
+        {/* </View> */}
       </ImageBackground>
     </View>
   );
