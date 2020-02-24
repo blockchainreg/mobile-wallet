@@ -50,7 +50,7 @@ const seedContainerStyle = {
   padding: 10
 };
 
-export default ({ store }) => {
+export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
 
     store.current.page = tab;

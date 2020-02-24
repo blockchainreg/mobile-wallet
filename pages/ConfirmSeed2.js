@@ -26,21 +26,7 @@ import setupWallet from '../setupWallet.js';
 //import { generateMnemonic } from 'bip39';
 //import { refreshAccount } from '../wallet/refresh-account.js';
 
-let isLoading = false;
-async function loadTerms(store) {
-  if (isLoading) {
-    return;
-  }
-  isLoading = true;
-  try {
-    const response = await fetch('https://raw.githubusercontent.com/web3space/wallet/master/TERMS.md');
-    store.current.termsMarkdown = await response.text();
-    store.current.loading = false;
-  }catch(e) {
-    console.error(e);
-    setTimeout(loadTerms.bind(this, store), 1000);
-  }
-}
+
 
 const showToast = message => {
   this.toastify.show(message, 3000);
@@ -49,7 +35,7 @@ const showToast = message => {
 const number = 4;
 
 export default ({ store, web3t }) => {
-  loadTerms(store);
+  //loadTerms(store);
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
