@@ -13,7 +13,6 @@ import {
   Header,
   Thumbnail
 } from "native-base";
-import { StatusBar } from "react-native";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
 import styles from "../Styles.js";
@@ -24,6 +23,7 @@ import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import Spinner from "../utils/spinner.js";
+import StatusBar from "../components/StatusBar.js";
 
 const showToast = message => {
   console.log(message);
@@ -288,7 +288,7 @@ class Withdraw extends React.Component {
               <Thumbnail small source={{ uri: wallet.coin.image }} />
             </Right>
           </Header>
-          <StatusBar hidden={true} />
+          <StatusBar />
           <RefreshControl swipeRefresh={refreshToken}>
             <View style={styles.bodyBlock}>
               <View>

@@ -1,3 +1,4 @@
+import {Font} from "expo";
 import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
@@ -11,12 +12,20 @@ export default class App extends React.Component {
     AppReady: null
   };
 
+  async loadFonts() {
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+    });
+  }
+
   componentDidMount() {
-    setTimeout(() => {
-      Promise.all([prngSync, localStoragePromise]).then(() => {
+    // TODO: Comment why this timeout is needed or remove
+    // setTimeout(() => {
+      Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
         this.setState({ AppReady: require("./App-ready.js").default });
       });
-    }, 1500);  
+    // }, 1500);
 
 
 

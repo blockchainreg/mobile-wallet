@@ -10,7 +10,7 @@ import {
   Right,
   Button
 } from "native-base";
-import { Image, StatusBar, ImageBackground, runAfterInteractions, InteractionManager } from "react-native";
+import { Image, ImageBackground, runAfterInteractions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -22,6 +22,7 @@ import SvgUri from "react-native-svg-uri";
 import Spinner from "../utils/spinner.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
+import StatusBar from "../components/StatusBar.js";
 
 
 export default ({ store, web3t }) => {
@@ -29,64 +30,89 @@ export default ({ store, web3t }) => {
     console.log('Trying to show toast', message);
     this.toastify.show(message, 3000);
   };
-  const buttonActive = store => {
-    const login = async () => {
-      if (!check(store.current.pin)) {
-        store.current.pin = "";
-        return showToast("Incorrect pin");
-      }
-      store.current.pin = "";
-      store.userWallet = 200;
-      store.current.seed = get();
+  const loginQuick = () => {
+    const balancesSpinner = new Spinner(
+      store,
+      "Loading your balances",
+      {displayDescription: "true"}
+    );
+    setTimeout(() => {
+      store.current.page = "wallets";
 
-      //in case when we already have built objects we can just show it
-      if(store.current.account.wallets && store.current.account.wallets.length > 0) {
-          store.current.page = "wallets";
-
-          web3t.refresh(function(){
-
-          });
-
-          return;
-      }
-
-      const web3tInitSpinner = new Spinner(
-        store,
-        "Your wallet is being decrypting now",
-        {displayDescription: true}
-      );
-
-      InteractionManager.runAfterInteractions(() => {
-        web3t.init(function(err, data) {
-          //console.log("refresh", err, data);
+      web3t.refresh(function(err, data){
+          balancesSpinner.finish();
 
           if (err) {
-            return showToast(err + "");
+            store.current.page = "error";
+            store.current.error = err + "";
           }
 
-          store.current.page = "wallets";
-          //store.footerVisible = true;
-          const balancesSpinner = new Spinner(
-            store,
-            "Loading your balances",
-            {displayDescription: "auto"}
-          );
-          web3tInitSpinner.finish();
-          web3t.refresh(function(err, data){
-              balancesSpinner.finish();
+      });
+    }, 1);
+  };
 
-              if (err) {
-                store.current.page = "error";
-                store.current.error = err + "";
-              }
+  const loginSlow = () => {
+    const web3tInitSpinner = new Spinner(
+      store,
+      "Your wallet is being decrypting now",
+      {displayDescription: true}
+    );
 
-          });
+    setTimeout(() => {
+      web3t.init(function(err, data) {
+        if (err) {
+          return showToast(err + "");
+        }
+
+        store.current.page = "wallets";
+        const balancesSpinner = new Spinner(
+          store,
+          "Loading your balances",
+          {displayDescription: "true"}
+        );
+        web3tInitSpinner.finish();
+        web3t.refresh(function(err, data){
+            balancesSpinner.finish();
+
+            if (err) {
+              store.current.page = "error";
+              store.current.error = err + "";
+            }
+
         });
       });
-      // store.tab = "SetupSeed";
-      // store.footerVisible = false;
+    }, 1);
+  };
+
+  const buttonActive = store => {
+    const login = async () => {
+
+      const checkSpinner = new Spinner(
+        store,
+        "Checking your pin"
+      );
+      setTimeout(() => {
+        if (!check(store.current.pin)) {
+          checkSpinner.finish();
+          store.current.pin = "";
+          return showToast("Incorrect pin");
+        }
+
+        store.current.pin = "";
+        store.userWallet = 200;
+        store.current.seed = get();
+        checkSpinner.finish();
+
+
+        //in case when we already have built objects we can just show it
+        if(store.current.account.wallets && store.current.account.wallets.length > 0) {
+          loginQuick();
+          return;
+        }
+        loginSlow();
+      }, 1);
     };
-    const loginText = store.current.loading ? "..." : "Login";
+    const loginText = "Login";
     return (
       <GradientButton
         style={styles.gradientBtnPh}

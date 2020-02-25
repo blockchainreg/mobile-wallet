@@ -14,7 +14,7 @@ import {
   Thumbnail,
   Badge
 } from "native-base";
-import { View, ScrollView, Clipboard, Alert, Vibration, StatusBar } from "react-native";
+import { View, ScrollView, Clipboard, Alert, Vibration } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "./StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
@@ -47,7 +47,7 @@ export default (store) => {
     writeToClipboard(store.infoTransaction.from);
   };
 
-  return (  
+  return (
         <View>
 
           <View style={styles.detailsHistory}>

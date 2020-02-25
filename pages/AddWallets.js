@@ -15,7 +15,7 @@ import {
   Header
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, StatusBar, InteractionManager } from "react-native";
+import { ScrollView, StatusBar } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -43,13 +43,13 @@ const renderCoin = (store, web3t) => item => {
 
   const addItem = () => {
     const spinner = new Spinner(store, `Installing ${name}`, {displayDescription: "auto"});
-    InteractionManager.runAfterInteractions(() => {
+    setTimeout(() => {
       web3t.installQuick(item, (err, data) => {
         //console.log("install", err, data);
         //store.current.page = "wallets";
         spinner.finish();
       });
-    });
+    }, 1);
   };
 
   const deleteItem = () => {

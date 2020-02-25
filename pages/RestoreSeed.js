@@ -5,7 +5,6 @@ import {
   Keyboard,
   TouchableOpacity,
   ImageBackground,
-  StatusBar
 } from "react-native";
 import {
   Text,
@@ -31,6 +30,7 @@ import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
 import setupWallet from '../setupWallet.js';
+import StatusBar from "../components/StatusBar.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -56,7 +56,7 @@ export default ({ store, web3t }) => {
     store.current.page = tab;
   };
 
-  
+
   const done = () => {
       if (badSeed(store.current.seed))
         return;

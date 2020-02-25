@@ -5,7 +5,7 @@ export default class Spinner {
     store.current.loadingSpinners.push(this);
     this.isDescriptionPushed = false;
 
-    if (options.displayDescription === "auto") {
+    if (options.displayDescription === "auto" || options.displayDescription === undefined) {
       this.shouldDisplayDescriptionTimeout = setTimeout(() => {
         this.isDescriptionPushed = true;
         store.current.loadingDescriptions.push(description);

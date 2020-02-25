@@ -11,7 +11,7 @@ import {
   Icon,
   Thumbnail
 } from "native-base";
-import { Clipboard, Alert, Vibration, StatusBar, Share } from "react-native";
+import { Clipboard, Alert, Vibration, Share } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -19,6 +19,7 @@ import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
 import { QRCode } from 'react-native-custom-qr-codes-expo';
 import walletsFuncs from '../wallet/wallets-funcs.js';
+import StatusBar from "../components/StatusBar.js";
 
 const showToast = message => {
   console.log(message);
@@ -113,7 +114,7 @@ export default ({ store, web3t }) => {
             <Thumbnail small source={{ uri: wallet.coin.image }} />
           </Right>
         </Header>
-        <StatusBar hidden={true} />
+        <StatusBar />
         <RefreshControl swipeRefresh={refreshToken}>
           <View style={styles.bodyBlock}>
             <View>

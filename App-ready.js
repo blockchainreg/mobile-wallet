@@ -33,7 +33,7 @@ const renderSpinner = ({ store }) => {
         visible={isVisible}
         overlayColor="rgba(41, 12, 100, 0.90)"
         textStyle={{ color: 'white', textShadowColor: 'transparent' }}
-        indicatorStyle={{ color: 'white', justifyContent: 'start', top: 50 }}
+        indicatorStyle={{ color: 'white', justifyContent: 'flex-start', top: 50 }}
         size="large"
         animation="fade"
         textContent={text}
@@ -43,16 +43,16 @@ const renderSpinner = ({ store }) => {
     );
 };
 
-const Main = observer(({ store }) => {
-  
-  // console.log("current descriptions", current.loadingDescriptions);
-  
+const Main = observer(({ store, current }) => {
 
-  const page = pages[store.current.page];
+  // console.log("current descriptions", current.loadingDescriptions);
+
+
+  const page = pages[current.page];
   if (!page) {
     return (
-      <View style={{alignItems: 'stretch', justifyContent: 'center', flex: 1, backgroundColor: '#fff'}}>
-        <Text>Page {store.current.page} not found</Text>
+      <View style={{alignItems: 'stretch', justifyContent: 'flex-center', flex: 1, backgroundColor: '#fff'}}>
+        <Text>Page {current.page} not found</Text>
       </View>
     );
   }
@@ -60,11 +60,11 @@ const Main = observer(({ store }) => {
     <>
       {renderSpinner({ store })}
       {HistoryDetail({ store })}
-      {store.current.confirmation
+      {current.confirmation
         ?<Confirm
-          confirmation={store.current.confirmation}
-          onYes={() => {store.current.confirmationCallback(true)}}
-          onNo={() => {store.current.confirmationCallback(false)}}
+          confirmation={current.confirmation}
+          onYes={() => {current.confirmationCallback(true)}}
+          onNo={() => {current.confirmationCallback(false)}}
         />
         :null
       }
@@ -86,7 +86,7 @@ intercept(store.current, "page", (x)=> {
 const resetTimer = () => {
     //console.log("reset timer");
     clearTimeout(state.timer);
-    state.timer = setTimeout(lockWallet, 120000)
+    state.timer = setTimeout(lockWallet, 60000)
     return true;
 }
 
@@ -136,7 +136,7 @@ export default class AppReady extends React.Component {
       return <StartPage store={store} />;
     }
     return (
-      <Main store={store} />
+      <Main store={store} current={store.current}/>
     );
   }
 }

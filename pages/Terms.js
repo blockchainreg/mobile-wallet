@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, ImageBackground, ScrollView, StatusBar } from "react-native";
+import { Image, ImageBackground, ScrollView } from "react-native";
 import {
   Text,
   Button,
@@ -18,6 +18,7 @@ import Hyperlink from "react-native-hyperlink";
 import {set} from "../wallet/seed.js";
 import Markdown from 'react-native-markdown-display';
 import Images from '../Images.js';
+import StatusBar from "../components/StatusBar.js";
 
 const buttonAccept = store => {
   const changePage = (tab) => () => {

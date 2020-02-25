@@ -20,7 +20,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  StatusBar
 } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //import ModalComponent from "react-native-modal-component";
@@ -34,6 +33,7 @@ import { Linking } from "react-native";
 
 import navigate from "../wallet/navigate.js";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
+import StatusBar from "../components/StatusBar.js";
 
 
 import Images from '../Images.js';
@@ -135,7 +135,7 @@ export default ({ store, web3t }) => {
     return (
       <View style={styles.viewFlex}>
           <StandardLinearGradient>
-            <StatusBar hidden={true} />
+            <StatusBar />
             <Header style={styles.mtAndroid}>
               <Left style={styles.viewFlex}>
                 <Button

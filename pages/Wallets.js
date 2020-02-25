@@ -15,16 +15,16 @@ import {
   Header
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, StatusBar } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
-// import StatusBar from "../components/StatusBar.js";
 import Footer from "./Footer.js";
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import walletFuncs from '../wallet/wallet-funcs.js';
 import applyTransactions from '../wallet/apply-transactions.js';
 import { times } from "../wallet/math.js";
+import StatusBar from "../components/StatusBar.js";
 
 
 
@@ -56,7 +56,7 @@ const wallets = (store, web3t) => {
     }
 
     const { active, balance, balanceUsd, pending, usdRate } = walletFuncs(store, web3t, wallets, wallet);
-    
+
 
     return (
       <ListItem

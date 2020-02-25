@@ -4,8 +4,7 @@ import {
   Clipboard,
   Keyboard,
   TouchableOpacity,
-  ImageBackground,
-  StatusBar
+  ImageBackground
 } from "react-native";
 import {
   Text,
@@ -30,6 +29,7 @@ import GradientButton from "react-native-gradient-buttons";
 import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
+import StatusBar from "../components/StatusBar.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";

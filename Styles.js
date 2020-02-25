@@ -72,7 +72,7 @@ export default StyleSheet.create({
           android: {
             borderRadius: 0,
             height: "auto",
-            backgroundColor: ""
+            backgroundColor: "transparent"
           }
         })
       }

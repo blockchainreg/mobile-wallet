@@ -11,12 +11,13 @@ import {
   Left,
   Right
 } from "native-base";
-import { Image, ImageBackground, StatusBar } from "react-native";
+import { Image, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import { set, check } from '../wallet/pin.js';
 import Images from '../Images.js';
+import StatusBar from "../components/StatusBar.js";
 
 const showToast = message => {
   // console.log(message);
