@@ -10,6 +10,8 @@ export default ({ store }) => {
     store.current.page = tab;
     if(tab == "history") {
       store.current.filter = [ '*' ]
+      store.current.filterVal.temp = "";
+      store.current.filterVal.apply = "";
       applyTransactions(store);
     }
   };

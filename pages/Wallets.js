@@ -47,6 +47,8 @@ const wallets = (store, web3t) => {
       store.current.filter.push("IN");
       store.current.filter.push("OUT");
       store.current.filter.push(wallet.coin.token);
+      store.current.filterVal.temp = "";
+      store.current.filterVal.apply = "";
       applyTransactions(store);
       store.current.page = "wallet";
 
