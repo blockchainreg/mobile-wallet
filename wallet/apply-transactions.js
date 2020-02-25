@@ -3,21 +3,32 @@
   var ref$, sortBy, reverse, filter;
   ref$ = require('prelude-ls'), sortBy = ref$.sortBy, reverse = ref$.reverse, filter = ref$.filter;
   module.exports = function(store){
-    var filt, filterTxs, this$ = this;
+    var filt, filt2, filterVal, filterTxs, this$ = this;
     filt = store.current.filter;
-    filterTxs = function(tx){
-      var type, token;
-      type = tx.type, token = tx.token;
-      return in$(type, filt) && in$(token, filt);
+    filt2 = store.current.filterVal.apply;
+    filterVal = function(tx){
+      var ref$;
+      if ((filt2 != null ? filt2 : "").length === 0) {
+        return true;
+      }
+      return ((ref$ = tx.from) != null ? ref$ : "").indexOf(filt2) > -1 || ((ref$ = tx.to) != null ? ref$ : "").indexOf(filt2) > -1;
     };
-    store.transactions.applied = reverse(
+    filterTxs = function(tx){
+      var type, token, r, r2;
+      if (filt.indexOf('*') > -1) {
+        return true;
+      }
+      type = tx.type, token = tx.token;
+      r = in$(type, filt) && in$(token, filt);
+      r2 = filterVal(tx);
+      return r && r2;
+    };
+    return store.transactions.applied = reverse(
     sortBy(function(it){
       return it.time;
     })(
     filter(filterTxs)(
     store.transactions.all)));
-    // console.log('tx-length', store.transactions.all.length);
-    // return console.log('atx-length', store.transactions.applied.length);
   };
   function in$(x, xs){
     var i = -1, l = xs.length >>> 0;

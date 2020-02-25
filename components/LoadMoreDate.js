@@ -1,9 +1,10 @@
 import React, { Component } from "react"; //import react in our code.
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
-import { List, ListItem, Left, Body, Right, Thumbnail } from "native-base";
+import { List, ListItem, Left, Body, Right, Thumbnail, Header, Item, Icon, Button, Input } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
 import Images from "../Images.js";
+import applyTransactions from '../wallet/apply-transactions.js';
 
 const checkType = type => {
   switch (type) {
@@ -37,16 +38,46 @@ const thumbnail = type => {
   }
 };
 
+
 export default ({ store, web3t }) => {
 
     const txs = store.transactions.applied;
 
     const showTransaction = (transaction) => {
-      store.infoTransaction = transaction;
+        store.infoTransaction = transaction;
     };
+
+    const applyFilter = () => {
+        store.current.filterVal.apply = store.current.filterVal.temp;
+        applyTransactions(store);
+    }
+
+    const changeSearch = (e) => {
+        store.current.filterVal.temp = e;
+    }
+
+    const clearFilter = () => {
+        store.current.filterVal.temp = "";
+        store.current.filterVal.apply = "";
+        applyTransactions(store);
+    }
 
     return (
       <View style={styles.container}>
+
+        {store.history.filterOpen ? (
+          <Header searchBar rounded style={{ paddingBottom: 20, height: 40 }}>
+                <Item>
+                  <Icon name="ios-search" />
+                  <Input placeholder="Search" value={store.current.filterVal.temp} onChangeText={changeSearch} />
+                  <Icon name="ios-trash" onPress={clearFilter} />
+                </Item>
+                <Button transparent onPress={applyFilter}>
+                  <Text>Filter</Text>
+                </Button>
+          </Header>
+        ) : null}
+
         {store.current.refreshing ? (
           <ActivityIndicator color="#707070" />
         ) : (
@@ -58,6 +89,8 @@ export default ({ store, web3t }) => {
                 </Text>
               </View>
             )}
+
+
             <List>
               {txs.map(transaction => (
                 //{ token, tx, amount, fee, time, url, type, pending } = tran

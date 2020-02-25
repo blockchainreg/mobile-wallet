@@ -3,10 +3,15 @@ import { Footer, FooterTab, Button } from "native-base";
 import { observer } from "mobx-react";
 import styles from "../Styles.js";
 import { Ionicons } from "@expo/vector-icons";
+import applyTransactions from "../wallet/apply-transactions.js";
 
 export default ({ store }) => {
   const changeTab = (tab) => () => {
     store.current.page = tab;
+    if(tab == "history") {
+      store.current.filter = [ '*' ]
+      applyTransactions(store);
+    }
   };
   return (
     <Footer style={styles.footerHeight}>

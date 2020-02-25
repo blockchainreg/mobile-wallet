@@ -47,7 +47,7 @@ export default (store) => {
     writeToClipboard(store.infoTransaction.from);
   };
 
-  return (
+  return (  
         <View>
 
           <View style={styles.detailsHistory}>
