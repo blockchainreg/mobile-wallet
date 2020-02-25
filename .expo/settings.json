@@ -3,6 +3,6 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "cz-uqm",
+  "urlRandomness": null,
   "https": false
 }
