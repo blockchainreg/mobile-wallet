@@ -114,7 +114,7 @@ export default ({ store, web3t }) => {
                     onPressAction={continueProcess}
                   />
                   <Text style={styles.textCard}>
-                    Please enter the {number} word to confirm that you saved it
+                    Please enter the {number}th word to confirm that you saved it
                     in a safe place
                   </Text>
                 </View>
