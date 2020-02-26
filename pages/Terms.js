@@ -27,7 +27,6 @@ const buttonAccept = store => {
     }
     set(store.current.seed);
     store.current.page = tab;
-    store.current.loading = false;
   };
   return (
     <GradientButton

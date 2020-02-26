@@ -43,7 +43,11 @@
       if (coin == null) {
         return cb(null, []);
       }
+      var dt = Date.now();
+
+      //it is very slow on android
       return generateCoinWallet(coin, function(err, walletOrNull){
+        console.log('generateCoinWallet', Date.now() - dt, coin.token);
         if (err != null) {
           return cb(err);
         }
@@ -79,7 +83,6 @@
         wallets: []
       });
     }
-
     return generateCoinWallets(store.coins, function(err, wallets){
       if (err != null) {
         return cb(err);

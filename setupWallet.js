@@ -1,10 +1,13 @@
 const terms = require("./terms.js");
+import Spinner from "./utils/spinner.js";
 
 async function loadTerms(store) {
   try {
     const response = await fetch('https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md');
     store.current.termsMarkdown = await response.text();
   }catch(e) {
+    console.error(e);
+    setTimeout(loadTerms.bind(this, store), 1000);
   }
 }
 
@@ -15,14 +18,15 @@ module.exports = (store, web3t) => {
   web3t.init(function(err, data) {
 
       if (err) {
+          spinner.finish();
           store.current.page = "error";
           store.current.error = err + "";
           return;
       }
-      store.current.loading = true;
-      
+      const spinner = new Spinner(store, `Setting up your wallet`);
+
       web3t.refresh(function(err, data){
-        store.current.loading = false;
+        spinner.finish();
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";
@@ -30,4 +34,4 @@ module.exports = (store, web3t) => {
       });
     });
 
-} 
+}

@@ -42,7 +42,7 @@ const renderCoin = (store, web3t) => item => {
 
 
   const addItem = () => {
-    const spinner = new Spinner(store, `Installing ${name}`, {displayDescription: "auto"});
+    const spinner = new Spinner(store, `Installing ${name}`);
     setTimeout(() => {
       web3t.installQuick(item, (err, data) => {
         //console.log("install", err, data);
@@ -53,7 +53,7 @@ const renderCoin = (store, web3t) => item => {
   };
 
   const deleteItem = () => {
-    const spinner = new Spinner(store, `Uninstalling ${name}`, {displayDescription: "auto"});
+    const spinner = new Spinner(store, `Uninstalling ${name}`);
     console.log("Removing coin", name);
     //BUG: This works unstable
     web3t.uninstall(item.token, (err, data) => {
