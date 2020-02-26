@@ -84,7 +84,6 @@ intercept(store.current, "page", (x)=> {
 })
 
 const resetTimer = () => {
-    //console.log("reset timer");
     clearTimeout(state.timer);
     state.timer = setTimeout(lockWallet, 60000)
     return true;
@@ -93,9 +92,9 @@ const resetTimer = () => {
 
 const lockWallet = () => {
 
-      if (store.current.page !== "wallets" || store.current.loading == true) {
+      if (store.current.page !== "wallets" || store.current.loading == true)
         return resetTimer();
-      }
+      
       store.current.page = "locked";
       resetTimer();
 };
