@@ -67,6 +67,7 @@ export default ({ store }) => {
         </View>
     );
   };
+  const lang = getLang(store);
 
   return (
     <View style={styles.viewFlex}>

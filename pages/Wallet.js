@@ -41,6 +41,7 @@ import Images from '../Images.js';
 
 export default ({ store, web3t }) => {
 
+    const lang = getLang(store);
     const wallets = walletsFuncs(store, web3t).wallets;
     const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 

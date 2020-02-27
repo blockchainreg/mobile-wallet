@@ -26,6 +26,8 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 
 export default ({ store, web3t }) => {
+
+  const lang = getLang(store);
   const changePage = tab => () => {
       store.tab = tab;
   };

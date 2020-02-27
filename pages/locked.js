@@ -31,6 +31,7 @@ export default ({ store, web3t }) => {
     console.log('Trying to show toast', message);
     this.toastify.show(message, 3000);
   };
+  const lang = getLang(store);
   const loginQuick = () => {
     const balancesSpinner = new Spinner(
       store,

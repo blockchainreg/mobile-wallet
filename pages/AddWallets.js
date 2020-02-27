@@ -92,6 +92,9 @@ const renderCoin = (store, web3t) => item => {
 };
 
 export default ({ store, web3t }) => {
+
+  const lang = getLang(store);
+
   const changePage = tab => () => {
     store.current.page = tab;
   };

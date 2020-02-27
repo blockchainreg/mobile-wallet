@@ -113,6 +113,7 @@ export default ({ store }) => {
   const handleChangeEmailResetPas = async text => {
     store.resetPasswordInputMailField = text;
   };
+  const lang = getLang(store);
   const inputResetPasMail = store => {
     return (
       <Item regular style={styles.borderItem}>

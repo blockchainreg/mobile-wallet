@@ -181,6 +181,7 @@ class Withdraw extends React.Component {
   }
   render() {
     const {store, web3t} = this.props;
+    const lang = getLang(store);
     const {
       token,
       feeToken,

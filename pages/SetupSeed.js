@@ -76,6 +76,8 @@ export default ({ store }) => {
     store.current.seed = seed;
   }
 
+  const lang = getLang(store);
+
 
 
   return (

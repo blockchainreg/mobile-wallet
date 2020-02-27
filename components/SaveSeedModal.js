@@ -8,6 +8,7 @@ import styles from "../Styles.js";
 import getLang from '../wallet/get-lang.js';
 
 export default ({ store }) => {
+  const lang = getLang(store);
   const changePage = (tab, visible) => () => {
     store.tab = tab;
     store.footerVisible = visible;

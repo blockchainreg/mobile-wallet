@@ -29,6 +29,7 @@ const showToast = message => {
 
 
 export default ({ store, web3t }) => {
+  const lang = getLang(store);
   const buttonCopy = store => {
     const DURATION = 10000;
     const writeToClipboardAddr = async () => {

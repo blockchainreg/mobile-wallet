@@ -25,6 +25,7 @@ import getLang from '../wallet/get-lang.js';
 
 export default (store) => {
 
+  const lang = getLang(store);
   const writeToClipboard = async (info) => {
     await Clipboard.setString(
       info

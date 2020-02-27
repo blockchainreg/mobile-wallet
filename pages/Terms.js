@@ -52,6 +52,7 @@ const markdownStyle = {
 
 
 export default ({ store }) => {
+  const lang = getLang(store);
   const terms = store => {
     return (
       <View style={{ alignItems: "flex-start" }}>

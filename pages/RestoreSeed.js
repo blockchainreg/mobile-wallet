@@ -89,6 +89,8 @@ export default ({ store, web3t }) => {
 
   };
 
+  const lang = getLang(store);
+
   return (
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}

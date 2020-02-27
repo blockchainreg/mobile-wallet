@@ -42,6 +42,7 @@ const thumbnail = type => {
 
 export default ({ store, web3t }) => {
 
+    const lang = getLang(store);
     const txs = store.transactions.applied;
 
     const showTransaction = (transaction) => {

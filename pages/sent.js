@@ -72,6 +72,7 @@ import getLang from '../wallet/get-lang.js';
 
 export default ({ store, web3t }) => {
   const url = store.current.lastTxUrl;
+  const lang = getLang(store);
   return (
     <View style={styles.containerModal}>
       <StandardLinearGradient>

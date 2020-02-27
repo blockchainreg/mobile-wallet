@@ -7,6 +7,7 @@ import getLang from '../wallet/get-lang.js';
 
 module.exports = ({ store }) => {
     if (store.infoTransaction == null) return null;
+    const lang = getLang(store);
     return (
       <View style={styles.viewMonoHistory}>
         <View style={{ paddingTop: 30 }}>

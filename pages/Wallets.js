@@ -34,7 +34,7 @@ const wallets = (store, web3t) => {
   };
 
 
-
+  const lang = getLang(store);
   const wallets = walletsFuncs(store, web3t).wallets;
 
   const listItem =  (wallet) => {

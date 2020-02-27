@@ -41,6 +41,7 @@ import {
 
 
 export default ({ store }) => {
+  const lang = getLang(store);
   return (
     <View style={styles.containerModal}>
       <Modal isVisible={true} hasBackdrop={true}>

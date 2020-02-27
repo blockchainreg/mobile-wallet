@@ -5,6 +5,7 @@ import getLang from '../wallet/get-lang.js';
 export default class Confirm extends Component {
 
   render() {
+    //const lang = getLang(store);
     return (
       <ConfirmDialog
         title="Confirm Dialog"

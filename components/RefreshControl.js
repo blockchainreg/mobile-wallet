@@ -22,10 +22,11 @@ export default ({ children, swipeRefresh }) => {
         wait(2000).then(() => setRefreshing(false));
     }, [refreshing]);
    */
-   refreshing =false
-   const onRefresh = (err, data)=> {
+  refreshing =false
+  const onRefresh = (err, data)=> {
       swipeRefresh();
-   }
+  }
+  //const lang = getLang(store);
   return (
       <ScrollView
         refreshControl={

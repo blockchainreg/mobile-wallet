@@ -32,6 +32,7 @@ export default ({ store }) => {
   const termsBtn = async () => {
     store.current.page = "terms";
   };
+  const lang = getLang(store);
 
 
   return (

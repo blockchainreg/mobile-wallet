@@ -86,6 +86,7 @@ const buttonInactive = store => {
 // };
 
 export default ({ store }) => {
+  const lang = getLang(store);
   const changePage = (tab, visible) => () => {
     store.tab = tab;
     store.footerVisible = visible;
