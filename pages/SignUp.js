@@ -18,6 +18,7 @@ import Toast from "@rimiti/react-native-toastify";
 import { set, check } from '../wallet/pin.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 const showToast = message => {
   // console.log(message);

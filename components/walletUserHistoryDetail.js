@@ -20,6 +20,7 @@ import StandardLinearGradient from "./StandardLinearGradient.js";
 import ModalComponent from "react-native-modal-component";
 import moment from "moment";
 //import LoadMoreAllDate from "./LoadMoreAllDate";
+import getLang from '../wallet/get-lang.js';
 
 
 export default (store) => {

@@ -16,6 +16,7 @@ import GradientButton from "react-native-gradient-buttons";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
+import getLang from '../wallet/get-lang.js';
 
 const showToast = message => {
   console.log(message);

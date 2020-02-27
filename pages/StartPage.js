@@ -3,6 +3,8 @@ import { View } from 'native-base';
 import { Image, ImageBackground } from 'react-native';
 import styles from '../Styles.js';
 import Images from '../Images.js';
+import getLang from '../wallet/get-lang.js';
+
 
 export default ({ store }) => {
   return (

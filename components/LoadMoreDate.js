@@ -5,6 +5,7 @@ import styles from "../Styles.js";
 import moment from "moment";
 import Images from "../Images.js";
 import applyTransactions from '../wallet/apply-transactions.js';
+import getLang from '../wallet/get-lang.js';
 
 const checkType = type => {
   switch (type) {

@@ -646,10 +646,8 @@
     vout));
     amount = unspend != null ? unspend.value : void 8;
     to = address;
-    return url = net.api.url + "/tx/" + tx;
-  };
-  ({
-    TODO: {
+    url = net.api.url + "/tx/" + tx;
+    return {
       network: network,
       tx: tx,
       amount: amount,
@@ -658,10 +656,10 @@
       url: url,
       to: to,
       pending: pending
-    }
-  });
+    };
+  };
   transformOut = function(arg$, t){
-    var net, address, network, tx, time, fee, ref$, vout, pending, outcoming, amount, to, url, this$ = this;
+    var net, address, network, tx, time, fee, ref$, vout, pending, outcoming, amount, to, url, from, this$ = this;
     net = arg$.net, address = arg$.address;
     network = net.token;
     tx = t.txid;
@@ -684,10 +682,9 @@
     to = outcoming.map(function(it){
       return it.address;
     }).join(",");
-    return url = net.api.url + "/tx/" + tx;
-  };
-  ({
-    TODO: {
+    url = net.api.url + "/tx/" + tx;
+    from = address;
+    return {
       network: network,
       tx: tx,
       amount: amount,
@@ -696,8 +693,8 @@
       url: url,
       to: to,
       pending: pending
-    }
-  });
+    };
+  };
   transformTx = curry$(function(config, t){
     var selfSender, ref$;
     selfSender = find(function(it){

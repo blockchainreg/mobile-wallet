@@ -3,6 +3,7 @@ import {
   ScrollView,
   RefreshControl,
 } from 'react-native';
+import getLang from '../wallet/get-lang.js';
 
 function wait(timeout) {
   return new Promise(resolve => {

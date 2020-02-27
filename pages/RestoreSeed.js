@@ -31,6 +31,7 @@ import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
 import setupWallet from '../setupWallet.js';
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";

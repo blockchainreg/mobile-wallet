@@ -5,6 +5,7 @@ import { Image } from "react-native";
 import styles from "../Styles.js";
 import Images from '../Images.js';
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
+import getLang from '../wallet/get-lang.js';
 
 // export default ({ store }) => {
 //   const handleOpenModalPress = store => {

@@ -23,6 +23,7 @@ import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
 import setupWallet from '../setupWallet.js';
+import getLang from '../wallet/get-lang.js';
 //import { generateMnemonic } from 'bip39';
 //import { refreshAccount } from '../wallet/refresh-account.js';
 
@@ -36,6 +37,9 @@ const number = 4;
 
 export default ({ store, web3t }) => {
   //loadTerms(store);
+
+  const lang = getLang(store);
+
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
@@ -79,7 +83,7 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Confirmation</Text>
+          <Text style={styles.textH1Seed}>$(lang.confirmation)</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>

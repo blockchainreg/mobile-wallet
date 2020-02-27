@@ -3,7 +3,7 @@ import { Text, Button, View } from "native-base";
 import styles from "../Styles.js";
 import { ScrollView } from "react-native";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
-
+import getLang from '../wallet/get-lang.js';
 
 module.exports = ({ store }) => {
     if (store.infoTransaction == null) return null;

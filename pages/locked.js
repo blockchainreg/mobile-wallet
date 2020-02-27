@@ -23,6 +23,7 @@ import Spinner from "../utils/spinner.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 
 export default ({ store, web3t }) => {

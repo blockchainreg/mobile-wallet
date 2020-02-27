@@ -25,7 +25,7 @@ import walletFuncs from '../wallet/wallet-funcs.js';
 import applyTransactions from '../wallet/apply-transactions.js';
 import { times } from "../wallet/math.js";
 import StatusBar from "../components/StatusBar.js";
-
+import getLang from '../wallet/get-lang.js';
 
 
 const wallets = (store, web3t) => {

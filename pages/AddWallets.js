@@ -30,6 +30,7 @@ import ltc from "../registry/ltc.json";
 import usdt from "../registry/usdt.json";
 import usdt_erc20 from "../registry/usdt_erc20.json";
 import walletsFuncs from "../wallet/wallets-funcs.js";
+import getLang from '../wallet/get-lang.js';
 //
 
 const coinItems = [dash, etc, eth, ltc, usdt, usdt_erc20];
@@ -54,10 +55,10 @@ const renderCoin = (store, web3t) => item => {
 
   const deleteItem = () => {
     const spinner = new Spinner(store, `Uninstalling ${name}`);
-    console.log("Removing coin", name);
+    //console.log("Removing coin", name);
     //BUG: This works unstable
     web3t.uninstall(item.token, (err, data) => {
-      console.log("Remove coin result", err, data);
+      //console.log("Remove coin result", err, data);
       //store.current.page = "wallets";
       spinner.finish();
     });

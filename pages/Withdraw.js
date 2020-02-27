@@ -24,6 +24,7 @@ import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import Spinner from "../utils/spinner.js";
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 const showToast = message => {
   console.log(message);

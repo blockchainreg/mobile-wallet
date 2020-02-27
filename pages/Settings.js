@@ -18,7 +18,7 @@ import Switch from "react-native-switch-pro";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
-
+import getLang from '../wallet/get-lang.js';
 
 
 

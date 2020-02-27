@@ -30,6 +30,7 @@ import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";

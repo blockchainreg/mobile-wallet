@@ -23,6 +23,7 @@ import moment from "moment";
 import LoadMoreDate from "../components/LoadMoreDate";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 export default ({ store, web3t }) => {
   const changePage = tab => () => {

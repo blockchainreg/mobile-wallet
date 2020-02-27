@@ -294,8 +294,8 @@ transform-in = ({ net, address }, t)->
     amount = unspend?value
     to = address
     url = "#{net.api.url}/tx/#{tx}"
-TODO:
-# make "from" field like this from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
+    #TODO:
+    # make "from" field like this from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
 
     { network, tx, amount, fee, time, url, to, pending }
 transform-out = ({ net, address }, t)->
@@ -315,8 +315,9 @@ transform-out = ({ net, address }, t)->
             |> foldl plus, 0
     to = outcoming.map(-> it.address).join(",")
     url = "#{net.api.url}/tx/#{tx}"
-TODO:
-# make "from" field like this from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
+    from = address
+    #TODO:
+    # make "from" field like this from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
     { network, tx, amount, fee, time, url, to, pending }
 transform-tx = (config, t)-->
     self-sender =

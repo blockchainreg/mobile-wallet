@@ -34,7 +34,7 @@ import { Linking } from "react-native";
 import navigate from "../wallet/navigate.js";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 import StatusBar from "../components/StatusBar.js";
-
+import getLang from '../wallet/get-lang.js';
 
 import Images from '../Images.js';
 

@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Linking } from "react-native";
 import Modal from "react-native-modal";
 import { Image } from "react-native";
 import styles from "../Styles.js";
+import getLang from '../wallet/get-lang.js';
 import {
   List,
   ListItem,

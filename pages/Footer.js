@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import styles from "../Styles.js";
 import { Ionicons } from "@expo/vector-icons";
 import applyTransactions from "../wallet/apply-transactions.js";
+import getLang from '../wallet/get-lang.js';
 
 export default ({ store }) => {
   const changeTab = (tab) => () => {

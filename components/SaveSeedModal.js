@@ -5,6 +5,7 @@ import GradientButton from "react-native-gradient-buttons";
 import { Container, Content, Icon, Button } from "native-base";
 import { Image } from "react-native";
 import styles from "../Styles.js";
+import getLang from '../wallet/get-lang.js';
 
 export default ({ store }) => {
   const changePage = (tab, visible) => () => {

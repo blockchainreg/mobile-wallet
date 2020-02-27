@@ -19,6 +19,7 @@ import {set} from "../wallet/seed.js";
 import Markdown from 'react-native-markdown-display';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 const buttonAccept = store => {
   const changePage = (tab) => () => {

@@ -20,6 +20,7 @@ import RefreshControl from "../components/RefreshControl.js";
 import { QRCode } from 'react-native-custom-qr-codes-expo';
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import StatusBar from "../components/StatusBar.js";
+import getLang from '../wallet/get-lang.js';
 
 const showToast = message => {
   console.log(message);
