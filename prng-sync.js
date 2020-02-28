@@ -52,6 +52,8 @@ isSyncPrngRequestingAsyncBytes = true;
 // Pausing to attach debugger
 const startAt = Date.now();
 // while(Date.now() - 15000 < startAt);
+console.log("global.crypto.getRandomValues set before", !!global.crypto.getRandomValues);
+
 global.crypto.getRandomValues = () => {
   throw new Error('Crypto.getRandomValues called too early. We have no good random data yet. This usually happens when you import crypto library without waiting for prng-sync to finish initializing. Do things like this: import prngSync from "./prng-sync.js"; prngSync.then(() => { web3 = require("./wallet/web3.js").. do anything with web3');
 };

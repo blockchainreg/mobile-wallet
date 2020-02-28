@@ -94,7 +94,7 @@ const lockWallet = () => {
 
       if (store.current.page !== "wallets" || store.current.loading == true)
         return resetTimer();
-      
+
       store.current.page = "locked";
       resetTimer();
 };

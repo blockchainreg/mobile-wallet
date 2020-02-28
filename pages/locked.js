@@ -29,7 +29,7 @@ import getLang from '../wallet/get-lang.js';
 export default ({ store, web3t }) => {
   const showToast = message => {
     console.log('Trying to show toast', message);
-    this.toastify.show(message, 3000);
+    this.toastify && this.toastify.show(message, 3000);
   };
   const lang = getLang(store);
   const loginQuick = () => {
@@ -67,12 +67,13 @@ export default ({ store, web3t }) => {
         }
 
         store.current.page = "wallets";
+        web3tInitSpinner.finish();
         const balancesSpinner = new Spinner(
           store,
           "Loading your balances",
           {displayDescription: "true"}
         );
-        web3tInitSpinner.finish();
+        debugger;
         web3t.refresh(function(err, data){
             balancesSpinner.finish();
 

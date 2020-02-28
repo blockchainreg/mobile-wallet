@@ -7,7 +7,7 @@ async function makeProxy() {
     key => AsyncStorage.getItem(key).then(value => [key, value])
   ));
   console.log("Loaded localStorage", keys)
-  // const inMemoryStorage = Object.fromEntries(pairs);
+  // const inMemoryStorage = Object.fromEntries(pairs); - not implemented in rn
   const inMemoryStorage = {};
   for(let pair of pairs) {
     const [key, value] = pair;

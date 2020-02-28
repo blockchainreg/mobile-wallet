@@ -8295,10 +8295,10 @@ react-native-gesture-handler@1.2.1:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-gradient-buttons@1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/react-native-gradient-buttons/-/react-native-gradient-buttons-1.3.4.tgz#099a4e1973e2a48c1890de2c1bade782230b9da2"
-  integrity sha512-pn0pl8BIXTnicrC2BOzh72vJWhZRMjp6bhNErelIytc3DS+L8n+cVqtkzDEJq44h34Tv+LIcd4iNqfiK8eVD6A==
+react-native-gradient-buttons@1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/react-native-gradient-buttons/-/react-native-gradient-buttons-1.3.5.tgz#b88c4cdae4219d70df4ed76bfa43e6af65711df2"
+  integrity sha512-ZbQ9ho6QQGn0hyhdjEVgfcw/knJo28BX9Mg5u30JMIOK5vfe4TNuFeJhXQtKtgs2ugQfiviszMzeGzcApIlCBQ==
 
 react-native-hide-show-password-input@1.1.0:
   version "1.1.0"

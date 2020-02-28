@@ -4,6 +4,7 @@ export default class Spinner {
     this.store = store;
     store.current.loadingSpinners.push(this);
     this.isDescriptionPushed = false;
+    this.startedAt = Date.now();
 
     if (options.displayDescription === "auto" || options.displayDescription === undefined) {
       this.shouldDisplayDescriptionTimeout = setTimeout(() => {
@@ -21,6 +22,7 @@ export default class Spinner {
   }
 
   finish() {
+    console.log(this.description + " took " + (Date.now() - this.startedAt) + "ms");
     if (this.shouldDisplayDescriptionTimeout) {
       clearTimeout(this.shouldDisplayDescriptionTimeout);
       delete this.shouldDisplayDescriptionTimeout;

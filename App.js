@@ -1,4 +1,4 @@
-import {Font} from "expo";
+import * as Font from "expo-font";
 import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
@@ -46,6 +46,13 @@ export default class App extends React.Component {
         </View>
       );
     }
-    return <AppReady />;
+    return (
+      <View style={{
+        width: "100%",
+        height: "100%"
+        }}>
+        <AppReady />
+      </View>
+    );
   }
 }
