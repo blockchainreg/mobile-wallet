@@ -56,9 +56,7 @@
           items: items
         });
       }
-      console.log(url);
       return get(url).end(function(err, data){
-        console.log(err);
         return cb({
           err: err,
           data: data,
@@ -121,7 +119,7 @@
     var item;
     item = pairsToObj(
     map(function(it){
-      return [it.token, it.val];
+      return [it.token, it.val || 0];
     })(
     flatten(
     map(function(it){

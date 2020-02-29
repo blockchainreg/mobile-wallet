@@ -18,36 +18,35 @@
     return provider.calcFee(config, cb);
   });
 
-  var caches = Object.create(null);
-  out$.getKeys = getKeys = function(config, cb){
-    //getKeys is very slow on mobile wallet
-    //So we add caching. I bet it can be done sipmplier with standard ls library
+  // var caches = Object.create(null);
+  // out$.getKeys = getKeys = function(config, cb){
+  //   //getKeys is very slow on mobile wallet
+  //   //So we add caching. I bet it can be done sipmplier with standard ls library
+  //
+  //   var key = JSON.stringify(config);
+  //   if (!caches[key]) {
+  //     var result = null;
+  //     var q = [];
+  //     out$.getKeys_(config, (err, data) => {
+  //       result = {err, data};
+  //       while(q.length > 0) {
+  //         q.pop()(err, data);
+  //       }
+  //     });
+  //     caches[key] = cb => {
+  //       if (result) {
+  //         cb(result.err, result.data);
+  //         return;
+  //       }
+  //       q.push(cb);
+  //     };
+  //   }
+  //   return caches[key](cb);
+  // };
 
-    var key = JSON.stringify(config);
-    if (!caches[key]) {
-      var result = null;
-      var q = [];
-      out$.getKeys_(config, (err, data) => {
-        result = {err, data};
-        while(q.length > 0) {
-          q.pop()(err, data);
-        }
-      });
-      caches[key] = cb => {
-        if (result) {
-          cb(result.err, result.data);
-          return;
-        }
-        q.push(cb);
-      };
-    }
-    return caches[key](cb);
-  };
-
-  out$.getKeys_ = action(function(provider, config, cb){
-    return provider.getKeys(config, (...args) => {
-      return cb(...args);
-    });
+  out$.getKeys = action(function(provider, config, cb){
+    debugger;
+    return provider.getKeys(config, cb);
   });
   out$.getBalance = getBalance = action(function(provider, config, cb){
     return provider.getBalance(config, cb);
