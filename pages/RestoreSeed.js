@@ -76,7 +76,7 @@ export default ({ store, web3t }) => {
         <View style={seedContainerStyle}>
           <Textarea
             rowSpan={2}
-            placeholder="Your mnemonic phrase"
+            placeholder={lang.placeholderSeed}
             placeholderTextColor="rgba(255,255,255,0.60)"
             style={styles.inputSize}
             selectionColor={"#fff"}
@@ -109,7 +109,7 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Restore Your Seed</Text>
+          <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
@@ -133,7 +133,7 @@ export default ({ store, web3t }) => {
           </View>
           {/* {SaveSeedModal({ store })} */}
           <TouchableOpacity onPress={changePage("newseed")}>
-            <Text style={styles.textLoginStyle}>Back</Text>
+            <Text style={styles.textLoginStyle}>{lang.back}</Text>
           </TouchableOpacity>
         </View>
         {/* </View> */}

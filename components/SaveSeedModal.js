@@ -16,7 +16,7 @@ export default ({ store }) => {
   const handleOpenModalPress = store => {
     return (
       <TouchableOpacity onPress={() => (store.seedModal = true)}>
-        <Text style={styles.textLoginStyle}>CONTINUE</Text>
+        <Text style={styles.textLoginStyle}>{lang.continue}</Text>
       </TouchableOpacity>
     );
   };
@@ -32,7 +32,7 @@ export default ({ store }) => {
     return (
       <GradientButton
         style={styles.gradientBtn2}
-        text={"Confirm"}
+        text={lang.confirm}
         textStyle={{ fontSize: 18 }}
         gradientBegin="#74EBEE"
         gradientEnd="#009EFD"
@@ -51,7 +51,7 @@ export default ({ store }) => {
         style={styles.btnClose}
         onPress={() => (store.seedModal = false)}
       >
-        <Text style={styles.btnTextClose}>Cancel</Text>
+        <Text style={styles.btnTextClose}>{lang.cancel}</Text>
       </TouchableOpacity>
     );
   };
@@ -62,7 +62,7 @@ export default ({ store }) => {
       <Modal isVisible={store.seedModal} hasBackdrop={true}>
         <View style={styles.modalContent}>
           <Text style={styles.textSnackBar}>
-            Please confirm that you stored this phrase in safe place?
+            {lang.phraseSafePlace}
           </Text>
           {buttonPressLogout(store)}
           {handleCloseModalPress(store)}

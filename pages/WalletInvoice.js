@@ -35,12 +35,12 @@ export default ({ store, web3t }) => {
     const writeToClipboardAddr = async () => {
       await Clipboard.setString(wallet.address);
       Vibration.vibrate(DURATION);
-      Alert.alert("Copied to clipboard", "", [{ text: "OK" }]);
+      Alert.alert(lang.copied, "", [{ text: lang.ok }]);
     };
     return (
       <GradientButton
         style={styles.gradientBtn2}
-        text="Copy"
+        text={lang.copy}
         textStyle={{ fontSize: 18 }}
         gradientBegin="#9d41eb"
         gradientEnd="#9d41eb"
@@ -63,7 +63,7 @@ export default ({ store, web3t }) => {
     return (
       <GradientButton
         style={styles.gradientBtn2}
-        text="Share"
+        text={lang.share}
         textStyle={{ fontSize: 18 }}
         gradientBegin="#3CD5AF"
         gradientEnd="#3CD5AF"
@@ -110,7 +110,7 @@ export default ({ store, web3t }) => {
             </Button>
           </Left>
           <Body style={styles.viewFlex}>
-            <Title style={styles.titleBlack}>Receive</Title>
+            <Title style={styles.titleBlack}>{lang.receive}</Title>
           </Body>
           <Right style={styles.viewFlex}>
             <Thumbnail small source={{ uri: wallet.coin.image }} />
@@ -122,7 +122,7 @@ export default ({ store, web3t }) => {
             <View>
               <View style={styles.bodyBalance}>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.title1}>Your {wallet.coin.token.toUpperCase()} address</Text>
+                  <Text style={styles.title1}>{lang.your} {wallet.coin.token.toUpperCase()} {lang.address}</Text>
                 </View>
               </View>
 

@@ -10,9 +10,9 @@ import getLang from '../wallet/get-lang.js';
 const checkType = type => {
   switch (type) {
     case "IN":
-      return <Text style={styles.txtSizeHistory}>Receive</Text>;
+      return <Text style={styles.txtSizeHistory}>{lang.receive}</Text>;
     case "OUT":
-      return <Text style={styles.txtSizeHistory}>Sent</Text>;
+      return <Text style={styles.txtSizeHistory}>{lang.sent}</Text>;
     default:
       return null;
   }
@@ -75,7 +75,7 @@ export default ({ store, web3t }) => {
                   <Icon name="ios-trash" onPress={clearFilter} />
                 </Item>
                 <Button transparent onPress={applyFilter}>
-                  <Text>Filter</Text>
+                  <Text>{lang.filter}</Text>
                 </Button>
           </Header>
         ) : null}
@@ -87,7 +87,7 @@ export default ({ store, web3t }) => {
             {txs.length == 0 && (
               <View style={styles.footer}>
                 <Text style={styles.textContainer}>
-                  Oops! You have no any transaction yet
+                {lang.nothingToShow}
                 </Text>
               </View>
             )}
@@ -120,7 +120,7 @@ export default ({ store, web3t }) => {
                       {transaction.amount} {transaction.token.toUpperCase()}
                     </Text>
                     <Text style={styles.constDate}>
-                    (fee: {transaction.fee}{" "}{transaction.token.toUpperCase()})
+                    ({lang.fee}: {transaction.fee}{" "}{transaction.token.toUpperCase()})
                     </Text>
                   </Right>
                 </ListItem>

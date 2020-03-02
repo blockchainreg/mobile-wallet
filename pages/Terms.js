@@ -29,10 +29,11 @@ const buttonAccept = store => {
     set(store.current.seed);
     store.current.page = tab;
   };
+  const lang = getLang(store);
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text="Accept"
+      text={lang.accept}
       textStyle={{ fontSize: 14 }}
       gradientBegin="#9d41eb"
       gradientEnd="#9d41eb"
@@ -79,7 +80,7 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Terms of Use</Text>
+          <Text style={styles.textH1Seed}>{lang.termsOfUse}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
@@ -90,7 +91,7 @@ export default ({ store }) => {
                 </View>
 
                 <Text style={{ fontSize: 14, color: "#fff", marginTop: 15 }}>
-                  By clicking the button you accept the terms of use
+                  {lang.terms}
                 </Text>
 
                 <View style={styles.marginBtn}>{buttonAccept(store)}</View>

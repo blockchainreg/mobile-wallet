@@ -47,7 +47,7 @@ export default ({ store, web3t }) => {
     expectedWord = store.current.seed.split(" ")[number - 1];
 
     if (expectedWord !== store.signUpConfirmSeedField) {
-      return showToast("Your word does not match to expected word");
+      return showToast(lang.inconsistency);
     }
 
     setupWallet(store, web3t);
@@ -83,7 +83,7 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>$(lang.confirmation)</Text>
+          <Text style={styles.textH1Seed}>{lang.confirmation}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
@@ -106,7 +106,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.marginBtnSeed}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Confirm"
+                    text={lang.confirm}
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
@@ -118,15 +118,14 @@ export default ({ store, web3t }) => {
                     onPressAction={continueProcess}
                   />
                   <Text style={styles.textCard}>
-                    Please enter the {number}th word to confirm that you saved it
-                    in a safe place
+                  {lang.pleaseEnter} {number}{lang.enterWord}
                   </Text>
                 </View>
               </Body>
             </CardItem>
           </View>
           <TouchableOpacity onPress={changePage('generatedseed')}>
-            <Text style={styles.textLoginStyle}>Back</Text>
+            <Text style={styles.textLoginStyle}>{lang.back}</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

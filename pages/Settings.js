@@ -42,14 +42,14 @@ export default ({ store }) => {
       <Header style={styles.mtAndroid}>
         <Left style={styles.viewFlex} />
         <Body style={styles.viewFlex}>
-          <Title style={styles.titleBlack}>Settings</Title>
+          <Title style={styles.titleBlack}>{lang.settings}</Title>
         </Body>
         <Right style={styles.viewFlex} />
       </Header>
 
       <Content>
         <Separator bordered>
-          <Text>Get Help</Text>
+          <Text>{lang.help}</Text>
         </Separator>
         <ListItem
           icon
@@ -62,7 +62,7 @@ export default ({ store }) => {
             <Icon name="ios-text" />
           </Left>
           <Body style={styles.heightListItem}>
-            <Text style={styles.numbersFaq1}>Support</Text>
+            <Text style={styles.numbersFaq1}>{lang.support}</Text>
           </Body>
           <Right style={styles.heightListItem}>
             <Icon name="ios-arrow-forward" />
@@ -80,7 +80,7 @@ export default ({ store }) => {
             <Icon name="md-document" />
           </Left>
           <Body style={styles.heightListItem}>
-            <Text style={styles.numbersFaq1}>Privacy Policy</Text>
+            <Text style={styles.numbersFaq1}>{lang.privacyPolicy}</Text>
           </Body>
           <Right style={styles.heightListItem}>
             <Icon name="ios-arrow-forward" />
@@ -98,7 +98,7 @@ export default ({ store }) => {
             <Icon name="md-document" />
           </Left>
           <Body style={styles.heightListItem}>
-            <Text style={styles.numbersFaq1}>Terms and Conditions</Text>
+            <Text style={styles.numbersFaq1}>{lang.termsOfUse}</Text>
           </Body>
           <Right style={styles.heightListItem}>
             <Icon name="ios-arrow-forward" />
@@ -107,7 +107,7 @@ export default ({ store }) => {
 
 
         <Separator bordered>
-          <Text>Security</Text>
+          <Text>{lang.security}</Text>
         </Separator>
 
         <ListItem icon style={styles.heightListItem} last onPress={logoutBtn}>
@@ -115,7 +115,7 @@ export default ({ store }) => {
         <Icon name="ios-log-out" />
       </Left>
       <Body style={styles.heightListItem}>
-        <Text style={styles.numbersFaq1}>Log Out</Text>
+        <Text style={styles.numbersFaq1}>{lang.logOut}</Text>
       </Body>
       <Right style={styles.heightListItem} />
     </ListItem>

@@ -34,7 +34,7 @@ const wallets = (store, web3t) => {
   };
 
 
-  const lang = getLang(store);
+  // const lang = getLang(store);
   const wallets = walletsFuncs(store, web3t).wallets;
 
   const listItem =  (wallet) => {
@@ -107,6 +107,7 @@ const wallets = (store, web3t) => {
 
 
 export default ({ store, web3t }) => {
+  const lang = getLang(store);
 
   const calcUsd = store.current.balanceUsd;
 
@@ -127,7 +128,7 @@ export default ({ store, web3t }) => {
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlex} />
               <Body style={styles.viewFlex}>
-                <Text style={styles.title1}>Total Balance</Text>
+                <Text style={styles.title1}>{lang.totalBalance}</Text>
               </Body>
               <Right style={styles.viewFlex} />
             </Header>

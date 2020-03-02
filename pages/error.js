@@ -34,7 +34,7 @@ import {
         style={styles.btnClose}
         onPress={() => (store.current.page = "wallets")}
       >
-        <Text style={styles.btnTextClose}>Close</Text>
+        <Text style={styles.btnTextClose}>{lang.close}</Text>
       </TouchableOpacity>
     );
   };
@@ -46,7 +46,7 @@ export default ({ store }) => {
     <View style={styles.containerModal}>
       <Modal isVisible={true} hasBackdrop={true}>
         <View style={styles.modalContent2}>
-          <Text style={styles.textModalRender}>Oops!</Text>
+          <Text style={styles.textModalRender}>{lang.oops}</Text>
           <Text style={styles.textModalStyle}>
               {store.current.error}
           </Text>

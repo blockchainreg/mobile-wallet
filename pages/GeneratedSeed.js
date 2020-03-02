@@ -87,7 +87,7 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>New Seed Phrase!</Text>
+          <Text style={styles.textH1Seed}>{lang.newSeedPhrase}!</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
@@ -95,7 +95,7 @@ export default ({ store }) => {
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Continue"
+                    text={lang.continue}
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
@@ -107,15 +107,14 @@ export default ({ store }) => {
                     onPressAction={changePage("confirmseed")}
                   />
                   <Text style={styles.textCard}>
-                    Do not pass the phrase to a third party and keep it in a
-                    safe place
+                    {lang.seedNotify}
                   </Text>
                 </View>
               </Body>
             </CardItem>
           </View>
           <TouchableOpacity onPress={changePage("newseed")}>
-            <Text style={styles.textLoginStyle}>Back</Text>
+            <Text style={styles.textLoginStyle}>{lang.back}</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

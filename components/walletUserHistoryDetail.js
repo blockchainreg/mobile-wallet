@@ -32,7 +32,7 @@ export default (store) => {
     );
     Vibration.vibrate(10000);
     Alert.alert("Copied to clipboard", "", [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
+      { text: lang.ok, onPress: () => console.log("OK Pressed") }
     ]);
   };
 
@@ -74,7 +74,7 @@ export default (store) => {
 
           <View style={styles.viewPt} />
            <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>Sender:</Text>
+            <Text style={styles.detail}>{lang.sender}:</Text>
             <Text style={styles.viewPt} onPress={writeToClipboardSourceAcc}>
               {store.infoTransaction.from}{"  "}
               <Icon
@@ -85,7 +85,7 @@ export default (store) => {
             </Text>
           </View>
           <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>Recipient:</Text>
+            <Text style={styles.detail}>{lang.recipient}:</Text>
             <Text style={styles.viewPt} onPress={writeToClipboardDestAcc}>
               {store.infoTransaction.to}{"  "}
               <Icon
@@ -97,7 +97,7 @@ export default (store) => {
           </View>
 
           <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>Amount:</Text>
+            <Text style={styles.detail}>{lang.amount}:</Text>
             <Text style={styles.viewPt}>
               {store.infoTransaction.amount}
               {" "}{store.infoTransaction.token.toUpperCase()}
@@ -105,7 +105,7 @@ export default (store) => {
           </View>
 
           <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>Fee:</Text>
+            <Text style={styles.detail}>{lang.fee}:</Text>
             <Text style={styles.viewPt}>
               {store.infoTransaction.fee}
               {" "}{store.infoTransaction.token.toUpperCase()}
@@ -113,7 +113,7 @@ export default (store) => {
           </View>
 
           <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>External Id:</Text>
+            <Text style={styles.detail}>{lang.externalId}:</Text>
             <Text style={styles.viewPt} onPress={writeToClipboardId}>
               {store.infoTransaction.tx}
               {"  "}

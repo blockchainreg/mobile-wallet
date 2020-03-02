@@ -35,7 +35,7 @@ export default ({ store, web3t }) => {
   const loginQuick = () => {
     const balancesSpinner = new Spinner(
       store,
-      "Loading your balances",
+      lang.loadingBalance,
       {displayDescription: "true"}
     );
     setTimeout(() => {
@@ -56,7 +56,7 @@ export default ({ store, web3t }) => {
   const loginSlow = () => {
     const web3tInitSpinner = new Spinner(
       store,
-      "Your wallet is being decrypting now",
+      lang.walletDecrypting,
       {displayDescription: true}
     );
 
@@ -70,7 +70,7 @@ export default ({ store, web3t }) => {
         web3tInitSpinner.finish();
         const balancesSpinner = new Spinner(
           store,
-          "Loading your balances",
+          lang.loadingBalance,
           {displayDescription: "true"}
         );
         debugger;
@@ -92,7 +92,7 @@ export default ({ store, web3t }) => {
 
       const checkSpinner = new Spinner(
         store,
-        "Checking your pin"
+        lang.checkingPin
       );
       setTimeout(() => {
         if (!check(store.current.pin)) {
@@ -115,7 +115,7 @@ export default ({ store, web3t }) => {
         loginSlow();
       }, 1);
     };
-    const loginText = "Login";
+    const loginText = lang.login;
     return (
       <GradientButton
         style={styles.gradientBtnPh}
@@ -136,7 +136,7 @@ export default ({ store, web3t }) => {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text="Login"
+        text={lang.login}
         textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
         gradientBegin="rgba(221,181,255,0.30)"
         gradientEnd="rgba(221,181,255,0.30)"
@@ -152,7 +152,7 @@ export default ({ store, web3t }) => {
     const anotherAccount = () => {
       confirm(
         store,
-        "Your current data will be overridden. Please ensure your current mnemonic phrase is in a safe place. Open another account?",
+        lang.dataOverridden,
         (sure) => {
           if (sure) {
             store.current.page = "register";
@@ -163,7 +163,7 @@ export default ({ store, web3t }) => {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text="Create an Account"
+        text={lang.createAcc}
         textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
         gradientBegin="rgba(221,181,255,0.10)"
         gradientEnd="rgba(221,181,255,0.10)"
@@ -222,7 +222,7 @@ export default ({ store, web3t }) => {
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
-          placeholder="Pin"
+          placeholder={lang.placeholderSignup}
           keyboardType="numeric"
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
@@ -257,11 +257,11 @@ export default ({ store, web3t }) => {
           />
           <View style={styles.widthCard}>
             <View style={styles.titleInput}>
-              <Text style={styles.textH1Seed}>Enter Your PIN</Text>
+              <Text style={styles.textH1Seed}>{lang.enterPin}</Text>
             </View>
             {inputSuccessPin(store)}
             {!validInputPin && (
-              <Text style={styles.error}>Enter a valid pin</Text>
+              <Text style={styles.error}>{lang.validPin}</Text>
             )}
             {unlock(store)}
           </View>

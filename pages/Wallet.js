@@ -109,7 +109,7 @@ export default ({ store, web3t }) => {
         return (
             <View style={{ ...styles.viewMono, height: '80%' }}>
               <View style={styles.bodyBlockTitle} onStartShouldSetResponder={collapse}>
-                <Text style={styles.titleHistory}>Last Transactions</Text>
+                <Text style={styles.titleHistory}>{lang.txLast}</Text>
               </View>
               <ScrollView>
                 <View style={styles.viewPt} />
@@ -122,7 +122,7 @@ export default ({ store, web3t }) => {
       return (
           <View style={styles.viewMono}>
             <View style={styles.bodyBlockTitle} onStartShouldSetResponder={expand}>
-              <Text style={styles.titleHistory}>Last Transactions</Text>
+              <Text style={styles.titleHistory}>{lang.txLast}</Text>
             </View>
             <ScrollView>
               <View style={styles.viewPt} />
@@ -162,7 +162,7 @@ export default ({ store, web3t }) => {
             <RefreshControl transparent swipeRefresh={refreshToken}>
               <View style={styles.bodyBlockWallet}>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.nameTokenSwiper1}>Total Balance</Text>
+                  <Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
                 </View>
                 <View style={styles.bodyBlock3}>
                   <Balance wallet={wallet}/>
@@ -180,7 +180,7 @@ export default ({ store, web3t }) => {
                         style={styles.sizeIconBtn}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.textTouchable}>Send</Text>
+                    <Text style={styles.textTouchable}>{lang.send}</Text>
                   </View>
 
                   <View style={{ alignItems: "center" }}>
@@ -195,7 +195,7 @@ export default ({ store, web3t }) => {
                         style={styles.sizeIconBtn}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.textTouchable}>Explorer</Text>
+                    <Text style={styles.textTouchable}>{lang.explorer}</Text>
                   </View>
 
                   <View style={{ alignItems: "center" }}>
@@ -208,7 +208,7 @@ export default ({ store, web3t }) => {
                         style={styles.sizeIconBtn}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.textTouchable}>Receive</Text>
+                    <Text style={styles.textTouchable}>{lang.receive}</Text>
                   </View>
                 </View>
               </View>

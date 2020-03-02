@@ -46,7 +46,7 @@ export default ({ store, web3t }) => {
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlex} />
               <Body style={styles.viewFlex}>
-              <Text style={styles.title}>History</Text>
+              <Text style={styles.title}>{lang.history}</Text>
               </Body>
               <Right style={styles.viewFlex} />
             </Header>

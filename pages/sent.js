@@ -38,7 +38,7 @@ import getLang from '../wallet/get-lang.js';
         style={styles.btnClose}
         onPress={refreshAndBack}
       >
-        <Text style={styles.btnTextClose}>Close</Text>
+        <Text style={styles.btnTextClose}>{lang.close}</Text>
       </TouchableOpacity>
     );
   };
@@ -82,9 +82,9 @@ export default ({ store, web3t }) => {
               source={Images.tick}
               style={styles.imgSizeModal2}
             />
-            <Text style={styles.textModalRender}>Your Transaction has been sent</Text>
+            <Text style={styles.textModalRender}>{lang.txSend}</Text>
             <Text style={styles.textModalStyle}>
-              Transaction Id:{" "}
+              {lang.txId}:{" "}
               <Text
                 style={styles.linkStyle}
                 onPress={() => {

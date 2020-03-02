@@ -26,6 +26,8 @@ const showToast = message => {
 };
 
 const buttonActive = store => {
+  const lang = getLang(store);
+
   const changePage = (tab) => () => {
     store.tab = tab;
   };
@@ -41,7 +43,7 @@ const buttonActive = store => {
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text="Signup"
+      text={lang.signup}
       textStyle={{ fontSize: 14 }}
       gradientBegin="#9d41eb"
       gradientEnd="#9d41eb"
@@ -55,10 +57,12 @@ const buttonActive = store => {
 };
 
 const buttonInactive = store => {
+  const lang = getLang(store);
+
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text="Signup"
+      text={lang.signup}
       textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
       gradientBegin="rgba(221,181,255,0.30)"
       gradientEnd="rgba(221,181,255,0.30)"
@@ -117,7 +121,7 @@ export default ({ store }) => {
           onChangeText={text => handleChangePin(text)}
           secureTextEntry={true}
           returnKeyType="done"
-          placeholder="Pin"
+          placeholder={lang.placeholderSignup}
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor="#fff"
@@ -152,11 +156,11 @@ export default ({ store }) => {
           {/* <Text style={styles.textH1Sign}>SignUp</Text> */}
           <View style={styles.widthCard}>
           <View style={styles.titleInput}>
-              <Text style={styles.textH1Seed}>Setup New PIN</Text>
+              <Text style={styles.textH1Seed}>{lang.setupPin}</Text>
             </View>
             {inputSuccessPin(store)}
             {!validInputPinSignUp && (
-              <Text style={styles.error}>Enter a valid pin</Text>
+              <Text style={styles.error}>{lang.validPin}</Text>
             )}
             <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
           </View>

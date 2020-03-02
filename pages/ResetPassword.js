@@ -42,7 +42,7 @@ const buttonActive = store => {
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text="Reset"
+      text={lang.reset}
       textStyle={{ fontSize: 14 }}
       gradientBegin="#9d41eb"
       gradientEnd="#9d41eb"
@@ -61,7 +61,7 @@ const buttonInactive = store => {
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text="Reset"
+      text={lang.reset}
       textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
       gradientBegin="rgba(221,181,255,0.30)"
       gradientEnd="rgba(221,181,255,0.30)"
@@ -154,7 +154,7 @@ export default ({ store }) => {
           <View style={styles.widthCard}>
             {inputResetPasMail(store)}
             {!validInputMailSignUp && (
-              <Text style={styles.error}>Enter a valid email</Text>
+              <Text style={styles.error}>{lang.validEmail}</Text>
             )}
             <View style={styles.marginBtn}>{buttonsChangeResetPas(store)}</View>
           </View>

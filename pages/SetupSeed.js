@@ -98,14 +98,14 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>Choose The Option</Text>
+          <Text style={styles.textH1Seed}>{lang.choose}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Restore Your Seed"
+                    text={lang.restoreSeed}
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
@@ -118,7 +118,7 @@ export default ({ store }) => {
                   <View style={{ padding: 10 }}></View>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Generate"
+                    text={lang.generate}
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
