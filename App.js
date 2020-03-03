@@ -41,7 +41,7 @@ export default class App extends React.Component {
             style={styles.bgMainPage}
           >
             <Image source={Images.logo} style={styles.styleLogoHead} />
-            <Text>...</Text>
+            {/* <Text>...</Text> */}
           </ImageBackground>
         </View>
       );

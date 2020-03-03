@@ -2049,7 +2049,8 @@ export default StyleSheet.create({
     // bottom: height / 12
   },
   bodyBlockTitle: {
-    marginVertical: "3%"
+    paddingVertical: '2%'
+    // marginVertical: "2%"
     // bottom: height / 12
   },
   bodyBlock3: {
@@ -2278,7 +2279,8 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: "500",
     alignSelf: "center",
-    color: "#707070"
+    color: "#707070",
+    height: 20
   },
 
   modalAmountStyle: {
