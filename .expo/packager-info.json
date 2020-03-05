@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://cu-xv8.dmitry602.expo-web3.exp.direct",
+  "packagerNgrokUrl": "https://packager.cu-xv8.dmitry602.expo-web3.exp.direct",
+  "ngrokPid": 36592
 }

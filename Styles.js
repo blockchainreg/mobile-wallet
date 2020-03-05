@@ -1807,9 +1807,15 @@ export default StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     marginTop: 15,
-    width: 250,
+    // width: 250,
+    width: "80%",
     // height: '100%',
     textAlign: "center"
+  },
+  textCardLine: {
+    fontSize: 14,
+    color: "#fff",
+    textDecorationLine: "underline"
   },
   textTerms: {
     fontSize: 12,

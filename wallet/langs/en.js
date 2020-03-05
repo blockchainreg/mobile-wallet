@@ -107,6 +107,7 @@
     close: "close",
     oops: "Oops!",
     seedNotify: "Do not pass the phrase to a third party and keep it in a safe place",
+    seedNotifyPrint: "print a sheet",
     done: "Done",
     validPin: "Enter a valid pin",
     validEmail: "Enter a valid email",

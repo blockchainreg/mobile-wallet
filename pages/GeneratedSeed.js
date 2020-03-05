@@ -1,37 +1,15 @@
 import React from "react";
 import {
   Image,
-  Clipboard,
-  Keyboard,
   TouchableOpacity,
   ImageBackground,
-  Badge,
   ScrollView,
-  TextInput
+  Linking
 } from "react-native";
-import {
-  Text,
-  Button,
-  View,
-  Icon,
-  Container,
-  Content,
-  Item,
-  Input,
-  Card,
-  CardItem,
-  Body,
-  Header,
-  Left,
-  Right,
-  Form,
-  Textarea,
-  ListItem
-} from "native-base";
+import { Text, View, CardItem, Body, Header, Left, Right } from "native-base";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
-import SaveSeedModal from "../components/SaveSeedModal.js";
-import { generateMnemonic } from "bip39";
+// import { generateMnemonic } from "bip39";
 import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
@@ -48,18 +26,10 @@ const badSeed = seed => {
 const createWordBlock = store => (word, index) => {
   var i = 1;
   return (
-    <View
-      style={styles.createWordBlock}
-    >
+    <View style={styles.createWordBlock}>
       <Text style={styles.inputSize}>{word}</Text>
-      <View
-        style={styles.numberBlock}
-      >
-        <Text
-          style={styles.styleIndex}
-        >
-          {i + index++}
-        </Text>
+      <View style={styles.numberBlock}>
+        <Text style={styles.styleIndex}>{i + index++}</Text>
       </View>
     </View>
   );
@@ -78,13 +48,26 @@ export default ({ store }) => {
   const seedPhrase = store => {
     return (
       <ScrollView style={styles.seedContainerStyle}>
-        <View style={style.styleSeedWrap}>
-          {words.map(createWordBlock())}
-        </View>
+        <View style={style.styleSeedWrap}>{words.map(createWordBlock())}</View>
       </ScrollView>
     );
   };
   const lang = getLang(store);
+
+  const btnPrint = store => {
+    return (
+      <Text
+        style={styles.textCardLine}
+        onPress={() => {
+          Linking.openURL(
+            `https://drive.google.com/file/d/1U8o4PqKeQErR3WnyAR1JffrLFNkRrAIu/view`
+          );
+        }}
+      >
+        {lang.seedNotifyPrint}
+      </Text>
+    );
+  };
 
   return (
     <View style={styles.viewFlex}>
@@ -120,7 +103,9 @@ export default ({ store }) => {
                     placeholderTextColor="rgba(255,255,255,0.60)"
                     onPressAction={changePage("confirmseed")}
                   />
-                  <Text style={styles.textCard}>{lang.seedNotify}</Text>
+                  <Text style={styles.textCard}>
+                    {lang.seedNotify}, {btnPrint(store)}
+                  </Text>
                 </View>
               </Body>
             </CardItem>
