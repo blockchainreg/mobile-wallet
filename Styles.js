@@ -642,16 +642,16 @@ export default StyleSheet.create({
         alignSelf: "center",
         height: 30,
         marginTop: 10,
-        textAlign: 'center',
-        width: '150%'
+        textAlign: "center",
+        width: "150%"
       },
       {
         color: "#fff",
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center",
-        textAlign: 'center',
-        width: '150%'
+        textAlign: "center",
+        width: "150%"
       }
     )
   },
@@ -2049,7 +2049,7 @@ export default StyleSheet.create({
     // bottom: height / 12
   },
   bodyBlockTitle: {
-    paddingVertical: '2%'
+    paddingVertical: "2%"
     // marginVertical: "2%"
     // bottom: height / 12
   },
@@ -4364,13 +4364,92 @@ export default StyleSheet.create({
     height: 241 / 2
   },
   styleCoinIn: {
-    color: '#3FD4B2',
+    color: "#3FD4B2",
     fontSize: 17,
     fontWeight: "500"
   },
   styleCoinOut: {
-    color: 'red',
+    color: "red",
     fontSize: 17,
     fontWeight: "500"
+  },
+  createWordBlock: {
+    borderRadius: 30,
+    borderWidth: 1,
+    width: "45%",
+    // height: "auto",
+    paddingHorizontal: 10,
+    borderColor: "rgba(157, 65, 235, 0.5)",
+    alignItems: "center",
+    paddingVertical: 5,
+    marginHorizontal: 7,
+    marginVertical: 5
+  },
+  numberBlock: {
+    borderRadius: 30,
+    borderWidth: 1,
+    width: 16,
+    height: 16,
+    marginVertical: 5,
+    marginRight: 5,
+    backgroundColor: "#7651ae",
+    borderColor: "transparent",
+    position: "absolute",
+    left: 10
+  },
+  styleIndex: {
+    color: "#fff",
+    alignSelf: "center",
+    fontSize: 10,
+    fontWeight: "bold",
+    justifyContent: "center",
+    alignItems: "center",
+    top: 1
+  },
+  styleSeedWrap: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingBottom: 10
+  },
+  heightQW: {
+    borderColor: "red"
+  },
+  seedContainerStyle: {
+    ...ifIphoneX(
+      {
+        borderWidth: 1,
+        borderRadius: 5,
+        width: "100%",
+        // height: "40%",
+        borderColor: "#fff",
+        marginTop: 20,
+        padding: 10,
+        alignItems: "center"
+      },
+      {
+        ...Platform.select({
+          ios: {
+            borderWidth: 1,
+            borderRadius: 5,
+            width: "100%",
+            height: "40%",
+            borderColor: "#fff",
+            marginTop: 20,
+            padding: 10,
+            alignItems: "center"
+          },
+          android: {
+            borderWidth: 1,
+            borderRadius: 5,
+            width: "100%",
+            height: "40%",
+            borderColor: "#fff",
+            marginTop: 20,
+            padding: 10,
+            alignItems: "center"
+          }
+        })
+      }
+    )
   }
 });
