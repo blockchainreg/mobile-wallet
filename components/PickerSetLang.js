@@ -5,6 +5,8 @@ import RNPickerSelect from "react-native-picker-select";
 export default ({ store }) => {
   const onValueChangeValue = async value => {
     store.lang = value;
+    localStorage.setItem("lang", value);
+
     await console.log("store.lang", store.lang);
   };
   const langItems = [

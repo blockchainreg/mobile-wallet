@@ -18,6 +18,7 @@ import HistoryDetail from './pages/HistoryDetail.js';
 //mobile specific defaults (start)
 //Store.current.expanded = false;
 Store.current.filterVal = { apply: "", temp: "" }
+Store.lang = localStorage.getItem("lang") || "en";
 //module specific defaults (end)
 
 const store = observable(Store);
