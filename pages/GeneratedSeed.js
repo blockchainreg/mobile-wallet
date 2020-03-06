@@ -60,7 +60,7 @@ export default ({ store }) => {
         style={styles.textCardLine}
         onPress={() => {
           Linking.openURL(
-            `https://drive.google.com/file/d/1U8o4PqKeQErR3WnyAR1JffrLFNkRrAIu/view`
+            `https://drive.google.com/file/d/117CIN7TkLcJFWRQkPYRbU4BK6JOnRgPf/view`
           );
         }}
       >

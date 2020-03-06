@@ -109,7 +109,7 @@ export default ({ store }) => {
 
           <ListItem icon style={styles.heightListItem} last>
             <Left>
-              <Icon name="ios-globe" />
+              <Icon name="md-globe" />
             </Left>
             <Body style={styles.heightListItem}>
               {PickerSetLang({ store })}
