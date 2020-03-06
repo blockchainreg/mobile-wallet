@@ -36,7 +36,7 @@ const badSeed = seed => {
 const createWordBlock = store => (word, index) => {
   var i = 1;
   return (
-    <View style={styles.createWordBlock}>
+    <View key={"word" + word + i} style={styles.createWordBlock}>
       <Text style={styles.inputSize}>{word}</Text>
       <View style={styles.numberBlock}>
         <Text style={styles.styleIndex}>{i + index++}</Text>
@@ -57,9 +57,7 @@ export default ({ store }) => {
 
   const seedPhrase = store => {
     return (
-      <ScrollView style={styles.seedContainerStyle}>
-        <View style={style.styleSeedWrap}>{words.map(createWordBlock())}</View>
-      </ScrollView>
+      <View style={style.styleSeedWrap}>{words.map(createWordBlock(store))}</View>
     );
   };
   const lang = getLang(store);
