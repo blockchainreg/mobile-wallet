@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Image,
-  TouchableOpacity,
   ImageBackground,
 } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
@@ -73,7 +72,18 @@ export default ({ store, web3t }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex} />
+        <Left style={styles.viewFlex}>
+            <Button
+              transparent
+              style={styles.arrowHeaderLeft}
+              onPress={changePage("generatedseed")}
+            >
+              <Icon
+                name="ios-arrow-back"
+                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
+              />
+            </Button>
+          </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
@@ -96,7 +106,7 @@ export default ({ store, web3t }) => {
                       autoCapitalize="none"
                       secureTextEntry={false}
                       returnKeyType="done"
-                      placeholder="word from seed"
+                      placeholder={lang.placeholderConfirmSeed}
                       placeholderTextColor="rgba(255,255,255,0.60)"
                       style={styles.inputSize}
                       selectionColor={"#fff"}
@@ -124,9 +134,6 @@ export default ({ store, web3t }) => {
               </Body>
             </CardItem>
           </View>
-          <TouchableOpacity onPress={changePage('generatedseed')}>
-            <Text style={styles.textLoginStyle}>{lang.back}</Text>
-          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>

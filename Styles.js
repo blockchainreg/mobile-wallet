@@ -4380,28 +4380,59 @@ export default StyleSheet.create({
     fontWeight: "500"
   },
   createWordBlock: {
-    borderRadius: 30,
-    borderWidth: 1,
-    width: "45%",
-    // height: "auto",
-    paddingHorizontal: 10,
-    borderColor: "rgba(157, 65, 235, 0.5)",
-    alignItems: "center",
-    paddingVertical: 5,
-    marginHorizontal: 7,
-    marginVertical: 5
+    ...Platform.select({
+      ios: {
+        borderRadius: 30,
+        borderWidth: 1,
+        width: "45%",
+        paddingHorizontal: 10,
+        borderColor: "rgba(157, 65, 235, 0.5)",
+        alignItems: "center",
+        paddingVertical: 5,
+        marginHorizontal: 7,
+        marginVertical: 5
+      },
+      android: {
+        borderRadius: 30,
+        borderWidth: 1,
+        width: "45%",
+        paddingHorizontal: 10,
+        borderColor: "rgba(157, 65, 235, 0.5)",
+        alignItems: "center",
+        paddingVertical: 5,
+        marginHorizontal: 5,
+        marginVertical: 5
+      }
+    })
   },
   numberBlock: {
-    borderRadius: 30,
+    ...Platform.select({
+      ios: {
+        borderRadius: 30,
+        borderWidth: 1,
+        width: 16,
+        height: 16,
+        marginVertical: 5,
+        marginRight: 5,
+        backgroundColor: "#7651ae",
+        borderColor: "transparent",
+        position: "absolute",
+        left: 10
+      },
+      android: {
+        borderRadius: 30,
     borderWidth: 1,
-    width: 16,
-    height: 16,
+    width: 18,
+    height: 18,
     marginVertical: 5,
     marginRight: 5,
     backgroundColor: "#7651ae",
     borderColor: "transparent",
     position: "absolute",
     left: 10
+      }
+    })
+    
   },
   styleIndex: {
     color: "#fff",
@@ -4457,5 +4488,12 @@ export default StyleSheet.create({
         })
       }
     )
+  },
+  placeholderSeedInput: {
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: "bold",
+    left: -10, 
+    top: -5
   }
 });

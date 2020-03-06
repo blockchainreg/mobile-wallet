@@ -133,6 +133,7 @@
     login: "Login",
     reset: "Reset",
     placeholderSeed: "Your mnemonic phrase",
+    placeholderConfirmSeed: "Word from seed",
     signup: "Signup",
     placeholderSignup: "Pin",
     copy: "Copy",

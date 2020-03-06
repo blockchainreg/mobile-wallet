@@ -6,7 +6,17 @@ import {
   ScrollView,
   Linking
 } from "react-native";
-import { Text, View, CardItem, Body, Header, Left, Right } from "native-base";
+import {
+  Text,
+  View,
+  CardItem,
+  Body,
+  Header,
+  Left,
+  Right,
+  Button,
+  Icon
+} from "native-base";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 // import { generateMnemonic } from "bip39";
@@ -43,7 +53,7 @@ export default ({ store }) => {
   };
 
   const words = store.current.seed.split(" ");
-  console.log("words:", words);
+  // console.log("words:", words);
 
   const seedPhrase = store => {
     return (
@@ -77,7 +87,18 @@ export default ({ store }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex} />
+          <Left style={styles.viewFlex}>
+            <Button
+              transparent
+              style={styles.arrowHeaderLeft}
+              onPress={changePage("newseed")}
+            >
+              <Icon
+                name="ios-arrow-back"
+                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
+              />
+            </Button>
+          </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
@@ -110,9 +131,6 @@ export default ({ store }) => {
               </Body>
             </CardItem>
           </View>
-          <TouchableOpacity onPress={changePage("newseed")}>
-            <Text style={styles.textLoginStyle}>{lang.back}</Text>
-          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>

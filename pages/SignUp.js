@@ -121,6 +121,8 @@ export default ({ store }) => {
           onChangeText={text => handleChangePin(text)}
           secureTextEntry={true}
           returnKeyType="done"
+          // autoFocus
+          keyboardType="numeric"
           placeholder={lang.placeholderSignup}
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
