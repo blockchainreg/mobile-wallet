@@ -8,6 +8,7 @@ import register from "./pages/SignUp.js";
 import generatedseed from "./pages/GeneratedSeed.js";
 import restoreseed from "./pages/RestoreSeed.js";
 import locked from "./pages/locked";
+import LangPage from "./pages/LangPage";
 import reset from "./pages/ResetPassword";
 import add from "./pages/AddWallets";
 import newseed from "./pages/SetupSeed";
@@ -35,5 +36,6 @@ export default {
   add,
   confirmseed,
   invoice,
-  sent
+  sent,
+  LangPage
 };

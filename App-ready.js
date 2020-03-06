@@ -96,7 +96,7 @@ const lockWallet = () => {
       if (store.current.page !== "wallets" || store.current.loading == true)
         return resetTimer();
 
-      store.current.page = "locked";
+      store.current.page = "LangPage";
       resetTimer();
 };
 
@@ -115,7 +115,7 @@ export default class AppReady extends React.Component {
 
 
   componentDidMount() {
-    store.current.page = saved() === true ? "locked" : "register";
+    store.current.page = saved() === true ? "LangPage" : "register";
 
     this._panResponder = PanResponder.create({
 
