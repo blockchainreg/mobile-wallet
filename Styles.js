@@ -4421,18 +4421,17 @@ export default StyleSheet.create({
       },
       android: {
         borderRadius: 30,
-    borderWidth: 1,
-    width: 18,
-    height: 18,
-    marginVertical: 5,
-    marginRight: 5,
-    backgroundColor: "#7651ae",
-    borderColor: "transparent",
-    position: "absolute",
-    left: 10
+        borderWidth: 1,
+        width: 18,
+        height: 18,
+        marginVertical: 5,
+        marginRight: 5,
+        backgroundColor: "#7651ae",
+        borderColor: "transparent",
+        position: "absolute",
+        left: 10
       }
     })
-    
   },
   styleIndex: {
     color: "#fff",
@@ -4493,7 +4492,32 @@ export default StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     fontWeight: "bold",
-    left: -10, 
+    left: -10,
     top: -5
+  },
+  itemPickerLang: {
+    borderRadius: 10,
+    marginVertical: 5,
+    borderColor: "#fff",
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  btnLangPage: {
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 15,
+    marginTop: 20
+  },
+  langPage: {
+    inputIOS: {
+      color: "#fff",
+      fontSize: 16
+    },
+    inputAndroid: {
+      color: "#fff",
+      fontSize: 16
+    }
   }
 });

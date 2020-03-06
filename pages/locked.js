@@ -17,8 +17,6 @@ import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import SvgUri from "react-native-svg-uri";
 import Spinner from "../utils/spinner.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
@@ -231,7 +229,6 @@ export default ({ store, web3t }) => {
       </Item>
     );
   };
-
 
   return (
     <View style={styles.viewFlex}>
