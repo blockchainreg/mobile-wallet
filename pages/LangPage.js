@@ -39,6 +39,7 @@ export default ({ store, web3t }) => {
   const selectLang = store => {
     const onValueChangeValue = async value => {
       store.lang = value;
+      localStorage.setItem("lang", value);
     };
     const langItems = [
       {
