@@ -74,7 +74,7 @@
     nothingToShow: "Nothing to see here!",
     makeTx: "Make your first transaction or change your filters.",
     fee: "Fee",
-    'delete': "delete",
+    delete: "delete",
     created: "Created",
     manageAccount: "Manage Account",
     copied: "Copied to Clipboard!",

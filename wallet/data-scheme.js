@@ -7,6 +7,8 @@
   en = require('./langs/en.js');
   ru = require('./langs/ru.js');
   ua = require('./langs/ua.js');
+  zh = require('./langs/zh.js');
+  ko = require('./langs/ko.js');
   getDevice = require('./get-device.js');
   savedSeed = saved();
   createSend = function(){
@@ -40,7 +42,9 @@
     langs: {
       en: en,
       ru: ru,
-      ua: ua
+      ua: ua,
+      zh: zh,
+      ko: ko
     },
     registry: [],
     terms: "Loading...",

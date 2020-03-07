@@ -21,6 +21,14 @@ export default ({ store }) => {
     {
       label: "Українська",
       value: "ua"
+    },
+    {
+      label: "中國人",
+      value: "zh"
+    },
+    {
+      label: "韓語",
+      value: "ko"
     }
   ];
 
