@@ -18,6 +18,8 @@ import HistoryDetail from './pages/HistoryDetail.js';
 //mobile specific defaults (start)
 //Store.current.expanded = false;
 Store.current.filterVal = { apply: "", temp: "" }
+if ((localStorage.getItem("lang") || "").length === 0)
+  Store.current.page = "LangPage"
 Store.lang = localStorage.getItem("lang") || "en";
 //module specific defaults (end)
 
@@ -95,8 +97,9 @@ const lockWallet = () => {
 
       if (store.current.page !== "wallets" || store.current.loading == true)
         return resetTimer();
-
-      store.current.page = "LangPage";
+      //console.log("lang",localStorage.getItem("lang"));
+      //if (!localStorage.getItem("lang"))
+      //   store.current.page = "LangPage";
       resetTimer();
 };
 
@@ -115,7 +118,7 @@ export default class AppReady extends React.Component {
 
 
   componentDidMount() {
-    store.current.page = saved() === true ? "LangPage" : "register";
+    store.current.page = saved() === true ? "locked" : "register";
 
     this._panResponder = PanResponder.create({
 

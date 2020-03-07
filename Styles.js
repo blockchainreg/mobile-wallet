@@ -4509,12 +4509,9 @@ export default StyleSheet.create({
     width: "100%",
     marginBottom: 15,
     marginTop: 20
-<<<<<<< HEAD
-=======
   },
   langPage: {
     color: "#fff",
     fontSize: 16
->>>>>>> d409b3bb9c94bf460d31f08087e49ae446e26ef1
   }
 });
