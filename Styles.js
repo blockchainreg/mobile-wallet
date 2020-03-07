@@ -4509,15 +4509,5 @@ export default StyleSheet.create({
     width: "100%",
     marginBottom: 15,
     marginTop: 20
-  },
-  langPage: {
-    inputIOS: {
-      color: "#fff",
-      fontSize: 16
-    },
-    inputAndroid: {
-      color: "#fff",
-      fontSize: 16
-    }
   }
 });

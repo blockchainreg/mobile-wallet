@@ -63,7 +63,16 @@ export default ({ store, web3t }) => {
         useNativeAndroidPickerStyle={false}
         value={store.lang}
         items={langItems}
-        style={styles.langPage}
+        style={{
+          inputIOS: {
+            color: "#fff",
+            fontSize: 16
+          },
+          inputAndroid: {
+            color: "#fff",
+            fontSize: 16
+          }
+        }}
         Icon={() => {
           return null;
         }}
