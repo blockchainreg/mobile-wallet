@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "postinstall-commented": "rn-nodeify --install buffer,stream,assert,events,crypto,vm --hack && cd node_modules/bs58 && yarn add base-x@3.0.4 && cd ../../"
+    "postinstall-commented": "rn-nodeify --install buffer,stream,assert,events,crypto,vm --hack && cd node_modules/bs58 && yarn add base-x@3.0.4 && cd ../../",
+    "install": "pwd && cp scripts/pre-commit .git/hooks/ && chmod u+x .git/hooks/pre-commit && chmod u+x scripts/bump-version.sh"
   },
   "dependencies": {
     "@rimiti/react-native-toastify": "^1.2.0",
