@@ -33,6 +33,7 @@ jobs:
         with:
           fileName: 'api-android.json'
           encodedString: ${{ secrets.ANDROID_API_JSON }}
+      - run: cat ${{ steps.write_file.outputs.filePath }}
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
