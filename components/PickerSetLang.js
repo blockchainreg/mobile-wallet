@@ -29,6 +29,18 @@ export default ({ store }) => {
     {
       label: "韓語",
       value: "ko"
+    },
+    {
+      label: "Indonesia",
+      value: "id"
+    },
+    {
+      label: "ภาษาไทย",
+      value: "th"
+    },
+        {
+      label: "Malay",
+      value: "my"
     }
   ];
 

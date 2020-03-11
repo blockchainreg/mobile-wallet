@@ -61,6 +61,18 @@ export default ({ store, web3t }) => {
       {
         label: "韓語",
         value: "ko"
+      },
+      {
+        label: "Indonesia",
+        value: "id"
+      },
+      {
+        label: "ภาษาไทย",
+        value: "th"
+      },
+          {
+        label: "Malay",
+        value: "my"
       }
     ];
     return (
