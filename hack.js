@@ -3,6 +3,8 @@
   var seedCaches = Object.create(null);
   const originalFunc = bip39.mnemonicToSeed;
 
+
+
   bip39.mnemonicToSeed = function(mnemonic, password){
     //mnemonicToSeed is very slow on mobile wallet
     //So we add caching. I bet it can be done sipmplier with standard ls library
