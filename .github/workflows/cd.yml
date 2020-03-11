@@ -33,7 +33,8 @@ jobs:
         with:
           fileName: 'api-android.json'
           encodedString: ${{ secrets.ANDROID_API_JSON }}
-      - run: cat ${{ steps.write_file.outputs.filePath }}
+      - run: cp ${{ steps.write_file.outputs.filePath }} api-android.json
+      - run: cat api-android.json
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
@@ -45,5 +46,5 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm i --global yarn
       - run: yarn install
-      - run: expo upload:android --key ${{ steps.write_file.outputs.filePath }} --track beta
+      - run: expo upload:android --key api-android.json --track beta
         continue-on-error: true
