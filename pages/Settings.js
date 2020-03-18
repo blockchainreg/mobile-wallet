@@ -14,7 +14,6 @@ import {
   Button
 } from "native-base";
 import { Linking } from "react-native";
-import Switch from "react-native-switch-pro";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
@@ -106,7 +105,6 @@ export default ({ store }) => {
           <Separator bordered>
             <Text>{lang.profile}</Text>
           </Separator>
-
           <ListItem icon style={styles.heightListItem} last>
             <Left>
               <Icon name="md-globe" />

@@ -43,35 +43,35 @@ export default ({ store, web3t }) => {
     };
     const langItems = [
       {
-        label: "English",
+        label: "English 🇺🇸",
         value: "en"
       },
       {
-        label: "Русский",
+        label: "Русский 🇷🇺",
         value: "ru"
       },
       {
-        label: "Українська",
+        label: "Українська 🇺🇦",
         value: "ua"
       },
       {
-        label: "中國人",
+        label: "中國人 🇨🇳",
         value: "zh"
       },
       {
-        label: "韓語",
+        label: "韓語 🇰🇷",
         value: "ko"
       },
       {
-        label: "Indonesia",
+        label: "Indonesia 🇮🇩",
         value: "id"
       },
       {
-        label: "ภาษาไทย",
+        label: "ภาษาไทย 🇹🇭",
         value: "th"
       },
-          {
-        label: "Malay",
+      {
+        label: "Malay 🇲🇾",
         value: "my"
       }
     ];

@@ -4513,5 +4513,10 @@ export default StyleSheet.create({
   langPage: {
     color: "#fff",
     fontSize: 16
+  },
+  thumbnailStyle: {
+    width: 26,
+    height: 26,
+    borderRadius: 10
   }
 });
