@@ -17,18 +17,11 @@ jobs:
           expo-version: 3.12.1
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-      - run: |
-          echo ${{secrets.EXPO_CLI_USERNAME}} | base64
-          echo !!!
-          echo ${{secrets.EXPO_CLI_PASSWORD}} | base64
-          echo !!!
-          echo ${{secrets.EXPO_CLI_PASSWORD}}
-          echo !!!
-#      - run: sudo apt-get update && sudo apt-get install procps -y
-#      - run: npm i --global yarn
-#      - run: yarn install
-#      - run: expo build:android -t app-bundle
-#        continue-on-error: true
+      - run: sudo apt-get update && sudo apt-get install procps -y
+      - run: npm i --global yarn
+      - run: yarn install
+     - run: expo build:android -t app-bundle
+       continue-on-error: true
   publish:
     needs: build
     name: Publish
