@@ -20,8 +20,8 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install procps -y
       - run: npm i --global yarn
       - run: yarn install
-     - run: expo build:android -t app-bundle
-       continue-on-error: true
+      - run: expo build:android -t app-bundle
+          continue-on-error: true
   publish:
     needs: build
     name: Publish
