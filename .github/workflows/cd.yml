@@ -18,7 +18,7 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: |
-          echo ${{secrets.EXPO_CLI_PASSWORD}} | base64
+          echo ${{secrets.EXPO_CLI_USERNAME}} | base64
           echo !!!
           echo ${{secrets.EXPO_CLI_PASSWORD}} | base64
           echo !!!
