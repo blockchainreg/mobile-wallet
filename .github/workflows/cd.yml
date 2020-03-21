@@ -20,6 +20,8 @@ jobs:
       - run: |
           echo ${{secrets.EXPO_CLI_PASSWORD}} | base64
           echo !!!
+          echo ${{secrets.EXPO_CLI_PASSWORD}} | base64
+          echo !!!
           echo ${{secrets.EXPO_CLI_PASSWORD}}
           echo !!!
 #      - run: sudo apt-get update && sudo apt-get install procps -y
