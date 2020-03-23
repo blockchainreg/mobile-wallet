@@ -1,5 +1,5 @@
 require! {
-    \../api/ethnamed.ls
+    \./api/ethnamed.ls
     \./get-record.ls
 }
 module.exports = (web3, store, cb)->
