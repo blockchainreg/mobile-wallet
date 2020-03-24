@@ -21,11 +21,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
+      }
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 24
+      "versionCode": 25
     },
     "description": "Premium quality cryptocurrency wallet!"
   }

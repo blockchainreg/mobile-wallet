@@ -10,14 +10,16 @@ import {
   Right,
   Button
 } from "native-base";
-import { Image, ImageBackground, runAfterInteractions } from "react-native";
+import { Image, ImageBackground, Platform, } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
+import * as LocalAuthentication from 'expo-local-authentication';
+import * as SecureStore from 'expo-secure-store';
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
-import Spinner from "../utils/spinner.js";
+import spin from "../utils/spin.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
@@ -30,89 +32,151 @@ export default ({ store, web3t }) => {
     this.toastify && this.toastify.show(message, 3000);
   };
   const lang = getLang(store);
+  let isLoggingIn = false;
+
   const loginQuick = () => {
-    const balancesSpinner = new Spinner(
-      store,
-      lang.loadingBalance,
-      {displayDescription: "true"}
-    );
-    setTimeout(() => {
-      store.current.page = "wallets";
+    store.current.page = "wallets";
+    isLoggingIn = false;
 
-      web3t.refresh(function(err, data){
-          balancesSpinner.finish();
-
-          if (err) {
-            store.current.page = "error";
-            store.current.error = err + "";
-          }
-
-      });
-    }, 1);
+    spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
+      if (err) {
+        store.current.page = "error";
+        store.current.error = err + "";
+      }
+    });
   };
 
   const loginSlow = () => {
-    const web3tInitSpinner = new Spinner(
-      store,
-      lang.walletDecrypting,
-      {displayDescription: true}
-    );
+    spin(store, lang.walletDecrypting, web3t.init.bind(web3t))(function(err, data){
+      if (err) {
+        return showToast(err + "");
+      }
 
-    setTimeout(() => {
-      web3t.init(function(err, data) {
+      store.current.page = "wallets";
+      isLoggingIn = false;
+      spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
         if (err) {
-          return showToast(err + "");
+          store.current.page = "error";
+          store.current.error = err + "";
         }
-
-        store.current.page = "wallets";
-        web3tInitSpinner.finish();
-        const balancesSpinner = new Spinner(
-          store,
-          lang.loadingBalance,
-          {displayDescription: "true"}
-        );
-        debugger;
-        web3t.refresh(function(err, data){
-            balancesSpinner.finish();
-
-            if (err) {
-              store.current.page = "error";
-              store.current.error = err + "";
-            }
-
-        });
       });
-    }, 1);
+    });
   };
 
-  const buttonActive = store => {
-    const login = async () => {
+  const login = (seed) => {
+    if (isLoggingIn) {
+      return;
+    }
 
-      const checkSpinner = new Spinner(
-        store,
-        lang.checkingPin
-      );
-      setTimeout(() => {
-        if (!check(store.current.pin)) {
-          checkSpinner.finish();
-          store.current.pin = "";
-          return showToast("Incorrect pin");
-        }
+    store.current.seed = seed;
+    isLoggingIn = true;
+    //in case when we already have built objects we can just show it
+    if(store.current.account.wallets && store.current.account.wallets.length > 0) {
+      loginQuick();
+      return;
+    }
+    loginSlow();
+  };
 
-        store.current.pin = "";
-        store.userWallet = 200;
-        store.current.seed = get();
-        checkSpinner.finish();
+  class LocalAuth extends React.Component {
+    state = {
+      isEnabled: null,
+      isAuthenticating: false,
+      failedCount: 0
+    };
 
+    componentDidMount() {
+      console.log("LocalAuth did mount");
+      const {store} = this.props;
 
-        //in case when we already have built objects we can just show it
-        if(store.current.account.wallets && store.current.account.wallets.length > 0) {
-          loginQuick();
+      Promise.all([
+        LocalAuthentication.hasHardwareAsync(),
+        LocalAuthentication.supportedAuthenticationTypesAsync(),
+        LocalAuthentication.isEnrolledAsync(),
+        SecureStore.getItemAsync("localAuthToken")
+      ]).then(([hasHardware, supportedAuthTypes, isEnrolled, token]) => {
+          console.log("localAuthToken", !!token);
+          if (this.isUnmounted) {
+            return;
+          }
+          this.setState({ isEnabled: hasHardware && supportedAuthTypes.length > 0 && isEnrolled && !!token });
+          if (token && Platform.OS === 'android') {
+            this.authenticateRecursiveAndroid();
+          }
+        });
+    }
+
+    componentWillUnmount() {
+      if (this.state.isAuthenticating) {
+        LocalAuthentication.cancelAuthenticate();
+      }
+      this.isUnmounted = true;
+    }
+
+    useLocalAuth = async () => {
+      const {store} = this.props;
+      this.setState({isAuthenticating: true});
+      const result = await LocalAuthentication.authenticateAsync();
+      this.setState({isAuthenticating: false});
+      if (!result.success) {
+        return;
+      }
+      login(await SecureStore.getItemAsync("localAuthToken"));
+    }
+
+    async authenticateRecursiveAndroid() {
+      const {store} = this.props;
+      if (this.state.isAuthenticating) {
+        return;
+      }
+      this.setState({isAuthenticating: true});
+      const result = await LocalAuthentication.authenticateAsync();
+      if (!result.success) {
+        if (result.error === "user_cancel") {
           return;
         }
-        loginSlow();
-      }, 1);
-    };
+        this.setState(
+          {failedCount: this.state.failedCount + 1, isAuthenticating: false},
+          () => this.authenticateRecursiveAndroid()
+        );
+        return;
+      }
+      this.setState({isAuthenticating: false});
+
+      console.log("authenticateRecursiveAndroid success!!!");
+      login(await SecureStore.getItemAsync("localAuthToken"));
+    }
+
+    render() {
+      const {isEnabled, isAuthenticating, failedCount} = this.state;
+      if (!this.state.isEnabled) {
+        return null;
+      }
+      if (isAuthenticating) {
+        if (failedCount) {
+          return <Text>You may scan fingerprint to log in. Failed tries {failedCount}.</Text>;
+        }
+        return <Text>You may scan fingerprint to log in</Text>;
+      }
+
+      if (Platform.OS === 'android') {
+        return <Text>One moment...</Text>;
+      }
+      return <Text onPress={this.useLocalAuth}>Use Fingerprint or Face ID</Text>;
+    }
+  }
+
+  const buttonActive = store => {
+    const loginAction = spin(store, lang.checkingPin, () => {
+      if (!check(store.current.pin)) {
+        store.current.pin = "";
+        return showToast("Incorrect pin");
+      }
+
+      login(get());
+      store.current.pin = "";
+      store.userWallet = 200;
+    });
     const loginText = lang.login;
     return (
       <GradientButton
@@ -125,7 +189,7 @@ export default ({ store, web3t }) => {
         height={50}
         width="100%"
         radius={10}
-        onPressAction={login}
+        onPressAction={loginAction}
       />
     );
   };
@@ -190,6 +254,7 @@ export default ({ store, web3t }) => {
       : buttonInactive(store)}
       <View height={15}></View>
       {anotherAccount(store)}
+      {!isLoggingIn && <LocalAuth store={store} />}
     </View>);
   };
 

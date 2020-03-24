@@ -77,7 +77,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
       //The next code is made to watch sending process and display spinners with adequate text
       //Store's data changes step-by-step in the following way
       //0. sending is true, confirmation is null - checking balance, we display Checking balance spinner
-      //1. sending is true, confirmation is not null - user is asked to confirm transaction - we should hide all spinners
+      //1. sending is true, confirmation is not null - user is asked to confirm transaction - we must hide all spinners
       //2. sending is true, confirmation is again null - user confirmed, so we display Sending funds spinner
       //   If the user declined confirmation, we will see this state for a short time
       //3. sending is false, confirmation is null - sending is completed and we must hide all spinners

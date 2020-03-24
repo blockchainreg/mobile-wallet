@@ -5,4 +5,5 @@ branch="$(git rev-parse --abbrev-ref HEAD)"
 if [ "$branch" = "master" ]; then
   echo "Running version bump script on master commit Hook..."
   ./scripts/bump-version.sh
+  git add ${TARGET}
 fi

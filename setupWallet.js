@@ -1,5 +1,5 @@
 const terms = require("./terms.js");
-import Spinner from "./utils/spinner.js";
+import spin from "./utils/spin.js";
 
 async function loadTerms(store) {
   try {
@@ -16,22 +16,17 @@ module.exports = (store, web3t) => {
 	//loadTerms(store);
   store.current.page = "terms";
   web3t.init(function(err, data) {
-
       if (err) {
-          spinner.finish();
           store.current.page = "error";
           store.current.error = err + "";
           return;
       }
-      const spinner = new Spinner(store, `Setting up your wallet`);
 
-      web3t.refresh(function(err, data){
-        spinner.finish();
+      spin(store, `Setting up your wallet`, web3t.refresh.bind(web3t))(function(err, data){
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";
         }
       });
     });
-
 }

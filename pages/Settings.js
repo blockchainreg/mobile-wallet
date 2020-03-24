@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Content,
   ListItem,
@@ -20,6 +20,44 @@ import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import PickerSetLang from "../components/PickerSetLang.js";
+import * as LocalAuthentication from 'expo-local-authentication';
+
+const LocalAuthListView = ({store}) => {
+  // const [localAuthEnabled, setLocalAuthEnabled] = useState(null);
+  // if (localAuthEnabled === null) {
+  //   console.log("Requesting LocalAuthentication params");
+  //   Promise.all([
+  //     LocalAuthentication.hasHardwareAsync(),
+  //     LocalAuthentication.supportedAuthenticationTypesAsync(),
+  //     LocalAuthentication.isEnrolledAsync()
+  //   ]).then(([hasHardware, supportedAuthTypes, isEnrolled]) => {
+  //     console.log("LocalAuthentication params", hasHardware, supportedAuthTypes, isEnrolled);
+  //     setLocalAuthEnabled(hasHardware && isEnrolled && supportedAuthTypes.length > 0);
+  //   });
+  // }
+  // if (!localAuthEnabled) {
+  //   return null;
+  // }
+  return (
+    <ListItem
+      icon
+      onPress={() => {
+        store.current.page = "LocalAuthenticationSettings";
+      }}
+      style={styles.heightListItem}
+    >
+      <Left>
+        <Icon name="md-document" />
+      </Left>
+      <Body style={styles.heightListItem}>
+        <Text style={styles.numbersFaq1}>Fingerprint or FaceID</Text>
+      </Body>
+      <Right style={styles.heightListItem}>
+        <Icon name="ios-arrow-forward" />
+      </Right>
+    </ListItem>
+  );
+};
 
 export default ({ store }) => {
   const logoutBtn = async () => {
@@ -30,6 +68,7 @@ export default ({ store }) => {
   const termsBtn = async () => {
     store.current.page = "terms";
   };
+
 
   return (
     <View style={styles.container}>
@@ -102,6 +141,7 @@ export default ({ store }) => {
               <Icon name="ios-arrow-forward" />
             </Right>
           </ListItem>
+          <LocalAuthListView store={store}/>
 
           <Separator bordered>
             <Text>{lang.profile}</Text>
