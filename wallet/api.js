@@ -45,7 +45,6 @@
   // };
 
   out$.getKeys = action(function(provider, config, cb){
-    debugger;
     return provider.getKeys(config, cb);
   });
   out$.getBalance = getBalance = action(function(provider, config, cb){

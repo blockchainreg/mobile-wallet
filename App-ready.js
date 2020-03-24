@@ -13,7 +13,6 @@ import { saved } from './wallet/seed.js';
 import Confirm from './components/Confirm.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HistoryDetail from './pages/HistoryDetail.js';
-//console.log(web3);
 
 //mobile specific defaults (start)
 //Store.current.expanded = false;

@@ -37,6 +37,7 @@ const buttonActive = store => {
     check(store.current.signUpInputPinField);
     store.current.page = "newseed";
     store.current.newseedstep = "ask";
+    store.current.signUpInputPinField = "";
     // store.current.page = "locked";
   };
 

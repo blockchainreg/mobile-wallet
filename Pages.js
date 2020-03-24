@@ -17,6 +17,8 @@ import invoice from "./pages/WalletInvoice";
 import terms from "./pages/Terms";
 import sent from "./pages/sent";
 import error from "./pages/error";
+import LocalAuthenticationSettings from "./pages/LocalAuthenticationSettings";
+import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
 
 export default {
   generatedseed,
@@ -37,5 +39,7 @@ export default {
   confirmseed,
   invoice,
   sent,
-  LangPage
+  LangPage,
+  LocalAuthenticationEnable,
+  LocalAuthenticationSettings
 };

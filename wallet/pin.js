@@ -30,22 +30,28 @@
     return 'unsecure';
   };
   out$.check = check = function(value){
-    var res, ref$, key, decrypted;
-    if (toString$.call(value).slice(8, -1) !== 'String') {
+    try {
+      var res, ref$, key, decrypted;
+      if (toString$.call(value).slice(8, -1) !== 'String') {
+        return false;
+      }
+      if (value.length !== 4) {
+        return false;
+      }
+      mem.encrypt = function(str){
+        return md5(value + '234ef' + str).toString();
+      };
+      res = (ref$ = localStorage.getItem('spin')) != null ? ref$ : "";
+      if (res.length === 0) {
+        return false;
+      }
+      key = getKey(value);
+      decrypted = aes.decrypt(res, key).toString(wordsToUtf8);
+      return decrypted === value;
+    }
+    catch(e) {
+      console.log(e);
       return false;
     }
-    if (value.length !== 4) {
-      return false;
-    }
-    mem.encrypt = function(str){
-      return md5(value + '234ef' + str).toString();
-    };
-    res = (ref$ = localStorage.getItem('spin')) != null ? ref$ : "";
-    if (res.length === 0) {
-      return false;
-    }
-    key = getKey(value);
-    decrypted = aes.decrypt(res, key).toString(wordsToUtf8);
-    return decrypted === value;
   };
 }).call(this);

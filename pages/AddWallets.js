@@ -19,7 +19,7 @@ import { ScrollView, StatusBar } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
-import Spinner from "../utils/spinner.js";
+import spin from "../utils/spin.js";
 // import StatusBar from "../components/StatusBar.js";
 
 //
@@ -43,24 +43,19 @@ const renderCoin = (store, web3t) => item => {
 
 
   const addItem = () => {
-    const spinner = new Spinner(store, `Installing ${name}`);
-    setTimeout(() => {
-      web3t.installQuick(item, (err, data) => {
-        //console.log("install", err, data);
-        //store.current.page = "wallets";
-        spinner.finish();
-      });
-    }, 1);
+    spin(store, `Installing ${name}`, web3t.installQuick.bind(web3t))
+      (item, (err, data) => {
+      //console.log("install", err, data);
+      //store.current.page = "wallets";
+    });
   };
 
   const deleteItem = () => {
-    const spinner = new Spinner(store, `Uninstalling ${name}`);
     //console.log("Removing coin", name);
     //BUG: This works unstable
-    web3t.uninstall(item.token, (err, data) => {
+    spin(store, `Uninstalling ${name}`, web3t.uninstall.bind(web3t))(item.token, (err, data) => {
       //console.log("Remove coin result", err, data);
       //store.current.page = "wallets";
-      spinner.finish();
     });
   };
   const currentAction = isAdded ? deleteItem : addItem;

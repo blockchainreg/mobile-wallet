@@ -7,42 +7,40 @@ import Images from "../Images.js";
 import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 
-const checkType = type => {
-  switch (type) {
-    case "IN":
-      return <Text style={styles.txtSizeHistory}>{lang.receive}</Text>;
-    case "OUT":
-      return <Text style={styles.txtSizeHistory}>{lang.sent}</Text>;
-    default:
-      return null;
-  }
-};
-
-const index = type => {
-  if (type === "IN") return null;
-  else if (type === "OUT") return <Text>-</Text>;
-};
-const amountStyle = type => {
-  if (type === "IN") return styles.styleCoinIn;
-  else if (type === "OUT") return styles.styleCoinOut;
-};
-const thumbnail = type => {
-  switch (type) {
-    case "IN":
-      return <Thumbnail small source={Images.depositImage} />;
-    case "OUT":
-      return (
-        <Thumbnail small source={Images.withdrawImage2} />
-      );
-    default:
-      return null;
-  }
-};
-
-
 export default ({ store, web3t }) => {
-
     const lang = getLang(store);
+    const checkType = type => {
+      switch (type) {
+        case "IN":
+          return <Text style={styles.txtSizeHistory}>{lang.receive}</Text>;
+        case "OUT":
+          return <Text style={styles.txtSizeHistory}>{lang.sent}</Text>;
+        default:
+          return null;
+      }
+    };
+
+    const index = type => {
+      if (type === "IN") return null;
+      else if (type === "OUT") return <Text>-</Text>;
+    };
+    const amountStyle = type => {
+      if (type === "IN") return styles.styleCoinIn;
+      else if (type === "OUT") return styles.styleCoinOut;
+    };
+    const thumbnail = type => {
+      switch (type) {
+        case "IN":
+          return <Thumbnail small source={Images.depositImage} />;
+        case "OUT":
+          return (
+            <Thumbnail small source={Images.withdrawImage2} />
+          );
+        default:
+          return null;
+      }
+    };
+
     const txs = store.transactions.applied;
 
     const showTransaction = (transaction) => {
