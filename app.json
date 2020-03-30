@@ -22,6 +22,8 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.kpogromskiy.mobilewallet.exponent",
+      "buildNumber": "1.0.0",
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
       }

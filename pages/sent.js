@@ -18,6 +18,7 @@ import getLang from '../wallet/get-lang.js';
 //   const url = store.current.lastTxUrl;
 //
   const handleCloseModalPress = (store, web3t) => {
+    const lang = getLang(store);
     const refreshAndBack = () => {
 
         //store.current.wallet = wallet.coin.token;
@@ -29,7 +30,7 @@ import getLang from '../wallet/get-lang.js';
         store.current.page = "wallets";
 
         web3t.refresh((err,data) => {
-          
+
         });
 
     }
