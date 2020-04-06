@@ -15,14 +15,14 @@ import {
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import Hyperlink from "react-native-hyperlink";
-import {set} from "../wallet/seed.js";
-import Markdown from 'react-native-markdown-display';
-import Images from '../Images.js';
+import { set } from "../wallet/seed.js";
+import Markdown from "react-native-markdown-display";
+import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";
-import getLang from '../wallet/get-lang.js';
+import getLang from "../wallet/get-lang.js";
 
 const buttonAccept = store => {
-  const changePage = (tab) => () => {
+  const changePage = tab => () => {
     if (!store.current.seed) {
       return;
     }
@@ -51,7 +51,6 @@ const markdownStyle = {
   }
 };
 
-
 export default ({ store }) => {
   const lang = getLang(store);
   const terms = store => {
@@ -76,10 +75,7 @@ export default ({ store }) => {
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
-          <Image
-            source={Images.logo}
-            style={styles.styleLogo}
-          />
+          <Image source={Images.logo} style={styles.styleLogo} />
           <Text style={styles.textH1Seed}>{lang.termsOfUse}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
@@ -94,7 +90,9 @@ export default ({ store }) => {
                   {lang.terms}
                 </Text>
 
-                <View style={styles.marginBtn}>{buttonAccept(store)}</View>
+                <View style={[styles.marginBtn, { marginBottom: -40 }]}>
+                  {buttonAccept(store)}
+                </View>
               </Body>
             </CardItem>
           </View>
