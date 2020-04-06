@@ -96,6 +96,7 @@
       demo: location.href.indexOf('web3.space/wallet') > -1,
       network: 'mainnet',
       pin: "",
+      pinSave: "",
       lastTxUrl: "",
       tryEditSeed: false,
       pinTrial: 0,

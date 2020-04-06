@@ -113,6 +113,7 @@ export default ({ store }) => {
 
   const handleChangePin = async text => {
     store.current.signUpInputPinField = text;
+    store.current.pinSave = store.current.signUpInputPinField;
   };
   const inputSuccessPin = store => {
     return (

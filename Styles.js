@@ -5,6 +5,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import Constants from "expo-constants";
+
 
 export default StyleSheet.create({
   size: 24,
@@ -4207,6 +4209,11 @@ export default StyleSheet.create({
     backgroundColor: "black",
     width: "90%"
   },
+  toastStyle1: {
+    backgroundColor: "black",
+    width: "90%",
+    top: -100
+  },
   styleLogo: {
     ...Platform.select({
       ios: {
@@ -4518,5 +4525,75 @@ export default StyleSheet.create({
     width: 26,
     height: 26,
     borderRadius: 10
+  },
+  containerFp: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    paddingTop: Constants.statusBarHeight,
+    padding: 8
+  },
+  gradientBtnPhMarginFp: {
+    paddingHorizontal: 0,
+    marginTop: 20
+  },
+  titleBlackFp: {
+    ...ifIphoneX(
+      {
+        color: "#000",
+        fontSize: 20,
+        fontWeight: "bold",
+        alignSelf: "center",
+        height: 30,
+        marginTop: 10
+      },
+      {
+        color: "#000",
+        fontSize: 20,
+        fontWeight: "bold",
+        alignSelf: "center"
+      }
+    )
+  },
+  viewFlexFp: {
+    ...Platform.select({
+      ios: {
+        flex: 1
+      },
+      android: {
+        flex: 1
+      }
+    })
+  },
+  modalFp: {
+    flex: 1,
+    marginTop: "90%",
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: hp("50%"),
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  innerContainerFp: {
+    marginTop: "30%",
+    width: "100%",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  textFp: {
+    alignSelf: "center",
+    fontSize: 22,
+    paddingTop: 20
+  },
+  introBackgroundFp: {
+    backgroundColor: "#290C64",
+    width: "100%",
+    height: "100%"
   }
 });

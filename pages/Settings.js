@@ -13,7 +13,7 @@ import {
   Separator,
   Button
 } from "native-base";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
@@ -37,7 +37,16 @@ const LocalAuthListView = ({store}) => {
   // if (!localAuthEnabled) {
   //   return null;
   // }
-  return (
+  const touchFinger = () => {
+    if (Platform.OS === 'android') {
+      return <Text style={styles.numbersFaq1}>Use Touch ID</Text>;
+    }
+    else if (Platform.OS === 'ios') {
+      return <Text style={styles.numbersFaq1}>Use Touch ID or FaceID</Text>;
+    }
+  }
+  
+  return ( 
     <ListItem
       icon
       onPress={() => {
@@ -46,10 +55,10 @@ const LocalAuthListView = ({store}) => {
       style={styles.heightListItem}
     >
       <Left>
-        <Icon name="md-document" />
+        <Icon name="finger-print" />
       </Left>
       <Body style={styles.heightListItem}>
-        <Text style={styles.numbersFaq1}>Fingerprint or FaceID</Text>
+        {touchFinger()}
       </Body>
       <Right style={styles.heightListItem}>
         <Icon name="ios-arrow-forward" />
@@ -140,7 +149,6 @@ export default ({ store }) => {
               <Icon name="ios-arrow-forward" />
             </Right>
           </ListItem>
-          <LocalAuthListView store={store}/>
 
           <Separator bordered>
             <Text>{lang.profile}</Text>
@@ -154,6 +162,8 @@ export default ({ store }) => {
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
+          <LocalAuthListView store={store}/>
+
 
           <Separator bordered>
             <Text>{lang.security}</Text>
@@ -164,7 +174,7 @@ export default ({ store }) => {
               <Icon name="ios-log-out" />
             </Left>
             <Body style={styles.heightListItem}>
-              <Text style={styles.numbersFaq1}>{lang.logOut}</Text>
+          <Text style={styles.numbersFaq1}>{lang.logOut}</Text>
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>

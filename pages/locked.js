@@ -246,7 +246,6 @@ export default ({ store, web3t }) => {
       regexPin.test(store.current.pin)
     );
     // Validation end
-
     return (<View style={styles.marginBtn}>
       {
       store.current.pin && validInputPin
@@ -257,7 +256,6 @@ export default ({ store, web3t }) => {
       {!isLoggingIn && <LocalAuth store={store} />}
     </View>);
   };
-
   const changePage = (tab) => () => {
     store.tab = tab;
     store.current.pin = "";
@@ -274,6 +272,7 @@ export default ({ store, web3t }) => {
 
   const handleChangePin = async text => {
     store.current.pin = text;
+    store.current.pinSave = store.current.pin;
   };
   const inputSuccessPin = store => {
     return (
