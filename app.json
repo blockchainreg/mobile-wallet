@@ -3,7 +3,7 @@
     "name": "Expo Web3 wallet",
     "slug": "expo-web3",
     "privacy": "public",
-    "sdkVersion": "34.0.0",
+    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android"
@@ -26,12 +26,19 @@
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
-      }
+      },
+      "publishBundlePath": "ios/expo-web3-wallet/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/expo-web3-wallet/Supporting/shell-app-manifest.json"
     },
     "android": {
       "package": "com.velas.mobile_wallet",
       "versionCode": 31
     },
-    "description": "Premium quality cryptocurrency wallet!"
+    "description": "Premium quality cryptocurrency wallet!",
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.13.0-sdk35.0.0-a30ebc9b-3db4-42f4-b677-e468076baf18.tar.gz"
+    },
+    "scheme": "exp909be699bde04c14a7f9a71ac40e7d5d"
   }
 }

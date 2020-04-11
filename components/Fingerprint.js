@@ -16,9 +16,6 @@ import styles from "../Styles.js";
 export default class Fingerprint extends React.Component {
   constructor(props) {
     super(props);
-    if (Platform.OS !== "android") {
-      this.scanFingerPrint();
-    }
   }
 
   state = {
@@ -38,7 +35,11 @@ export default class Fingerprint extends React.Component {
   scanFingerPrint = async () => {
     try {
       console.log("scanFingerPrint");
-      let results = await LocalAuthentication.authenticateAsync();
+      debugger;
+      let results = await LocalAuthentication.authenticateAsync({
+        promptMessage: "Please Authenticate yourself using Fingerprint or Face ID",
+        fallbackLabel: ""
+      });
       if (results.success) {
         this.setState({
           modalVisible: false,
@@ -122,4 +123,3 @@ export default class Fingerprint extends React.Component {
     );
   }
 }
-
