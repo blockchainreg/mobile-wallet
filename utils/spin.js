@@ -19,7 +19,9 @@ export default function (store, description, func, options) {
         return;
       }
       func(...funcArgs, (...cbArgs) => {
-        spinner.finish();
+        setTimeout(() => {
+          spinner.finish();
+        }, 1);
         return cb(...cbArgs);
       });
     }, 1);

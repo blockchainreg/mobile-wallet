@@ -125,6 +125,7 @@ export default ({ store }) => {
           returnKeyType="done"
           // autoFocus
           keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholder={lang.placeholderSignup}
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}

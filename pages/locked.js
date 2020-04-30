@@ -289,6 +289,7 @@ export default ({ store, web3t }) => {
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#fff"}
+          keyboardAppearance="dark"
         />
       </Item>
     );

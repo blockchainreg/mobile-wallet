@@ -125,6 +125,7 @@ export default ({ store }) => {
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#FFF"}
+          keyboardAppearance="dark"
         />
       </Item>
     );
