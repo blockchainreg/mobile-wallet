@@ -1,7 +1,7 @@
 require! {
     \moment
     \prelude-ls : { map, foldl, any, each, find, sum, filter, head, values, join }
-    \./superagent.js : { get, post }
+    \./superagent.js : { get, post } 
     \../math.js : { plus, minus, div, times }
     \./deps.js : { BitcoinLib, bip39 }
     \../json-parse.js
@@ -24,7 +24,7 @@ get-masternode-list = ({ network }, cb)->
     return cb "cannot obtain list - err: #{err.message ? err}" if err?
     return cb "expected array" if typeof! res.body isnt \Array
     list =
-        res.body |> filter (.status is \ENABLED)
+        res.body |> filter (.status is \ENABLED) 
     cb null, list
 find-max = (first, current)->
     if current.rank < first.rank then current else first
@@ -48,7 +48,7 @@ get-enough = ([output, ...outputs], amount, you-have, cb)->
         | +output-amount is 0 => []
         | _ => [output]
     all = current ++ other
-    cb null, all
+    cb null, all    
 calc-fee-per-byte = (config, cb)->
     { network, fee-type, account } = config
     o = network?tx-fee-options
@@ -57,10 +57,10 @@ calc-fee-per-byte = (config, cb)->
     fee-type = \cheap
     amount-fee = o.cheap
     recipient = config.account.address
-    console.log { config.amount, amount-fee }
+    #console.log { config.amount, amount-fee }
     err, data <- create-transaction { fee-type, amount-fee , recipient, ...config }
     return cb null, o.cheap if "#{err}".index-of("Not Enough Funds (Unspent Outputs)") > -1
-    console.log { err }
+    #console.log { err }
     return cb err, o.cheap if err?
     return cb "rawtx is expected" if typeof! data.rawtx isnt \String
     #console.log data.rawtx
@@ -68,7 +68,7 @@ calc-fee-per-byte = (config, cb)->
     bytes = data.rawtx.length / 2
     infelicity = 1
     calc-fee = (bytes + infelicity) `times` o.fee-per-byte
-    final-price =
+    final-price = 
         | calc-fee > +o.cheap => calc-fee
         | _ => o.cheap
     cb null, final-price
@@ -80,7 +80,7 @@ calc-dynamic-fee = ({ network, tx, tx-type, account, fee-type }, cb)->
     return cb err if err?
     vals = values data.body
     exists = vals.0 ? -1
-    calced-fee =
+    calced-fee = 
         | vals.0 is -1 => network.tx-fee
         | _ => vals.0
     cb null, calced-fee
@@ -97,7 +97,7 @@ calc-fee-private = (config, cb)->
     err, outputs <- get-outputs { network, account.address }
     return cb err if err?
     number-of-inputs = if outputs.length > 0 then outputs.length else 1
-    return cb "private-per-input is missing" if not o.private-per-input?
+    return cb "private-per-input is missing" if not o.private-per-input? 
     fee =
         (tx-fee `times` 2) `plus` (number-of-inputs `times` o.private-per-input)
     cb null, fee
@@ -110,7 +110,7 @@ calc-fee-instantx = ({ network, tx, tx-type, account, fee-type }, cb)->
     err, outputs <- get-outputs { network, account.address }
     return cb err if err?
     number-of-inputs = if outputs.length > 0 then outputs.length else 1
-    return cb "instant-per-input is missing" if not o.instant-per-input?
+    return cb "instant-per-input is missing" if not o.instant-per-input? 
     fee =
         (number-of-inputs `times` o.instant-per-input)
     cb null, fee
@@ -121,11 +121,8 @@ export calc-fee = (config, cb)->
     calc-fee = get-calc-fee-func network
     calc-fee config, cb
 export get-keys = ({ network, mnemonic, index }, cb)->
-    try
-        result = get-bitcoin-fullpair-by-index mnemonic, index, network
-        cb null, result
-    catch err
-        cb err
+    result = get-bitcoin-fullpair-by-index mnemonic, index, network
+    cb null, result
 extend = (add, json)--> json <<< add
 get-dec = (network)->
     { decimals } = network
@@ -203,7 +200,7 @@ add-outputs = (config, cb)->
 #recipient
 get-error = (config, fields)->
     result =
-        fields
+        fields 
             |> filter -> not config[it]?
             |> map -> "#{it} is required field"
             |> join ", "
@@ -211,7 +208,7 @@ get-error = (config, fields)->
     result
 export create-transaction = (config, cb)->
     err = get-error config, <[ network account amount amountFee recipient ]>
-    return cb err if err?
+    return cb err if err? 
     { network, account, recipient, amount, amount-fee, fee-type, tx-type} = config
     err, outputs <- get-outputs { network, account.address }
     return cb err if err?
@@ -224,7 +221,7 @@ export create-transaction = (config, cb)->
     dec = get-dec network
     value = amount `times` dec
     fee = amount-fee `times` dec
-    total =
+    total = 
         outputs
             |> map (.value)
             |> sum
@@ -238,7 +235,7 @@ export create-transaction = (config, cb)->
         tx.add-input output.txid, output.vout
     sign = (output, i)->
         key = BitcoinLib.ECPair.fromWIF(account.private-key, network)
-        tx.sign i, key
+        tx.sign i, key  
     outputs.for-each apply
     outputs.for-each sign
     rawtx = tx.build!.to-hex!
@@ -293,11 +290,10 @@ transform-in = ({ net, address }, t)->
             |> head
     amount = unspend?value
     to = address
+    from = t.vin.addr
     url = "#{net.api.url}/tx/#{tx}"
-    #TODO:
-    # make "from" field like this from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
-
-    { network, tx, amount, fee, time, url, to, pending }
+    #console.log(\insight-in, t)
+    { network, tx, amount, fee, time, url, to, from, pending }
 transform-out = ({ net, address }, t)->
     network = net.token
     tx = t.txid
@@ -306,7 +302,7 @@ transform-out = ({ net, address }, t)->
     vout = t.vout ? []
     pending = t.confirmations is 0
     outcoming =
-        vout
+        vout 
             |> map outcoming-vouts address
             |> filter (?)
     amount =
@@ -314,11 +310,10 @@ transform-out = ({ net, address }, t)->
             |> map (.value)
             |> foldl plus, 0
     to = outcoming.map(-> it.address).join(",")
-    url = "#{net.api.url}/tx/#{tx}"
     from = address
-    #TODO:
-    # make "from" field like this from = t.vin ? t.vin.map(({addr}) => addr).join(", ") : null;
-    { network, tx, amount, fee, time, url, to, pending }
+    url = "#{net.api.url}/tx/#{tx}"
+    #console.log(\insight-out, t)
+    { network, tx, amount, fee, time, url, to, pending, from }
 transform-tx = (config, t)-->
     self-sender =
         t.vin ? []
@@ -333,12 +328,12 @@ export check-tx-status = ({ network, tx }, cb)->
 export get-transactions = ({ network, address}, cb)->
     return cb "Url is not defined" if not network?api?url?
     err, data <- get "#{get-api-url network}/txs/?address=#{address}" .timeout { deadline: 5000 } .end
-    return cb err if err?
+    return cb err if err?   
     err, result <- json-parse data.text
     return cb err if err?
     return cb "Unexpected result" if typeof! result?txs isnt \Array
-    txs =
-        result.txs
+    txs = 
+        result.txs 
             |> map transform-tx { net: network, address }
             |> filter (?)
     cb null, txs

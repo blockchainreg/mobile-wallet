@@ -1,0 +1,13 @@
+#Thu May 07 16:47:28 EEST 2020
+path.3=classes3.dex
+path.2=classes2.dex
+path.1=classes.dex
+path.0=classes.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.3=/Users/kostyapogromskiy/Projects/blockchain/expo-web3detached/android/app/build/intermediates/transforms/dexMerger/debug/0
+base.2=/Users/kostyapogromskiy/Projects/blockchain/expo-web3detached/android/app/build/intermediates/transforms/dexMerger/debug/0
+base.1=/Users/kostyapogromskiy/Projects/blockchain/expo-web3detached/android/app/build/intermediates/transforms/dexMerger/debug/0
+base.0=/Users/kostyapogromskiy/Projects/blockchain/expo-web3detached/android/app/build/intermediates/transforms/dexMerger/debug/1

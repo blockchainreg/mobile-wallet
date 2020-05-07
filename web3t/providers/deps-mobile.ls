@@ -1,5 +1,5 @@
 require! {
-    \../../bitcoinjs-lib : BitcoinLib
+    \rn-bitcoinjs-lib : BitcoinLib
     \node-libs-browser
     \web3 : \Web3
     \ethereumjs-tx : Tx

@@ -10,6 +10,7 @@ require! {
     #\../web3t/providers/tron.ls
     #\../web3t/providers/qiwi.ls
     \../web3t/providers/rst.js
-    \../web3t/providers/velas.js
+    # \../web3t/providers/velas.js
+    \../web3t/providers/velas2.js
 }
 module.exports = { eth, insight , erc20, omni, velas /* rst, xem, waves,eos, stellar, tron, qiwi*/ }

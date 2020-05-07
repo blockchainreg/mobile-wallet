@@ -6,12 +6,12 @@
   erc20 = require('../web3t/providers/erc20.js');
   omni = require('../web3t/providers/omni.js');
   rst = require('../web3t/providers/rst.js');
-  velas = require('../web3t/providers/velas.js');
+  velas2 = require('../web3t/providers/velas2.js');
   module.exports = {
     eth: eth,
     insight: insight,
     erc20: erc20,
     omni: omni,
-    velas: velas
+    velas2: velas2
   };
 }).call(this);

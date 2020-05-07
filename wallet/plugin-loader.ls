@@ -14,13 +14,13 @@ query-related = (token, coin)->
     #console.log token, window.location.search.index-of("plugin=#{token}"), coin
     if window.location.search.index-of("plugin=#{token}") > -1 then coin
 common =
-    * require \../web3t/plugins/vlx-coin.js
+    * require \../web3t/plugins/vlx2-coin.js
     * require \../web3t/plugins/btc-coin.js
     ...
 #    * require \../web3t/plugins/vlx-coin.js
 #    * query-related \gbx         , gobyte
 #    * require \../web3t/plugins/usdt-coin.ls
-#    
+#
 #    * require \../web3t/plugins/eth-coin.ls
 #    * require \../web3t/plugins/dash-coin.ls
 #    * require \../web3t/plugins/ltc-coin.ls

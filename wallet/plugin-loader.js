@@ -9,7 +9,7 @@
       return coin;
     }
   };
-  common = [require('../web3t/plugins/vlx-coin.js'), require('../web3t/plugins/btc-coin.js')];
+  common = [require('../web3t/plugins/vlx2-coin.js'), require('../web3t/plugins/btc-coin.js')];
   out$.getCoins = getCoins = function(cb){
     var base, this$ = this;
     base = filter(function(it){
