@@ -32,16 +32,12 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 32,
+      "versionCode": 33,
       "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
       "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
     },
     "description": "Premium quality cryptocurrency wallet!",
     "isDetached": false,
-    "detach__commented": {
-      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.13.0-sdk35.0.0-a30ebc9b-3db4-42f4-b677-e468076baf18.tar.gz",
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v119-sdk35.0.0-6758e9de-1e10-40f8-863d-ec8972895cf1.tar.gz"
-    },
     "scheme": "exp909be699bde04c14a7f9a71ac40e7d5d"
   }
 }
