@@ -32,9 +32,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 33,
-      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
-      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
+      "versionCode": 34
     },
     "description": "Premium quality cryptocurrency wallet!",
     "isDetached": false,
