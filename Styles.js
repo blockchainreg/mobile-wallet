@@ -101,6 +101,9 @@ export default StyleSheet.create({
       android: { color: "#563688" }
     })
   },
+  styleTxtSettings: {
+    color: "#563688"
+  },
   iconTouchableBuy: {
     top: 2
   },
@@ -1672,6 +1675,10 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold"
   },
+  txtSettings: {
+    color: "#563688",
+    fontSize: 17,
+  },
   colorIcon: {
     color: "rgba(34,34,34,0.30)"
   },
@@ -1999,7 +2006,7 @@ export default StyleSheet.create({
       {
         marginTop: 10,
         color: "#fff",
-        fontSize: 40,
+        fontSize: 36,
         fontWeight: "bold"
       },
       {
@@ -4117,6 +4124,10 @@ export default StyleSheet.create({
   sizeIconBtn: {
     width: 60,
     height: 60
+  },
+  sizeIconRefresh: {
+    width: 30,
+    height: 30
   },
   touchableCenter: {
     justifyContent: "center",

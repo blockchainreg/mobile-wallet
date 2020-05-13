@@ -54,14 +54,12 @@ export default ({ store }) => {
       items={langItems}
       style={{
         inputIOS: {
-          color: "rgba(49,49,49,100)",
+          color: "#563688",
           fontSize: 17,
-          fontWeight: "bold"
         },
         inputAndroid: {
-          color: "rgba(49,49,49,100)",
+          color: "#563688",
           fontSize: 17,
-          fontWeight: "bold"
         }
       }}
     />

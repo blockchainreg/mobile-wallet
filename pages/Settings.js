@@ -39,10 +39,10 @@ const LocalAuthListView = ({store}) => {
   // }
   const touchFinger = () => {
     if (Platform.OS === 'android') {
-      return <Text style={styles.numbersFaq1}>Use Touch ID</Text>;
+      return <Text style={styles.txtSettings}>Use Touch ID</Text>;
     }
     else if (Platform.OS === 'ios') {
-      return <Text style={styles.numbersFaq1}>Use Touch ID or FaceID</Text>;
+      return <Text style={styles.txtSettings}>Use Touch ID or FaceID</Text>;
     }
   }
   
@@ -55,7 +55,7 @@ const LocalAuthListView = ({store}) => {
       style={styles.heightListItem}
     >
       <Left>
-        <Icon name="finger-print" />
+        <Icon name="finger-print" style={styles.styleTxtSettings}/>
       </Left>
       <Body style={styles.heightListItem}>
         {touchFinger()}
@@ -85,14 +85,14 @@ export default ({ store }) => {
         <Header style={styles.mtAndroid}>
           <Left style={styles.viewFlex} />
           <Body style={styles.viewFlex}>
-            <Title style={styles.titleBlack}>{lang.settings}</Title>
+            <Title style={[styles.titleBlack, {color: "#563688"}]}>{lang.settings}</Title>
           </Body>
           <Right style={styles.viewFlex} />
         </Header>
 
         <Content>
           <Separator bordered>
-            <Text>{lang.help}</Text>
+            <Text style={styles.styleTxtSettings}>{lang.help}</Text>
           </Separator>
           <ListItem
             icon
@@ -102,10 +102,10 @@ export default ({ store }) => {
             style={styles.heightListItem}
           >
             <Left>
-              <Icon name="ios-text" />
+              <Icon name="ios-text" style={styles.styleTxtSettings}/>
             </Left>
             <Body style={styles.heightListItem}>
-              <Text style={styles.numbersFaq1}>{lang.support}</Text>
+              <Text style={styles.txtSettings}>{lang.support}</Text>
             </Body>
             <Right style={styles.heightListItem}>
               <Icon name="ios-arrow-forward" />
@@ -120,10 +120,10 @@ export default ({ store }) => {
             style={styles.heightListItem}
           >
             <Left>
-              <Icon name="md-document" />
+              <Icon name="md-document" style={styles.styleTxtSettings}/>
             </Left>
             <Body style={styles.heightListItem}>
-              <Text style={styles.numbersFaq1}>{lang.privacyPolicy}</Text>
+              <Text style={styles.txtSettings}>{lang.privacyPolicy}</Text>
             </Body>
             <Right style={styles.heightListItem}>
               <Icon name="ios-arrow-forward" />
@@ -140,10 +140,10 @@ export default ({ store }) => {
             style={styles.heightListItem}
           >
             <Left>
-              <Icon name="md-document" />
+              <Icon name="md-document" style={styles.styleTxtSettings}/>
             </Left>
             <Body style={styles.heightListItem}>
-              <Text style={styles.numbersFaq1}>{lang.termsOfUse}</Text>
+              <Text style={styles.txtSettings}>{lang.termsOfUse}</Text>
             </Body>
             <Right style={styles.heightListItem}>
               <Icon name="ios-arrow-forward" />
@@ -151,11 +151,11 @@ export default ({ store }) => {
           </ListItem>
 
           <Separator bordered>
-            <Text>{lang.profile}</Text>
+            <Text style={styles.styleTxtSettings}>{lang.profile}</Text>
           </Separator>
           <ListItem icon style={styles.heightListItem} last>
             <Left>
-              <Icon name="md-globe" />
+              <Icon name="md-globe" style={styles.styleTxtSettings}/>
             </Left>
             <Body style={styles.heightListItem}>
               {PickerSetLang({ store })}
@@ -166,15 +166,15 @@ export default ({ store }) => {
 
 
           <Separator bordered>
-            <Text>{lang.security}</Text>
+            <Text style={styles.styleTxtSettings}>{lang.security}</Text>
           </Separator>
 
           <ListItem icon style={styles.heightListItem} last onPress={logoutBtn}>
             <Left>
-              <Icon name="ios-log-out" />
+              <Icon name="ios-log-out" style={styles.styleTxtSettings}/>
             </Left>
             <Body style={styles.heightListItem}>
-          <Text style={styles.numbersFaq1}>{lang.logOut}</Text>
+          <Text style={styles.txtSettings}>{lang.logOut}</Text>
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
