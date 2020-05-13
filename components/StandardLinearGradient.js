@@ -7,8 +7,8 @@ import getLang from '../wallet/get-lang.js';
 export default ({ children }) => {
   return (
     <LinearGradient
-      colors={['#5038AC', '#8D53E4', '#D8A9FF']}
-      // colors={['#428FCE', '#425DCE']}
+      // colors={['#5038AC', '#8D53E4', '#D8A9FF']}
+      colors={['#15063c', '#331462']}
       start={[0.9, 0.3]}
       end={[0.1, 0.1]}
       style={styles.linearGradientNew}>

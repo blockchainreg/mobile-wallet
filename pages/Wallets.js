@@ -15,7 +15,7 @@ import {
   Header
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity, Image } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -26,6 +26,8 @@ import applyTransactions from '../wallet/apply-transactions.js';
 import { times } from "../wallet/math.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
+import Images from '../Images.js';
+
 
 
 const wallets = (store, web3t) => {
@@ -126,11 +128,21 @@ export default ({ store, web3t }) => {
         <StandardLinearGradient>
           <RefreshControl swipeRefresh={refreshBalance}>
             <Header transparent style={styles.mtIphoneX}>
-              <Left style={styles.viewFlex} />
+              <Left style={styles.viewFlex}/>
               <Body style={styles.viewFlex}>
                 <Text style={styles.title1}>{lang.totalBalance}</Text>
               </Body>
-              <Right style={styles.viewFlex} />
+              <Right style={styles.viewFlex}>
+                <Button
+                  transparent
+                  style={styles.arrowHeaderLeft}
+                  onPress={refreshBalance}
+                >
+                  <Icon
+                    name="ios-sync"
+                    style={styles.arrowHeaderIcon}
+                  />
+                </Button></Right>
             </Header>
             <StatusBar barStyle="light-content" />
             <Text style={styles.textBalanceHeader}>
@@ -139,7 +151,7 @@ export default ({ store, web3t }) => {
               </Text>
               {" "}{calcUsd}
             </Text>
-          </RefreshControl>
+            </RefreshControl>
         </StandardLinearGradient>
         <View style={styles.viewMonoWallets}>
           <View style={styles.viewPt} />
