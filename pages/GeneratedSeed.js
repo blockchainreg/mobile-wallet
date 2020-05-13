@@ -97,13 +97,13 @@ export default ({ store }) => {
               />
             </Button>
           </Left>
-          <Body style={styles.viewFlex} />
+          <Body style={styles.viewFlex}>
+            <Text style={styles.textH1Seed2}>{lang.newSeedPhrase}</Text>
+          </Body>
           <Right style={styles.viewFlex} />
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
-          <Image source={Images.logo} style={styles.styleLogo} />
-          <Text style={styles.textH1Seed}>{lang.newSeedPhrase}!</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>

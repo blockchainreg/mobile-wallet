@@ -1713,6 +1713,11 @@ export default StyleSheet.create({
     fontWeight: "bold",
     marginTop: 25
   },
+  textH1Seed2 : {
+    fontSize: 25,
+    color: "#fff",
+    fontWeight: "bold"
+  },
   textH1Seed: {
     ...ifIphoneX(
       {
@@ -4406,7 +4411,7 @@ export default StyleSheet.create({
         paddingHorizontal: 10,
         borderColor: "rgba(157, 65, 235, 0.5)",
         alignItems: "center",
-        paddingVertical: 5,
+        paddingVertical: 2,
         marginHorizontal: 7,
         marginVertical: 5
       },
@@ -4417,7 +4422,7 @@ export default StyleSheet.create({
         paddingHorizontal: 10,
         borderColor: "rgba(157, 65, 235, 0.5)",
         alignItems: "center",
-        paddingVertical: 5,
+        paddingVertical: 2,
         marginHorizontal: 5,
         marginVertical: 5
       }

@@ -60,7 +60,7 @@ export default ({ store }) => {
   };
 
   const generateRandom = async () => {
-    store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic();
+    store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic() + ' ' + generateMnemonic();
     store.current.page = "generatedseed";
     //store.curren.newseedstep = "ganarate";
     //
