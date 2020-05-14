@@ -98,7 +98,6 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          <Text style={styles.textH1Seed}>{lang.choose}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>

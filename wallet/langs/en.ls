@@ -122,7 +122,7 @@ module.exports =
     address: "address"
     sent: "Sent"
     filter: "Filter"
-    continue: "Continue"
+    continue: "Next"
     sender: "Sender"
     external-id: "External Id"
     ok: "Ok"

@@ -135,7 +135,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.marginBtnSeed}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text={lang.confirm}
+                    text={lang.continue}
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
@@ -147,7 +147,6 @@ export default ({ store, web3t }) => {
                     onPressAction={continueProcess}
                   />
                   <Text style={styles.textCard}>
-                  {lang.pleaseEnter} {number + 1}{lang.enterWord}
                   </Text>
                 </View>
               </Body>

@@ -42,17 +42,21 @@ const wallets = (store, web3t) => {
   const listItem =  (wallet) => {
 
     const chooseWallet = () => {
-
-      store.current.wallet = wallet.coin.token;
-      store.current.walletIndex = wallets.indexOf(wallet);
-      store.current.filter.length = 0;
-      store.current.filter.push("IN");
-      store.current.filter.push("OUT");
-      store.current.filter.push(wallet.coin.token);
-      store.current.filterVal.temp = "";
-      store.current.filterVal.apply = "";
-      applyTransactions(store);
-      store.current.page = "wallet";
+      try {
+        store.current.wallet = wallet.coin.token;
+        store.current.walletIndex = wallets.indexOf(wallet);
+        store.current.filter.length = 0;
+        store.current.filter.push("IN");
+        store.current.filter.push("OUT");
+        store.current.filter.push(wallet.coin.token);
+        store.current.filterVal.temp = "";
+        store.current.filterVal.apply = "";
+        applyTransactions(store);
+        store.current.page = "wallet";
+      }
+      catch(err) {
+        console.log(err);
+      }
 
 
     }
