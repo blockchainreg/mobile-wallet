@@ -44,7 +44,7 @@ export default ({ store, web3t }) => {
   };
 
   const number = store.current.seedIndexes[store.current.seedIndex];
-
+  const placeholderConfirmSeed = (number + 1) + " " + lang.placeholderConfirmSeed;
   const continueProcess = () => {
     expectedWord = store.current.seed.split(" ")[number];
 
@@ -118,13 +118,13 @@ export default ({ store, web3t }) => {
                 <View style={styles.bodyConfirm}>
                   <Item regular style={styles.borderItemSeed}>
                     <Input
-                      // autoFocus
+                      autoFocus
                       value={store.signUpConfirmSeedField}
                       onChangeText={text => handleConfirmSeedField(text)}
                       autoCapitalize="none"
                       secureTextEntry={false}
                       returnKeyType="done"
-                      placeholder={lang.placeholderConfirmSeed}
+                      placeholder={placeholderConfirmSeed}
                       placeholderTextColor="rgba(255,255,255,0.60)"
                       style={styles.inputSize}
                       selectionColor={"#fff"}
