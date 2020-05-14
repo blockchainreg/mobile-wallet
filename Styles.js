@@ -668,7 +668,7 @@ export default StyleSheet.create({
   titleBlack: {
     ...ifIphoneX(
       {
-        color: "#000",
+        color: "#563688",
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center",
@@ -676,7 +676,7 @@ export default StyleSheet.create({
         marginTop: 10
       },
       {
-        color: "#000",
+        color: "#563688",
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center"

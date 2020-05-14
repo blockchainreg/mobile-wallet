@@ -1,5 +1,5 @@
 import React, { Component } from "react"; //import react in our code.
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Image } from "react-native";
 import { List, ListItem, Left, Body, Right, Thumbnail, Header, Item, Icon, Button, Input } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
@@ -84,9 +84,13 @@ export default ({ store, web3t }) => {
           <View>
             {txs.length == 0 && (
               <View style={styles.footer}>
-                <Text style={styles.textContainer}>
+                <Image
+                source={Images.trx}
+                style={styles.styleLogo}
+                />
+                {/* <Text style={styles.textContainer}>
                 {lang.nothingToShow}
-                </Text>
+                </Text> */}
               </View>
             )}
 
