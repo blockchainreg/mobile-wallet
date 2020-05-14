@@ -50,6 +50,9 @@ const randOrd = () => {
 }
 
 export default ({ store }) => {
+  const changePage = tab => () => {
+    store.current.page = tab;
+  };
 
   const generateRandom = async () => {
     store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic() + ' ' + generateMnemonic();
@@ -84,7 +87,18 @@ export default ({ store }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex} />
+          <Left style={styles.viewFlex}>
+          <Button
+              transparent
+              style={styles.arrowHeaderLeft}
+              onPress={changePage("register")}
+            >
+              <Icon
+                name="ios-arrow-back"
+                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
+              />
+            </Button>
+            </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>
