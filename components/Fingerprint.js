@@ -35,7 +35,6 @@ export default class Fingerprint extends React.Component {
   scanFingerPrint = async () => {
     try {
       console.log("scanFingerPrint");
-      debugger;
       let results = await LocalAuthentication.authenticateAsync({
         promptMessage: "Please Authenticate yourself using Fingerprint or Face ID",
         fallbackLabel: ""
