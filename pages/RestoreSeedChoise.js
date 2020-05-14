@@ -24,13 +24,26 @@ import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 
+const randOrd = () => {
+  return (Math.round(Math.random())-0.5);
+}
+
+
 export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
 
-  const restoreSeed12 = async () => {
+  const makeRange = (from)=> {
     store.current.seed = "";
+    store.current.seedIndex = 0;
+    store.current.seedIndexes = [...Array(from).keys()].sort(randOrd)
+    store.current.seedWords = [...Array(from).keys()].map(x=> { return "" } )
+  }
+
+  const restoreSeed1 = async () => {
+    store.current.seed = "";
+    makeRange(12)
     store.current.page = "restoreseed";
     // store.seedCheck = "restoreseed1";
     // console.log('store.seedCheck', store.seedCheck)
@@ -38,6 +51,7 @@ export default ({ store, web3t }) => {
 
   const restoreSeed24 = async () => {
     store.current.seed = "";
+    makeRange(24)
     store.current.page = "restoreseed";
   }
   const lang = getLang(store);
