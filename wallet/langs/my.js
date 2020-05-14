@@ -134,7 +134,7 @@
     login: "Log masuk",
     reset: "Tetapkan semula",
     placeholderSeed: "Frasa mnemonik anda",
-    placeholderConfirmSeed: "Perkataan dari benih",
+    placeholderConfirmSeed: "Perkataan",
     signup: "Pendaftaran",
     placeholderSignup: "Pin",
     copy: "Salinan",

@@ -134,7 +134,7 @@
       login: "Gabung",
       reset: "Setel ulang",
       placeholderSeed: "Frasa mnemonik Anda",
-      placeholderConfirmSeed: "Berita dari benih",
+      placeholderConfirmSeed: "Kata-kata",
       signup: "Daftar",
       placeholderSignup: "Pin",
       copy: "Salinan",

@@ -134,7 +134,7 @@
       login: "登錄",
       reset: "重啟",
       placeholderSeed: "您的助記詞",
-      placeholderConfirmSeed: "種子的話",
+      placeholderConfirmSeed: "字",
       signup: "註冊",
       placeholderSignup: "銷",
       copy: "複製",

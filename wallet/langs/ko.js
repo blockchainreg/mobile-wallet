@@ -134,7 +134,7 @@
       login: "로그인",
       reset: "초기화",
       placeholderSeed: "니모닉 문구",
-      placeholderConfirmSeed: "씨앗의 말씀",
+      placeholderConfirmSeed: "워드",
       signup: "가입하기",
       placeholderSignup: "핀",
       copy: "부",

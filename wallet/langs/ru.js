@@ -134,7 +134,7 @@
     login: "Авторизоваться",
     reset: "Сброс",
     placeholderSeed: "Ваша мнемоническая фраза",
-    placeholderConfirmSeed: "Слово с мнемонической фразы",
+    placeholderConfirmSeed: "Слово",
     signup: "Зарегистрироваться",
     placeholderSignup: "Пин",
     copy: "Копировать",
