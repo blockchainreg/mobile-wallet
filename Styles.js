@@ -564,6 +564,11 @@ export default StyleSheet.create({
     color: "#fff",
     fontWeight: "bold"
   },
+  refreshHeaderIcon: {
+    fontSize: 30,
+    color: "rgba(255, 255, 255, 0.50)",
+    fontWeight: "bold"
+  },
   arrowHeaderIconBlack: {
     fontSize: 30,
     color: "#9d41eb",
