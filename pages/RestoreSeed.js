@@ -32,7 +32,7 @@ import getLang from "../wallet/get-lang.js";
 // }
 
 const showToast = message => {
-  this.toastify.show(message, 3000);
+  alert(message);
 };
 
 
@@ -53,7 +53,7 @@ export default ({ store, web3t }) => {
 
   const done = () => {
 
-    if(store.signUpConfirmSeedField == "") return;
+    if(store.signUpConfirmSeedField == "") return showToast("Empty word is not allowed");
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;
     if(store.current.seedIndex < 23) {
@@ -81,7 +81,7 @@ export default ({ store, web3t }) => {
               autoCapitalize="none"
               secureTextEntry={false}
               returnKeyType="done"
-              placeholder={number + 1 + " word"}
+              placeholder={number + 1 + " Word"}
               placeholderTextColor="rgba(255,255,255,0.60)"
               style={styles.inputSize}
               selectionColor={"#fff"}
