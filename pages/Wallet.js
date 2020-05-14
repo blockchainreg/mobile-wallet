@@ -156,7 +156,7 @@ export default ({ store, web3t }) => {
                 </Title>
               </Body>
               <Right style={styles.viewFlex}>
-                <Thumbnail small source={{uri: wallet.coin.image}} />
+                <Thumbnail square small source={{uri: wallet.coin.image}} />
               </Right>
             </Header>
             <RefreshControl transparent swipeRefresh={refreshToken}>

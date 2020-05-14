@@ -566,7 +566,7 @@ export default StyleSheet.create({
   },
   refreshHeaderIcon: {
     fontSize: 30,
-    color: "rgba(255, 255, 255, 0.50)",
+    color: "rgba(255, 255, 255, 0.35)",
     fontWeight: "bold"
   },
   arrowHeaderIconBlack: {
@@ -1723,9 +1723,28 @@ export default StyleSheet.create({
     marginTop: 25
   },
   textH1Seed2 : {
-    fontSize: 25,
+    ...ifIphoneX(
+      {
+        fontSize: 25,
     color: "#fff",
     fontWeight: "bold"
+      },
+      {
+        ...Platform.select({
+          ios: {
+            fontSize: 20,
+    color: "#fff",
+    fontWeight: "bold"
+          },
+          android: {
+            fontSize: 20,
+            color: "#fff",
+            fontWeight: "bold"
+          }
+        })
+      }
+    )
+    
   },
   textH1Seed: {
     ...ifIphoneX(

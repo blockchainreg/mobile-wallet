@@ -113,7 +113,7 @@ export default ({ store, web3t }) => {
             <Title style={styles.titleBlack}>{lang.receive}</Title>
           </Body>
           <Right style={styles.viewFlex}>
-            <Thumbnail small source={{ uri: wallet.coin.image }} />
+            <Thumbnail square small source={{ uri: wallet.coin.image }} />
           </Right>
         </Header>
         <StatusBar />
