@@ -287,7 +287,7 @@ class Withdraw extends React.Component {
 
           <Header style={styles.mtAndroid}>
             <Left style={styles.viewFlex}>
-              <BackButton onBack={back}/>
+              <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
             </Left>
             <Body style={styles.viewFlex}>
               <Title style={styles.titleBlack}>{lang.send}</Title>

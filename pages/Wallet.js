@@ -143,7 +143,7 @@ export default ({ store, web3t }) => {
             <StatusBar />
             <Header style={styles.mtAndroid}>
               <Left style={styles.viewFlex}>
-                <BackButton onBack={back}/>
+                <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
               </Left>
               <Body style={styles.viewFlex}>
                 <Title style={styles.titleBlack}>

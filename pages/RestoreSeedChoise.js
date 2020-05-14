@@ -23,6 +23,7 @@ import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
+import BackButton from "../components/BackButton.js";
 
 const randOrd = () => {
   return (Math.round(Math.random())-0.5);
@@ -63,17 +64,8 @@ export default ({ store, web3t }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-        <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("newseed")}
-            >
-              <Icon
-                name="ios-arrow-back"
-                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
-              />
-            </Button>
+          <Left style={styles.viewFlex}>
+            <BackButton onBack={changePage("newseed")}/>
           </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />

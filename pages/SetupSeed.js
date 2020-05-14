@@ -31,6 +31,7 @@ import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
+import BackButton from "../components/BackButton.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -80,17 +81,8 @@ export default ({ store }) => {
       >
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlex}>
-          <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("register")}
-            >
-              <Icon
-                name="ios-arrow-back"
-                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
-              />
-            </Button>
-            </Left>
+            <BackButton onBack={changePage("register")}/>
+          </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />
         </Header>

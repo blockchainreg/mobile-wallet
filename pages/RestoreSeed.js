@@ -58,7 +58,7 @@ export default ({ store, web3t }) => {
     if(store.signUpConfirmSeedField == "") return showToast("Empty word is not allowed");
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;
-    if(store.current.seedIndex < 23) {
+    if(store.current.seedIndex < store.current.seedWords.length - 1) {
       store.current.seedIndex += 1;
       store.signUpConfirmSeedField = "";
       return
