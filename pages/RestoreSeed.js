@@ -31,10 +31,11 @@ import getLang from "../wallet/get-lang.js";
 //   return "one two three four five six";
 // }
 
-const badSeed = seed => {
-  blocks = (seed || "").split(" ");
-  return blocks.length < 10;
+const showToast = message => {
+  this.toastify.show(message, 3000);
 };
+
+
 
 const seedContainerStyle = {
   borderWidth: 1,
@@ -61,8 +62,6 @@ export default ({ store, web3t }) => {
       return
     }
     store.current.seed = store.current.seedWords.join(' ')
-    console.log(store.current.seed);
-    if (badSeed(store.current.seed)) return;
 
     setupWallet(store, web3t);
   };

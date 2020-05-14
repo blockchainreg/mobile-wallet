@@ -36,11 +36,6 @@ import getLang from '../wallet/get-lang.js';
 //   return "one two three four five six";
 // }
 
-const badSeed = (seed) => {
-  blocks = (seed || "").split(' ')
-  return blocks.length < 10;
-}
-
 const seedContainerStyle = {
   borderWidth: 1,
   borderRadius: 5,
@@ -55,13 +50,6 @@ const randOrd = () => {
 }
 
 export default ({ store }) => {
-  const changePage = (tab) => () => {
-
-    if (badSeed(store.current.seed))
-      return;
-
-    store.current.page = tab;
-  };
 
   const generateRandom = async () => {
     store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic() + ' ' + generateMnemonic();
