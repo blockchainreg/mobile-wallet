@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  Linking
+  Linking,
 } from "react-native";
 import {
   Text,
@@ -24,6 +24,7 @@ import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import style from "../Styles";
+import BackButton from "../components/BackButton.js";
 // const generateMnemonic = () => {
 //   return "one two three four five six";
 // }
@@ -83,6 +84,8 @@ export default ({ store }) => {
     );
   };
 
+  const back = changePage("newseed");
+
   return (
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
@@ -92,16 +95,7 @@ export default ({ store }) => {
       >
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("newseed")}
-            >
-              <Icon
-                name="ios-arrow-back"
-                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
-              />
-            </Button>
+            <BackButton onBack={back}/>
           </Left>
           <Body style={styles.viewFlex}>
             <Text style={styles.textH1Seed2}>{lang.newSeedPhrase}</Text>

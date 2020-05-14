@@ -23,6 +23,7 @@ import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
 import setupWallet from '../setupWallet.js';
 import getLang from '../wallet/get-lang.js';
+import BackButton from "../components/BackButton.js";
 //import { generateMnemonic } from 'bip39';
 //import { refreshAccount } from '../wallet/refresh-account.js';
 
@@ -68,7 +69,7 @@ export default ({ store, web3t }) => {
     store.signUpConfirmSeedField = text;
   };
   const back = ()=> {
-    
+
     if (store.current.seedIndex > 0) {
       store.signUpConfirmSeedField = "";
       store.current.seedIndex -= 1;
@@ -90,17 +91,8 @@ export default ({ store, web3t }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-        <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={back}
-            >
-              <Icon
-                name="ios-arrow-back"
-                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
-              />
-            </Button>
+          <Left style={styles.viewFlex}>
+            <BackButton onBack={back}/>
           </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />

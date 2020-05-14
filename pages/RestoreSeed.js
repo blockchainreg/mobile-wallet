@@ -4,7 +4,8 @@ import {
   Clipboard,
   Keyboard,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  BackHandler
 } from "react-native";
 import {
   Input,
@@ -26,6 +27,7 @@ import Images from "../Images.js";
 import setupWallet from "../setupWallet.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
+import BackButton from "../components/BackButton.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -93,6 +95,7 @@ export default ({ store, web3t }) => {
   };
 
   const lang = getLang(store);
+  const back = changePage("newseed");
 
   return (
     <View style={styles.viewFlex}>
@@ -103,16 +106,7 @@ export default ({ store, web3t }) => {
       >
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("newseed")}
-            >
-              <Icon
-                name="ios-arrow-back"
-                style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
-              />
-            </Button>
+            <BackButton onBack={back}/>
           </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />

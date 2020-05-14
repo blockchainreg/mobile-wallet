@@ -25,6 +25,7 @@ import walletsFuncs from "../wallet/wallets-funcs.js";
 import Spinner from "../utils/spinner.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
+import BackButton from "../components/BackButton.js";
 
 const showToast = message => {
   console.log(message);
@@ -274,6 +275,7 @@ class Withdraw extends React.Component {
     const refreshToken = async bool => {
       web3t.refresh((err, data) => {});
     };
+    const back = changePage("wallet", true);
     return (
       <View style={styles.viewFlex}>
         <StandardLinearGradient>
@@ -285,16 +287,7 @@ class Withdraw extends React.Component {
 
           <Header style={styles.mtAndroid}>
             <Left style={styles.viewFlex}>
-              <Button
-                transparent
-                style={styles.arrowHeaderLeft}
-                onPress={changePage("wallet", true)}
-              >
-                <Icon
-                  name="ios-arrow-back"
-                  style={styles.arrowHeaderIconBlack}
-                />
-              </Button>
+              <BackButton onBack={back}/>
             </Left>
             <Body style={styles.viewFlex}>
               <Title style={styles.titleBlack}>{lang.send}</Title>

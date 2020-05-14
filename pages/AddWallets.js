@@ -31,6 +31,7 @@ import usdt from "../registry/usdt.json";
 import usdt_erc20 from "../registry/usdt_erc20.json";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import getLang from '../wallet/get-lang.js';
+import BackButton from "../components/BackButton.js";
 //
 
 const coinItems = [dash, etc, eth, ltc, usdt, usdt_erc20];
@@ -105,6 +106,8 @@ export default ({ store, web3t }) => {
     }
   };
 
+  const back = changePage("wallet");
+
   return (
     <View style={styles.viewFlex}>
       {/* <StatusBar /> */}
@@ -112,16 +115,7 @@ export default ({ store, web3t }) => {
         <RefreshControl swipeRefresh={refreshToken}>
           <Header transparent style={styles.mtIphoneX}>
             <Left style={styles.viewFlex}>
-              <Button
-                transparent
-                style={styles.arrowHeaderLeft}
-                onPress={changePage("wallets")}
-              >
-                <Icon
-                  name="ios-arrow-back"
-                  style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
-                />
-              </Button>
+              <BackButton onBack={back}/>
             </Left>
             <Body style={styles.viewFlex}>
               <Text style={styles.title1}>{lang.manageWallet}</Text>

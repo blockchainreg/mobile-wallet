@@ -20,6 +20,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  BackHandler
 } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //import ModalComponent from "react-native-modal-component";
@@ -37,6 +38,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 
 import Images from '../Images.js';
+import BackButton from "../components/BackButton.js";
 
 
 export default ({ store, web3t }) => {
@@ -131,7 +133,9 @@ export default ({ store, web3t }) => {
             </ScrollView>
           </View>
         )
-    }
+    };
+
+    const back = changePage("wallets");
 
     return (
       <View style={styles.viewFlex}>
@@ -139,16 +143,7 @@ export default ({ store, web3t }) => {
             <StatusBar />
             <Header style={styles.mtAndroid}>
               <Left style={styles.viewFlex}>
-                <Button
-                  transparent
-                  style={styles.arrowHeaderLeft}
-                  onPress={changePage("wallets")}
-                >
-                  <Icon
-                    name="ios-arrow-back"
-                    style={styles.arrowHeaderIconBlack}
-                  />
-                </Button>
+                <BackButton onBack={back}/>
               </Left>
               <Body style={styles.viewFlex}>
                 <Title style={styles.titleBlack}>

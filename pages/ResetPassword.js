@@ -9,7 +9,8 @@ import {
   Body,
   Header,
   Left,
-  Right
+  Right,
+  BackHandler
 } from "native-base";
 import { Image, ImageBackground } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
@@ -17,6 +18,7 @@ import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
 import getLang from '../wallet/get-lang.js';
+import BackButton from "../components/BackButton.js";
 
 const showToast = message => {
   console.log(message);
@@ -82,10 +84,12 @@ const logIn = store => {
     store.settingsInputMailField = "";
     store.settingsInputPasswordField = "";
   };
+  // <Button transparent style={styles.arrowHeaderLeft} onPress={logInBtn}>
+  //   <Icon name="ios-arrow-back"  />
+  // </Button>
+
   return (
-    <Button transparent style={styles.arrowHeaderLeft} onPress={logInBtn}>
-      <Icon name="ios-arrow-back" style={styles.arrowIcon} />
-    </Button>
+    <BackButton onBack={logInBtn} style={styles.arrowIcon} />
   );
 };
 

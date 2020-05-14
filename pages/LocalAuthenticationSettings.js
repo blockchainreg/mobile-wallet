@@ -17,7 +17,8 @@ import {
   StatusBar,
   Image,
   ImageBackground,
-  runAfterInteractions
+  runAfterInteractions,
+  BackHandler
 } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
 import Toast from "@rimiti/react-native-toastify";
@@ -25,6 +26,7 @@ import * as SecureStore from "expo-secure-store";
 import GradientButton from "react-native-gradient-buttons";
 import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
+import BackButton from "../components/BackButton.js";
 
 
 
@@ -128,6 +130,10 @@ export default ({ store, web3t }) => {
     );
   };
 
+  const back = () => {
+    store.current.page = "settings";
+  };
+
   return (
     <View style={styles.viewFlex}>
       <ImageBackground
@@ -136,18 +142,7 @@ export default ({ store, web3t }) => {
       >
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={() => {
-                store.current.page = "settings";
-              }}
-            >
-              <Icon
-                name="ios-arrow-back"
-                style={[styles.arrowHeaderIconBlack, , { color: "#fff" }]}
-              />
-            </Button>
+            <BackButton onBack={back}/>
           </Left>
           <Body style={styles.viewFlex} />
           <Right style={styles.viewFlex} />

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Velas wallet",
-    "slug": "velas wallet",
+    "slug": "velas-wallet",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [

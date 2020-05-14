@@ -21,6 +21,7 @@ import { QRCode } from 'react-native-custom-qr-codes-expo';
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
+import BackButton from "../components/BackButton.js";
 
 const showToast = message => {
   console.log(message);
@@ -90,6 +91,7 @@ export default ({ store, web3t }) => {
     if (bool === true) {
     }
   };
+  const back = changePage("wallet");
   return (
     <View style={styles.viewFlex}>
       <StandardLinearGradient>
@@ -101,13 +103,7 @@ export default ({ store, web3t }) => {
 
         <Header style={styles.mtAndroid}>
           <Left style={styles.viewFlex}>
-            <Button
-              transparent
-              style={styles.arrowHeaderLeft}
-              onPress={changePage("wallet")}
-            >
-              <Icon name="ios-arrow-back" style={styles.arrowHeaderIconBlack} />
-            </Button>
+            <BackButton onBack={back}/>
           </Left>
           <Body style={styles.viewFlex}>
             <Title style={styles.titleBlack}>{lang.receive}</Title>
