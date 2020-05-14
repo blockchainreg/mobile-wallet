@@ -134,7 +134,7 @@
       login: "登錄",
       reset: "重啟",
       placeholderSeed: "您的助記詞",
-      placeholderConfirmSeed: "種子的話",
+      placeholderConfirmSeed: "字",
       signup: "註冊",
       placeholderSignup: "銷",
       copy: "複製",
@@ -146,7 +146,8 @@
       dataOverridden: "您當前的數據將被覆蓋。 請確保您當前的記憶短語在安全的地方。 開設另一個帳戶？",
       confirmDialog: "確認對話框",
       yes: "是",
-      no: "沒有"
+      no: "沒有",
+      to: "To",
     };
   }).call(this);
   

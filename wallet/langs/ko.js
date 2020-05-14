@@ -134,7 +134,7 @@
       login: "로그인",
       reset: "초기화",
       placeholderSeed: "니모닉 문구",
-      placeholderConfirmSeed: "씨앗의 말씀",
+      placeholderConfirmSeed: "워드",
       signup: "가입하기",
       placeholderSignup: "핀",
       copy: "부",
@@ -146,7 +146,8 @@
       dataOverridden: "현재 데이터가 무시됩니다. 현재 니모닉 문구가 안전한 곳에 있는지 확인하십시오. 다른 계정을 개설 하시겠습니까?",
       confirmDialog: "대화 상자 확인",
       yes: "예",
-      no: "아니"
+      no: "아니",
+      to: "To",
     };
   }).call(this);
   

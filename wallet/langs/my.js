@@ -134,7 +134,7 @@
     login: "Log masuk",
     reset: "Tetapkan semula",
     placeholderSeed: "Frasa mnemonik anda",
-    placeholderConfirmSeed: "Perkataan dari benih",
+    placeholderConfirmSeed: "Perkataan",
     signup: "Pendaftaran",
     placeholderSignup: "Pin",
     copy: "Salinan",
@@ -146,6 +146,7 @@
     dataOverridden: "Data semasa anda akan ditindih. Sila pastikan frasa mnemonik semasa anda berada di tempat yang selamat. Buka akaun lain?",
     confirmDialog: "Sahkan Dialog",
     yes: "Ya",
-    no: "Tidak"
+    no: "Tidak",
+    to: "To",
   };
 }).call(this);

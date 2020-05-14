@@ -134,7 +134,7 @@
     login: "เข้าสู่ระบบ",
     reset: "ตั้งค่าใหม่",
     placeholderSeed: "วลีช่วยในการจำของคุณ",
-    placeholderConfirmSeed: "คำพูดจากเมล็ด",
+    placeholderConfirmSeed: "คำ",
     signup: "ลงชื่อ",
     placeholderSignup: "หมุด",
     copy: "สำเนา",
@@ -146,6 +146,7 @@
     dataOverridden: "ข้อมูลปัจจุบันของคุณจะถูกเขียนทับ โปรดตรวจสอบให้แน่ใจว่าวลีช่วยในการจำของคุณอยู่ในที่ปลอดภัย เปิดบัญชีอื่นหรือไม่",
     confirmDialog: "ยืนยันไดอะล็อก",
     yes: "ใช่",
-    no: "ไม่"
+    no: "ไม่",
+    to: "To",
   };
 }).call(this);

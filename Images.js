@@ -1,6 +1,7 @@
 const backgroundImage = require("./assets/intro-bg.jpg");
 const tick = require("./assets/tick.png");
 const logo = require("./assets/velas-logo.png");
+const trx = require("./assets/nothing.png");
 
 const receiveImage = require("./assets/RECEIVE-btn.png");
 const sendImage = require("./assets/SEND-btn.png");
@@ -21,6 +22,7 @@ export default {
   backgroundImage,
   tick,
   logo,
+  trx,
   receiveImage,
   sendImage,
   withdrawImage,

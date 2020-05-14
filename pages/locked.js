@@ -154,15 +154,15 @@ export default ({ store, web3t }) => {
       }
       if (isAuthenticating) {
         if (failedCount) {
-          return <Text>You may scan fingerprint to log in. Failed tries {failedCount}.</Text>;
+          return <Text style={styles.txtLocked}>You may scan fingerprint to log in. Failed tries {failedCount}.</Text>;
         }
-        return <Text>You may scan fingerprint to log in</Text>;
+        return <Text style={styles.txtLocked}>You may scan fingerprint to log in</Text>;
       }
 
       if (Platform.OS === 'android') {
-        return <Text>One moment...</Text>;
+        return <Text style={styles.txtLocked}>One moment...</Text>;
       }
-      return <Text onPress={this.useLocalAuth}>Use Fingerprint or Face ID</Text>;
+      return <Text onPress={this.useLocalAuth} style={styles.txtLocked}>Use Fingerprint or Face ID</Text>;
     }
   }
 

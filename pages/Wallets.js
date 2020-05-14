@@ -144,7 +144,7 @@ export default ({ store, web3t }) => {
                 >
                   <Icon
                     name="ios-sync"
-                    style={styles.arrowHeaderIcon}
+                    style={styles.refreshHeaderIcon}
                   />
                 </Button></Right>
             </Header>
