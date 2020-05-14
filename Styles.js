@@ -4439,7 +4439,7 @@ export default StyleSheet.create({
         paddingHorizontal: 10,
         borderColor: "rgba(157, 65, 235, 0.5)",
         alignItems: "center",
-        paddingVertical: 2,
+        paddingVertical: 4,
         marginHorizontal: 7,
         marginVertical: 5
       },
@@ -4450,7 +4450,7 @@ export default StyleSheet.create({
         paddingHorizontal: 10,
         borderColor: "rgba(157, 65, 235, 0.5)",
         alignItems: "center",
-        paddingVertical: 2,
+        paddingVertical: 4,
         marginHorizontal: 5,
         marginVertical: 5
       }

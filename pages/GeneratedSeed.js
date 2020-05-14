@@ -90,45 +90,42 @@ export default ({ store }) => {
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
       <ImageBackground
-        source={Images.backgroundImage}
         style={styles.introBackground}
       >
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex}>
-            <BackButton onBack={back}/>
-          </Left>
-          <Body style={styles.viewFlex}>
-            <Text style={styles.textH1Seed2}>{lang.newSeedPhrase}</Text>
-          </Body>
-          <Right style={styles.viewFlex} />
-        </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
-          <View style={styles.card1}>
-            <CardItem style={styles.cardItemSeed}>
-              <Body>
-                {seedPhrase(store)}
-                <View style={styles.marginBtn}>
-                  <GradientButton
-                    style={styles.gradientBtnPh}
-                    text={lang.continue}
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
-                    gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
-                    placeholderTextColor="rgba(255,255,255,0.60)"
-                    onPressAction={changePage("confirmseed")}
-                  />
-                  <Text style={styles.textCard}>
-                    {lang.seedNotify}, {btnPrint(store)}
-                  </Text>
+            {seedPhrase(store)}
+            <View style={styles.marginBtn}>
+              <GradientButton
+                style={styles.gradientBtnPh}
+                text={lang.continue}
+                textStyle={{ fontSize: 14 }}
+                gradientBegin="#9d41eb"
+                gradientEnd="#9d41eb"
+                gradientDirection="diagonal"
+                height={50}
+                width={"40%"}
+                radius={10}
+                placeholderTextColor="rgba(255,255,255,0.60)"
+                onPressAction={changePage("confirmseed")}
+              />
+              <GradientButton
+                style={styles.gradientBtnPh}
+                text={lang.back}
+                textStyle={{ fontSize: 14 }}
+                gradientBegin="gray"
+                gradientEnd="gray"
+                gradientDirection="diagonal"
+                height={50}
+                width={"40%"}
+                radius={10}
+                placeholderTextColor="rgba(255,255,255,0.60)"
+                onPressAction={back}
+              />
+              <Text style={styles.textCard}>
+                {lang.seedNotify}, {btnPrint(store)}
+              </Text>
                 </View>
-              </Body>
-            </CardItem>
-          </View>
         </View>
       </ImageBackground>
     </View>
