@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Velas wallet",
-    "slug": "velas wallet",
+    "slug": "expo-web3",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -32,7 +32,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 41
+      "versionCode": 42
     },
     "description": "Premium quality cryptocurrency wallet!",
     "isDetached": false,
