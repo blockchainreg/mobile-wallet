@@ -44,7 +44,7 @@ const buttonActive = store => {
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text={lang.signup}
+      text={lang.continue}
       textStyle={{ fontSize: 14 }}
       gradientBegin="#9d41eb"
       gradientEnd="#9d41eb"
@@ -63,7 +63,7 @@ const buttonInactive = store => {
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text={lang.signup}
+      text={lang.continue}
       textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
       gradientBegin="rgba(221,181,255,0.30)"
       gradientEnd="rgba(221,181,255,0.30)"

@@ -4,7 +4,7 @@ import spin from "./utils/spin.js";
 async function loadTerms(store) {
   try {
     // const response = await fetch('https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md');
-    const response = await fetch('https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md');
+    const response = await fetch('https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md');
     store.current.termsMarkdown = await response.text();
   }catch(e) {
     console.error(e);

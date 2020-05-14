@@ -32,7 +32,7 @@ const showToast = message => {
   this.toastify.show(message, 3000);
 };
 
-const number = 4;
+
 
 export default ({ store, web3t }) => {
   //loadTerms(store);
@@ -42,11 +42,20 @@ export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+
+  const number = store.current.seedIndexes[store.current.seedIndex];
+
   const continueProcess = () => {
-    expectedWord = store.current.seed.split(" ")[number - 1];
+    expectedWord = store.current.seed.split(" ")[number];
 
     if (expectedWord !== store.signUpConfirmSeedField) {
       return showToast(lang.inconsistency);
+    }
+
+    if (store.current.seedIndex < 23) {
+      store.signUpConfirmSeedField = "";
+      store.current.seedIndex += 1;
+      return;
     }
 
     setupWallet(store, web3t);
@@ -55,10 +64,19 @@ export default ({ store, web3t }) => {
   };
 
 
-
   const handleConfirmSeedField = async text => {
     store.signUpConfirmSeedField = text;
   };
+  const back = ()=> {
+    
+    if (store.current.seedIndex > 0) {
+      store.signUpConfirmSeedField = "";
+      store.current.seedIndex -= 1;
+      return;
+    }
+
+    store.current.page = "generatedseed";
+  }
 
   return (
     <View style={styles.viewFlex}>
@@ -76,7 +94,7 @@ export default ({ store, web3t }) => {
             <Button
               transparent
               style={styles.arrowHeaderLeft}
-              onPress={changePage("generatedseed")}
+              onPress={back}
             >
               <Icon
                 name="ios-arrow-back"
@@ -129,7 +147,7 @@ export default ({ store, web3t }) => {
                     onPressAction={continueProcess}
                   />
                   <Text style={styles.textCard}>
-                  {lang.pleaseEnter} {number}{lang.enterWord}
+                  {lang.pleaseEnter} {number + 1}{lang.enterWord}
                   </Text>
                 </View>
               </Body>

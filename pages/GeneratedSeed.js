@@ -45,11 +45,17 @@ const createWordBlock = store => (word, index) => {
   );
 };
 
+const randOrd = () => {
+  return (Math.round(Math.random())-0.5);
+}
+
 export default ({ store }) => {
   const changePage = tab => () => {
     if (badSeed(store.current.seed)) return;
 
     store.current.page = tab;
+    store.current.seedIndex = 0;
+    store.current.seedIndexes = [...Array(24).keys()].sort(randOrd)
   };
 
   const words = store.current.seed.split(" ");
@@ -68,7 +74,7 @@ export default ({ store }) => {
         style={styles.textCardLine}
         onPress={() => {
           Linking.openURL(
-            `https://drive.google.com/file/d/117CIN7TkLcJFWRQkPYRbU4BK6JOnRgPf/view`
+            `https://drive.google.com/file/d/1mE53JDe2722D0BY2Mi7qIcXUFtwqSZFx/view`
           );
         }}
       >

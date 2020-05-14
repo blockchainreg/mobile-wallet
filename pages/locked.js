@@ -177,11 +177,10 @@ export default ({ store, web3t }) => {
       store.current.pin = "";
       store.userWallet = 200;
     });
-    const loginText = lang.login;
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text={loginText}
+        text={lang.login}
         textStyle={{ fontSize: 14 }}
         gradientBegin="#9d41eb"
         gradientEnd="#9d41eb"

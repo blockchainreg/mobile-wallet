@@ -14,13 +14,20 @@ import Confirm from './components/Confirm.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HistoryDetail from './pages/HistoryDetail.js';
 
+
+//Extend the store here !!!
+//------------------------------
 //mobile specific defaults (start)
 //Store.current.expanded = false;
 Store.current.filterVal = { apply: "", temp: "" }
+Store.current.seedIndex = 0
+Store.current.seedIndexes = [];
 if ((localStorage.getItem("lang") || "").length === 0)
   Store.current.page = "LangPage"
 Store.lang = localStorage.getItem("lang") || "en";
 //module specific defaults (end)
+//------------------------------
+//Extend the store here !!!
 
 const store = observable(Store);
 const web3t = web3(store);

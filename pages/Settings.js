@@ -19,6 +19,7 @@ import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import PickerSetLang from "../components/PickerSetLang.js";
+import PickerAccountIndex from "../components/PickerAccountIndex.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 
 const LocalAuthListView = ({store}) => {
@@ -67,7 +68,7 @@ const LocalAuthListView = ({store}) => {
   );
 };
 
-export default ({ store }) => {
+export default ({ store, web3t }) => {
   const logoutBtn = async () => {
     store.current.page = "locked";
   };
@@ -134,7 +135,7 @@ export default ({ store }) => {
             icon
             onPress={() => {
               Linking.openURL(
-                `https://raw.githubusercontent.com/web3space/wallet/master/TERMS.md`
+                `https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md`
               );
             }}
             style={styles.heightListItem}
@@ -153,6 +154,15 @@ export default ({ store }) => {
           <Separator bordered>
             <Text style={styles.styleTxtSettings}>{lang.profile}</Text>
           </Separator>
+          <ListItem icon style={styles.heightListItem} last>
+            <Left>
+              <Icon name="md-wallet" style={styles.styleTxtSettings}/>
+            </Left>
+            <Body style={styles.heightListItem}>
+              {PickerAccountIndex({ store, web3t })}
+            </Body>
+            <Right style={styles.heightListItem} />
+          </ListItem>
           <ListItem icon style={styles.heightListItem} last>
             <Left>
               <Icon name="md-globe" style={styles.styleTxtSettings}/>
