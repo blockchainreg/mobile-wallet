@@ -146,6 +146,7 @@
     dataOverridden: "Data semasa anda akan ditindih. Sila pastikan frasa mnemonik semasa anda berada di tempat yang selamat. Buka akaun lain?",
     confirmDialog: "Sahkan Dialog",
     yes: "Ya",
-    no: "Tidak"
+    no: "Tidak",
+    to: "To",
   };
 }).call(this);

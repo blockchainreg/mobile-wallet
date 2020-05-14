@@ -146,7 +146,8 @@
       dataOverridden: "您當前的數據將被覆蓋。 請確保您當前的記憶短語在安全的地方。 開設另一個帳戶？",
       confirmDialog: "確認對話框",
       yes: "是",
-      no: "沒有"
+      no: "沒有",
+      to: "To",
     };
   }).call(this);
   

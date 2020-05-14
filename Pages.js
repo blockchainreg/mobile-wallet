@@ -7,6 +7,7 @@ import loading from "./pages/StartPage.js";
 import register from "./pages/SignUp.js";
 import generatedseed from "./pages/GeneratedSeed.js";
 import restoreseed from "./pages/RestoreSeed.js";
+import restoreseedchoise from "./pages/RestoreSeedChoise";
 import locked from "./pages/locked";
 import LangPage from "./pages/LangPage";
 import reset from "./pages/ResetPassword";
@@ -23,6 +24,7 @@ import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
 export default {
   generatedseed,
   restoreseed,
+  restoreseedchoise,
   error,
   terms,
   locked,

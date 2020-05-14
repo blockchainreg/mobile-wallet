@@ -88,9 +88,6 @@ export default ({ store, web3t }) => {
                 source={Images.trx}
                 style={styles.styleLogo}
                 />
-                {/* <Text style={styles.textContainer}>
-                {lang.nothingToShow}
-                </Text> */}
               </View>
             )}
 

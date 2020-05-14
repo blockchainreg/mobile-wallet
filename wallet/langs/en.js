@@ -12,6 +12,7 @@
     send: "Send",
     sendFrom: "Send From",
     recipient: "Recipient",
+    to: "To",
     amount: "Amount",
     useMax: "Use max",
     pending: "Pending",
