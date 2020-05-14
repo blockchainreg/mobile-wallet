@@ -72,7 +72,7 @@ const wallets = (store, web3t) => {
           style={styles.mbListItem}
         >
           <Left>
-            <Thumbnail source={{uri: wallet.coin.image}} />
+            <Thumbnail square source={{uri: wallet.coin.image}} />
           </Left>
           <Body>
             <Text style={styles.amountView}>

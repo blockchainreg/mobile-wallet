@@ -42,7 +42,7 @@ export default ({ store, web3t }) => {
     store.current.seedWords = [...Array(from).keys()].map(x=> { return "" } )
   }
 
-  const restoreSeed1 = async () => {
+  const restoreSeed12 = async () => {
     store.current.seed = "";
     makeRange(12)
     store.current.page = "restoreseed";
@@ -50,7 +50,7 @@ export default ({ store, web3t }) => {
     // console.log('store.seedCheck', store.seedCheck)
   }
 
-  const restoreSeed2 = async () => {
+  const restoreSeed24 = async () => {
     store.current.seed = "";
     makeRange(24)
     store.current.page = "restoreseed";
@@ -90,7 +90,7 @@ export default ({ store, web3t }) => {
                     height={50}
                     width={"100%"}
                     radius={10}
-                    onPressAction={restoreSeed1}
+                    onPressAction={restoreSeed12}
                   />
                   <View style={{ padding: 10 }}></View>
                   <GradientButton
@@ -103,7 +103,7 @@ export default ({ store, web3t }) => {
                     height={50}
                     width={"100%"}
                     radius={10}
-                    onPressAction={restoreSeed2}
+                    onPressAction={restoreSeed24}
                   />
                 </View>
               </Body>

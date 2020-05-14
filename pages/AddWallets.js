@@ -71,7 +71,7 @@ const renderCoin = (store, web3t) => item => {
       key={item.token}
     >
       <Left>
-        <Thumbnail source={{ uri: item.image }} />
+        <Thumbnail square source={{ uri: item.image }} />
       </Left>
       <Body>
         <Text note />
