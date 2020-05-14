@@ -38,7 +38,7 @@
   exportPrivateKeyWarning: "Будь ласка, ніколи не робіть цього, якщо ви не розумієте точну причину цієї дії і не приймаєте на себе ризики",
   secretPhraseChange: "Якщо ви відредагуєте це, старий гаманець зникне, і всі ваші монети втратяться",
   showSecret: "Показати",
-  totalBalance: "Загальний баланс",
+  totalBalance: "Баланс",
   verifyNickname: "Перевірити нік",
   getNickname: "Отримати нік",
   register: "Реєструвати",
@@ -134,7 +134,7 @@
   login: "Вхід",
   reset: "Скинути",
   placeholderSeed: "Ваша мнемонічна фраза",
-  placeholderConfirmSeed: "Слово з мнемонічної фрази",
+  placeholderConfirmSeed: "Слово",
   signup: "Реєстрація",
   placeholderSignup: "Пiн",
   copy: "Копіювати",
@@ -146,6 +146,7 @@
   dataOverridden: "Ваші поточні дані будуть замінені. Переконайтеся, що ваша поточна мнемонічна фраза є в безпечному місці. Відкрити інший аккаунт?",
   confirmDialog: "Підтвердити діалог",
   yes: "Так",
-  no: "Ні"
+  no: "Ні",
+  to: "To",
   };
 }).call(this);

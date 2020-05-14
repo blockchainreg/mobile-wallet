@@ -564,6 +564,11 @@ export default StyleSheet.create({
     color: "#fff",
     fontWeight: "bold"
   },
+  refreshHeaderIcon: {
+    fontSize: 30,
+    color: "rgba(255, 255, 255, 0.50)",
+    fontWeight: "bold"
+  },
   arrowHeaderIconBlack: {
     fontSize: 30,
     color: "#9d41eb",
@@ -663,7 +668,7 @@ export default StyleSheet.create({
   titleBlack: {
     ...ifIphoneX(
       {
-        color: "#000",
+        color: "#563688",
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center",
@@ -671,12 +676,16 @@ export default StyleSheet.create({
         marginTop: 10
       },
       {
-        color: "#000",
+        color: "#563688",
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center"
       }
     )
+  },
+  txtLocked: {
+    color: '#fff', 
+    marginTop: 15,
   },
 
   h1TextBuy: {

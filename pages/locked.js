@@ -154,15 +154,15 @@ export default ({ store, web3t }) => {
       }
       if (isAuthenticating) {
         if (failedCount) {
-          return <Text>You may scan fingerprint to log in. Failed tries {failedCount}.</Text>;
+          return <Text style={styles.txtLocked}>You may scan fingerprint to log in. Failed tries {failedCount}.</Text>;
         }
-        return <Text>You may scan fingerprint to log in</Text>;
+        return <Text style={styles.txtLocked}>You may scan fingerprint to log in</Text>;
       }
 
       if (Platform.OS === 'android') {
-        return <Text>One moment...</Text>;
+        return <Text style={styles.txtLocked}>One moment...</Text>;
       }
-      return <Text onPress={this.useLocalAuth}>Use Fingerprint or Face ID</Text>;
+      return <Text onPress={this.useLocalAuth} style={styles.txtLocked}>Use Fingerprint or Face ID</Text>;
     }
   }
 
@@ -180,7 +180,7 @@ export default ({ store, web3t }) => {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text={lang.login}
+        text={lang.continue}
         textStyle={{ fontSize: 14 }}
         gradientBegin="#9d41eb"
         gradientEnd="#9d41eb"
@@ -197,7 +197,7 @@ export default ({ store, web3t }) => {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text={lang.login}
+        text={lang.continue}
         textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
         gradientBegin="rgba(221,181,255,0.30)"
         gradientEnd="rgba(221,181,255,0.30)"

@@ -333,8 +333,7 @@ class Withdraw extends React.Component {
                 <View style={styles.viewMt}>
                   <View>
                     <Text style={styles.titleHeader}>
-                      {lang.recipient} {wallet.coin.token.toUpperCase()}{" "}
-                      {lang.address}:
+                      {lang.to}:
                     </Text>
                   </View>
                   <InputAddressWithdrawBtc send={store.current.send} />
