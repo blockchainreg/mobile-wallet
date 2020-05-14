@@ -41,7 +41,7 @@ export default ({ store, web3t }) => {
     store.current.seedWords = [...Array(from).keys()].map(x=> { return "" } )
   }
 
-  const restoreSeed1 = async () => {
+  const restoreSeed12 = async () => {
     store.current.seed = "";
     makeRange(12)
     store.current.page = "restoreseed";
