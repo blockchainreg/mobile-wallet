@@ -14,8 +14,10 @@ import {
   Header,
   Left,
   Right,
+  Icon,
+  Content,
   Button,
-  Icon
+  Container
 } from "native-base";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
@@ -25,6 +27,8 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import style from "../Styles";
 import BackButton from "../components/BackButton.js";
+import {confirm} from "../wallet/pages/confirmation.js";
+
 // const generateMnemonic = () => {
 //   return "one two three four five six";
 // }
@@ -38,7 +42,7 @@ const createWordBlock = store => (word, index) => {
   var i = 1;
   return (
     <View key={"word" + word + i} style={styles.createWordBlock}>
-      <Text style={styles.inputSize}>{word}</Text>
+      <Text style={styles.inputSize1}>{word}</Text>
       <View style={styles.numberBlock}>
         <Text style={styles.styleIndex}>{i + index++}</Text>
       </View>
@@ -96,7 +100,7 @@ export default ({ store }) => {
         <View style={styles.containerFlexStart}>
             {seedPhrase(store)}
             <View style={styles.marginBtn}>
-              <GradientButton
+              {/* <GradientButton
                 style={styles.gradientBtnPh}
                 text={lang.continue}
                 textStyle={{ fontSize: 14 }}
@@ -104,11 +108,12 @@ export default ({ store }) => {
                 gradientEnd="#9d41eb"
                 gradientDirection="diagonal"
                 height={50}
-                width={"40%"}
+                width={"80%"}
                 radius={10}
                 placeholderTextColor="rgba(255,255,255,0.60)"
                 onPressAction={changePage("confirmseed")}
               />
+              <View style={styles.viewPt1}></View>
               <GradientButton
                 style={styles.gradientBtnPh}
                 text={lang.back}
@@ -117,11 +122,16 @@ export default ({ store }) => {
                 gradientEnd="gray"
                 gradientDirection="diagonal"
                 height={50}
-                width={"40%"}
+                width={"80%"}
                 radius={10}
                 placeholderTextColor="rgba(255,255,255,0.60)"
                 onPressAction={back}
-              />
+              /> */}
+              <View style={styles.containerBtn}
+              >
+              <TouchableOpacity onPress={changePage("confirmseed")} style={styles.btnNext}><Text style={styles.txtBtn}>{lang.continue}</Text></TouchableOpacity>
+              <TouchableOpacity onPress={back} style={styles.btnCancel}><Text style={styles.txtBtn}>{lang.back}</Text></TouchableOpacity>
+              </View>
               <Text style={styles.textCard}>
                 {lang.seedNotify}, {btnPrint(store)}
               </Text>

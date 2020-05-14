@@ -173,9 +173,9 @@ function RequestPin({store, web3t}) {
           style={styles.toastStyle}
         />
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex} />
-          <Body style={styles.viewFlex} />
-          <Right style={styles.viewFlex} />
+          <Left style={styles.viewFlexHeader} />
+          <Body style={styles.viewFlexHeader} />
+          <Right style={styles.viewFlexHeader} />
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>

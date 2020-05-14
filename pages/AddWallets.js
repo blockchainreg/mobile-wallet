@@ -114,13 +114,13 @@ export default ({ store, web3t }) => {
       <StandardLinearGradient>
         <RefreshControl swipeRefresh={refreshToken}>
           <Header transparent style={styles.mtIphoneX}>
-            <Left style={styles.viewFlex}>
+            <Left style={styles.viewFlexHeader}>
               <BackButton onBack={back}/>
             </Left>
-            <Body style={styles.viewFlex}>
+            <Body style={styles.viewFlexHeader}>
               <Text style={styles.title1}>{lang.manageWallet}</Text>
             </Body>
-            {/* <Right style={styles.viewFlex}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
+            {/* <Right style={styles.viewFlexHeader}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
             <Right style={styles.viewFlex} />
           </Header>
           <StatusBar barStyle="light-content" />

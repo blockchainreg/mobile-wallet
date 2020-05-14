@@ -147,6 +147,18 @@ export default StyleSheet.create({
       }
     })
   },
+  viewFlexHeader: {
+    ...Platform.select({
+      ios: {
+        flex: 1,
+        top: -10
+      },
+      android: {
+        flex: 1,
+        top: -10
+      }
+    })
+  },
   headerBlock: {
     marginTop: 20,
     flexDirection: "row",
@@ -969,7 +981,7 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         paddingTop: hp("5%"),
-        paddingBottom: hp("3%")
+        paddingBottom: hp("3%"),
       },
       {
         ...Platform.select({
@@ -1097,6 +1109,9 @@ export default StyleSheet.create({
   },
   viewPt: {
     paddingTop: 10
+  },
+  viewPt1: {
+    paddingTop: 20
   },
   listitemHeight: {
     height: 60
@@ -1538,10 +1553,50 @@ export default StyleSheet.create({
     top: 2
   },
   inputSize: {
-    fontSize: 14,
-    color: "#fff",
-    fontWeight: "bold"
-    // paddingLeft: 15,
+    ...ifIphoneX(
+      {
+        fontSize: 14,
+        color: "#fff",
+        fontWeight: "bold"
+      },
+      {
+        ...Platform.select({
+          ios: { 
+            fontSize: 12,
+            color: "#fff",
+            fontWeight: "bold"
+           },
+          android: { 
+            fontSize: 12,
+            color: "#fff",
+            fontWeight: "bold"
+           }
+        })
+      }
+    )
+  },
+  inputSize1: {
+    ...ifIphoneX(
+      {
+        fontSize: 14,
+        color: "#fff",
+        fontWeight: "bold"
+      },
+      {
+        ...Platform.select({
+          ios: { 
+            fontSize: 12,
+            color: "#fff",
+            fontWeight: "bold"
+           },
+          android: { 
+            fontSize: 12,
+            color: "#fff",
+            fontWeight: "bold"
+           }
+        })
+      }
+    )
   },
   errorSend: {
     fontSize: 12,
@@ -1559,7 +1614,6 @@ export default StyleSheet.create({
     })
   },
   marginBtn: {
-    // flex: 1,
     alignItems: "center",
     width: "100%",
     marginBottom: 15,
@@ -1850,7 +1904,7 @@ export default StyleSheet.create({
     color: "#fff",
     marginTop: 15,
     // width: 250,
-    width: "80%",
+    width: "90%",
     // height: '100%',
     textAlign: "center"
   },
@@ -4355,6 +4409,20 @@ export default StyleSheet.create({
     marginBottom: 15,
     marginTop: 10
   },
+  btnNext: {
+    backgroundColor: "#9d41eb", width: "45%",  marginHorizontal: 10, borderRadius: 10,  
+  },
+  btnCancel: {
+    backgroundColor: "gray", width: "45%", marginHorizontal: 10, borderRadius: 10,
+  },
+  txtBtn: {
+    fontSize: 14, textAlign: "center", paddingVertical: 15, color: "#fff", fontWeight: 'bold'
+  },
+  containerBtn: {
+    flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center', paddingHorizontal: 20
+  },
   textTermsStyle: {
     color: "#fff"
   },
@@ -4431,11 +4499,11 @@ export default StyleSheet.create({
     fontWeight: "500"
   },
   createWordBlock: {
-    ...Platform.select({
-      ios: {
+    ...ifIphoneX(
+      {
         borderRadius: 30,
         borderWidth: 1,
-        width: "45%",
+        width: "46%",
         paddingHorizontal: 10,
         borderColor: "rgba(157, 65, 235, 0.5)",
         alignItems: "center",
@@ -4443,18 +4511,33 @@ export default StyleSheet.create({
         marginHorizontal: 7,
         marginVertical: 5
       },
-      android: {
-        borderRadius: 30,
-        borderWidth: 1,
-        width: "45%",
-        paddingHorizontal: 10,
-        borderColor: "rgba(157, 65, 235, 0.5)",
-        alignItems: "center",
-        paddingVertical: 4,
-        marginHorizontal: 5,
-        marginVertical: 5
+      {
+        ...Platform.select({
+          ios: { 
+            borderRadius: 30,
+            borderWidth: 1,
+            width: "45%",
+            paddingHorizontal: 10,
+            borderColor: "rgba(157, 65, 235, 0.5)",
+            alignItems: "center",
+            paddingVertical: 4,
+            marginHorizontal: 7,
+            marginVertical: 5 
+          },
+          android: { 
+             borderRadius: 30,
+            borderWidth: 1,
+            width: "46%",
+            paddingHorizontal: 10,
+            borderColor: "rgba(157, 65, 235, 0.5)",
+            alignItems: "center",
+            paddingVertical: 4,
+            marginHorizontal: 5,
+            marginVertical: 5 
+          }
+        })
       }
-    })
+    )
   },
   numberBlock: {
     ...Platform.select({

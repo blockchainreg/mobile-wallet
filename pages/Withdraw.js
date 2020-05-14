@@ -140,8 +140,8 @@ const btnWithdrawBtc = ({ store, web3t }) => {
       style={styles.gradientBtn2}
       text={sendText}
       textStyle={{ fontSize: 18 }}
-      gradientBegin="#9d41eb"
-      gradientEnd="#9d41eb"
+      gradientBegin="#563688"
+      gradientEnd="#563688"
       gradientDirection="diagonal"
       height={56}
       width={"100%"}
@@ -156,10 +156,10 @@ const buttonInactive = ({ store }) => {
   return (
     <GradientButton
       style={styles.gradientBtn2}
-      text={lang.continue}
+      text={lang.send}
       textStyle={{ fontSize: 18 }}
-      gradientBegin="#DDB5FF"
-      gradientEnd="#DDB5FF"
+      gradientBegin="rgba(86, 54, 136, 0.35)"
+      gradientEnd="rgba(86, 54, 136, 0.35)"
       gradientDirection="diagonal"
       height={56}
       width={"100%"}
@@ -286,13 +286,13 @@ class Withdraw extends React.Component {
           />
 
           <Header style={styles.mtAndroid}>
-            <Left style={styles.viewFlex}>
+            <Left style={styles.viewFlexHeader}>
               <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
             </Left>
-            <Body style={styles.viewFlex}>
+            <Body style={styles.viewFlexHeader}>
               <Title style={styles.titleBlack}>{lang.send}</Title>
             </Body>
-            <Right style={styles.viewFlex}>
+            <Right style={styles.viewFlexHeader}>
               <Thumbnail square small source={{ uri: wallet.coin.image }} />
             </Right>
           </Header>
@@ -308,7 +308,7 @@ class Withdraw extends React.Component {
                   </View>
                   <View style={styles.bodyBlock3}>
                     <Text style={styles.totalBalance}>
-                      {wallet.balance}{" "}
+                    {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
                       <Text style={styles.nameToken}>
                         {wallet.coin.token.toUpperCase()}
                       </Text>

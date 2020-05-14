@@ -119,7 +119,7 @@ export default ({ store, web3t }) => {
                       {transaction.amount} {transaction.token.toUpperCase()}
                     </Text>
                     <Text style={styles.constDate}>
-                    ({lang.fee}: {transaction.fee}{" "}{transaction.token.toUpperCase()})
+                    ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()})
                     </Text>
                   </Right>
                 </ListItem>

@@ -91,11 +91,11 @@ export default ({ store, web3t }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex}>
+          <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>
           </Left>
-          <Body style={styles.viewFlex} />
-          <Right style={styles.viewFlex} />
+          <Body style={styles.viewFlexHeader} />
+          <Right style={styles.viewFlexHeader} />
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
@@ -124,7 +124,7 @@ export default ({ store, web3t }) => {
                     />
                   </Item>
                 </View>
-                <View style={styles.marginBtnSeed}>
+                <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
                     text={lang.continue}
@@ -138,8 +138,6 @@ export default ({ store, web3t }) => {
                     placeholderTextColor="rgba(255,255,255,0.60)"
                     onPressAction={continueProcess}
                   />
-                  <Text style={styles.textCard}>
-                  </Text>
                 </View>
               </Body>
             </CardItem>

@@ -148,9 +148,9 @@ export default ({ store }) => {
         />
 
         <Header transparent style={styles.mtIphoneX}>
-          {/*}<Left  style={styles.viewFlex}>{logIn(store)}</Left>{*/}
-          <Body  style={styles.viewFlex} />
-          <Right style={styles.viewFlex} />
+          {/*}<Left  style={styles.viewFlexHeader}>{logIn(store)}</Left>{*/}
+          <Body  style={styles.viewFlexHeader} />
+          <Right style={styles.viewFlexHeader} />
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>

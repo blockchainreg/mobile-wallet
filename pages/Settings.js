@@ -84,11 +84,11 @@ export default ({ store, web3t }) => {
       <View style={styles.viewFlex}>
         <StatusBar />
         <Header style={styles.mtAndroid}>
-          <Left style={styles.viewFlex} />
-          <Body style={styles.viewFlex}>
+          <Left style={styles.viewFlexHeader} />
+          <Body style={styles.viewFlexHeader}>
             <Title style={[styles.titleBlack, {color: "#563688"}]}>{lang.settings}</Title>
           </Body>
-          <Right style={styles.viewFlex} />
+          <Right style={styles.viewFlexHeader} />
         </Header>
 
         <Content>

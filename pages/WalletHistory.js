@@ -44,11 +44,11 @@ export default ({ store, web3t }) => {
         <View style={styles.viewFlex}>
           <StandardLinearGradient>
             <Header transparent style={styles.mtIphoneX}>
-              <Left style={styles.viewFlex} />
-              <Body style={styles.viewFlex}>
+              <Left style={styles.viewFlexHeader} />
+              <Body style={styles.viewFlexHeader}>
               <Text style={styles.title}>{lang.history}</Text>
               </Body>
-              <Right style={styles.viewFlex} />
+              <Right style={styles.viewFlexHeader} />
             </Header>
             <StatusBar barStyle="light-content" />
           </StandardLinearGradient>

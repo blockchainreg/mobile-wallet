@@ -102,13 +102,13 @@ export default ({ store, web3t }) => {
         />
 
         <Header style={styles.mtAndroid}>
-          <Left style={styles.viewFlex}>
+          <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
           </Left>
-          <Body style={styles.viewFlex}>
+          <Body style={styles.viewFlexHeader}>
             <Title style={styles.titleBlack}>{lang.receive}</Title>
           </Body>
-          <Right style={styles.viewFlex}>
+          <Right style={styles.viewFlexHeader}>
             <Thumbnail square small source={{ uri: wallet.coin.image }} />
           </Right>
         </Header>

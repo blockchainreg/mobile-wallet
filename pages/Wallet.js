@@ -83,7 +83,7 @@ export default ({ store, web3t }) => {
 
     const Balance = observer(({wallet}) =>
       <Text style={styles.totalBalance}>
-        {wallet.balance}{" "}
+        {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
         <Text style={styles.nameToken}>
           {wallet.coin.token.toUpperCase()}
         </Text>
@@ -142,15 +142,15 @@ export default ({ store, web3t }) => {
           <StandardLinearGradient>
             <StatusBar />
             <Header style={styles.mtAndroid}>
-              <Left style={styles.viewFlex}>
+              <Left style={styles.viewFlexHeader}>
                 <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
               </Left>
-              <Body style={styles.viewFlex}>
+              <Body style={styles.viewFlexHeader}>
                 <Title style={styles.titleBlack}>
                   {wallet.coin.name}
                 </Title>
               </Body>
-              <Right style={styles.viewFlex}>
+              <Right style={styles.viewFlexHeader}>
                 <Thumbnail square small source={{uri: wallet.coin.image}} />
               </Right>
             </Header>

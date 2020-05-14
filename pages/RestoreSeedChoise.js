@@ -64,11 +64,11 @@ export default ({ store, web3t }) => {
         style={styles.introBackground}
       >
         <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlex}>
+          <Left style={styles.viewFlexHeader}>
             <BackButton onBack={changePage("newseed")}/>
           </Left>
-          <Body style={styles.viewFlex} />
-          <Right style={styles.viewFlex} />
+          <Body style={styles.viewFlexHeader} />
+          <Right style={styles.viewFlexHeader} />
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
