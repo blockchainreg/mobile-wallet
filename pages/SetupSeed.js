@@ -50,6 +50,10 @@ const seedContainerStyle = {
   padding: 10
 };
 
+const randOrd = () => {
+  return (Math.round(Math.random())-0.5);
+}
+
 export default ({ store }) => {
   const changePage = (tab) => () => {
 
@@ -69,6 +73,10 @@ export default ({ store }) => {
 
   const restoreSeed = async () => {
     store.current.seed = "";
+    from = 24;
+    store.current.seedIndex = 0;
+    store.current.seedIndexes = [...Array(from).keys()].sort(randOrd)
+    store.current.seedWords = [...Array(from).keys()].map(x=> { return "" } )
     store.current.page = "restoreseed";
   }
 

@@ -22,6 +22,7 @@ import HistoryDetail from './pages/HistoryDetail.js';
 Store.current.filterVal = { apply: "", temp: "" }
 Store.current.seedIndex = 0
 Store.current.seedIndexes = [];
+Store.current.seedWords = [];
 if ((localStorage.getItem("lang") || "").length === 0)
   Store.current.page = "LangPage"
 Store.lang = localStorage.getItem("lang") || "en";

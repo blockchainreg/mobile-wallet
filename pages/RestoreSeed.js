@@ -7,6 +7,8 @@ import {
   ImageBackground
 } from "react-native";
 import {
+  Input,
+  Item,
   Text,
   Button,
   View,
@@ -49,28 +51,44 @@ export default ({ store, web3t }) => {
   };
 
   const done = () => {
+
+    if(store.signUpConfirmSeedField == "") return;
+
+    store.current.seedWords[number] = store.signUpConfirmSeedField;
+    if(store.current.seedIndex < 23) {
+      store.current.seedIndex += 1;
+      store.signUpConfirmSeedField = "";
+      return
+    }
+    store.current.seed = store.current.seedWords.join(' ')
+    console.log(store.current.seed);
     if (badSeed(store.current.seed)) return;
 
     setupWallet(store, web3t);
   };
-
-  const changeSeed = async seed => {
-    store.current.seed = seed;
+  const number = store.current.seedIndexes[store.current.seedIndex];
+  const changeSeed = async word => {
+    store.signUpConfirmSeedField = word;
   };
 
   const seedPhrase = store => {
     return (
-      <View style={seedContainerStyle}>
-        <Textarea
-          rowSpan={2}
-          placeholder={lang.placeholderSeed}
-          placeholderTextColor="rgba(255,255,255,0.60)"
-          style={styles.placeholderSeedInput}
-          selectionColor={"#fff"}
-          autoCapitalize="none"
-          value={store.current.seed}
-          onChangeText={changeSeed}
-        />
+      <View style={styles.bodyConfirm}>
+        <Item regular style={styles.borderItemSeed}>
+          <Input
+              autoFocus
+              value={store.signUpConfirmSeedField}
+              onChangeText={changeSeed}
+              autoCapitalize="none"
+              secureTextEntry={false}
+              returnKeyType="done"
+              placeholder={number + 1 + " word"}
+              placeholderTextColor="rgba(255,255,255,0.60)"
+              style={styles.inputSize}
+              selectionColor={"#fff"}
+              keyboardAppearance="dark"
+            />
+          </Item>
       </View>
     );
   };
@@ -111,7 +129,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
-                    text="Restore"
+                    text={lang.continue}
                     textStyle={{ fontSize: 14 }}
                     gradientBegin="#9d41eb"
                     gradientEnd="#9d41eb"
