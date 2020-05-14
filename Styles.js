@@ -683,6 +683,10 @@ export default StyleSheet.create({
       }
     )
   },
+  txtLocked: {
+    color: '#fff', 
+    marginTop: 15,
+  },
 
   h1TextBuy: {
     ...ifIphoneX(
