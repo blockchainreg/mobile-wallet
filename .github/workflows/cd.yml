@@ -20,7 +20,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install procps -y
       - run: npm i --global yarn
       - run: yarn install
-      - run: expo build:android -t app-bundle --force
+      - run: yes | expo build:android -t app-bundle --non-interactive
         continue-on-error: true
       - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
