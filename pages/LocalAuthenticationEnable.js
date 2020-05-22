@@ -37,7 +37,6 @@ function LocalAuthenticationEnable({store, web3t}) {
         LocalAuthentication.supportedAuthenticationTypesAsync(),
         LocalAuthentication.isEnrolledAsync()
       ]).then(([hasHardware, supportedAuthTypes, isEnrolled]) => {
-        console.log("LocalAuthentication params", hasHardware, supportedAuthTypes, isEnrolled);
         if (hasHardware && isEnrolled && supportedAuthTypes.length > 0) {
           setStatus("localAuth");
           return;
@@ -59,7 +58,6 @@ function LocalAuthenticationEnable({store, web3t}) {
 function RequestPin({store, web3t}) {
   let [toastify, setToastify] = useState(null);
   const showToast = message => {
-    console.log('Trying to show toast', message, !!toastify);
     toastify && toastify.show(message, 3000);
   };
   const [pin, setPin] = useState("");
@@ -75,7 +73,7 @@ function RequestPin({store, web3t}) {
         }
 
         setPin("");
-        await SecureStore.setItemAsync("localAuthToken", get());
+        await SecureStore.setItemAsync("localAuthToken", pin);
         store.current.page = "settings";
       }, 1);
     };

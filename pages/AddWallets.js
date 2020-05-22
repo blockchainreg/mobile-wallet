@@ -34,7 +34,7 @@ import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 //
 
-const coinItems = [dash, etc, eth, ltc, usdt, usdt_erc20];
+const coinItems = [dash, etc, /*eth, Ethereum */ltc, usdt, usdt_erc20];
 
 const renderCoin = (store, web3t) => item => {
   const tokens = walletsFuncs(store, web3t).wallets.map(x => x.coin.token);
