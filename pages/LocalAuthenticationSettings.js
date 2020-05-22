@@ -60,8 +60,8 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
   };
 
   if (hasKey === null) {
-    SecureStore.getItemAsync("localAuthToken").then(token => {
-      setHasKey(token !== null);
+    SecureStore.getItemAsync("localAuthToken").then(pin => {
+      setHasKey(pin !== null);
     });
   }
   if (hasKey) {

@@ -36,8 +36,8 @@
       if (err != null) {
         return cb("query err: " + ((ref$ = err.message) != null ? ref$ : err));
       }
-      if (data.body.error != null) {
-        return cb(data.body.error);
+      if (!data.body || data.body.error != null) {
+        return cb(data.body ? data.body.error : data.text);
       }
       return cb(null, data.body.result);
     });

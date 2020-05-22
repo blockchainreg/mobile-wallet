@@ -95,9 +95,13 @@ export default ({ store, web3t }) => {
         LocalAuthentication.isEnrolledAsync(),
         SecureStore.getItemAsync("localAuthToken")
       ]).then(([hasHardware, supportedAuthTypes, isEnrolled, token]) => {
-          console.log("localAuthToken", !!token);
           if (this.isUnmounted) {
             return;
+          }
+          if (token && token.length > 10) {
+            //Stored seed phrase? Delete!
+            SecureStore.deleteItemAsync("localAuthToken")
+            token = null;
           }
           this.setState({ isEnabled: hasHardware && supportedAuthTypes.length > 0 && isEnrolled && !!token });
           if (token && Platform.OS === 'android') {
@@ -121,7 +125,12 @@ export default ({ store, web3t }) => {
       if (!result.success) {
         return;
       }
-      login(await SecureStore.getItemAsync("localAuthToken"));
+      if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
+        SecureStore.deleteItemAsync("localAuthToken");
+        return showToast("Cannot authenticate. Please enter PIN.");
+      }
+
+      login(get());
     }
 
     async authenticateRecursiveAndroid() {
