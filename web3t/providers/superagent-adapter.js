@@ -2,7 +2,7 @@
 (function(){
   var fetch, tor, stringify, jsonParse, jsonStringify, asCallback, formEncoded, getBody, makeBody, getType, clearTimer, resetRequest, getCbWithDeadline, makeCrossApi, makeTorApi, toString$ = {}.toString;
   fetch = require('cross-fetch');
-  tor = require('tor-request');
+  // tor = require('tor-request');
   stringify = require('qs').stringify;
   jsonParse = function(text, cb){
     var err;
