@@ -24,8 +24,6 @@ import Images from '../Images.js';
 import setupWallet from '../setupWallet.js';
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
-//import { generateMnemonic } from 'bip39';
-//import { refreshAccount } from '../wallet/refresh-account.js';
 
 
 
@@ -33,32 +31,34 @@ const showToast = message => {
   this.toastify.show(message, 3000);
 };
 
-
+const DEV_SKIP = "...";
 
 export default ({ store, web3t }) => {
-  //loadTerms(store);
-
   const lang = getLang(store);
 
-  const changePage = (tab) => () => {
-    store.current.page = tab;
-  };
 
   const number = store.current.seedIndexes[store.current.seedIndex];
   const placeholderConfirmSeed = (number + 1) + " " + lang.placeholderConfirmSeed;
-  const continueProcess = () => {
-    expectedWord = store.current.seed.split(" ")[number];
+  const verifyWordOrSetup = () => {
 
-    if (expectedWord !== store.signUpConfirmSeedField) {
-      return showToast(lang.inconsistency);
+    if(store.signUpConfirmSeedField != DEV_SKIP) { 
+
+      const expectedWord = store.current.seed.split(" ")[number];
+
+      if (expectedWord !== store.signUpConfirmSeedField) {
+        return showToast(lang.inconsistency);
+      }
+
+      if (store.current.seedIndex < 23) {
+        store.signUpConfirmSeedField = "";
+        store.current.seedIndex += 1;
+        return;
+      }
+
     }
 
-    if (store.current.seedIndex < 23) {
-      store.signUpConfirmSeedField = "";
-      store.current.seedIndex += 1;
-      return;
-    }
-
+    
+    store.signUpConfirmSeedField = "";
     setupWallet(store, web3t);
 
 
@@ -136,7 +136,7 @@ export default ({ store, web3t }) => {
                     width={"100%"}
                     radius={10}
                     placeholderTextColor="rgba(255,255,255,0.60)"
-                    onPressAction={continueProcess}
+                    onPressAction={verifyWordOrSetup}
                   />
                 </View>
               </Body>
