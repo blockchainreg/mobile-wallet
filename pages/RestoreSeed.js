@@ -113,7 +113,7 @@ export default ({ store, web3t }) => {
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
-          <Image source={Images.logo} style={styles.styleLogo} />
+          <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} />
           <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>

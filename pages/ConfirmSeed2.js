@@ -100,8 +100,8 @@ export default ({ store, web3t }) => {
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
           <Image
-            source={Images.logo}
-            style={styles.styleLogo}
+            source={Images.confirmation}
+            style={styles.setupConfirmImg}
           />
           <Text style={styles.textH1Seed}>{lang.confirmation}</Text>
           <View style={styles.card1}>

@@ -98,6 +98,10 @@ export default ({ store }) => {
       >
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
+        <Image
+            source={Images.generate}
+            style={styles.setupImg}
+          />
             {seedPhrase(store)}
             <View style={styles.marginBtn}>
               {/* <GradientButton

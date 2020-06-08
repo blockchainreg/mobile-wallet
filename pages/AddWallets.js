@@ -15,12 +15,12 @@ import {
   Header
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, StatusBar } from "react-native";
+import { ScrollView} from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
 import spin from "../utils/spin.js";
-// import StatusBar from "../components/StatusBar.js";
+import StatusBar from "../components/StatusBar.js";
 
 //
 import dash from "../registry/dash.json";

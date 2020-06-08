@@ -45,7 +45,7 @@ export default StyleSheet.create({
       },
       {
         ...Platform.select({
-          ios: { height: null },
+          ios: { height: 50 },
           android: { backgroundColor: "#FAFAFA" }
         })
       }
@@ -100,6 +100,48 @@ export default StyleSheet.create({
       ios: { color: "#563688" },
       android: { color: "#563688" }
     })
+  },
+  iconFooter1: {
+    ...ifIphoneX(
+      {
+        height: 184 /7,
+        width: 208 / 7,
+
+      },
+      {
+        ...Platform.select({
+          ios: {
+            height: 184 /8,
+            width: 208 / 8,
+          },
+          android: {
+            height: 184 /8,
+            width: 208 / 8,
+          }
+        })
+      }
+    )
+  },
+  iconFooter2: {
+    ...ifIphoneX(
+      {
+        height: 184 /7,
+        width: 184 / 7,
+      },
+      {
+        ...Platform.select({
+          ios: {
+            height: 184 /8,
+            width: 184 / 8,
+          },
+          android: {
+            height: 184 /8,
+            width: 184 / 8,
+          }
+        })
+      }
+    )
+    
   },
   styleTxtSettings: {
     color: "#563688"
@@ -4323,6 +4365,33 @@ export default StyleSheet.create({
         width: 31.7 * 2
       }
     })
+  },
+  setupConfirmImg: {
+    height: 292 / 5,
+    width: 320 / 5
+  },
+  setupImg: {
+    ...ifIphoneX(
+      {
+        height: 271 / 4,
+        width: 320 / 4,
+        marginBottom: "10%",
+      },
+      {
+        ...Platform.select({
+          ios: { 
+            height: 271 / 4.5,
+            width: 320 / 4.5,
+            marginBottom: "5%",
+          },
+          android: { 
+            height: 271 / 5,
+            width: 320 / 5,
+            marginBottom: "5%",
+          }
+        })
+      }
+    )
   },
   iconAdd: {
     ...Platform.select({
