@@ -7,6 +7,7 @@ import Images from "../Images.js";
 import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 
+
 export default ({ store, web3t }) => {
     const lang = getLang(store);
     const checkType = type => {
@@ -31,10 +32,10 @@ export default ({ store, web3t }) => {
     const thumbnail = type => {
       switch (type) {
         case "IN":
-          return <Thumbnail small source={Images.depositImage} />;
+          return <Thumbnail small square source={Images.depositImage} />;
         case "OUT":
           return (
-            <Thumbnail small source={Images.withdrawImage2} />
+            <Thumbnail small square source={Images.withdrawImage2} />
           );
         default:
           return null;
@@ -66,20 +67,27 @@ export default ({ store, web3t }) => {
       <View style={styles.container}>
 
         {store.history.filterOpen ? (
-          <Header searchBar rounded style={{ paddingBottom: 20, height: 40 }}>
-                <Item>
-                  <Icon name="ios-search" />
-                  <Input placeholder="Search" value={store.current.filterVal.temp} onChangeText={changeSearch} />
-                  <Icon name="ios-trash" onPress={clearFilter} />
+          <Header searchBar style={styles.headerSearchBar}>
+                <Item style={{ backgroundColor: Images.color4}}>
+                  <Icon name="ios-search" style={{ color: "#fff"}}/>
+                  <Input 
+                    placeholder="Search" 
+                    value={store.current.filterVal.temp} 
+                    placeholderTextColor="#fff" 
+                    onChangeText={changeSearch} 
+                    selectionColor={"#fff"}
+                    style={{ color: "#fff", backgroundColor: "transparent"}}
+                  />
+                  <Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>
                 </Item>
                 <Button transparent onPress={applyFilter}>
-                  <Text>{lang.filter}</Text>
+                  <Text style={{ color: "#fff"}}>{lang.filter}</Text>
                 </Button>
           </Header>
         ) : null}
 
         {store.current.refreshing ? (
-          <ActivityIndicator color="#707070" />
+          <ActivityIndicator color="#fff" />
         ) : (
           <View>
             {txs.length == 0 && (
@@ -97,6 +105,7 @@ export default ({ store, web3t }) => {
                 //{ token, tx, amount, fee, time, url, type, pending } = tran
                 <ListItem
                   thumbnail
+                  underlayColor={Images.color1}
                   onPress={() => {
                     showTransaction(transaction);
                   }}

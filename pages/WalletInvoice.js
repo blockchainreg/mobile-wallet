@@ -22,6 +22,10 @@ import walletsFuncs from '../wallet/wallets-funcs.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
+import Images from '../Images.js';
+import { LinearGradient } from "expo-linear-gradient";
+
 
 const showToast = message => {
   console.log(message);
@@ -42,13 +46,13 @@ export default ({ store, web3t }) => {
       <GradientButton
         style={styles.gradientBtn2}
         text={lang.copy}
-        textStyle={{ fontSize: 18 }}
+        textStyle={{ fontSize: 14 }}
         gradientBegin="#9d41eb"
         gradientEnd="#9d41eb"
         gradientDirection="diagonal"
-        height={56}
+        height={45}
         width={"100%"}
-        radius={10}
+        radius={5}
         onPressAction={writeToClipboardAddr}
       />
     );
@@ -65,13 +69,13 @@ export default ({ store, web3t }) => {
       <GradientButton
         style={styles.gradientBtn2}
         text={lang.share}
-        textStyle={{ fontSize: 18 }}
+        textStyle={{ fontSize: 14 }}
         gradientBegin="#3CD5AF"
         gradientEnd="#3CD5AF"
         gradientDirection="diagonal"
-        height={56}
+        height={45}
         width={"100%"}
-        radius={10}
+        radius={5}
         onPressAction={onShare}
       />
     );
@@ -94,14 +98,14 @@ export default ({ store, web3t }) => {
   const back = changePage("wallet");
   return (
     <View style={styles.viewFlex}>
-      <StandardLinearGradient>
+          <Background />
         <Toast
           ref={c => (this.toastify = c)}
           position={"top"}
           style={styles.toastStyle}
         />
 
-        <Header style={styles.mtAndroid}>
+        <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
           </Left>
@@ -142,7 +146,7 @@ export default ({ store, web3t }) => {
             </View>
           </View>
         </RefreshControl>
-      </StandardLinearGradient>
+
     </View>
   );
 };

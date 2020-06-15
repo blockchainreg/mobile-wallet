@@ -147,7 +147,10 @@
       confirmDialog: "대화 상자 확인",
       yes: "예",
       no: "아니",
-      to: "To",
+      to: "에",
+      from: "아니",
+      words12: "12 단어",
+      words24: "24 단어"
     };
   }).call(this);
   

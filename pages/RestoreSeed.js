@@ -28,6 +28,8 @@ import setupWallet from "../setupWallet.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
+
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -75,7 +77,8 @@ export default ({ store, web3t }) => {
   const seedPhrase = store => {
     return (
       <View style={styles.bodyConfirm}>
-        <Item regular style={styles.borderItemSeed}>
+        <Item style={styles.borderItem}>
+        <Icon active name='key' style={{color: "#fff"}}/>
           <Input
               autoFocus
               value={store.signUpConfirmSeedField}
@@ -100,10 +103,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>
@@ -123,13 +123,13 @@ export default ({ store, web3t }) => {
                   <GradientButton
                     style={styles.gradientBtnPh}
                     text={lang.continue}
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
                     gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
+                    height={45}
+                    width="100%"
+                    radius={5}
                     onPressAction={done}
                   />
                 </View>
@@ -137,7 +137,6 @@ export default ({ store, web3t }) => {
             </CardItem>
           </View>
         </View>
-      </ImageBackground>
     </View>
   );
 };

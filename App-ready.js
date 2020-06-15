@@ -41,10 +41,10 @@ const renderSpinner = ({ store }) => {
     return (
       <Spinner
         visible={isVisible}
-        overlayColor="rgba(41, 12, 100, 0.90)"
+        overlayColor="rgba(23, 18, 89, 0.70)"
         textStyle={{ color: 'white', textShadowColor: 'transparent' }}
         indicatorStyle={{ color: 'white', justifyContent: 'flex-start', top: 50 }}
-        size="large"
+        size="small"
         animation="fade"
         textContent={text}
         textStyle={styles.spinnerTextStyle}

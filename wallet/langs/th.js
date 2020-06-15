@@ -147,6 +147,9 @@
     confirmDialog: "ยืนยันไดอะล็อก",
     yes: "ใช่",
     no: "ไม่",
-    to: "To",
+    to: "ถึง",
+    from: "จาก",
+    words12: "12 คำ",
+    words24: "24 คำ"
   };
 }).call(this);

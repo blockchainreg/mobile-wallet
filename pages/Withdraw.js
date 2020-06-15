@@ -11,12 +11,12 @@ import {
   Title,
   Body,
   Header,
-  Thumbnail
+  Thumbnail,
 } from "native-base";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
 import styles from "../Styles.js";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
+// import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "react-native-gradient-buttons";
 import RefreshControl from "../components/RefreshControl.js";
@@ -26,8 +26,11 @@ import Spinner from "../utils/spinner.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
+import Images from "../Images.js";
+import { LinearGradient } from "expo-linear-gradient";
 
-const showToast = message => {
+const showToast = (message) => {
   console.log(message);
   this.toastify.show(message, 3000);
 };
@@ -64,14 +67,14 @@ const btnWithdrawBtc = ({ store, web3t }) => {
     isData,
     encodeDecode,
     changeAmount,
-    invoice
+    invoice,
   } = sendFuncs(store, web3t);
 
   const withdrawBtc = async () => {
     try {
       let withdrawSpinner = null;
       let checkingSpinner = new Spinner(store, "Checking balance", {
-        displayDescription: true
+        displayDescription: true,
       });
       let disposerSend = null;
       let disposerCurrent = null;
@@ -95,7 +98,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
         ) {
           // console.log("Making withdraw spinner");
           withdrawSpinner = new Spinner(store, "Sending funds", {
-            displayDescription: true
+            displayDescription: true,
           });
           return;
         }
@@ -137,15 +140,15 @@ const btnWithdrawBtc = ({ store, web3t }) => {
 
   return (
     <GradientButton
-      style={styles.gradientBtn2}
+      style={styles.gradientBtnPh}
       text={sendText}
-      textStyle={{ fontSize: 18 }}
-      gradientBegin="#563688"
-      gradientEnd="#563688"
-      gradientDirection="diagonal"
-      height={56}
-      width={"100%"}
-      radius={10}
+      textStyle={{ fontSize: 14, color: Images.color1 }}
+      gradientBegin="#fff"
+        gradientEnd="#fff"
+        gradientDirection="diagonal"
+        height={45}
+        width="100%"
+        radius={5}
       onPressAction={withdrawBtc}
     />
   );
@@ -154,33 +157,26 @@ const btnWithdrawBtc = ({ store, web3t }) => {
 const buttonInactive = ({ store }) => {
   const lang = getLang(store);
   return (
-    <GradientButton
-      style={styles.gradientBtn2}
-      text={lang.send}
-      textStyle={{ fontSize: 18 }}
-      gradientBegin="rgba(86, 54, 136, 0.35)"
-      gradientEnd="rgba(86, 54, 136, 0.35)"
-      gradientDirection="diagonal"
-      height={56}
-      width={"100%"}
-      radius={10}
-    />
+    <Button block style={styles.buttonInactive}>
+    <Text style={styles.buttonTextInactive}>{lang.send}</Text>
+  </Button>
+    
   );
 };
 
-const wrapNumber = text => {
+const wrapNumber = (text) => {
   return {
     target: {
-      value: text.replace(",", ".").replace(/[^0-9\.]/g, "")
-    }
+      value: text.replace(",", ".").replace(/[^0-9\.]/g, ""),
+    },
   };
 };
 
-const wrap = text => {
+const wrap = (text) => {
   return {
     target: {
-      value: text
-    }
+      value: text,
+    },
   };
 };
 
@@ -190,7 +186,6 @@ class Withdraw extends React.Component {
     const { store, web3t } = props;
     store.current.send.amountSend = "";
     store.current.send.to = "";
-
   }
   render() {
     const { store, web3t } = this.props;
@@ -225,43 +220,45 @@ class Withdraw extends React.Component {
       isData,
       encodeDecode,
       changeAmount,
-      invoice
+      invoice,
     } = sendFuncs(store, web3t);
 
     const wallets = walletsFuncs(store, web3t).wallets;
 
-    const wallet = wallets.find(x => x.coin.token === store.current.wallet);
+    const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 
-    const changePage = tab => () => {
+    const changePage = (tab) => () => {
       store.current.page = tab;
     };
 
     const InputAmountWithdraw = observer(({ send }) => (
-      <Item regular style={styles.borderItemInput}>
+      <Item style={styles.borderItem}>
         <Input
-          onChangeText={text => amountChange(wrapNumber(text))}
+          onChangeText={(text) => amountChange(wrapNumber(text))}
           returnKeyType="done"
-          style={styles.inputStyle}
-          placeholder="0"
+          style={[styles.inputStyle, { fontSize: 18 }]}
+          selectionColor={"#fff"}
+          keyboardAppearance="dark"
+          placeholder="0.00"
           value={send.amountSend}
           keyboardType="numeric"
-          placeholderTextColor="rgba(255,255,255,0.50)"
-          selectionColor={"rgba(255,255,255,0.60)"}
+          placeholderTextColor="rgba(255,255,255,0.60)"
         />
       </Item>
     ));
 
     const InputAddressWithdrawBtc = observer(({ send }) => (
-      <Item regular style={styles.borderItemInput}>
+      <Item style={styles.borderItem}>
         <Input
-          onChangeText={text => recipientChange(wrap(text))}
+          onChangeText={(text) => recipientChange(wrap(text))}
           returnKeyType="done"
+          selectionColor={"#fff"}
+          keyboardAppearance="dark"
           placeholder={wallet.network.mask}
           style={[styles.inputStyle, { fontSize: 18 }]}
           value={send.to}
           keyboardType={"default"}
-          placeholderTextColor="rgba(255,255,255,0.50)"
-          selectionColor={"rgba(255,255,255,0.60)"}
+          placeholderTextColor="rgba(255,255,255,0.60)"
         />
       </Item>
     ));
@@ -272,82 +269,78 @@ class Withdraw extends React.Component {
         : buttonInactive({ store, web3t })
     );
 
-    const refreshToken = async bool => {
+    const refreshToken = async (bool) => {
       web3t.refresh((err, data) => {});
     };
     const back = changePage("wallet", true);
     return (
       <View style={styles.viewFlex}>
-        <StandardLinearGradient>
-          <Toast
-            ref={c => (this.toastify = c)}
-            position={"top"}
-            style={styles.toastStyle}
-          />
+        <Background />
+        <Toast
+          ref={(c) => (this.toastify = c)}
+          position={"top"}
+          style={styles.toastStyle}
+        />
 
-          <Header style={styles.mtAndroid}>
-            <Left style={styles.viewFlexHeader}>
-              <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
-            </Left>
-            <Body style={styles.viewFlexHeader}>
-              <Title style={styles.titleBlack}>{lang.send}</Title>
-            </Body>
-            <Right style={styles.viewFlexHeader}>
-              <Thumbnail square small source={{ uri: wallet.coin.image }} />
-            </Right>
-          </Header>
-          <StatusBar />
-          <RefreshControl swipeRefresh={refreshToken}>
-            <View style={styles.bodyBlock}>
-              <View>
-                <View style={styles.bodyBalance}>
-                  <View style={styles.bodyBlock3}>
-                    <Text style={styles.nameTokenSwiper1}>
-                      {lang.totalBalance}
-                    </Text>
-                  </View>
-                  <View style={styles.bodyBlock3}>
-                    <Text style={styles.totalBalance}>
-                    {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
-                      <Text style={styles.nameToken}>
-                        {wallet.coin.token.toUpperCase()}
-                      </Text>
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.viewMt}>
-                  <View>
-                    <Text style={styles.titleHeader}>{lang.amount}:</Text>
-                  </View>
-                  <InputAmountWithdraw send={store.current.send} />
-                  <View style={styles.viewTextInputDown}>
-                    <Text note style={styles.textInputDownRight}>
-                      {lang.fee} {store.current.send.amountSendFee}{" "}
-                      {wallet.coin.token.toUpperCase()}
-                    </Text>
-                    <Text style={styles.errorSend}>
-                      {store.current.send.error}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.viewMt}>
-                  <View>
-                    <Text style={styles.titleHeader}>
-                      {lang.to}:
-                    </Text>
-                  </View>
-                  <InputAddressWithdrawBtc send={store.current.send} />
-                </View>
-              </View>
+        <Header transparent style={styles.mtAndroid}>
+          <Left style={styles.viewFlexHeader}>
+            <BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
+          </Left>
+          <Body style={styles.viewFlexHeader}>
+            <Title style={styles.titleBlack}>{lang.send}</Title>
+          </Body>
+          <Right style={styles.viewFlexHeader}>
+            <Thumbnail square small source={{ uri: wallet.coin.image }} />
+          </Right>
+        </Header>
+        <StatusBar />
+        <RefreshControl swipeRefresh={refreshToken}>
+          <View style={styles.bodyBlockWallet}>
+            {/* <View style={styles.bodyBalance}> */}
+            <View style={styles.bodyBlock3}>
+              <Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
             </View>
-          </RefreshControl>
-        </StandardLinearGradient>
-        <View style={styles.viewMonoBuy}>
-          <View style={styles.containerScreen}>
-            <View style={styles.marginBtn}>
-              <SendButton send={store.current.send} />
+            <View style={styles.bodyBlock3}>
+              <Text style={styles.totalBalance}>
+                {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
+                <Text style={styles.nameToken}>
+                  {wallet.coin.token.toUpperCase()}
+                </Text>
+              </Text>
+            </View>
+            {/* </View> */}
+
+            <View style={[styles.widthCard, { marginHorizontal: 20 }]}>
+              <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang.amount}:</Text>
+              </View>
+              <InputAmountWithdraw send={store.current.send} />
+              <View style={styles.viewTextInputDown}>
+                <Text note style={styles.textInputDownRight}>
+                  {lang.fee} {store.current.send.amountSendFee}{" "}
+                  {wallet.coin.token.toUpperCase()}
+                </Text>
+                <Text style={styles.errorSend}>{store.current.send.error}</Text>
+              </View>
+
+              <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang.to}:</Text>
+              </View>
+              <InputAddressWithdrawBtc send={store.current.send} />
             </View>
           </View>
+        </RefreshControl>
+        <View style={styles.viewMonoBuy}>
+          <LinearGradient
+            colors={[Images.color1, Images.color1, Images.color2]}
+            style={styles.linearGradientBg}
+          >
+            <View style={styles.containerScreen}>
+              <View style={styles.marginBtn}>
+                <SendButton send={store.current.send} />
+              </View>
+            </View>
+          </LinearGradient>
         </View>
       </View>
     );

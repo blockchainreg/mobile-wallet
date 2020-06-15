@@ -8,7 +8,8 @@ import {
   Body,
   Left,
   Right,
-  Button
+  Button,
+  Icon
 } from "native-base";
 import { Image, ImageBackground, runAfterInteractions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
@@ -25,6 +26,7 @@ import getLang from '../wallet/get-lang.js';
 import * as SecureStore from 'expo-secure-store';
 import Fingerprint from "../components/Fingerprint.js";
 import * as LocalAuthentication from 'expo-local-authentication';
+import Background from "../components/Background.js";
 
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
@@ -82,13 +84,13 @@ function RequestPin({store, web3t}) {
       <GradientButton
         style={styles.gradientBtnPh}
         text={"Confirm Pin"}
-        textStyle={{ fontSize: 14 }}
-        gradientBegin="#9d41eb"
-        gradientEnd="#9d41eb"
+        textStyle={{ fontSize: 14, color: Images.color1 }}
+        gradientBegin="#fff"
+        gradientEnd="#fff"
         gradientDirection="diagonal"
-        height={50}
+        height={45}
         width="100%"
-        radius={10}
+        radius={5}
         onPressAction={login}
       />
     );
@@ -96,17 +98,9 @@ function RequestPin({store, web3t}) {
 
   const buttonInactive = store => {
     return (
-      <GradientButton
-        style={styles.gradientBtnPh}
-        text={"Confirm Pin"}
-        textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
-        gradientBegin="rgba(221,181,255,0.30)"
-        gradientEnd="rgba(221,181,255,0.30)"
-        gradientDirection="diagonal"
-        height={50}
-        width="100%"
-        radius={10}
-      />
+      <Button block style={styles.buttonInactive}>
+      <Text style={styles.buttonTextInactive}>Confirm Pin</Text>
+    </Button>
     );
   };
 
@@ -140,7 +134,8 @@ function RequestPin({store, web3t}) {
 
   const inputSuccessPin = store => {
     return (
-      <Item regular style={styles.borderItem}>
+      <Item style={styles.borderItem}>
+        <Icon active name='lock' style={{color: "#fff"}}/>
         <Input
           onChangeText={setPin}
           value={pin}
@@ -161,10 +156,7 @@ function RequestPin({store, web3t}) {
 
   return (
     <View style={styles.viewFlex}>
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Toast
           ref={setToastify}
           position="top"
@@ -192,7 +184,6 @@ function RequestPin({store, web3t}) {
             {checkpin(store)}
           </View>
         </View>
-      </ImageBackground>
       </View>
   );
 };

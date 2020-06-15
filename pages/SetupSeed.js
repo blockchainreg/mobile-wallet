@@ -32,6 +32,7 @@ import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -75,10 +76,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={changePage("register")}/>
@@ -93,32 +91,35 @@ export default ({ store }) => {
             style={styles.styleLogo}
           />
           <View style={styles.card1}>
+            <View style={styles.titleInput}>
+              <Text style={styles.textH1Seed}>{lang.welcomeWallet}</Text>
+            </View>
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
                   <GradientButton
-                    style={styles.gradientBtnPh}
+                    style={styles.viewMt}
                     text={lang.restoreSeed}
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
                     gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
+                    height={45}
+                    width="100%"
+                    radius={5}
                     onPressAction={restoreSeed}
                   />
                   <View style={{ padding: 10 }}></View>
                   <GradientButton
-                    style={styles.gradientBtnPh}
+                    style={styles.viewMt}
                     text={lang.generate}
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
                     gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
+                    height={45}
+                    width="100%"
+                    radius={5}
                     onPressAction={generateRandom}
                   />
                 </View>
@@ -126,7 +127,6 @@ export default ({ store }) => {
             </CardItem>
           </View>
         </View>
-      </ImageBackground>
     </View>
   );
 };

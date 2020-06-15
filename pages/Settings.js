@@ -21,6 +21,9 @@ import getLang from "../wallet/get-lang.js";
 import PickerSetLang from "../components/PickerSetLang.js";
 import PickerAccountIndex from "../components/PickerAccountIndex.js";
 import * as LocalAuthentication from 'expo-local-authentication';
+import Background from "../components/Background.js";
+import Images from "../Images.js";
+import { LinearGradient } from "expo-linear-gradient";
 
 const LocalAuthListView = ({store}) => {
   // const [localAuthEnabled, setLocalAuthEnabled] = useState(null);
@@ -80,19 +83,21 @@ export default ({ store, web3t }) => {
 
 
   return (
-    <View style={styles.container}>
+
       <View style={styles.viewFlex}>
+      <Background />
+
         <StatusBar />
-        <Header style={styles.mtAndroid}>
+        <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader}>
-            <Title style={[styles.titleBlack, {color: "#563688"}]}>{lang.settings}</Title>
+            <Title style={styles.titleBlack}>{lang.settings}</Title>
           </Body>
           <Right style={styles.viewFlexHeader} />
         </Header>
 
         <Content>
-          <Separator bordered>
+          <Separator bordered style={styles.seperatorStyle}>
             <Text style={styles.styleTxtSettings}>{lang.help}</Text>
           </Separator>
           <ListItem
@@ -100,6 +105,7 @@ export default ({ store, web3t }) => {
             onPress={() => {
               Linking.openURL(`https://t.me/VelasDevelopers`);
             }}
+            underlayColor={Images.color1}
             style={styles.heightListItem}
           >
             <Left>
@@ -118,6 +124,7 @@ export default ({ store, web3t }) => {
             onPress={() => {
               Linking.openURL(`https://velas.com/privacy.html`);
             }}
+            underlayColor={Images.color1}
             style={styles.heightListItem}
           >
             <Left>
@@ -138,6 +145,7 @@ export default ({ store, web3t }) => {
                 `https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md`
               );
             }}
+            underlayColor={Images.color1}
             style={styles.heightListItem}
           >
             <Left>
@@ -151,10 +159,10 @@ export default ({ store, web3t }) => {
             </Right>
           </ListItem>
 
-          <Separator bordered>
+          <Separator bordered style={styles.seperatorStyle}>
             <Text style={styles.styleTxtSettings}>{lang.profile}</Text>
           </Separator>
-          <ListItem icon style={styles.heightListItem} last>
+          <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
             <Left>
               <Icon name="md-wallet" style={styles.styleTxtSettings}/>
             </Left>
@@ -163,7 +171,7 @@ export default ({ store, web3t }) => {
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
-          <ListItem icon style={styles.heightListItem} last>
+          <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
             <Left>
               <Icon name="md-globe" style={styles.styleTxtSettings}/>
             </Left>
@@ -175,11 +183,11 @@ export default ({ store, web3t }) => {
           <LocalAuthListView store={store}/>
 
 
-          <Separator bordered>
+          <Separator bordered style={styles.seperatorStyle}>
             <Text style={styles.styleTxtSettings}>{lang.security}</Text>
           </Separator>
 
-          <ListItem icon style={styles.heightListItem} last onPress={logoutBtn}>
+          <ListItem icon style={styles.heightListItem} last onPress={logoutBtn} underlayColor={Images.color1}>
             <Left>
               <Icon name="ios-log-out" style={styles.styleTxtSettings}/>
             </Left>
@@ -189,8 +197,8 @@ export default ({ store, web3t }) => {
             <Right style={styles.heightListItem} />
           </ListItem>
         </Content>
+        <Footer store={store}></Footer>
       </View>
-      <Footer store={store}></Footer>
-    </View>
+
   );
 };

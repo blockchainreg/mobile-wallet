@@ -27,6 +27,8 @@ import GradientButton from "react-native-gradient-buttons";
 import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
+
 
 
 
@@ -69,15 +71,15 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
       <>
         <Toast ref={setToastify} position="top" style={styles.toastStyle1} />
         <GradientButton
-          style={styles.gradientBtnPhMargin}
+          style={styles.gradientBtnPh}
           text={"Disable Local Authentication"}
-          textStyle={{ fontSize: 14 }}
-          gradientBegin="#9d41eb"
-          gradientEnd="#9d41eb"
+          textStyle={{ fontSize: 14, color: Images.color1 }}
+          gradientBegin="#fff"
+          gradientEnd="#fff"
           gradientDirection="diagonal"
-          height={50}
+          height={45}
           width="80%"
-          radius={10}
+          radius={5}
           onPressAction={disable}
         />
       </>
@@ -87,15 +89,15 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
     <>
       <Toast ref={setToastify} position="top" style={styles.toastStyle1} />
       <GradientButton
-        style={styles.gradientBtnPhMargin}
+        style={styles.gradientBtnPh}
         text={"Enable Local Authentication"}
-        textStyle={{ fontSize: 14 }}
-        gradientBegin="#9d41eb"
-        gradientEnd="#9d41eb"
+        textStyle={{ fontSize: 14, color: Images.color1 }}
+        gradientBegin="#fff"
+        gradientEnd="#fff"
         gradientDirection="diagonal"
-        height={50}
+        height={45}
         width="80%"
-        radius={10}
+        radius={5}
         onPressAction={enable}
       />
     </>
@@ -111,7 +113,8 @@ export default ({ store, web3t }) => {
   };
   const inputSuccessPin = store => {
     return (
-      <Item regular style={styles.borderItem}>
+      <Item style={styles.borderItem}>
+        <Icon active name='lock' style={{color: "#fff"}}/>
         <Input
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
@@ -136,10 +139,7 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>
@@ -149,7 +149,11 @@ export default ({ store, web3t }) => {
         </Header>
         <StatusBar barStyle="light-content" />
         <View style={styles.containerFlexStart}>
-          <View style={[styles.widthCard, {marginTop: 60}]}>
+        <Image
+            source={Images.logo}
+            style={styles.styleLogo}
+          />
+          <View style={styles.widthCard}>
             <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>Enter your PIN</Text>
             </View>
@@ -160,9 +164,9 @@ export default ({ store, web3t }) => {
             {/* {Unlock(store)} */}
             {/* <Unlock store={store} web3t={web3t}/> */}
           </View>
+          <View style={styles.viewMtLocal}/>
           <LocalAuthSettingsPage store={store} web3t={web3t} />
         </View>
-      </ImageBackground>
     </View>
   );
 };

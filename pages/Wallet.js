@@ -36,9 +36,10 @@ import navigate from "../wallet/navigate.js";
 import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
-
+import Background from "../components/Background.js";
 import Images from '../Images.js';
 import BackButton from "../components/BackButton.js";
+import { LinearGradient } from "expo-linear-gradient";
 
 
 export default ({ store, web3t }) => {
@@ -110,6 +111,9 @@ export default ({ store, web3t }) => {
         //return { ...styles.viewMono, height: '80%' }
         return (
             <View style={{ ...styles.viewMono, height: '80%' }}>
+            <LinearGradient
+            colors={[Images.color1, Images.color1, Images.color2]}
+            style={styles.linearGradientBg}>
               <View style={styles.bodyBlockTitle} onStartShouldSetResponder={collapse}>
                 <Text style={styles.titleHistory}>{lang.txLast}</Text>
               </View>
@@ -118,11 +122,15 @@ export default ({ store, web3t }) => {
                 {LoadMoreDate({ store })}
                 <View style={{ paddingBottom: 150 }} />
               </ScrollView>
+              </LinearGradient>
             </View>
         )
 
       return (
           <View style={styles.viewMono}>
+            <LinearGradient
+            colors={[Images.color1, Images.color1, Images.color2]}
+            style={styles.linearGradientBg}>
             <View style={styles.bodyBlockTitle} onStartShouldSetResponder={expand}>
               <Text style={styles.titleHistory}>{lang.txLast}</Text>
             </View>
@@ -131,6 +139,8 @@ export default ({ store, web3t }) => {
               {LoadMoreDate({ store })}
               <View style={{ paddingBottom: 150 }} />
             </ScrollView>
+          </LinearGradient>
+
           </View>
         )
     };
@@ -139,9 +149,10 @@ export default ({ store, web3t }) => {
 
     return (
       <View style={styles.viewFlex}>
-          <StandardLinearGradient>
+          <Background />
+
             <StatusBar />
-            <Header style={styles.mtAndroid}>
+            <Header transparent style={styles.mtAndroid}>
               <Left style={styles.viewFlexHeader}>
                 <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
               </Left>
@@ -187,7 +198,7 @@ export default ({ store, web3t }) => {
                     >
                       <Image
                         source={Images.sendImage}
-                        style={styles.sizeIconBtn}
+                        style={styles.sizeIconSendBtn}
                       />
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.explorer}</Text>
@@ -200,7 +211,7 @@ export default ({ store, web3t }) => {
                     >
                       <Image
                         source={Images.receiveImage}
-                        style={styles.sizeIconBtn}
+                        style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]}
                       />
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.receive}</Text>
@@ -208,7 +219,7 @@ export default ({ store, web3t }) => {
                 </View>
               </View>
             </RefreshControl>
-          </StandardLinearGradient>
+
           {getTxContainer()}
       </View>
     );

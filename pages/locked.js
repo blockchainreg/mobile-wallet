@@ -8,6 +8,7 @@ import {
   Body,
   Left,
   Right,
+  Icon,
   Button
 } from "native-base";
 import { Image, ImageBackground, Platform, } from "react-native";
@@ -24,6 +25,7 @@ import spin from "../utils/spin.js";
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
+import Background from "../components/Background.js";
 
 
 export default ({ store, web3t }) => {
@@ -190,13 +192,13 @@ export default ({ store, web3t }) => {
       <GradientButton
         style={styles.gradientBtnPh}
         text={lang.continue}
-        textStyle={{ fontSize: 14 }}
-        gradientBegin="#9d41eb"
-        gradientEnd="#9d41eb"
+        textStyle={{ fontSize: 14, color: Images.color1 }}
+        gradientBegin="#fff"
+        gradientEnd="#fff"
         gradientDirection="diagonal"
-        height={50}
+        height={45}
         width="100%"
-        radius={10}
+        radius={5}
         onPressAction={loginAction}
       />
     );
@@ -204,17 +206,9 @@ export default ({ store, web3t }) => {
 
   const buttonInactive = store => {
     return (
-      <GradientButton
-        style={styles.gradientBtnPh}
-        text={lang.continue}
-        textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
-        gradientBegin="rgba(221,181,255,0.30)"
-        gradientEnd="rgba(221,181,255,0.30)"
-        gradientDirection="diagonal"
-        height={50}
-        width="100%"
-        radius={10}
-      />
+      <Button block style={styles.buttonInactive}>
+      <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
+    </Button>
     );
   };
 
@@ -232,15 +226,12 @@ export default ({ store, web3t }) => {
     }
     return (
       <GradientButton
-        style={styles.gradientBtnPh}
         text={lang.createAcc}
         textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
-        gradientBegin="rgba(221,181,255,0.10)"
-        gradientEnd="rgba(221,181,255,0.10)"
-        gradientDirection="diagonal"
-        height={50}
+        gradientBegin="transparent"
+        gradientEnd="transparent"
+        height={45}
         width="100%"
-        radius={10}
         onPressAction={anotherAccount}
       />
     );
@@ -284,7 +275,8 @@ export default ({ store, web3t }) => {
   };
   const inputSuccessPin = store => {
     return (
-      <Item regular style={styles.borderItem}>
+      <Item style={styles.borderItem}>
+        <Icon active name='lock' style={{color: "#fff"}}/>
         <Input
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
@@ -305,10 +297,7 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Toast
           ref={c => (this.toastify = c)}
           position="top"
@@ -336,7 +325,6 @@ export default ({ store, web3t }) => {
             {unlock(store)}
           </View>
         </View>
-      </ImageBackground>
       </View>
   );
 };

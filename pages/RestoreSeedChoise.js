@@ -24,6 +24,8 @@ import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
+
 
 const randOrd = () => {
   return (Math.round(Math.random())-0.5);
@@ -59,10 +61,7 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={changePage("newseed")}/>
@@ -77,32 +76,35 @@ export default ({ store, web3t }) => {
             style={styles.styleLogo}
           />
           <View style={styles.card1}>
+          <View style={styles.titleInput}>
+              <Text style={styles.textH1Seed}>{lang.from}</Text>
+            </View>
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
                   <GradientButton
-                    style={styles.gradientBtnPh}
-                    text={"12 words"}
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
+                    style={styles.viewMt}
+                    text={lang.words12}
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
                     gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
+                    height={45}
+                    width="100%"
+                    radius={5}
                     onPressAction={restoreSeed12}
                   />
                   <View style={{ padding: 10 }}></View>
                   <GradientButton
-                    style={styles.gradientBtnPh}
-                    text={"24 words"}
-                    textStyle={{ fontSize: 14 }}
-                    gradientBegin="#9d41eb"
-                    gradientEnd="#9d41eb"
+                    style={styles.viewMt}
+                    text={lang.words24}
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
                     gradientDirection="diagonal"
-                    height={50}
-                    width={"100%"}
-                    radius={10}
+                    height={45}
+                    width="100%"
+                    radius={5}
                     onPressAction={restoreSeed24}
                   />
                 </View>
@@ -110,7 +112,6 @@ export default ({ store, web3t }) => {
             </CardItem>
           </View>
         </View>
-      </ImageBackground>
     </View>
   );
 };

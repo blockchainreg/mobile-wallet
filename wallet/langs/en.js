@@ -147,6 +147,9 @@
     dataOverridden: "Your instant data will be overridden. Please ensure your current mnemonic phrase is in a safe place. Open another account?",
     confirmDialog: "Confirm Dialog",
     yes: "Yes",
-    no: "No"
+    no: "No",
+    from: "From",
+    words12: "12 words",
+    words24: "24 words"
   };
 }).call(this);

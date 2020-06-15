@@ -17,7 +17,7 @@ import {
   Icon,
   Content,
   Button,
-  Container
+  Container,
 } from "native-base";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
@@ -27,18 +27,20 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import style from "../Styles";
 import BackButton from "../components/BackButton.js";
-import {confirm} from "../wallet/pages/confirmation.js";
+import { confirm } from "../wallet/pages/confirmation.js";
+import Background from "../components/Background.js";
+
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
 // }
 
-const badSeed = seed => {
+const badSeed = (seed) => {
   blocks = (seed || "").split(" ");
   return blocks.length < 10;
 };
 
-const createWordBlock = store => (word, index) => {
+const createWordBlock = (store) => (word, index) => {
   var i = 1;
   return (
     <View key={"word" + word + index} style={styles.createWordBlock}>
@@ -51,29 +53,31 @@ const createWordBlock = store => (word, index) => {
 };
 
 const randOrd = () => {
-  return (Math.round(Math.random())-0.5);
-}
+  return Math.round(Math.random()) - 0.5;
+};
 
 export default ({ store }) => {
-  const changePage = tab => () => {
+  const changePage = (tab) => () => {
     if (badSeed(store.current.seed)) return;
 
     store.current.page = tab;
     store.current.seedIndex = 0;
-    store.current.seedIndexes = [...Array(24).keys()].sort(randOrd)
+    store.current.seedIndexes = [...Array(24).keys()].sort(randOrd);
   };
 
   const words = store.current.seed.split(" ");
   // console.log("words:", words);
 
-  const seedPhrase = store => {
+  const seedPhrase = (store) => {
     return (
-      <View style={style.styleSeedWrap}>{words.map(createWordBlock(store))}</View>
+      <View style={style.styleSeedWrap}>
+        {words.map(createWordBlock(store))}
+      </View>
     );
   };
   const lang = getLang(store);
 
-  const btnPrint = store => {
+  const btnPrint = (store) => {
     return (
       <Text
         style={styles.textCardLine}
@@ -92,56 +96,28 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-      {/* <View style={styles.viewLogin}> */}
-      <ImageBackground
-        style={styles.introBackground}
-      >
-        <StatusBar barStyle="light-content" />
-        <View style={styles.containerFlexStart}>
-        <Image
-            source={Images.generate}
-            style={styles.setupImg}
-          />
-            {seedPhrase(store)}
-            <View style={styles.marginBtn}>
-              {/* <GradientButton
-                style={styles.gradientBtnPh}
-                text={lang.continue}
-                textStyle={{ fontSize: 14 }}
-                gradientBegin="#9d41eb"
-                gradientEnd="#9d41eb"
-                gradientDirection="diagonal"
-                height={50}
-                width={"80%"}
-                radius={10}
-                placeholderTextColor="rgba(255,255,255,0.60)"
-                onPressAction={changePage("confirmseed")}
-              />
-              <View style={styles.viewPt1}></View>
-              <GradientButton
-                style={styles.gradientBtnPh}
-                text={lang.back}
-                textStyle={{ fontSize: 14 }}
-                gradientBegin="gray"
-                gradientEnd="gray"
-                gradientDirection="diagonal"
-                height={50}
-                width={"80%"}
-                radius={10}
-                placeholderTextColor="rgba(255,255,255,0.60)"
-                onPressAction={back}
-              /> */}
-              <View style={styles.containerBtn}
-              >
-              <TouchableOpacity onPress={changePage("confirmseed")} style={styles.btnNext}><Text style={styles.txtBtn}>{lang.continue}</Text></TouchableOpacity>
-              <TouchableOpacity onPress={back} style={styles.btnCancel}><Text style={styles.txtBtn}>{lang.back}</Text></TouchableOpacity>
-              </View>
-              <Text style={styles.textCard}>
-                {lang.seedNotify}, {btnPrint(store)}
-              </Text>
-                </View>
+      <Background />
+      <StatusBar barStyle="light-content" />
+      <View style={styles.containerFlexStart}>
+        <Image source={Images.generate} style={styles.setupImg} />
+        {seedPhrase(store)}
+        <View style={styles.marginBtn}>
+          <View style={styles.containerBtn}>
+            <TouchableOpacity
+              onPress={changePage("confirmseed")}
+              style={styles.btnNext}
+            >
+              <Text style={styles.txtBtn}>{lang.continue}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={back} style={styles.btnCancel}>
+              <Text style={styles.txtBtnBack}>{lang.back}</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.textCard}>
+            {lang.seedNotify}, {btnPrint(store)}
+          </Text>
         </View>
-      </ImageBackground>
+      </View>
     </View>
   );
 };

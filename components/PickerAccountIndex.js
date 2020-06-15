@@ -29,11 +29,11 @@ export default ({ store, web3t }) => {
       items={langItems}
       style={{
         inputIOS: {
-          color: "#563688",
+          color: "#fff",
           fontSize: 17,
         },
         inputAndroid: {
-          color: "#563688",
+          color: "#fff",
           fontSize: 17,
         }
       }}

@@ -16,10 +16,13 @@ import {
 } from "native-base";
 import { View, ScrollView, Clipboard, Alert, Vibration } from "react-native";
 import styles from "../Styles.js";
-import StandardLinearGradient from "./StandardLinearGradient.js";
+// import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from "moment";
 //import LoadMoreAllDate from "./LoadMoreAllDate";
 import getLang from '../wallet/get-lang.js';
+import { LinearGradient } from "expo-linear-gradient";
+import Images from '../Images.js';
+
 
 
 export default (store) => {
@@ -47,26 +50,44 @@ export default (store) => {
   const writeToClipboardSourceAcc = async () => {
     writeToClipboard(store.infoTransaction.from);
   };
+  const index = type => {
+    if (type === "IN") return null;
+    else if (type === "OUT") return <Text style={styles.detailInfoOut}>-</Text>;
+  };
+  const amountStyle = type => {
+    if (type === "IN") return styles.detailInfoIn;
+    else if (type === "OUT") return styles.detailInfoOut;
+  };
+  const thumbnail = type => {
+    switch (type) {
+      case "IN":
+        return <Thumbnail small square source={Images.depositImage} />;
+      case "OUT":
+        return (
+          <Thumbnail small square source={Images.withdrawImage2} />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
         <View>
-
           <View style={styles.detailsHistory}>
-
             <View>
-              <Badge style={styles.badgeMono}>
-                <Text>{store.infoTransaction.type}</Text>
-              </Badge>
+              <View style={styles.badge}>
+              {thumbnail(store.infoTransaction.type)}
+              </View>
             </View>
 
-            <View style={styles.lineMono} />
 
-            <Text style={styles.detailInfoAmount}>
+            <Text style={amountStyle(store.infoTransaction.type)}>
+              {index(store.infoTransaction.type)}
               {store.infoTransaction.amount} {store.infoTransaction.token.toUpperCase()}
             </Text>
 
-            <Text>
-              {moment(store.infoTransaction.time).format("MMM D YYYY h:mm A")}
+            <Text style={{color: "rgba(255, 255, 255, 0.70)"}}>
+              {moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
             </Text>
 
           </View>

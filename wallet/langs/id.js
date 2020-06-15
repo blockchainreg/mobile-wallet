@@ -147,7 +147,10 @@
       confirmDialog: "Konfirmasi Dialog",
       yes: "Iya",
       no: "Tidak",
-      to: "To",
+      to: "Untuk",
+      from: "Dari",
+      words12: "12 kata",
+      words24: "24 kata"
     };
   }).call(this);
   

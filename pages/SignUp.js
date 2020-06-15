@@ -19,6 +19,8 @@ import { set, check } from '../wallet/pin.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
+import Background from "../components/Background.js";
+import { LinearGradient } from "expo-linear-gradient";
 
 const showToast = message => {
   // console.log(message);
@@ -45,13 +47,13 @@ const buttonActive = store => {
     <GradientButton
       style={styles.gradientBtnPh}
       text={lang.continue}
-      textStyle={{ fontSize: 14 }}
-      gradientBegin="#9d41eb"
-      gradientEnd="#9d41eb"
+      textStyle={{ fontSize: 14, color: Images.color1 }}
+      gradientBegin="#fff"
+      gradientEnd="#fff"
       gradientDirection="diagonal"
-      height={50}
+      height={45}
       width="100%"
-      radius={10}
+      radius={5}
       onPressAction={signup}
     />
   );
@@ -61,17 +63,9 @@ const buttonInactive = store => {
   const lang = getLang(store);
 
   return (
-    <GradientButton
-      style={styles.gradientBtnPh}
-      text={lang.continue}
-      textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
-      gradientBegin="rgba(221,181,255,0.30)"
-      gradientEnd="rgba(221,181,255,0.30)"
-      gradientDirection="diagonal"
-      height={50}
-      width="100%"
-      radius={10}
-    />
+    <Button block style={styles.buttonInactive}>
+      <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
+    </Button>
   );
 };
 
@@ -117,7 +111,8 @@ export default ({ store }) => {
   };
   const inputSuccessPin = store => {
     return (
-      <Item regular style={styles.borderItem}>
+      <Item style={styles.borderItem}>
+        <Icon active name='lock' style={{color: "#fff"}}/>
         <Input
           value={store.current.signUpInputPinField}
           onChangeText={text => handleChangePin(text)}
@@ -137,10 +132,7 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+          <Background />
         <Toast
           ref={c => (this.toastify = c)}
           position={"top"}
@@ -170,7 +162,6 @@ export default ({ store }) => {
             <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
           </View>
         </View>
-      </ImageBackground>
     </View>
   );
 };

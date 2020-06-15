@@ -147,7 +147,10 @@
       confirmDialog: "確認對話框",
       yes: "是",
       no: "沒有",
-      to: "To",
+      to: "至",
+      from: "从",
+      words12: "12个字",
+      words24: "24个字"
     };
   }).call(this);
   

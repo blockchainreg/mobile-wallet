@@ -16,7 +16,6 @@ import {
 } from "native-base";
 import styles from "../Styles.js";
 import { ScrollView} from "react-native";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import RefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
 import spin from "../utils/spin.js";
@@ -32,6 +31,9 @@ import usdt_erc20 from "../registry/usdt_erc20.json";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
+import Background from "../components/Background.js";
+import { LinearGradient } from "expo-linear-gradient";
+import Images from '../Images.js';
 //
 
 const coinItems = [dash, etc, /*eth, Ethereum */ltc, usdt, usdt_erc20];
@@ -111,7 +113,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       {/* <StatusBar /> */}
-      <StandardLinearGradient>
+      <Background/>
         <RefreshControl swipeRefresh={refreshToken}>
           <Header transparent style={styles.mtIphoneX}>
             <Left style={styles.viewFlexHeader}>
@@ -125,14 +127,18 @@ export default ({ store, web3t }) => {
           </Header>
           <StatusBar barStyle="light-content" />
         </RefreshControl>
-      </StandardLinearGradient>
-      <View style={styles.viewMonoWallets}>
+      <View style={styles.viewMono1}>
+      <LinearGradient
+            colors={[Images.color1, Images.color1, Images.color2]}
+            style={styles.linearGradientBg}
+          >
         <View style={styles.viewPt} />
         <ScrollView>
           <Content>
             <List>{coinItems.map(renderCoin(store, web3t))}</List>
           </Content>
         </ScrollView>
+        </LinearGradient>
       </View>
     </View>
   );

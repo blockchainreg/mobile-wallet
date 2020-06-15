@@ -20,6 +20,9 @@ import Markdown from "react-native-markdown-display";
 import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
+import Background from "../components/Background.js";
+
+
 
 const buttonAccept = store => {
   const changePage = tab => () => {
@@ -34,13 +37,13 @@ const buttonAccept = store => {
     <GradientButton
       style={styles.gradientBtnPh}
       text={lang.accept}
-      textStyle={{ fontSize: 14 }}
-      gradientBegin="#9d41eb"
-      gradientEnd="#9d41eb"
+      textStyle={{ fontSize: 14, color: Images.color1 }}
+      gradientBegin="#fff"
+      gradientEnd="#fff"
       gradientDirection="diagonal"
-      height={50}
-      width={"100%"}
-      radius={10}
+      height={45}
+      width="100%"
+      radius={5}
       onPressAction={changePage("wallets", true)}
     />
   );
@@ -64,10 +67,7 @@ export default ({ store }) => {
   };
   return (
     <View style={styles.viewFlex}>
-      <ImageBackground
-        source={Images.backgroundImage}
-        style={styles.introBackground}
-      >
+      <Background/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader} />
@@ -97,7 +97,6 @@ export default ({ store }) => {
             </CardItem>
           </View>
         </View>
-      </ImageBackground>
     </View>
   );
 };

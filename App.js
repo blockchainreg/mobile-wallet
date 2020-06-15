@@ -3,9 +3,11 @@ import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
 import * as React from "react";
-import { View, Text, ImageBackground, Image } from "react-native";
+import { View, Image } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
+import Background from "./components/Background.js"
+
 
 export default class App extends React.Component {
   state = {
@@ -35,14 +37,9 @@ export default class App extends React.Component {
     const { AppReady } = this.state;
     if (!AppReady) {
       return (
-        <View>
-          <ImageBackground
-            source={Images.backgroundImage}
-            style={styles.bgMainPage}
-          >
+        <View style={styles.bgMainPage}>
+          <Background/>
             <Image source={Images.logo} style={styles.styleLogoHead} />
-            {/* <Text>...</Text> */}
-          </ImageBackground>
         </View>
       );
     }
