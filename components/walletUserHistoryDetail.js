@@ -72,7 +72,7 @@ export default (store) => {
   };
 
   return (
-        <View>
+        <View style={[styles.container, {zIndex: 999}]}>
           <View style={styles.detailsHistory}>
             <View>
               <View style={styles.badge}>

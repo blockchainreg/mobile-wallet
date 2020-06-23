@@ -15,6 +15,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import HistoryDetail from './pages/HistoryDetail.js';
 
 
+
 //Extend the store here !!!
 //------------------------------
 //mobile specific defaults (start)

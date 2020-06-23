@@ -167,7 +167,7 @@ function RequestPin({store, web3t}) {
           <Body style={styles.viewFlexHeader} />
           <Right style={styles.viewFlexHeader} />
         </Header>
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}

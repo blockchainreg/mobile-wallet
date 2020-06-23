@@ -97,7 +97,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       <Background />
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
       <View style={styles.containerFlexStart}>
         <Image source={Images.generate} style={styles.setupImg} />
         {seedPhrase(store)}

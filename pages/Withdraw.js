@@ -189,6 +189,7 @@ class Withdraw extends React.Component {
   }
   render() {
     const { store, web3t } = this.props;
+    console.log('store.current.send.error', store.current.send.error)
     const lang = getLang(store);
     const {
       token,
@@ -236,6 +237,7 @@ class Withdraw extends React.Component {
         <Input
           onChangeText={(text) => amountChange(wrapNumber(text))}
           returnKeyType="done"
+          autoCompleteType="off"
           style={[styles.inputStyle, { fontSize: 18 }]}
           selectionColor={"#fff"}
           keyboardAppearance="dark"
@@ -293,7 +295,7 @@ class Withdraw extends React.Component {
             <Thumbnail square small source={{ uri: wallet.coin.image }} />
           </Right>
         </Header>
-        <StatusBar />
+        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <RefreshControl swipeRefresh={refreshToken}>
           <View style={styles.bodyBlockWallet}>
             {/* <View style={styles.bodyBalance}> */}
@@ -320,17 +322,23 @@ class Withdraw extends React.Component {
                   {lang.fee} {store.current.send.amountSendFee}{" "}
                   {wallet.coin.token.toUpperCase()}
                 </Text>
-                <Text style={styles.errorSend}>{store.current.send.error}</Text>
               </View>
+                <Text style={styles.error}>{store.current.send.error}</Text>
+                
 
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.to}:</Text>
               </View>
               <InputAddressWithdrawBtc send={store.current.send} />
             </View>
+            <View style={styles.containerScreen}>
+              <View style={styles.marginBtn}>
+                <SendButton send={store.current.send} />
+              </View>
+            </View>
           </View>
         </RefreshControl>
-        <View style={styles.viewMonoBuy}>
+        {/* <View style={styles.viewMonoBuy}>
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}
@@ -341,7 +349,7 @@ class Withdraw extends React.Component {
               </View>
             </View>
           </LinearGradient>
-        </View>
+        </View> */}
       </View>
     );
   }
