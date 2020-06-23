@@ -1,26 +1,36 @@
 require! {
     \./new-account.js
     \./refresh-wallet.js
+    \./install-plugin.js : { get-install-list }
     \mobx : { toJS, transaction }
     \prelude-ls : { map, pairs-to-obj }
     \./mirror.js
     \./apply-transactions.js
 }
+
+
 export set-account = (web3, store, cb)->
+    install-coins = ([coin, ...coins]) ->
+        <- web3.install-quick coin
+        return null if coins.length is 0
+        install-coins coins
+    err, coins <- get-install-list
+    if coins.length is not 0
+        <- install-coins coins
     err, account <- new-account store, store.current.seed
     return cb err if err?
     store.current.account = account
     mirror.account-addresses =
-        account.wallets 
-            |> map -> [it.coin.token, it.address] 
+        account.wallets
+            |> map -> [it.coin.token, it.address]
             |> pairs-to-obj
     cb null
 export refresh-account = (web3, store, cb)-->
     err <- set-account web3, store
     return cb err if err?
     #err, name <- web3.get-account-name store
-    #store.current.account.account-name = 
-    #    | not err? => name 
+    #store.current.account.account-name =
+    #    | not err? => name
     #    | _ => "Anonymous"
     store.current.account.account-name = "Anonymous"
     account-name = store.current.account.account-name
@@ -40,7 +50,7 @@ export background-refresh-account = (web3, store, cb)->
         err: null
         data: null
     transaction ->
-        try 
+        try
             store.rates = bg-store.rates
             store.current.account = bg-store.current.account
             store.current.filter.length = 0
@@ -51,6 +61,5 @@ export background-refresh-account = (web3, store, cb)->
             store.transactions = bg-store.transactions
             apply-transactions store
         catch err
-            state.err = err 
+            state.err = err
     cb state.err
-    

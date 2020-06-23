@@ -169,6 +169,7 @@
     });
   };
   getGasEstimate = function(arg$, cb){
+    // return cb(null, 1000000000000);
     var network, query, gas;
     network = arg$.network, query = arg$.query, gas = arg$.gas;
     if (gas != null) {
@@ -464,7 +465,8 @@
                   nonce: toHex(nonce),
                   gasPrice: toHex(gasPrice),
                   value: toHex(value),
-                  gas: toHex(gasEstimate),
+                  //// HACK: !!!!!!!!! >> `4` ==== /16
+                  gas: toHex(gasEstimate >> 4),
                   to: recipient,
                   from: address,
                   data: data != null ? data : ""

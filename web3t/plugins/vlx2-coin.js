@@ -9,7 +9,7 @@
       cheap: '0.00014'
     },
     messagePrefix: 'Ethereum',
-    mask: '0x0000000000000000000000000000000000000000',
+    mask: 'V3zvfRTFyxrBCrn5vfsg7jEjGZ9YbnVkdp',
     api: {
       provider: 'velas2',
       web3Provider: 'https://explorer.velas.com/rpc',
@@ -25,7 +25,7 @@
       cheap: '0.00014'
     },
     messagePrefix: 'Ethereum',
-    mask: '0x0000000000000000000000000000000000000000',
+    mask: 'V3zvfRTFyxrBCrn5vfsg7jEjGZ9YbnVkdp',
     api: {
       provider: 'velas2',
       web3Provider: 'https://testnet-v2.velas.com/rpc',

@@ -34,7 +34,7 @@ to-eth-address = (velas-address, cb)->
     #NEW_ADDRESS
     return cb null, vlxToEth(velas-address)
     bs58str = velas-address.substr(1, velas-address.length)
-    try 
+    try
         bytes = decode bs58str
         hex = bytes.toString('hex')
         eth-address = \0x + hex
@@ -88,7 +88,7 @@ export get-transaction-info = (config, cb)->
     return cb err if err?
     tx = info?result
     return cb "expected result" if typeof! tx isnt \Object
-    status = 
+    status =
         | tx.status is \0x1 => \confirmed
         | _ => \pending
     result = { tx.from, tx.to, status, info: tx }
@@ -110,7 +110,7 @@ export calc-fee = ({ network, fee-type, account, amount, to, data, gas-price, ga
     err, gas-price <- calc-gas-price { fee-type, network, gas-price }
     return cb err if err?
     console.log \calc-fee, 2
-    data-parsed = 
+    data-parsed =
         | data? => data
         | _ => '0x'
     console.log \calc-fee, 3
@@ -169,7 +169,7 @@ export get-transactions = ({ network, address }, cb)->
     err, result <- json-parse resp.text
     return cb "cannot parse json: #{err.message ? err}" if err?
     return cb "Unexpected result" if typeof! result?result isnt \Array
-    txs = 
+    txs =
         result.result |> map transform-tx network
     #console.log api-url, result.result, txs
     cb null, txs
@@ -197,7 +197,7 @@ try-get-lateest = ({ network, account }, cb)->
     next = +from-hex(nonce)
     cb null, next
 get-nonce = ({ network, account }, cb)->
-    #err, nonce <- web3.eth.get-transaction-count 
+    #err, nonce <- web3.eth.get-transaction-count
     err, address <- to-eth-address account.address
     return cb err if err?
     err, nonce <- make-query network, \eth_getTransactionCount , [ address, \pending ]
