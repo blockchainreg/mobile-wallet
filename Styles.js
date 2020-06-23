@@ -5077,8 +5077,23 @@ export default StyleSheet.create({
     // height: Dimensions.get("window").height,
     // width: wp("100%"),
     // height: hp("100%"),
+    // width: "100%",
+    // height: "100%"
+    width: width < height ? width : height,
+  height: width < height ? height : width,
+  resizeMode: 'stretch',
+
+  },
+  containterBg1: {
+    // width: Dimensions.get("window").width, 
+    // height: Dimensions.get("window").height,
+    // width: wp("100%"),
+    // height: hp("100%"),
+    // width: "100%",
+    // height: "100%"
     width: "100%",
-    height: "100%"
+  height: "100%"
+
   },
   fixedBg: {
     position: "absolute",
