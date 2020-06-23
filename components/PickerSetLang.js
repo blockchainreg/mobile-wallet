@@ -1,5 +1,7 @@
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default ({ store }) => {
   const onValueChangeValue = async value => {
@@ -52,6 +54,9 @@ export default ({ store }) => {
       useNativeAndroidPickerStyle={false}
       value={store.lang}
       items={langItems}
+      Icon={() => {
+        return <Ionicons name="md-arrow-down" size={24} color="transparent" />;
+      }}
       style={{
         inputIOS: {
           color: "#fff",

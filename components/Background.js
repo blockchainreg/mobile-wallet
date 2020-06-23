@@ -10,7 +10,7 @@ export default ({ children }) => {
   return (
     <ImageBackground
     source={require("../assets/bg-mob.png")}
-    style={{ width: "100%", height: "100%", zIndex: 0, position: "absolute", top: 0 }}
+    style={[styles.fixedBg, styles.containterBg, {zIndex: -1}]}
     >
       {children}
     </ImageBackground>

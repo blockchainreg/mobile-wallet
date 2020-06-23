@@ -144,7 +144,6 @@ export default ({ store, web3t }) => {
       <LinearGradient
         colors={[Images.color4, Images.color5]}
         style={styles.linearGradientBg}>
-      {/* {Shape2()} */}
         <View
           style={styles.topView}
         >
