@@ -16,9 +16,13 @@ async function makeProxy() {
     AsyncStorage.setItem(key, value);
     inMemoryStorage[key] = value;
   }
+  function clear() {
+    return AsyncStorage.clear();
+  }
   const prototype = {
     getItem: (key) => inMemoryStorage[key],
-    setItem
+    setItem,
+    clear
   };
 
   const proxy = new Proxy(inMemoryStorage, {

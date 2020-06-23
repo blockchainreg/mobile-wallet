@@ -36,6 +36,7 @@ const buttonActive = store => {
   };
 
   const signup = async () => {
+    await localStorage.clear();
     set(store.current.signUpInputPinField);
     check(store.current.signUpInputPinField);
     await SecureStore.deleteItemAsync("localAuthToken");
