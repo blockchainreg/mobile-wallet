@@ -108,7 +108,7 @@ export default ({ store, web3t }) => {
     }
   };
 
-  const back = changePage("wallet");
+  const back = changePage("wallets");
 
   return (
     <View style={styles.viewFlex}>
@@ -125,7 +125,7 @@ export default ({ store, web3t }) => {
             {/* <Right style={styles.viewFlexHeader}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
             <Right style={styles.viewFlex} />
           </Header>
-          <StatusBar barStyle="light-content" />
+          <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         </RefreshControl>
       <View style={styles.viewMono1}>
       <LinearGradient

@@ -54,7 +54,7 @@ export default ({ store, web3t }) => {
               </Body>
               <Right style={styles.viewFlexHeader} />
             </Header>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
           <View style={styles.viewMono1}>
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}

@@ -70,7 +70,7 @@ export default StyleSheet.create({
   footerTab: {
     ...Platform.select({
       ios: {},
-      android: { backgroundColor: "#FAFAFA" },
+      android: { backgroundColor: "transparent" },
     }),
   },
   footerButtonStyle: {
@@ -160,6 +160,10 @@ export default StyleSheet.create({
   styleTxtSettings: {
     color: "#fff",
   },
+  styleTxtSeparator: {
+    color: "#fff",
+    fontSize: 14
+  },
   iconTouchableBuy: {
     top: 2,
   },
@@ -225,9 +229,6 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "white",
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
         position: "absolute",
         left: 0,
         right: 0,
@@ -239,9 +240,6 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "white",
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
             position: "absolute",
             left: 0,
             right: 0,
@@ -251,9 +249,6 @@ export default StyleSheet.create({
           },
           android: {
             flex: 1,
-            backgroundColor: "white",
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
             position: "absolute",
             left: 0,
             right: 0,
@@ -1141,7 +1136,7 @@ export default StyleSheet.create({
           android: {
             paddingTop: 70,
             paddingBottom: 30,
-            backgroundColor: "#fafafa",
+            // backgroundColor: "#fafafa",
           },
         }),
       }
@@ -1275,7 +1270,10 @@ export default StyleSheet.create({
     borderBottomColor: "transparent"
   },
   seperatorStyle: {
-    backgroundColor: Images.color1, opacity: 0.60, borderColor: "transparent"
+    backgroundColor: Images.color1, 
+    opacity: 0.60, 
+    borderColor: "transparent",
+    height: Platform.OS === "android" ? 40 : null,
   },
   // InviteFriend
   line: {
@@ -2299,7 +2297,13 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   bodyBlockWallet: {
-    marginTop: "5%",
+    ...Platform.select({
+      ios: {
+        marginTop: "5%",
+      },
+      android: {marginTop: 10,},
+    }),
+    
     // bottom: height / 12
   },
   bodyBlockTitle: {

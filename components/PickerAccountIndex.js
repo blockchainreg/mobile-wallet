@@ -1,5 +1,6 @@
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
+import { KECCAK256_NULL } from "ethereumjs-util";
 
 export default ({ store, web3t }) => {
   const onValueChangeValue = async value => {

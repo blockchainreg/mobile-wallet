@@ -87,7 +87,7 @@ export default ({ store, web3t }) => {
       <View style={styles.viewFlex}>
       <Background />
 
-        <StatusBar />
+        <StatusBar translucent={true} backgroundColor={'transparent'}/>
         <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader}>
@@ -98,7 +98,7 @@ export default ({ store, web3t }) => {
 
         <Content>
           <Separator bordered style={styles.seperatorStyle}>
-            <Text style={styles.styleTxtSettings}>{lang.help}</Text>
+            <Text style={styles.styleTxtSeparator}>{lang.help}</Text>
           </Separator>
           <ListItem
             icon
@@ -160,7 +160,7 @@ export default ({ store, web3t }) => {
           </ListItem>
 
           <Separator bordered style={styles.seperatorStyle}>
-            <Text style={styles.styleTxtSettings}>{lang.profile}</Text>
+            <Text style={styles.styleTxtSeparator}>{lang.profile}</Text>
           </Separator>
           <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
             <Left>
@@ -184,7 +184,7 @@ export default ({ store, web3t }) => {
 
 
           <Separator bordered style={styles.seperatorStyle}>
-            <Text style={styles.styleTxtSettings}>{lang.security}</Text>
+            <Text style={styles.styleTxtSeparator}>{lang.security}</Text>
           </Separator>
 
           <ListItem icon style={styles.heightListItem} last onPress={logoutBtn} underlayColor={Images.color1}>

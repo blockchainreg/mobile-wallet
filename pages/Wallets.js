@@ -105,27 +105,27 @@ const wallets = (store, web3t) => {
   );
 };
 
-var gradientBg = () => {
-  return (
-    <LinearGradient
-      colors={[Images.color4, Images.color4,  Images.color5]}
-      start={{ x: 0.0, y: 0.1 }}
-      end={{ x: 0.5, y: 1.0 }}
-      locations={[0.0, 0.5, 0.8]}
-      style={{
-        position: "absolute",
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        opacity: 0.8,
-      }}
-    />
-  );
-};
-var Shape2 = () => {
-  return <View style={styles.squareLight}>{gradientBg()}</View>;
-};
+// var gradientBg = () => {
+//   return (
+//     <LinearGradient
+//       colors={[Images.color4, Images.color4,  Images.color5]}
+//       start={{ x: 0.0, y: 0.1 }}
+//       end={{ x: 0.5, y: 1.0 }}
+//       locations={[0.0, 0.5, 0.8]}
+//       style={{
+//         position: "absolute",
+//         left: 0,
+//         right: 0,
+//         top: 0,
+//         bottom: 0,
+//         opacity: 0.8,
+//       }}
+//     />
+//   );
+// };
+// var Shape2 = () => {
+//   return <View style={styles.squareLight}>{gradientBg()}</View>;
+// };
 export default ({ store, web3t }) => {
   const lang = getLang(store);
 
@@ -144,7 +144,7 @@ export default ({ store, web3t }) => {
       <LinearGradient
         colors={[Images.color4, Images.color5]}
         style={styles.linearGradientBg}>
-      {Shape2()}
+      {/* {Shape2()} */}
         <View
           style={styles.topView}
         >
@@ -165,7 +165,7 @@ export default ({ store, web3t }) => {
                 </Button>
               </Right>
             </Header>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
             {/* <View style={styles.viewMt1} /> */}
             <Text style={styles.title2}>{lang.totalBalance}</Text>
             <Text style={styles.textBalanceHeader}>
