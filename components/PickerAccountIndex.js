@@ -1,5 +1,6 @@
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
+import { Ionicons } from '@expo/vector-icons';
 import { KECCAK256_NULL } from "ethereumjs-util";
 
 export default ({ store, web3t }) => {
@@ -28,6 +29,10 @@ export default ({ store, web3t }) => {
       useNativeAndroidPickerStyle={false}
       value={store.current.accountIndex}
       items={langItems}
+      useNativeAndroidPickerStyle={false}
+      Icon={() => {
+        return <Ionicons name="md-arrow-down" size={24} color="transparent" />;
+      }}
       style={{
         inputIOS: {
           color: "#fff",

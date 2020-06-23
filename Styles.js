@@ -1715,12 +1715,12 @@ export default StyleSheet.create({
       {
         ...Platform.select({
           ios: {
-            fontSize: 12,
+            fontSize: 14,
             color: "#fff",
             fontWeight: "bold",
           },
           android: {
-            fontSize: 12,
+            fontSize: 14,
             color: "#fff",
             fontWeight: "bold",
           },
@@ -4995,9 +4995,9 @@ export default StyleSheet.create({
     flex: 1,
     position: "absolute",
     left: 0,
-    right: -3,
+    right: 0,
     top: 0,
-    height: "25%",
+    height: "30%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -5071,5 +5071,20 @@ export default StyleSheet.create({
     left: 150,
     top: 200,
     transform: [{ scale: 1.8 }],
+  },
+  containterBg: {
+    // width: Dimensions.get("window").width, 
+    // height: Dimensions.get("window").height,
+    // width: wp("100%"),
+    // height: hp("100%"),
+    width: "100%",
+    height: "100%"
+  },
+  fixedBg: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
