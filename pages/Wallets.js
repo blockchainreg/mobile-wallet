@@ -25,7 +25,7 @@ import walletFuncs from "../wallet/wallet-funcs.js";
 import applyTransactions from "../wallet/apply-transactions.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
-import Background from "../components/Background.js";
+import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
 
