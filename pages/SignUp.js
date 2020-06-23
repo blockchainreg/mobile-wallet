@@ -21,6 +21,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 import { LinearGradient } from "expo-linear-gradient";
+import * as SecureStore from "expo-secure-store";
 
 const showToast = message => {
   // console.log(message);
@@ -37,6 +38,7 @@ const buttonActive = store => {
   const signup = async () => {
     set(store.current.signUpInputPinField);
     check(store.current.signUpInputPinField);
+    await SecureStore.deleteItemAsync("localAuthToken");
     store.current.page = "newseed";
     store.current.newseedstep = "ask";
     store.current.signUpInputPinField = "";

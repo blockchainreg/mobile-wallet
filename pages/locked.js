@@ -88,7 +88,6 @@ export default ({ store, web3t }) => {
     };
 
     componentDidMount() {
-      console.log("LocalAuth did mount");
       const {store} = this.props;
 
       Promise.all([

@@ -13,9 +13,12 @@ require! {
 query-related = (token, coin)->
     #console.log token, window.location.search.index-of("plugin=#{token}"), coin
     if window.location.search.index-of("plugin=#{token}") > -1 then coin
-common =
+export common =
     * require \../web3t/plugins/vlx2-coin.js
     * require \../web3t/plugins/btc-coin.js
+    * require \../web3t/plugins/eth-coin.js
+    * require \../web3t/plugins/usdt-coin.js
+    * require \../web3t/plugins/ltc-coin.js
     ...
 #    * require \../web3t/plugins/vlx-coin.js
 #    * query-related \gbx         , gobyte
