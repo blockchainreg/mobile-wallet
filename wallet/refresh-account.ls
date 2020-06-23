@@ -1,7 +1,6 @@
 require! {
     \./new-account.js
     \./refresh-wallet.js
-    \./install-plugin.js : { get-install-list }
     \mobx : { toJS, transaction }
     \prelude-ls : { map, pairs-to-obj }
     \./mirror.js
@@ -10,13 +9,6 @@ require! {
 
 
 export set-account = (web3, store, cb)->
-    install-coins = ([coin, ...coins]) ->
-        <- web3.install-quick coin
-        return null if coins.length is 0
-        install-coins coins
-    err, coins <- get-install-list
-    if coins.length is not 0
-        <- install-coins coins
     err, account <- new-account store, store.current.seed
     return cb err if err?
     store.current.account = account

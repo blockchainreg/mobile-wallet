@@ -70,7 +70,6 @@ const Main = observer(({ store, current }) => {
   return (
     <>
       {renderSpinner({ store })}
-      {HistoryDetail({ store })}
       {current.confirmation
         ?<Confirm
           confirmation={current.confirmation}
@@ -80,6 +79,7 @@ const Main = observer(({ store, current }) => {
         :null
       }
       {page( {store, web3t })}
+      {HistoryDetail({ store })}
     </>
   );
 });
