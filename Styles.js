@@ -306,7 +306,7 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("40%"),
+            height: hp("47%"),
           },
         }),
       }
@@ -1788,6 +1788,7 @@ export default StyleSheet.create({
     color: "#C6C5C5",
     fontWeight: "bold",
     fontSize: 14,
+    textTransform: "capitalize"
   },
   gradientBtnBorder: {
     paddingHorizontal: 0,
@@ -2412,7 +2413,9 @@ export default StyleSheet.create({
     ),
   },
   headerSearchBar: {
-    paddingBottom: 40, height: 40, backgroundColor: "transparent" 
+    // paddingBottom: 40, 
+    height: 60, 
+    backgroundColor: "transparent",
   },
   textTouchable: {
     marginTop: 10,
