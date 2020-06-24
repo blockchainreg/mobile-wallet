@@ -144,7 +144,7 @@ export default ({ store, web3t }) => {
             icon
             onPress={() => {
               Linking.openURL(
-                `https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md`
+                `https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md`
               );
             }}
             underlayColor={Images.color1}
