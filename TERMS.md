@@ -23,18 +23,18 @@ When you use the Velas Wallet, Velas does not gain access to or control over you
 Subject to your compliance with these Terms, Velas hereby grants you limited, personal, non-exclusive, non-transferable, non-assignable, royalty-free, revocable license to use the Velas Wallet. If you commit a breach of these Terms or violate applicable legislation, the license granted hereunder shall automatically terminate and cease.
 4. PROHIBITED USE
 You shall not:
-   3.  Use robots, spiders, or other similar automated means to access the Velas Wallet or its parts.
-   4.  Use the Velas Wallet in any manner that could disrupt, interfere with, or inhibit other users from using it, or that could disable, impair, or harm the functioning of the Velas Wallet or servers.
-   5.  Copy, duplicate, reproduce, clone the Velas Wallet, create derivative works from the Velas Wallet or related content. In addition, you shall not attempt to modify, translate, adapt, edit, decompile, disassemble, or reverse engineer the Velas Wallet or related content without our prior written authorisation.
-   6.  “Frame”, “mirror”, or incorporate any part of the Velas Wallet into another software, website, network, platform, or application without our prior written authorisation.
+   1.  Use robots, spiders, or other similar automated means to access the Velas Wallet or its parts.
+   2.  Use the Velas Wallet in any manner that could disrupt, interfere with, or inhibit other users from using it, or that could disable, impair, or harm the functioning of the Velas Wallet or servers.
+   3.  Copy, duplicate, reproduce, clone the Velas Wallet, create derivative works from the Velas Wallet or related content. In addition, you shall not attempt to modify, translate, adapt, edit, decompile, disassemble, or reverse engineer the Velas Wallet or related content without our prior written authorisation.
+   4.  “Frame”, “mirror”, or incorporate any part of the Velas Wallet into another software, website, network, platform, or application without our prior written authorisation.
 5. REPRESENTATIONS AND WARRANTIES
 You represent and warrant that you:
-   7.  Are eligible and have full capacity for setting up and holding a Wallet under the laws of the country of your residence.
-   8.  Are of the necessary legal age, in accordance with the laws of the country of your residence, to use the Velas Wallet, however, in any case, you shall be older than 14 (fourteen) years old.
-   9.  Are not a subject of any sanctions administered or enforced by any country, government, or international authority nor are you a resident or established (in the case of a corporate entity) in a country or territory that is the subject of a country-wide or territory-wide sanction imposed by any country, government, or international authority.
-   10.  Have all necessary rights to set up and hold your Wallet and this does not infringe any rights of third parties.
-   11.  Will use the Velas Wallet only for legitimate purposes and you will not use it for any illegal or fraudulent activity.
-   12.  Will carefully check the address of the recipient before making any transfers and that your transactions with virtual assets are done with correct blockchain addresses.
+   1.  Are eligible and have full capacity for setting up and holding a Wallet under the laws of the country of your residence.
+   2.  Are of the necessary legal age, in accordance with the laws of the country of your residence, to use the Velas Wallet, however, in any case, you shall be older than 14 (fourteen) years old.
+   3.  Are not a subject of any sanctions administered or enforced by any country, government, or international authority nor are you a resident or established (in the case of a corporate entity) in a country or territory that is the subject of a country-wide or territory-wide sanction imposed by any country, government, or international authority.
+   4.  Have all necessary rights to set up and hold your Wallet and this does not infringe any rights of third parties.
+   5.  Will use the Velas Wallet only for legitimate purposes and you will not use it for any illegal or fraudulent activity.
+   6.  Will carefully check the address of the recipient before making any transfers and that your transactions with virtual assets are done with correct blockchain addresses.
 6. INDEMNITY
 You shall indemnify and hold Velas, its directors, officers, employees, agents, and representatives harmless from and against any and all third-party claims, actions, demands, losses, costs, expenses, fines, penalties, liabilities, and other amounts that arise out of or related to your use of the Velas Wallet or your violation of any provision of these Terms.
 7. LIMITATION ON LIABILITY
