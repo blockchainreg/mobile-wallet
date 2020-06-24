@@ -22,8 +22,8 @@
       wrongPinShould: "PIN碼應為4位數字",
       setup: "設定",
       pinInfo: "請記住此密碼，不要將其提供給第三方",
-      setupPin: "設定針",
-      enterPin: "輸入密碼",
+      setupPin: "设定密码",
+      enterPin: "输入密码",
       titleLang: "選擇你的語言",
       secretPhrase: "秘密短語",
       secretPhraseWarning: "您有責任確保此短語的安全。 如果丟失此短語，我們將無法幫助您恢復它",
@@ -107,10 +107,10 @@
       enterWord: "確認您保存在安全位置的單詞",
       close: "關",
       oops: "糟糕！",
-      seedNotify: "請勿將短語傳遞給第三方並將其保存在安全的地方",
-      seedNotifyPrint: "打印一張紙",
+      seedNotify: "请点击“打印”按钮，打印出纸质说明，并写下您助记词的24个单词的种子。 知道您恢复助记词的人都可以占有您的钱包和资产，请保管好您助记词。 我们不会存储24个单词的备份，如果丢失了，钱包中的所有硬币将永远存在在中！",
+      seedNotifyPrint: "打印",
       done: "完成",
-      validPin: "輸入有效的密碼",
+      validPin: "输入有效的密码（6位数字",
       validEmail: "輸入有效的電子郵件",
       restoreSeed: "從種子還原",
       txSend: "您的交易已發送",
@@ -136,7 +136,7 @@
       placeholderSeed: "您的助記詞",
       placeholderConfirmSeed: "字",
       signup: "註冊",
-      placeholderSignup: "銷",
+      placeholderSignup: "密码",
       copy: "複製",
       share: "分享",
       createAcc: "創建一個帳戶",
@@ -150,7 +150,12 @@
       to: "至",
       from: "从",
       words12: "12个字",
-      words24: "24个字"
+      words24: "24个字",
+      yourPassword: "你的密码",
+      disable: "禁用",
+      enable: "启用",
+      touchId: "触摸ID",
+      faceId: "面孔ID"
     };
   }).call(this);
   

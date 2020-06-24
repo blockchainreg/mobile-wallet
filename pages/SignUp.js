@@ -95,7 +95,7 @@ export default ({ store }) => {
     store.current.signUpInputPinField = null;
   };
 
-  const regexPin = /^\w{4}/;
+  const regexPin = /^\w{6}/;
   const validInputPinSignUp = (
     !store.current.signUpInputPinField ||
     regexPin.test(store.current.signUpInputPinField)
@@ -121,8 +121,9 @@ export default ({ store }) => {
           onChangeText={text => handleChangePin(text)}
           secureTextEntry={true}
           returnKeyType="done"
+          maxLength={6}
           // autoFocus
-          keyboardType="numeric"
+          keyboardType="default"
           keyboardAppearance="dark"
           placeholder={lang.placeholderSignup}
           placeholderTextColor="rgba(255,255,255,0.60)"

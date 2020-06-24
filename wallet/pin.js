@@ -35,7 +35,7 @@
       if (toString$.call(value).slice(8, -1) !== 'String') {
         return false;
       }
-      if (value.length !== 4) {
+      if (value.length !== 6) {
         return false;
       }
       mem.encrypt = function(str){

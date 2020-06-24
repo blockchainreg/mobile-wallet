@@ -22,8 +22,8 @@
       wrongPinShould: "PIN harus 4 digit",
       setup: "Mempersiapkan",
       pinInfo: "Harap hafal PIN ini dan jangan berikan kepada pihak ketiga",
-      setupPin: "Siapkan PIN",
-      enterPin: "Masukkan PIN",
+      setupPin: "Kata sandi pengaturan",
+      enterPin: "Masukkan kata kunci",
       titleLang: "Pilih bahasamu",
       secretPhrase: "Frasa Rahasia",
       secretPhraseWarning: "Anda bertanggung jawab untuk menjaga frasa ini tetap aman. Jika frasa ini hilang, kami tidak akan dapat membantu Anda memulihkannya",
@@ -107,10 +107,10 @@
       enterWord: "kata untuk mengkonfirmasi bahwa Anda menyimpannya di tempat yang aman",
       close: "menutup",
       oops: "Ups!",
-      seedNotify: "Jangan sampaikan frasa tersebut kepada pihak ketiga dan simpan di tempat yang aman",
+      seedNotify: "Klik 'Cetak' dan cetak instruksi kertas dan tulis benih 24 kata Anda dengan hati-hati. Siapa pun yang memiliki akses ke frasa pemulihan Anda dapat mengambil aset Anda, menyimpannya dengan aman. Kami tidak menyimpan cadangan 24 kata Anda, jika Anda kehilangan semua koin di dompet Anda akan hilang selamanya!",
       seedNotifyPrint: "cetak selembar",
       done: "Selesai",
-      validPin: "Masukkan pin yang valid",
+      validPin: "Masukkan kata sandi yang valid (6-digit)",
       validEmail: "Masukkan email yang valid",
       restoreSeed: "Kembalikan Dari Benih",
       txSend: "Transaksi Anda telah dikirim",
@@ -136,7 +136,7 @@
       placeholderSeed: "Frasa mnemonik Anda",
       placeholderConfirmSeed: "Kata-kata",
       signup: "Daftar",
-      placeholderSignup: "Pin",
+      placeholderSignup: "Kata sandi",
       copy: "Salinan",
       share: "Bagikan",
       createAcc: "Buat sebuah akun",
@@ -150,7 +150,12 @@
       to: "Untuk",
       from: "Dari",
       words12: "12 kata",
-      words24: "24 kata"
+      words24: "24 kata",
+      yourPassword: "Kata sandi Anda",
+      disable: "Nonaktifkan",
+      enable: "Memungkinkan",
+      touchId: "Sentuh id",
+      faceId: "ID Wajah"
     };
   }).call(this);
   

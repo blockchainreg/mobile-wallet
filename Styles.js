@@ -1627,8 +1627,8 @@ export default StyleSheet.create({
       },
       {
         ...Platform.select({
-          ios: { flex: 1, alignItems: "center", paddingTop: "5%" },
-          android: { flex: 1, alignItems: "center", paddingTop: "5%" },
+          ios: { flex: 1, alignItems: "center", paddingTop: "10%" },
+          android: { flex: 1, alignItems: "center", paddingTop: "10%" },
         }),
       }
     ),
@@ -2008,6 +2008,26 @@ export default StyleSheet.create({
       },
     }),
   },
+  stylePrint: {
+    ...Platform.select({
+      ios: {
+        width: "100%",
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        marginVertical: 20,
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+      },
+      android: {
+        width: "90%",
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        marginTop: 25,
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+      },
+    }),
+  },
   cardItem1: {
     ...Platform.select({
       ios: {
@@ -2050,11 +2070,12 @@ export default StyleSheet.create({
     // height: 180,
   },
   textCard: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#fff",
-    marginTop: 15,
+    marginTop: 5,
+    marginBottom: 20,
     // width: 250,
-    width: "90%",
+    // width: "90%",
     // height: '100%',
     textAlign: "center",
   },
@@ -4618,6 +4639,13 @@ export default StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 5,
   },
+  btnPrint: {
+    backgroundColor: "#3CD5AF",
+    width: "45%",
+    height: 45,
+    marginHorizontal: 10,
+    borderRadius: 5,
+  },
   btnCancel: {
     backgroundColor: "#cecece",
     width: "45%",
@@ -4630,6 +4658,13 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 15,
     color: Images.color1,
+    fontWeight: "bold",
+  },
+  txtBtnPrint: {
+    fontSize: 14,
+    textAlign: "center",
+    paddingVertical: 15,
+    color: "#fff",
     fontWeight: "bold",
   },
   txtBtnBack: {

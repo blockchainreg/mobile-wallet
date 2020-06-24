@@ -180,7 +180,7 @@ export default ({ store, web3t }) => {
     const loginAction = spin(store, lang.checkingPin, () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return showToast("Incorrect pin");
+        return showToast("Incorrect password");
       }
 
       login(get());
@@ -238,7 +238,7 @@ export default ({ store, web3t }) => {
 
   const unlock = store => {
     // Validation start
-    const regexPin = /^\w{4}$/;
+    const regexPin = /^\w{6}$/;
     const validInputPin = (
       !store.current.pin ||
       regexPin.test(store.current.pin)
@@ -259,7 +259,7 @@ export default ({ store, web3t }) => {
     store.current.pin = "";
   };
   // Validation start
-  const regexPin = /^\w{4}$/;
+  const regexPin = /^\w{6}$/;
   const validInputPin = (
     !store.current.pin ||
     regexPin.test(store.current.pin)
@@ -280,11 +280,12 @@ export default ({ store, web3t }) => {
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
           autoCompleteType="off"
+          maxLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
           placeholder={lang.placeholderSignup}
-          keyboardType="numeric"
+          keyboardType="default"
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#fff"}

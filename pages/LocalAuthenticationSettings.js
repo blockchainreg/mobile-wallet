@@ -39,14 +39,16 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
     console.log("Trying to show toast", message);
     toastify && toastify.show(message, 3000);
   };
+  const lang = getLang(store);
 
   const disable = async () => {
     if (store.current.pin === store.current.pinSave) {
       await SecureStore.deleteItemAsync("localAuthToken");
       showToast("Local Authentication disabled");
       store.current.page = "settings";
+      store.current.pin = "";
     } else if (store.current.pin != store.current.pinSave) {
-      showToast("Incorrect pin");
+      showToast("Incorrect password");
       store.current.pin = "";
     }
   };
@@ -56,7 +58,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
       store.current.page = "LocalAuthenticationEnable";
       store.current.pin = "";
     } else if (store.current.pin != store.current.pinSave) {
-      showToast("Incorrect pin");
+      showToast("Incorrect password");
       store.current.pin = "";
     }
   };
@@ -72,7 +74,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
         <Toast ref={setToastify} position="top" style={styles.toastStyle1} />
         <GradientButton
           style={styles.gradientBtnPh}
-          text={"Disable Local Authentication"}
+          text={lang.disable}
           textStyle={{ fontSize: 14, color: Images.color1 }}
           gradientBegin="#fff"
           gradientEnd="#fff"
@@ -90,7 +92,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
       <Toast ref={setToastify} position="top" style={styles.toastStyle1} />
       <GradientButton
         style={styles.gradientBtnPh}
-        text={"Enable Local Authentication"}
+        text={lang.enable}
         textStyle={{ fontSize: 14, color: Images.color1 }}
         gradientBegin="#fff"
         gradientEnd="#fff"
@@ -106,7 +108,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
-  const regexPin = /^\w{4}$/;
+  const regexPin = /^\w{6}$/;
   const validInputPin = !store.current.pin || regexPin.test(store.current.pin);
   const handleChangePin = async text => {
     store.current.pin = text;
@@ -119,11 +121,12 @@ export default ({ store, web3t }) => {
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
           autoCompleteType="off"
+          maxLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
-          placeholder={"Pin"}
-          keyboardType="numeric"
+          placeholder={lang.placeholderSignup}
+          keyboardType="default"
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#fff"}
@@ -155,7 +158,7 @@ export default ({ store, web3t }) => {
           />
           <View style={styles.widthCard}>
             <View style={styles.titleInput}>
-              <Text style={styles.textH1Seed}>Enter your PIN</Text>
+              <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             {inputSuccessPin(store)}
             {!validInputPin && (

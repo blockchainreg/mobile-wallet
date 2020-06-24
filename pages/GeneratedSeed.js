@@ -77,21 +77,6 @@ export default ({ store }) => {
   };
   const lang = getLang(store);
 
-  const btnPrint = (store) => {
-    return (
-      <Text
-        style={styles.textCardLine}
-        onPress={() => {
-          Linking.openURL(
-            `https://drive.google.com/file/d/1mE53JDe2722D0BY2Mi7qIcXUFtwqSZFx/view`
-          );
-        }}
-      >
-        {lang.seedNotifyPrint}
-      </Text>
-    );
-  };
-
   const back = changePage("newseed");
 
   return (
@@ -103,19 +88,16 @@ export default ({ store }) => {
         {seedPhrase(store)}
         <View style={styles.marginBtn}>
           <View style={styles.containerBtn}>
+            <TouchableOpacity onPress={back} style={styles.btnCancel}>
+              <Text style={styles.txtBtnBack}>{lang.back}</Text>
+            </TouchableOpacity>
             <TouchableOpacity
-              onPress={changePage("confirmseed")}
+              onPress={changePage("printseed")}
               style={styles.btnNext}
             >
               <Text style={styles.txtBtn}>{lang.continue}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={back} style={styles.btnCancel}>
-              <Text style={styles.txtBtnBack}>{lang.back}</Text>
-            </TouchableOpacity>
           </View>
-          <Text style={styles.textCard}>
-            {lang.seedNotify}, {btnPrint(store)}
-          </Text>
         </View>
       </View>
     </View>

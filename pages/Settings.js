@@ -41,12 +41,14 @@ const LocalAuthListView = ({store}) => {
   // if (!localAuthEnabled) {
   //   return null;
   // }
+  const lang = getLang(store);
+
   const touchFinger = () => {
     if (Platform.OS === 'android') {
-      return <Text style={styles.txtSettings}>Use Touch ID</Text>;
+    return <Text style={styles.txtSettings}>{lang.touchId}</Text>;
     }
     else if (Platform.OS === 'ios') {
-      return <Text style={styles.txtSettings}>Use Touch ID or FaceID</Text>;
+      return <Text style={styles.txtSettings}>{lang.touchId} / {lang.faceId}</Text>;
     }
   }
   
