@@ -133,6 +133,7 @@ export default ({ store, web3t }) => {
       }
 
       login(get());
+      store.userWallet = 200;
     }
 
     async authenticateRecursiveAndroid() {
@@ -155,7 +156,13 @@ export default ({ store, web3t }) => {
       this.setState({isAuthenticating: false});
 
       console.log("authenticateRecursiveAndroid success!!!");
-      login(await SecureStore.getItemAsync("localAuthToken"));
+      if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
+        SecureStore.deleteItemAsync("localAuthToken");
+        return showToast("Cannot authenticate. Please enter PIN.");
+      }
+
+      login(get());
+      store.userWallet = 200;
     }
 
     render() {

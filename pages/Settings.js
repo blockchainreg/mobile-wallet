@@ -51,8 +51,8 @@ const LocalAuthListView = ({store}) => {
       return <Text style={styles.txtSettings}>{lang.touchId} / {lang.faceId}</Text>;
     }
   }
-  
-  return ( 
+
+  return (
     <ListItem
       icon
       onPress={() => {
@@ -100,7 +100,7 @@ export default ({ store, web3t }) => {
             <Icon name="ios-log-out" style={styles.styleTxtSettings} />
           </Button>
           </Right>
-          
+
         </Header>
 
 
@@ -188,7 +188,7 @@ export default ({ store, web3t }) => {
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
-          {/* <LocalAuthListView store={store}/> */}
+          <LocalAuthListView store={store}/>
         </Content>
 
         <Footer store={store}></Footer>
