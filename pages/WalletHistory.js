@@ -46,7 +46,7 @@ export default ({ store, web3t }) => {
   return (
       <View style={styles.container}>
         <View style={styles.viewFlex}>
-          <Background/>
+          <Background fullscreen={true}/>
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader} />
               <Body style={styles.viewFlexHeader}>

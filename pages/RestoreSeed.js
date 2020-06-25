@@ -69,6 +69,7 @@ export default ({ store, web3t }) => {
 
     setupWallet(store, web3t);
   };
+  
   const number = store.current.seedIndexes[store.current.seedIndex];
   const changeSeed = async word => {
     store.signUpConfirmSeedField = word;
@@ -86,7 +87,7 @@ export default ({ store, web3t }) => {
               autoCapitalize="none"
               secureTextEntry={false}
               returnKeyType="done"
-              placeholder={number + 1 + " Word"}
+              placeholder={lang.placeholderConfirmSeed + " " +  "#" + (number + 1)}
               placeholderTextColor="rgba(255,255,255,0.60)"
               style={styles.inputSize}
               selectionColor={"#fff"}
@@ -103,7 +104,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
-      <Background/>
+      <Background fullscreen={true}/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>

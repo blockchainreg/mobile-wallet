@@ -108,7 +108,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
-  const regexPin = /^\w{6}$/;
+  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPin = !store.current.pin || regexPin.test(store.current.pin);
   const handleChangePin = async text => {
     store.current.pin = text;
@@ -121,7 +121,7 @@ export default ({ store, web3t }) => {
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
           autoCompleteType="off"
-          maxLength={6}
+          minLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
@@ -142,7 +142,7 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background/>
+      <Background fullscreen={true}/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>

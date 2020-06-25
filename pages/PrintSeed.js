@@ -45,7 +45,7 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background />
+      <Background fullscreen={true}/>
       <Header transparent style={styles.mtIphoneX}>
         <Left style={styles.viewFlexHeader}>
           <BackButton onBack={back} />
@@ -65,8 +65,10 @@ export default ({ store }) => {
             <Body>
               <View style={styles.bodyConfirm}>
                 <Text style={styles.textCard}>{lang.seedNotify}</Text>
+                <Text style={styles.textCard}>{lang.seedNotify1}</Text>
+                <Text style={styles.textCard}>{lang.seedNotify2}</Text>
 
-                <View style={[styles.containerBtn, { marginBottom: 20 }]}>
+                <View style={styles.containerBtn1}>
                   {btnPrint(store)}
                   <TouchableOpacity
                     style={styles.btnNext}

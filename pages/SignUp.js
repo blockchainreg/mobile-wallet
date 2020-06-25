@@ -95,7 +95,7 @@ export default ({ store }) => {
     store.current.signUpInputPinField = null;
   };
 
-  const regexPin = /^\w{6}/;
+  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPinSignUp = (
     !store.current.signUpInputPinField ||
     regexPin.test(store.current.signUpInputPinField)
@@ -121,7 +121,7 @@ export default ({ store }) => {
           onChangeText={text => handleChangePin(text)}
           secureTextEntry={true}
           returnKeyType="done"
-          maxLength={6}
+          minLength={6}
           // autoFocus
           keyboardType="default"
           keyboardAppearance="dark"
@@ -136,7 +136,7 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-          <Background />
+          <Background fullscreen={true}/>
         <Toast
           ref={c => (this.toastify = c)}
           position={"top"}

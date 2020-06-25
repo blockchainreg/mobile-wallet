@@ -81,10 +81,11 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background />
+      <Background fullscreen={true}/>
       <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-      <View style={styles.containerFlexStart}>
+      <View style={styles.containerGenerated}>
         <Image source={Images.generate} style={styles.setupImg} />
+        <ScrollView style={{ width: "90%"}}>
         {seedPhrase(store)}
         <View style={styles.marginBtn}>
           <View style={styles.containerBtn}>
@@ -99,6 +100,7 @@ export default ({ store }) => {
             </TouchableOpacity>
           </View>
         </View>
+        </ScrollView>
       </View>
     </View>
   );

@@ -28,6 +28,7 @@ import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 
 
+
 export default ({ store, web3t }) => {
   const showToast = message => {
     console.log('Trying to show toast', message);
@@ -238,7 +239,7 @@ export default ({ store, web3t }) => {
 
   const unlock = store => {
     // Validation start
-    const regexPin = /^\w{6}$/;
+    const regexPin = /[0-9a-zA-Z]{6,}/;
     const validInputPin = (
       !store.current.pin ||
       regexPin.test(store.current.pin)
@@ -259,7 +260,7 @@ export default ({ store, web3t }) => {
     store.current.pin = "";
   };
   // Validation start
-  const regexPin = /^\w{6}$/;
+  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPin = (
     !store.current.pin ||
     regexPin.test(store.current.pin)
@@ -280,7 +281,7 @@ export default ({ store, web3t }) => {
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
           autoCompleteType="off"
-          maxLength={6}
+          minLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
@@ -297,7 +298,8 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background/>
+      <Background fullscreen={true}/>
+      <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <Toast
           ref={c => (this.toastify = c)}
           position="top"
@@ -308,7 +310,6 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlexHeader} />
           <Right style={styles.viewFlexHeader} />
         </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}
@@ -325,6 +326,9 @@ export default ({ store, web3t }) => {
             {unlock(store)}
           </View>
         </View>
+
+
+
       </View>
   );
 };

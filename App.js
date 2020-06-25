@@ -37,17 +37,14 @@ export default class App extends React.Component {
     const { AppReady } = this.state;
     if (!AppReady) {
       return (
-        <View style={styles.bgMainPage}>
-          <Background/>
+        <View style={[styles.bgMainPage, {backgroundColor: "#0A0D4D"}]}>
+          <Background fullscreen={true}/>
             <Image source={Images.logo} style={styles.styleLogoHead} />
         </View>
       );
     }
     return (
-      <View style={{
-        width: "100%",
-        height: "100%"
-        }}>
+      <View style={[styles.containterBg, {backgroundColor: "#0A0D4D"}]}>
         <AppReady />
       </View>
     );

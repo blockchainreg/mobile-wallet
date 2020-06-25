@@ -13,7 +13,7 @@ import {
   Separator,
   Button
 } from "native-base";
-import { Linking, Platform } from "react-native";
+import { Linking, Platform, ScrollView } from "react-native";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
@@ -87,7 +87,7 @@ export default ({ store, web3t }) => {
   return (
 
       <View style={styles.viewFlex}>
-      <Background />
+      <Background fullscreen={true}/>
 
         <StatusBar translucent={true} backgroundColor={'transparent'}/>
         <Header transparent style={styles.mtAndroid}>
@@ -95,8 +95,14 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlexHeader}>
             <Title style={styles.titleBlack}>{lang.settings}</Title>
           </Body>
-          <Right style={styles.viewFlexHeader} />
+          <Right style={styles.viewFlexHeader} >
+          <Button transparent onPress={logoutBtn}>
+            <Icon name="ios-log-out" style={styles.styleTxtSettings} />
+          </Button>
+          </Right>
+          
         </Header>
+
 
         <Content>
           <Separator bordered style={styles.seperatorStyle}>
@@ -182,23 +188,9 @@ export default ({ store, web3t }) => {
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
-          <LocalAuthListView store={store}/>
-
-
-          <Separator bordered style={styles.seperatorStyle}>
-            <Text style={styles.styleTxtSeparator}>{lang.security}</Text>
-          </Separator>
-
-          <ListItem icon style={styles.heightListItem} last onPress={logoutBtn} underlayColor={Images.color1}>
-            <Left>
-              <Icon name="ios-log-out" style={styles.styleTxtSettings}/>
-            </Left>
-            <Body style={styles.heightListItem}>
-          <Text style={styles.txtSettings}>{lang.logOut}</Text>
-            </Body>
-            <Right style={styles.heightListItem} />
-          </ListItem>
+          {/* <LocalAuthListView store={store}/> */}
         </Content>
+
         <Footer store={store}></Footer>
       </View>
 

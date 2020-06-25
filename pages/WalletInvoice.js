@@ -98,7 +98,7 @@ export default ({ store, web3t }) => {
   const back = changePage("wallet");
   return (
     <View style={styles.viewFlex}>
-          <Background />
+          <Background fullscreen={true}/>
         <Toast
           ref={c => (this.toastify = c)}
           position={"top"}

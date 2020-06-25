@@ -109,7 +109,7 @@ function RequestPin({store, web3t}) {
 
   const checkpin = store => {
     // Validation start
-    const regexPin = /^\w{6}$/;
+    const regexPin = /[0-9a-zA-Z]{6,}/;
     const validInputPin = (
       !pin ||
       regexPin.test(pin)
@@ -126,7 +126,7 @@ function RequestPin({store, web3t}) {
   };
 
   // Validation start
-  const regexPin = /^\w{6}$/;
+  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPin = (
     !pin ||
     regexPin.test(pin)
@@ -143,7 +143,7 @@ function RequestPin({store, web3t}) {
           onChangeText={setPin}
           value={pin}
           autoCompleteType="off"
-          maxLength={6}
+          minLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
@@ -160,7 +160,7 @@ function RequestPin({store, web3t}) {
 
   return (
     <View style={styles.viewFlex}>
-      <Background/>
+      <Background fullscreen={true}/>
         <Toast
           ref={setToastify}
           position="top"

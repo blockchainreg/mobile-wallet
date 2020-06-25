@@ -58,7 +58,7 @@ export default StyleSheet.create({
           android: {
             backgroundColor: "#1B1B74",
             borderTopColor: "transparent",
-            bottom: 0,
+            bottom: -30,
             left: 0,
             right: 0,
             position: "absolute",
@@ -204,6 +204,7 @@ export default StyleSheet.create({
       },
       android: {
         flex: 1,
+        // backgroundColor: "#11155D"
       },
     }),
   },
@@ -1628,7 +1629,23 @@ export default StyleSheet.create({
       {
         ...Platform.select({
           ios: { flex: 1, alignItems: "center", paddingTop: "10%" },
-          android: { flex: 1, alignItems: "center", paddingTop: "10%" },
+          // android: { flex: 1, alignItems: "center", paddingTop: 30 },
+          android: { flex: 1, alignItems: "center",  },
+        }),
+      }
+    ),
+  },
+  containerGenerated: {
+    ...ifIphoneX(
+      {
+        flex: 1,
+        alignItems: "center",
+        paddingTop: hp("10%"),
+      },
+      {
+        ...Platform.select({
+          ios: { flex: 1, alignItems: "center", paddingTop: "10%" },
+          android: { flex: 1, alignItems: "center", paddingTop: "15%" },
         }),
       }
     ),
@@ -4637,7 +4654,12 @@ export default StyleSheet.create({
     width: "45%",
     height: 45,
     marginHorizontal: 10,
+
+    // marginLeft: 10,
+    // marginRight: 20,
     borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnPrint: {
     backgroundColor: "#3CD5AF",
@@ -4645,6 +4667,8 @@ export default StyleSheet.create({
     height: 45,
     marginHorizontal: 10,
     borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnCancel: {
     backgroundColor: "#cecece",
@@ -4652,6 +4676,9 @@ export default StyleSheet.create({
     height: 45,
     marginHorizontal: 10,
     borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   txtBtn: {
     fontSize: 14,
@@ -4676,9 +4703,28 @@ export default StyleSheet.create({
   },
   containerBtn: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
+  },
+  containerBtn1: {
+    ...Platform.select({
+      ios: {
+        flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 25,
+    marginBottom: 20, 
+    width: "95%"
+      },
+      android: {
+        flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 25,
+    marginBottom: 20, 
+    width: "90%"
+      },
+    }),
+    
   },
   textTermsStyle: {
     color: "#fff",
@@ -5027,7 +5073,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    bottom: 0,
+    bottom: -30,
   },
   topView: {
     flex: 1,
@@ -5111,26 +5157,17 @@ export default StyleSheet.create({
     transform: [{ scale: 1.8 }],
   },
   containterBg: {
-    // width: Dimensions.get("window").width, 
-    // height: Dimensions.get("window").height,
-    // width: wp("100%"),
-    // height: hp("100%"),
-    // width: "100%",
-    // height: "100%"
     width: width < height ? width : height,
   height: width < height ? height : width,
   resizeMode: 'stretch',
+  // backgroundColor: "red"
+  // width: "100%",
+  // height: "100%",
 
   },
   containterBg1: {
-    // width: Dimensions.get("window").width, 
-    // height: Dimensions.get("window").height,
-    // width: wp("100%"),
-    // height: hp("100%"),
-    // width: "100%",
-    // height: "100%"
     width: "100%",
-  height: "100%"
+    height: "100%"
 
   },
   fixedBg: {
@@ -5138,6 +5175,6 @@ export default StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 0
   },
 });
