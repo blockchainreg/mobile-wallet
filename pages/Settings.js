@@ -13,7 +13,7 @@ import {
   Separator,
   Button
 } from "native-base";
-import { Linking, Platform } from "react-native";
+import { Linking, Platform, ScrollView } from "react-native";
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
@@ -41,16 +41,18 @@ const LocalAuthListView = ({store}) => {
   // if (!localAuthEnabled) {
   //   return null;
   // }
+  const lang = getLang(store);
+
   const touchFinger = () => {
     if (Platform.OS === 'android') {
-      return <Text style={styles.txtSettings}>Use Touch ID</Text>;
+    return <Text style={styles.txtSettings}>{lang.touchId}</Text>;
     }
     else if (Platform.OS === 'ios') {
-      return <Text style={styles.txtSettings}>Use Touch ID or FaceID</Text>;
+      return <Text style={styles.txtSettings}>{lang.touchId} / {lang.faceId}</Text>;
     }
   }
-  
-  return ( 
+
+  return (
     <ListItem
       icon
       onPress={() => {
@@ -85,7 +87,7 @@ export default ({ store, web3t }) => {
   return (
 
       <View style={styles.viewFlex}>
-      <Background />
+      <Background fullscreen={true}/>
 
         <StatusBar translucent={true} backgroundColor={'transparent'}/>
         <Header transparent style={styles.mtAndroid}>
@@ -93,8 +95,14 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlexHeader}>
             <Title style={styles.titleBlack}>{lang.settings}</Title>
           </Body>
-          <Right style={styles.viewFlexHeader} />
+          <Right style={styles.viewFlexHeader} >
+          <Button transparent onPress={logoutBtn}>
+            <Icon name="ios-log-out" style={styles.styleTxtSettings} />
+          </Button>
+          </Right>
+
         </Header>
+
 
         <Content>
           <Separator bordered style={styles.seperatorStyle}>
@@ -142,7 +150,7 @@ export default ({ store, web3t }) => {
             icon
             onPress={() => {
               Linking.openURL(
-                `https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md`
+                `https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md`
               );
             }}
             underlayColor={Images.color1}
@@ -181,22 +189,8 @@ export default ({ store, web3t }) => {
             <Right style={styles.heightListItem} />
           </ListItem>
           <LocalAuthListView store={store}/>
-
-
-          <Separator bordered style={styles.seperatorStyle}>
-            <Text style={styles.styleTxtSeparator}>{lang.security}</Text>
-          </Separator>
-
-          <ListItem icon style={styles.heightListItem} last onPress={logoutBtn} underlayColor={Images.color1}>
-            <Left>
-              <Icon name="ios-log-out" style={styles.styleTxtSettings}/>
-            </Left>
-            <Body style={styles.heightListItem}>
-          <Text style={styles.txtSettings}>{lang.logOut}</Text>
-            </Body>
-            <Right style={styles.heightListItem} />
-          </ListItem>
         </Content>
+
         <Footer store={store}></Footer>
       </View>
 

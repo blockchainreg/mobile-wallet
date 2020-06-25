@@ -28,6 +28,7 @@ import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 
 
+
 export default ({ store, web3t }) => {
   const showToast = message => {
     console.log('Trying to show toast', message);
@@ -132,6 +133,7 @@ export default ({ store, web3t }) => {
       }
 
       login(get());
+      store.userWallet = 200;
     }
 
     async authenticateRecursiveAndroid() {
@@ -154,7 +156,13 @@ export default ({ store, web3t }) => {
       this.setState({isAuthenticating: false});
 
       console.log("authenticateRecursiveAndroid success!!!");
-      login(await SecureStore.getItemAsync("localAuthToken"));
+      if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
+        SecureStore.deleteItemAsync("localAuthToken");
+        return showToast("Cannot authenticate. Please enter PIN.");
+      }
+
+      login(get());
+      store.userWallet = 200;
     }
 
     render() {
@@ -180,7 +188,7 @@ export default ({ store, web3t }) => {
     const loginAction = spin(store, lang.checkingPin, () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return showToast("Incorrect pin");
+        return showToast("Incorrect password");
       }
 
       login(get());
@@ -238,7 +246,7 @@ export default ({ store, web3t }) => {
 
   const unlock = store => {
     // Validation start
-    const regexPin = /^\w{4}$/;
+    const regexPin = /[0-9a-zA-Z]{6,}/;
     const validInputPin = (
       !store.current.pin ||
       regexPin.test(store.current.pin)
@@ -259,7 +267,7 @@ export default ({ store, web3t }) => {
     store.current.pin = "";
   };
   // Validation start
-  const regexPin = /^\w{4}$/;
+  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPin = (
     !store.current.pin ||
     regexPin.test(store.current.pin)
@@ -280,11 +288,12 @@ export default ({ store, web3t }) => {
           onChangeText={text => handleChangePin(text)}
           value={store.current.pin}
           autoCompleteType="off"
+          minLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
           placeholder={lang.placeholderSignup}
-          keyboardType="numeric"
+          keyboardType="default"
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#fff"}
@@ -296,7 +305,8 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background/>
+      <Background fullscreen={true}/>
+      <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <Toast
           ref={c => (this.toastify = c)}
           position="top"
@@ -307,7 +317,6 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlexHeader} />
           <Right style={styles.viewFlexHeader} />
         </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}
@@ -324,6 +333,9 @@ export default ({ store, web3t }) => {
             {unlock(store)}
           </View>
         </View>
+
+
+
       </View>
   );
 };

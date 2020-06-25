@@ -40,7 +40,7 @@ export default ({ store, web3t }) => {
 
 
   const number = store.current.seedIndexes[store.current.seedIndex];
-  const placeholderConfirmSeed = (number + 1) + " " + lang.placeholderConfirmSeed;
+  const placeholderConfirmSeed = lang.placeholderConfirmSeed + " " +  "#" + (number + 1);
   const verifyWordOrSetup = () => {
 
     if(store.signUpConfirmSeedField != DEV_SKIP) { 
@@ -88,7 +88,7 @@ export default ({ store, web3t }) => {
         position={"top"}
         style={styles.toastStyle}
       />
-      <Background/>
+      <Background fullscreen={true}/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>

@@ -27,9 +27,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
-import Images from '../Images.js';
-
-
+import Images from "../Images.js";
 
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
@@ -83,7 +81,7 @@ const wallets = (store, web3t) => {
           </Text>
         </Body>
         <Right>
-          <Button transparent>
+          <Button transparent onPress={chooseWallet}>
             <Icon name="ios-arrow-forward" style={styles.iconBtn} />
           </Button>
         </Right>
@@ -141,13 +139,11 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
+      {/* <LinearGradient
         colors={[Images.color4, Images.color5]}
-        style={styles.linearGradientBg}>
-        <View
-          style={styles.topView}
-        >
-          <Background />
+        style={styles.linearGradientBg}> */}
+      <Background fullscreen={true}>
+        <View style={styles.topView}>
           <RefreshControl swipeRefresh={refreshBalance}>
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader} />
@@ -164,7 +160,11 @@ export default ({ store, web3t }) => {
                 </Button>
               </Right>
             </Header>
-            <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+            <StatusBar
+              barStyle="light-content"
+              translucent={true}
+              backgroundColor={"transparent"}
+            />
             {/* <View style={styles.viewMt1} /> */}
             <Text style={styles.title2}>{lang.totalBalance}</Text>
             <Text style={styles.textBalanceHeader}>
@@ -172,7 +172,6 @@ export default ({ store, web3t }) => {
             </Text>
           </RefreshControl>
         </View>
-
 
         <View style={styles.viewMonoWallets}>
           <LinearGradient
@@ -183,9 +182,9 @@ export default ({ store, web3t }) => {
             <ScrollView>{wallets(store, web3t)}</ScrollView>
           </LinearGradient>
         </View>
-
-        {/* </View> */}
-      </LinearGradient>
+      </Background>
+      {/* </View> */}
+      {/* </LinearGradient> */}
       <Footer store={store}></Footer>
     </View>
   );

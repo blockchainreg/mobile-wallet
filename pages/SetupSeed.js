@@ -76,7 +76,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
-      <Background/>
+      <Background fullscreen={true}/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={changePage("register")}/>

@@ -27,7 +27,7 @@ export default ({ store }) => {
           onPress={changeTab("wallets")}
         >
           {/* <Ionicons name="ios-wallet" size={32} style={styles.iconFooter} /> */}
-          <Thumbnail square small source={Images.btnWallet} style={styles.iconFooter1}/>
+          <Thumbnail square small source={Images.btnWallet} style={styles.iconFooter1} onPress={changeTab("wallets")}/>
           
         </Button>
         <Button
@@ -37,7 +37,7 @@ export default ({ store }) => {
           onPress={changeTab("history")}
         >
           {/* <Ionicons name="ios-time" size={32} style={styles.iconFooter} /> */}
-          <Thumbnail square small source={Images.btnHistory} style={styles.iconFooter2}/>
+          <Thumbnail square small source={Images.btnHistory} style={styles.iconFooter2} onPress={changeTab("history")}/>
         </Button>
         <Button
           vertical
@@ -46,7 +46,7 @@ export default ({ store }) => {
           onPress={changeTab("settings")}
         >
           {/* <Ionicons name="ios-settings" size={32} style={styles.iconFooter} /> */}
-          <Thumbnail square small source={Images.btnSettings} style={styles.iconFooter2}/>
+          <Thumbnail square small source={Images.btnSettings} style={styles.iconFooter2} onPress={changeTab("settings")}/>
         </Button>
       </FooterTab>
     </Footer>

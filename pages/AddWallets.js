@@ -113,7 +113,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       {/* <StatusBar /> */}
-      <Background/>
+      <Background fullscreen={true}/>
         <RefreshControl swipeRefresh={refreshToken}>
           <Header transparent style={styles.mtIphoneX}>
             <Left style={styles.viewFlexHeader}>

@@ -277,7 +277,7 @@ class Withdraw extends React.Component {
     const back = changePage("wallet", true);
     return (
       <View style={styles.viewFlex}>
-        <Background />
+        <Background fullscreen={true}/>
         <Toast
           ref={(c) => (this.toastify = c)}
           position={"top"}

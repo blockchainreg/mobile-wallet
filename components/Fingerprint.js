@@ -65,7 +65,7 @@ export default class Fingerprint extends React.Component {
   render() {
     return (
       <View style={styles.viewFlexFp}>
-        <Background />
+        <Background fullscreen={true}/>
         {this.state.authenticated && (
           <Text style={styles.textFp}>Authentication Successful! 🎉</Text>
         )}

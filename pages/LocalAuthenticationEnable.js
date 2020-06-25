@@ -28,6 +28,8 @@ import Fingerprint from "../components/Fingerprint.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 import Background from "../components/Background.js";
 
+
+
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
   switch(status) {
@@ -64,14 +66,14 @@ function RequestPin({store, web3t}) {
   };
   const [pin, setPin] = useState("");
 
-  const lang = getLang(store);
+  // const lang = getLang(store);
 
   const buttonActive = store => {
     const login = () => {
       setTimeout(async () => {
         if (!check(pin)) {
           setPin("");
-          return showToast("Incorrect pin");
+          return showToast("Incorrect password");
         }
 
         setPin("");
@@ -83,7 +85,7 @@ function RequestPin({store, web3t}) {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text={"Confirm Pin"}
+        text={lang.confirm}
         textStyle={{ fontSize: 14, color: Images.color1 }}
         gradientBegin="#fff"
         gradientEnd="#fff"
@@ -99,14 +101,15 @@ function RequestPin({store, web3t}) {
   const buttonInactive = store => {
     return (
       <Button block style={styles.buttonInactive}>
-      <Text style={styles.buttonTextInactive}>Confirm Pin</Text>
+      <Text style={styles.buttonTextInactive}>{lang.confirm}</Text>
     </Button>
     );
   };
+  const lang = getLang(store);
 
   const checkpin = store => {
     // Validation start
-    const regexPin = /^\w{4}$/;
+    const regexPin = /[0-9a-zA-Z]{6,}/;
     const validInputPin = (
       !pin ||
       regexPin.test(pin)
@@ -123,7 +126,7 @@ function RequestPin({store, web3t}) {
   };
 
   // Validation start
-  const regexPin = /^\w{4}$/;
+  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPin = (
     !pin ||
     regexPin.test(pin)
@@ -140,11 +143,12 @@ function RequestPin({store, web3t}) {
           onChangeText={setPin}
           value={pin}
           autoCompleteType="off"
+          minLength={6}
           // autoFocus
           secureTextEntry={true}
           returnKeyType="done"
           placeholder={lang.placeholderSignup}
-          keyboardType="numeric"
+          keyboardType="default"
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={"#fff"}
@@ -156,7 +160,7 @@ function RequestPin({store, web3t}) {
 
   return (
     <View style={styles.viewFlex}>
-      <Background/>
+      <Background fullscreen={true}/>
         <Toast
           ref={setToastify}
           position="top"
@@ -175,7 +179,7 @@ function RequestPin({store, web3t}) {
           />
           <View style={styles.widthCard}>
             <View style={styles.titleInput}>
-              <Text style={styles.textH1Seed}>Confirm your pin</Text>
+              <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             {inputSuccessPin(store)}
             {!validInputPin && (

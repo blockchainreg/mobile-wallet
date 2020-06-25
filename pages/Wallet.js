@@ -114,7 +114,7 @@ export default ({ store, web3t }) => {
             <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}>
-              <View style={styles.bodyBlockTitle} onStartShouldSetResponder={collapse}>
+              <View style={styles.bodyBlockTitle} >
                 <Text style={styles.titleHistory}>{lang.txLast}</Text>
               </View>
               <ScrollView>
@@ -131,7 +131,7 @@ export default ({ store, web3t }) => {
             <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}>
-            <View style={styles.bodyBlockTitle} onStartShouldSetResponder={expand}>
+            <View style={styles.bodyBlockTitle} >
               <Text style={styles.titleHistory}>{lang.txLast}</Text>
             </View>
             <ScrollView>
@@ -149,7 +149,7 @@ export default ({ store, web3t }) => {
 
     return (
       <View style={styles.viewFlex}>
-          <Background />
+          <Background fullscreen={true}/>
 
             <StatusBar />
             <Header transparent style={styles.mtAndroid}>

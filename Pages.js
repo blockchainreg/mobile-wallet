@@ -20,6 +20,7 @@ import sent from "./pages/sent";
 import error from "./pages/error";
 import LocalAuthenticationSettings from "./pages/LocalAuthenticationSettings";
 import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
+import printseed from "./pages/PrintSeed";
 
 export default {
   generatedseed,
@@ -43,5 +44,6 @@ export default {
   sent,
   LangPage,
   LocalAuthenticationEnable,
-  LocalAuthenticationSettings
+  LocalAuthenticationSettings,
+  printseed
 };
