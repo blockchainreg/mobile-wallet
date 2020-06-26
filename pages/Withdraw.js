@@ -185,7 +185,7 @@ class Withdraw extends React.Component {
     super(props);
     const { store, web3t } = props;
     store.current.send.amountSend = "";
-    store.current.send.to = "";
+    //store.current.send.to = "";
   }
   render() {
     const { store, web3t } = this.props;

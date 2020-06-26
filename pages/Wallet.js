@@ -51,10 +51,8 @@ export default ({ store, web3t }) => {
     const usdRate = wallet.usdRate || 0;
     const sendLocal = () => {
 
-          if(wallet.balance == "..") {
-            return;
-          }
-
+          if(wallet.balance == "..") return;
+          store.current.send.to = "";
           store.current.send.wallet = wallet;
           store.current.send.coin = wallet.coin;
           store.current.send.network = wallet.network;
@@ -147,6 +145,21 @@ export default ({ store, web3t }) => {
 
     const back = changePage("wallets");
 
+
+
+    const scanQRSend = () => {
+
+          if(wallet.balance == "..") return;
+          store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
+          store.current.send.wallet = wallet;
+          store.current.send.coin = wallet.coin;
+          store.current.send.network = wallet.network;
+          navigate(store, web3t, "send", x=> {
+
+          });
+
+    }
+
     return (
       <View style={styles.viewFlex}>
           <Background fullscreen={true}/>
@@ -191,9 +204,7 @@ export default ({ store, web3t }) => {
 
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
-                      onPress={() => {
-                          Linking.openURL(addressExplorerLink);
-                        }}
+                      onPress={scanQRSend}
                       style={styles.touchables}
                     >
                       <Image
@@ -201,7 +212,7 @@ export default ({ store, web3t }) => {
                         style={styles.sizeIconSendBtn}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.textTouchable}>{lang.explorer}</Text>
+                    <Text style={styles.textTouchable}>{lang.send}</Text>
                   </View>
 
                   <View style={{ alignItems: "center" }}>
