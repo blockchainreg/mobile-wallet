@@ -29,6 +29,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
+import bip39 from "bip39";
 
 
 // const generateMnemonic = () => {
@@ -59,6 +60,10 @@ export default ({ store, web3t }) => {
 
     if(store.signUpConfirmSeedField == "") return showToast("Empty word is not allowed");
 
+    if (bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
+      return showToast("You have mistake in your word");
+    }
+
     store.current.seedWords[number] = store.signUpConfirmSeedField;
     if(store.current.seedIndex < store.current.seedWords.length - 1) {
       store.current.seedIndex += 1;
@@ -69,7 +74,7 @@ export default ({ store, web3t }) => {
 
     setupWallet(store, web3t);
   };
-  
+
   const number = store.current.seedIndexes[store.current.seedIndex];
   const changeSeed = async word => {
     store.signUpConfirmSeedField = word;
