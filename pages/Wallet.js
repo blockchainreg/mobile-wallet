@@ -215,7 +215,7 @@ export default ({ store, web3t }) => {
                     >
                       <Image
                         source={Images.scanImage}
-                        style={styles.sizeIconSendBtn}
+                        style={styles.sizeIconScanBtn}
                       />
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.scan}</Text>

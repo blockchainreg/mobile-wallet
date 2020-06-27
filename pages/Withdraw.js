@@ -180,16 +180,7 @@ const wrap = (text) => {
   };
 };
 
-class Withdraw extends React.Component {
-  constructor(props) {
-    super(props);
-    const { store, web3t } = props;
-    store.current.send.amountSend = "";
-    //store.current.send.to = "";
-  }
-  render() {
-    const { store, web3t } = this.props;
-    console.log('store.current.send.error', store.current.send.error)
+export default ({ store, web3t }) => {
     const lang = getLang(store);
     const {
       token,
@@ -274,6 +265,9 @@ class Withdraw extends React.Component {
     const refreshToken = async (bool) => {
       web3t.refresh((err, data) => {});
     };
+    const pad = 
+      { paddingTop: 10 };
+    //const send = store.current.send;
     const back = changePage("wallet", true);
     return (
       <View style={styles.viewFlex}>
@@ -316,16 +310,17 @@ class Withdraw extends React.Component {
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
-              <InputAmountWithdraw send={store.current.send} />
+              <InputAmountWithdraw send={send} />
               <View style={styles.viewTextInputDown}>
                 <Text note style={styles.textInputDownRight}>
-                  {lang.fee} {store.current.send.amountSendFee}{" "}
-                  {wallet.coin.token.toUpperCase()}
+                  {lang.amount} USD: ${send.amountSendUsd}
                 </Text>
               </View>
-                <Text style={styles.error}>{store.current.send.error}</Text>
-                
-
+                <Text style={styles.textInputDownRight}>
+                  {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
+                </Text>
+                <Text style={styles.error}>{send.error}</Text>
+              <View style={pad}></View>
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.to}:</Text>
               </View>
@@ -352,6 +347,5 @@ class Withdraw extends React.Component {
         </View> */}
       </View>
     );
-  }
 }
-export default ({ store, web3t }) => <Withdraw store={store} web3t={web3t} />;
+

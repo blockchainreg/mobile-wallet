@@ -4418,6 +4418,12 @@ export default StyleSheet.create({
     height: 36 /2.5,
     left: 1,
   },
+  sizeIconScanBtn: {
+    width: 65 / 2.5,
+    height: 65 / 2.5,
+    left: 0,
+    bottom: 1
+  },
   sizeIconSendBtn: {
     width: 65 / 2.5,
     height: 65 / 2.5,
