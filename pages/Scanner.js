@@ -3,6 +3,10 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 
+import walletsFuncs from "../wallet/wallets-funcs.js";
+import walletFuncs from "../wallet/wallet-funcs.js";
+import navigate from "../wallet/navigate.js";
+
 function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -18,6 +22,7 @@ function Scanner() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    this.props.onScan(data);
   };
 
   if (hasPermission === null) {
@@ -44,6 +49,20 @@ function Scanner() {
 }
 
 
-module.exports = ({ store })=> {
-  return <Scanner />;
+module.exports = ({ store, web3t }) => {
+
+  const wallets = walletsFuncs(store, web3t).wallets;
+  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+
+
+  const onScan = (text) => {
+          store.current.send.to = text;
+          store.current.send.wallet = wallet;
+          store.current.send.coin = wallet.coin;
+          store.current.send.network = wallet.network;
+          navigate(store, web3t, "send", x=> {
+          
+          });
+  }
+  return (<Scanner onScan={onScan} />);
 }
