@@ -14,7 +14,6 @@ import {
   Thumbnail,
 } from "native-base";
 import { observe } from "mobx";
-import { observer } from "mobx-react";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -223,7 +222,7 @@ export default ({ store, web3t }) => {
       store.current.page = tab;
     };
 
-    const InputAmountWithdraw = observer(({ send }) => (
+    const InputAmountWithdraw = ({ send }) => (
       <Item style={styles.borderItem}>
         <Input
           onChangeText={(text) => amountChange(wrapNumber(text))}
@@ -238,9 +237,9 @@ export default ({ store, web3t }) => {
           placeholderTextColor="rgba(255,255,255,0.60)"
         />
       </Item>
-    ));
+    );
 
-    const InputAddressWithdrawBtc = observer(({ send }) => (
+    const InputAddressWithdrawBtc = ({ send }) => (
       <Item style={styles.borderItem}>
         <Input
           onChangeText={(text) => recipientChange(wrap(text))}
@@ -254,13 +253,13 @@ export default ({ store, web3t }) => {
           placeholderTextColor="rgba(255,255,255,0.60)"
         />
       </Item>
-    ));
+    );
 
-    const SendButton = observer(({ send }) =>
+    const SendButton = ({ send }) =>
       send.amountSend
         ? btnWithdrawBtc({ store, web3t })
         : buttonInactive({ store, web3t })
-    );
+    ;
 
     const refreshToken = async (bool) => {
       web3t.refresh((err, data) => {});
