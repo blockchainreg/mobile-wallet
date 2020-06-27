@@ -7,14 +7,17 @@ import walletsFuncs from "../wallet/wallets-funcs.js";
 import walletFuncs from "../wallet/wallet-funcs.js";
 import navigate from "../wallet/navigate.js";
 
-function Scanner() {
+function Scanner({onScan}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
     (async () => {
       //console.log("BarCodeScanner", BarCodeScanner.requestPermissionsAsync);
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      // This will work on expo 38
+      // const { status } = await BarCodeScanner.requestPermissionsAsync();
+      // And this work on expo 35
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -22,7 +25,7 @@ function Scanner() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    this.props.onScan(data);
+    onScan(data);
   };
 
   if (hasPermission === null) {
@@ -61,7 +64,7 @@ module.exports = ({ store, web3t }) => {
           store.current.send.coin = wallet.coin;
           store.current.send.network = wallet.network;
           navigate(store, web3t, "send", x=> {
-          
+
           });
   }
   return (<Scanner onScan={onScan} />);

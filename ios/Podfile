@@ -1,7 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 
-target 'expo-web3-wallet' do
+target 'velas-wallet' do
   pod 'ExpoKit',
     :git => "http://github.com/expo/expo.git",
     :tag => "ios/2.13.0",
@@ -18,7 +18,6 @@ target 'expo-web3-wallet' do
       'expo-bluetooth',
       'expo-in-app-purchases',
       'expo-payments-stripe',
-      'expo-notifications',
       'expo-splash-screen',
       'expo-image',
       'expo-updates',

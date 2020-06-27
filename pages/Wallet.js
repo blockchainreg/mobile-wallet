@@ -41,7 +41,7 @@ import Background from "../components/Background.js";
 import Images from '../Images.js';
 import BackButton from "../components/BackButton.js";
 import { LinearGradient } from "expo-linear-gradient";
-//import Scanner from '../components/Scanner.js';
+// import Scanner from './Scanner.js';
 
 
 export default ({ store, web3t }) => {

@@ -160,7 +160,7 @@ const buttonInactive = ({ store }) => {
     <Button block style={styles.buttonInactive}>
     <Text style={styles.buttonTextInactive}>{lang.send}</Text>
   </Button>
-    
+
   );
 };
 
@@ -283,7 +283,7 @@ export default ({ store, web3t }) => {
     const refreshToken = async (bool) => {
       web3t.refresh((err, data) => {});
     };
-    const pad = 
+    const pad =
       { paddingTop: 10 };
     //const send = store.current.send;
     const back = changePage("wallet", true);
@@ -335,7 +335,7 @@ export default ({ store, web3t }) => {
                 <Text style={styles.error}>{send.error}</Text>
               <View style={pad}></View>
               <View style={styles.titleInputSend}>
-                <Text style={styles.titleInput1}>{lang.to}:</Text>
+                <Text style={styles.titleInput1}>{lang["to"]}:</Text>
               </View>
               <InputAddressWithdrawBtc send={store.current.send} />
             </View>
@@ -361,4 +361,3 @@ export default ({ store, web3t }) => {
       </View>
     );
 }
-
