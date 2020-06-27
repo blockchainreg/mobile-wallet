@@ -12,6 +12,7 @@ import {
   Body,
   Header,
   Thumbnail,
+  Label
 } from "native-base";
 import { observe } from "mobx";
 import styles from "../Styles.js";
@@ -223,20 +224,38 @@ export default ({ store, web3t }) => {
     };
 
     const InputAmountWithdraw = ({ send }) => (
-      <Item style={styles.borderItem}>
-        <Input
-          onChangeText={(text) => amountChange(wrapNumber(text))}
-          returnKeyType="done"
-          autoCompleteType="off"
-          style={[styles.inputStyle, { fontSize: 18 }]}
-          selectionColor={"#fff"}
-          keyboardAppearance="dark"
-          placeholder="0.00"
-          value={send.amountSend}
-          keyboardType="numeric"
-          placeholderTextColor="rgba(255,255,255,0.60)"
-        />
-      </Item>
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        <Item style={{width: '50%'}}>
+            <Label>{wallet.coin.token.toUpperCase()}</Label>
+            <Input
+              onChangeText={(text) => amountChange(wrapNumber(text))}
+              returnKeyType="done"
+              autoCompleteType="off"
+              style={[styles.inputStyle, { fontSize: 18 }]}
+              selectionColor={"#fff"}
+              keyboardAppearance="dark"
+              placeholder="0.00"
+              value={send.amountSend}
+              keyboardType="numeric"
+              placeholderTextColor="rgba(255,255,255,0.60)"
+            />
+        </Item>
+        <Item style={{width: '50%'}}>
+            <Label>USD</Label>
+            <Input
+              onChangeText={(text) => amountUsdChange(wrapNumber(text))}
+              returnKeyType="done"
+              autoCompleteType="off"
+              style={[styles.inputStyle, { fontSize: 18}]}
+              selectionColor={"#fff"}
+              keyboardAppearance="dark"
+              placeholder="USD"
+              value={send.amountSendUsd}
+              keyboardType="numeric"
+              placeholderTextColor="rgba(255,255,255,0.60)"
+            />
+        </Item>
+      </View>
     );
 
     const InputAddressWithdrawBtc = ({ send }) => (
@@ -310,11 +329,6 @@ export default ({ store, web3t }) => {
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
               <InputAmountWithdraw send={send} />
-              <View style={styles.viewTextInputDown}>
-                <Text note style={styles.textInputDownRight}>
-                  {lang.amount} USD: ${send.amountSendUsd}
-                </Text>
-              </View>
                 <Text style={styles.textInputDownRight}>
                   {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
                 </Text>
