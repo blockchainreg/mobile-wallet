@@ -24,6 +24,14 @@ export default ({ store }) => {
       value: "ua"
     },
     {
+      label: "Français 🇫🇷",
+      value: "fr"
+    },
+    {
+      label: "Eestlane 🇪🇪",
+      value: "es"
+    },
+    {
       label: "中國人 🇨🇳",
       value: "zh"
     },
@@ -32,16 +40,8 @@ export default ({ store }) => {
       value: "ko"
     },
     {
-      label: "Indonesia 🇮🇩",
-      value: "id"
-    },
-    {
-      label: "ภาษาไทย 🇹🇭",
-      value: "th"
-    },
-    {
-      label: "Malay 🇲🇾",
-      value: "my"
+      label: "عرب 🇦🇪",
+      value: "ar"
     }
   ];
 
