@@ -21,8 +21,10 @@ import error from "./pages/error";
 import LocalAuthenticationSettings from "./pages/LocalAuthenticationSettings";
 import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
 import printseed from "./pages/PrintSeed";
+import Scanner from "./pages/Scanner";
 
 export default {
+  Scanner,
   generatedseed,
   restoreseed,
   restoreseedchoise,

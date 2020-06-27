@@ -8,6 +8,7 @@ module.exports =
     confirm: "Confirm"
     cancel: "Cancel"
     send: "Send"
+    scan: "Scan"
     send-from: "Send From"
     recipient: "Recipient"
     amount: "Amount"

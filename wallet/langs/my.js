@@ -10,6 +10,7 @@
     confirm: "Sahkan",
     cancel: "Batalkan",
     send: "Hantar",
+    scan: "Imbas",
     sendFrom: "Hantar Dari",
     recipient: "Penerima",
     amount: "Jumlah",

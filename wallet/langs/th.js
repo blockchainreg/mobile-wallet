@@ -10,6 +10,7 @@
     confirm: "ยืนยัน",
     cancel: "ยกเลิก",
     send: "ส่ง",
+    scan: "Scan",
     sendFrom: "ส่งจาก",
     recipient: "ผู้รับ",
     amount: "จำนวน",

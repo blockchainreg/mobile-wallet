@@ -20,7 +20,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  BackHandler
+  BackHandler,
+  StyleSheet
 } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //import ModalComponent from "react-native-modal-component";
@@ -40,6 +41,7 @@ import Background from "../components/Background.js";
 import Images from '../Images.js';
 import BackButton from "../components/BackButton.js";
 import { LinearGradient } from "expo-linear-gradient";
+//import Scanner from '../components/Scanner.js';
 
 
 export default ({ store, web3t }) => {
@@ -150,20 +152,24 @@ export default ({ store, web3t }) => {
     const scanQRSend = () => {
 
           if(wallet.balance == "..") return;
-          store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
-          store.current.send.wallet = wallet;
-          store.current.send.coin = wallet.coin;
-          store.current.send.network = wallet.network;
-          navigate(store, web3t, "send", x=> {
+          return store.current.page = 'Scanner';
+          //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
+          //store.current.send.wallet = wallet;
+          //store.current.send.coin = wallet.coin;
+          //store.current.send.network = wallet.network;
+          //navigate(store, web3t, "send", x=> {
+          //
+          //});
 
-          });
+    }
 
+    const handleBarCodeScanned = (ev) => {
+      console.log(ev);
     }
 
     return (
       <View style={styles.viewFlex}>
           <Background fullscreen={true}/>
-
             <StatusBar />
             <Header transparent style={styles.mtAndroid}>
               <Left style={styles.viewFlexHeader}>
@@ -208,11 +214,11 @@ export default ({ store, web3t }) => {
                       style={styles.touchables}
                     >
                       <Image
-                        source={Images.sendImage}
+                        source={Images.scanImage}
                         style={styles.sizeIconSendBtn}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.textTouchable}>{lang.send}</Text>
+                    <Text style={styles.textTouchable}>{lang.scan}</Text>
                   </View>
 
                   <View style={{ alignItems: "center" }}>
