@@ -224,8 +224,8 @@ export default ({ store, web3t }) => {
     };
 
     const InputAmountWithdraw = ({ send }) => (
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <Item style={{width: '50%'}}>
+      <View>
+        <Item style={{width: '100%'}}>
             <Label>{wallet.coin.token.toUpperCase()}</Label>
             <Input
               onChangeText={(text) => amountChange(wrapNumber(text))}
@@ -240,7 +240,7 @@ export default ({ store, web3t }) => {
               placeholderTextColor="rgba(255,255,255,0.60)"
             />
         </Item>
-        <Item style={{width: '50%'}}>
+        <Item style={{width: '100%'}}>
             <Label>USD</Label>
             <Input
               onChangeText={(text) => amountUsdChange(wrapNumber(text))}
