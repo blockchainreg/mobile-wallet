@@ -120,7 +120,7 @@
         return send.error = (function(){
           switch (false) {
           case wallet.balance !== '...':
-            return "Balance is not loaded yet";
+            return "Balance is not yet loaded";
           case !(parseFloat(minus(wallet.balance, resultAmountSend)) < 0):
             return "Insufficient funds";
           default:

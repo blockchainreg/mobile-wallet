@@ -186,7 +186,6 @@ export default ({ store, web3t }) => {
       token,
       feeToken,
       network,
-      send,
       pending,
       recipientChange,
       amountChange,
@@ -223,40 +222,7 @@ export default ({ store, web3t }) => {
       store.current.page = tab;
     };
 
-    const InputAmountWithdraw = ({ send }) => (
-      <View>
-        <Item style={{width: '100%'}}>
-            <Label>{wallet.coin.token.toUpperCase()}</Label>
-            <Input
-              onChangeText={(text) => amountChange(wrapNumber(text))}
-              returnKeyType="done"
-              autoCompleteType="off"
-              style={[styles.inputStyle, { fontSize: 18 }]}
-              selectionColor={"#fff"}
-              keyboardAppearance="dark"
-              placeholder="0.00"
-              value={send.amountSend}
-              keyboardType="numeric"
-              placeholderTextColor="rgba(255,255,255,0.60)"
-            />
-        </Item>
-        <Item style={{width: '100%'}}>
-            <Label>USD</Label>
-            <Input
-              onChangeText={(text) => amountUsdChange(wrapNumber(text))}
-              returnKeyType="done"
-              autoCompleteType="off"
-              style={[styles.inputStyle, { fontSize: 18}]}
-              selectionColor={"#fff"}
-              keyboardAppearance="dark"
-              placeholder="USD"
-              value={send.amountSendUsd}
-              keyboardType="numeric"
-              placeholderTextColor="rgba(255,255,255,0.60)"
-            />
-        </Item>
-      </View>
-    );
+    const send = store.current.send;
 
     const InputAddressWithdrawBtc = ({ send }) => (
       <Item style={styles.borderItem}>
@@ -285,7 +251,6 @@ export default ({ store, web3t }) => {
     };
     const pad =
       { paddingTop: 10 };
-    //const send = store.current.send;
     const back = changePage("wallet", true);
     return (
       <View style={styles.viewFlex}>
@@ -328,7 +293,41 @@ export default ({ store, web3t }) => {
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
-              <InputAmountWithdraw send={send} />
+              
+                <View>
+                    <Item style={{width: '100%'}}>
+                        <Label>{wallet.coin.token.toUpperCase()}</Label>
+                        <Input
+                          onChangeText={(text) => amountChange(wrapNumber(text))}
+                          returnKeyType="done"
+                          autoCompleteType="off"
+                          style={[styles.inputStyle, { fontSize: 18 }]}
+                          selectionColor={"#fff"}
+                          keyboardAppearance="dark"
+                          placeholder="0.00"
+                          value={send.amountSend}
+                          keyboardType="numeric"
+                          placeholderTextColor="rgba(255,255,255,0.60)"
+                        />
+                    </Item>
+                    <Item style={{width: '100%'}}>
+                        <Label>USD</Label>
+                        <Input
+                          onChangeText={(text) => amountUsdChange(wrapNumber(text))}
+                          returnKeyType="done"
+                          autoCompleteType="off"
+                          style={[styles.inputStyle, { fontSize: 18}]}
+                          selectionColor={"#fff"}
+                          keyboardAppearance="dark"
+                          placeholder="USD"
+                          value={send.amountSendUsd}
+                          keyboardType="numeric"
+                          placeholderTextColor="rgba(255,255,255,0.60)"
+                        />
+                    </Item>
+               </View>
+
+
                 <Text style={styles.textInputDownRight}>
                   {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
                 </Text>
