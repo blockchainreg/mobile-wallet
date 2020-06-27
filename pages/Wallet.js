@@ -82,14 +82,14 @@ export default ({ store, web3t }) => {
         return mapping[wallet.coin.token] || 'address';
     }
 
-    const Balance = observer(({wallet}) =>
+    const Balance = ({wallet}) =>
       <Text style={styles.totalBalance}>
         {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
         <Text style={styles.nameToken}>
           {wallet.coin.token.toUpperCase()}
         </Text>
       </Text>
-    );
+    ;
 
     const prefix = hardCodedStrategyGetAddessPrefix();
 
@@ -198,7 +198,7 @@ export default ({ store, web3t }) => {
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={sendLocal}
-                      style={styles.touchables}
+                      style={{ ...styles.touchables, backgroundColor: '#FB746E' }}
                     >
                       <Image
                         source={Images.withdrawImage}
@@ -215,7 +215,7 @@ export default ({ store, web3t }) => {
                     >
                       <Image
                         source={Images.scanImage}
-                        style={styles.sizeIconSendBtn}
+                        style={styles.sizeIconScanBtn}
                       />
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.scan}</Text>
@@ -224,7 +224,7 @@ export default ({ store, web3t }) => {
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={changePage("invoice")}
-                      style={styles.touchables}
+                      style={{ ...styles.touchables, backgroundColor: '#60B687' }}
                     >
                       <Image
                         source={Images.receiveImage}
