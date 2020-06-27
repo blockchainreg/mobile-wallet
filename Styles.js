@@ -212,11 +212,11 @@ export default StyleSheet.create({
     ...Platform.select({
       ios: {
         flex: 1,
-        top: -10,
+        // top: -10,
       },
       android: {
         flex: 1,
-        top: -10,
+        // top: -10,
       },
     }),
   },
