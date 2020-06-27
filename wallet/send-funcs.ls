@@ -92,7 +92,7 @@ module.exports = (store, web3t)->
     check-enough = (cb)->
         try
             amount = wallet.balance `minus` send.amount-send `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
-            return cb "Not Enough funds" if +amount < 0
+            return cb "Insufficient funds" if +amount < 0
             cb null
         catch err
             cb err

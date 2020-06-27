@@ -138,7 +138,7 @@
       try {
         amount = minus(minus(minus(wallet.balance, send.amountSend), (ref$ = wallet.pendingSent) != null ? ref$ : 0), send.amountSendFee);
         if (+amount < 0) {
-          return cb("Not Enough funds");
+          return cb("Insufficient funds");
         }
         return cb(null);
       } catch (e$) {
