@@ -8,6 +8,7 @@ module.exports =
     confirm: "Погодитись"
     cancel: "Скасувати"
     send: "Надіслати"
+    scan: "Scan"
     send-from: "Надіслати з"
     recipient: "Одержувач"
     amount: "Сума"

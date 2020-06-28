@@ -122,7 +122,7 @@
           case wallet.balance !== '...':
             return "Balance is not yet loaded";
           case !(parseFloat(minus(wallet.balance, resultAmountSend)) < 0):
-            return "Not Enough Funds";
+            return "Insufficient funds";
           default:
             return "";
           }

@@ -10,6 +10,7 @@
       confirm: "확인",
       cancel: "취소",
       send: "보내다",
+      scan: "주사",
       sendFrom: "발신",
       recipient: "받는 사람",
       amount: "양",

@@ -20,7 +20,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  BackHandler
+  BackHandler,
+  StyleSheet
 } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //import ModalComponent from "react-native-modal-component";
@@ -40,6 +41,7 @@ import Background from "../components/Background.js";
 import Images from '../Images.js';
 import BackButton from "../components/BackButton.js";
 import { LinearGradient } from "expo-linear-gradient";
+// import Scanner from './Scanner.js';
 
 
 export default ({ store, web3t }) => {
@@ -51,10 +53,8 @@ export default ({ store, web3t }) => {
     const usdRate = wallet.usdRate || 0;
     const sendLocal = () => {
 
-          if(wallet.balance == "..") {
-            return;
-          }
-
+          if(wallet.balance == "..") return;
+          store.current.send.to = "";
           store.current.send.wallet = wallet;
           store.current.send.coin = wallet.coin;
           store.current.send.network = wallet.network;
@@ -82,14 +82,14 @@ export default ({ store, web3t }) => {
         return mapping[wallet.coin.token] || 'address';
     }
 
-    const Balance = observer(({wallet}) =>
+    const Balance = ({wallet}) =>
       <Text style={styles.totalBalance}>
         {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
         <Text style={styles.nameToken}>
           {wallet.coin.token.toUpperCase()}
         </Text>
       </Text>
-    );
+    ;
 
     const prefix = hardCodedStrategyGetAddessPrefix();
 
@@ -147,10 +147,29 @@ export default ({ store, web3t }) => {
 
     const back = changePage("wallets");
 
+
+
+    const scanQRSend = () => {
+
+          if(wallet.balance == "..") return;
+          return store.current.page = 'Scanner';
+          //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
+          //store.current.send.wallet = wallet;
+          //store.current.send.coin = wallet.coin;
+          //store.current.send.network = wallet.network;
+          //navigate(store, web3t, "send", x=> {
+          //
+          //});
+
+    }
+
+    const handleBarCodeScanned = (ev) => {
+      console.log(ev);
+    }
+
     return (
       <View style={styles.viewFlex}>
           <Background fullscreen={true}/>
-
             <StatusBar />
             <Header transparent style={styles.mtAndroid}>
               <Left style={styles.viewFlexHeader}>
@@ -179,7 +198,7 @@ export default ({ store, web3t }) => {
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={sendLocal}
-                      style={styles.touchables}
+                      style={{ ...styles.touchables, backgroundColor: '#FB746E' }}
                     >
                       <Image
                         source={Images.withdrawImage}
@@ -191,23 +210,21 @@ export default ({ store, web3t }) => {
 
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
-                      onPress={() => {
-                          Linking.openURL(addressExplorerLink);
-                        }}
+                      onPress={scanQRSend}
                       style={styles.touchables}
                     >
                       <Image
-                        source={Images.sendImage}
-                        style={styles.sizeIconSendBtn}
+                        source={Images.scanImage}
+                        style={styles.sizeIconScanBtn}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.textTouchable}>{lang.explorer}</Text>
+                    <Text style={styles.textTouchable}>{lang.scan}</Text>
                   </View>
 
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={changePage("invoice")}
-                      style={styles.touchables}
+                      style={{ ...styles.touchables, backgroundColor: '#60B687' }}
                     >
                       <Image
                         source={Images.receiveImage}

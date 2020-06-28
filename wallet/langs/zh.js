@@ -10,6 +10,7 @@
       confirm: "確認",
       cancel: "取消",
       send: "發送",
+      scan: "扫瞄",
       sendFrom: "從發送",
       recipient: "接受者",
       amount: "量",

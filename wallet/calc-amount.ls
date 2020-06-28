@@ -52,6 +52,7 @@ change-amount-generic = (field)-> (store, amount-send)->
     send.amount-obtain-usd = send.amount-obtain `times` usd-rate
     send.amount-send-usd = calc-usd store, amount-send
     send.amount-send-eur = calc-eur store, amount-send
+    #return console.log("return")
     err, calced-fee <- calc-fee-proxy { token, send.network, amount: result-amount-send, fee-type, tx-type, account }
     return send.error = "Calc Fee Error: #{err.message ? err}" if err?
     tx-fee = 
@@ -68,7 +69,7 @@ change-amount-generic = (field)-> (store, amount-send)->
     send.amount-send-fee-usd = tx-fee `times` fee-usd-rate
     send.error = 
         | wallet.balance is \... => "Balance is not yet loaded"
-        | parse-float(wallet.balance `minus` result-amount-send) < 0 => "Not Enough Funds"
+        | parse-float(wallet.balance `minus` result-amount-send) < 0 => "Insufficient funds"
         | _ => ""
 export change-amount = change-amount-generic \send
 export change-amount-invoice = change-amount-generic \invoice
