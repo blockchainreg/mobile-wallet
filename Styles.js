@@ -1271,8 +1271,8 @@ export default StyleSheet.create({
     borderBottomColor: "transparent"
   },
   seperatorStyle: {
-    backgroundColor: Images.color1, 
-    opacity: 0.60, 
+    backgroundColor: Images.color1,
+    opacity: 0.60,
     borderColor: "transparent",
     height: Platform.OS === "android" ? 40 : null,
   },
@@ -2058,7 +2058,7 @@ export default StyleSheet.create({
       android: {},
     }),
   },
-  
+
   // SignUpPassword
   arrowIconBlack: {
     fontSize: 30,
@@ -2342,7 +2342,7 @@ export default StyleSheet.create({
       },
       android: {marginTop: 10,},
     }),
-    
+
     // bottom: height / 12
   },
   bodyBlockTitle: {
@@ -2451,8 +2451,8 @@ export default StyleSheet.create({
     ),
   },
   headerSearchBar: {
-    // paddingBottom: 40, 
-    height: 60, 
+    // paddingBottom: 40,
+    height: 60,
     backgroundColor: "transparent",
   },
   textTouchable: {
@@ -4719,18 +4719,18 @@ export default StyleSheet.create({
         flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 25,
-    marginBottom: 20, 
+    marginBottom: 20,
     width: "95%"
       },
       android: {
         flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 25,
-    marginBottom: 20, 
+    marginBottom: 20,
     width: "90%"
       },
     }),
-    
+
   },
   textTermsStyle: {
     color: "#fff",
@@ -5183,4 +5183,71 @@ export default StyleSheet.create({
     right: 0,
     bottom: 0
   },
+  autocompleteContainerStyle: {
+    borderWidth: 0,
+    margin: 0,
+    width: "100%",
+    flex: 0
+  },
+  autocompleteInputContainerStyle: {
+    borderWidth: 0,
+    margin: 0,
+    width: "100%",
+    flex: 0
+  },
+  autocompleteListStyle: {
+    backgroundColor: "rgba(157, 65, 235, 0.2)",
+    borderWidth: 0
+  },
+  autocompleteListItemStyle: {
+    fontSize: 15,
+    margin: 2,
+    color: "white"
+  },
+  autocompleteInputIncorrect: {
+    ...ifIphoneX(
+      {
+        fontSize: 14,
+        color: "red",
+        fontWeight: "bold",
+      },
+      {
+        ...Platform.select({
+          ios: {
+            fontSize: 14,
+            color: "red",
+            fontWeight: "bold",
+          },
+          android: {
+            fontSize: 14,
+            color: "red",
+            fontWeight: "bold",
+          },
+        }),
+      }
+    ),
+  },
+  autocompleteInputCorrect: {
+    ...ifIphoneX(
+      {
+        fontSize: 14,
+        color: "green",
+        fontWeight: "bold",
+      },
+      {
+        ...Platform.select({
+          ios: {
+            fontSize: 14,
+            color: "green",
+            fontWeight: "bold",
+          },
+          android: {
+            fontSize: 14,
+            color: "green",
+            fontWeight: "bold",
+          },
+        }),
+      }
+    ),
+  }
 });
