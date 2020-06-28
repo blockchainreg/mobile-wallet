@@ -48,5 +48,5 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm i --global yarn
       - run: yarn install
-      - run: expo upload:android --key ${{ steps.write_file.outputs.filePath }} --track beta
+      - run: expo upload:android --key ${{ steps.write_file.outputs.filePath }} --track alpha
         continue-on-error: true
