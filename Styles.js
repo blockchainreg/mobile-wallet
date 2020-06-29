@@ -5213,7 +5213,8 @@ export default StyleSheet.create({
     borderWidth: 0.4,
     borderColor: "rgba(255,255,255,0.60)",
     width: "100%",
-    height: 150,
+    minHeight: '10%',
+    maxHeight: 150,
     left: Platform.OS === "android" ? -9 : 1,
     zIndex: 9999,
     position: 'absolute'
