@@ -22,6 +22,8 @@ import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 import { LinearGradient } from "expo-linear-gradient";
 import * as SecureStore from "expo-secure-store";
+import PickerSetLang from "../components/PickerSetLang.js";
+
 
 const showToast = message => {
   // console.log(message);
@@ -164,6 +166,7 @@ export default ({ store }) => {
               <Text style={styles.error}>{lang.validPin}</Text>
             )}
             <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
+            <View style={styles.marginBtn1}>{PickerSetLang({ store })}</View>
           </View>
         </View>
     </View>

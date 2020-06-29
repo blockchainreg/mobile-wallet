@@ -10,7 +10,7 @@ export default ({ children, fullscreen }) => {
   return (
     <ImageBackground
     source={require("../assets/bg-mob.png")}
-    style={[styles.fixedBg, styles.containterBg, {zIndex: -1, top: fullscreen && Platform.OS === "android" ? 30:0}]} 
+    style={[styles.fixedBg, styles.containterBg, {zIndex: -1, top: fullscreen && Platform.OS === "android" ? 0:0}]} 
     >
       {children}
     </ImageBackground>
