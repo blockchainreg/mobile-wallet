@@ -231,7 +231,7 @@ export default ({ store, web3t }) => {
           returnKeyType="done"
           selectionColor={"#fff"}
           keyboardAppearance="dark"
-          placeholder={wallet.network.mask}
+          placeholder={wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..."}
           style={[styles.inputStyle, { fontSize: 18 }]}
           value={send["to"]}
           keyboardType={"default"}
@@ -289,14 +289,14 @@ export default ({ store, web3t }) => {
             </View>
             {/* </View> */}
 
-            <View style={[styles.widthCard, { marginHorizontal: 20 }]}>
+            <View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
-
-                <View>
-                    <Item style={{width: '100%'}}>
-                        <Label>{wallet.coin.token.toUpperCase()}</Label>
+              
+                <View >
+                    <Item style={styles.borderItem}>
+                      {/* <Label style={{ color: Images.color6}}>{wallet.coin.token.toUpperCase()}</Label> */}
                         <Input
                           onChangeText={(text) => amountChange(wrapNumber(text))}
                           returnKeyType="done"
@@ -310,8 +310,7 @@ export default ({ store, web3t }) => {
                           placeholderTextColor="rgba(255,255,255,0.60)"
                         />
                     </Item>
-                    <Item style={{width: '100%'}}>
-                        <Label>USD</Label>
+                    <Item style={styles.borderItem}>
                         <Input
                           onChangeText={(text) => amountUsdChange(wrapNumber(text))}
                           disabled
@@ -321,7 +320,7 @@ export default ({ store, web3t }) => {
                           selectionColor={"#fff"}
                           keyboardAppearance="dark"
                           placeholder="USD"
-                          value={send.amountSendUsd}
+                          value={send.amountSendUsd + " " + "$"}
                           keyboardType="numeric"
                           placeholderTextColor="rgba(255,255,255,0.60)"
                         />
@@ -346,18 +345,6 @@ export default ({ store, web3t }) => {
             </View>
           </View>
         </RefreshControl>
-        {/* <View style={styles.viewMonoBuy}>
-          <LinearGradient
-            colors={[Images.color1, Images.color1, Images.color2]}
-            style={styles.linearGradientBg}
-          >
-            <View style={styles.containerScreen}>
-              <View style={styles.marginBtn}>
-                <SendButton send={store.current.send} />
-              </View>
-            </View>
-          </LinearGradient>
-        </View> */}
       </View>
     );
 }
