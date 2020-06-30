@@ -85,7 +85,7 @@ export default ({ store }) => {
       <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
       <View style={styles.containerGenerated}>
         <Image source={Images.generate} style={styles.setupImg} />
-        <ScrollView style={{ width: "90%"}}>
+        <ScrollView style={styles.scrollViewAndroid}>
         {seedPhrase(store)}
         <View style={styles.marginBtn}>
           <View style={styles.containerBtn}>

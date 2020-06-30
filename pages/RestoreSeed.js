@@ -119,21 +119,27 @@ export default ({ store, web3t }) => {
       </View>
     );
     return (
-            <Autocomplete
-              data={autocompleteData}
-              keyExtractor={item => item}
-              containerStyle={styles.autocompleteContainerStyle}
-              inputContainerStyle={styles.autocompleteInputContainerStyle}
-              listStyle={styles.autocompleteListStyle}
-              renderTextInput={props => input}
-              renderItem={({item}) => (
-                <TouchableOpacity onPress={() => changeSeed(item)} key={item}>
-                  <Text style={styles.autocompleteListItemStyle}>
-                    {item}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            />
+
+      // <View style={styles.autocompleteContainer}>
+
+      <Autocomplete
+        data={autocompleteData}
+        keyExtractor={item => item}
+        containerStyle={styles.autocompleteContainerStyle}
+        inputContainerStyle={styles.autocompleteInputContainerStyle}
+        listStyle={styles.autocompleteListStyle}
+        renderTextInput={props => input}
+        renderItem={({item}) => (
+          <TouchableOpacity onPress={() => changeSeed(item)} key={item}>
+            <Text style={styles.autocompleteListItemStyle}>
+              {item}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
+      // </View>
+
+
     );
   };
 
@@ -168,7 +174,7 @@ export default ({ store, web3t }) => {
                     gradientEnd="#fff"
                     gradientDirection="diagonal"
                     height={45}
-                    width="100%"
+                    width="98%"
                     radius={5}
                     onPressAction={done}
                   />

@@ -56,9 +56,10 @@ export default StyleSheet.create({
             position: "absolute",
           },
           android: {
+            height: 50,
             backgroundColor: "#1B1B74",
             borderTopColor: "transparent",
-            bottom: -30,
+            bottom: 0,
             left: 0,
             right: 0,
             position: "absolute",
@@ -89,7 +90,7 @@ export default StyleSheet.create({
           },
           android: {
             borderRadius: 0,
-            height: "auto",
+            height: 50,
             backgroundColor: "transparent",
           },
         }),
@@ -255,7 +256,7 @@ export default StyleSheet.create({
             right: 0,
             bottom: 0,
             height: hp("65%"),
-            zIndex: 2,
+            zIndex: 1,
           },
         }),
       }
@@ -1788,6 +1789,14 @@ export default StyleSheet.create({
     width: "100%",
     marginBottom: 15,
     marginTop: 20,
+  },
+  marginBtn1: {
+    width: "100%",
+    marginBottom: 15,
+    marginTop: 20,
+    flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
   },
   textErrorField: {
     marginTop: 3,
@@ -3371,7 +3380,7 @@ export default StyleSheet.create({
       {
         ...Platform.select({
           ios: { marginBottom: hp("10%") },
-          android: { marginBottom: hp("10%") },
+          android: { marginBottom: hp("20%") },
         }),
       }
     ),
@@ -5163,9 +5172,12 @@ export default StyleSheet.create({
     transform: [{ scale: 1.8 }],
   },
   containterBg: {
-    width: width < height ? width : height,
-  height: width < height ? height : width,
-  resizeMode: 'stretch',
+    // width: width < height ? width : height,
+  // height: width < height ? height : width,
+  // resizeMode: 'stretch',
+  width: "100%",
+  height: "100%",
+
   // backgroundColor: "red"
   // width: "100%",
   // height: "100%",
@@ -5183,21 +5195,29 @@ export default StyleSheet.create({
     right: 0,
     bottom: 0
   },
+  
   autocompleteContainerStyle: {
     borderWidth: 0,
     margin: 0,
     width: "100%",
-    flex: 0
+    flex: 0,
   },
   autocompleteInputContainerStyle: {
     borderWidth: 0,
     margin: 0,
     width: "100%",
-    flex: 0
+    flex: 0,
   },
   autocompleteListStyle: {
-    backgroundColor: "rgba(157, 65, 235, 0.2)",
-    borderWidth: 0
+    backgroundColor: Images.color3,
+    borderWidth: 0.4,
+    borderColor: "rgba(255,255,255,0.60)",
+    width: "100%",
+    minHeight: '10%',
+    maxHeight: 150,
+    left: Platform.OS === "android" ? -9 : 1,
+    zIndex: 9999,
+    position: 'absolute'
   },
   autocompleteListItemStyle: {
     fontSize: 15,
@@ -5249,5 +5269,8 @@ export default StyleSheet.create({
         }),
       }
     ),
+  },
+  scrollViewAndroid: {
+    width: Platform.OS === "android" ? "90%" : null
   }
 });

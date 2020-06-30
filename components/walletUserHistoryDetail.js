@@ -72,7 +72,7 @@ export default (store) => {
   };
 
   return (
-        <View style={[styles.container, {zIndex: 999}]}>
+        <View style={styles.container}>
           <View style={styles.detailsHistory}>
             <View>
               <View style={styles.badge}>
@@ -93,6 +93,7 @@ export default (store) => {
           </View>
 
           <View style={styles.viewPt} />
+          <ScrollView>
            <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.sender}:</Text>
             <Text style={styles.viewPt} onPress={writeToClipboardSourceAcc}>
@@ -144,9 +145,10 @@ export default (store) => {
               ></Icon>
             </Text>
           </View>
-
-
           <View style={styles.mbXScroll}/>
+          </ScrollView>
+
+
         </View>
   )
 };
