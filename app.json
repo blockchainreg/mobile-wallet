@@ -35,8 +35,6 @@
       "versionCode": 55
     },
     "description": "Premium quality cryptocurrency wallet!",
-    "isDetached": true,
-    "scheme": "exp909be699bde04c14a7f9a71ac40e7d5d",
     "detach": {
       "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.13.0-sdk35.0.0-a30ebc9b-3db4-42f4-b677-e468076baf18.tar.gz"
     }

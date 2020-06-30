@@ -233,7 +233,7 @@ export default ({ store, web3t }) => {
           keyboardAppearance="dark"
           placeholder={wallet.network.mask}
           style={[styles.inputStyle, { fontSize: 18 }]}
-          value={send.to}
+          value={send["to"]}
           keyboardType={"default"}
           placeholderTextColor="rgba(255,255,255,0.60)"
         />
@@ -293,7 +293,7 @@ export default ({ store, web3t }) => {
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
-              
+
                 <View>
                     <Item style={{width: '100%'}}>
                         <Label>{wallet.coin.token.toUpperCase()}</Label>
@@ -314,6 +314,7 @@ export default ({ store, web3t }) => {
                         <Label>USD</Label>
                         <Input
                           onChangeText={(text) => amountUsdChange(wrapNumber(text))}
+                          disabled
                           returnKeyType="done"
                           autoCompleteType="off"
                           style={[styles.inputStyle, { fontSize: 18}]}
@@ -336,11 +337,11 @@ export default ({ store, web3t }) => {
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang["to"]}:</Text>
               </View>
-              <InputAddressWithdrawBtc send={store.current.send} />
+              {InputAddressWithdrawBtc({send: store.current.send})}
             </View>
             <View style={styles.containerScreen}>
               <View style={styles.marginBtn}>
-                <SendButton send={store.current.send} />
+                {SendButton({send: store.current.send})}
               </View>
             </View>
           </View>
