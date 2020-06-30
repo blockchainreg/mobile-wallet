@@ -32,7 +32,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 66
+      "versionCode": 67
     },
     "description": "Premium quality cryptocurrency wallet!",
     "isDetached": true,
