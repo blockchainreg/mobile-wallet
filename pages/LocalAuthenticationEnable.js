@@ -85,7 +85,7 @@ function RequestPin({store, web3t}) {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text={lang.confirm}
+        text={capitalize(lang.confirm)}
         textStyle={{ fontSize: 14, color: Images.color1 }}
         gradientBegin="#fff"
         gradientEnd="#fff"
@@ -101,7 +101,7 @@ function RequestPin({store, web3t}) {
   const buttonInactive = store => {
     return (
       <Button block style={styles.buttonInactive}>
-      <Text style={styles.buttonTextInactive}>{lang.confirm}</Text>
+      <Text style={styles.buttonTextInactive}>{capitalize(lang.confirm)}</Text>
     </Button>
     );
   };
@@ -191,5 +191,9 @@ function RequestPin({store, web3t}) {
       </View>
   );
 };
+
+function capitalize(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 export default ({ store, web3t }) => <LocalAuthenticationEnable store={store} web3t={web3t} />;
