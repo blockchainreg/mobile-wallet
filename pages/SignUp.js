@@ -38,6 +38,10 @@ const buttonActive = store => {
   };
 
   const signup = async () => {
+    if (store.current.signUpInputPinField.length < 6) {
+      store.current.signUpInputPinField = "";
+      return showToast(lang.validPin);
+    }
     await localStorage.clear();
     set(store.current.signUpInputPinField);
     check(store.current.signUpInputPinField);
@@ -97,7 +101,7 @@ export default ({ store }) => {
     store.current.signUpInputPinField = null;
   };
 
-  const regexPin = /[0-9a-zA-Z]{6,}/;
+  const regexPin = /[0-9a-zA-Z]{1,}/;
   const validInputPinSignUp = (
     !store.current.signUpInputPinField ||
     regexPin.test(store.current.signUpInputPinField)
@@ -156,15 +160,14 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          {/* <Text style={styles.textH1Sign}>SignUp</Text> */}
           <View style={styles.widthCard}>
           <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>{lang.setupPin}</Text>
             </View>
             {inputSuccessPin(store)}
-            {!validInputPinSignUp && (
+            {/* {!validInputPinSignUp && (
               <Text style={styles.error}>{lang.validPin}</Text>
-            )}
+            )} */}
             <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
             <View style={styles.marginBtn1}>{PickerSetLang({ store })}</View>
           </View>

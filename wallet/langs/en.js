@@ -3,7 +3,7 @@
   module.exports = {
   confirmation: "Confirmation",
 	search: "search",
-	confirm: "confirm",
+	confirm: "Confirm",
 	cancel: "Cancel",
 	send: "Send",
 	amount: "Amount",
@@ -114,7 +114,7 @@
 	seedNotify2: "We do not keep a backup of your 24 words. please store them securely, if you lose them we cannot recover your wallet for you. ",
 	seedNotifyPrint: "Print",
 	done: "Done",
-	validPin: "Enter a valid password (at least 6 characters)",
+	validPin: "Minimum 6 characters",
 	validEmail: "Enter a valid email",
 	restoreSeed: "Restore",
 	txSend: "Your Transaction has been sent",
@@ -158,6 +158,7 @@
     enable: "Enable",
     touchId: "Touch Id",
     faceId: "Face Id",
-    scan: "Scan"
+	scan: "Scan",
+	incorrectPass: "Incorrect password"
   };
 }).call(this);

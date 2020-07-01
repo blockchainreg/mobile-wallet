@@ -48,7 +48,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
       store.current.page = "settings";
       store.current.pin = "";
     } else if (store.current.pin != store.current.pinSave) {
-      showToast("Incorrect password");
+      showToast(lang.incorrectPass ||  "Incorrect password");
       store.current.pin = "";
     }
   };
@@ -58,7 +58,7 @@ const LocalAuthSettingsPage = ({ store, web3t }) => {
       store.current.page = "LocalAuthenticationEnable";
       store.current.pin = "";
     } else if (store.current.pin != store.current.pinSave) {
-      showToast("Incorrect password");
+      showToast(lang.incorrectPass ||  "Incorrect password");
       store.current.pin = "";
     }
   };
@@ -161,9 +161,9 @@ export default ({ store, web3t }) => {
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             {inputSuccessPin(store)}
-            {!validInputPin && (
+            {/* {!validInputPin && (
               <Text style={styles.error}>{lang.validPin}</Text>
-            )}
+            )} */}
             {/* {Unlock(store)} */}
             {/* <Unlock store={store} web3t={web3t}/> */}
           </View>

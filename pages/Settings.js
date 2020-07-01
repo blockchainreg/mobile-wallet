@@ -95,11 +95,7 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlexHeader}>
             <Title style={styles.titleBlack}>{lang.settings}</Title>
           </Body>
-          <Right style={styles.viewFlexHeader} >
-          <Button transparent onPress={logoutBtn}>
-            <Icon name="ios-log-out" style={styles.styleTxtSettings} />
-          </Button>
-          </Right>
+          <Right style={styles.viewFlexHeader}/>
 
         </Header>
 
@@ -189,6 +185,22 @@ export default ({ store, web3t }) => {
             <Right style={styles.heightListItem} />
           </ListItem>
           <LocalAuthListView store={store}/>
+
+          <Separator bordered style={styles.seperatorStyle}>
+            <Text style={styles.styleTxtSeparator}>{lang.security}</Text>
+          </Separator>
+
+          <ListItem icon style={styles.heightListItem} last underlayColor={Images.color1} onPress={logoutBtn}>
+            <Left>
+              <Icon name="ios-log-out" style={styles.styleTxtSettings}/>
+            </Left>
+            <Body style={styles.heightListItem}>
+              <Text style={styles.txtSettings}>{lang.logOut}</Text>
+            </Body>
+            <Right style={styles.heightListItem} />
+          </ListItem>
+          {/* <ListItem/>
+          <ListItem/> */}
         </Content>
 
         <Footer store={store}></Footer>
