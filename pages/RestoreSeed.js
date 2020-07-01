@@ -21,6 +21,7 @@ import {
   Right,
   Textarea
 } from "native-base";
+import bip39 from "bip39";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import Images from "../Images.js";
