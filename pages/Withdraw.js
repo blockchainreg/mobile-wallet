@@ -293,7 +293,7 @@ export default ({ store, web3t }) => {
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
-              
+
                 <View >
                     <Item style={styles.borderItem}>
                       {/* <Label style={{ color: Images.color6}}>{wallet.coin.token.toUpperCase()}</Label> */}
@@ -311,16 +311,16 @@ export default ({ store, web3t }) => {
                         />
                     </Item>
                     <Item style={styles.borderItem}>
+                        <Text style={{color: "white"}}>$ </Text>
                         <Input
                           onChangeText={(text) => amountUsdChange(wrapNumber(text))}
-                          disabled
                           returnKeyType="done"
                           autoCompleteType="off"
                           style={[styles.inputStyle, { fontSize: 18}]}
                           selectionColor={"#fff"}
                           keyboardAppearance="dark"
                           placeholder="USD"
-                          value={send.amountSendUsd + " " + "$"}
+                          value={send.amountSendUsd}
                           keyboardType="numeric"
                           placeholderTextColor="rgba(255,255,255,0.60)"
                         />

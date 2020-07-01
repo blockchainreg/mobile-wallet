@@ -1,6 +1,5 @@
 require! {
     \mobx : { toJS }
-    \react-native: {Alert}
     \./math.js : { times, minus, div }
     \./api.js : { create-transaction, push-tx }
     \./calc-amount.js : { change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
@@ -25,22 +24,6 @@ require! {
     \./get-lang.js
     \./apply-transactions.js
 }
-
-confirmrn = (store, message, yesButtonText, cb)->
-  Alert.alert(
-    "Confirmation",
-    message,
-    [
-      {
-        text: 'Cancel',
-        onPress: () => cb(false),
-        style: 'cancel',
-      },
-      {text: yesButtonText, onPress: () => cb(true)},
-    ],
-    {cancelable: false},
-  );
-
 
 module.exports = (store, web3t)->
     return null if not store? or not web3t?

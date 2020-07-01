@@ -230,12 +230,12 @@
     performAmountEurChange = function(value){
       var toSend;
       toSend = calcCryptoFromEur(store, value);
-      return changeAmount(store, toSend);
+      return changeAmount(store, toSend, "skipUpdateFiat");
     };
     performAmountUsdChange = function(value){
       var toSend;
       toSend = calcCryptoFromUsd(store, value);
-      return changeAmount(store, toSend);
+      return changeAmount(store, toSend, "skipUpdateFiat");
     };
     amountEurChange = function(event){
       var value;
@@ -244,7 +244,7 @@
       amountEurChange.timer = clearTimeout(amountEurChange.timer);
       return amountEurChange.timer = setTimeout(function(){
         return performAmountEurChange(value);
-      }, 1000);
+      }, 100);
     };
     amountUsdChange = function(event){
       var value;
@@ -253,7 +253,7 @@
       amountUsdChange.timer = clearTimeout(amountUsdChange.timer);
       return amountUsdChange.timer = setTimeout(function(){
         return performAmountUsdChange(value);
-      }, 1000);
+      }, 100);
     };
     encodeDecode = function(){
       return send.showDataMode = (function(){
