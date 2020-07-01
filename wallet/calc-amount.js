@@ -45,7 +45,7 @@
     return calcFeeProxy.timer = setTimeout(fun, 1000);
   };
   changeAmountGeneric = function(field){
-    return function(store, amountSend){
+    return function(store, amountSend, skipUpdateFiat){
       var send, wallet, token, wallets, feeToken, ref$, feeWallet, resultAmountSend, feeType, txType, usdRate, feeUsdRate, account;
       send = store.current[field];
       wallet = send.wallet;
@@ -75,8 +75,10 @@
       send.value = times(resultAmountSend, Math.pow(10, send.network.decimals));
       send.amountObtain = resultAmountSend;
       send.amountObtainUsd = times(send.amountObtain, usdRate);
-      send.amountSendUsd = calcUsd(store, amountSend);
-      send.amountSendEur = calcEur(store, amountSend);
+      if (!skipUpdateFiat) {
+        send.amountSendUsd = calcUsd(store, amountSend);
+        send.amountSendEur = calcEur(store, amountSend);
+      }
       return calcFeeProxy({
         token: token,
         network: send.network,
