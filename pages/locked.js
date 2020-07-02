@@ -185,10 +185,11 @@ export default ({ store, web3t }) => {
   }
 
   const buttonActive = store => {
+    const lang = getLang(store);
     const loginAction = spin(store, lang.checkingPin, () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return showToast("Incorrect password");
+        return showToast(lang.incorrectPass ||  "Incorrect password");
       }
 
       login(get());
@@ -327,9 +328,9 @@ export default ({ store, web3t }) => {
               <Text style={styles.textH1Seed}>{lang.enterPin}</Text>
             </View>
             {inputSuccessPin(store)}
-            {!validInputPin && (
+            {/* {!validInputPin && (
               <Text style={styles.error}>{lang.validPin}</Text>
-            )}
+            )} */}
             {unlock(store)}
           </View>
         </View>

@@ -91,42 +91,17 @@ const wallets = (store, web3t) => {
   return (
     <Content>
       <List>{wallets.map(listItem)}</List>
-      <View style={styles.touchableCenter}>
-        <TouchableOpacity
-          onPress={changePage("add")}
-          style={[styles.touchableAdd, { backgroundColor: Images.color4 }]}
-        >
-          <Icon name="md-create" style={styles.iconAdd} />
-        </TouchableOpacity>
-      </View>
+      <View style={styles.touchableCenter} />
     </Content>
   );
 };
 
-// var gradientBg = () => {
-//   return (
-//     <LinearGradient
-//       colors={[Images.color4, Images.color4,  Images.color5]}
-//       start={{ x: 0.0, y: 0.1 }}
-//       end={{ x: 0.5, y: 1.0 }}
-//       locations={[0.0, 0.5, 0.8]}
-//       style={{
-//         position: "absolute",
-//         left: 0,
-//         right: 0,
-//         top: 0,
-//         bottom: 0,
-//         opacity: 0.8,
-//       }}
-//     />
-//   );
-// };
-// var Shape2 = () => {
-//   return <View style={styles.squareLight}>{gradientBg()}</View>;
-// };
+
 export default ({ store, web3t }) => {
   const lang = getLang(store);
-
+  const changePage = (tab) => () => {
+    store.current.page = tab;
+  };
   const calcUsd = store.current.balanceUsd;
 
   const refreshBalance = () => {
@@ -146,7 +121,7 @@ export default ({ store, web3t }) => {
         <View style={styles.topView}>
           <RefreshControl swipeRefresh={refreshBalance}>
             <Header transparent style={styles.mtIphoneX}>
-              <Left style={styles.viewFlexHeader} />
+              <Left style={styles.viewFlexHeader}/>
               <Body style={styles.viewFlexHeader}>
                 <Text style={styles.title1}>{lang.yourWallets}</Text>
               </Body>
@@ -154,9 +129,9 @@ export default ({ store, web3t }) => {
                 <Button
                   transparent
                   style={styles.arrowHeaderLeft}
-                  onPress={refreshBalance}
+                  onPress={changePage("add")}
                 >
-                  <Icon name="ios-sync" style={styles.refreshHeaderIcon} />
+                  <Icon name="md-create" style={styles.refreshHeaderIcon} />
                 </Button>
               </Right>
             </Header>
@@ -166,14 +141,20 @@ export default ({ store, web3t }) => {
               backgroundColor={"transparent"}
             />
             {/* <View style={styles.viewMt1} /> */}
-            <Text style={styles.title2}>{lang.totalBalance}</Text>
+            {/* <Text style={styles.title2}>{lang.totalBalance}</Text>
             <Text style={styles.textBalanceHeader}>
               {calcUsd} <Text style={styles.textCurrency}>$</Text>
-            </Text>
+            </Text> */}
           </RefreshControl>
         </View>
 
         <View style={styles.viewMonoWallets}>
+          <View style={styles.viewWalletBalance}>
+          <Text style={styles.title2}>{lang.totalBalance}</Text>
+            <Text style={styles.textBalanceHeader}>
+              {calcUsd} <Text style={styles.textCurrency}>$</Text>
+            </Text>
+          </View>
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}

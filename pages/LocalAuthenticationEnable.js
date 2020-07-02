@@ -69,11 +69,12 @@ function RequestPin({store, web3t}) {
   // const lang = getLang(store);
 
   const buttonActive = store => {
+    const lang = getLang(store);
     const login = () => {
       setTimeout(async () => {
         if (!check(pin)) {
           setPin("");
-          return showToast("Incorrect password");
+          return showToast(lang.incorrectPass ||  "Incorrect password");
         }
 
         setPin("");
@@ -182,9 +183,9 @@ function RequestPin({store, web3t}) {
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             {inputSuccessPin(store)}
-            {!validInputPin && (
+            {/* {!validInputPin && (
               <Text style={styles.error}>{lang.validPin}</Text>
-            )}
+            )} */}
             {checkpin(store)}
           </View>
         </View>
