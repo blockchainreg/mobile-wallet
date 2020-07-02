@@ -43,6 +43,18 @@ export default (store, changeSeed, number) => {
   if (autocompleteData.length === 1 && autocompleteData[0] === store.signUpConfirmSeedField) {
     autocompleteData = [];
   }
+  if (store.current.isAutocompleteHidden) {
+    autocompleteData = [];
+  }
+  const setAutocomplete = (seed) => {
+    store.current.isAutocompleteHidden = true;
+    changeSeed(seed);
+  };
+  const changeSeedInternal = (seed) => {
+    store.current.isAutocompleteHidden = false;
+    changeSeed(seed);
+  };
+
   const input = (
     <View style={styles.bodyConfirm}>
       <Item style={styles.borderItem}>
@@ -51,7 +63,7 @@ export default (store, changeSeed, number) => {
         autoFocus
         autoCorrect={false}
         value={store.signUpConfirmSeedField}
-        onChangeText={changeSeed}
+        onChangeText={changeSeedInternal}
         autoCapitalize="none"
         secureTextEntry={false}
         returnKeyType="done"
@@ -74,7 +86,7 @@ export default (store, changeSeed, number) => {
       listStyle={styles.autocompleteListStyle}
       renderTextInput={props => input}
       renderItem={({item}) => (
-        <TouchableOpacity onPress={() => changeSeed(item)} key={item}>
+        <TouchableOpacity onPress={() => setAutocomplete(item)} key={item}>
           <Text style={styles.autocompleteListItemStyle}>
             {item}
           </Text>
