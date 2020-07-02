@@ -97,6 +97,19 @@ export default ({ store }) => {
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
+                <GradientButton
+                    style={styles.viewMt}
+                    text={lang.newWallet}
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
+                    gradientDirection="diagonal"
+                    height={45}
+                    width="100%"
+                    radius={5}
+                    onPressAction={generateRandom}
+                  />
+                  <View style={{ padding: 10 }}></View>
                   <GradientButton
                     style={styles.viewMt}
                     text={lang.restoreSeed}
@@ -109,19 +122,7 @@ export default ({ store }) => {
                     radius={5}
                     onPressAction={restoreSeed}
                   />
-                  <View style={{ padding: 10 }}></View>
-                  <GradientButton
-                    style={styles.viewMt}
-                    text={lang.generate}
-                    textStyle={{ fontSize: 14, color: Images.color1 }}
-                    gradientBegin="#fff"
-                    gradientEnd="#fff"
-                    gradientDirection="diagonal"
-                    height={45}
-                    width="100%"
-                    radius={5}
-                    onPressAction={generateRandom}
-                  />
+
                 </View>
               </Body>
             </CardItem>
