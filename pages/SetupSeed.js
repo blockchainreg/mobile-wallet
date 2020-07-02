@@ -100,9 +100,9 @@ export default ({ store }) => {
                 <GradientButton
                     style={styles.viewMt}
                     text={lang.newWallet}
-                    textStyle={{ fontSize: 14, color: Images.color1 }}
-                    gradientBegin="#fff"
-                    gradientEnd="#fff"
+                    textStyle={{ fontSize: 14, color: "#fff" }}
+                    gradientBegin="#60B687"
+                    gradientEnd="#60B687"
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
