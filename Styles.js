@@ -5266,19 +5266,19 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "red",
+        color: "#FB746E",
         fontWeight: "bold",
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "red",
+            color: "#FB746E",
             fontWeight: "bold",
           },
           android: {
             fontSize: 14,
-            color: "red",
+            color: "#FB746E",
             fontWeight: "bold",
           },
         }),
@@ -5289,19 +5289,19 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "green",
+        color: "#60B687",
         fontWeight: "bold",
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "green",
+            color: "#60B687",
             fontWeight: "bold",
           },
           android: {
             fontSize: 14,
-            color: "green",
+            color: "#60B687",
             fontWeight: "bold",
           },
         }),
