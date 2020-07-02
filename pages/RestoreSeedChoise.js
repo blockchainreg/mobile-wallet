@@ -20,36 +20,12 @@ import {
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import { generateMnemonic } from "bip39";
-import randomBytes from "randombytes";
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
-
-
-const randOrd = () => {
-  return (Math.round(Math.random())-0.5);
-}
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = randomBytes(4).readUInt32BE() % currentIndex;
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
+import {shuffle} from "../utils/array.js";
 
 export default ({ store, web3t }) => {
   const changePage = (tab) => () => {

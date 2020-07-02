@@ -21,7 +21,6 @@ import {
 } from "native-base";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
-import randomBytes from "randombytes";
 // import { generateMnemonic } from "bip39";
 import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";
@@ -30,6 +29,7 @@ import style from "../Styles";
 import BackButton from "../components/BackButton.js";
 import { confirm } from "../wallet/pages/confirmation.js";
 import Background from "../components/Background.js";
+import {shuffle} from "../utils/array.js";
 
 
 // const generateMnemonic = () => {
@@ -52,29 +52,6 @@ const createWordBlock = (store) => (word, index) => {
     </View>
   );
 };
-
-const randOrd = () => {
-  return Math.round(Math.random()) - 0.5;
-};
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = randomBytes(4).readUInt32BE() % currentIndex;
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
 
 export default ({ store }) => {
   const changePage = (tab) => () => {
