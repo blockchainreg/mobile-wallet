@@ -18,7 +18,6 @@ import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check} from "../wallet/pin.js";
-import Spinner from "../utils/spinner.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";

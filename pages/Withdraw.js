@@ -247,7 +247,10 @@ export default ({ store, web3t }) => {
     ;
 
     const refreshToken = async (bool) => {
-      web3t.refresh((err, data) => {});
+      store.current.refreshingBalances = true;
+      web3t.refresh((err, data) => {
+        store.current.refreshingBalances = false;
+      });
     };
     const pad =
       { paddingTop: 10 };
@@ -273,7 +276,7 @@ export default ({ store, web3t }) => {
           </Right>
         </Header>
         <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-        <RefreshControl swipeRefresh={refreshToken}>
+        {RefreshControl({swipeRefresh:refreshToken, store, children:<>
           <View style={styles.bodyBlockWallet}>
             {/* <View style={styles.bodyBalance}> */}
             <View style={styles.bodyBlock3}>
@@ -346,7 +349,7 @@ export default ({ store, web3t }) => {
               </View>
             </View>
           </View>
-        </RefreshControl>
+        </>})}
       </View>
     );
 }
