@@ -33,7 +33,7 @@ function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
   switch(status) {
     case "unavailable":
-      return <Text>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
+      return<Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
     case "waiting":
       Promise.all([
         LocalAuthentication.hasHardwareAsync(),

@@ -14,7 +14,7 @@ import {
   Thumbnail,
   Badge
 } from "native-base";
-import { View, ScrollView, Clipboard, Alert, Vibration } from "react-native";
+import { View, ScrollView, Clipboard, Alert, Vibration, Linking } from "react-native";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from "moment";
@@ -70,6 +70,7 @@ export default (store) => {
         return null;
     }
   };
+  const url = `https://explorer.velas.com/tx/${store.infoTransaction.tx}`;
 
   return (
         <View style={styles.container}>
@@ -146,7 +147,7 @@ export default (store) => {
                 onPress={writeToClipboardId}
                 style={[styles.viewPt, {fontSize: 20} ]}
             />
-              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardId}>
+              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={() => {Linking.openURL(url)}}>
               {store.infoTransaction.tx}
             </Text>
             </View>
