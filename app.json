@@ -32,7 +32,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 61,
+      "versionCode": 81,
       "adaptiveIcon": {
         "backgroundColor": "#000000",
         "foregroundImage": "./assets/velas-logo-1024x1024.png"
