@@ -18,6 +18,8 @@ export default ({ store }) => {
       applyTransactions(store);
     }
   };
+  //DO NOT generate footer if transaction info is visible
+  if (store.infoTransaction != null) return null;
   return (
     <Footer style={styles.footerHeight}>
       <FooterTab style={styles.footerTab}>
@@ -28,7 +30,7 @@ export default ({ store }) => {
         >
           {/* <Ionicons name="ios-wallet" size={32} style={styles.iconFooter} /> */}
           <Thumbnail square small source={Images.btnWallet} style={styles.iconFooter1} onPress={changeTab("wallets")}/>
-          
+
         </Button>
         <Button
           vertical
