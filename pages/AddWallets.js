@@ -114,7 +114,7 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       {/* <StatusBar /> */}
       <Background fullscreen={true}/>
-        <RefreshControl swipeRefresh={refreshToken}>
+        {RefreshControl({swipeRefresh: refreshToken, store, children: <>
           <Header transparent style={styles.mtIphoneX}>
             <Left style={styles.viewFlexHeader}>
               <BackButton onBack={back}/>
@@ -126,7 +126,7 @@ export default ({ store, web3t }) => {
             <Right style={styles.viewFlex} />
           </Header>
           <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-        </RefreshControl>
+        </>})}
       <View style={styles.viewMono1}>
       <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}

@@ -25,12 +25,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
-
-
-const randOrd = () => {
-  return (Math.round(Math.random())-0.5);
-}
-
+import {shuffle} from "../utils/array.js";
 
 export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
@@ -40,7 +35,7 @@ export default ({ store, web3t }) => {
   const makeRange = (from)=> {
     store.current.seed = "";
     store.current.seedIndex = 0;
-    store.current.seedIndexes = [...Array(from).keys()].sort(randOrd)
+    store.current.seedIndexes = shuffle([...Array(from).keys()])
     store.current.seedWords = [...Array(from).keys()].map(x=> { return "" } )
   }
 

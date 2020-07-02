@@ -1283,6 +1283,11 @@ export default StyleSheet.create({
   viewPt1: {
     paddingTop: 20,
   },
+  userHistoryRow: {
+    flexDirection: 'row', 
+    alignItems: 'flex-start',
+    width: "100%"
+  },
   listitemHeight: {
     height: 60,
   },
@@ -4364,6 +4369,11 @@ export default StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
+  imgScanCamera: {
+    paddingTop: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   loadMoreBtn: {
     padding: 10,
     borderRadius: 4,
@@ -4573,6 +4583,12 @@ export default StyleSheet.create({
         width: 31.7 * 2,
       },
     }),
+  },
+  styleLogoCamera: {
+    
+        height: 86/1.5,
+        width: 115/1.5,
+    
   },
   setupConfirmImg: {
     height: 292 / 5,
@@ -5250,19 +5266,19 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "red",
+        color: "#FB746E",
         fontWeight: "bold",
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "red",
+            color: "#FB746E",
             fontWeight: "bold",
           },
           android: {
             fontSize: 14,
-            color: "red",
+            color: "#FB746E",
             fontWeight: "bold",
           },
         }),
@@ -5273,19 +5289,19 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "green",
+        color: "#60B687",
         fontWeight: "bold",
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "green",
+            color: "#60B687",
             fontWeight: "bold",
           },
           android: {
             fontSize: 14,
-            color: "green",
+            color: "#60B687",
             fontWeight: "bold",
           },
         }),
@@ -5294,5 +5310,82 @@ export default StyleSheet.create({
   },
   scrollViewAndroid: {
     width: Platform.OS === "android" ? "90%" : null
+  },
+  
+  containerBarCode: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+    
+  },
+  layerTop: {
+    flex: 0.5,
+    // backgroundColor: "rgba(0, 0, 0, .6)"
+  },
+  layerCenter: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  layerLeft: {
+    flex: 1.5,
+    // backgroundColor: "rgba(0, 0, 0, .6)",
+  },
+  focused: {
+    flex: 10,
+  },
+  layerRight: {
+    flex: 1.5,
+    // backgroundColor: "rgba(0, 0, 0, .6)"
+  },
+  layerBottom: {
+    flex: 1,
+    // backgroundColor: "rgba(0, 0, 0, .6)"
+  },
+  focusedBorder1: {
+    backgroundColor: "transparent",
+    borderColor: "#fff",
+    height: "10%",
+    width: "10%",
+    top: 0,
+    left: 0,
+    position: "absolute",
+    borderLeftWidth: 5,
+    borderTopWidth: 5,
+  },
+  focusedBorder2: {
+    backgroundColor: "transparent",
+    borderColor: "#fff",
+    height: "10%",
+    width: "10%",
+    top:0,
+    right: 0,
+    position: "absolute",
+    borderRightWidth: 5,
+    borderTopWidth: 5,
+  },
+  focusedBorder3: {
+    backgroundColor: "transparent",
+    borderColor: "#fff",
+    height: "10%",
+    width: "10%",
+    bottom:0,
+    left: 0,
+    position: "absolute",
+    borderLeftWidth: 5,
+    borderBottomWidth: 5,
+  },
+  focusedBorder4: {
+    backgroundColor: "transparent",
+    borderColor: "#fff",
+    height: "10%",
+    width: "10%",
+    bottom:0,
+    right: 0,
+    position: "absolute",
+    borderRightWidth: 5,
+    borderBottomWidth: 5,
+  },
+  paddingSettings: {
+    paddingTop: 100
   }
 });

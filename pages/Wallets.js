@@ -15,9 +15,9 @@ import {
   Header,
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image } from "react-native";
+import { ScrollView, TouchableOpacity, Image,  RefreshControl, } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import RefreshControl from "../components/RefreshControl.js";
+import CustomRefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
 import Footer from "./Footer.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
@@ -105,8 +105,10 @@ export default ({ store, web3t }) => {
   const calcUsd = store.current.balanceUsd;
 
   const refreshBalance = () => {
+    store.current.refreshingBalances = true;
     console.log("refresh balance start");
     web3t.refresh((err, data) => {
+      store.current.refreshingBalances = false;
       console.log("refresh balance finish");
     });
     return true;
@@ -119,7 +121,7 @@ export default ({ store, web3t }) => {
         style={styles.linearGradientBg}> */}
       <Background fullscreen={true}>
         <View style={styles.topView}>
-          <RefreshControl swipeRefresh={refreshBalance}>
+          {CustomRefreshControl({swipeRefresh: refreshBalance, store, children: <>
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader}/>
               <Body style={styles.viewFlexHeader}>
@@ -140,27 +142,31 @@ export default ({ store, web3t }) => {
               translucent={true}
               backgroundColor={"transparent"}
             />
-            {/* <View style={styles.viewMt1} /> */}
-            {/* <Text style={styles.title2}>{lang.totalBalance}</Text>
-            <Text style={styles.textBalanceHeader}>
-              {calcUsd} <Text style={styles.textCurrency}>$</Text>
-            </Text> */}
-          </RefreshControl>
+            </>
+          })}
         </View>
 
         <View style={styles.viewMonoWallets}>
           <View style={styles.viewWalletBalance}>
           <Text style={styles.title2}>{lang.totalBalance}</Text>
-            <Text style={styles.textBalanceHeader}>
-              {calcUsd} <Text style={styles.textCurrency}>$</Text>
-            </Text>
+          <Text style={styles.textBalanceHeader}>
+            {calcUsd} <Text style={styles.textCurrency}>$</Text>
+          </Text>
           </View>
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}
           >
             <View style={styles.viewPt} />
-            <ScrollView>{wallets(store, web3t)}</ScrollView>
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={false}
+                  onRefresh={refreshBalance}
+                  tintColor="#fff"
+                />
+              }
+            >{wallets(store, web3t)}</ScrollView>
           </LinearGradient>
         </View>
       </Background>

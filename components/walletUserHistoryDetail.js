@@ -14,7 +14,7 @@ import {
   Thumbnail,
   Badge
 } from "native-base";
-import { View, ScrollView, Clipboard, Alert, Vibration } from "react-native";
+import { View, ScrollView, Clipboard, Alert, Vibration, Linking } from "react-native";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from "moment";
@@ -70,6 +70,7 @@ export default (store) => {
         return null;
     }
   };
+  const url = `https://explorer.velas.com/tx/${store.infoTransaction.tx}`;
 
   return (
         <View style={styles.container}>
@@ -95,26 +96,31 @@ export default (store) => {
           <View style={styles.viewPt} />
           <ScrollView>
            <View style={styles.lineMonoRow}>
+
             <Text style={styles.detail}>{lang.sender}:</Text>
-            <Text style={styles.viewPt} onPress={writeToClipboardSourceAcc}>
-              {store.infoTransaction.from}{"  "}
-              <Icon
+            <View style={styles.userHistoryRow}>
+            <Icon
                 name="ios-copy"
                 onPress={writeToClipboardSourceAcc}
-                style={styles.iconCopy}
-              ></Icon>
+                style={[styles.viewPt, {fontSize: 20,} ]}
+            />
+              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardSourceAcc}>
+              {store.infoTransaction.from}
             </Text>
+            </View>
           </View>
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.recipient}:</Text>
-            <Text style={styles.viewPt} onPress={writeToClipboardDestAcc}>
-              {store.infoTransaction.to}{"  "}
-              <Icon
+            <View style={styles.userHistoryRow}>
+            <Icon
                 name="ios-copy"
                 onPress={writeToClipboardDestAcc}
-                style={styles.iconCopy}
-              ></Icon>
+                style={[styles.viewPt, {fontSize: 20} ]}
+            />
+              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardDestAcc}>
+              {store.infoTransaction.to}
             </Text>
+            </View>
           </View>
 
           <View style={styles.lineMonoRow}>
@@ -135,15 +141,17 @@ export default (store) => {
 
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.externalId}:</Text>
-            <Text style={styles.viewPt} onPress={writeToClipboardId}>
-              {store.infoTransaction.tx}
-              {"  "}
-              <Icon
+            <View style={styles.userHistoryRow}>
+            <Icon
                 name="ios-copy"
                 onPress={writeToClipboardId}
-                style={styles.iconCopy}
-              ></Icon>
+                style={[styles.viewPt, {fontSize: 20} ]}
+            />
+              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={() => {Linking.openURL(url)}}>
+              {store.infoTransaction.tx}
             </Text>
+            </View>
+
           </View>
           <View style={styles.mbXScroll}/>
           </ScrollView>

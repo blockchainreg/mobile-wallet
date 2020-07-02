@@ -18,7 +18,6 @@ import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check} from "../wallet/pin.js";
-import Spinner from "../utils/spinner.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
@@ -34,7 +33,7 @@ function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
   switch(status) {
     case "unavailable":
-      return <Text>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
+      return<Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
     case "waiting":
       Promise.all([
         LocalAuthentication.hasHardwareAsync(),

@@ -29,6 +29,7 @@ import style from "../Styles";
 import BackButton from "../components/BackButton.js";
 import { confirm } from "../wallet/pages/confirmation.js";
 import Background from "../components/Background.js";
+import {shuffle} from "../utils/array.js";
 
 
 // const generateMnemonic = () => {
@@ -52,17 +53,13 @@ const createWordBlock = (store) => (word, index) => {
   );
 };
 
-const randOrd = () => {
-  return Math.round(Math.random()) - 0.5;
-};
-
 export default ({ store }) => {
   const changePage = (tab) => () => {
     if (badSeed(store.current.seed)) return;
 
     store.current.page = tab;
     store.current.seedIndex = 0;
-    store.current.seedIndexes = [...Array(24).keys()].sort(randOrd);
+    store.current.seedIndexes = shuffle([...Array(24).keys()]);
   };
 
   const words = store.current.seed.split(" ");

@@ -9,7 +9,9 @@
       return coin;
     }
   };
-  common = [require('../web3t/plugins/vlx2-coin.js'), require('../web3t/plugins/btc-coin.js'), require('../web3t/plugins/eth-coin.js'), require('../web3t/plugins/usdt-coin.js'), require('../web3t/plugins/ltc-coin.js')];
+  common = [
+    require('../web3t/plugins/vlx2-coin.js'),
+    require('../web3t/plugins/btc-coin.js'), require('../web3t/plugins/eth-coin.js'), require('../web3t/plugins/usdt-coin.js'), require('../web3t/plugins/ltc-coin.js')];
   out$.getCoins = getCoins = function(cb){
     var base;
     base = filter(function(it){
@@ -31,7 +33,10 @@
         return it.type === 'coin';
       })(
       items);
-      all = installed.concat(base);
+
+      // HACK: it got reversed later by reverse concatenation at recursion
+
+      all = base.concat(installed).reverse();
       return cb(null, all);
     });
   };

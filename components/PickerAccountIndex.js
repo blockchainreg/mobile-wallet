@@ -3,13 +3,15 @@ import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from '@expo/vector-icons';
 import { KECCAK256_NULL } from "ethereumjs-util";
 
+import spin from "../utils/spin.js";
+
 export default ({ store, web3t }) => {
   const onValueChangeValue = async value => {
     //store.lang = value;
     //localStorage.setItem("lang", value);
     store.current.accountIndex = value;
-    web3t.refresh((err,data) => {
-        console.log("refresh balance finish");
+    spin(store, `Updating account index`, web3t.refresh.bind(web3t))((err,data) => {
+        console.log("Updating account index finished");
     })
   };
   const createIndex = (i)=> {

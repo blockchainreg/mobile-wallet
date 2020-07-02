@@ -117,7 +117,7 @@ export default ({ store, web3t }) => {
           </Right>
         </Header>
         <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-        <RefreshControl swipeRefresh={refreshToken}>
+        {RefreshControl({swipeRefresh: refreshToken, store, children: <>
           <View style={styles.bodyBlock}>
             <View>
               <View style={styles.bodyBalance}>
@@ -145,7 +145,7 @@ export default ({ store, web3t }) => {
               </View>
             </View>
           </View>
-        </RefreshControl>
+        </>})}
 
     </View>
   );

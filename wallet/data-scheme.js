@@ -80,6 +80,8 @@
       applied: []
     },
     current: {
+      isAutocompleteHidden: false,
+      refreshingBalances: false,
       account: {wallets:[]},
       device: getDevice(),
       list: 0,
