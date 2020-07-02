@@ -68,7 +68,7 @@
               return [];
             }
           }());
-          all = currentWallets.concat(wallets);
+          all = wallets.concat(currentWallets);
           return cb(null, all);
         });
       });
