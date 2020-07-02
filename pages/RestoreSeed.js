@@ -21,6 +21,7 @@ import {
   Right,
   Textarea
 } from "native-base";
+import bip39 from "bip39";
 import styles from "../Styles.js";
 import GradientButton from "react-native-gradient-buttons";
 import Images from "../Images.js";
@@ -29,9 +30,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
-import bip39 from "bip39";
-import Autocomplete from 'react-native-autocomplete-input';
-
+import SeedWord from "../components/SeedWord.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -82,65 +81,7 @@ export default ({ store, web3t }) => {
   };
 
   const seedPhrase = store => {
-    let autocompleteData = (
-      !store.signUpConfirmSeedField || store.signUpConfirmSeedField.length < 2
-      ? []
-      : bip39.wordlists.EN.filter((word) => word.startsWith(store.signUpConfirmSeedField))
-    );
-    let inputStyle = styles.inputSize;
-    if (store.signUpConfirmSeedField && store.signUpConfirmSeedField.length >= 2 && !autocompleteData.length) {
-      inputStyle = styles.autocompleteInputIncorrect;
-    } else if (bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) !== -1) {
-      inputStyle = styles.autocompleteInputCorrect;
-    }
-    if (autocompleteData.length === 1 && autocompleteData[0] === store.signUpConfirmSeedField) {
-      autocompleteData = [];
-    }
-
-    const input = (
-      <View style={styles.bodyConfirm}>
-        <Item style={styles.borderItem}>
-          <Icon active name='key' style={{color: "#fff"}}/>
-          <Input
-          autoFocus
-          autoCorrect={false}
-          value={store.signUpConfirmSeedField}
-          onChangeText={changeSeed}
-          autoCapitalize="none"
-          secureTextEntry={false}
-          returnKeyType="done"
-          placeholder={lang.placeholderConfirmSeed + " " +  "#" + (number + 1)}
-          placeholderTextColor="rgba(255,255,255,0.60)"
-          style={inputStyle}
-          selectionColor={"#fff"}
-          keyboardAppearance="dark"
-          />
-          </Item>
-      </View>
-    );
-    return (
-
-      // <View style={styles.autocompleteContainer}>
-
-      <Autocomplete
-        data={autocompleteData}
-        keyExtractor={item => item}
-        containerStyle={styles.autocompleteContainerStyle}
-        inputContainerStyle={styles.autocompleteInputContainerStyle}
-        listStyle={styles.autocompleteListStyle}
-        renderTextInput={props => input}
-        renderItem={({item}) => (
-          <TouchableOpacity onPress={() => changeSeed(item)} key={item}>
-            <Text style={styles.autocompleteListItemStyle}>
-              {item}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
-      // </View>
-
-
-    );
+      return SeedWord(store, changeSeed, number);
   };
 
   const lang = getLang(store);

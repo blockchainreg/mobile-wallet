@@ -25,6 +25,7 @@ import setupWallet from '../setupWallet.js';
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
+import SeedWord from "../components/SeedWord.js";
 
 
 
@@ -43,7 +44,7 @@ export default ({ store, web3t }) => {
   const placeholderConfirmSeed = lang.placeholderConfirmSeed + " " +  "#" + (number + 1);
   const verifyWordOrSetup = () => {
 
-    if(store.signUpConfirmSeedField != DEV_SKIP) { 
+    if(store.signUpConfirmSeedField != DEV_SKIP) {
 
       const expectedWord = store.current.seed.split(" ")[number];
 
@@ -59,7 +60,7 @@ export default ({ store, web3t }) => {
 
     }
 
-    
+
     store.signUpConfirmSeedField = "";
     setupWallet(store, web3t);
 
@@ -106,6 +107,7 @@ export default ({ store, web3t }) => {
           <View style={styles.card1}>
             <CardItem style={styles.cardItemSeed}>
               <Body>
+              {/*
                 <View style={styles.bodyConfirm}>
                   <Item style={styles.borderItem}>
                     <Icon active name='key' style={{color: "#fff"}}/>
@@ -124,6 +126,8 @@ export default ({ store, web3t }) => {
                     />
                   </Item>
                 </View>
+                */}
+                {SeedWord(store, handleConfirmSeedField, number)}
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}

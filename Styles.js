@@ -235,8 +235,8 @@ export default StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        height: "60%",
-        zIndex: 2,
+        height: "75%",
+        zIndex: 1,
       },
       {
         ...Platform.select({
@@ -246,8 +246,8 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("60%"),
-            zIndex: 2,
+            height: hp("75%"),
+            zIndex: 1,
           },
           android: {
             flex: 1,
@@ -255,8 +255,25 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("65%"),
+            height: hp("70%"),
             zIndex: 1,
+          },
+        }),
+      }
+    ),
+  },
+  viewWalletBalance: {
+    ...ifIphoneX(
+      {
+        top: "-15%", position: "absolute"
+      },
+      {
+        ...Platform.select({
+          ios: {
+            top: "-15%", position: "absolute"
+          },
+          android: {
+            top: "-20%", position: "absolute"
           },
         }),
       }
@@ -646,6 +663,11 @@ export default StyleSheet.create({
   },
   refreshHeaderIcon: {
     fontSize: 30,
+    color: "rgba(255, 255, 255, 0.35)",
+    fontWeight: "bold",
+  },
+  addHeaderIcon: {
+    fontSize: 20,
     color: "rgba(255, 255, 255, 0.35)",
     fontWeight: "bold",
   },
@@ -5195,7 +5217,7 @@ export default StyleSheet.create({
     right: 0,
     bottom: 0
   },
-  
+
   autocompleteContainerStyle: {
     borderWidth: 0,
     margin: 0,

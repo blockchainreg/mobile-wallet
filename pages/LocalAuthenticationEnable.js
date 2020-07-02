@@ -69,11 +69,12 @@ function RequestPin({store, web3t}) {
   // const lang = getLang(store);
 
   const buttonActive = store => {
+    const lang = getLang(store);
     const login = () => {
       setTimeout(async () => {
         if (!check(pin)) {
           setPin("");
-          return showToast("Incorrect password");
+          return showToast(lang.incorrectPass ||  "Incorrect password");
         }
 
         setPin("");
@@ -85,7 +86,7 @@ function RequestPin({store, web3t}) {
     return (
       <GradientButton
         style={styles.gradientBtnPh}
-        text={lang.confirm}
+        text={capitalize(lang.confirm)}
         textStyle={{ fontSize: 14, color: Images.color1 }}
         gradientBegin="#fff"
         gradientEnd="#fff"
@@ -101,7 +102,7 @@ function RequestPin({store, web3t}) {
   const buttonInactive = store => {
     return (
       <Button block style={styles.buttonInactive}>
-      <Text style={styles.buttonTextInactive}>{lang.confirm}</Text>
+      <Text style={styles.buttonTextInactive}>{capitalize(lang.confirm)}</Text>
     </Button>
     );
   };
@@ -182,14 +183,18 @@ function RequestPin({store, web3t}) {
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             {inputSuccessPin(store)}
-            {!validInputPin && (
+            {/* {!validInputPin && (
               <Text style={styles.error}>{lang.validPin}</Text>
-            )}
+            )} */}
             {checkpin(store)}
           </View>
         </View>
       </View>
   );
 };
+
+function capitalize(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 export default ({ store, web3t }) => <LocalAuthenticationEnable store={store} web3t={web3t} />;
