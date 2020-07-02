@@ -6,10 +6,12 @@ import * as Permissions from 'expo-permissions';
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import walletFuncs from "../wallet/wallet-funcs.js";
 import navigate from "../wallet/navigate.js";
+import {HiddenBackButton} from "../components/BackButton.js";
 
 function Scanner({onScan}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [onScanCalled, setOnScanCalled] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -19,13 +21,24 @@ function Scanner({onScan}) {
       // And this work on expo 35
       const { status } = await Permissions.askAsync(Permissions.CAMERA);
       setHasPermission(status === 'granted');
+      if (status !== 'granted') {
+        setTimeout( () => {
+          if (!onScanCalled) {
+            onScan(false);
+            setOnScanCalled(true);
+          }
+        }, 2000);
+      }
     })();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    onScan(data);
+    if (!onScanCalled) {
+      onScan(data);
+      setOnScanCalled(true);
+    }
   };
 
   if (hasPermission === null) {
@@ -34,6 +47,14 @@ function Scanner({onScan}) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+
+  const onBack = () => {
+    if (!onScanCalled) {
+      onScan(false);
+      setOnScanCalled(true);
+    }
+  };
 
   return (
     <View
@@ -47,6 +68,7 @@ function Scanner({onScan}) {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      <HiddenBackButton onBack={onBack}/>
     </View>
   );
 }
@@ -59,6 +81,12 @@ module.exports = ({ store, web3t }) => {
 
 
   const onScan = (text) => {
+      if (!text) {
+        //Canceled or permission problems
+        navigate(store, web3t, "wallet", x => {
+        });
+        return;
+      }
           store.current.send.to = text;
           store.current.send.wallet = wallet;
           store.current.send.coin = wallet.coin;

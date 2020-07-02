@@ -28,3 +28,17 @@ export default ({onBack, style}) => {
     </Button>
   );
 };
+
+export function HiddenBackButton({onBack}) {
+  const back = () => {
+    onBack();
+    return true;
+  };
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', back);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', back);
+    };
+  });
+  return null;
+};
