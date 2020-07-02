@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions';
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import walletFuncs from "../wallet/wallet-funcs.js";
 import navigate from "../wallet/navigate.js";
-import {HiddenBackButton} from "../components/BackButton.js";
+import BackButton, {HiddenBackButton} from "../components/BackButton.js";
 
 function Scanner({onScan}) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -33,8 +33,7 @@ function Scanner({onScan}) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     if (!onScanCalled) {
       onScan(data);
       setOnScanCalled(true);
@@ -60,15 +59,15 @@ function Scanner({onScan}) {
     <View
       style={{
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
       }}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+      <BackButton
+        onBack={onBack}
       />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
-      <HiddenBackButton onBack={onBack}/>
+      <BarCodeScanner
+        onBarCodeScanned={handleBarCodeScanned}
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+        style={[StyleSheet.absoluteFillObject, {top: 30}]}
+      />
     </View>
   );
 }
