@@ -80,6 +80,7 @@
       applied: []
     },
     current: {
+      refreshingBalances: false,
       account: {wallets:[]},
       device: getDevice(),
       list: 0,

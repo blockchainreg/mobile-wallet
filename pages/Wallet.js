@@ -69,7 +69,9 @@ export default ({ store, web3t }) => {
     };
 
     const refreshToken = () => {
+      store.current.refreshingBalances = true;
       web3t.refresh((err,data) => {
+        store.current.refreshingBalances = false;
         console.log("refresh done", err, data);
       })
     }
@@ -184,7 +186,7 @@ export default ({ store, web3t }) => {
                 <Thumbnail square small source={{uri: wallet.coin.image}} />
               </Right>
             </Header>
-            <RefreshControl transparent swipeRefresh={refreshToken}>
+            {RefreshControl({transparent: true, swipeRefresh: refreshToken, store, children: <>
               <View style={styles.bodyBlockWallet}>
                 <View style={styles.bodyBlock3}>
                   <Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
@@ -235,7 +237,7 @@ export default ({ store, web3t }) => {
                   </View>
                 </View>
               </View>
-            </RefreshControl>
+            </>})}
 
           {getTxContainer()}
       </View>

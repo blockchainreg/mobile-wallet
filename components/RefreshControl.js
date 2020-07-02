@@ -11,30 +11,30 @@ function wait(timeout) {
   });
 }
 
-  
-export default ({ children, swipeRefresh }) => {
+
+export default ({ children, swipeRefresh, store }) => {
     /*
     const [refreshing, setRefreshing] = React.useState(false);
-    
+
     const onRefresh = React.useCallback(() => {
         swipeRefresh(true);
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, [refreshing]);
    */
-  refreshing =false
+  // refreshing = false
   const onRefresh = (err, data)=> {
       swipeRefresh();
   }
+  // alert(store+"")
   //const lang = getLang(store);
   return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fff" />
+          <RefreshControl refreshing={store.current.refreshingBalances} onRefresh={onRefresh} tintColor="#fff" />
         }
       >
       {children}
       </ScrollView>
   );
 };
-
