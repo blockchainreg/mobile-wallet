@@ -126,7 +126,7 @@ export default ({ store, web3t }) => {
           <ListItem
             icon
             onPress={() => {
-              Linking.openURL(`https://velas.com/privacy.html`);
+              Linking.openURL(`https://raw.githubusercontent.com/askucher/expo-web3/dev/Privacy.md`);
             }}
             underlayColor={Images.color1}
             style={styles.heightListItem}
