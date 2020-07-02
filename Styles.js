@@ -1283,6 +1283,11 @@ export default StyleSheet.create({
   viewPt1: {
     paddingTop: 20,
   },
+  userHistoryRow: {
+    flexDirection: 'row', 
+    alignItems: 'flex-start',
+    width: "100%"
+  },
   listitemHeight: {
     height: 60,
   },

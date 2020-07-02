@@ -293,6 +293,12 @@ export default ({ store, web3t }) => {
             {/* </View> */}
 
             <View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
+            <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang["to"]}:</Text>
+              </View>
+              {InputAddressWithdrawBtc({send: store.current.send})}
+              <View style={pad}></View>
+
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.amount}:</Text>
               </View>
@@ -322,7 +328,7 @@ export default ({ store, web3t }) => {
                           style={[styles.inputStyle, { fontSize: 18}]}
                           selectionColor={"#fff"}
                           keyboardAppearance="dark"
-                          placeholder="USD"
+                          placeholder="0.00"
                           value={send.amountSendUsd}
                           keyboardType="numeric"
                           placeholderTextColor="rgba(255,255,255,0.60)"
@@ -335,11 +341,7 @@ export default ({ store, web3t }) => {
                   {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
                 </Text>
                 <Text style={styles.error}>{send.error}</Text>
-              <View style={pad}></View>
-              <View style={styles.titleInputSend}>
-                <Text style={styles.titleInput1}>{lang["to"]}:</Text>
-              </View>
-              {InputAddressWithdrawBtc({send: store.current.send})}
+              
             </View>
             <View style={styles.containerScreen}>
               <View style={styles.marginBtn}>
