@@ -5385,4 +5385,7 @@ export default StyleSheet.create({
     borderRightWidth: 5,
     borderBottomWidth: 5,
   },
+  paddingSettings: {
+    paddingTop: 100
+  }
 });

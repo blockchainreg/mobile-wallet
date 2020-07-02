@@ -199,8 +199,7 @@ export default ({ store, web3t }) => {
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
-          {/* <ListItem/>
-          <ListItem/> */}
+          <View style={styles.paddingSettings}/>
         </Content>
 
         <Footer store={store}></Footer>
