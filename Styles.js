@@ -1158,7 +1158,7 @@ export default StyleSheet.create({
             paddingBottom: 10,
           },
           android: {
-            paddingTop: 50,
+            paddingTop: 70,
             paddingBottom: 30,
             // backgroundColor: "#fafafa",
           },

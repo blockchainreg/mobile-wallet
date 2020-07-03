@@ -173,7 +173,7 @@ export default ({ store, web3t }) => {
       <View style={styles.viewFlex}>
           <Background fullscreen={true}/>
             <StatusBar />
-            <Header transparent style={styles.mtAndroid}>
+            <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader}>
                 <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
               </Left>
