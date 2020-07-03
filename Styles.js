@@ -255,7 +255,7 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("70%"),
+            height: hp("75%"),
             zIndex: 1,
           },
         }),
@@ -265,15 +265,15 @@ export default StyleSheet.create({
   viewWalletBalance: {
     ...ifIphoneX(
       {
-        top: "-15%", position: "absolute"
+        top: hp("-13%"), position: "absolute"
       },
       {
         ...Platform.select({
           ios: {
-            top: "-15%", position: "absolute"
+            top: hp("-13%"), position: "absolute"
           },
           android: {
-            top: "-20%", position: "absolute"
+            top: hp("-15%"), position: "absolute"
           },
         }),
       }
@@ -1134,12 +1134,12 @@ export default StyleSheet.create({
       {
         ...Platform.select({
           ios: {
-            paddingTop: 30,
-            paddingBottom: 10,
+            paddingTop: hp("5%"),
+        paddingBottom: hp("3%"),
           },
           android: {
-            paddingTop: 70,
-            paddingBottom: 30,
+            paddingTop: hp("5%"),
+        paddingBottom: hp("3%"),
           },
         }),
       }
@@ -1158,7 +1158,7 @@ export default StyleSheet.create({
             paddingBottom: 10,
           },
           android: {
-            paddingTop: 70,
+            paddingTop: 50,
             paddingBottom: 30,
             // backgroundColor: "#fafafa",
           },
@@ -5130,20 +5130,61 @@ export default StyleSheet.create({
     bottom: -30,
   },
   topView: {
-    flex: 1,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: "30%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.17,
-    shadowRadius: 17.49,
-    elevation: 12,
+    ...ifIphoneX(
+      {
+        flex: 1,
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+        height: hp("25%"),
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 6,
+        },
+        shadowOpacity: 0.17,
+        shadowRadius: 17.49,
+        elevation: 12,
+      },
+      {
+        ...Platform.select({
+          ios: {
+            flex: 1,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: hp("25%"),
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 6,
+            },
+            shadowOpacity: 0.17,
+            shadowRadius: 17.49,
+            elevation: 12,
+          },
+          android: {
+            flex: 1,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: hp("25%"),
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 6,
+            },
+            shadowOpacity: 0.17,
+            shadowRadius: 17.49,
+            elevation: 12,
+          },
+        }),
+      }
+    ),
+    
   },
   square: {
     top: 30,
@@ -5388,5 +5429,26 @@ export default StyleSheet.create({
   },
   paddingSettings: {
     paddingTop: 100
-  }
+  },
+  containerLayer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  topLayer: {
+    flex: 1,
+    backgroundColor: "pink"
+  },
+  
+  bottomLayer: {
+    flex: 3,
+    backgroundColor: "transparent"
+  },
+
+  layerSubTop: {
+    flex: 0.5,
+    backgroundColor: "red",
+  },
+  
+
 });

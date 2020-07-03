@@ -89,8 +89,8 @@ export default ({ store, web3t }) => {
       <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
 
-        <StatusBar translucent={true} backgroundColor={'transparent'}/>
-        <Header transparent style={styles.mtAndroid}>
+
+        <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader}>
             <Title style={styles.titleBlack}>{lang.settings}</Title>
@@ -98,7 +98,11 @@ export default ({ store, web3t }) => {
           <Right style={styles.viewFlexHeader}/>
 
         </Header>
-
+        <StatusBar
+              barStyle="light-content"
+              translucent={true}
+              backgroundColor={"transparent"}
+            />
 
         <Content>
           <Separator bordered style={styles.seperatorStyle}>
