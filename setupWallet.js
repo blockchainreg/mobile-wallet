@@ -20,7 +20,7 @@ module.exports = (store, web3t) => {
   function preinstallCoins([coin, ...coins], cb) {
     if (!coin) {
       console.log(`refreshing`);
-      return web3t.refresh(cb);
+      return cb();
     }
     const name = coin.name || coin.token.toUpperCase();
     console.log(`installing ${name}`);
@@ -40,7 +40,11 @@ module.exports = (store, web3t) => {
           store.current.error = err + "";
           return;
       }
-      spin(store, `Setting up your wallet`, preinstallCoins)([eth, ltc, usdt], function(err){
+      spin(store, `Setting up your wallet`, (cb) => {
+        web3t.refresh(() => {
+          preinstallCoins([eth, ltc, usdt], cb)
+        })
+      })(function(err){
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";
