@@ -36,7 +36,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
 //
 
-const coinItems = [dash, etc, /*eth, Ethereum ltc, usdt,*/ usdt_erc20];
+const coinItems = [/*etc, */eth, ltc, dash, usdt, usdt_erc20];
 
 const renderCoin = (store, web3t) => item => {
   const tokens = walletsFuncs(store, web3t).wallets.map(x => x.coin.token);

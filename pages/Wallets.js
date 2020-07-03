@@ -29,6 +29,8 @@ import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from "../Images.js";
 import Modal from 'react-native-modal';
+import navigate from "../wallet/navigate.js";
+import spin from "../utils/spin.js";
 
 
 const wallets = (store, web3t) => {
@@ -63,18 +65,46 @@ const wallets = (store, web3t) => {
       wallets,
       wallet
     );
-    
+
+    const send = () => {
+          if(wallet.balance == "..") return;
+          store.current.wallet = wallet.coin.token;
+          store.current.walletIndex = wallets.indexOf(wallet);
+          store.current.filter.length = 0;
+          store.current.filter.push("IN");
+          store.current.filter.push("OUT");
+          store.current.filter.push(wallet.coin.token);
+          store.current.filterVal.temp = "";
+          store.current.filterVal.apply = "";
+          applyTransactions(store);
+          store.current.send.to = "";
+          store.current.send.wallet = wallet;
+          store.current.send.coin = wallet.coin;
+          store.current.send.network = wallet.network;
+          navigate(store, web3t, "send", () => {});
+    }
+    const deleteCoin = () => {
+      spin(store, `Uninstalling ${wallet.coin.name}`, web3t.uninstall.bind(web3t))(wallet.coin.token, (err, data) => {
+      });
+    };
+    const canRemove = !!global.localStorage[`plugin-${wallet.coin.token}`];
+    const buttons = (canRemove
+      ? [
+        {text: 'Send', onPress: send},
+        {text: 'Remove', onPress: deleteCoin},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      ]
+      : [
+        {text: 'Send', onPress: send},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      ]);
     const actions =()=>{
       Alert.alert(
         'Actions',
         '',
-        [
-          {text: 'Send', onPress: chooseWallet},
-          {text: 'Remove', onPress: () => console.log('Remove')},
-          {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
-        ],
-        { cancelable: false }
-      ); 
+        buttons,
+        // { cancelable: false }
+      );
     }
 
     return (
@@ -136,8 +166,8 @@ export default ({ store, web3t }) => {
   //     </TouchableOpacity>
   //   );
   // };
-  
-  
+
+
 
   return (
     <View style={styles.container}>
@@ -194,7 +224,7 @@ export default ({ store, web3t }) => {
             >{wallets(store, web3t)}</ScrollView>
           </LinearGradient>
         </View>
-   
+
       </Background>
       {/* </View> */}
       {/* </LinearGradient> */}

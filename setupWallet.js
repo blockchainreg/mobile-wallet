@@ -1,6 +1,10 @@
 const terms = require("./terms.js");
 import spin from "./utils/spin.js";
 
+import eth from "./registry/eth.json";
+import ltc from "./registry/ltc.json";
+import usdt from "./registry/usdt.json";
+
 async function loadTerms(store) {
   try {
     const response = await fetch('https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md');
@@ -11,7 +15,22 @@ async function loadTerms(store) {
   }
 }
 
+
 module.exports = (store, web3t) => {
+  function preinstallCoins([coin, ...coins], cb) {
+    if (!coin) {
+      console.log(`refreshing`);
+      return web3t.refresh(cb);
+    }
+    const name = coin.name || coin.token.toUpperCase();
+    console.log(`installing ${name}`);
+    web3t.installQuick(coin, function(err, data){
+      if (err) {
+        return cb(err);
+      }
+      preinstallCoins(coins, cb);
+    });
+  }
   // store.current.termsMarkdown = terms;
 	loadTerms(store);
   store.current.page = "terms";
@@ -21,8 +40,7 @@ module.exports = (store, web3t) => {
           store.current.error = err + "";
           return;
       }
-
-      spin(store, `Setting up your wallet`, web3t.refresh.bind(web3t))(function(err, data){
+      spin(store, `Setting up your wallet`, preinstallCoins)([eth, ltc, usdt], function(err){
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";

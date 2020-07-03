@@ -29,6 +29,7 @@ import {
 //   const url = store.current.lastTxUrl;
 //
   const handleCloseModalPress = store => {
+    const lang = getLang(store);
     return (
       <TouchableOpacity
         style={styles.btnClose}
