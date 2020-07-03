@@ -19,7 +19,6 @@ async function loadTerms(store) {
 module.exports = (store, web3t) => {
   function preinstallCoins([coin, ...coins], cb) {
     if (!coin) {
-      console.log(`refreshing`);
       return cb();
     }
     const name = coin.name || coin.token.toUpperCase();
@@ -31,6 +30,15 @@ module.exports = (store, web3t) => {
       preinstallCoins(coins, cb);
     });
   }
+
+  function postInit(cb) {
+    web3t.refresh((err) => {
+      if (err) {
+        return cb(err);
+      }
+      preinstallCoins([eth, ltc, usdt], cb)
+    })
+  }
   // store.current.termsMarkdown = terms;
 	loadTerms(store);
   store.current.page = "terms";
@@ -40,11 +48,7 @@ module.exports = (store, web3t) => {
           store.current.error = err + "";
           return;
       }
-      spin(store, `Setting up your wallet`, (cb) => {
-        web3t.refresh(() => {
-          preinstallCoins([eth, ltc, usdt], cb)
-        })
-      })(function(err){
+      spin(store, `Setting up your wallet`, postInit)(function(err){
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";
