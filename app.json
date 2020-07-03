@@ -27,17 +27,16 @@
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
       },
-      "publishBundlePath": "ios/velas-wallet/Supporting/shell-app.bundle",
-      "publishManifestPath": "ios/velas-wallet/Supporting/shell-app-manifest.json"
     },
     "android": {
       "package": "com.velas.mobile_wallet",
       "versionCode": 81,
-      "icon": "./assets/velas-logo-1024x1024.png"
+      "icon": "./assets/ic_launcher.png",
     },
     "description": "Premium quality cryptocurrency wallet!",
     "detach": {
-      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.13.0-sdk35.0.0-a30ebc9b-3db4-42f4-b677-e468076baf18.tar.gz"
-    }
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.13.0-sdk35.0.0-a30ebc9b-3db4-42f4-b677-e468076baf18.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v119-sdk35.0.0-6758e9de-1e10-40f8-863d-ec8972895cf1.tar.gz"
+    },
   }
 }
