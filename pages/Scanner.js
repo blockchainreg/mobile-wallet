@@ -114,7 +114,7 @@ function Scanner({ onScan }) {
       /> */}
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
-        style={[StyleSheet.absoluteFill, styles.containerBarCode]} 
+        style={[StyleSheet.absoluteFill, styles.containerBarCode]}
       >
         <Header transparent style={[styles.mtAndroid, {backgroundColor: "transparent", borderBottomColor: "transparent"}]}>
         <Left style={styles.viewFlexHeader}>
@@ -147,7 +147,7 @@ module.exports = ({ store, web3t }) => {
   const onScan = (text) => {
     if (!text) {
       //Canceled or permission problems
-      navigate(store, web3t, "wallet", (x) => {});
+      navigate(store, web3t, store.current.returnPage || "wallet", (x) => {});
       return;
     }
     store.current.send.to = text;

@@ -229,6 +229,7 @@ export default ({ store, web3t }) => {
     const scanQRSend = () => {
 
       if(wallet.balance == "..") return;
+      store.current.returnPage = 'send';
       return store.current.page = 'Scanner';
       //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
       //store.current.send.wallet = wallet;
@@ -259,7 +260,7 @@ export default ({ store, web3t }) => {
                       style={{ backgroundColor: 'transparent' }}
                     >
         <Image
-       
+
           source={Images.scanImage}
           style={styles.sizeIconBtn1}
         />
@@ -368,7 +369,7 @@ export default ({ store, web3t }) => {
                   {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
                 </Text>
                 <Text style={styles.error}>{send.error}</Text>
-              
+
             </View>
             <View style={styles.containerScreen}>
               <View style={styles.marginBtn}>
