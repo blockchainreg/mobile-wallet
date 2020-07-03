@@ -27,7 +27,7 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 
-
+let isLoggingIn = false;
 
 export default ({ store, web3t }) => {
   const showToast = message => {
@@ -35,13 +35,12 @@ export default ({ store, web3t }) => {
     this.toastify && this.toastify.show(message, 3000);
   };
   const lang = getLang(store);
-  let isLoggingIn = false;
 
   const loginQuick = () => {
     store.current.page = "wallets";
-    isLoggingIn = false;
 
-    spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
+    spin(store, lang.loadingBalance, web3t.refresh.bind(web3t), {displayDescription: true})(function(err, data){
+      isLoggingIn = false;
       if (err) {
         store.current.page = "error";
         store.current.error = err + "";
@@ -56,8 +55,8 @@ export default ({ store, web3t }) => {
       }
 
       store.current.page = "wallets";
-      isLoggingIn = false;
-      spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
+      spin(store, lang.loadingBalance, web3t.refresh.bind(web3t), {displayDescription: true})(function(err, data){
+        isLoggingIn = false;
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";
@@ -70,6 +69,10 @@ export default ({ store, web3t }) => {
     if (isLoggingIn) {
       return;
     }
+    console.warn("login called");
+    try {
+      LocalAuthentication.cancelAuthenticate();
+    }catch(e){}
 
     store.current.seed = seed;
     isLoggingIn = true;
@@ -89,6 +92,7 @@ export default ({ store, web3t }) => {
     };
 
     componentDidMount() {
+      console.warn("did mount");
       const {store} = this.props;
 
       Promise.all([
@@ -117,6 +121,7 @@ export default ({ store, web3t }) => {
         LocalAuthentication.cancelAuthenticate();
       }
       this.isUnmounted = true;
+      console.warn("will unmount");
     }
 
     useLocalAuth = async () => {
@@ -131,7 +136,6 @@ export default ({ store, web3t }) => {
         SecureStore.deleteItemAsync("localAuthToken");
         return showToast("Cannot authenticate. Please enter PIN.");
       }
-
       login(get());
       store.userWallet = 200;
     }
