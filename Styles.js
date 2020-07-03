@@ -2769,8 +2769,9 @@ export default StyleSheet.create({
     paddingHorizontal: 80,
   },
   modalContent: {
-    backgroundColor: "white",
-    borderRadius: 16,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    // opacity: .80,
+    borderRadius: 5,
     height: "auto",
     justifyContent: "center",
     alignItems: "center",

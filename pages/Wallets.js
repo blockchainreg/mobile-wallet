@@ -15,7 +15,7 @@ import {
   Header,
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image,  RefreshControl, } from "react-native";
+import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import CustomRefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -28,6 +28,8 @@ import getLang from "../wallet/get-lang.js";
 import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from "../Images.js";
+import Modal from 'react-native-modal';
+
 
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
@@ -61,6 +63,19 @@ const wallets = (store, web3t) => {
       wallets,
       wallet
     );
+    
+    const actions =()=>{
+      Alert.alert(
+        'Actions',
+        '',
+        [
+          {text: 'Send', onPress: chooseWallet},
+          {text: 'Remove', onPress: () => console.log('Remove')},
+          {text: 'Cancel', onPress: () => console.log('Cancel'), style: 'cancel'},
+        ],
+        { cancelable: false }
+      ); 
+    }
 
     return (
       <ListItem
@@ -68,6 +83,7 @@ const wallets = (store, web3t) => {
         thumbnail
         underlayColor={Images.color1}
         onPress={chooseWallet}
+        onLongPress={actions}
         style={styles.mbListItem}
       >
         <Left>
@@ -113,6 +129,15 @@ export default ({ store, web3t }) => {
     });
     return true;
   };
+  // const handleOpenModalPress = store => {
+  //   return (
+  //     <TouchableOpacity onPress={() => (store.modal = true)}>
+  //       <Text style={styles.textLoginStyle}>{lang.continue}</Text>
+  //     </TouchableOpacity>
+  //   );
+  // };
+  
+  
 
   return (
     <View style={styles.container}>
@@ -169,6 +194,7 @@ export default ({ store, web3t }) => {
             >{wallets(store, web3t)}</ScrollView>
           </LinearGradient>
         </View>
+   
       </Background>
       {/* </View> */}
       {/* </LinearGradient> */}
