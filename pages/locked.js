@@ -39,7 +39,7 @@ export default ({ store, web3t }) => {
   const loginQuick = () => {
     store.current.page = "wallets";
 
-    spin(store, lang.loadingBalance, web3t.refresh.bind(web3t), {displayDescription: true})(function(err, data){
+    spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
       isLoggingIn = false;
       if (err) {
         store.current.page = "error";
@@ -55,7 +55,7 @@ export default ({ store, web3t }) => {
       }
 
       store.current.page = "wallets";
-      spin(store, lang.loadingBalance, web3t.refresh.bind(web3t), {displayDescription: true})(function(err, data){
+      spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
         isLoggingIn = false;
         if (err) {
           store.current.page = "error";
@@ -69,7 +69,6 @@ export default ({ store, web3t }) => {
     if (isLoggingIn) {
       return;
     }
-    console.warn("login called");
     try {
       LocalAuthentication.cancelAuthenticate();
     }catch(e){}
@@ -92,7 +91,6 @@ export default ({ store, web3t }) => {
     };
 
     componentDidMount() {
-      console.warn("did mount");
       const {store} = this.props;
 
       Promise.all([
@@ -121,7 +119,6 @@ export default ({ store, web3t }) => {
         LocalAuthentication.cancelAuthenticate();
       }
       this.isUnmounted = true;
-      console.warn("will unmount");
     }
 
     useLocalAuth = async () => {
