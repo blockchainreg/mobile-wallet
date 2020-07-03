@@ -29,6 +29,9 @@ import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import Images from "../Images.js";
 import { LinearGradient } from "expo-linear-gradient";
+import {
+  Image, TouchableOpacity
+} from "react-native";
 
 const showToast = (message) => {
   console.log(message);
@@ -223,6 +226,19 @@ export default ({ store, web3t }) => {
     };
 
     const send = store.current.send;
+    const scanQRSend = () => {
+
+      if(wallet.balance == "..") return;
+      return store.current.page = 'Scanner';
+      //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
+      //store.current.send.wallet = wallet;
+      //store.current.send.coin = wallet.coin;
+      //store.current.send.network = wallet.network;
+      //navigate(store, web3t, "send", x=> {
+      //
+      //});
+
+}
 
     const InputAddressWithdrawBtc = ({ send }) => (
       <Item style={styles.borderItem}>
@@ -237,6 +253,17 @@ export default ({ store, web3t }) => {
           keyboardType={"default"}
           placeholderTextColor="rgba(255,255,255,0.60)"
         />
+        {/* <Icon name="ios-qr-code-outline" style={{ color: "#fff"}} onPress={scanQRSend}/> */}
+        <TouchableOpacity
+                      onPress={scanQRSend}
+                      style={{ backgroundColor: 'transparent' }}
+                    >
+        <Image
+       
+          source={Images.scanImage}
+          style={styles.sizeIconBtn1}
+        />
+        </TouchableOpacity>
       </Item>
     );
 
