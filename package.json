@@ -33,7 +33,7 @@
     "expo-permissions": "~7.0.0",
     "expo-random": "~7.0.0",
     "expo-secure-store": "~7.0.0",
-    "expokit": "^35.0.4",
+    "expokit": "35.0.4",
     "libsodium-wrappers-sumo": "^0.7.6",
     "localStorage": "^1.0.4",
     "mobx": "5.9.0",
