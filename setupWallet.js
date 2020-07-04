@@ -4,7 +4,7 @@ import spin from "./utils/spin.js";
 import eth from "./registry/eth.json";
 import ltc from "./registry/ltc.json";
 import usdt from "./registry/usdt.json";
-
+import {installPluginWORefresh} from "./wallet/install-plugin.js";
 async function loadTerms(store) {
   try {
     const response = await fetch('https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md');
@@ -23,12 +23,21 @@ module.exports = (store, web3t) => {
     }
     const name = coin.name || coin.token.toUpperCase();
     console.log(`installing ${name}`);
-    web3t.installQuick(coin, function(err, data){
-      if (err) {
-        return cb(err);
-      }
-      preinstallCoins(coins, cb);
-    });
+    if (coins.length > 0) {
+        installPluginWORefresh(coin, function(err, data){
+          if (err) {
+            return cb(err);
+          }
+          preinstallCoins(coins, cb);
+        });
+    } else {
+        web3t.installQuick(coin, function(err, data){
+          if (err) {
+            return cb(err);
+          }
+          preinstallCoins(coins, cb);
+        });
+    }
   }
 
   function postInit(cb) {

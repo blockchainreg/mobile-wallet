@@ -50,7 +50,7 @@
         if (err != null) {
           return cb(err);
         }
-        all = [plugin].concat(other);
+        all = plugin ? [plugin].concat(other) : other;
         return cb(null, all);
       });
     });
@@ -92,7 +92,7 @@
       if (err != null) {
         return cb(err);
       }
-      index = registry.indexOf(name) === -1;
+      index = registry.indexOf(name);
       if (index === -1) {
         return cb(null);
       }
@@ -176,6 +176,8 @@
       });
     };
   };
+
+  out$.installPluginWORefresh = installPlugin;
   out$.buildQuickInstall = buildQuickInstall = function(cweb3, store){
     return function(plugin, cb){
       if (store.current.page === 'locked') {

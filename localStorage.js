@@ -13,10 +13,13 @@ async function makeProxy() {
     inMemoryStorage[key] = value;
   }
   function setItem(key, value) {
-    AsyncStorage.setItem(key, value);
     inMemoryStorage[key] = value;
+    AsyncStorage.setItem(key, value);
   }
   function clear() {
+    for (let prop in inMemoryStorage) {
+      delete inMemoryStorage[prop];
+    }
     return AsyncStorage.clear();
   }
   const prototype = {
