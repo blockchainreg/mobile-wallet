@@ -15,7 +15,7 @@ import {
   Header,
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert } from "react-native";
+import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import CustomRefreshControl from "../components/RefreshControl.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -99,6 +99,7 @@ const wallets = (store, web3t) => {
         {text: 'Cancel', onPress: () => {}, style: 'cancel'},
       ]);
     const actions =()=>{
+      Vibration.vibrate(500);
       Alert.alert(
         'Actions',
         '',

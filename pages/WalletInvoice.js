@@ -36,7 +36,7 @@ const showToast = message => {
 export default ({ store, web3t }) => {
   const lang = getLang(store);
   const buttonCopy = store => {
-    const DURATION = 10000;
+    const DURATION = 10000/10;
     const writeToClipboardAddr = async () => {
       await Clipboard.setString(wallet.address);
       Vibration.vibrate(DURATION);

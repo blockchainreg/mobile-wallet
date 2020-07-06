@@ -32,10 +32,8 @@ export default (store) => {
     await Clipboard.setString(
       info
     );
-    Vibration.vibrate(10000);
-    Alert.alert("Copied to clipboard", "", [
-      { text: lang.ok, onPress: () => console.log("OK Pressed") }
-    ]);
+    Vibration.vibrate(1000);
+    Alert.alert(lang.copied, "", [{ text: lang.ok }]);
   };
 
 
