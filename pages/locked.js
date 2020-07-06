@@ -131,7 +131,7 @@ export default ({ store, web3t }) => {
       }
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
         SecureStore.deleteItemAsync("localAuthToken");
-        return showToast("Cannot authenticate. Please enter PIN.");
+        return showToast("Cannot authenticate. Please enter password.");
       }
       login(get());
       store.userWallet = 200;
@@ -159,7 +159,7 @@ export default ({ store, web3t }) => {
       console.log("authenticateRecursiveAndroid success!!!");
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
         SecureStore.deleteItemAsync("localAuthToken");
-        return showToast("Cannot authenticate. Please enter PIN.");
+        return showToast("Cannot authenticate. Please enter password.");
       }
 
       login(get());
@@ -240,7 +240,7 @@ export default ({ store, web3t }) => {
         gradientBegin="transparent"
         gradientEnd="transparent"
         height={45}
-        width="100%"
+        width="auto"
         onPressAction={anotherAccount}
       />
     );

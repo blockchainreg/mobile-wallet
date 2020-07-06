@@ -1839,6 +1839,7 @@ export default StyleSheet.create({
   buttonInactive: {
     backgroundColor: "#F2F2F2",
     marginVertical: 30,
+    borderRadius: 5
   },
   buttonTextInactive: {
     color: "#C6C5C5",

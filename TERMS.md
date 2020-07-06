@@ -2,7 +2,7 @@ VELAS WALLET — TERMS AND CONDITIONS
 
 PLEASE READ THESE TERMS CAREFULLY AS THEY AFFECT YOUR OBLIGATIONS AND LEGAL RIGHTS. SECTION 13 CONTAINS BINDING ARBITRATION AND WAIVER OF CLASS ACTIONS PROVISIONS. IN ACCORDANCE WITH SECTION 7, OUR LIABILITY TO YOU IS LIMITED, AND CERTAIN TYPES OF LIABILITY ARE EXCLUDED.
 
-Last updated: July 2, 2020
+Last updated: July 3, 2020
 
 Any use of the Velas Wallet through the website available at https://wallet.velas.com/, browser extension (plugin), desktop or mobile application, or otherwise (the “Velas Wallet”), is subject to these Terms and Conditions (the “Terms”). By downloading, using, or otherwise accessing the Velas Wallet, or by accepting these Terms, you agree without modifications to these Terms. If you are unwilling or unable to be bound by these Terms, you shall not use the Velas Wallet and you shall cease any such use immediately.
 Throughout these Terms, the terms “you” and “your” are used to refer to you as a user of the Velas Wallet, including you as a holder of a digital wallet on the Velas Wallet (the “Wallet”) and/or any person authorised to use your Wallet. If you are entering into these Terms on behalf of an entity, you hereby warrant and represent that you are authorised to act on behalf of such entity and to bind such entity to these Terms, and you accept these Terms on behalf of such entity and on your own behalf. In such case, the references in these Terms to “you” and “your” shall refer to both the above entity on whose behalf an individual using the Velas Wallet is acting, and to such individual.
