@@ -312,7 +312,7 @@ export default ({ store, web3t }) => {
             </View>
             <View style={styles.bodyBlock3}>
               <Text style={styles.totalBalance}>
-                {wallet.balance.toString().match(/^-?\d+(?:\.\d{0,8})?/)[0]}{" "}
+                {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,8})?/)[0]}{" "}
                 <Text style={styles.nameToken}>
                   {wallet.coin.token.toUpperCase()}
                 </Text>
