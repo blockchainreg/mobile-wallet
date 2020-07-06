@@ -21,7 +21,6 @@ import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
-import setupWallet from '../setupWallet.js';
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
@@ -62,9 +61,7 @@ export default ({ store, web3t }) => {
 
 
     store.signUpConfirmSeedField = "";
-    setupWallet(store, web3t);
-
-
+    store.current.page = "terms";
   };
 
 

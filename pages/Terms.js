@@ -21,16 +21,38 @@ import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/Background.js";
+import Spinner from "../utils/spinner.js";
+import setupWallet from '../setupWallet.js';
 
+async function loadTerms(store) {
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  const spinner = new Spinner(store, "Loading terms");
+  await loadTermsRecusion(store);
+  spinner.finish();
+}
 
+async function loadTermsRecusion(store) {
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md');
+    store.current.termsMarkdown = await response.text();
+  }catch(e) {
+    console.error(e);
+    setTimeout(loadTerms.bind(this, store), 1000);
+  }
+}
 
-const buttonAccept = store => {
+let loadTermsPromise = null;
+
+const buttonAccept = (store, web3t) => {
   const changePage = tab => () => {
     if (!store.current.seed) {
       return;
     }
     set(store.current.seed);
     store.current.page = tab;
+  };
+  const accept = () => {
+    setupWallet(store, web3t);
   };
   const lang = getLang(store);
   return (
@@ -44,7 +66,7 @@ const buttonAccept = store => {
       height={45}
       width="100%"
       radius={5}
-      onPressAction={changePage("wallets", true)}
+      onPressAction={accept}
     />
   );
 };
@@ -54,7 +76,13 @@ const markdownStyle = {
   }
 };
 
-export default ({ store }) => {
+export default ({ store, web3t }) => {
+  if (!loadTermsPromise) {
+    loadTermsPromise = loadTerms(store);
+  }
+  if (!store.current.termsMarkdown) {
+    return null;
+  }
   const lang = getLang(store);
   const terms = store => {
     return (
@@ -91,7 +119,7 @@ export default ({ store }) => {
                 </Text>
 
                 <View style={[styles.marginBtn, { marginBottom: -40 }]}>
-                  {buttonAccept(store)}
+                  {buttonAccept(store, web3t)}
                 </View>
               </Body>
             </CardItem>
