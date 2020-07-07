@@ -1,3 +1,5 @@
+import * as SecureStore from 'expo-secure-store';
+
 const terms = require("./terms.js");
 import spin from "./utils/spin.js";
 
@@ -41,6 +43,7 @@ module.exports = (store, web3t) => {
   }
 
   function initWallet(cb) {
+      SecureStore.deleteItemAsync("localAuthToken")
       spin(store, `Setting up your wallet`, (cb) => web3t.init(function(err, data) {
           if (err) {
             return cb(err);

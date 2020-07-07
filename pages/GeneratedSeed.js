@@ -42,12 +42,11 @@ const badSeed = (seed) => {
 };
 
 const createWordBlock = (store) => (word, index) => {
-  var i = 1;
   return (
     <View key={"word" + word + index} style={styles.createWordBlock}>
       <Text style={styles.inputSize1}>{word}</Text>
       <View style={styles.numberBlock}>
-        <Text style={styles.styleIndex}>{i + index++}</Text>
+        <Text style={styles.styleIndex}>{index + 1}</Text>
       </View>
     </View>
   );

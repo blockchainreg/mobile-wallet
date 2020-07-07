@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text, PanResponder} from "react-native";
-import { observable, intercept } from "mobx";
+import { observable, intercept, observe } from "mobx";
 import { observer } from "mobx-react";
 //import Store from "./Store.js";
 import pages from "./Pages.js";
@@ -27,6 +27,18 @@ Store.current.seedWords = [];
 // if ((localStorage.getItem("lang") || "").length === 0)
 //   Store.current.page = "LangPage"
 Store.lang = localStorage.getItem("lang") || "en";
+Store.current.auth = {
+    isLocalAuthEnabled: null,
+    isAuthenticating: false,
+    failedCount: 0,
+    isLoggingIn: false,
+    localAuthError: null
+};
+Store.current.isAutocompleteHidden = false;
+Store.current.refreshingBalances = false;
+Store.current.loadingDescriptions = [];
+Store.current.loadingSpinners = [];
+
 //module specific defaults (end)
 //------------------------------
 //Extend the store here !!!
@@ -38,7 +50,7 @@ const web3t = web3(store);
 const renderSpinner = ({ store }) => {
     const {current} = store;
     const text = current.loadingDescriptions.join(", ");
-    const isVisible = current.loading || current.loadingSpinners.length > 0;
+    const isVisible = current.loadingSpinners.length > 0;
     return (
       <Spinner
         visible={isVisible}
@@ -89,21 +101,26 @@ const state = {
   timer: null
 }
 
-intercept(store.current, "page", (x)=> {
+observe(store.current, "page", ()=> {
   resetTimer();
-  return x;
-})
+});
+
+observe(store.current.loadingSpinners, () => {
+  resetTimer();
+});
 
 const resetTimer = () => {
     clearTimeout(state.timer);
-    state.timer = setTimeout(lockWallet, 60000)
+    if (store.current.loadingSpinners.length === 0) {
+      state.timer = setTimeout(lockWallet, 60000);
+    }
     return true;
 }
 
 
 const lockWallet = () => {
 
-      if (store.current.page !== "wallets" || store.current.loading == true)
+      if (store.current.page !== "wallets")
         return resetTimer();
       //console.log("lang",localStorage.getItem("lang"));
       //if (!localStorage.getItem("lang"))
