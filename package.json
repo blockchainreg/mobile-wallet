@@ -9,6 +9,7 @@
     "install": "pwd && cp scripts/pre-commit .git/hooks/ && chmod u+x .git/hooks/pre-commit && chmod u+x scripts/bump-version.sh"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@rimiti/react-native-toastify": "^1.2.0",
     "bip174": "^1.0.1",
     "bip32": "^2.0.5",

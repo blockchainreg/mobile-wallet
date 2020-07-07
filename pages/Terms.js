@@ -44,14 +44,11 @@ async function loadTermsRecusion(store) {
 let loadTermsPromise = null;
 
 const buttonAccept = (store, web3t) => {
-  const changePage = tab => () => {
+  const accept = () => {
     if (!store.current.seed) {
       return;
     }
     set(store.current.seed);
-    store.current.page = tab;
-  };
-  const accept = () => {
     setupWallet(store, web3t);
   };
   const lang = getLang(store);

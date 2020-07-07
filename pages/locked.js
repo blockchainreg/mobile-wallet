@@ -27,12 +27,12 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 
-let isLoggingIn = false;
+let toastify = null;
 
 export default ({ store, web3t }) => {
   const showToast = message => {
     console.log('Trying to show toast', message);
-    this.toastify && this.toastify.show(message, 3000);
+    toastify && toastify.show(message, 3000);
   };
   const lang = getLang(store);
 
@@ -40,7 +40,7 @@ export default ({ store, web3t }) => {
     store.current.page = "wallets";
 
     spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
-      isLoggingIn = false;
+      store.current.auth.isLoggingIn = false;
       if (err) {
         store.current.page = "error";
         store.current.error = err + "";
@@ -56,7 +56,7 @@ export default ({ store, web3t }) => {
 
       store.current.page = "wallets";
       spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
-        isLoggingIn = false;
+        store.current.auth.isLoggingIn = false;
         if (err) {
           store.current.page = "error";
           store.current.error = err + "";
@@ -66,15 +66,19 @@ export default ({ store, web3t }) => {
   };
 
   const login = (seed) => {
-    if (isLoggingIn) {
-      return;
-    }
     try {
       LocalAuthentication.cancelAuthenticate();
     }catch(e){}
 
+    if (store.current.auth.isLoggingIn) {
+      return;
+    }
+
     store.current.seed = seed;
-    isLoggingIn = true;
+    store.current.auth.isLocalAuthEnabled = null;
+    store.current.auth.isAuthenticating = false;
+    store.current.auth.failedCount = 0;
+    store.current.auth.isLoggingIn = false;
     //in case when we already have built objects we can just show it
     if(store.current.account.wallets && store.current.account.wallets.length > 0) {
       loginQuick();
@@ -83,50 +87,35 @@ export default ({ store, web3t }) => {
     loginSlow();
   };
 
-  class LocalAuth extends React.Component {
-    state = {
-      isEnabled: null,
-      isAuthenticating: false,
-      failedCount: 0
-    };
-
-    componentDidMount() {
-      const {store} = this.props;
-
-      Promise.all([
-        LocalAuthentication.hasHardwareAsync(),
-        LocalAuthentication.supportedAuthenticationTypesAsync(),
-        LocalAuthentication.isEnrolledAsync(),
-        SecureStore.getItemAsync("localAuthToken")
-      ]).then(([hasHardware, supportedAuthTypes, isEnrolled, token]) => {
-          if (this.isUnmounted) {
-            return;
-          }
-          if (token && token.length > 10) {
-            //Stored seed phrase? Delete!
-            SecureStore.deleteItemAsync("localAuthToken")
-            token = null;
-          }
-          this.setState({ isEnabled: hasHardware && supportedAuthTypes.length > 0 && isEnrolled && !!token });
-          if (token && Platform.OS === 'android') {
-            this.authenticateRecursiveAndroid();
-          }
-        });
+  const LocalAuth = ({store}) => {
+    if (store.current.auth.isLocalAuthEnabled === null) {
+        setImmediate(() => {
+          store.current.auth.isLocalAuthEnabled = false;
+          Promise.all([
+            LocalAuthentication.hasHardwareAsync(),
+            LocalAuthentication.supportedAuthenticationTypesAsync(),
+            LocalAuthentication.isEnrolledAsync(),
+            SecureStore.getItemAsync("localAuthToken")
+          ]).then(([hasHardware, supportedAuthTypes, isEnrolled, token]) => {
+              if (token && token.length > 20) {
+                //Stored seed phrase? Delete!
+                SecureStore.deleteItemAsync("localAuthToken")
+                token = null;
+              }
+              store.current.auth.isLocalAuthEnabled = hasHardware && supportedAuthTypes.length > 0 && isEnrolled && !!token;
+              if (token && Platform.OS === 'android') {
+                authenticateRecursiveAndroid();
+              }
+            });
+      });
     }
 
-    componentWillUnmount() {
-      if (this.state.isAuthenticating) {
-        LocalAuthentication.cancelAuthenticate();
-      }
-      this.isUnmounted = true;
-    }
-
-    useLocalAuth = async () => {
-      const {store} = this.props;
-      this.setState({isAuthenticating: true});
+    const useLocalAuth = async () => {
+      store.current.auth.isAuthenticating = true;
       const result = await LocalAuthentication.authenticateAsync();
-      this.setState({isAuthenticating: false});
+      store.current.auth.isAuthenticating = false;
       if (!result.success) {
+        store.current.auth.localAuthError = result.error;
         return;
       }
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
@@ -135,26 +124,43 @@ export default ({ store, web3t }) => {
       }
       login(get());
       store.userWallet = 200;
+    };
+
+    const getAuthError = () => {
+      switch(store.current.auth.localAuthError) {
+        case "authentication_failed":
+            return "Authentication failed"
+        case "lockout":
+            return "Too many tries. Please enter password"
+        default:
+            return store.current.auth.localAuthError;
+      }
     }
 
-    async authenticateRecursiveAndroid() {
-      const {store} = this.props;
-      if (this.state.isAuthenticating) {
+    const authenticateRecursiveAndroid = async () => {
+      if (store.current.auth.isAuthenticating) {
         return;
       }
-      this.setState({isAuthenticating: true});
+      store.current.auth.isAuthenticating = true;
       const result = await LocalAuthentication.authenticateAsync();
       if (!result.success) {
         if (result.error === "user_cancel") {
           return;
         }
-        this.setState(
-          {failedCount: this.state.failedCount + 1, isAuthenticating: false},
-          () => this.authenticateRecursiveAndroid()
-        );
+        store.current.auth.localAuthError = result.error;
+        store.current.auth.failedCount = store.current.auth.failedCount + 1;
+        if (result.error === "lockout") {
+            return;
+        }
+        store.current.auth.isAuthenticating = false;
+        if (store.current.auth.failedCount > 20) {
+          store.current.auth.isLocalAuthEnabled = false;
+          return;
+        }
+        authenticateRecursiveAndroid();
         return;
       }
-      this.setState({isAuthenticating: false});
+      store.current.auth.isAuthenticating = false;
 
       console.log("authenticateRecursiveAndroid success!!!");
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
@@ -164,26 +170,24 @@ export default ({ store, web3t }) => {
 
       login(get());
       store.userWallet = 200;
+    };
+
+    const {isLocalAuthEnabled, isAuthenticating, failedCount} = store.current.auth;
+    if (!isLocalAuthEnabled) {
+      return <Text style={styles.txtLocked}></Text>;
+    }
+    if (isAuthenticating) {
+      if (failedCount) {
+        return <Text style={styles.txtLocked}>You may scan fingerprint to log in. Failed tries {failedCount}. {getAuthError()}</Text>;
+      }
+      return <Text style={styles.txtLocked}>You may scan fingerprint to log in</Text>;
     }
 
-    render() {
-      const {isEnabled, isAuthenticating, failedCount} = this.state;
-      if (!this.state.isEnabled) {
-        return null;
-      }
-      if (isAuthenticating) {
-        if (failedCount) {
-          return <Text style={styles.txtLocked}>You may scan fingerprint to log in. Failed tries {failedCount}.</Text>;
-        }
-        return <Text style={styles.txtLocked}>You may scan fingerprint to log in</Text>;
-      }
-
-      if (Platform.OS === 'android') {
-        return <Text style={styles.txtLocked}>One moment...</Text>;
-      }
-      return <Text onPress={this.useLocalAuth} style={styles.txtLocked}>Use Fingerprint or Face ID</Text>;
+    if (Platform.OS === 'android') {
+      return <Text style={styles.txtLocked}>One moment...</Text>;
     }
-  }
+    return <Text onPress={useLocalAuth} style={styles.txtLocked}>Use Fingerprint or Face ID</Text>;
+  };
 
   const buttonActive = store => {
     const lang = getLang(store);
@@ -261,7 +265,7 @@ export default ({ store, web3t }) => {
       : buttonInactive(store)}
       <View height={15}></View>
       {anotherAccount(store)}
-      {!isLoggingIn && <LocalAuth store={store} />}
+      {LocalAuth({store})}
     </View>);
   };
   const changePage = (tab) => () => {
@@ -310,7 +314,7 @@ export default ({ store, web3t }) => {
       <Background fullscreen={true}/>
       <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <Toast
-          ref={c => (this.toastify = c)}
+          ref={c => (toastify = c)}
           position="top"
           style={styles.toastStyle}
         />

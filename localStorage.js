@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 async function makeProxy() {
@@ -17,15 +17,20 @@ async function makeProxy() {
     AsyncStorage.setItem(key, value);
   }
   function clear() {
-    for (let prop in inMemoryStorage) {
-      delete inMemoryStorage[prop];
+    for (let key in inMemoryStorage) {
+      delete inMemoryStorage[key];
     }
     return AsyncStorage.clear();
+  }
+  function removeItem(key) {
+    delete inMemoryStorage[key];
+    AsyncStorage.removeItem(key);
   }
   const prototype = {
     getItem: (key) => inMemoryStorage[key],
     setItem,
-    clear
+    clear,
+    removeItem
   };
 
   const proxy = new Proxy(inMemoryStorage, {

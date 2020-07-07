@@ -23,6 +23,7 @@ export default class Fingerprint extends React.Component {
     authenticated: false,
     modalVisible: Platform.OS === "android",
     failedCount: 0,
+    error: null
   };
 
   setModalVisible(visible) {
@@ -30,7 +31,7 @@ export default class Fingerprint extends React.Component {
   }
 
   clearState = () => {
-    this.setState({ authenticated: false, failedCount: 0 });
+    this.setState({ authenticated: false, failedCount: 0, error: null });
   };
 
   scanFingerPrint = async () => {
@@ -50,9 +51,15 @@ export default class Fingerprint extends React.Component {
         this.props.onSuccess();
       } else {
         console.log("authenticateAsync failed", result);
+
+        if (results.error === "lockout") {
+          alert("Too many failed tries. Restart wallet and try again.");
+          return this.props.onCancel && this.props.onCancel();
+        }
         this.setState(
           {
             failedCount: this.state.failedCount + 1,
+            error: results.error
           },
           this.scanFingerPrint
         );
@@ -89,11 +96,11 @@ export default class Fingerprint extends React.Component {
                   style={styles.imageFinger}
                   source={Images.fingerPrint}
                 />
-                {/*this.state.failedCount > 0 && (
-                <Text style={{ color: 'red', fontSize: 14 }}>
-                  Failed to authenticate try again.
+                {this.state.failedCount > 0 && (
+                <Text style={{ color: "white", fontSize: 14 }}>
+                  Try again.
                 </Text>
-              )*/}
+              )}
                 <View style={styles.marginBtn}>
                   <GradientButton
                     style={styles.gradientBtnPh}
