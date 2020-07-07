@@ -31,6 +31,10 @@ import Images from "../Images.js";
 import Modal from 'react-native-modal';
 import navigate from "../wallet/navigate.js";
 import spin from "../utils/spin.js";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 
 const wallets = (store, web3t) => {
@@ -160,24 +164,22 @@ export default ({ store, web3t }) => {
     });
     return true;
   };
-  // const handleOpenModalPress = store => {
-  //   return (
-  //     <TouchableOpacity onPress={() => (store.modal = true)}>
-  //       <Text style={styles.textLoginStyle}>{lang.continue}</Text>
-  //     </TouchableOpacity>
-  //   );
-  // };
+  
+  
 
 
 
   return (
     <View style={styles.container}>
-      {/* <LinearGradient
-        colors={[Images.color4, Images.color5]}
-        style={styles.linearGradientBg}> */}
+
       <Background fullscreen={true}>
+        <View style={[styles.topView, {backgroundColor: "transparent", height: "20%", marginTop: hp("5%"), marginHorizontal: "17%", width: "66%", zIndex: 999}]}>
+        {CustomRefreshControl({swipeRefresh: refreshBalance, store, children: <>
+        </>
+          })}
+        </View>
         <View style={styles.topView}>
-          {CustomRefreshControl({swipeRefresh: refreshBalance, store, children: <>
+          
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader}/>
               <Body style={styles.viewFlexHeader}>
@@ -198,23 +200,28 @@ export default ({ store, web3t }) => {
               translucent={true}
               backgroundColor={"transparent"}
             />
-            </>
-          })}
+            
+            
+          <View style={styles.viewWalletAbsolute}>
+            <Text style={styles.titleAbsolute}>{lang.totalBalance}</Text>
+            <Text style={styles.textBalanceAbsolute}>
+              {calcUsd} <Text style={styles.textCurrency}>$</Text>
+            </Text>
+          </View>
+          
         </View>
 
         <View style={styles.viewMonoWallets}>
-          <View style={styles.viewWalletBalance}>
-          <Text style={styles.title2}>{lang.totalBalance}</Text>
-          <Text style={styles.textBalanceHeader}>
-            {calcUsd} <Text style={styles.textCurrency}>$</Text>
-          </Text>
-          </View>
+          
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}
           >
             <View style={styles.viewPt} />
             <ScrollView
+            // onScrollBeginDrag={refreshBalance}
+
+
               refreshControl={
                 <RefreshControl
                   refreshing={false}
@@ -227,8 +234,6 @@ export default ({ store, web3t }) => {
         </View>
 
       </Background>
-      {/* </View> */}
-      {/* </LinearGradient> */}
       <Footer store={store}></Footer>
     </View>
   );

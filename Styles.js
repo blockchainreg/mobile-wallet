@@ -262,18 +262,35 @@ export default StyleSheet.create({
       }
     ),
   },
-  viewWalletBalance: {
+  // viewWalletBalance: {
+  //   ...ifIphoneX(
+  //     {
+  //       top: hp("-13%"), position: "absolute"
+  //     },
+  //     {
+  //       ...Platform.select({
+  //         ios: {
+  //           top: hp("-13%"), position: "absolute"
+  //         },
+  //         android: {
+  //           top: hp("-15%"), position: "absolute"
+  //         },
+  //       }),
+  //     }
+  //   ),
+  // },
+  viewWalletAbsolute: {
     ...ifIphoneX(
       {
-        top: hp("-13%"), position: "absolute"
+        top: hp("13%"), position: "absolute", width: '80%'
       },
       {
         ...Platform.select({
           ios: {
-            top: hp("-13%"), position: "absolute"
+            top: hp("13%"), position: "absolute", width: '80%'
           },
           android: {
-            top: hp("-15%"), position: "absolute"
+            top: hp("13%"), position: "absolute", width: '80%'
           },
         }),
       }
@@ -801,6 +818,12 @@ export default StyleSheet.create({
     // fontWeight: "bold",
     marginLeft: 20,
     marginBottom: 10,
+  },
+  titleAbsolute: {
+    color: "#fff",
+    fontSize: 18,
+    left: 20,
+    bottom: 10,
   },
   titleBlack: {
     ...ifIphoneX(
@@ -2994,6 +3017,15 @@ export default StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     marginLeft: 20,
+  },
+  textBalanceAbsolute: {
+    color: "#fff",
+    fontSize: 36,
+    fontWeight: "bold",
+    left: 20,
+    top: 20,
+    position: "absolute",
+    width: '100%'
   },
   // LogOutModal
   textCancel: {
