@@ -761,11 +761,12 @@ export default StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center",
         height: 30,
-        // marginTop: 10
+        marginTop: 10
       },
       {
         color: "#fff",
         fontSize: 20,
+        height: 30,
         fontWeight: "bold",
         alignSelf: "center",
       }
@@ -775,7 +776,7 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         color: "#fff",
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center",
         height: 30,
@@ -785,7 +786,8 @@ export default StyleSheet.create({
       },
       {
         color: "#fff",
-        fontSize: 18,
+        fontSize: 20,
+        height: 30,
         fontWeight: "bold",
         alignSelf: "center",
         textAlign: "center",
@@ -813,6 +815,7 @@ export default StyleSheet.create({
       {
         color: "#fff",
         fontSize: 20,
+        height: 30,
         fontWeight: "bold",
         alignSelf: "center",
       }
@@ -1836,6 +1839,7 @@ export default StyleSheet.create({
   buttonInactive: {
     backgroundColor: "#F2F2F2",
     marginVertical: 30,
+    borderRadius: 5
   },
   buttonTextInactive: {
     color: "#C6C5C5",

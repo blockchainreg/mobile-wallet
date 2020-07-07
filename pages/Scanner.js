@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Vibration, Platform } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as Permissions from "expo-permissions";
 
@@ -27,6 +27,8 @@ import Images from '../Images.js';
 
 
 function Scanner({ onScan }) {
+  
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [onScanCalled, setOnScanCalled] = useState(false);
@@ -51,6 +53,7 @@ function Scanner({ onScan }) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    Vibration.vibrate( Platform.OS === "android" ? [0, 500, 200, 500] : 500);
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     if (!onScanCalled) {
       onScan(data);
