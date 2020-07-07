@@ -3,13 +3,11 @@ import settings from "./pages/Settings.js";
 import wallet from "./pages/Wallet.js";
 import history from "./pages/WalletHistory.js";
 import send from "./pages/Withdraw.js";
-import loading from "./pages/StartPage.js";
 import register from "./pages/SignUp.js";
 import generatedseed from "./pages/GeneratedSeed.js";
 import restoreseed from "./pages/RestoreSeed.js";
 import restoreseedchoise from "./pages/RestoreSeedChoise";
 import locked from "./pages/locked";
-import LangPage from "./pages/LangPage";
 import reset from "./pages/ResetPassword";
 import add from "./pages/AddWallets";
 import newseed from "./pages/SetupSeed";
@@ -35,7 +33,6 @@ export default {
   reset,
   settings,
   newseed,
-  loading,
   wallet,
   history,
   wallets,
@@ -44,7 +41,6 @@ export default {
   confirmseed,
   invoice,
   sent,
-  LangPage,
   LocalAuthenticationEnable,
   LocalAuthenticationSettings,
   printseed

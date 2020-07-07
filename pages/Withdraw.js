@@ -256,9 +256,9 @@ export default ({ store, web3t }) => {
         />
         {/* <Icon name="ios-qr-code-outline" style={{ color: "#fff"}} onPress={scanQRSend}/> */}
         <TouchableOpacity
-                      onPress={scanQRSend}
-                      style={{ backgroundColor: 'transparent' }}
-                    >
+          onPress={scanQRSend}
+          style={{ backgroundColor: 'transparent',  width: 50}}
+        >
         <Image
 
           source={Images.scanImage}

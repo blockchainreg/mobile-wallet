@@ -12,6 +12,7 @@
   id = require('./langs/id.js');
   my = require('./langs/my.js');
   th = require('./langs/th.js');
+  es = require('./langs/es.js');
   getDevice = require('./get-device.js');
   savedSeed = saved();
   createSend = function(){
@@ -59,7 +60,8 @@
       ko: ko,
       id: id,
       my: my,
-      th: th
+      th: th,
+      es: es
     },
     registry: [],
     terms: "Loading...",

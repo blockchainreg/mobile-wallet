@@ -230,7 +230,7 @@ export default ({ store, web3t }) => {
                       style={{ ...styles.touchables, backgroundColor: '#60B687' }}
                     >
                       <Image
-                        source={Images.receiveImage}
+                        source={Images.withdrawImage}
                         style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]}
                       />
                     </TouchableOpacity>

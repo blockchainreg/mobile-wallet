@@ -23,26 +23,26 @@ export default ({ store }) => {
       label: "Українська 🇺🇦",
       value: "ua"
     },
+    // {
+    //   label: "Français 🇫🇷",
+    //   value: "fr"
+    // },
     {
-      label: "Français 🇫🇷",
-      value: "fr"
-    },
-    {
-      label: "Eestlane 🇪🇪",
-      value: "es"
-    },
-    {
-      label: "中國人 🇨🇳",
+      label: "中文 🇨🇳",
       value: "zh"
     },
     {
-      label: "韓語 🇰🇷",
-      value: "ko"
+      label: "Español 🇪🇸",
+      value: "es"
     },
-    {
-      label: "عرب 🇦🇪",
-      value: "ar"
-    }
+    // {
+    //   label: "韓語 🇰🇷",
+    //   value: "ko"
+    // },
+    // {
+    //   label: "عرب 🇦🇪",
+    //   value: "ar"
+    // }
   ];
 
   return (

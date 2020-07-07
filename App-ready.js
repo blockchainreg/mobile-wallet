@@ -5,7 +5,7 @@ import { observer } from "mobx-react";
 //import Store from "./Store.js";
 import pages from "./Pages.js";
 import styles from "./Styles.js";
-import StartPage from "./pages/StartPage";
+// import StartPage from "./pages/StartPage";
 //import web3t from './web3t.js';
 import Store from './wallet/data-scheme.js';
 import web3 from './wallet/web3.js';
@@ -24,8 +24,8 @@ Store.current.filterVal = { apply: "", temp: "" }
 Store.current.seedIndex = 0
 Store.current.seedIndexes = [];
 Store.current.seedWords = [];
-if ((localStorage.getItem("lang") || "").length === 0)
-  Store.current.page = "LangPage"
+// if ((localStorage.getItem("lang") || "").length === 0)
+//   Store.current.page = "LangPage"
 Store.lang = localStorage.getItem("lang") || "en";
 //module specific defaults (end)
 //------------------------------
@@ -62,7 +62,7 @@ const Main = observer(({ store, current }) => {
   const page = pages[current.page];
   if (!page) {
     return (
-      <View style={{alignItems: 'stretch', justifyContent: 'flex-center', flex: 1, backgroundColor: '#fff'}}>
+      <View style={{alignItems: 'stretch', justifyContent: 'center', flex: 1, backgroundColor: '#fff'}}>
         <Text>Page {current.page} not found</Text>
       </View>
     );

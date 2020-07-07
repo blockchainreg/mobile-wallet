@@ -4467,7 +4467,7 @@ export default StyleSheet.create({
   sizeIconBtn1: {
     width: 64 / 4,
     height: 64 /4,
-    left: 1,
+    left: 30,
   },
   sizeIconScanBtn: {
     width: 65 / 2.5,
