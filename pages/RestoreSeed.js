@@ -31,6 +31,7 @@ import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
+import { set } from "../wallet/seed.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -71,6 +72,7 @@ export default ({ store, web3t }) => {
       return
     }
     store.current.seed = store.current.seedWords.join(' ')
+    set(store.current.seed);
 
     setupWallet(store, web3t);
   };

@@ -68,7 +68,8 @@
       return store.current.seedTemp = store.current.seed;
     };
     return {
-      save: save,
+
+      : save,
       changeSeed: changeSeed,
       generateSeed: generateSeed,
       hasIssue: hasIssue,

@@ -67,6 +67,9 @@ export default ({ store, web3t }) => {
   };
 
   const login = (seed) => {
+    if (!seed) {
+      throw new Error("Cannot login using empty seed");
+    }
     try {
       LocalAuthentication.cancelAuthenticate();
     }catch(e){}
