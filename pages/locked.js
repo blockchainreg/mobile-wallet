@@ -9,7 +9,8 @@ import {
   Left,
   Right,
   Icon,
-  Button
+  Button,
+  Separator
 } from "native-base";
 import { Image, ImageBackground, Platform, } from "react-native";
 import GradientButton from "../components/GradientButton.js";
@@ -181,15 +182,15 @@ export default ({ store, web3t }) => {
     }
     if (isAuthenticating) {
       if (failedCount) {
-        return <Text style={styles.txtLocked}>You may scan fingerprint to log in. Failed tries {failedCount}. {getAuthError()}</Text>;
+        return <Text style={styles.txtLocked}>{lang.lockedNotificationIos} {failedCount} {getAuthError()}</Text>;
       }
-      return <Text style={styles.txtLocked}>You may scan fingerprint to log in</Text>;
+      return <Text style={styles.txtLocked}>{lang.lockedNotificationIos1}</Text>;
     }
 
     if (Platform.OS === 'android') {
-      return <Text style={styles.txtLocked}>One moment...</Text>;
+      return <Text style={styles.txtLocked}>{lang.oneMoment}</Text>;
     }
-    return <Text onPress={useLocalAuth} style={styles.txtLocked}>Use Fingerprint or Face ID</Text>;
+    return <Text onPress={useLocalAuth} style={styles.txtLocked}>{lang.lockedNotificationAndroid}</Text>;
   };
 
   const buttonActive = store => {
@@ -247,7 +248,7 @@ export default ({ store, web3t }) => {
         gradientBegin="transparent"
         gradientEnd="transparent"
         height={45}
-        width="auto"
+        width="100%"
         onPressAction={anotherAccount}
       />
     );
@@ -331,6 +332,9 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
+          <View style={styles.styleVersion}>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{lang.ver}</Text>
+            </View>
           <View style={styles.widthCard}>
             <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>{lang.enterPin}</Text>

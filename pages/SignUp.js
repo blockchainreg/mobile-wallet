@@ -160,6 +160,9 @@ export default ({ store }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
+          <View style={{ opacity: 0.60, marginTop: 5}}>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{lang.ver}</Text>
+            </View>
           <View style={styles.widthCard}>
           <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>{lang.setupPin}</Text>

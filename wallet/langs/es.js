@@ -139,7 +139,7 @@
       placeholderSignup: "Contraseña",
       copy: "Copiar",
       share: "Compartir",
-      createAcc: "Crear Una Cuenta",
+      createAcc: "Nueva Cuenta",
       loadingBalance: "El Balance Está Cargando",
       walletDecrypting: "Tu Monedero Está Siendo Descifrado Ahora",
       checkingPin: "Comprobando Su Contraseña",
@@ -154,7 +154,15 @@
       enable: "Activar",
       touchId: "Touch ID",
       faceId: "Face ID",
-      scan: "Escanear"
+      scan: "Escanear",
+      incorrectPass: "Incorrect password",
+      touchIdAndroid: "Fingerprint Id",
+      lockedNotificationIos: "You may scan Fingerprint to log in. Failed tries ",
+      lockedNotificationIos1: "You may scan Fingerprint to log in",
+      lockedNotificationAndroid: "Use Fingerprint or Face Id",
+      oneMoment: "One moment...",
+      version: "Mobile Wallet",
+      ver: "0.1.1"
     };
   }).call(this);
   

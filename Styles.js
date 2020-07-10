@@ -5490,6 +5490,9 @@ export default StyleSheet.create({
     flex: 0.5,
     backgroundColor: "red",
   },
-  
+  styleVersion: {
+    opacity: 0.50, 
+    marginTop: 5
+  }
 
 });

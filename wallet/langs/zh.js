@@ -139,7 +139,6 @@
       placeholderSignup: "密码",
       copy: "复制",
       share: "分享",
-      createAcc: "创建一个帐户",
       loadingBalance: "余额正在加载",
       walletDecrypting: "您的钱包现在正在解密",
       checkingPin: "检查密码",
@@ -154,7 +153,16 @@
       enable: "启用",
       touchId: "指纹识别",
       faceId: "脸部识别",
-      scan: "扫码"
+      scan: "扫码",
+      incorrectPass: "密码有误",
+      touchIdAndroid: "指纹识别",
+      lockedNotificationIos: "您可以使用指纹识别登录。尝试失败",
+      lockedNotificationIos1: "您可以指纹识别登录",
+      lockedNotificationAndroid: "使用指纹或面部识别",
+      oneMoment: "稍后",
+      version: "手机钱包",
+      createAcc: "新账户",
+      ver: "0.1.1"
     };
   }).call(this);
   
