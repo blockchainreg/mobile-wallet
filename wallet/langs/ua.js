@@ -140,7 +140,7 @@
   placeholderSignup: "Пароль",
   copy: "Копіювати",
   share: "Поділитися",
-  createAcc: "Створити аккаунт",
+  createAcc: "Новий аккаунт",
   loadingBalance: "Завантаження балансів",
   walletDecrypting: "Зараз ваш гаманець розшифровується",
   checkingPin: "Перевірка вашого пароля",
@@ -156,6 +156,14 @@
   disable: "Відключити",
   enable: "Увімкнути",
   touchId: "Touch Id",
-  faceId: "Face Id"
+  faceId: "Face Id",
+  incorrectPass: "Невірний пароль",
+  touchIdAndroid: "Fingerprint Id",
+  lockedNotificationIos: "Ви можете сканувати відбиток пальця для входу. Невдалі спроби ",
+  lockedNotificationIos1: "Ви можете сканувати відбиток пальця, щоб увійти",
+  lockedNotificationAndroid: "Використовуйте Fingerprint або Face Id",
+  oneMoment: "Зачекайте...",
+  version: "Мобільний гаманець",
+  ver: "0.1.1"
   };
 }).call(this);

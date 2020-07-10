@@ -140,7 +140,7 @@
 	placeholderSignup: "Password",
 	copy: "Copy",
 	share: "Share",
-	createAcc: "Create an Account",
+	createAcc: "New Account",
 	loadingBalance: "Balance is loading",
 	walletDecrypting: "Your wallet is being decrypted now",
 	checkingPin: "Checking your password",
@@ -156,6 +156,13 @@
     touchId: "Touch Id",
     faceId: "Face Id",
 	scan: "Scan",
-	incorrectPass: "Incorrect password"
+	incorrectPass: "Incorrect password",
+	touchIdAndroid: "Fingerprint Id",
+	lockedNotificationIos: "You may scan Fingerprint to log in. Failed tries ",
+	lockedNotificationIos1: "You may scan Fingerprint to log in",
+	lockedNotificationAndroid: "Use Fingerprint or Face Id",
+	oneMoment: "One moment...",
+	version: "Mobile Wallet",
+	ver: "0.1.1"
   };
 }).call(this);
