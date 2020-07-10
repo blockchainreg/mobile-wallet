@@ -25,7 +25,7 @@ import {
   Textarea
 } from "native-base";
 import styles from "../Styles.js";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
 import Images from '../Images.js';

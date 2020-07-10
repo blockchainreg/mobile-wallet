@@ -15,7 +15,7 @@ import { Clipboard, Alert, Vibration, Share } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 import { QRCode } from 'react-native-custom-qr-codes-expo';
 import walletsFuncs from '../wallet/wallets-funcs.js';

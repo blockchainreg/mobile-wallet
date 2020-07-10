@@ -18,7 +18,7 @@ import { observe } from "mobx";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";

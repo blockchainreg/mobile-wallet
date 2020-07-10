@@ -12,7 +12,7 @@ import {
   Button
 } from "native-base";
 import { Image, ImageBackground, Platform, } from "react-native";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 import * as SecureStore from 'expo-secure-store';
 import styles from "../Styles.js";

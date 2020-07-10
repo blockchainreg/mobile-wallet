@@ -24,7 +24,7 @@ import {
 import * as LocalAuthentication from "expo-local-authentication";
 import Toast from "@rimiti/react-native-toastify";
 import * as SecureStore from "expo-secure-store";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import { Container, Content, Icon, Button } from "native-base";
 import { Image } from "react-native";
 import styles from "../Styles.js";

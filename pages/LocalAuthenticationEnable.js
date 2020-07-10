@@ -12,7 +12,7 @@ import {
   Icon
 } from "native-base";
 import { Image, ImageBackground, runAfterInteractions } from "react-native";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";

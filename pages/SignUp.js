@@ -12,7 +12,7 @@ import {
   Right
 } from "native-base";
 import { Image, ImageBackground } from "react-native";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
 import { set, check } from '../wallet/pin.js';
@@ -55,7 +55,7 @@ const buttonActive = store => {
   return (
     <GradientButton
       style={styles.gradientBtnPh}
-      text={lang.continue}
+      text={lang.continue + " "}
       textStyle={{ fontSize: 14, color: Images.color1 }}
       gradientBegin="#fff"
       gradientEnd="#fff"

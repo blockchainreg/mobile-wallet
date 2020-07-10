@@ -23,7 +23,7 @@ import {
 } from "native-base";
 import bip39 from "bip39";
 import styles from "../Styles.js";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import setupWallet from "../setupWallet.js";
 import StatusBar from "../components/StatusBar.js";

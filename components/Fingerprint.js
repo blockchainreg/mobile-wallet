@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import styles from "../Styles.js";
 import Background from "./Background.js";

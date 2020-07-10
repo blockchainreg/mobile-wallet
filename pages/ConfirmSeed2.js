@@ -3,7 +3,7 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import {
   Text,
   Button,
