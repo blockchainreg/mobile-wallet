@@ -37,7 +37,7 @@ export default ({ store, web3t }) => {
   const lang = getLang(store);
   console.log("Rendering qr code");
   const buttonCopy = store => {
-    const DURATION = 10000/10;
+    const DURATION = 1000/10;
     const writeToClipboardAddr = async () => {
       await Clipboard.setString(wallet.address);
       Vibration.vibrate(DURATION);
@@ -129,9 +129,9 @@ export default ({ store, web3t }) => {
 
               <View style={styles.viewMt}>
                 <View style={styles.alignItemsQr}>
-                  {/* <Text style={styles.titleQr}>Scan the QR code:</Text> */}
+                {/* <Text style={styles.titleQr}>Scan the QR code:</Text> */}
                   <QRCode
-                    color="#FFF"
+                    color="#FFFFFF"
                     content={wallet.address}
                   />
                   {/* <Text style={styles.titleQr}>Or click to copy:</Text> */}
