@@ -141,7 +141,7 @@
       share: "Compartir",
       createAcc: "Nueva Cuenta",
       loadingBalance: "El Balance Está Cargando",
-      walletDecrypting: "Tu Monedero Está Siendo Descifrado Ahora",
+      walletDecrypting: "Decodificación Monedero",
       checkingPin: "Comprobando Su Contraseña",
       dataOverridden: "¿Tiene una frase de respaldo de la cuenta actual?",
       confirmDialog: "Confirmar",

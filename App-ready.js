@@ -49,7 +49,7 @@ const web3t = web3(store);
 //TODO: Move to separate file
 const renderSpinner = ({ store }) => {
     const {current} = store;
-    const text = current.loadingDescriptions.join(", ");
+    const text = current.loadingDescriptions.length === 0 ? "" : current.loadingDescriptions[0];
     const isVisible = current.loadingSpinners.length > 0;
     return (
       <Spinner

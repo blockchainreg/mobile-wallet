@@ -128,7 +128,7 @@ const wallets = (store, web3t) => {
           <Text style={styles.amountView}>{wallet.coin.name}</Text>
           <Text>
             <Text style={{ color: "#fff" }}>{balance}</Text>
-            <Text note> ({balanceUsd})</Text>
+            <Text note> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
           </Text>
         </Body>
         <Right>

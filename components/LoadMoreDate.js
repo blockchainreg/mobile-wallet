@@ -1,5 +1,5 @@
 import React, { Component } from "react"; //import react in our code.
-import { View, Text, TouchableOpacity, ActivityIndicator, Image } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Image, Platform } from "react-native";
 import { List, ListItem, Left, Body, Right, Thumbnail, Header, Item, Icon, Button, Input } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
@@ -125,7 +125,7 @@ export default ({ store, web3t }) => {
                   <Right>
                     <Text style={amountStyle(transaction.type)}>
                       {index(transaction.type)}
-                      {transaction.amount} {transaction.token.toUpperCase()}
+                      {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{transaction.token.toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
                     </Text>
                     <Text style={styles.constDate}>
                     ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()})

@@ -142,7 +142,7 @@
 	share: "Share",
 	createAcc: "New Account",
 	loadingBalance: "Balance is loading",
-	walletDecrypting: "Your wallet is being decrypted now",
+	walletDecrypting: "Decrypting your wallet",
 	checkingPin: "Checking your password",
 	dataOverridden: "Do you have backup word phrase of the current account?",
 	confirmDialog: "Confirm",

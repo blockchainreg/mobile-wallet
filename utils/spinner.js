@@ -1,6 +1,6 @@
 export default class Spinner {
   constructor(store, description, options = {}) {
-    this.description = description;
+    this.description = (" "+description+"   ").split(" ").join('\u00A0');
     this.store = store;
     store.current.loadingSpinners.push(this);
     this.isDescriptionPushed = false;
@@ -9,11 +9,11 @@ export default class Spinner {
     if (options.displayDescription === "auto" || options.displayDescription === undefined) {
       this.shouldDisplayDescriptionTimeout = setTimeout(() => {
         this.isDescriptionPushed = true;
-        store.current.loadingDescriptions.push(description);
-      }, 500);
+        store.current.loadingDescriptions.push(this.description);
+      }, 0);
     } else if (options.displayDescription){
       this.isDescriptionPushed = true;
-      store.current.loadingDescriptions.push(description);
+      store.current.loadingDescriptions.push(this.description);
     }
     this.finishTimeout = setTimeout(() => {
       //TODO: cannot use error here, maybe alert
