@@ -35,6 +35,7 @@ const showToast = message => {
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
+  console.log("Rendering qr code");
   const buttonCopy = store => {
     const DURATION = 10000/10;
     const writeToClipboardAddr = async () => {

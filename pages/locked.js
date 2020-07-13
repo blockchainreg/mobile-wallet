@@ -13,6 +13,7 @@ import {
   Separator
 } from "native-base";
 import { Image, ImageBackground, Platform, } from "react-native";
+import Constants from 'expo-constants';
 import GradientButton from "../components/GradientButton.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 import * as SecureStore from 'expo-secure-store';
@@ -333,7 +334,7 @@ export default ({ store, web3t }) => {
             style={styles.styleLogo}
           />
           <View style={styles.styleVersion}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{lang.ver}</Text>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
             </View>
           <View style={styles.widthCard}>
             <View style={styles.titleInput}>

@@ -12,6 +12,7 @@ import {
   Right
 } from "native-base";
 import { Image, ImageBackground } from "react-native";
+import Constants from 'expo-constants';
 import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
 import Toast from "@rimiti/react-native-toastify";
@@ -161,7 +162,7 @@ export default ({ store }) => {
             style={styles.styleLogo}
           />
           <View style={{ opacity: 0.60, marginTop: 5}}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{lang.ver}</Text>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
             </View>
           <View style={styles.widthCard}>
           <View style={styles.titleInput}>
