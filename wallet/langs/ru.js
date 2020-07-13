@@ -140,9 +140,9 @@
     placeholderSignup: "Пароль",
     copy: "Копировать",
     share: "Поделиться",
-    createAcc: "Создать аккаунт",
+    createAcc: "Новый аккаунт",
     loadingBalance: "Загрузка балансов",
-    walletDecrypting: "Ваш кошелек сейчас расшифровывается",
+    walletDecrypting: "Кошелек расшифровывается",
     checkingPin: "Проверка вашего пароля",
     dataOverridden: "Есть ли у вас резервное копирование сид фразы текущего аккаунта?",
     confirmDialog: "Подтвердите диалог",
@@ -156,6 +156,14 @@
     disable: "Отключить",
     enable: "Включить",
     touchId: "Touch Id",
-    faceId: "Face Id"
+    faceId: "Face Id",
+    incorrectPass: "Неверный пароль",
+    touchIdAndroid: "Fingerprint Id",
+    lockedNotificationIos: "Вы можете отсканировать отпечатки пальцев для входа в систему. Неудачные попытки ",
+    lockedNotificationIos1: "Вы можете отсканировать отпечатки пальцев, чтобы войти",
+    lockedNotificationAndroid: "Используй Fingerprint или Face Id",
+    oneMoment: "Подождите...",
+    version: "Мобильный кошелек",
+    ver: "0.1.1"
   };
 }).call(this);

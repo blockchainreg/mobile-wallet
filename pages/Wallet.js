@@ -86,7 +86,8 @@ export default ({ store, web3t }) => {
 
     const Balance = ({wallet}) =>
       <Text style={styles.totalBalance}>
-        {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,8})?/)[0]}{" "}
+        {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,5})?/)[0]}{" "}
+        {/* {parseFloat(wallet.balance).toFixed(5)}{" "} */}
         <Text style={styles.nameToken}>
           {wallet.coin.token.toUpperCase()}
         </Text>

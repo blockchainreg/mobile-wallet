@@ -15,7 +15,7 @@ import { Clipboard, Alert, Vibration, Share } from "react-native";
 import styles from "../Styles.js";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import Toast from "@rimiti/react-native-toastify";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 import { QRCode } from 'react-native-custom-qr-codes-expo';
 import walletsFuncs from '../wallet/wallets-funcs.js';
@@ -35,8 +35,9 @@ const showToast = message => {
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
+  console.log("Rendering qr code");
   const buttonCopy = store => {
-    const DURATION = 10000/10;
+    const DURATION = 1000/10;
     const writeToClipboardAddr = async () => {
       await Clipboard.setString(wallet.address);
       Vibration.vibrate(DURATION);
@@ -128,9 +129,9 @@ export default ({ store, web3t }) => {
 
               <View style={styles.viewMt}>
                 <View style={styles.alignItemsQr}>
-                  {/* <Text style={styles.titleQr}>Scan the QR code:</Text> */}
+                {/* <Text style={styles.titleQr}>Scan the QR code:</Text> */}
                   <QRCode
-                    color="#FFF"
+                    color="#FFFFFF"
                     content={wallet.address}
                   />
                   {/* <Text style={styles.titleQr}>Or click to copy:</Text> */}

@@ -13,7 +13,7 @@ import {
   Right
 } from "native-base";
 import styles from "../Styles.js";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import Hyperlink from "react-native-hyperlink";
 import { set } from "../wallet/seed.js";
 import Markdown from "react-native-markdown-display";

@@ -14,6 +14,7 @@ import {
   Button
 } from "native-base";
 import { Linking, Platform, ScrollView } from "react-native";
+import Constants from 'expo-constants';
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
 import StatusBar from "../components/StatusBar.js";
@@ -45,7 +46,7 @@ const LocalAuthListView = ({store}) => {
 
   const touchFinger = () => {
     if (Platform.OS === 'android') {
-    return <Text style={styles.txtSettings}>{lang.touchId}</Text>;
+    return <Text style={styles.txtSettings}>{lang.touchIdAndroid}</Text>;
     }
     else if (Platform.OS === 'ios') {
       return <Text style={styles.txtSettings}>{lang.touchId} / {lang.faceId}</Text>;
@@ -203,6 +204,13 @@ export default ({ store, web3t }) => {
             </Body>
             <Right style={styles.heightListItem} />
           </ListItem>
+
+
+            <Separator bordered style={[styles.seperatorStyle, {backgroundColor: "transparent", opacity: 0.50}]}>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>{lang.version} {Constants.manifest.version}</Text>
+            </Separator>
+
+
           <View style={styles.paddingSettings}/>
         </Content>
 

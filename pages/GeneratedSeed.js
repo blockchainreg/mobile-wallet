@@ -20,7 +20,6 @@ import {
   Container,
 } from "native-base";
 import styles from "../Styles.js";
-import GradientButton from "react-native-gradient-buttons";
 // import { generateMnemonic } from "bip39";
 import Images from "../Images.js";
 import StatusBar from "../components/StatusBar.js";

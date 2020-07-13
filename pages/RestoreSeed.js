@@ -23,7 +23,7 @@ import {
 } from "native-base";
 import bip39 from "bip39";
 import styles from "../Styles.js";
-import GradientButton from "react-native-gradient-buttons";
+import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import setupWallet from "../setupWallet.js";
 import StatusBar from "../components/StatusBar.js";
@@ -31,6 +31,7 @@ import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
+import { set } from "../wallet/seed.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -71,6 +72,7 @@ export default ({ store, web3t }) => {
       return
     }
     store.current.seed = store.current.seedWords.join(' ')
+    set(store.current.seed);
 
     setupWallet(store, web3t);
   };
