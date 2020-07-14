@@ -289,7 +289,6 @@ export default ({ store, web3t }) => {
 
   const handleChangePin = async text => {
     store.current.pin = text;
-    store.current.pinSave = store.current.pin;
   };
   const inputSuccessPin = store => {
     return (

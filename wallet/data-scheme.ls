@@ -73,7 +73,6 @@ store =
         demo: location.href.index-of('web3.space/wallet') > -1
         network: \mainnet
         pin: ""
-        pinSave: ""
         last-tx-url: ""
         try-edit-seed: no
         pin-trial: 0
