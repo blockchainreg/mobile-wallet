@@ -128,7 +128,7 @@ export default ({ store, web3t }) => {
                       {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{transaction.token.toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
                     </Text>
                     <Text style={styles.constDate}>
-                    ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()})
+                    ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
                     </Text>
                   </Right>
                 </ListItem>
