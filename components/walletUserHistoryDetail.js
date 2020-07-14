@@ -79,12 +79,12 @@ export default (store) => {
               </View>
             </View>
 
-
+            <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20}}>
             <Text style={amountStyle(store.infoTransaction.type)}>
               {index(store.infoTransaction.type)}
-              {store.infoTransaction.amount} {store.infoTransaction.token.toUpperCase()}
+              {parseFloat(store.infoTransaction.amount).toFixed(7)} {store.infoTransaction.token.toUpperCase()}
             </Text>
-
+            </View>
             <Text style={{color: "rgba(255, 255, 255, 0.70)"}}>
               {moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
             </Text>
