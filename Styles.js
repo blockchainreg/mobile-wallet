@@ -1314,6 +1314,11 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     width: "100%"
   },
+  userHistoryRow1: {
+    flexDirection: 'row', 
+    alignItems: 'flex-start',
+    width: "90%"
+  },
   listitemHeight: {
     height: 60,
   },

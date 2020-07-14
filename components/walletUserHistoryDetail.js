@@ -139,7 +139,7 @@ export default (store) => {
 
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.externalId}:</Text>
-            <View style={styles.userHistoryRow}>
+            <View style={styles.userHistoryRow1}>
             <Icon
                 name="ios-copy"
                 onPress={writeToClipboardId}
