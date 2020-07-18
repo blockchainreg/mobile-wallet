@@ -101,7 +101,6 @@ export default ({ store, web3t }) => {
 
   const LocalAuth = ({store}) => {
     if (store.current.auth.isLocalAuthEnabled === null) {
-      console.warn('requesting isLocalAuthEnabled');
         setImmediate(() => {
           store.current.auth.isLocalAuthEnabled = false;
           Promise.all([
