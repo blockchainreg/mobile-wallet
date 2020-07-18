@@ -40,6 +40,11 @@ export default ({ store, web3t }) => {
 
   const loginQuick = () => {
     store.current.page = "wallets";
+    store.current.auth.isLocalAuthEnabled = null;
+    store.current.auth.isAuthenticating = false;
+    store.current.auth.failedCount = 0;
+    store.current.auth.isLoggingIn = false;
+    store.current.pin = "";
 
     spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
       store.current.auth.isLoggingIn = false;
@@ -57,6 +62,12 @@ export default ({ store, web3t }) => {
       }
 
       store.current.page = "wallets";
+      store.current.auth.isLocalAuthEnabled = null;
+      store.current.auth.isAuthenticating = false;
+      store.current.auth.failedCount = 0;
+      store.current.auth.isLoggingIn = false;
+      store.current.pin = "";
+
       spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
         store.current.auth.isLoggingIn = false;
         if (err) {
@@ -80,10 +91,6 @@ export default ({ store, web3t }) => {
     }
 
     store.current.seed = seed;
-    store.current.auth.isLocalAuthEnabled = null;
-    store.current.auth.isAuthenticating = false;
-    store.current.auth.failedCount = 0;
-    store.current.auth.isLoggingIn = false;
     //in case when we already have built objects we can just show it
     if(store.current.account.wallets && store.current.account.wallets.length > 0) {
       loginQuick();
@@ -94,6 +101,7 @@ export default ({ store, web3t }) => {
 
   const LocalAuth = ({store}) => {
     if (store.current.auth.isLocalAuthEnabled === null) {
+      console.warn('requesting isLocalAuthEnabled');
         setImmediate(() => {
           store.current.auth.isLocalAuthEnabled = false;
           Promise.all([

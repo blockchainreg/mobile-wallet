@@ -3,7 +3,6 @@
     "name": "Velas wallet",
     "slug": "expo-web3",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android"

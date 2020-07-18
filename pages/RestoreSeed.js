@@ -54,6 +54,7 @@ const seedContainerStyle = {
 
 export default ({ store, web3t }) => {
   const changePage = tab => () => {
+    store.signUpConfirmSeedField = "";
     store.current.page = tab;
   };
 
@@ -66,9 +67,9 @@ export default ({ store, web3t }) => {
     }
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;
+    store.signUpConfirmSeedField = "";
     if(store.current.seedIndex < store.current.seedWords.length - 1) {
       store.current.seedIndex += 1;
-      store.signUpConfirmSeedField = "";
       return
     }
     store.current.seed = store.current.seedWords.join(' ')
@@ -78,7 +79,7 @@ export default ({ store, web3t }) => {
   };
 
   const number = store.current.seedIndexes[store.current.seedIndex];
-  const changeSeed = async word => {
+  const changeSeed = (word) => {
     store.signUpConfirmSeedField = word;
   };
 
