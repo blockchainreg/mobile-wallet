@@ -26,7 +26,6 @@ import {
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //import ModalComponent from "react-native-modal-component";
 import moment from "moment";
-import Toast from "@rimiti/react-native-toastify";
 import RefreshControl from "../components/RefreshControl.js";
 import LoadMoreDate from "../components/LoadMoreDate.js";
 // import walletFuncs from '../wallet/wallet-funcs.js';

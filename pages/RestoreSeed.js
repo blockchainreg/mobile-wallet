@@ -19,7 +19,8 @@ import {
   Header,
   Left,
   Right,
-  Textarea
+  Textarea,
+  Toast
 } from "native-base";
 import bip39 from "bip39";
 import styles from "../Styles.js";
@@ -36,12 +37,6 @@ import { set } from "../wallet/seed.js";
 // const generateMnemonic = () => {
 //   return "one two three four five six";
 // }
-
-const showToast = message => {
-  alert(message);
-};
-
-
 
 const seedContainerStyle = {
   borderWidth: 1,
@@ -60,10 +55,10 @@ export default ({ store, web3t }) => {
 
   const done = () => {
 
-    if(store.signUpConfirmSeedField == "") return showToast("Empty word is not allowed");
+    if(store.signUpConfirmSeedField == "") return Toast.show({text: "Empty word is not allowed"});
 
     if (bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
-      return showToast("You have mistake in your word");
+      return Toast.show({text: "You have mistake in your word"});
     }
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;

@@ -12,12 +12,12 @@ import {
   Body,
   Header,
   Thumbnail,
-  Label
+  Label,
+  Toast
 } from "native-base";
 import { observe } from "mobx";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
@@ -32,11 +32,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import {
   Image, TouchableOpacity
 } from "react-native";
-
-const showToast = (message) => {
-  console.log(message);
-  this.toastify.show(message, 3000);
-};
 
 const btnWithdrawBtc = ({ store, web3t }) => {
   const {
@@ -134,7 +129,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
       sendAnyway();
     } catch (e) {
       console.error(e);
-      this.toastify.show(e.message, 3000);
+      Toast.show({text: e.message});
     }
   };
   const lang = getLang(store);
@@ -286,12 +281,6 @@ export default ({ store, web3t }) => {
     return (
       <View style={styles.viewFlex}>
         <Background fullscreen={true}/>
-        <Toast
-          ref={(c) => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
-
         <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back} style={styles.arrowHeaderIconBlack} />

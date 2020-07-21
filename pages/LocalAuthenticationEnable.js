@@ -9,12 +9,12 @@ import {
   Left,
   Right,
   Button,
-  Icon
+  Icon,
+  Toast
 } from "native-base";
 import { Image, ImageBackground, runAfterInteractions } from "react-native";
 import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
-import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check} from "../wallet/pin.js";
@@ -59,10 +59,6 @@ function LocalAuthenticationEnable({store, web3t}) {
 }
 
 function RequestPin({store, web3t}) {
-  let [toastify, setToastify] = useState(null);
-  const showToast = message => {
-    toastify && toastify.show(message, 3000);
-  };
   const [pin, setPin] = useState("");
 
   // const lang = getLang(store);
@@ -73,7 +69,7 @@ function RequestPin({store, web3t}) {
       setTimeout(async () => {
         if (!check(pin)) {
           setPin("");
-          return showToast(lang.incorrectPass ||  "Incorrect password");
+          return Toast.show({text: lang.incorrectPass ||  "Incorrect password"});
         }
 
         setPin("");
@@ -161,11 +157,6 @@ function RequestPin({store, web3t}) {
   return (
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-        <Toast
-          ref={setToastify}
-          position="top"
-          style={styles.toastStyle}
-        />
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader} />

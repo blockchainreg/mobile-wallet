@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, Text, PanResponder} from "react-native";
 import { observable, intercept, observe } from "mobx";
 import { observer } from "mobx-react";
+import { Root } from "native-base";
 //import Store from "./Store.js";
 import pages from "./Pages.js";
 import styles from "./Styles.js";
@@ -80,7 +81,7 @@ const Main = observer(({ store, current }) => {
     );
   }
   return (
-    <>
+    <Root>
       {renderSpinner({ store })}
       {current.confirmation
         ?<Confirm
@@ -92,7 +93,7 @@ const Main = observer(({ store, current }) => {
       }
       {page( {store, web3t })}
       {HistoryDetail({ store })}
-    </>
+    </Root>
   );
 });
 

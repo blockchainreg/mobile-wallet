@@ -18,7 +18,6 @@ import styles from "../Styles.js";
 import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, } from "react-native";
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import CustomRefreshControl from "../components/RefreshControl.js";
-import Toast from "@rimiti/react-native-toastify";
 import Footer from "./Footer.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import walletFuncs from "../wallet/wallet-funcs.js";
@@ -164,8 +163,8 @@ export default ({ store, web3t }) => {
     });
     return true;
   };
-  
-  
+
+
 
 
 
@@ -179,7 +178,7 @@ export default ({ store, web3t }) => {
           })}
         </View>
         <View style={styles.topView}>
-          
+
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader}/>
               <Body style={styles.viewFlexHeader}>
@@ -200,19 +199,19 @@ export default ({ store, web3t }) => {
               translucent={true}
               backgroundColor={"transparent"}
             />
-            
-            
+
+
           <View style={styles.viewWalletAbsolute}>
             <Text style={styles.titleAbsolute}>{lang.totalBalance}</Text>
             <Text style={styles.textBalanceAbsolute}>
               {calcUsd} <Text style={styles.textCurrency}>$</Text>
             </Text>
           </View>
-          
+
         </View>
 
         <View style={styles.viewMonoWallets}>
-          
+
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}

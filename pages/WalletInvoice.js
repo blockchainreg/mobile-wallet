@@ -13,7 +13,6 @@ import {
 import { Clipboard, Alert, Vibration, Share, View } from "react-native";
 import styles from "../Styles.js";
 
-import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 // import { QRCode } from 'react-native-custom-qr-codes-expo';
@@ -29,15 +28,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const showToast = message => {
-  console.log(message);
-  this.toastify.show(message, 3000);
-};
-
-
 export default ({ store, web3t }) => {
   const lang = getLang(store);
-  console.log("Rendering qr code");
   const buttonCopy = store => {
     const DURATION = 1000/10;
     const writeToClipboardAddr = async () => {
@@ -101,13 +93,7 @@ export default ({ store, web3t }) => {
   const back = changePage("wallet");
   return (
     <View style={styles.viewFlex}>
-          <Background fullscreen={true}/>
-        <Toast
-          ref={c => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
-
+        <Background fullscreen={true}/>
         <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>

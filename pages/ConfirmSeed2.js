@@ -15,23 +15,17 @@ import {
   Body,
   Header,
   Left,
-  Right
+  Right,
+  Toast
 } from "native-base";
 import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
-import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
 
-
-
-
-const showToast = message => {
-  this.toastify.show(message, 3000);
-};
 
 const DEV_SKIP = "...";
 
@@ -48,7 +42,7 @@ export default ({ store, web3t }) => {
       const expectedWord = store.current.seed.split(" ")[number];
 
       if (expectedWord !== store.signUpConfirmSeedField) {
-        return showToast(lang.inconsistency);
+        return Toast.show({text: lang.inconsistency});
       }
 
       if (store.current.seedIndex < 23) {
@@ -81,11 +75,6 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Toast
-        ref={c => (this.toastify = c)}
-        position={"top"}
-        style={styles.toastStyle}
-      />
       <Background fullscreen={true}/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
