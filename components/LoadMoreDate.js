@@ -13,7 +13,7 @@ export default ({ store, web3t }) => {
     const checkType = type => {
       switch (type) {
         case "IN":
-          return <Text style={styles.txtSizeHistory}>{lang.receive}</Text>;
+          return <Text style={styles.txtSizeHistory}>{lang.received}</Text>;
         case "OUT":
           return <Text style={styles.txtSizeHistory}>{lang.sent}</Text>;
         default:

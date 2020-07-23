@@ -31,6 +31,7 @@
       newSeedPhrase: "Nueva Frase de Recuperación",
       newSeedWarning: "Haga clic en 'Imprimir' e imprima las instrucciones, anote sus 24 palabras de recuperación. Cualquier persona con acceso a tu frase de recuperación podría acceder a tus activos, almacénalo en un lugar seguro. No guardamos una copia de seguridad de tus 24 palabras de recuperación, ¡si las pierdes no podrás recuperar tus activos!",
       receive: "Recibir",
+      received: "Recibido",
       history: "Historial",
       topup: "Recargar",
       fixIssue: "Solucionar problema",

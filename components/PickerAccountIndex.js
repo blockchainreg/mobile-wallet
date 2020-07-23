@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
-import { Ionicons } from '@expo/vector-icons';
 import { KECCAK256_NULL } from "ethereumjs-util";
-import {
-  Input,
-  Item,
-} from "native-base";
-
+import { Input, Item, Text } from "native-base";
+import styles from "../Styles.js";
 import spin from "../utils/spin.js";
+import getLang from "../wallet/get-lang.js";
 
-const InputComponent = ({accountIndex, onValueChange}) => {
+
+const InputComponent = ({ accountIndex, onValueChange }) => {
   const [index, indexChange] = useState(accountIndex);
   const onBlur = () => {
     let value = parseInt(index);
@@ -19,19 +16,23 @@ const InputComponent = ({accountIndex, onValueChange}) => {
     indexChange(value + "");
     onValueChange(value);
   };
+
   return (
-      <Input
-        value={index + ""}
-        onChangeText={indexChange}
-        onBlur={onBlur}
-        keyboardType="numeric"
-        style={{
-          color: "#fff",
-          fontSize: 17,
-        }}
-      />
+    <Item style={styles.borderItemAccount}>
+        <Text style={styles.txtSettings}>Account #</Text>
+        <Input
+          onChangeText={indexChange}
+          value={index + ""}
+          onBlur={onBlur}
+          returnKeyType="done"
+          keyboardType="numeric"
+          style={styles.inputSize}
+          selectionColor={"#fff"}
+          keyboardAppearance="dark"
+        />
+      </Item>
   );
-}
+};
 
 export default ({ store, web3t }) => {
   const onValueChange = (value) => {
@@ -41,9 +42,13 @@ export default ({ store, web3t }) => {
       return;
     }
     store.current.accountIndex = value;
-    spin(store, `Updating account index`, web3t.refresh.bind(web3t))((err,data) => {
-        console.log("Updating account index finished");
-    })
+    spin(
+      store,
+      `Updating account index`,
+      web3t.refresh.bind(web3t)
+    )((err, data) => {
+      console.log("Updating account index finished");
+    });
   };
   // const createIndex = (i)=> {
   //    return {
@@ -51,7 +56,12 @@ export default ({ store, web3t }) => {
   //     value: i
   //   }
   // }
-  return <InputComponent accountIndex={store.current.accountIndex} onValueChange={onValueChange}/>;
+  return (
+    <InputComponent
+      accountIndex={store.current.accountIndex}
+      onValueChange={onValueChange}
+    />
+  );
   // const langItems = [...Array(1000).keys()].map(createIndex)
   //
   // return (

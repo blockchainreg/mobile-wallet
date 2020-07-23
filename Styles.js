@@ -4436,6 +4436,10 @@ export default StyleSheet.create({
     borderBottomWidth: 0.4,
     marginTop: 10,
   },
+  borderItemAccount: {
+    borderBottomColor: "rgba(255,255,255,0.60)",
+    borderBottomWidth: 0.4,
+  },
   borderItemInput: {
     borderRadius: 10,
     marginVertical: 5,

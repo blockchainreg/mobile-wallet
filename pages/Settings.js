@@ -112,7 +112,7 @@ export default ({ store, web3t }) => {
           <ListItem
             icon
             onPress={() => {
-              Linking.openURL(`https://t.me/VelasDevelopers`);
+              Linking.openURL(`https://support.velas.com/hc/en-150`);
             }}
             underlayColor={Images.color1}
             style={styles.heightListItem}
@@ -173,12 +173,12 @@ export default ({ store, web3t }) => {
           </Separator>
           <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
             <Left>
-              <Icon name="md-wallet" style={styles.styleTxtSettings}/>
+              <Icon name="ios-wallet" style={styles.styleTxtSettings}/>
             </Left>
             <Body style={styles.heightListItem}>
               {PickerAccountIndex({ store, web3t })}
             </Body>
-            <Right style={styles.heightListItem} />
+            <Right style={styles.heightListItem}/>
           </ListItem>
           <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
             <Left>
