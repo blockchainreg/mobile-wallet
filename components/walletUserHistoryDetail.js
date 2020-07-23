@@ -14,7 +14,8 @@ import {
   Thumbnail,
   Badge
 } from "native-base";
-import { View, ScrollView, Clipboard, Alert, Vibration, Linking } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { View, ScrollView, Clipboard, Alert, Vibration, Linking, Platform } from "react-native";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from "moment";
@@ -32,7 +33,7 @@ export default (store) => {
     await Clipboard.setString(
       info
     );
-    Vibration.vibrate(1000);
+    Vibration.vibrate(100);
     Alert.alert(lang.copied, "", [{ text: lang.ok }]);
   };
 
@@ -141,11 +142,12 @@ export default (store) => {
             <Text style={styles.detail}>{lang.externalId}:</Text>
             <View style={styles.userHistoryRow1}>
             <Icon
-                name="ios-copy"
-                onPress={writeToClipboardId}
+                name="md-open"
+                onPress={() => {Linking.openURL(url)}}
+                onLongPress={writeToClipboardId}
                 style={[styles.viewPt, {fontSize: 20} ]}
             />
-              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={() => {Linking.openURL(url)}}>
+              <Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(url)}} onLongPress={writeToClipboardId}>
               {store.infoTransaction.tx}
             </Text>
             </View>
