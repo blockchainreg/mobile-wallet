@@ -27,7 +27,7 @@ import Images from '../Images.js';
 
 
 function Scanner({ onScan }) {
-  
+
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -153,7 +153,12 @@ module.exports = ({ store, web3t }) => {
       navigate(store, web3t, store.current.returnPage || "wallet", (x) => {});
       return;
     }
-    store.current.send.to = text;
+    store.current.send["to"] = text;
+    store.current.send.amountSend = '0';
+    store.current.send.amountSendUsd = '0';
+    store.current.send.amountSendFee = '0';
+    store.current.send.amountSendFeeUsd = '0';
+    store.current.send.error = "";
     store.current.send.wallet = wallet;
     store.current.send.coin = wallet.coin;
     store.current.send.network = wallet.network;

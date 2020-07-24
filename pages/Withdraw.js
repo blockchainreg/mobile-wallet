@@ -122,6 +122,13 @@ const btnWithdrawBtc = ({ store, web3t }) => {
         if (store.current.confirmation && checkingSpinner) {
           checkingSpinner.finish();
           checkingSpinner = null;
+          store.current.send["to"] = "";
+          store.current.send.amountSend = '0';
+          store.current.send.amountSendUsd = '0';
+          store.current.send.amountSendFee = '0';
+          store.current.send.amountSendFeeUsd = '0';
+          store.current.send.error = "";
+
           return;
         }
       };
