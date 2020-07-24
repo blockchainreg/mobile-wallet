@@ -425,7 +425,7 @@ export default StyleSheet.create({
     flex: 1,
     // width: "90%",
     alignItems: "center",
-    marginHorizontal: 20
+    marginHorizontal: 20,
     // justifyContent: 'center',
   },
   viewBuyFront: {
@@ -1845,7 +1845,7 @@ export default StyleSheet.create({
   marginBtn: {
     alignItems: "center",
     width: "100%",
-    marginBottom: 15,
+    marginBottom: 200,
     marginTop: 20,
   },
   marginBtn1: {
@@ -4751,7 +4751,7 @@ export default StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginBottom: 15,
-    marginTop: 10,
+    // marginTop: 10,
   },
   btnNext: {
     backgroundColor: "#fff",
@@ -5480,6 +5480,9 @@ export default StyleSheet.create({
   paddingSettings: {
     paddingTop: 100
   },
+  paddingWithdraw: {
+    paddingTop: Platform.OS === 'android' ? '30%' : '80%'
+  },
   containerLayer: {
     flex: 1,
     flexDirection: 'column',
@@ -5502,6 +5505,54 @@ export default StyleSheet.create({
   styleVersion: {
     opacity: 0.50, 
     marginTop: 5
-  }
+  },
+  txtRadio: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.50)',
+  },
+  txtRadioCheck: {
+    fontSize: 14,
+    color: 'yellow',
+  },
+  inputContainerRadio: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  radioField: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  inputStyleRadio: {
+    color: 'rgba(255,255,255,0.50)',
+    fontSize: 14,
+  },
+  inputStyleRadioCheck: {
+    color: 'yellow',
+    fontSize: 14,
+  },
+  borderItemRadio: {
+    borderBottomColor: 'transparent',
+    // paddingLeft: 30,
+  },
+  borderRadio: { 
+    borderColor: 'rgba(255,255,255,0.60)', 
+    borderWidth: 0.4,
+    width: wp("28%"),
+    borderRadius: 5,
+    // paddingHorizontal: 10,
+    marginHorizontal: 10
+  },
+  borderRadioCheck: {
+    borderColor: 'yellow',
+    borderWidth: 1,
+    borderRadius: 5,
+    width: wp("28%"),
+    // paddingHorizontal: 10,
+    marginHorizontal: 10
+
+  },
 
 });
