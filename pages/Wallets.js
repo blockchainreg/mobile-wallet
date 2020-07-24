@@ -80,7 +80,12 @@ const wallets = (store, web3t) => {
           store.current.filterVal.temp = "";
           store.current.filterVal.apply = "";
           applyTransactions(store);
-          store.current.send.to = "";
+          store.current.send["to"] = "";
+          store.current.send.amountSend = '0';
+          store.current.send.amountSendUsd = '0';
+          store.current.send.amountSendFee = '0';
+          store.current.send.amountSendFeeUsd = '0';
+          store.current.send.error = "";
           store.current.send.wallet = wallet;
           store.current.send.coin = wallet.coin;
           store.current.send.network = wallet.network;
