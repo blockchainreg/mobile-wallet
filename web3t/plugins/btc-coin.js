@@ -8,12 +8,13 @@
     txFeeOptions: {
       auto: '0.000001',
       cheap: '0.0000004',
-      feePerByte: '0.000001'
+      feePerByte: '0.0000005'
     },
     mask: '1000000000000000000000000000000000',
     api: {
-      provider: 'insight',
-      url: 'https://insight.bitpay.com',
+      provider: 'bitcore',
+      url: 'https://api.bitcore.io',
+      linktx: 'https://bitpay.com/insight/#/BTC/mainnet/tx/:hash',
       decimal: 8,
       alternative: {
         balance: 'https://blockchain.info/q/addressbalance/:address'
@@ -31,12 +32,19 @@
   };
   out$.testnet = testnet = {
     txFee: 0.0001,
+    txFeeAutoMode: 'per-byte',
     decimals: 8,
     mask: '1000000000000000000000000000000000',
     api: {
-      provider: 'insight',
-      url: 'https://testnet.blockexplorer.com',
+      provider: 'bitcore',
+      url: 'https://api.bitcore.io',
+      linktx: 'https://bitpay.com/insight/#/BTC/testnet/tx/:hash',
       decimal: 8
+    },
+    txFeeOptions: {
+      auto: '0.000001',
+      cheap: '0.0000004',
+      feePerByte: '0.0000005'
     },
     messagePrefix: '\x18Bitcoin Signed Message:\n',
     topup: 'https://testnet.manu.backend.hamburg/faucet',
