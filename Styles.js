@@ -59,7 +59,7 @@ export default StyleSheet.create({
             height: 50,
             backgroundColor: "#1B1B74",
             borderTopColor: "transparent",
-            bottom: 0,
+            bottom: 20,
             left: 0,
             right: 0,
             position: "absolute",

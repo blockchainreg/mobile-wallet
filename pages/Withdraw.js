@@ -289,7 +289,7 @@ const RadioButtons = () => {
         </TouchableOpacity>
 
 
-     
+
 
     </View>
   );
@@ -466,16 +466,16 @@ export default ({ store, web3t }) => {
                     </Item>
                </View>
 
-             
+
                 <View style={pad}></View>
 
               <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang.fee}:</Text>
               </View>
-              <RadioButtons/>
-                {/* <Text style={styles.textInputDownRight}>
+              {/* <RadioButtons/> */}
+                <Text style={styles.textInputDownRight}>
                   {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
-                </Text> */}
+                </Text>
                 <Text style={styles.error}>{send.error}</Text>
 
             </View>

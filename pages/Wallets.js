@@ -234,11 +234,11 @@ export default ({ store, web3t }) => {
                 />
               }
             >{wallets(store, web3t)}</ScrollView>
+            <Footer store={store}></Footer>
           </LinearGradient>
         </View>
 
       </Background>
-      <Footer store={store}></Footer>
     </View>
   );
 };

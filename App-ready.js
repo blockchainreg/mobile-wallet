@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, PanResponder} from "react-native";
+import { View, Text, PanResponder, SafeAreaView} from "react-native";
 import { observable, intercept, observe } from "mobx";
 import { observer } from "mobx-react";
 import { Root } from "native-base";
