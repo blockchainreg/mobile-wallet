@@ -1,22 +1,18 @@
 require! {
     \react
-    \native-base : { ListItem, Left, Body, Right, Thumbnail, Text, Button, View, Title, Icon, Header, Badge }
+    \native-base : { ListItem, Left, Body, Right, Thumbnail, Text, Button, View, Title, Icon, Header, Badge, Toast }
     \../Styles.js : styles
     \react-native : { ScrollView, TouchableOpacity, Dimensions, Clipboard, Alert, Vibration, Image }
     \../components/StandardLinearGradient.js
     \react-native-modal-component : ModalComponent
     \moment
     \axios
-    \@rimiti/react-native-toastify : Toast
     \../components/RefreshControl.js : RefreshControl
     \../components/LoadMoreDate.js : LoadMoreDate
 }
 
 
 { width, height } = Dimensions.get("window")
-
-showToast = (message)->
-  this.toastify.show(message, 3000)
 
 openInfoModal = (store, transaction)->
   store.infoTransaction = transaction
@@ -241,13 +237,13 @@ export default ({ store }) => {
 
       let loginResult = await axios
         .post("https://coinpay.org.ua/api/v1/user/obtain_token", params, {})
-        .catch(e => showToast(e.response.data.detail));
+        .catch(e => Toast.show({text: e.response.data.detail}));
 
       if (loginResult.status === 200) {
         store.userToken = loginResult.data.token;
         // console.log("in method!");
       } else {
-        showToast("balances not available");
+        Toast.show({text: "balances not available"});
       }
 
       console.log("userToken 😀", store.userToken);
@@ -258,13 +254,13 @@ export default ({ store }) => {
             Authorization: `Bearer ${store.userToken}`
           }
         })
-        .catch(e => showToast(e.response.data.detail));
+        .catch(e => Toast.show({text: e.response.data.detail}));
 
       if (balancesRefresh.status === 200) {
         store.userWallet = balancesRefresh.data.balance;
         console.log("balancesRefresh 😀", store.userWallet);
       } else {
-        showToast("error");
+        Toast.show({text: "error"});
       }
     }
   };
@@ -280,12 +276,6 @@ export default ({ store }) => {
     >
       <View style={styles.viewFlex}>
         <StandardLinearGradient>
-          <Toast
-            ref={c => (this.toastify = c)}
-            position={"top"}
-            style={styles.toastStyle}
-          />
-
           <Header style={styles.mtAndroid}>
             <Left style={styles.viewFlex}>
               <Button

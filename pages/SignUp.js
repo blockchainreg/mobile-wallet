@@ -9,13 +9,13 @@ import {
   Body,
   Header,
   Left,
-  Right
+  Right,
+  Toast
 } from "native-base";
 import { Image, ImageBackground } from "react-native";
 import Constants from 'expo-constants';
 import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
-import Toast from "@rimiti/react-native-toastify";
 import { set, check } from '../wallet/pin.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
@@ -25,11 +25,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as SecureStore from "expo-secure-store";
 import PickerSetLang from "../components/PickerSetLang.js";
 
-
-const showToast = message => {
-  // console.log(message);
-  this.toastify.show(message, 3000);
-};
 
 const buttonActive = store => {
   const lang = getLang(store);
@@ -41,7 +36,7 @@ const buttonActive = store => {
   const signup = async () => {
     if (store.current.signUpInputPinField.length < 6) {
       store.current.signUpInputPinField = "";
-      return showToast(lang.validPin);
+      return Toast.show({text: lang.validPin});
     }
     await localStorage.clear();
     set(store.current.signUpInputPinField);
@@ -117,7 +112,7 @@ export default ({ store }) => {
 
   const handleChangePin = async text => {
     store.current.signUpInputPinField = text;
-    store.current.pinSave = store.current.signUpInputPinField;
+    // store.current.pinSave = store.current.signUpInputPinField;
   };
   const inputSuccessPin = store => {
     return (
@@ -143,13 +138,7 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-          <Background fullscreen={true}/>
-        <Toast
-          ref={c => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
-
+        <Background fullscreen={true}/>
         <Header transparent style={styles.mtIphoneX}>
           {/*}<Left  style={styles.viewFlexHeader}>{logIn(store)}</Left>{*/}
           <Body  style={styles.viewFlexHeader} />

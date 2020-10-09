@@ -13,7 +13,7 @@ export default ({ store, web3t }) => {
     const checkType = type => {
       switch (type) {
         case "IN":
-          return <Text style={styles.txtSizeHistory}>{lang.receive}</Text>;
+          return <Text style={styles.txtSizeHistory}>{lang.received}</Text>;
         case "OUT":
           return <Text style={styles.txtSizeHistory}>{lang.sent}</Text>;
         default:
@@ -70,11 +70,11 @@ export default ({ store, web3t }) => {
           <Header searchBar style={styles.headerSearchBar}>
                 <Item style={{ backgroundColor: Images.color4}}>
                   <Icon name="ios-search" style={{ color: "#fff"}}/>
-                  <Input 
-                    placeholder="Search" 
-                    value={store.current.filterVal.temp} 
-                    placeholderTextColor="#fff" 
-                    onChangeText={changeSearch} 
+                  <Input
+                    placeholder="Search"
+                    value={store.current.filterVal.temp}
+                    placeholderTextColor="#fff"
+                    onChangeText={changeSearch}
                     selectionColor={"#fff"}
                     style={{ color: "#fff", backgroundColor: "transparent"}}
                   />
@@ -109,7 +109,7 @@ export default ({ store, web3t }) => {
                   onPress={() => {
                     showTransaction(transaction);
                   }}
-                  key={transaction.tx}
+                  key={transaction.tx+transaction.type}
                 >
                   <Left>{thumbnail(transaction.type)}</Left>
                   <Body style={{ paddingRight: 10 }}>
@@ -128,7 +128,7 @@ export default ({ store, web3t }) => {
                       {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{transaction.token.toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
                     </Text>
                     <Text style={styles.constDate}>
-                    ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()})
+                    ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
                     </Text>
                   </Right>
                 </ListItem>

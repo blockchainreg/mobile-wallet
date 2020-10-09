@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState } from "react";
 import {
   Left,
   Right,
@@ -12,12 +13,12 @@ import {
   Body,
   Header,
   Thumbnail,
-  Label
+  Label,
+  Toast
 } from "native-base";
 import { observe } from "mobx";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import Toast from "@rimiti/react-native-toastify";
 import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
@@ -32,11 +33,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import {
   Image, TouchableOpacity
 } from "react-native";
+import { RadioButton } from 'react-native-paper';
 
-const showToast = (message) => {
-  console.log(message);
-  this.toastify.show(message, 3000);
-};
 
 const btnWithdrawBtc = ({ store, web3t }) => {
   const {
@@ -124,6 +122,13 @@ const btnWithdrawBtc = ({ store, web3t }) => {
         if (store.current.confirmation && checkingSpinner) {
           checkingSpinner.finish();
           checkingSpinner = null;
+          store.current.send["to"] = "";
+          store.current.send.amountSend = '0';
+          store.current.send.amountSendUsd = '0';
+          store.current.send.amountSendFee = '0';
+          store.current.send.amountSendFeeUsd = '0';
+          store.current.send.error = "";
+
           return;
         }
       };
@@ -134,7 +139,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
       sendAnyway();
     } catch (e) {
       console.error(e);
-      this.toastify.show(e.message, 3000);
+      Toast.show({text: e.message});
     }
   };
   const lang = getLang(store);
@@ -182,6 +187,113 @@ const wrap = (text) => {
     },
   };
 };
+const RadioButtons = () => {
+  const [checked, setChecked] = React.useState('slow');
+
+  return (
+    <View style={styles.inputContainerRadio}>
+
+      <View style={styles.radioField}>
+        <TouchableOpacity
+          style={checked === 'slow' ? styles.borderRadioCheck : styles.borderRadio}
+          onPress={() => setChecked('slow')}>
+            <View style={styles.radioField}>
+              <RadioButton
+                value="slow"
+                status={checked === 'slow' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('slow')}
+                color={'yellow'}
+                uncheckedColor={'rgba(255,255,255,0.60)'}
+              />
+              <Text style={checked === 'slow' ? styles.txtRadioCheck : styles.txtRadio}>Slow</Text>
+            </View>
+          <Item style={styles.borderItemRadio}>
+              <Input
+                returnKeyType="done"
+                autoCompleteType="off"
+                style={checked === 'slow' ? styles.inputStyleRadioCheck : styles.inputStyleRadio}
+                selectionColor={'#fff'}
+                keyboardAppearance="dark"
+                placeholder="0.00"
+                value={'10.00 $'}
+                keyboardType="numeric"
+                placeholderTextColor="rgba(255,255,255,0.60)"
+                disabled={true}
+              />
+
+
+          </Item>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.radioField}>
+        <TouchableOpacity
+          style={checked === 'custom' ? styles.borderRadioCheck : styles.borderRadio}
+          onPress={() => setChecked('custom')}>
+            <View style={styles.radioField}>
+              <RadioButton
+                value="custom"
+                status={checked === 'custom' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('custom')}
+                color={'yellow'}
+                uncheckedColor={'rgba(255,255,255,0.60)'}
+              />
+              <Text style={checked === 'custom' ? styles.txtRadioCheck : styles.txtRadio}>Custom</Text>
+            </View>
+          <Item style={styles.borderItemRadio}>
+              <Input
+                returnKeyType="done"
+                autoCompleteType="off"
+                style={checked === 'custom' ? styles.inputStyleRadioCheck : styles.inputStyleRadio}
+                selectionColor={'#fff'}
+                keyboardAppearance="dark"
+                placeholder="0.00"
+                value={'10.00 $'}
+                keyboardType="numeric"
+                placeholderTextColor="rgba(255,255,255,0.60)"
+                disabled={true}
+              />
+
+          </Item>
+        </TouchableOpacity>
+      </View>
+
+
+        <TouchableOpacity
+          style={checked === 'fast' ? styles.borderRadioCheck : styles.borderRadio}
+          onPress={() => setChecked('fast')}>
+            <View style={styles.radioField}>
+              <RadioButton
+                value="fast"
+                status={checked === 'fast' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('fast')}
+                color={'yellow'}
+                uncheckedColor={'rgba(255,255,255,0.60)'}
+              />
+              <Text style={checked === 'fast' ? styles.txtRadioCheck : styles.txtRadio}>Fast</Text>
+            </View>
+          <Item style={styles.borderItemRadio}>
+              <Input
+                returnKeyType="done"
+                autoCompleteType="off"
+                style={checked === 'fast' ? styles.inputStyleRadioCheck : styles.inputStyleRadio}
+                selectionColor={'#fff'}
+                keyboardAppearance="dark"
+                placeholder="0.00"
+                value={'10.00 $'}
+                keyboardType="numeric"
+                placeholderTextColor="rgba(255,255,255,0.60)"
+                disabled={checked === 'fast' ? false : true}
+              />
+          </Item>
+        </TouchableOpacity>
+
+
+
+
+    </View>
+  );
+};
 
 export default ({ store, web3t }) => {
     const lang = getLang(store);
@@ -216,6 +328,7 @@ export default ({ store, web3t }) => {
       changeAmount,
       invoice,
     } = sendFuncs(store, web3t);
+
 
     const wallets = walletsFuncs(store, web3t).wallets;
 
@@ -254,13 +367,11 @@ export default ({ store, web3t }) => {
           keyboardType={"default"}
           placeholderTextColor="rgba(255,255,255,0.60)"
         />
-        {/* <Icon name="ios-qr-code-outline" style={{ color: "#fff"}} onPress={scanQRSend}/> */}
         <TouchableOpacity
           onPress={scanQRSend}
           style={{ backgroundColor: 'transparent',  width: 50}}
         >
         <Image
-
           source={Images.scanImage}
           style={styles.sizeIconBtn1}
         />
@@ -286,12 +397,6 @@ export default ({ store, web3t }) => {
     return (
       <View style={styles.viewFlex}>
         <Background fullscreen={true}/>
-        <Toast
-          ref={(c) => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
-
         <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
@@ -306,7 +411,6 @@ export default ({ store, web3t }) => {
         <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         {RefreshControl({swipeRefresh:refreshToken, store, children:<>
           <View style={styles.bodyBlockWallet}>
-            {/* <View style={styles.bodyBalance}> */}
             <View style={styles.bodyBlock3}>
               <Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
             </View>
@@ -318,8 +422,6 @@ export default ({ store, web3t }) => {
                 </Text>
               </Text>
             </View>
-            {/* </View> */}
-
             <View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
             <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang["to"]}:</Text>
@@ -365,6 +467,12 @@ export default ({ store, web3t }) => {
                </View>
 
 
+                <View style={pad}></View>
+
+              <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang.fee}:</Text>
+              </View>
+              {/* <RadioButtons/> */}
                 <Text style={styles.textInputDownRight}>
                   {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
                 </Text>
@@ -372,11 +480,12 @@ export default ({ store, web3t }) => {
 
             </View>
             <View style={styles.containerScreen}>
-              <View style={styles.marginBtn}>
+              {/* <View style={styles.marginBtn}> */}
                 {SendButton({send: store.current.send})}
-              </View>
+              {/* </View> */}
             </View>
           </View>
+          <View style={styles.paddingWithdraw}/>
         </>})}
       </View>
     );

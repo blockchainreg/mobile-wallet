@@ -19,7 +19,8 @@ import {
   Header,
   Left,
   Right,
-  Textarea
+  Textarea,
+  Toast
 } from "native-base";
 import bip39 from "bip39";
 import styles from "../Styles.js";
@@ -37,12 +38,6 @@ import { set } from "../wallet/seed.js";
 //   return "one two three four five six";
 // }
 
-const showToast = message => {
-  alert(message);
-};
-
-
-
 const seedContainerStyle = {
   borderWidth: 1,
   borderRadius: 5,
@@ -54,21 +49,22 @@ const seedContainerStyle = {
 
 export default ({ store, web3t }) => {
   const changePage = tab => () => {
+    store.signUpConfirmSeedField = "";
     store.current.page = tab;
   };
 
   const done = () => {
 
-    if(store.signUpConfirmSeedField == "") return showToast("Empty word is not allowed");
+    if(store.signUpConfirmSeedField == "") return Toast.show({text: "Empty word is not allowed"});
 
     if (bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
-      return showToast("You have mistake in your word");
+      return Toast.show({text: "You have mistake in your word"});
     }
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;
+    store.signUpConfirmSeedField = "";
     if(store.current.seedIndex < store.current.seedWords.length - 1) {
       store.current.seedIndex += 1;
-      store.signUpConfirmSeedField = "";
       return
     }
     store.current.seed = store.current.seedWords.join(' ')
@@ -78,7 +74,7 @@ export default ({ store, web3t }) => {
   };
 
   const number = store.current.seedIndexes[store.current.seedIndex];
-  const changeSeed = async word => {
+  const changeSeed = (word) => {
     store.signUpConfirmSeedField = word;
   };
 

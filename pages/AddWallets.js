@@ -17,7 +17,6 @@ import {
 import styles from "../Styles.js";
 import { ScrollView} from "react-native";
 import RefreshControl from "../components/RefreshControl.js";
-import Toast from "@rimiti/react-native-toastify";
 import spin from "../utils/spin.js";
 import StatusBar from "../components/StatusBar.js";
 

@@ -14,7 +14,8 @@ import {
   Thumbnail,
   Badge
 } from "native-base";
-import { View, ScrollView, Clipboard, Alert, Vibration, Linking } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { View, ScrollView, Clipboard, Alert, Vibration, Linking, Platform } from "react-native";
 import styles from "../Styles.js";
 // import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from "moment";
@@ -32,7 +33,7 @@ export default (store) => {
     await Clipboard.setString(
       info
     );
-    Vibration.vibrate(1000);
+    Vibration.vibrate(100);
     Alert.alert(lang.copied, "", [{ text: lang.ok }]);
   };
 
@@ -79,12 +80,12 @@ export default (store) => {
               </View>
             </View>
 
-
+            <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20}}>
             <Text style={amountStyle(store.infoTransaction.type)}>
               {index(store.infoTransaction.type)}
-              {store.infoTransaction.amount} {store.infoTransaction.token.toUpperCase()}
+              {parseFloat(store.infoTransaction.amount).toFixed(7)} {store.infoTransaction.token.toUpperCase()}
             </Text>
-
+            </View>
             <Text style={{color: "rgba(255, 255, 255, 0.70)"}}>
               {moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
             </Text>
@@ -139,13 +140,14 @@ export default (store) => {
 
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.externalId}:</Text>
-            <View style={styles.userHistoryRow}>
+            <View style={styles.userHistoryRow1}>
             <Icon
-                name="ios-copy"
-                onPress={writeToClipboardId}
+                name="md-open"
+                onPress={() => {Linking.openURL(url)}}
+                onLongPress={writeToClipboardId}
                 style={[styles.viewPt, {fontSize: 20} ]}
             />
-              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={() => {Linking.openURL(url)}}>
+              <Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(url)}} onLongPress={writeToClipboardId}>
               {store.infoTransaction.tx}
             </Text>
             </View>

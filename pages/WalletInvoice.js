@@ -6,36 +6,30 @@ import {
   Right,
   Text,
   Button,
-  View,
   Title,
   Icon,
   Thumbnail
 } from "native-base";
-import { Clipboard, Alert, Vibration, Share } from "react-native";
+import { Clipboard, Alert, Vibration, Share, View } from "react-native";
 import styles from "../Styles.js";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import Toast from "@rimiti/react-native-toastify";
+
 import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
-import { QRCode } from 'react-native-custom-qr-codes-expo';
+// import { QRCode } from 'react-native-custom-qr-codes-expo';
+// import QRCode from 'react-native-qrcode';
+import QRCode from 'react-native-qrcode-svg';
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
-import Images from '../Images.js';
-import { LinearGradient } from "expo-linear-gradient";
-
-
-const showToast = message => {
-  console.log(message);
-  this.toastify.show(message, 3000);
-};
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
-  console.log("Rendering qr code");
   const buttonCopy = store => {
     const DURATION = 1000/10;
     const writeToClipboardAddr = async () => {
@@ -99,13 +93,7 @@ export default ({ store, web3t }) => {
   const back = changePage("wallet");
   return (
     <View style={styles.viewFlex}>
-          <Background fullscreen={true}/>
-        <Toast
-          ref={c => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
-
+        <Background fullscreen={true}/>
         <Header transparent style={styles.mtAndroid}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
@@ -129,12 +117,12 @@ export default ({ store, web3t }) => {
 
               <View style={styles.viewMt}>
                 <View style={styles.alignItemsQr}>
-                {/* <Text style={styles.titleQr}>Scan the QR code:</Text> */}
                   <QRCode
-                    color="#FFFFFF"
-                    content={wallet.address}
+                    value={wallet.address}
+                    color="#fff"
+                    backgroundColor="transparent"
+                    size={hp("30%")}
                   />
-                  {/* <Text style={styles.titleQr}>Or click to copy:</Text> */}
                   <View style={styles.viewMt}>
                   <Text style={styles.textAddrQr}>
                     {wallet.address}
@@ -147,7 +135,6 @@ export default ({ store, web3t }) => {
             </View>
           </View>
         </>})}
-
     </View>
   );
 };

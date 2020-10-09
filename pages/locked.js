@@ -10,7 +10,8 @@ import {
   Right,
   Icon,
   Button,
-  Separator
+  Separator,
+  Toast
 } from "native-base";
 import { Image, ImageBackground, Platform, } from "react-native";
 import Constants from 'expo-constants';
@@ -18,7 +19,6 @@ import GradientButton from "../components/GradientButton.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 import * as SecureStore from 'expo-secure-store';
 import styles from "../Styles.js";
-import Toast from "@rimiti/react-native-toastify";
 import {get} from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import {check, set} from "../wallet/pin.js";
@@ -29,17 +29,16 @@ import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 
-let toastify = null;
-
 export default ({ store, web3t }) => {
-  const showToast = message => {
-    console.log('Trying to show toast', message);
-    toastify && toastify.show(message, 3000);
-  };
   const lang = getLang(store);
 
   const loginQuick = () => {
     store.current.page = "wallets";
+    store.current.auth.isLocalAuthEnabled = null;
+    store.current.auth.isAuthenticating = false;
+    store.current.auth.failedCount = 0;
+    store.current.auth.isLoggingIn = false;
+    store.current.pin = "";
 
     spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
       store.current.auth.isLoggingIn = false;
@@ -53,10 +52,16 @@ export default ({ store, web3t }) => {
   const loginSlow = () => {
     spin(store, lang.walletDecrypting, web3t.init.bind(web3t))(function(err, data){
       if (err) {
-        return showToast(err + "");
+        return Toast.show({text: err + ""});
       }
 
       store.current.page = "wallets";
+      store.current.auth.isLocalAuthEnabled = null;
+      store.current.auth.isAuthenticating = false;
+      store.current.auth.failedCount = 0;
+      store.current.auth.isLoggingIn = false;
+      store.current.pin = "";
+
       spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
         store.current.auth.isLoggingIn = false;
         if (err) {
@@ -80,10 +85,6 @@ export default ({ store, web3t }) => {
     }
 
     store.current.seed = seed;
-    store.current.auth.isLocalAuthEnabled = null;
-    store.current.auth.isAuthenticating = false;
-    store.current.auth.failedCount = 0;
-    store.current.auth.isLoggingIn = false;
     //in case when we already have built objects we can just show it
     if(store.current.account.wallets && store.current.account.wallets.length > 0) {
       loginQuick();
@@ -125,7 +126,7 @@ export default ({ store, web3t }) => {
       }
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
         SecureStore.deleteItemAsync("localAuthToken");
-        return showToast("Cannot authenticate. Please enter password.");
+        return Toast.show({text: "Cannot authenticate. Please enter password."});
       }
       login(get());
       store.userWallet = 200;
@@ -170,7 +171,7 @@ export default ({ store, web3t }) => {
       console.log("authenticateRecursiveAndroid success!!!");
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
         SecureStore.deleteItemAsync("localAuthToken");
-        return showToast("Cannot authenticate. Please enter password.");
+        return Toast.show({text: "Cannot authenticate. Please enter password."});
       }
 
       login(get());
@@ -199,7 +200,7 @@ export default ({ store, web3t }) => {
     const loginAction = spin(store, lang.checkingPin, () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return showToast(lang.incorrectPass ||  "Incorrect password");
+        return Toast.show({text: lang.incorrectPass ||  "Incorrect password"});
       }
 
       login(get());
@@ -289,7 +290,6 @@ export default ({ store, web3t }) => {
 
   const handleChangePin = async text => {
     store.current.pin = text;
-    store.current.pinSave = store.current.pin;
   };
   const inputSuccessPin = store => {
     return (
@@ -318,11 +318,6 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
       <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-        <Toast
-          ref={c => (toastify = c)}
-          position="top"
-          style={styles.toastStyle}
-        />
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader} />

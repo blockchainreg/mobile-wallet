@@ -24,11 +24,13 @@ class PathView extends RenderableView {
     public PathView(ReactContext reactContext) {
         super(reactContext);
         PathParser.mScale = mScale;
+        mPath = new Path();
     }
 
     @ReactProp(name = "d")
     public void setD(String d) {
         mPath = PathParser.parse(d);
+        elements = PathParser.elements;
         invalidate();
     }
 

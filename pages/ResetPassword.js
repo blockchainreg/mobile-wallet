@@ -15,15 +15,9 @@ import {
 import { Image, ImageBackground } from "react-native";
 import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
-import Toast from "@rimiti/react-native-toastify";
 import Images from '../Images.js';
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
-
-const showToast = message => {
-  console.log(message);
-  this.toastify.show(message, 3000);
-};
 
 const buttonActive = store => {
   const changePage = (tab, visible) => () => {
@@ -141,11 +135,6 @@ export default ({ store }) => {
         source={Images.backgroundImage}
         style={styles.introBackground}
       >
-        <Toast
-          ref={c => (this.toastify = c)}
-          position={"top"}
-          style={styles.toastStyle}
-        />
         <Header transparent style={styles.mtIphoneX}>
         <Left style={styles.viewFlexHeader}>{logIn(store)}</Left>
           <Body style={styles.viewFlexHeader} />

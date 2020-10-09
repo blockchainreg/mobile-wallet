@@ -2,11 +2,10 @@ require! {
     \react
     \native-base : { List, ListItem, Left, Body, Right, Thumbnail, Text, Button, View, Title, Icon, Content, Header }
     \../Styles.js : styles
-    \react-native : { ScrollView, TouchableOpacity } 
+    \react-native : { ScrollView, TouchableOpacity }
     \../components/StandardLinearGradient.js
     \../components/RefreshControl.js
     \../components/StatusBar.js
-    \@rimiti/react-native-toastify : Toast
     \./Footer.js
 }
 styles = styles.default
@@ -52,7 +51,7 @@ module.exports = ({ store }) ->
                             Title.pug(style=styles.title1) Total Balance
                         Right.pug(style=styles.viewFlex)
                     Text.pug(style=styles.textBalanceHeader)
-                        Text.pug(style=styles.textCurrency) {{calcUsd}} 
+                        Text.pug(style=styles.textCurrency) {{calcUsd}}
             View.pug(style=styles.viewMonoWallets)
                 View.pug(style=styles.viewPt)
                 ScrollView.pug
