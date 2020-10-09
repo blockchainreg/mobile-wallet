@@ -7,7 +7,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/velas-icon.png",
     "splash": {
@@ -22,7 +22,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.velas.mobilewallet",
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
       },
@@ -32,14 +32,13 @@
     "android": {
       "package": "com.velas.mobile_wallet",
       "versionCode": 93,
-      "icon": "./assets/ic_launcher.png",
+      "icon": "./assets/ic_launcher.png"
     },
     "description": "Premium quality cryptocurrency wallet!",
     "detach": {
       "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.14.6-sdk36.0.0-8ea388d1-463b-4e91-bbf7-2d95d0174c96.tar.gz",
       "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v119-sdk35.0.0-6758e9de-1e10-40f8-863d-ec8972895cf1.tar.gz"
     },
-    "sdkVersion": "36.0.0",
     "scheme": "exp044147f6e1dc4d5d90744d75e8dbe9b8"
   }
 }
