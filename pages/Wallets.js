@@ -115,6 +115,8 @@ const wallets = (store, web3t) => {
         // { cancelable: false }
       );
     }
+  // It opens dialog on scroll - should be fixed
+  //    onLongPress={actions}
 
     return (
       <ListItem
@@ -122,7 +124,6 @@ const wallets = (store, web3t) => {
         thumbnail
         underlayColor={Images.color1}
         onPress={chooseWallet}
-        onLongPress={actions}
         style={styles.mbListItem}
       >
         <Left>

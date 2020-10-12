@@ -23,10 +23,11 @@ import moment from "moment";
 import getLang from '../wallet/get-lang.js';
 import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
+import walletsFuncs from "../wallet/wallets-funcs.js";
 
 
 
-export default (store) => {
+export default (store, web3t) => {
 
   const lang = getLang(store);
   const writeToClipboard = async (info) => {
@@ -69,7 +70,12 @@ export default (store) => {
         return null;
     }
   };
-  const url = `https://explorer.velas.com/tx/${store.infoTransaction.tx}`;
+  //const txurl = `https://explorer.velas.com/tx/${store.infoTransaction.tx}`;
+  const wallets = walletsFuncs(store, web3t).wallets;
+  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  const {linktx, url} = wallet.network.api;
+  const {tx} = store.infoTransaction;
+  const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
 
   return (
         <View style={styles.container}>
@@ -143,11 +149,11 @@ export default (store) => {
             <View style={styles.userHistoryRow1}>
             <Icon
                 name="md-open"
-                onPress={() => {Linking.openURL(url)}}
+                onPress={() => {Linking.openURL(txurl)}}
                 onLongPress={writeToClipboardId}
                 style={[styles.viewPt, {fontSize: 20} ]}
             />
-              <Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(url)}} onLongPress={writeToClipboardId}>
+              <Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(txurl)}} onLongPress={writeToClipboardId}>
               {store.infoTransaction.tx}
             </Text>
             </View>
