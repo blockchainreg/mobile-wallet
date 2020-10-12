@@ -81,8 +81,8 @@ export default ({ store, web3t }) => {
           <Text style={styles.constDate}>
             {transaction.time
               ? moment(transaction.time * 1000).format(
-              "MMM D YYYY h:mm A"
-            )
+                "MMM D YYYY h:mm A"
+              )
               : null
             }
           </Text>
