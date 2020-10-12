@@ -27,6 +27,12 @@ var color5 = "#101255";
 var color6 = "rgba(19, 20, 91, 0.04)";
 var color7 = "rgba(19, 20, 91, 0.99)";
 var color8 = "rgba(22, 23, 111, 0.80)";
+var velasColor1 = "#2C2F59";
+var velasColor2 = "#131940";
+var velasColor3 = "rgba(8, 14, 61, 100)";
+var velasColor4 = "rgba(21, 26, 66, 100)";
+var velasColor5 = "#292b55";
+
 
 export default {
   cameraEn,
@@ -51,5 +57,10 @@ export default {
   color5,
   color6,
   color7,
-  color8
+  color8,
+  velasColor1,
+  velasColor2,
+  velasColor3,
+  velasColor4,
+  velasColor5
 };

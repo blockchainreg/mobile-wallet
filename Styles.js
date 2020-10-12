@@ -38,41 +38,28 @@ export default StyleSheet.create({
       {
         backgroundColor: "#1B1B74",
         borderTopColor: "transparent",
-        // height: height - '80%',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        position: "absolute",
+        
       },
       {
         ...Platform.select({
           ios: {
-            height: 50,
             borderTopColor: "transparent",
             backgroundColor: "#1B1B74",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            position: "absolute",
+            
           },
           android: {
-            height: 50,
             backgroundColor: "#1B1B74",
             borderTopColor: "transparent",
-            bottom: 20,
-            left: 0,
-            right: 0,
-            position: "absolute",
+            // zIndex: 2
+            
           },
         }),
       }
     ),
   },
   footerTab: {
-    ...Platform.select({
-      ios: {},
-      android: { backgroundColor: "transparent" },
-    }),
+    backgroundColor: "transparent" ,
+
   },
   footerButtonStyle: {
     ...ifIphoneX(
@@ -255,8 +242,8 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("75%"),
-            zIndex: 1,
+            height: hp("67%"),
+            zIndex: 0,
           },
         }),
       }
@@ -1154,7 +1141,7 @@ export default StyleSheet.create({
   mtIphoneX: {
     ...ifIphoneX(
       {
-        paddingTop: hp("5%"),
+        // paddingTop: hp("5%"),
         paddingBottom: hp("3%"),
       },
       {
@@ -1164,8 +1151,10 @@ export default StyleSheet.create({
         paddingBottom: hp("3%"),
           },
           android: {
-            paddingTop: hp("5%"),
-        paddingBottom: hp("3%"),
+            // paddingTop: 70,
+            // paddingBottom: 30,
+            paddingTop: hp("6%"),
+            paddingBottom: hp("3%"),
           },
         }),
       }
@@ -1174,7 +1163,7 @@ export default StyleSheet.create({
   mtAndroid: {
     ...ifIphoneX(
       {
-        paddingTop: hp("5%"),
+        // paddingTop: hp("5%"),
         paddingBottom: hp("3%"),
       },
       {
@@ -1184,8 +1173,10 @@ export default StyleSheet.create({
             paddingBottom: 10,
           },
           android: {
-            paddingTop: 70,
-            paddingBottom: 30,
+            // paddingTop: 70,
+            // paddingBottom: 30,
+            paddingTop: hp("6%"),
+            paddingBottom: hp("3%"),
             // backgroundColor: "#fafafa",
           },
         }),
@@ -5221,7 +5212,7 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             top: 0,
-            height: hp("25%"),
+            height: hp("30%"),
             shadowColor: "#000",
             shadowOffset: {
               width: 0,

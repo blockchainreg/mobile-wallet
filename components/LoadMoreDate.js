@@ -63,6 +63,48 @@ export default ({ store, web3t }) => {
         applyTransactions(store);
     }
 
+    const renderTransaction = (transaction) => (
+      //{ token, tx, amount, fee, time, url, type, pending } = tran
+      <ListItem
+        thumbnail
+        underlayColor={Images.color1}
+        onPress={() => {
+          showTransaction(transaction);
+        }}
+        key={transaction.tx+transaction.type}
+      >
+        <Left>{thumbnail(transaction.type)}</Left>
+        <Body style={{ paddingRight: 10 }}>
+          <Text style={styles.txtSizeHistory}>
+            {checkType(transaction.type)}
+          </Text>
+          <Text style={styles.constDate}>
+            {transaction.time
+              ? moment(transaction.time * 1000).format(
+              "MMM D YYYY h:mm A"
+            )
+              : null
+            }
+          </Text>
+        </Body>
+        <Right>
+          <Text style={amountStyle(transaction.type)}>
+            {index(transaction.type)}
+            {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{transaction.token.toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+          </Text>
+            {transaction.fee
+                ?(
+                  <Text style={styles.constDate}>
+                  ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+                  </Text>
+                )
+                : null
+            }
+        </Right>
+      </ListItem>
+    );
+
+
     return (
       <View style={styles.container}>
 
@@ -101,38 +143,7 @@ export default ({ store, web3t }) => {
 
 
             <List>
-              {txs.map(transaction => (
-                //{ token, tx, amount, fee, time, url, type, pending } = tran
-                <ListItem
-                  thumbnail
-                  underlayColor={Images.color1}
-                  onPress={() => {
-                    showTransaction(transaction);
-                  }}
-                  key={transaction.tx+transaction.type}
-                >
-                  <Left>{thumbnail(transaction.type)}</Left>
-                  <Body style={{ paddingRight: 10 }}>
-                    <Text style={styles.txtSizeHistory}>
-                      {checkType(transaction.type)}
-                    </Text>
-                    <Text style={styles.constDate}>
-                      {moment(transaction.time * 1000).format(
-                        "MMM D YYYY h:mm A"
-                      )}
-                    </Text>
-                  </Body>
-                  <Right>
-                    <Text style={amountStyle(transaction.type)}>
-                      {index(transaction.type)}
-                      {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{transaction.token.toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-                    </Text>
-                    <Text style={styles.constDate}>
-                    ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-                    </Text>
-                  </Right>
-                </ListItem>
-              ))}
+              {txs.map(renderTransaction)}
             </List>
           </View>
         )}
