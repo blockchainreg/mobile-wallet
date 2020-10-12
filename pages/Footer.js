@@ -8,6 +8,7 @@ import getLang from '../wallet/get-lang.js';
 import Images from "../Images.js";
 
 
+
 export default ({ store }) => {
   const changeTab = (tab) => () => {
     store.current.page = tab;
@@ -28,7 +29,6 @@ export default ({ store }) => {
           style={styles.footerButtonStyle}
           onPress={changeTab("wallets")}
         >
-          {/* <Ionicons name="ios-wallet" size={32} style={styles.iconFooter} /> */}
           <Thumbnail square small source={Images.btnWallet} style={styles.iconFooter1} onPress={changeTab("wallets")}/>
 
         </Button>
@@ -38,7 +38,6 @@ export default ({ store }) => {
           style={styles.footerButtonStyle}
           onPress={changeTab("history")}
         >
-          {/* <Ionicons name="ios-time" size={32} style={styles.iconFooter} /> */}
           <Thumbnail square small source={Images.btnHistory} style={styles.iconFooter2} onPress={changeTab("history")}/>
         </Button>
         <Button
@@ -47,7 +46,6 @@ export default ({ store }) => {
           style={styles.footerButtonStyle}
           onPress={changeTab("settings")}
         >
-          {/* <Ionicons name="ios-settings" size={32} style={styles.iconFooter} /> */}
           <Thumbnail square small source={Images.btnSettings} style={styles.iconFooter2} onPress={changeTab("settings")}/>
         </Button>
       </FooterTab>

@@ -175,6 +175,7 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.container}>
+<View style={styles.viewFlex}>
 
       <Background fullscreen={true}>
         <View style={[styles.topView, {backgroundColor: "transparent", height: "20%", marginTop: hp("5%"), marginHorizontal: "17%", width: "66%", zIndex: 999}]}>
@@ -183,7 +184,6 @@ export default ({ store, web3t }) => {
           })}
         </View>
         <View style={styles.topView}>
-
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader}/>
               <Body style={styles.viewFlexHeader}>
@@ -234,11 +234,12 @@ export default ({ store, web3t }) => {
                 />
               }
             >{wallets(store, web3t)}</ScrollView>
-            <Footer store={store}></Footer>
           </LinearGradient>
         </View>
 
       </Background>
+      </View>
+            <Footer store={store}></Footer>
     </View>
   );
 };

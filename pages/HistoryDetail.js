@@ -16,7 +16,7 @@ module.exports = ({ store }) => {
       <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}>
-      <View style={{ paddingTop: 30 }}>
+      <View style={{ paddingTop: 50 }}>
         <Button
           onPress={() => {
             store.infoTransaction = null;

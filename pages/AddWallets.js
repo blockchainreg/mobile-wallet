@@ -19,6 +19,10 @@ import { ScrollView} from "react-native";
 import RefreshControl from "../components/RefreshControl.js";
 import spin from "../utils/spin.js";
 import StatusBar from "../components/StatusBar.js";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 //
 import dash from "../registry/dash.json";
@@ -126,7 +130,7 @@ export default ({ store, web3t }) => {
           </Header>
           <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         </>})}
-      <View style={styles.viewMono1}>
+      <View style={[styles.viewMono1, {height: hp("85%")}]}>
       <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
             style={styles.linearGradientBg}
