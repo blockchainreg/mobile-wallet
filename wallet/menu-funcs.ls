@@ -1,15 +1,15 @@
 require! {
     \prelude-ls : { filter, find }
-    \./tools.js : { cut, money }
-    \./seed.js
-    \./use-network.js
-    \./pin.js : { check }
-    \./navigate.js
-    \./get-primary-info.js
+    \./tools.ls : { cut, money }
+    \./seed.ls
+    \./use-network.ls
+    \./pin.ls : { check }
+    \./navigate.ls
+    \./get-primary-info.ls
     \copy-to-clipboard
-    \./pages/confirmation.js : { confirm, prompt }
-    \./get-lang.js
-    \bip39
+    \./pages/confirmation.ls : { confirm, prompt, alert }
+    \./get-lang.ls
+    \../web3t/providers/deps.ls : { bip39 }
 }
 export generate-wallet = ->
     bip39.generate-mnemonic!
@@ -39,6 +39,17 @@ module.exports = (store, web3t)->
         navigate store, web3t, \locked
     refresh = ->
         <- web3t.refresh
+    not-in-dictionary = (word)->
+        word not in bip39.wordlists.EN
+    check-problem = (seed)->
+        return "expected seed" if typeof! seed isnt \String
+        return "expected lowercase" if seed.to-lower-case! isnt seed
+        words = seed.split(' ')
+        #return "expected 12/24 words" if words.length not in [12,24]
+        wrong-words =
+            words |> filter not-in-dictionary
+        return "some words are not in dictionary" if wrong-words.length > 0
+        ""
     #active-page = (page)->
     #    if current.page is page then \active
     #choose-account = (selected, event)-->
@@ -53,9 +64,11 @@ module.exports = (store, web3t)->
     change-seed = (event)->
         state.timeout = clear-timeout state.timeout
         current.seed = event.target.value
+        seedmem.mnemonic = event.target.value
+        current.seed-problem = check-problem event.target.value
         state.timeout = set-timeout refresh, 2000
     save-seed = ->
-        seed.set current.seed
+        seed.set seedmem.mnemonic
         current.saved-seed = yes
     lang = get-lang store
     edit-seed = ->
@@ -66,18 +79,20 @@ module.exports = (store, web3t)->
         #current.saved-seed = no
     cancel-try = ->
         current.try-edit-seed = no
-    enter-pin = (e)->
-        store.current.pin = e.target.value
+    check-pin = ->
         return if not check(store.current.pin)
         cancel-try!
         current.saved-seed = no
+    enter-pin = (e)->
+        store.current.pin = e.target.value
     generate = ->
         agree <- confirm store, "Are you sure you want to override the current seed?"
         return if not agree?
         current.seed = generate-wallet!
+        seedmem.mnemonic = generate-wallet!
         create-account!
     switch-network = ->
-        network = 
+        network =
             | store.current.network is \mainnet => \testnet
             | _ => \mainnet
         <- use-network web3t, store, network
@@ -96,12 +111,21 @@ module.exports = (store, web3t)->
         store.current.manage-account = yes
     close-account = ->
         store.current.manage-account = no
+    open-migration = ->
+    close-migration = ->
+        store.current.token-migration = null
+    open-language = ->
+        store.current.choose-language = yes
+    close-language = ->
+        store.current.choose-language = no
     account-left = ->
-        return alert "0 is smallest account index" if store.current.account-index is 0
+        cb = console.log
+        return alert store, "0 is smallest account index", cb if store.current.account-index is 0
         store.current.account-index -= 1
         refresh!
     account-right = ->
-        return alert "999999999 is highest account index" if store.current.account-index > 999999999
+        cb = console.log
+        return alert store, "999999999 is highest account index", cb if store.current.account-index > 999999999
         store.current.account-index += 1
         refresh!
     change-account-index = (event)->
@@ -112,16 +136,19 @@ module.exports = (store, web3t)->
         change-account-index.timer = clear-timeout change-account-index.timer
         change-account-index.timer = set-timeout refresh, 2000
     export-private-key = ->
+        cb = console.log
         pin <- prompt store, lang.private-key-enter-pin
-        return if not check pin
+        return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
+        store.current.prompt-answer = "VLX2"
         token-input <- prompt store, lang.private-key-enter-coin
-        return if not token?
+        return alert store, "token is empty", cb if not token-input?
         token = (token-input ? "").to-lower-case!
         wallets = current.account?wallets ? []
         wallet =
             wallets |> find (.coin?token is token)
-        return alert "Wallet not found for #{token}" if not wallet?
+        return alert store, "Wallet not found for #{token}", cb if not wallet?
         message = "This is your Private KEY"
-        copy-to-clipboard wallet.private-key, { message }
-    { export-private-key, change-account-index, account-left, account-right, open-account, close-account, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }
+        copy-to-clipboard wallet.private-key
+        alert store, "Your Private KEY is copied into your clipboard", cb
+    { export-private-key, check-pin, change-account-index, account-left, account-right, open-account, close-account, open-migration, close-migration, open-language, close-language, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }

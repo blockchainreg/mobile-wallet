@@ -1,8 +1,7 @@
 require! {
     \react
-    \./scroll-top.js
+    \./scroll-top.ls
 }
-/*
 .modal-container
     @import scheme
     z-index: 999
@@ -211,7 +210,6 @@ require! {
                 animation: init .5s forwards
             >.install-body>.install
                 animation: init-install .5s forwards
-*/
 export modal-control = (store)->
     { text, callback, enabled } = store.ask
     return if enabled isnt yes
@@ -223,7 +221,6 @@ export modal-control = (store)->
         background-image: "url(#{store.ask.image})"
     coin-type =
         "#{store.ask.type}-type"
-    /*
     .modal-container.pug(key="modal-container")
         .modal.pug
             .bg.pug
@@ -245,7 +242,6 @@ export modal-control = (store)->
                                     for i in [1 to 15]
                                         .spoke.pug(style=coin-image)
                     .button.pug(on-click=accept) INSTALL
-    */
 current =
     timer: null
 make-choice = (err)-> (store)->

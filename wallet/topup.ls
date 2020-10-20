@@ -1,5 +1,5 @@
 require! {
-    \./topup-loader.js : { get-topup-address }
+    \./topup-loader.ls : { get-topup-address }
 }
 module.exports = (store)-> (e)->
     store.current.send-menu-open = no

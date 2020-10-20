@@ -1,8 +1,8 @@
 require! {
-    \../web3t/providers/superagent.js : { get }
+    \../web3t/providers/superagent.ls : { get }
     \prelude-ls : { map, group-by, obj-to-pairs, pairs-to-obj, flatten, filter }
-    \./workflow.js : { task, run }
-    \./math.js : { div }
+    \./workflow.ls : { task, run }
+    \./math.ls : { div }
 }
 parse-rate-string = (usd-info)->
     [_, div, url, extract] = usd-info.match(/(1\/)?url\(([^)]+)\)(.+)?/)
@@ -31,11 +31,11 @@ extract-val = (data, [head, ...tail])->
     return data if not head?
     extract-val data[head], tail
 modify-item = (data, item)-->
-    res =
+    res = 
         | data?body? => extract-val data.body, item.extract.split('.').splice(1)
         | _ => ""
     val =
-        | item.div is "1/" => 1 `div` res
+        | item.div is "1/" => 1 `div` res 
         | _ => res
     { val, item.extract, item.token }
 set-val = (info)->
@@ -52,7 +52,7 @@ set-vals = (res, cb)->
             |> filter -> it?
             |> map -> it.1.items
             |> flatten
-            |> map -> [it.token, it.val || 0]
+            |> map -> [it.token, it.val]
             |> pairs-to-obj
     cb null, item
 get-data = (wallets, cb)->

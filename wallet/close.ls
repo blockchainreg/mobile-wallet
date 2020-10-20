@@ -1,5 +1,5 @@
 require! {
-    \./browser/window.js
+    \./browser/window.ls
 }
 module.exports = ->
     window.close?!

@@ -1,15 +1,14 @@
 require! {
     \mobx : { toJS }
-    \./math.js : { times, minus, div }
-    \./calc-amount.js : { change-amount-invoice, calc-crypto }
-    \./browser/window.js
-    \./navigate.js
-    \./close.js
-    \./round5edit.js
-    \./get-primary-info.js
+    \./math.ls : { times, minus, div }
+    \./calc-amount.ls : { change-amount-invoice, calc-crypto }
+    \./browser/window.ls
+    \./navigate.ls
+    \./close.ls
+    \./round5edit.ls
+    \./get-primary-info.ls
     \prelude-ls : { map }
-    \./address-link.js : { get-address-link, get-address-title }
-    \../web3t/providers/superagent.js : { put }
+    \../web3t/providers/superagent.ls : { put }
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -21,12 +20,13 @@ module.exports = (store, web3t)->
         background: color
     default-button-style = { color }
     send-anyway = (response)->
-        { address } = invoice.wallet
-        { to, data, amount-send } = invoice
-        err, data <- put "https://web3.space/invoice/send", { response, token, address, to, data, amount: amount-send } .end
-        return alert "#{err.message ? err}: #{data.text}" if err?
-        alert "Your invoice has been sent"
-        cancel!
+        #{ address } = invoice.wallet
+        #{ to, data, amount-send } = invoice
+        #err, data <- put "https://web3.space/invoice/send", { response, token, address, to, data, amount: amount-send } .end
+        ##alert store, "0 is smallest account index", cb
+        #return alert "#{err.message ? err}: #{data.text}" if err?
+        #<- alert store, "Your invoice has been sent"
+        #cancel!
     cancel = (event)->
         navigate store, web3t, \wallets
     recipient-change = (event)->
@@ -39,15 +39,15 @@ module.exports = (store, web3t)->
         value2
     amount-change = (event)->
         value = get-value event
-        change-amount-invoice store, value
+        <- change-amount-invoice store, value, no
     amount-usd-change = (event)->
         value = get-value event
         to-send = calc-crypto store, value
-        change-amount-invoice store, to-send
+        <- change-amount-invoice store, to-send, no
     network =
         | store.current.network is \testnet => " (TESTNET) "
         | _ => ""
     token = invoice.coin.token.to-upper-case!
     description-change = (event)->
         invoice.data = event.target.value
-    { invoice, description-change, token, wallet, primary-button-style, recipient-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit }
+    { invoice, description-change, token, wallet, primary-button-style, recipient-change, amount-change, amount-usd-change, cancel, send-anyway, default-button-style, round5edit }

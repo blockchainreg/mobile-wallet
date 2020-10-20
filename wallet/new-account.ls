@@ -1,8 +1,8 @@
 require! {
     \prelude-ls : { obj-to-pairs, pairs-to-obj, map }
     \mobx : { toJS }
-    \./api.js : { get-keys }
-    # \./web3.js
+    \./api.ls : { get-keys }
+    \./web3.ls
     #\./ethnamed.ls
 }
 module.exports = (store, mnemonic="", cb)->
@@ -35,8 +35,6 @@ module.exports = (store, mnemonic="", cb)->
             | _ => []
         all = current-wallets ++ wallets
         cb null, all
-    return cb null, {mnemonic, wallets: []} if store.coins.length == 0
-
     err, wallets <- generate-coin-wallets store.coins
     return cb err if err?
     cb null, { mnemonic, wallets }

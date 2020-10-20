@@ -1,37 +1,23 @@
 require! {
     \prelude-ls : { filter }
-    \./install-plugin.js : { get-install-list }
-    \./browser/window.js
+    \./install-plugin.ls : { get-install-list }
+    \./browser/window.ls
 }
-#gobyte = require \../web3t/plugins/gobyte-coin.ls
-#stt = require \../web3t/plugins/stt-coin.json
-#qiwi = require \../web3t/plugins/qiwi-coin.ls
-#ym = require \../web3t/plugins/ym-coin.ls
-#qiwi_rs = require \../web3t/plugins/qiwi-rs.ls
-#ym_rs = require \../web3t/plugins/ym-rs.ls
-#usd_ac_rs = require \../web3t/plugins/usd-ac-rs.ls
-query-related = (token, coin)->
-    #console.log token, window.location.search.index-of("plugin=#{token}"), coin
-    if window.location.search.index-of("plugin=#{token}") > -1 then coin
-export common =
-    * require \../web3t/plugins/vlx2-coin.js
-    * require \../web3t/plugins/btc-coin.js
-    * require \../web3t/plugins/eth-coin.js
-    * require \../web3t/plugins/usdt-coin.js
-    * require \../web3t/plugins/ltc-coin.js
-    ...
-#    * require \../web3t/plugins/vlx-coin.js
-#    * query-related \gbx         , gobyte
-#    * require \../web3t/plugins/usdt-coin.ls
-#
-#    * require \../web3t/plugins/eth-coin.ls
-#    * require \../web3t/plugins/dash-coin.ls
-#    * require \../web3t/plugins/ltc-coin.ls
-#    * require \../web3t/plugins/etc-coin.ls
-#    #* require \../web3t/plugins/eos-coin.ls
-export get-coins = (cb)->
+gobyte = require \../web3t/plugins/gobyte-coin.ls
+zec = require \../web3t/plugins/zec-coin.ls
+common = (store)->
+    vlx2 = require \../web3t/plugins/vlx2-coin.ls
+    btc  = require \../web3t/plugins/btc-coin.ls
+    #btc_sw  = require \../web3t/plugins/btc-segwit-coin.ls
+    coins = [vlx2, btc]
+    #if store.url-params.segwit?
+    #    coins.push btc_sw
+    if store.url-params.gbx?
+        coins.push gobyte
+    coins
+export get-coins = (store, cb)->
     base =
-        common
+        common store
             |> filter (?)
             |> filter (.type is \coin)
             |> filter (.enabled)
@@ -39,5 +25,6 @@ export get-coins = (cb)->
     return cb err if err?
     installed =
         items |> filter (.type is \coin)
-    all = installed ++ base
+            |> filter (.enabled isnt no)
+    all =  base ++ installed
     cb null, all

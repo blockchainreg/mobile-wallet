@@ -110,7 +110,7 @@ module.exports = ({ store, web3t })->
     set-mask = ->
         store.current.nicknamefull = get-name-mask(store.current.nickname ? "")
     enter-nick = (event)->
-        console.log \enter-nick
+        #console.log \enter-nick
         nickname = (event.target.value ? "").match(/^[a-z0-9\.@]+/)?0 ? ""
         show-message "Typing..."
         clear-timeout state.timeout
@@ -122,7 +122,7 @@ module.exports = ({ store, web3t })->
         store.current.custom-domain = yes
     change-to-ethnamed = ->
         store.current.custom-domain = no
-    console.log \nicknamefull, store.current.nicknamefull
+    #console.log \nicknamefull, store.current.nicknamefull
     style = get-primary-info store
     input-style = 
         color: style.app.text
@@ -143,8 +143,8 @@ module.exports = ({ store, web3t })->
             .pug
                 switch store.current.status
                     case \verify
-                        .pug #{lang.verify-nickname ? 'Nickname Verification...'}
+                        .pug #{lang.verify-nickname}
                     case \buy-nickname
-                        .pug #{lang.get-nickname ? 'Get Nickname'}
+                        .pug #{lang.get-nickname}
                     else
-                        button.pug(on-click=buy-nickname-click) #{lang.register ? 'Register'}
+                        button.pug(on-click=buy-nickname-click) #{lang.register}

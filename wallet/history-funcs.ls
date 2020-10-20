@@ -1,31 +1,41 @@
 require! {
     \prelude-ls : { sort-by, reverse, filter, map, find }
     \moment
-    \./navigate.js
+    \./navigate.ls
     \react
-    \./pending-tx.js : { remove-tx }
-    \./web3.js
+    \./pending-tx.ls : { remove-tx }
+    \./api.ls : { get-transaction-info }
+    \./web3.ls
     \mobx : { toJS }
-    \./pages/confirmation.js : { confirm, prompt }
-    \./apply-transactions.js
+    \./pages/confirmation.ls : { confirm, prompt }
+    \./apply-transactions.ls
+    \./get-lang.ls
+    \./icons.ls
+    \./round-human.ls
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
-    cut-tx = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 10) + \.. + t.substr(t.length - 4, 4)
-        r.to-upper-case!
     ago = (time)->
         moment(time * 1000).from-now!
     date = (time)->
         moment(time * 1000).format!
     filt = store.current.filter
+    lang = get-lang store
     arrow = (type)->
-        | type is \IN => \INC
-        | _ => \OUT
+        | type is \IN => \ "#{lang.in}"
+        | _ => \ "#{lang.out}"
+    arrow-lg = (type)->
+        | type is \IN => \ "#{icons.get}"
+        | _ => \ "#{icons.send}"
+    sign = (type)->
+        | type is \IN => \+
+        | _ => \-
     go-back = ->
-        navigate store, web3t, \wallets
+        return null if store.pages.length <= 1
+        store.pages.splice(-1, 1)
+        prev = store.pages[store.pages.length - 1]
+        page = prev ? \wallets
+        navigate store, web3t, page
     extended = (str)->
         | str.index-of('.') > -1 => "#{str}0"
         | _ => "#{str}.0"
@@ -39,20 +49,23 @@ module.exports = (store, web3t)->
     amount-beautify = (amount, max)->
         str = cut-amount amount, max
         data = str.match(/(.+[^0])(0+)$/)
+        return
+            .pug.balance
+                span.color.pug #{round-human str}
         if not data?
             return
-                .pug.balance 
-                    span.color.pug #{str}
+                .pug.balance
+                    span.color.pug #{round-human str}
         [_, first, last] = data
         span.pug.balance
-            span.color.pug #{first}
-            span.rest.pug #{last}
+            span.color.pug #{round-human first}
+            span.rest.pug #{round-human last}
     is-active = (value)->
         if value in filt then \active else ''
     switch-filter  = (value, event)-->
         if value not in filt
             filt.push value
-        else 
+        else
             filt.splice(filt.index-of(value), 1)
         apply-transactions store
     switch-type-in = switch-filter \IN
@@ -61,6 +74,8 @@ module.exports = (store, web3t)->
         agree <- confirm store, "Would you like to remove pending transaction? Your balance will be increased till confirmed transaction"
         return if not agree
         err <- remove-tx { store, ...tx }
-        #return alert "Cannot Remove Tx. Looks like it is already in blockchain" if err?
         <- web3t.refresh
-    { go-back, switch-type-in, switch-type-out, store.coins, is-active, switch-filter, cut-tx, arrow, delete-pending-tx, amount-beautify, ago }
+    transaction-info = (config)-> (event)->
+        err, info <- get-transaction-info config
+        console.log err, info
+    { go-back, switch-type-in, transaction-info, switch-type-out, store.coins, is-active, switch-filter, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago }

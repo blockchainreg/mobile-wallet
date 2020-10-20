@@ -1,21 +1,24 @@
 require! {
     \react
     \../tools.ls : { money }
-    \prelude-ls : { each }
-    \react-copy-to-clipboard : { CopyToClipboard }
-    \../copied-inform.ls
-    \../copy.ls
-    \../address-link.ls : { get-address-link, get-address-title }
+    \prelude-ls : { each, find }
     \../wallet-funcs.ls
     \../get-lang.ls
     \./icon.ls
     \../get-primary-info.ls
+    \../../web3t/providers/superagent.ls : { get }
+    \../icons.ls
+    \../round-human.ls
+    \./confirmation.ls : { alert }
+    \../components/button.ls
+    \../components/address-holder.ls
 }
 #
 .wallet
+    @import scheme
     $cards-height: 324px
     $pad: 20px
-    $radius: 15px 
+    $radius: 15px
     position: relative
     cursor: pointer
     $card-height: 60px
@@ -30,15 +33,54 @@ require! {
     &:first-child
         margin-top: 0
         box-shadow: none
+    &:last-child
+        margin-bottom: 0px
     .pending
         color: orange
     &.over
         background: #CCC
     &.big
-        height: 135px
+        height: 120px
     &.active
-        >.wallet-middle
-            display: inline-block
+    .wallet-middle
+        >.uninstall
+            text-align: left
+            font-size: 10px
+            padding-top: 5px
+        box-sizing: border-box
+        width: 70%
+        height: 85px
+        float: left
+        padding: 20px
+        border-top: 1px solid rgb(107, 38, 142)
+        border-right: 1px solid rgb(107, 38, 142)
+        &:last-child
+            display: block
+        &:last-child
+            width: 30%
+            border-right: 0 !important
+        .name
+            color: #fff
+            font-size: 16px
+            font-weight: 700
+            &.per
+                font-size: 10px
+                color: orange
+                font-weight: 100
+            &:last-child
+                font-size: 10px
+                text-transform: uppercase
+                letter-spacing: 2px
+                margin-top: 5px
+                opacity: .8
+        .title-balance
+            color: #fff
+            font-size: 14px
+            text-align: left
+        span
+            padding-left: 10px
+        a
+            text-align: left
     >.wallet-top
         padding: 0 12px
         box-sizing: border-box
@@ -54,43 +96,60 @@ require! {
             vertical-align: top
             padding-top: 12px
             height: $card-top-height
+            line-height: 16px
         >.top-left
-            width: 35%
+            width: 30%
             text-align: left
             overflow: hidden
             text-overflow: ellipsis
+            @media screen and (min-width: 801px)
+                padding-top: 5px
             >*
                 display: inline-block
             >.img
                 line-height: $card-top-height
                 vertical-align: top
-                margin-right: 5px
+                margin-right: 10px
+                width: 40px
                 >img
                     vertical-align: top
                     max-width: 50px
                     $s: 35px
-                    border-radius: $s
-                    width: $s
+                    border-radius: 0
                     height: $s
+                    @media screen and (min-width: 801px)
+                        padding-top: 4px
             >.info
                 text-align: left
                 margin-left: 0px
                 text-overflow: ellipsis
                 overflow: hidden
-                width: 65px
+                width: auto
                 @media screen and (max-width: 390px)
                     display: none
                 >.name
                     padding-left: 3px
                 >.price
-                    padding-left: 3px
-                    font-size: 12px
+                    font-size: 11px
                     font-weight: bold
                     overflow: hidden
                     text-overflow: ellipsis
+                    opacity: .5
+                    padding: 0
+                    letter-spacing: .4px
+                    &.token
+                        opacity: 1
+                        font-size: 12px
         >.top-middle
-            width: 20%
+            width: 30%
             text-align: center
+            .label-coin
+                height: 16px
+                top: 3px
+                padding-left: 4px
+                position: relative
+            @media screen and (max-width: 800px)
+                width: 35%
             >.balance
                 &:last-child
                     font-weight: bold
@@ -98,19 +157,30 @@ require! {
                 &.title
                     @media screen and (max-width: 220px)
                         display: none
+                .title-balance
+                    display: none
         >.top-right
-            width: 45%
+            width: 40%
             text-align: right
+            .icon
+                vertical-align: sub
+                .icon-svg-create
+                    height: 9px
+                    transform: rotate(-90deg)
+                    vertical-align: inherit
+                    opacity: .3
+            @media screen and (max-width: 800px)
+                width: 35%
             >button
                 outline: none
                 margin-bottom: 5px
                 margin-left: 5px
                 cursor: pointer
-                border: 1px solid
+                border: 0
                 $round: 36px
                 padding: 0
                 box-sizing: border-box
-                border-radius: 6px
+                border-radius: $border
                 font-size: 10px
                 width: auto
                 padding: 0 6px
@@ -120,107 +190,112 @@ require! {
                 font-weight: bold
                 background: transparent
                 transition: all .5s
+                text-overflow: ellipsis
+                overflow: hidden
+                width: 80px
+                .icon-svg
+                    @media screen and (max-width: 800px)
+                        padding: 0
+                .icon
+                    position: relative
+                    height: 16px
+                    top: 2px
                 @media screen and (max-width: 800px)
                     width: 40px
-                &:hover
-                    background: #7aa7f3
-                    color: white
-    >.wallet-middle
-        $card-top-height: 50px
-        width: 100%
-        padding: 0 12px
-        box-sizing: border-box
-        color: #A8BACB
-        font-size: 14px
-        margin-top: 10px
-        text-align: center
-        position: relative
-        >.uninstall
-            text-align: left
-            font-size: 10px
-            padding-top: 10px
-        >img
-            position: absolute
-            right: 3%
-            margin: 10px
-            margin-left: 50px
-            z-index: 2
-        >a
-            width: 100%
-            z-index: 1
-            position: relative
-            border-radius: 5px
-            border: 0
-            background: #E6F0FF
-            box-sizing: border-box
-            vertical-align: top
-            text-align: center
-            padding-left: 20px
-            padding-right: 25px
-            height: $card-top-height - 14px
-            color: #677897
-            font-size: 14px
-            line-height: $card-top-height - 14px
-            display: inline-block
-            text-overflow: ellipsis
-            overflow: hidden
-            @media screen and (max-width: 390px)
-                padding-right: 35px
+                    line-height: 30px
+cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
-    { button-style, uninstall, wallet, active, big, balance, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
+    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
     label-uninstall =
         | store.current.refreshing => \...
-        | _ => \HIDE
+        | _ => \ "#{lang.hide}"
     wallet-style=
-        color: style.app.text3
+        color: style.app.text
     border-style =
         border-bottom: "1px solid #{style.app.border}"
-        background: style.app.wallet
-    button-primary1-style=
-        border: "1px solid #{style.app.border}"
-        color: style.app.text
-        background: style.app.primary1
+    border =
+        border-top: "1px solid #{style.app.border}"
+        border-right: "1px solid #{style.app.border}"
     button-primary3-style=
-        border: "1px solid #{style.app.border}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     address-input=
-        color: style.app.addressText
-        background: style.app.addressBg
-    filter-icon=
-        filter: style.app.filterIcon
-    .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
-        .wallet-top.pug
+        color: style.app.color3
+        background: style.app.bg-primary-light
+    btn-icon =
+        filter: style.app.btn-icon
+    icon-color=
+        filter: style.app.icon-filter
+    placeholder =
+        | store.current.refreshing => "placeholder"
+        | _ => ""
+    placeholder-coin =
+        | store.current.refreshing => "placeholder-coin"
+        | _ => ""
+    name = wallet.coin.name ? wallet.coin.token
+    #load-terms = (cb)->
+    #    #return cb null if store.current.content-migrate?
+    #    err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
+    #    return cb err if err?
+    #    store.terms2 = res.text
+    #    cb null
+    #migrate = (wallet)-> ->
+    #    err <- load-terms
+    #    address =
+    #        store.current.account.wallets
+    #            |> find (-> it.coin.token is \vlx2)
+    #            |> (.address)
+    #    return alert store, "addres #{address} is wrong", cb if typeof! address isnt \String
+    #    err, data <- get "https://mainnet-v2.velas.com/migration/topup-velas-address/#{address}" .end
+    #    return alert store, "#{err}", cb if err?
+    #    return alert store, "cannot create address", cb if not data.body?address?
+    #    store.current.token-migration = data.body.address
+    #    #store.current.token-migration = "V123"
+    receive-click = receive(wallet)
+    send-click = send(wallet)
+    .wallet.pug(class="#{big}" key="#{wallet.coin.token}" style=border-style)
+        .wallet-top.pug(on-click=expand)
             .top-left.pug(style=wallet-style)
-                .img.pug
+                .img.pug(class="#{placeholder-coin}")
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
-                    .name.pug #{lang.price ? "Price"}
-                    .price.pug $#{ money(usd-rate)}
-            .top-middle.pug(style=wallet-style)
-                if +wallet.pending-sent is 0
-                    .balance.pug.title #{lang.balance ? 'Balance'}
-                .balance.pug
-                    .pug #{ balance }
-                    if +wallet.pending-sent >0
-                        .pug.pending 
-                            span.pug -#{pending}
+                    .balance.pug.title(class="#{placeholder}") #{name}
+                    if store.current.device is \desktop
+                        .price.token.pug(class="#{placeholder}" title="#{wallet.balance}")
+                            span.pug #{ round-human wallet.balance }
+                            span.pug #{ wallet.coin.token.to-upper-case! }
+                    .price.pug(class="#{placeholder}" title="#{balance-usd}")
+                        span.pug #{ round-human balance-usd}
+                        span.pug USD
+            if store.current.device is \mobile
+                .top-middle.pug(style=wallet-style)
+                    if +wallet.pending-sent is 0
+                        .balance.pug.title(class="#{placeholder}") #{name}
+                    .balance.pug(class="#{placeholder}")
+                        span.pug(title="#{wallet.balance}") #{ round-human wallet.balance }
+                            img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
+                            span.pug #{ wallet.coin.token.to-upper-case! }
+                        if +wallet.pending-sent >0
+                            .pug.pending
+                                span.pug -#{ pending }
             .top-right.pug
-                button.pug(on-click=send(wallet) style=button-primary3-style)
-                    if store.current.device is \mobile
-                        icon "ArrowSmallUp", 25
-                    if store.current.device is \desktop
-                        span.pug #{lang.send}
-                button.pug(on-click=receive(wallet) style=button-primary1-style)
-                    if store.current.device is \mobile
-                        icon "ArrowSmallDown", 25
-                    if store.current.device is \desktop
-                        span.pug #{lang.receive}
-        .wallet-middle.pug
-            a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
-            CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
-                copy store
-            if wallet.coin.token isnt \btc
+                if store.current.device is \desktop
+                    if no
+                        button.btn-open.pug(on-click=expand style=button-primary3-style)
+                            img.icon.pug(src="#{icons.open}" style=btn-icon)
+                    span.pug.icon(on-click=expand)
+                        img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
+                button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
+                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
+        .wallet-middle.pug(style=border)
+            address-holder { store, wallet, type: \bg }
+            if wallet.coin.token not in <[ btc vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
+        .wallet-middle.title-balance.pug(style=border)
+            .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human(usd-rate)}
+            .name.per.pug(class="#{placeholder}")
+                span.pug #{lang.per}
+                | #{ wallet.coin.token.to-upper-case! }

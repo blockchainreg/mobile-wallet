@@ -1,8 +1,7 @@
 require! {
-    \./location.js
+    \./location.ls
 }
 document = {}
 scroll-to = ->
 mock-window = { scroll-to, location, document }
 module.exports = window ? mock-window
-module.exports.scroll-to = module.exports.scroll-to ? scroll-to

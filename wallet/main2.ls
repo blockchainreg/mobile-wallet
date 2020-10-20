@@ -3,12 +3,12 @@ require! {
     \mobx : { observable, toJS }
     \react-dom : { render }
     \react
-    \./app.js
-    \./data-scheme.js
-    \./browser/window.js
-    \./web3.js
-    \./autodetect-lang.js
-    \./get-device.js
+    \./app.ls
+    \./data-scheme.ls
+    \./browser/window.ls
+    \./web3.ls
+    \./autodetect-lang.ls
+    \./get-device.ls
 }
 state =
     timeout: null

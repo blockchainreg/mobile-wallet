@@ -1,13 +1,14 @@
 require! {
+    \localStorage
     \prelude-ls : { any, map, filter }
     #react controls
-    \./modal.js : { install, replace }
-    \../web3t/providers/superagent.js : { get }
-    \./json-parse.js
-    \./providers.js
+    \./modal.ls : { install, replace }
+    \../web3t/providers/superagent.ls : { get }
+    \./json-parse.ls
+    \./providers.ls
 }
 required-fields = <[ type token enabled ]>
-not-in = (arr, arr2)->
+not-in = (arr, arr2)-> 
     arr |> any -> arr2.index-of(it) is -1
 verify-plugin = (plugin, cb)->
     return cb "Expected Object" if typeof! plugin isnt \Object
@@ -48,7 +49,7 @@ add-to-registry = (name, cb)->
 remove-from-registry = (name, cb)->
     err, registry <- get-registry
     return cb err if err?
-    index = registry.index-of(name) is -1
+    index = registry.index-of(name)
     return cb null if index is -1
     registry.splice index, 1
     save-registry registry
@@ -67,9 +68,9 @@ install-plugin = (plugin, cb)->
 uninstall-plugin = (cweb3, token, cb)->
     return cb "expected string argument" if typeof! token isnt \String
     name = build-name token
-    local-storage.set-item name, ""
     err <- remove-from-registry name
     return cb err if err?
+    local-storage.set-item name, ""
     cweb3.refresh cb
 ask-user = (cweb3, store, plugin, cb)->
     err, registry <- get-registry
@@ -97,7 +98,7 @@ export build-quick-install = (cweb3, store)-> (plugin, cb)->
 export build-uninstall = (cweb3, store)-> (name, cb)->
     uninstall-plugin cweb3, name, cb
 export build-install-by-name = (cweb3, store)-> (name, cb)->
-    err, resp <- get "https://raw.githubusercontent.com/web3space/plugin-registry/master/plugins/#{name}.json"
+    err, resp <- get "https://raw.githubusercontent.com/web3space/plugin-registry/master/plugins/#{name}.json" .end
     return cb err if err?
     err, plugin <- json-parse resp.text
     return cb err if err?

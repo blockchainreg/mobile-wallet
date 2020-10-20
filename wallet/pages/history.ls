@@ -1,17 +1,87 @@
 require! {
     \react
-    \prelude-ls : { sort-by, reverse, filter, map, find }
+    \prelude-ls : { sort-by, reverse, filter, map, find, take }
     \../history-funcs.ls
     \../get-primary-info.ls
     \../get-lang.ls
     \./icon.ls
     \./loading.ls
+    \react-copy-to-clipboard : { CopyToClipboard }
+    \../copied-inform.ls
+    \../copy.ls
+    \../icons.ls
+    \../components/middle-ellipsis : MiddleEllipsis
+    \../components/address-holder.ls
 }
 .history
+    @import scheme
     width: 100%
     position: relative
-    padding-bottom: 20px
+    padding-bottom: 0px
     display: inline-block
+    .from-to
+        width: 40px
+        display: inline-block
+        line-height: 25px
+    .tooltip
+        position: absolute
+        text-transform: uppercase
+        left: 25px
+        top: -8px
+        z-index: 1
+        line-height: 14px
+        font-size: 9px
+        font-weight: 600
+        color: #fff
+        padding: 5px
+        background: #000
+        visibility: hidden
+        &:after, &:before
+            right: 100%
+            top: 21%
+            border: solid transparent
+            content: " "
+            height: 0
+            width: 0
+            position: absolute
+            pointer-events: none
+        &:after
+            border-color: rgba(136, 183, 213, 0)
+            border-right-color: #000
+            border-width: 6px
+            margin-top: 2px
+        &:before
+            border-color: rgba(194, 225, 245, 0)
+            border-width: 8px
+            margin-top: 0px
+    .icon-svg1
+        position: relative
+        border-radius: 0px
+        height: 15px
+        top: 2px
+        &.more
+            height: 8px
+            top: 0
+    .icon-svg-arrow
+        position: relative
+        height: 12px
+        top: 0px
+    .smart-contract
+        color: orange
+        position: relative
+        .help
+            cursor: help
+        &:hover
+            .tooltip
+                visibility: visible
+    &.normalheader
+        @media(max-width: 800px)
+            margin: 60px 0 0
+    .sign
+        margin-right: 3px
+        margin-left: 5px
+        font-size: 15px !important
+        font-weight: 600
     .nothin-to-show
         color: rgba(white, 0.5)
         padding-top: 50px
@@ -22,53 +92,169 @@ require! {
         img
             height: 50px
             border-radius: 0
-            margin-bottom: 30px
+            margin-bottom: 15px
         .head
             font-weight: 600
             margin-bottom: 10px
+            font-size: 14px
+            opacity: .7
         .content
             font-size: 14px
             opacity: .7
-    .header
+    .header-table
+        .cell
+            font-size: 12px
+            padding: 10px 15px
+            margin: 0
+            display: inline-block
+            vertical-align: top
+            box-sizing: border-box
+            color: rgb(204, 204, 204)
+            overflow-y: hidden
+            &.network
+                width: 10%
+                text-align: center
+            &.txhash
+                width: 55%
+                text-align: left
+            &.amount
+                width: 35%
+                text-align: left
+    .header, .header-table
         text-align: left
-        height: 40px
+        height: 100px
         box-sizing: border-box
         left: 0
         top: 0
         width: 100%
+        .table-header
+            width: 100%
+            display: inline-flex
+            margin-top: 10px
+            span
+                font-size: 12px
+                opacity: .5
+                padding: 10px 0
+                line-height: 1.8
+                &.from-to
+                    width: 50%
+                &.created
+                    width: 12%
+                &.amount
+                    width: 16%
+                &.status
+                    width: 16%
+                &.details
+                    width: 6%
+                    text-align: center
         .head
             display: inline-block
             &.left
-                padding: 0px 0 10px 10px
-                margin-top: 8px
+                padding: 0px 0 10px 0px
+                margin-top: 21px
             &.right
                 float: right
                 padding: 0px 10px 0px 0
-                margin-top: 8px
+                margin-top: 17px
                 cursor: pointer
+            &.h1
+                font-size: 12px
+                text-transform: uppercase
+                letter-spacing: 2px
+                opacity: .8
         .filter
-            width: 118px
-            background: #321260
+            width: 226px
+            background: inherit
             position: absolute
-            top: 39px
+            top: 59px
             right: 0
             display: inline-grid
             z-index: 1
-            .top, .bottom
-                padding: 15px
+            border-radius: $border
+            .bottom, .middle
+                padding: 10px
+            .top
+                padding: 0
+                display: flex
+                button
+                    width: 50% !important
+                    border: 0 !important
+                    margin: 0 !important
+                    height: 39px
+                    text-transform: uppercase
+                    &.active
+                        filter: brightness(1.3)
+            .middle
+                div
+                    line-height: 7px
+                    &:first-child
+                        margin-bottom: 10px
+                label
+                    font-size: 10px
+                    text-transform: uppercase
+                input
+                    outline: none
+                    width: 100%
+                    box-sizing: border-box
+                    height: 36px
+                    line-height: 36px
+                    border-radius: $border
+                    padding: 0px 10px
+                    font-size: 14px
+                    border: 0px
+                    box-shadow: none
+                button
+                    outline: none
+                    cursor: pointer
+                    border: 0
+                    padding: 0
+                    box-sizing: border-box
+                    border-radius: $border
+                    font-size: 10px
+                    padding: 0 6px
+                    height: 36px
+                    color: #6CA7ED
+                    text-transform: uppercase
+                    font-weight: bold
+                    background: transparent
+                    transition: all .5s
+                    text-overflow: ellipsis
+                    overflow: hidden
+                    width: 100%
+                    margin: 0 auto
+                    opacity: 1
+                    margin-top: 10px
             button
                 border-radius: 50px
                 margin: 2px
                 border: 2px solid hsla(0, 0%, 79%, 0.15)
-                opacity: .7
+                opacity: .25
+                border-width: 3px
                 &.active
                     opacity: 1
                 img
-                    height: 30px
+                    height: 25px
+                    &.icon-svg
+                        height: 12px
+                        padding: 0 0 3px 0
+                        margin: 0
+                    &.icon-svg-btn
+                        height: 12px
+                        padding: 0px 5px 0 0px
+                &.OUT
+                    border-radius: $border 0 0 0
+                    img
+                        filter: invert(105%)
+                    background: var(--primary1)
+                &.IN
+                    border-radius: 0 $border 0 0
+                    img
+                        filter: invert(105%)
+                    background: var(--primary2)
         .separator
             min-width: 2px
             display: inline-block
-        button 
+        button
             outline: none
             cursor: pointer
             border: 0
@@ -80,11 +266,15 @@ require! {
             &.active
                 border-color: #9d40eb
                 background: rgba(59, 213, 175, 0.25)
+                border-width: 3px
             line-height: 12px
-            height: 40px
-            width: 40px
+            height: 45px
+            width: 45px
             font-size: 10px
             text-align: center
+            &.back
+                height: 60px
+                width: 60px
             >*
                 vertical-align: middle
                 display: inline-block
@@ -99,11 +289,43 @@ require! {
             font-size: 10px
             margin-left: 7px
             color: #ffffff
-            background: #db5de8
-            border-radius: 4px
+            background: #e6307a
+            border-radius: $border
             width: auto
-            letter-spacing: 0px
-            padding: 0px 3px 0 2px
+            letter-spacing: .5px
+            padding: 0px 3px 1px 0px
+        .icon-check
+            width: 12px
+            height: 12px !important
+            vertical-align: middle
+        &.confirmed
+            font-style: normal
+            font-size: 14px
+            margin-left: 3px
+            color: gray
+            border-radius: $border
+            width: auto
+            letter-spacing: .5px
+            padding: 0px 3px 1px 0px
+            &.done
+                background-image: linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)
+                -webkit-text-fill-color: transparent
+                -webkit-background-clip: text
+    .syncing
+        svg
+            color: orange
+            height: 12px
+            width: 15px
+            margin-left: 4px
+            @keyframes spin
+                from
+                    transform: rotate(0deg)
+                to
+                    transform: rotate(360deg)
+            animation-name: spin
+            animation-duration: 4000ms
+            animation-iteration-count: infinite
+            animation-timing-function: linear
     .fee
         display: inline-block
         margin-right: 5px
@@ -114,34 +336,207 @@ require! {
         .color
             font-weight: 600
         .rest
-            color: #CCC
+            color: inherit
+            opacity: .5
     .table
         width: 100%
-        height: calc(100vh - 100px)
         overflow-y: scroll
+        margin-top: -1px
+        height: calc(100vh - 270px)
+        opacity: .8
         .head, .record
             &.record
                 border-radius: 0px
+                .tx-top
+                    cursor: default
+                    height: 59px
+                    position: relative
+                .tx-middle
+                    height: 60px
+                &:last-child
+                    margin-bottom: 0px
             .cell
-                padding: 10px 15px
+                padding: 10px 0
                 display: inline-block
                 vertical-align: top
                 box-sizing: border-box
                 text-align: left
-                height: 60px
+                height: 59px
                 white-space: nowrap
-                overflow: scroll
+                overflow: hidden
+                .action
+                    margin-top: 7px
+                    display: block
+                &:first-child
+                    padding-right: 10px
+                @media screen and (max-width: 800px)
+                    overflow-x: scroll
+                    overflow-y: hidden
                 &.network
-                    width: 10%
+                    width: 5%
                     div
                         text-align: center
                 &.txhash
-                    width: 55%
+                    width: 54%
+                    div:first-child
+                        display: inline
+                    .loader-ios
+                        margin-left: 10px
                     a
-                        color: black
+                        font-size: 14px
+                    img
+                        border-radius: inherit
+                        border: none
+                        margin-right: 0px
+                        margin-left: 5px
+                        height: 13px
+                        top: 3px
+                        left: 3px
+                        position: relative
                 &.amount
-                    width: 35%
-                    text-align: right
+                    width: 16%
+                    text-align: left
+                    line-height: 40px
+                    @media screen and (max-width: 1020px)
+                        width: 16%
+                &.status
+                    width: 16%
+                    text-align: left
+                    line-height: 40px
+                    @media screen and (max-width: 1020px)
+                        width: 16%
+                &.divider2
+                    width: 38%
+                &.divider
+                    width: 4%
+                    .direction
+                        text-align: center
+                        line-height: 40px
+                &.arrow
+                    width: 5%
+                    text-align: center
+                    line-height: 40px
+                    opacity: .5
+                    padding-left: 0
+                &.created
+                    width: 12%
+                    text-align: left
+                    @media screen and (max-width: 1020px)
+                        width: 12%
+                    .syncing
+                        svg
+                            width: auto
+                            height: 14px
+                            margin: 0
+                            vertical-align: middle !important
+                    .bold
+                        margin-right: 0px
+                        .icon-check
+                            opacity: .8;
+                            vertical-align: inherit
+                            top: 1px
+                            margin-right: 2px
+                            position: relative
+                            width: 15px
+                            height: 13px !important
+                    .time-ago
+                        display: inline-block
+                        text-overflow: ellipsis
+                        overflow: hidden
+                        width: 100%
+                        font-size: 13px
+                        line-height: 22px
+                        text-decoration: none
+                        line-height: 1.1
+                        margin-top: 7px
+                        white-space: break-spaces
+                        vertical-align: -webkit-baseline-middle
+                &.more
+                    text-align: center
+                    width: 6%
+                    line-height: 40px
+                    cursor: pointer
+                    &:hover
+                        .arrow_box
+                            display: block
+                    .arrow_box
+                        position: absolute
+                        text-transform: uppercase
+                        right: 6%
+                        top: 17px
+                        z-index: 1
+                        line-height: 14px
+                        font-size: 9px
+                        font-weight: 600
+                        color: #fff
+                        padding: 5px
+                        background: #210b4a
+                        display: none
+                        transition: opacity .5s
+                        &:after, &:before
+                            left: 100%
+                            top: 15%
+                            border: solid transparent
+                            content: " "
+                            height: 0
+                            width: 0
+                            position: absolute
+                            pointer-events: none
+                        &:after
+                            border-color: rgba(136, 183, 213, 0)
+                            border-left-color: #000
+                            border-width: 6px
+                            margin-top: 2px
+                        &:before
+                            border-color: rgba(194, 225, 245, 0)
+                            border-width: 8px
+                            margin-top: 0px
+                &.details-from, &.details-to
+                    width: 45%
+                    text-align: left
+                    height: 60px
+                    div:last-child
+                        height: 36px
+                    .action
+                        .address-holder
+                            text-align: left
+                            height: 22px
+                            width: 85%
+                            .copy
+                                margin-left: 0px
+                                width: 13px
+                                height: 15px
+                            >img
+                                margin: 5px
+                                &:first-child
+                                    top: 0px
+                                    margin: 0 10px 0 0
+                                    height: 25px
+                                    border-radius: 6px
+                            .browse
+                                right: 0px
+                                padding: 0
+                            >span a
+                                height: 25px
+                                line-height: 25px
+                            span
+                                padding: 0
+                                width: 80%
+                                text-align: left
+                                @media screen and (min-width: 1921px)
+                                    width: 340px
+                                @media screen and (min-width: 1441px) and (max-width: 1920px)
+                                    width: 340px
+                                a
+                                    img
+                                        height: 16px
+                                div
+                                    width: 310px
+                                    margin-right: 0px
+                                    a
+                                        padding: 0
+                                        min-width: 250px
+                                        text-align: left
             .gray
                 $gray: #8290ad
                 color: $gray
@@ -149,61 +544,298 @@ require! {
                 .color
                     font-size: 12px
                     color: $gray
+                img
+                    border-radius: inherit
+                    border: none
+                    margin-right: 13px
+                    height: 12px
+                    left: 3px
+                    position: relative
             .type
                 text-align: center
             .direction
                 font-size: 11px
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden
+                text-transform: uppercase
             &.OUT
+                &.record
+                    .tx-top
+                        .details-from
+                            display: none
                 .direction
-                    color: #ef44b1
+                    img
+                        filter: invert(105%)
+                        vertical-align: bottom
+                    color: #be6ed2
+                    &.label-icon
+                        width: 25px
+                        height: 25px
+                        background: var(--primary1)
+                        border-radius: 6px
+                        text-align: center
+                        margin-top: 7px
                 .txhash a
-                    color: #c79b9b
+                    color: #be6ed2
             &.IN
+                &.record
+                    .tx-top
+                        .details-to
+                            display: none
                 .direction
-                    color: #3cd5a4
+                    img
+                        filter: invert(105%)
+                        vertical-align: bottom
+                    color: #3465d2
+                    &.label-icon
+                        width: 25px
+                        height: 25px
+                        background: var(--primary2)
+                        border-radius: 6px
+                        text-align: center
+                        margin-top: 7px
                 .txhash a
-                    color: #80ad80
+                    color: #71c5aa
     .panel-footer
         padding: 10px
     img
         height: 20px
-        border-radius: 25px
+        border-radius: 0
+        &.icon-svg
+            position: relative
+            border-radius: 0px
+            height: 12px
+            top: 2px
+            margin: 0
+            margin-top: 5px
     .hidden
         display: none !important
+    .loader-ios
+        position: relative
+        display: inline-block
+        vertical-align: middle
+        -webkit-animation: iosIntro 0.6s
+        animation: iosIntro 0.6s
+        svg
+            fill: #c5c5c5
+            path
+                &:nth-of-type(1)
+                    -webkit-animation: pulsed 1s infinite linear
+                    animation: pulsed 1s infinite linear
+                &:nth-of-type(2)
+                    -webkit-animation: pulsed 1s -0.083s infinite linear
+                    animation: pulsed 1s -0.083s infinite linear
+                &:nth-of-type(3)
+                    -webkit-animation: pulsed 1s -0.166s infinite linear
+                    animation: pulsed 1s -0.166s infinite linear
+                &:nth-of-type(4)
+                    -webkit-animation: pulsed 1s -0.249s infinite linear
+                    animation: pulsed 1s -0.249s infinite linear
+                &:nth-of-type(5)
+                    -webkit-animation: pulsed 1s -0.332s infinite linear
+                    animation: pulsed 1s -0.332s infinite linear
+                &:nth-of-type(6)
+                    -webkit-animation: pulsed 1s -0.415s infinite linear
+                    animation: pulsed 1s -0.415s infinite linear
+                &:nth-of-type(7)
+                    -webkit-animation: pulsed 1s -0.498s infinite linear
+                    animation: pulsed 1s -0.498s infinite linear
+                &:nth-of-type(8)
+                    -webkit-animation: pulsed 1s -0.581s infinite linear
+                    animation: pulsed 1s -0.581s infinite linear
+                &:nth-of-type(9)
+                    -webkit-animation: pulsed 1s -0.664s infinite linear
+                    animation: pulsed 1s -0.664s infinite linear
+                &:nth-of-type(10)
+                    -webkit-animation: pulsed 1s -0.747s infinite linear
+                    animation: pulsed 1s -0.747s infinite linear
+                &:nth-of-type(11)
+                    -webkit-animation: pulsed 1s -0.83s infinite linear
+                    animation: pulsed 1s -0.83s infinite linear
+                &:nth-of-type(12)
+                    -webkit-animation: pulsed 1s -0.913s infinite linear
+                    animation: pulsed 1s -0.913s infinite linear
+    @-webkit-keyframes pulsed
+        50%
+            fill: #868686
+        to
+            fill: rgba(134, 134, 134, 0.4)
+    @keyframes pulsed
+        50%
+            fill: #868686
+        to
+            fill: rgba(134, 134, 134, 0.4)
+    @-webkit-keyframes iosIntro
+        from
+            -webkit-transform: scale(1)
+            transform: scale(1)
+            opacity: 1
+        to
+            -webkit-transform: scale(1)
+            transform: scale(1)
+            opacity: 1
+    @keyframes iosIntro
+        from
+            -webkit-transform: scale(1)
+            transform: scale(1)
+            opacity: 1
+        to
+            -webkit-transform: scale(1)
+            transform: scale(1)
+            opacity: 1
+loader = ({ store, web3t })->
+    .loader-ios.pug
+        svg.pug(width='15px' height='15px' viewbox='0 0 15 15' version='1.1' xmlns='http://www.w3.org/2000/svg')
+            path.pug(d='M10.3866667,5.83333333 C10.2338889,5.56722222 10.3238889,5.22777778 10.5894444,5.07388889 L13.2333333,3.54555556 C13.5011111,3.39388889 13.8416667,3.48444444 13.9944444,3.75 C14.1477778,4.01611111 14.0583333,4.35666667 13.7922222,4.50777778 L11.1455556,6.03611111 C10.8794444,6.18944444 10.5405556,6.09833333 10.3866667,5.83333333 Z')
+            path.pug(d='M8.96277778,3.85444444 L10.4905556,1.20722222 C10.6438889,0.941666667 10.9844444,0.85 11.25,1.00388889 C11.5161111,1.15722222 11.6061111,1.49611111 11.4527778,1.76277778 L9.92611111,4.40833333 C9.77277778,4.675 9.43277778,4.76666667 9.16666667,4.61277778 C8.90055556,4.45944444 8.80888889,4.11888889 8.96277778,3.85444444 Z')
+            path.pug(d='M7.49944444,4.16666667 C7.19277778,4.16666667 6.94388889,3.91777778 6.94388889,3.61055556 L6.94388889,0.555555556 C6.94388889,0.247777778 7.19277778,0 7.49944444,0 C7.80722222,0 8.05666667,0.248333333 8.05666667,0.555555556 L8.05666667,3.61055556 C8.05555556,3.91833333 7.80722222,4.16666667 7.49944444,4.16666667 Z')
+            path.pug(d='M4.61277778,5.83333333 C4.45888889,6.09833333 4.11944444,6.18944444 3.85444444,6.03611111 L1.20833333,4.50777778 C0.942777778,4.35666667 0.851111111,4.01611111 1.00444444,3.75 C1.15833333,3.48388889 1.49888889,3.39333333 1.76388889,3.54555556 L4.40944444,5.07388889 C4.67555556,5.22777778 4.76666667,5.56722222 4.61277778,5.83333333 Z')
+            path.pug(d='M5.07388889,4.40944444 L3.54611111,1.76333333 C3.39277778,1.49666667 3.48444444,1.15777778 3.74888889,1.00444444 C4.015,0.850555556 4.35444444,0.941111111 4.50833333,1.20777778 L6.03611111,3.855 C6.18833333,4.11944444 6.09833333,4.45944444 5.83222222,4.61277778 C5.56722222,4.76722222 5.22722222,4.675 5.07388889,4.40944444 Z')
+            path.pug(d='M3.61055556,8.05555556 L0.555555556,8.05555556 C0.247777778,8.05555556 0,7.80666667 0,7.5 C0,7.19222222 0.248333333,6.94388889 0.555555556,6.94388889 L3.61055556,6.94388889 C3.91722222,6.94388889 4.16666667,7.19277778 4.16666667,7.5 C4.16666667,7.80666667 3.91777778,8.05555556 3.61055556,8.05555556 Z')
+            path.pug(d='M4.61277778,9.16777778 C4.76666667,9.43333333 4.67555556,9.77222222 4.41,9.92666667 L1.76444444,11.4538889 C1.49888889,11.6055556 1.15833333,11.5161111 1.00444444,11.2505556 C0.851111111,10.9844444 0.942777778,10.6455556 1.20833333,10.4905556 L3.85388889,8.96388889 C4.11944444,8.80888889 4.45888889,8.90055556 4.61277778,9.16777778 Z')
+            path.pug(d='M6.03666667,11.1455556 L4.50888889,13.7938889 C4.355,14.0577778 4.01444444,14.1488889 3.74944444,13.995 C3.48444444,13.8411111 3.39277778,13.5027778 3.54666667,13.2366667 L5.07444444,10.59 C5.22833333,10.325 5.56777778,10.2355556 5.83333333,10.3872222 C6.09888889,10.5411111 6.18944444,10.8805556 6.03666667,11.1455556 Z')
+            path.pug(d='M7.49944444,10.8344444 C7.80722222,10.8344444 8.05666667,11.0833333 8.05666667,11.3911111 L8.05666667,14.4455556 C8.05666667,14.7511111 7.80777778,15.0005556 7.49944444,15.0005556 C7.19277778,15.0005556 6.94388889,14.7522222 6.94388889,14.4455556 L6.94388889,11.3911111 C6.94388889,11.0833333 7.19222222,10.8344444 7.49944444,10.8344444 Z')
+            path.pug(d='M9.92611111,10.59 L11.4527778,13.2366667 C11.6055556,13.5027778 11.5155556,13.8411111 11.25,13.995 C10.9838889,14.1483333 10.6438889,14.0572222 10.4905556,13.7938889 L8.96277778,11.1455556 C8.80944444,10.8805556 8.90111111,10.5411111 9.16666667,10.3872222 C9.43277778,10.2355556 9.77277778,10.325 9.92611111,10.59 Z')
+            path.pug(d='M10.3866667,9.16777778 C10.54,8.90111111 10.8794444,8.80888889 11.145,8.96388889 L13.7922222,10.4905556 C14.0583333,10.6455556 14.1477778,10.9844444 13.9944444,11.2505556 C13.8416667,11.5166667 13.5011111,11.6061111 13.2333333,11.4538889 L10.5894444,9.92666667 C10.3238889,9.77222222 10.2338889,9.43277778 10.3866667,9.16777778 Z')
+            path.pug(d='M14.4433333,6.94388889 L11.3872222,6.94388889 C11.0805556,6.94388889 10.8311111,7.19277778 10.8311111,7.5 C10.8311111,7.80666667 11.0794444,8.05555556 11.3872222,8.05555556 L14.4433333,8.05555556 C14.7511111,8.05555556 15,7.80666667 15,7.5 C15,7.19222222 14.7511111,6.94388889 14.4433333,6.94388889 Z')
 render-transaction = (store, web3t, tran)-->
-    { coins, cut-tx, arrow, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
+    { transaction-info, coins, checked, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
+    filter-icon=
+        filter: style.app.filterIcon
     lang = get-lang store
     menu-style=
         color: style.app.text
     border-style =
         border-bottom: "1px solid #{style.app.border}"
+    line-style =
         background: style.app.wallet
+    light-style =
+        background: style.app.wallet-light
     lightText=
-        color: style.app.addressText
-    { token, tx, amount, fee, time, url, type, pending } = tran
-    coin = 
+        color: style.app.color3
+    icon1=
+        filter: style.app.icon1
+    tooltip=
+        background: "#000"
+    { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
+    coin =
         coins |> find (.token is token)
+    return null if not coin?
+    network = coin[store.current.network]
+    request = { network, tx }
+    tx-details = ->
+        store.history.tx-details =
+            | store.history.tx-details is tx => null
+            | _ => tx
+    icon-pending=
+        filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else style.app.icon-filter
+    amount-pending=
+        color: if pending is yes then 'orange' else ''
+    about =
+        | recipient-type is \contract => 'Smart'
+        | description is \internal => 'Smart'
+        | description is \external => 'User'
+        | _ => 'Unknown'
+    about-icon =
+        | recipient-type is \contract => \ "#{icons.smart}"
+        | description is \internal => \ "#{icons.smart}"
+        | description is \external => \ "#{icons.user}"
+        | _ => \ "#{icons.unknown}"
+    wallet-from =
+        address: from
+        network: network
+        coin: coin
+    wallet-to =
+        address: to
+        network: network
+        coin: coin
+    cut-hash = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        r = t.substr(0, 15) + \.. + t.substr(t.length - 15, 15)
+    time-ago =
+        | time => ago time
+        | _ => ""
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
-        .cell.pug.text-center.network
-            .pug
-                img.pug(src="#{coin.image}")
-            .pug.direction #{arrow(type)}
-        .cell.pug.txhash
-            a.pug(href="#{url}" target="_blank") #{cut-tx tx}
-            .pug.gray(style=lightText)
-                span.pug #{lang.created}: 
-                    | #{ago time}
+        .pug.tx-top(style=line-style)
+            .cell.pug.text-center.network
+                .pug.direction.label-icon
+                    img.icon-svg.pug(src="#{arrow-lg(type)}")
+            .cell.pug.details-from
+                .pug.gray(style=lightText)
+                    span.action.pug
+                        address-holder { store, wallet: wallet-from }
+                    if no
+                        span.from-to.pug
+                            span.pug.smart-contract
+                                .pug.tooltip #{about}
+                                img.help.pug(src="#{about-icon}")
+                            span.pug #{lang.from}
+            .cell.pug.details-to
+                .pug.gray(style=lightText)
+                    span.action.pug
+                        address-holder { store, wallet: wallet-to }
+                    if no
+                        span.from-to.pug
+                            span.pug.smart-contract
+                                .pug.tooltip #{about}
+                                img.help.pug(src="#{about-icon}")
+                            span.pug #{lang.to}
+            .cell.pug.created
+                .time-ago.pug #{time-ago}
+            .cell.pug.amount(style=menu-style)
+                .pug(title="#{amount}" style=amount-pending)
+                    span.sign.direction.pug #{sign(type)}
+                    amount-beautify amount, 8
+                if no
+                    .pug(title="#{amount}" style=amount-pending)
+                        #span.sign.direction.pug #{sign(type)}
+                        #amount-beautify amount, 8
+                if no
+                    .pug.gray(style=lightText)
+                        span.pug.fee #{lang.fee}:
+                        amount-beautify fee, 10
+            .cell.pug.status(style=menu-style)
                 if pending is yes
                     span.pug
-                        span.pug.bold (#{lang.pending})
-                        span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
-        .cell.pug.amount(style=menu-style)
-            .pug(title="#{amount}") 
-                amount-beautify amount, 8
-            .pug.gray(style=lightText)
-                span.pug.fee #{lang.fee}:
-                amount-beautify fee, 10
+                        span.pug.bold.confirmed #{lang.created}
+                        span.pug.bold
+                            loader store, web3t
+                else
+                    span.pug
+                        span.pug.bold.confirmed.done #{lang.confirmed}
+            .cell.pug.divider.more(on-click=tx-details)
+                img.icon-svg1.more.pug(src="#{icons.arrow-down}" style=icon1)
+                .arrow_box.pug(style=tooltip) #{lang.details}
+        if store.history.tx-details is tx
+            .pug.tx-middle(style=light-style on-click=transaction-info(request))
+                .cell.pug.divider
+                    if no
+                        .pug.direction #{arrow(type)}
+                .cell.pug.txhash
+                    MiddleEllipsis.pug
+                        a.pug(href="#{url}" target="_blank") #{tx}
+                    CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
+                        copy store
+                    .pug.gray(style=lightText)
+                        span.pug #{lang.created}:
+                            | #{time-ago}
+                        if pending is yes
+                            span.pug
+                                span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
+                        else
+                            span.pug
+                                span.pug.bold.confirmed.done #{lang.confirmed}
+                        span.pug.smart-contract
+                            .pug.tooltip #{about}
+                            img.help.pug(src="#{about-icon}")
+                .cell.pug.divider
+                .cell.pug.divider2
+                    .pug.gray(style=lightText)
+                        span.pug.fee #{lang.fee}:
+                        amount-beautify fee, 10
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t
     style = get-primary-info store
@@ -211,47 +843,99 @@ module.exports = ({ store, web3t })->
     header-style =
         border-bottom: "1px solid #{style.app.border}"
         color: style.app.text
+    icon2=
+        filter: style.app.icon2
+    header-style-light =
+        color: style.app.text
     button-style=
         color: style.app.text
         border-right: "1px solid #{style.app.border}"
         border-left: "1px solid #{style.app.border}"
     filter-style=
-        color: style.app.text
         background: style.app.header
+        font-weight: "600"
+    split=
+        border: "1px solid #{style.app.border}"
     menu-style=
         color: style.app.text
     border-b =
         border-bottom: "1px solid #{style.app.border}"
+    border-t =
+        border-top: "1px solid #{style.app.border}"
     filter-body =
         border: "1px solid #{style.app.border}"
-        background: style.app.header
+        background: style.app.account-bg
+    input-style=
+        background: style.app.bg-primary-light
+        border: "1px solid #{style.app.border}"
+        color: style.app.text
+    button-primary3-style=
+        border: "0"
+        color: style.app.text2
+        background: style.app.primary3
+    button-primary1-style=
+        border: "0"
+        color: style.app.text
+        background: style.app.primary1
+    lightText=
+        color: style.app.color3
     nothing-icon=
         filter: style.app.nothingIcon
+    header-table-style=
+        border-bottom: "1px solid #{style.app.border}"
+        background: style.app.wallet-light
+    icon-filter=
+        filter: style.app.icon-filter
     expand-collapse = ->
         store.history.filter-open = not store.history.filter-open
+    length = store.transactions.applied.length
+    rowRenderer = ({ key, index, isScrolling, isVisible, style })->
+        return render-transaction store, web3t, store.transactions.applied[index] # if isVisible
+        null
+    history-width = store.current.size.width / 1.9
+    history-height = store.current.size.height - 200 - 60
     .pug.normalheader.history
-        .header.pug(style=header-style)
+        .header.pug(style=header-style-light)
             if store.current.device is \mobile
-                button.pug(on-click=go-back style=button-style)
-                    icon "ChevronLeft", 25
-            span.pug.head.left #{lang.your-transactions}
+                button.back.pug(on-click=go-back style=button-style)
+                    img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
+            span.pug.head.left.h1 #{lang.your-transactions}
             span.pug.head.right(on-click=expand-collapse)
-                icon \Settings, 20
+                img.icon-svg1.pug(src="#{icons.filter}" style=icon2)
+            .pug.table-header
+                span.pug.from-to
+                    | #{lang.from}
+                    | /
+                    | #{lang.to}
+                span.pug.created #{lang.created}
+                span.pug.amount #{lang.amount}
+                span.pug.status #{lang.status}
+                span.pug.details #{lang.details}
             if store.history.filter-open
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)
-                        button.pug(class="#{is-active('IN')}" style=filter-style on-click=switch-type-in) IN
-                        button.pug(class="#{is-active('OUT')}" style=filter-style on-click=switch-type-out) OUT
+                        button.OUT.pug(class="#{is-active('OUT')}" on-click=switch-type-out)
+                            img.icon-svg.pug(src="#{icons.send}")
+                        .pug(style=split)
+                        button.IN.pug(class="#{is-active('IN')}" on-click=switch-type-in)
+                            img.icon-svg.pug(src="#{icons.get}")
+                    .pug.middle(style=border-b)
+                        .pug
+                            input.pug(type='text' style=input-style placeholder="#{lang.from}")
+                        .pug
+                            input.pug(type='text' style=input-style placeholder="#{lang.to}")
+                        button.pug(on-click style=button-primary1-style)
+                            span.pug
+                                img.icon-svg-btn.pug(src="#{icons.apply}")
+                                | #{lang.btn-apply}
                     .pug.bottom
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))
                                 img.pug(src="#{coin.image}")
         .pug
-            .pug.table
-                if store.transactions.applied.length > 0
-                    store.transactions.applied |> map render-transaction store, web3t
-            if store.transactions.applied.length is 0
+            .pug.table(style=border-t)
+                store.transactions.applied |> take 20 |> map render-transaction store, web3t
+            if length is 0
                 .pug.nothin-to-show(style=menu-style)
-                    img.pug(style=nothing-icon src='data:image/png;base64,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')
+                    img.pug(style=nothing-icon src="#{icons.search-history}"
                     .pug.head #{lang.nothing-to-show}
-                    .pug.content #{lang.make-tx}
