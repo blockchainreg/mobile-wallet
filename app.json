@@ -12,6 +12,7 @@
     "icon": "./assets/velas-icon.png",
     "splash": {
       "image": "./assets/bg-mob.png",
+      "backgroundColor": "#FEF9B0"
       "resizeMode": "cover"
     },
     "updates": {
@@ -32,7 +33,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 98,
+      "versionCode": 99,
       "icon": "./assets/ic_launcher.png"
     },
     "description": "Premium quality cryptocurrency wallet!",
