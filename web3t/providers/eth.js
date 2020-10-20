@@ -36,8 +36,8 @@
       if (err != null) {
         return cb("query err: " + ((ref$ = err.message) != null ? ref$ : err));
       }
-      if (!data.body || data.body.error != null) {
-        return cb(data.body ? data.body.error : data.text);
+      if (data.body.error != null) {
+        return cb(data.body.error);
       }
       return cb(null, data.body.result);
     });
@@ -278,7 +278,7 @@
             gas: toHex(gasEstimate),
             to: recipient,
             from: account.address,
-            data: data != null ? data : ""
+            data: data != null ? data : '0x'
           });
           tx.sign(privateKey);
           rawtx = '0x' + tx.serialize().toString('hex');

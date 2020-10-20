@@ -2,7 +2,7 @@
 (function(){
   var fetch, tor, stringify, jsonParse, jsonStringify, asCallback, formEncoded, getBody, makeBody, getType, clearTimer, resetRequest, getCbWithDeadline, makeCrossApi, makeTorApi, toString$ = {}.toString;
   fetch = require('cross-fetch');
-  // tor = require('tor-request');
+  tor = require('tor-request');
   stringify = require('qs').stringify;
   jsonParse = function(text, cb){
     var err;
@@ -142,6 +142,11 @@
                 return cb(err);
               }
               return jsonParse(text, function(err, body){
+                if (err != null) {
+                  return cb(err, {
+                    text: text
+                  });
+                }
                 cb(null, {
                   body: body,
                   text: text
@@ -185,6 +190,11 @@
           tor.setTorAddress("localhost", "9050");
           return tor.request(url, body, function(err, res, text){
             return jsonParse(text, function(err, body){
+              if (err != null) {
+                return cb(err, {
+                  text: text
+                });
+              }
               console.log('make-tor-request', method, url, err, body);
               cb(null, {
                 body: body,

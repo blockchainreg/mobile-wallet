@@ -16,8 +16,8 @@ export testnet =
     disabled: yes
 export color = \#5838B8
 export testnet = ropsten
-export type = \coin
-export enabled = no
+export type = \coin    
+export enabled = yes
 export token = \eth_rs
 export image = \./res/eth-ethnamed.png
 export usd-info = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,DASH,XEM,USDT,ETC&tsyms=USD).ETH.USD"

@@ -20,7 +20,7 @@
   out$.color = color = '#5838B8';
   out$.testnet = testnet = ropsten;
   out$.type = type = 'coin';
-  out$.enabled = enabled = false;
+  out$.enabled = enabled = true;
   out$.token = token = 'eth_rs';
   out$.image = image = './res/eth-ethnamed.png';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,DASH,XEM,USDT,ETC&tsyms=USD).ETH.USD";

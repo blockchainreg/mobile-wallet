@@ -128,7 +128,7 @@
     if (feeType !== 'auto') {
       return cb(null, txFee);
     }
-    return get(getApiUrl(network) + "/BTC/mainnet/fee/6").timeout({
+    return get(getApiUrl(network) + "/BTC/" + global.store.current.network + "/fee/6").timeout({
       deadline: deadline
     }).end(function(err, data){
       var vals, exists, ref$, calcedFee;
@@ -663,7 +663,7 @@
   getApiUrl = function(network){
     var apiName, ref$;
     apiName = (ref$ = network.api.apiName) != null ? ref$ : 'api';
-    return network.api.url + "/" + apiName + "/BTC/mainnet";
+    return network.api.url + "/" + apiName + "/BTC/" + global.store.current.network;
   };
   out$.checkTxStatus = checkTxStatus = function(arg$, cb){
     var network, tx;
