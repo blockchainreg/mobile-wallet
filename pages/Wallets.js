@@ -114,6 +114,22 @@ const wallets = (store, web3t) => {
         buttons,
         // { cancelable: false }
       );
+    };
+    let balanceLayout = null;
+    if (wallet.balance !== "..") {
+      balanceLayout = (
+        <Text>
+          <Text style={{ color: "#fff" }}>{balance}</Text>
+          <Text note> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
+        </Text>
+      );
+    } else {
+      balanceLayout = (
+        <Text>
+          <Text style={{ color: "#fff" }}>-</Text>
+          <Text note> (loading)</Text>
+        </Text>
+      );
     }
   // It opens dialog on scroll - should be fixed
   //    onLongPress={actions}
@@ -131,10 +147,7 @@ const wallets = (store, web3t) => {
         </Left>
         <Body>
           <Text style={styles.amountView}>{wallet.coin.name}</Text>
-          <Text>
-            <Text style={{ color: "#fff" }}>{balance}</Text>
-            <Text note> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
-          </Text>
+          {balanceLayout}
         </Body>
         <Right>
           <Button transparent onPress={chooseWallet}>

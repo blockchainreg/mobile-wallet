@@ -17,6 +17,7 @@
     "bip32": "^2.0.5",
     "bip39": "^2.6.0",
     "bitcoinjs-lib": "^3.3.2",
+    "bitgo-utxo-lib": "^1.8.0",
     "buffer": "5",
     "buffer-reverse": "^1.0.1",
     "cross-fetch": "3.0.4",
