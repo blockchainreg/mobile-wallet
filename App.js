@@ -3,11 +3,14 @@ import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
 import * as React from "react";
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
 import Background from "./components/Background.js"
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default class App extends React.Component {
   state = {

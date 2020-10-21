@@ -34,6 +34,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import DemoMode from "../components/DemoMode.js"
+
+
 
 
 const wallets = (store, web3t) => {
@@ -185,12 +188,9 @@ export default ({ store, web3t }) => {
 
 
 
-
-
   return (
     <View style={styles.container}>
 <View style={styles.viewFlex}>
-
       <Background fullscreen={true}>
         <View style={[styles.topView, {backgroundColor: "transparent", height: "20%", marginTop: hp("5%"), marginHorizontal: "17%", width: "66%", zIndex: 999}]}>
         {CustomRefreshControl({swipeRefresh: refreshBalance, store, children: <>
@@ -213,6 +213,7 @@ export default ({ store, web3t }) => {
                 </Button>
               </Right>
             </Header>
+
             <StatusBar
               barStyle="light-content"
               translucent={true}
@@ -254,6 +255,8 @@ export default ({ store, web3t }) => {
       </Background>
       </View>
             <Footer store={store}></Footer>
+        <DemoMode/>
+
     </View>
   );
 };

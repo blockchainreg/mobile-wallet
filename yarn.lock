@@ -15197,6 +15197,11 @@ react-native-material-textfield@^0.12.0:
   dependencies:
     prop-types "^15.5.9"
 
+react-native-messages@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-messages/-/react-native-messages-0.3.0.tgz#529d81a5c4fe725721c5b15c03280472a04e51fa"
+  integrity sha512-XHhMCTO6IYae3iYhO1YXIx8+vgIXRq5g8vSLzff46b0qzQRDWoxUjC20ZQK/YutGZJ9gXTtdSjzAMsg1AurhYg==
+
 react-native-modal-component@0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/react-native-modal-component/-/react-native-modal-component-0.1.4.tgz#74275eec21b90b41caf40f61786f7a059a7573ba"

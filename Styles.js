@@ -5548,5 +5548,17 @@ export default StyleSheet.create({
   contentLoader: {
     opacity: 0.4
    },
+  demoView: {
+    backgroundColor: 'orange',
+  },
+  demoTxt: {
+    paddingBottom: hp("2%"), 
+    paddingHorizontal: 20, 
+    paddingTop: 10,  
+    alignSelf: "center", 
+    textAlign: 'center', 
+    fontSize: 16,
+    color: "black"
+  }
 
 });
