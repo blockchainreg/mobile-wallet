@@ -127,7 +127,7 @@ const wallets = (store, web3t) => {
       balanceLayout = (
         <Text>
           <Text style={{ color: "#fff" }}>-</Text>
-          <Text note> (loading)</Text>
+          <Text note> (pull to reload)</Text>
         </Text>
       );
     }

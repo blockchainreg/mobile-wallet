@@ -33,7 +33,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 102,
+      "versionCode": 103,
       "icon": "./assets/ic_launcher.png"
     },
     "description": "Premium quality cryptocurrency wallet!",
