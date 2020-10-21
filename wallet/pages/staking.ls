@@ -1036,7 +1036,7 @@ staking-content = (store, web3t)->
                             .pug
                                 .pug.btn
                                     button { store, on-click: hide-script , icon: \close2 }
-                    if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
+                    if pairs.mining.keystore.length > 0 or window?.location?.href?.index-of('dev') > -1
                         .pug
                             .pug.tabs
                                 span.tab.pug(on-click=activate-line class="#{active-line}") #{lang.line-by-line}
@@ -1162,7 +1162,7 @@ staking-content = (store, web3t)->
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
                         button { store, on-click: become-validator , type : \secondary , text: \btnApply , icon : \apply }
-            if window.location.href.index-of('emit') > -1
+            if window?.location?.href?.index-of('emit') > -1
                 .pug.section
                     .title.pug
                         h3.pug #{lang.emit-change}

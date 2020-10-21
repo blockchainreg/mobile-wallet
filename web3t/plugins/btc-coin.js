@@ -13,7 +13,7 @@
     mask: '1000000000000000000000000000000000',
     api: {
       provider: 'bitcore',
-      url: 'https://api.xbitcore.io',
+      url: 'https://api.bitcore.io',
       linktx: 'https://bitpay.com/insight/#/BTC/mainnet/tx/:hash',
       decimal: 8,
       alternative: {

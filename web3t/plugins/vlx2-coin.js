@@ -51,7 +51,7 @@
     }
   };
   out$.mainnet = mainnet = mainnetConfig;
-  out$.testnet = testnet = (typeof window != 'undefined' && window !== null ? window.location.href.indexOf('testnet2') : void 8) > -1 ? testnet2Config : testnetConfig;
+  out$.testnet = testnet = (typeof window != 'undefined' && window != null && window.location != null && window.location.href != null ? window.location.href.indexOf('testnet2') : void 8) > -1 ? testnet2Config : testnetConfig;
   out$.color = color = '#9E4FEB';
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
