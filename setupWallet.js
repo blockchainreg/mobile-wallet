@@ -38,7 +38,7 @@ module.exports = (store, web3t) => {
       if (err) {
         return cb(err);
       }
-      preinstallCoins([eth, ltc, usdt], cb)
+      preinstallCoins([eth, /*ltc, */usdt], cb)
     })
   }
 

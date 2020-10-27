@@ -27,21 +27,6 @@ import Images from "../Images.js";
 import { LinearGradient } from "expo-linear-gradient";
 
 const LocalAuthListView = ({store}) => {
-  // const [localAuthEnabled, setLocalAuthEnabled] = useState(null);
-  // if (localAuthEnabled === null) {
-  //   console.log("Requesting LocalAuthentication params");
-  //   Promise.all([
-  //     LocalAuthentication.hasHardwareAsync(),
-  //     LocalAuthentication.supportedAuthenticationTypesAsync(),
-  //     LocalAuthentication.isEnrolledAsync()
-  //   ]).then(([hasHardware, supportedAuthTypes, isEnrolled]) => {
-  //     console.log("LocalAuthentication params", hasHardware, supportedAuthTypes, isEnrolled);
-  //     setLocalAuthEnabled(hasHardware && isEnrolled && supportedAuthTypes.length > 0);
-  //   });
-  // }
-  // if (!localAuthEnabled) {
-  //   return null;
-  // }
   const lang = getLang(store);
 
   const touchFinger = () => {
@@ -195,17 +180,6 @@ export default ({ store, web3t }) => {
             <Text style={styles.styleTxtSeparator}>{lang.security}</Text>
           </Separator>
 
-          <ListItem icon style={styles.heightListItem} underlayColor={Images.color1} onPress={logoutBtn}>
-            <Left>
-              <Icon name="ios-document" style={styles.styleTxtSettings}/>
-            </Left>
-            <Body style={styles.heightListItem}>
-              <Text style={styles.txtSettings}>Save seed</Text>
-            </Body>
-            <Right style={styles.heightListItem}>
-              <Icon name="ios-arrow-forward" />
-            </Right>
-          </ListItem>
           <ListItem icon style={styles.heightListItem} last underlayColor={Images.color1} onPress={logoutBtn}>
             <Left>
               <Icon name="ios-log-out" style={styles.styleTxtSettings}/>

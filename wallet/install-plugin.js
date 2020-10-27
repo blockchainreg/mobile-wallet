@@ -7,6 +7,20 @@
   jsonParse = require('./json-parse.js');
   providers = require('./providers.js');
   requiredFields = ['type', 'token', 'enabled'];
+  var dash = require('../web3t/plugins/dash-coin.js');
+  var eth = require('../web3t/plugins/eth-coin.js');
+  var etc = require('../web3t/plugins/etc-coin.js');
+  var syx = require('../web3t/plugins/symblox.js');
+  var ltc = require('../web3t/plugins/ltc-coin.js');
+  var usdt = require('../web3t/plugins/usdt-coin.js');
+  var usdt_erc20 = require("../registry/usdt_erc20.json");
+  var currentConfigs = {
+    dash: dash,
+    eth: eth,
+    syx: syx,
+    usdt: usdt,
+    usdt_erc20
+  };
   notIn = function(arr, arr2){
     return any(function(it){
       return arr2.indexOf(it) === -1;
@@ -28,8 +42,13 @@
     return jsonParse(registryString, cb);
   };
   getPlugin = function(name, cb){
-    var item;
-    item = localStorage.getItem(name);
+    var coinName, item;
+    coinName = name.substr("plugin-".length);
+    if (currentConfigs[coinName]) {
+      item = JSON.stringify(currentConfigs[coinName]);
+    } else {
+      return cb(null);
+    }
     if (toString$.call(item).slice(8, -1) !== 'String') {
       return cb(null);
     }

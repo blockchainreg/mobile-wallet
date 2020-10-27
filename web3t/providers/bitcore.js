@@ -662,10 +662,10 @@
     return transformOut(config, t);
   });
   getApiUrl = function(network){
-    var apiName, ref$, ref1$;
+    var apiName, ref$, networkName, ref1$;
     apiName = (ref$ = network.api.apiName) != null ? ref$ : 'api';
     networkName = ((ref$ = global.store) != null ? (ref1$ = ref$.current) != null ? ref1$.network : void 8 : void 8) || 'mainnet';
-    return network.api.url + "/" + apiName + "/BTC/" + networkName ;
+    return network.api.url + "/" + apiName + "/BTC/" + networkName;
   };
   out$.checkTxStatus = checkTxStatus = function(arg$, cb){
     var network, tx;

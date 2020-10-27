@@ -72,7 +72,7 @@ export default ({ store }) => {
   };
   const lang = getLang(store);
 
-  const back = changePage("newseed");
+  const back = changePage("wallets");
 
   return (
     <View style={styles.viewFlex}>

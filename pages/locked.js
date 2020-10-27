@@ -77,7 +77,7 @@ export default ({ store, web3t }) => {
       throw new Error("Cannot login using empty seed");
     }
     try {
-      LocalAuthentication.cancelAuthenticate();
+      LocalAuthentication.cancelAuthenticate().catch(() => {});
     }catch(e){}
 
     if (store.current.auth.isLoggingIn) {
@@ -109,9 +109,6 @@ export default ({ store, web3t }) => {
                 token = null;
               }
               store.current.auth.isLocalAuthEnabled = hasHardware && supportedAuthTypes.length > 0 && isEnrolled && !!token;
-              if (token && Platform.OS === 'android') {
-                authenticateRecursiveAndroid();
-              }
             });
       });
     }
@@ -143,41 +140,6 @@ export default ({ store, web3t }) => {
       }
     }
 
-    const authenticateRecursiveAndroid = async () => {
-      if (store.current.auth.isAuthenticating) {
-        return;
-      }
-      store.current.auth.isAuthenticating = true;
-      const result = await LocalAuthentication.authenticateAsync();
-      if (!result.success) {
-        if (result.error === "user_cancel") {
-          return;
-        }
-        store.current.auth.localAuthError = result.error;
-        store.current.auth.failedCount = store.current.auth.failedCount + 1;
-        if (result.error === "lockout") {
-            return;
-        }
-        store.current.auth.isAuthenticating = false;
-        if (store.current.auth.failedCount > 20) {
-          store.current.auth.isLocalAuthEnabled = false;
-          return;
-        }
-        authenticateRecursiveAndroid();
-        return;
-      }
-      store.current.auth.isAuthenticating = false;
-
-      console.log("authenticateRecursiveAndroid success!!!");
-      if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
-        SecureStore.deleteItemAsync("localAuthToken");
-        return Toast.show({text: "Cannot authenticate. Please enter password."});
-      }
-
-      login(get());
-      store.userWallet = 200;
-    };
-
     const {isLocalAuthEnabled, isAuthenticating, failedCount} = store.current.auth;
     if (!isLocalAuthEnabled) {
       return <Text style={styles.txtLocked}></Text>;
@@ -189,9 +151,6 @@ export default ({ store, web3t }) => {
       return <Text style={styles.txtLocked}>{lang.lockedNotificationIos1}</Text>;
     }
 
-    if (Platform.OS === 'android') {
-      return <Text style={styles.txtLocked}>{lang.oneMoment}</Text>;
-    }
     return <Text onPress={useLocalAuth} style={styles.txtLocked}>{lang.lockedNotificationAndroid}</Text>;
   };
 

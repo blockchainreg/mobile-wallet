@@ -186,8 +186,24 @@ export default ({ store, web3t }) => {
     return true;
   };
 
+  const isDemoMode = !!localStorage.getItem("is-demo-mode");
+  const renderDemoMode = () => {
+    if (!isDemoMode) {
+      return null;
+    }
+    return (
+      <DemoMode store={store}/>
+    );
+  };
 
-
+  const walletListStyle = Object.assign({}, styles.viewMonoWallets);
+  if (isDemoMode) {
+    if (typeof walletListStyle.height === "string") {
+      walletListStyle.height = (walletListStyle.height.substr(0, walletListStyle.height.length - 1) - 3) + "%";
+    } else {
+      walletListStyle.height -= 50;
+    }
+  }
   return (
     <View style={styles.container}>
 <View style={styles.viewFlex}>
@@ -230,7 +246,7 @@ export default ({ store, web3t }) => {
 
         </View>
 
-        <View style={styles.viewMonoWallets}>
+        <View style={walletListStyle}>
 
           <LinearGradient
             colors={[Images.color1, Images.color1, Images.color2]}
@@ -255,8 +271,7 @@ export default ({ store, web3t }) => {
       </Background>
       </View>
             <Footer store={store}></Footer>
-        <DemoMode/>
-
+            {renderDemoMode()}
     </View>
   );
 };

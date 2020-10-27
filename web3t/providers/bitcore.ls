@@ -315,8 +315,8 @@ transform-tx = (config, t)-->
     transform-out config, t
 get-api-url = (network)->
     api-name = network.api.api-name ? \api
-    network = global.store?.current?.network || \mainnet
-    "#{network.api.url}/#{api-name}/BTC/#{network}"
+    network-name = global.store?.current?.network || \mainnet
+    "#{network.api.url}/#{api-name}/BTC/#{network-name}"
 export check-tx-status = ({ network, tx }, cb)->
     cb "Not Implemented"
 export get-transactions = ({ network, address}, cb)->

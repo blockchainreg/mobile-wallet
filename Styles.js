@@ -38,20 +38,20 @@ export default StyleSheet.create({
       {
         backgroundColor: "#1B1B74",
         borderTopColor: "transparent",
-        
+
       },
       {
         ...Platform.select({
           ios: {
             borderTopColor: "transparent",
             backgroundColor: "#1B1B74",
-            
+
           },
           android: {
             backgroundColor: "#1B1B74",
             borderTopColor: "transparent",
             // zIndex: 2
-            
+
           },
         }),
       }
@@ -233,7 +233,7 @@ export default StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("75%"),
+            height: hp("67%"),
             zIndex: 1,
           },
           android: {
@@ -5550,15 +5550,13 @@ export default StyleSheet.create({
    },
   demoView: {
     backgroundColor: 'orange',
+    height: 50
   },
   demoTxt: {
-    paddingBottom: hp("2%"), 
-    paddingHorizontal: 20, 
-    paddingTop: 10,  
-    alignSelf: "center", 
-    textAlign: 'center', 
-    fontSize: 16,
-    color: "black"
+    paddingHorizontal: 20,
+    alignSelf: "center",
+    textAlign: 'center',
+    fontSize: 16
   }
 
 });

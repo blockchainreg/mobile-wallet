@@ -54,14 +54,16 @@ export default ({ store }) => {
   };
 
   const generateRandom = async () => {
-    store.current.seed = /*"demand time hero together space blur test fatal mistake leaf rigid that";*/generateMnemonic() + ' ' + generateMnemonic();
-    store.current.page = "generatedseed";
+    store.current.seed = generateMnemonic() + ' ' + generateMnemonic();
+    localStorage.setItem("is-demo-mode", "yes");
+    store.current.page = "terms";
     //store.curren.newseedstep = "ganarate";
     //
     //send to text address VLV8jDEudTEF6m3JGkjPAXrGWnHzwYHETsE - it is index 0 address of test mnemonic phrase
   };
 
   const restoreSeed = async () => {
+    localStorage.setItem("is-demo-mode", "");
     store.current.page = "restoreseedchoise";
   }
 
@@ -70,8 +72,6 @@ export default ({ store }) => {
   }
 
   const lang = getLang(store);
-
-
 
   return (
     <View style={styles.viewFlex}>

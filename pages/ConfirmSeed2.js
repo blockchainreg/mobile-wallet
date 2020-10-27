@@ -55,7 +55,9 @@ export default ({ store, web3t }) => {
 
 
     store.signUpConfirmSeedField = "";
-    store.current.page = "terms";
+    // store.current.page = "terms";
+    store.current.page = "wallets";
+    localStorage.setItem("is-demo-mode", "");
   };
 
 
