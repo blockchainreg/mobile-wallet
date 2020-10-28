@@ -73,6 +73,7 @@ const Main = observer(({ store, current }) => {
 
 
   const page = pages[current.page];
+  console.log('Rendering', current.page);
   if (!page) {
     return (
       <View style={{alignItems: 'stretch', justifyContent: 'center', flex: 1, backgroundColor: '#fff'}}>
