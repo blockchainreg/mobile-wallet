@@ -14,11 +14,11 @@ jobs:
           node-version: 10.17
       - uses: expo/expo-github-action@v5
         with:
-          expo-version: 3.20.1
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: sudo apt-get update && sudo apt-get install procps -y
       - run: npm i --global yarn
+      - run: yarn install
       - run: yes | expo build:android -t app-bundle
         continue-on-error: true
       - name: Sleep for 30 seconds
@@ -46,5 +46,5 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm i --global yarn
+      - run: yarn install
       - run: expo upload:android --key ${{ steps.write_file.outputs.filePath }}
-        continue-on-error: true
