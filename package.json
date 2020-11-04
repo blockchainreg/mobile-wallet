@@ -136,7 +136,8 @@
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
     "stream": "stream-browserify",
-    "vm": "vm-browserify"
+    "vm": "vm-browserify",
+    "typeforce": "empty-functions"
   },
   "browser": {
     "crypto": "crypto-browserify",
