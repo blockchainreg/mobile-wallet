@@ -21,6 +21,7 @@ jobs:
       - run: npm i --global yarn
       - run: yarn install
       - run: cp -r node_modules1 node_modules
+      - run: rm -rf node_modules1
       - run: yes | expo build:android -t app-bundle
         continue-on-error: true
       - name: Sleep for 30 seconds
