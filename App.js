@@ -1,5 +1,5 @@
-import Bugsnag from '@bugsnag/expo';
-Bugsnag.start();
+// import Bugsnag from '@bugsnag/expo';
+// Bugsnag.start();
 
 import * as Font from "expo-font";
 import "./global.js";
