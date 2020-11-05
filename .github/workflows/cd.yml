@@ -17,11 +17,9 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: sudo apt-get update && sudo apt-get install procps -y
-      - run: cp -r node_modules node_modules1
       - run: npm i --global yarn
       - run: yarn install
-      - run: cp -r node_modules1 node_modules
-      - run: rm -rf node_modules1
+      - run: node scripts/fix_node_modules.js
       - run: yes | expo build:android -t app-bundle
         continue-on-error: true
       - name: Sleep for 30 seconds

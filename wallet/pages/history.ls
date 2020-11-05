@@ -758,7 +758,7 @@ render-transaction = (store, web3t, tran)-->
     time-ago =
         | time => ago time
         | _ => ""
-    .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
+    .record.pug(class="#{type}" key="#{token + tx + type}" style=border-style)
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
                 .pug.direction.label-icon

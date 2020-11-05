@@ -19,7 +19,7 @@ for (var networkName in NETWORKS) {
   NETWORKS_LIST.push(NETWORKS[networkName])
 }
 
-describe('ECPair', function () {
+describe(ECPair, function () {
   describe('constructor', function () {
     it('defaults to compressed', function () {
       var keyPair = new ECPair(BigInteger.ONE)

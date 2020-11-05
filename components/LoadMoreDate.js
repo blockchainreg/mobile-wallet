@@ -71,7 +71,7 @@ export default ({ store, web3t }) => {
         onPress={() => {
           showTransaction(transaction);
         }}
-        key={transaction.tx+transaction.type}
+        key={transaction.token+transaction.tx+transaction.type}
       >
         <Left>{thumbnail(transaction.type)}</Left>
         <Body style={{ paddingRight: 10 }}>
