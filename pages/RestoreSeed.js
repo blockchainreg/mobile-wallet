@@ -74,8 +74,8 @@ export default ({ store, web3t }) => {
       return
     }
     try {
-        for(let i = 0; i < store.current.seedWords.length - 12; i += 12) {
-            bip39.mnemonicToEntropy(store.current.seedWords.slice(i, i+12).map((it) => it.part).join(" "));
+        for(let i = 0; i < store.current.seedWords.length - 11; i += 12) {
+            bip39.mnemonicToEntropy(store.current.seedWords.slice(i, i+12).join(" "));
         }
         onSeedConfirmed(store.current.seedWords.join(' '));
     }
