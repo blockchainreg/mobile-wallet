@@ -8,12 +8,14 @@
   omni = require('../web3t/providers/omni.js');
   rst = require('../web3t/providers/rst.js');
   velas2 = require('../web3t/providers/velas2.js');
+  vlxerc20 = require('../web3t/providers/vlxerc20.js');
   module.exports = {
     eth: eth,
     insight: insight,
     erc20: erc20,
     omni: omni,
     velas2: velas2,
-    bitcore: bitcore
+    bitcore: bitcore,
+    vlxerc20: vlxerc20
   };
 }).call(this);

@@ -72,7 +72,7 @@ export default (store, web3t) => {
   };
   //const txurl = `https://explorer.velas.com/tx/${store.infoTransaction.tx}`;
   const wallets = walletsFuncs(store, web3t).wallets;
-  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  const wallet = wallets.find((x) => x.coin.token === store.infoTransaction.token);
   const {linktx, url} = wallet.network.api;
   const {tx} = store.infoTransaction;
   const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;

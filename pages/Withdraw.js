@@ -394,6 +394,10 @@ export default ({ store, web3t }) => {
     const pad =
       { paddingTop: 10 };
     const back = changePage("wallet", true);
+    // var feeToken = wallet.coin.token.toUpperCase();
+    // if (wallett.network.txFeeIn) {
+    //   feeToken = wallet.network.txFeeIn.toUpperCase();
+    // }
     return (
       <View style={styles.viewFlex}>
         <Background fullscreen={true}/>
@@ -418,7 +422,7 @@ export default ({ store, web3t }) => {
               <Text style={styles.totalBalance}>
                 {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,8})?/)[0]}{" "}
                 <Text style={styles.nameToken}>
-                  {wallet.coin.token.toUpperCase()}
+                  {(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
                 </Text>
               </Text>
             </View>
@@ -474,7 +478,7 @@ export default ({ store, web3t }) => {
               </View>
               {/* <RadioButtons/> */}
                 <Text style={styles.textInputDownRight}>
-                  {lang.fee} {send.amountSendFee}{" "} {wallet.coin.token.toUpperCase()} (${send.amountSendFeeUsd})
+                  {lang.fee} {send.amountSendFee}{" "} {feeToken} (${send.amountSendFeeUsd})
                 </Text>
                 <Text style={styles.error}>{send.error}</Text>
 

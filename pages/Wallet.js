@@ -93,7 +93,7 @@ export default ({ store, web3t }) => {
         {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,5})?/)[0]}{" "}
         {/* {parseFloat(wallet.balance).toFixed(5)}{" "} */}
         <Text style={styles.nameToken}>
-          {wallet.coin.token.toUpperCase()}
+          {(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
         </Text>
       </Text>
     ;

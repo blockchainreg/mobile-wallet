@@ -602,7 +602,7 @@
                     gas: toHex(gasEstimate),
                     to: recipient,
                     from: address,
-                    data: data != null ? data : "0x"
+                    data: data || "0x"
                   };
                   tx = new Tx(txObj, {
                     common: common

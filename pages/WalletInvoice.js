@@ -111,7 +111,7 @@ export default ({ store, web3t }) => {
             <View>
               <View style={styles.bodyBalance}>
                 <View style={styles.bodyBlock3}>
-                  <Text style={styles.title1}>{lang.your} {wallet.coin.token.toUpperCase()} {lang.address}</Text>
+                  <Text style={styles.title1}>{lang.your} {(wallet.coin.nickname || wallet.coin.token).toUpperCase()} {lang.address}</Text>
                 </View>
               </View>
 

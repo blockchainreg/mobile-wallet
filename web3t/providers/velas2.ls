@@ -300,7 +300,7 @@ export create-transaction = ({ network, account, recipient, amount, amount-fee, 
         gas: to-hex gas-estimate
         to: recipient
         from: address
-        data: data ? "0x"
+        data: data || "0x"
     }
     tx = new Tx tx-obj, { common }
     tx.sign private-key

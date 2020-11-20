@@ -90,12 +90,12 @@ export default ({ store, web3t }) => {
         <Right>
           <Text style={amountStyle(transaction.type)}>
             {index(transaction.type)}
-            {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{transaction.token.toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+            {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
           </Text>
             {transaction.fee
                 ?(
                   <Text style={styles.constDate}>
-                  ({lang.fee}: {Math.floor(transaction.fee)}{" "}{transaction.token.toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+                  ({lang.fee}: {Math.floor(transaction.fee)}{" "}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
                   </Text>
                 )
                 : null

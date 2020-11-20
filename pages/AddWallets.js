@@ -30,6 +30,7 @@ import etc from "../registry/etc.json";
 import eth from "../registry/eth.json";
 import ltc from "../registry/ltc.json";
 import usdt from "../registry/usdt.json";
+import syx from "../registry/syx.json";
 import usdt_erc20 from "../registry/usdt_erc20.json";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import getLang from '../wallet/get-lang.js';
@@ -39,7 +40,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
 //
 
-const coinItems = [/*etc, */eth, /*ltc, dash, */usdt, usdt_erc20];
+const coinItems = [/*etc, */eth, ltc, /*dash, */usdt, usdt_erc20, syx];
 
 const renderCoin = (store, web3t) => item => {
   const tokens = walletsFuncs(store, web3t).wallets.map(x => x.coin.token);

@@ -19,7 +19,8 @@
     eth: eth,
     syx: syx,
     usdt: usdt,
-    usdt_erc20
+    usdt_erc20,
+    ltc
   };
   notIn = function(arr, arr2){
     return any(function(it){

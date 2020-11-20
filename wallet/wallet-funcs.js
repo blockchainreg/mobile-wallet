@@ -72,9 +72,10 @@
       }
     }());
     balanceOrigin = round5(wallet.balance);
-    balance = balanceOrigin + ' ' + wallet.coin.token.toUpperCase();
+    var tokenDisplay = (wallet.coin.nickname || wallet.coin.token).toUpperCase();
+    balance = balanceOrigin + ' ' + tokenDisplay;
     balanceUsd = round5(times(balanceOrigin, usdRate)) + " USD";
-    pending = round5(wallet.pendingSent) + ' ' + wallet.coin.token.toUpperCase();
+    pending = round5(wallet.pendingSent) + ' ' + tokenDisplay;
     style = getPrimaryInfo(store);
     buttonStyle = {
       color: style.app.text,

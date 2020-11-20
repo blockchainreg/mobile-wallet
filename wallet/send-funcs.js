@@ -332,10 +332,13 @@
       });
       return navigate(store, web3t, 'invoice');
     };
-    token = send.coin.token.toUpperCase();
+    token = (send.coin.nickname + send.coin.token).toUpperCase();
     feeToken = ((ref$ = wallet.network.txFeeIn) != null
       ? ref$
       : send.coin.token).toUpperCase();
+    if (feeToken === 'VLX2') {
+      feeToken = 'VLX';
+    }
     isData = ((ref$ = send.data) != null ? ref$ : "").length > 0;
     chooseAuto = function(){
       send.feeType = 'auto';
