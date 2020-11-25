@@ -36,20 +36,24 @@ export default ({ store, web3t }) => {
     store.current.seed = "";
     store.current.seedIndex = 0;
     store.current.seedIndexes = shuffle([...Array(from).keys()])
-    store.current.seedWords = [...Array(from).keys()].map(x=> { return "" } )
+    store.current.seedWords = [...Array(from).keys()].map(() => "")
   }
 
-  const restoreSeed12 = async () => {
+  const restoreSeed12 = () => {
     store.current.seed = "";
-    makeRange(12)
+    makeRange(12);
     store.current.page = "restoreseed";
-    // store.seedCheck = "restoreseed1";
-    // console.log('store.seedCheck', store.seedCheck)
   }
 
-  const restoreSeed24 = async () => {
+  const restoreSeed24 = () => {
     store.current.seed = "";
-    makeRange(24)
+    makeRange(24);
+    store.current.page = "restoreseed";
+  }
+
+  const restoreCustom = () => {
+    store.current.seed = "";
+    makeRange(1);
     store.current.page = "restoreseed";
   }
   const lang = getLang(store);
@@ -101,6 +105,19 @@ export default ({ store, web3t }) => {
                     width="100%"
                     radius={5}
                     onPressAction={restoreSeed24}
+                  />
+                  <View style={{ padding: 10 }}></View>
+                  <GradientButton
+                    style={styles.viewMt}
+                    text="Custom"
+                    textStyle={{ fontSize: 14, color: Images.color1 }}
+                    gradientBegin="#fff"
+                    gradientEnd="#fff"
+                    gradientDirection="diagonal"
+                    height={45}
+                    width="100%"
+                    radius={5}
+                    onPressAction={restoreCustom}
                   />
                 </View>
               </Body>

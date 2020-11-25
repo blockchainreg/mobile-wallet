@@ -19,7 +19,7 @@
   };
   testnetConfig = {
     decimals: 18,
-    txFee: '0.0020',
+    txFee: '0.0014',
     txFeeOptions: {
       auto: '0.0020',
       cheap: '0.0020'
@@ -45,7 +45,7 @@
     mask: 'V0000000000000',
     api: {
       provider: 'velas2',
-      web3Provider: 'https://testnet-v2.velas.com/rpc',
+      web3Provider: 'https://tn.yopta.net/rpc',
       url: 'https://testnet-v2.velas.com',
       apiUrl: "http://139.59.138.137"
     }

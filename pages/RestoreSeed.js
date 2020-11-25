@@ -63,7 +63,7 @@ export default ({ store, web3t }) => {
 
     if(store.signUpConfirmSeedField == "") return Toast.show({text: "Empty word is not allowed"});
 
-    if (bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
+    if (store.current.seedWords.length > 1 && bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
       return Toast.show({text: "You have mistake in your word"});
     }
 
@@ -99,8 +99,28 @@ export default ({ store, web3t }) => {
     store.signUpConfirmSeedField = word;
   };
 
-  const seedPhrase = store => {
+  const seedPhrase = (store) => {
+      if (store.current.seedIndexes.length === 1) {
+        return seedPhraseCustom(store);
+      }
       return SeedWord(store, changeSeed, number);
+  };
+  const seedPhraseCustom = (store) => {
+      return (
+        <View style={seedContainerStyle}>
+          <Textarea
+            rowSpan={2}
+            placeholder="Your mnemonic phrase"
+            placeholderTextColor="rgba(255,255,255,0.60)"
+            style={styles.inputSize}
+            selectionColor={"#fff"}
+            autoCapitalize="none"
+            value={store.signUpConfirmSeedField}
+            onChangeText={changeSeed}
+          />
+        </View>
+      );
+
   };
 
   const lang = getLang(store);
