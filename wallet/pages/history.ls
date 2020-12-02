@@ -10,7 +10,6 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../icons.ls
-    \../components/middle-ellipsis : MiddleEllipsis
     \../components/address-holder.ls
 }
 .history

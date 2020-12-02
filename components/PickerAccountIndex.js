@@ -10,7 +10,7 @@ const InputComponent = ({ accountIndex, onValueChange }) => {
   const [index, indexChange] = useState(accountIndex);
   const onBlur = () => {
     let value = parseInt(index);
-    if (isNaN(value)) {
+    if (isNaN(value) || value < 1 || value > 1e9) {
       value = 1;
     }
     indexChange(value + "");

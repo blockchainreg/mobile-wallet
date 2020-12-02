@@ -29,9 +29,9 @@ import getLang from '../wallet/get-lang.js';
         //store.current.filter.push(wallet.coin.token);
         store.current.page = "wallets";
 
-        web3t.refresh((err,data) => {
-
-        });
+        setTimeout(() => {
+          web3t.refresh((err,data) => {});
+        }, 0);
 
     }
     return (
