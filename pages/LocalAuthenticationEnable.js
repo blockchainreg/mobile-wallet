@@ -10,7 +10,8 @@ import {
   Right,
   Button,
   Icon,
-  Toast
+  Toast,
+  Alert
 } from "native-base";
 import { Image, ImageBackground, runAfterInteractions } from "react-native";
 import GradientButton from "../components/GradientButton.js";
@@ -74,7 +75,16 @@ function RequestPin({store, web3t}) {
 
         setPin("");
         await SecureStore.setItemAsync("localAuthToken", pin);
+        store.current.auth.isLocalAuthEnabled = null;
         store.current.page = "settings";
+        Alert.alert(
+          "Touch ID / Face ID",
+          "Enabled successfully",
+          [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ],
+          { cancelable: false }
+        );
       }, 1);
     };
     const loginText = lang.login;
