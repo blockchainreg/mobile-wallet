@@ -39,7 +39,7 @@ export default ({ store }) => {
         gradientDirection="diagonal"
         height={56}
         width={"100%"}
-        radius={28}
+        radius={0}
         onPressAction={changePage("UniquePassword", false)}
       />
     );

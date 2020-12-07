@@ -133,7 +133,7 @@ export default ({ store, web3t }) => {
         </>})}
       <View style={[styles.viewMono1, {height: hp("85%")}]}>
       <LinearGradient
-            colors={[Images.color1, Images.color1, Images.color2]}
+            colors={[Images.velasColor4, Images.velasColor4]}
             style={styles.linearGradientBg}
           >
         <View style={styles.viewPt} />

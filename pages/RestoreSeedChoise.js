@@ -81,7 +81,7 @@ export default ({ store, web3t }) => {
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
-                  <GradientButton
+                  {/* <GradientButton
                     style={styles.viewMt}
                     text={lang.words12}
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -90,11 +90,14 @@ export default ({ store, web3t }) => {
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={restoreSeed12}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasRestore} onPress={restoreSeed12}>
+                    <Text style={styles.textBtn}>{lang.words12}</Text>
+                  </Button>
                   <View style={{ padding: 10 }}></View>
-                  <GradientButton
+                  {/* <GradientButton
                     style={styles.viewMt}
                     text={lang.words24}
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -103,11 +106,14 @@ export default ({ store, web3t }) => {
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={restoreSeed24}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasRestore} onPress={restoreSeed24}>
+                    <Text style={styles.textBtn}>{lang.words24}</Text>
+                  </Button>
                   <View style={{ padding: 10 }}></View>
-                  <GradientButton
+                  {/* <GradientButton
                     style={styles.viewMt}
                     text="Custom"
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -116,9 +122,12 @@ export default ({ store, web3t }) => {
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={restoreCustom}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasRestore} onPress={restoreCustom}>
+                    <Text style={styles.textBtn}>Custom</Text>
+                  </Button>
                 </View>
               </Body>
             </CardItem>

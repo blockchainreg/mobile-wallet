@@ -6,7 +6,7 @@ import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
 import * as React from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
 import Background from "./components/Background.js"
@@ -17,13 +17,20 @@ import {
 
 export default class App extends React.Component {
   state = {
-    AppReady: null
+    AppReady: null,
   };
+  
 
   async loadFonts() {
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      'Nexa-Regular': require("./assets/fonts/NexaRegular.ttf"),
+      'Nexa-Bold': require("./assets/fonts/Nexa-Bold.ttf"),
+      'Nexa-Light': require("./assets/fonts/Nexa-Light.ttf"),
+      'Nexa-Book': require("./assets/fonts/Nexa-Book.ttf"), 
+      'Fontfabric-NexaBold': require("./assets/fonts/Fontfabric-NexaBold.otf"), 
+      'Fontfabric-NexaRegular': require("./assets/fonts/Fontfabric-NexaRegular.otf"), 
     });
   }
 
@@ -43,14 +50,17 @@ export default class App extends React.Component {
     const { AppReady } = this.state;
     if (!AppReady) {
       return (
-        <View style={[styles.bgMainPage, {backgroundColor: "#0A0D4D"}]}>
-          <Background fullscreen={true}/>
+        <View style={[styles.viewFlex, {backgroundColor: '#05061f'}]}>
+        <ImageBackground source={Images.bg} style={styles.image}>
+
+          {/* <Background fullscreen={true}/> */}
             <Image source={Images.logo} style={styles.styleLogoHead} />
+            </ImageBackground>
         </View>
       );
     }
     return (
-      <View style={[styles.containterBg, {backgroundColor: "#0A0D4D"}]}>
+      <View style={[styles.viewFlex, {backgroundColor: '#05061f'}]}>
         <AppReady />
       </View>
     );

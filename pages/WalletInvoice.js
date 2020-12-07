@@ -38,18 +38,21 @@ export default ({ store, web3t }) => {
       Alert.alert(lang.copied, "", [{ text: lang.ok }]);
     };
     return (
-      <GradientButton
-        style={styles.gradientBtn2}
-        text={lang.copy}
-        textStyle={{ fontSize: 14 }}
-        gradientBegin="#9d41eb"
-        gradientEnd="#9d41eb"
-        gradientDirection="diagonal"
-        height={45}
-        width={"100%"}
-        radius={5}
-        onPressAction={writeToClipboardAddr}
-      />
+      // <GradientButton
+      //   style={styles.gradientBtn2}
+      //   text={lang.copy}
+      //   textStyle={{ fontSize: 14, fontFamily: "Fontfabric-NexaRegular"  }}
+      //   gradientBegin="#9d41eb"
+      //   gradientEnd="#9d41eb"
+      //   gradientDirection="diagonal"
+      //   height={45}
+      //   width={"100%"}
+      //   radius={0}
+      //   onPressAction={writeToClipboardAddr}
+      // />
+      <Button block style={styles.btnVelasCopy} onPress={writeToClipboardAddr}>
+      <Text style={[styles.textBtn, {color: "#fff"}]}>{lang.copy}</Text>
+    </Button>
     );
   };
   const buttonShare = store => {
@@ -61,18 +64,21 @@ export default ({ store, web3t }) => {
       }
     };
     return (
-      <GradientButton
-        style={styles.gradientBtn2}
-        text={lang.share}
-        textStyle={{ fontSize: 14 }}
-        gradientBegin="#3CD5AF"
-        gradientEnd="#3CD5AF"
-        gradientDirection="diagonal"
-        height={45}
-        width={"100%"}
-        radius={5}
-        onPressAction={onShare}
-      />
+      // <GradientButton
+      //   style={styles.gradientBtn2}
+      //   text={lang.share}
+      //   textStyle={{ fontSize: 14, fontFamily: "Fontfabric-NexaRegular" }}
+      //   gradientBegin="#3CD5AF"
+      //   gradientEnd="#3CD5AF"
+      //   gradientDirection="diagonal"
+      //   height={45}
+      //   width={"100%"}
+      //   radius={0}
+      //   onPressAction={onShare}
+      // />
+      <Button block style={styles.btnVelasShare} onPress={onShare}>
+      <Text style={[styles.textBtn, {color: "#000"}]}>{lang.share}</Text>
+    </Button>
     );
   };
 

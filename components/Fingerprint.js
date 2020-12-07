@@ -1,18 +1,24 @@
 import * as React from "react";
 import {
-  Text,
   View,
   Modal,
   Image,
   Platform,
   ImageBackground,
+  Text
 } from "react-native";
+import {
+  Button,
+} from "native-base";
 import * as LocalAuthentication from "expo-local-authentication";
-import GradientButton from "../components/GradientButton.js";
+import GradientButton from "react-native-gradient-buttons";
+// import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import styles from "../Styles.js";
 import Background from "./Background.js";
 import { LinearGradient } from "expo-linear-gradient";
+import getLang from '../wallet/get-lang.js';
+
 
 export default class Fingerprint extends React.Component {
   constructor(props) {
@@ -68,6 +74,7 @@ export default class Fingerprint extends React.Component {
       console.log(e);
     }
   };
+  
 
   render() {
     return (
@@ -85,12 +92,13 @@ export default class Fingerprint extends React.Component {
         >
           <View style={styles.modalFp}>
             <LinearGradient
-              colors={[Images.color1, Images.color1, Images.color2]}
+              colors={[Images.velasColor4, Images.velasColor4]}
               style={styles.linearGradientBg}
             >
               <View style={styles.containerScreen}>
                 <Text style={[styles.titleBlack , {paddingVertical: 20}]}>
-                  Authenticate with fingerprint
+                  {/* Authenticate with fingerprint */}
+                  Please Authenticate!
                 </Text>
                 <Image
                   style={styles.imageFinger}
@@ -98,11 +106,11 @@ export default class Fingerprint extends React.Component {
                 />
                 {this.state.failedCount > 0 && (
                 <Text style={{ color: "white", fontSize: 14 }}>
-                  Try again.
+                  Try again
                 </Text>
               )}
                 <View style={styles.marginBtn}>
-                  <GradientButton
+                  {/* <GradientButton
                     style={styles.gradientBtnPh}
                     text={"Cancel"}
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -111,13 +119,21 @@ export default class Fingerprint extends React.Component {
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={async () => {
                       LocalAuthentication.cancelAuthenticate();
                       this.props.onCancel && this.props.onCancel();
                       this.setModalVisible(!this.state.modalVisible);
                     }}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasActive} 
+                    onPress={() => {
+                      LocalAuthentication.cancelAuthenticate();
+                      this.props.onCancel && this.props.onCancel();
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}>
+                    <Text style={styles.textBtn}>{"Cancel"}</Text>
+                  </Button>
                 </View>
               </View>
             </LinearGradient>

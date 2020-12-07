@@ -45,7 +45,7 @@ const buttonActive = store => {
       gradientDirection="diagonal"
       height={50}
       width={"100%"}
-      radius={10}
+      radius={0}
 
 
       onPressAction={resetPassword}
@@ -64,7 +64,7 @@ const buttonInactive = store => {
       gradientDirection="diagonal"
       height={50}
       width={"100%"}
-      radius={10}
+      radius={0}
 
 
     />

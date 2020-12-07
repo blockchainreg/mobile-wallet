@@ -12,6 +12,8 @@ export default class Confirm extends Component {
         message={this.props.confirmation}
         visible={true}
         onTouchOutside={this.props.onNo}
+        titleStyle={{fontFamily: "Fontfabric-NexaBold", color: '#000'}}
+        messageStyle={{fontFamily: "Fontfabric-NexaRegular", color: '#000'}}
         positiveButton={{
             title: "Yes",
             onPress: this.props.onYes

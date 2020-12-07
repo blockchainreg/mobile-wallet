@@ -49,18 +49,21 @@ const buttonActive = store => {
   };
 
   return (
-    <GradientButton
-      style={styles.gradientBtnPh}
-      text={lang.continue + " "}
-      textStyle={{ fontSize: 14, color: Images.color1 }}
-      gradientBegin="#fff"
-      gradientEnd="#fff"
-      gradientDirection="diagonal"
-      height={45}
-      width="100%"
-      radius={5}
-      onPressAction={signup}
-    />
+    // <GradientButton
+    //   style={styles.gradientBtnPh}
+    //   text={lang.continue + " "}
+    //   textStyle={{ fontSize: 14, color: Images.color1 }}
+    //   gradientBegin="#fff"
+    //   gradientEnd="#fff"
+    //   gradientDirection="diagonal"
+    //   height={45}
+    //   width="100%"
+    //   radius={0}
+    //   onPressAction={signup}
+    // />
+    <Button block style={styles.btnVelasActive} onPress={signup}>
+      <Text style={styles.textBtn}>{lang.continue}</Text>
+    </Button>
   );
 };
 
@@ -138,7 +141,9 @@ export default ({ store }) => {
 
   return (
     <View style={styles.viewFlex}>
-        <Background fullscreen={true}/>
+        <ImageBackground source={Images.bg} style={styles.image}>
+
+        {/* <Background fullscreen={true}/> */}
         <Header transparent style={styles.mtIphoneX}>
           {/*}<Left  style={styles.viewFlexHeader}>{logIn(store)}</Left>{*/}
           <Body  style={styles.viewFlexHeader} />
@@ -165,6 +170,7 @@ export default ({ store }) => {
             <View style={styles.marginBtn1}>{PickerSetLang({ store })}</View>
           </View>
         </View>
+        </ImageBackground>
     </View>
   );
 };

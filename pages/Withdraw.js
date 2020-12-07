@@ -147,18 +147,21 @@ const btnWithdrawBtc = ({ store, web3t }) => {
   const sendText = /*store.current.send.sending === true ? "..." : */ lang.send;
 
   return (
-    <GradientButton
-      style={styles.gradientBtnPh}
-      text={sendText}
-      textStyle={{ fontSize: 14, color: Images.color1 }}
-      gradientBegin="#fff"
-        gradientEnd="#fff"
-        gradientDirection="diagonal"
-        height={45}
-        width="100%"
-        radius={5}
-      onPressAction={withdrawBtc}
-    />
+    // <GradientButton
+    //   style={styles.gradientBtnPh}
+    //   text={sendText}
+    //   textStyle={{ fontSize: 14, color: Images.color1 }}
+    //   gradientBegin="#fff"
+    //     gradientEnd="#fff"
+    //     gradientDirection="diagonal"
+    //     height={45}
+    //     width="100%"
+    //     radius={0}
+    //   onPressAction={withdrawBtc}
+    // />
+    <Button block style={styles.btnVelasActive} onPress={withdrawBtc}>
+      <Text style={styles.textBtn}>{sendText}</Text>
+    </Button>
   );
 };
 

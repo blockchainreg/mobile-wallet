@@ -2,6 +2,7 @@ import React from "react";
 import {
   Image,
   ImageBackground,
+  Platform
 } from "react-native";
 import GradientButton from "../components/GradientButton.js";
 import {
@@ -116,8 +117,8 @@ export default ({ store, web3t }) => {
                 </View>
                 */}
                 {SeedWord(store, handleConfirmSeedField, number)}
-                <View style={styles.marginBtn}>
-                  <GradientButton
+                <View style={Platform.OS === 'ios' ? styles.marginBtn : styles.marginBtnAndroid}>
+                  {/* <GradientButton
                     style={styles.gradientBtnPh}
                     text={lang.continue}
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -126,9 +127,12 @@ export default ({ store, web3t }) => {
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={verifyWordOrSetup}
-                  />
+                  /> */}
+                      <Button block style={styles.btnVelasActive} onPress={verifyWordOrSetup}>
+                        <Text style={styles.textBtn}>{lang.continue}</Text>
+                      </Button>
                 </View>
               </Body>
             </CardItem>

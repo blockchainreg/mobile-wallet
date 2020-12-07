@@ -5,7 +5,10 @@ import {
   Keyboard,
   TouchableOpacity,
   ImageBackground,
-  BackHandler
+  BackHandler,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform
 } from "react-native";
 import {
   Input,
@@ -41,7 +44,7 @@ import {confirm} from "../wallet/pages/confirmation.js";
 
 const seedContainerStyle = {
   borderWidth: 1,
-  borderRadius: 5,
+  borderRadius: 0,
   width: "100%",
   borderColor: "#fff",
   marginTop: 20,
@@ -110,13 +113,18 @@ export default ({ store, web3t }) => {
         <View style={seedContainerStyle}>
           <Textarea
             rowSpan={2}
-            placeholder="Your mnemonic phrase"
+            placeholder={lang.placeholderSeed}
             placeholderTextColor="rgba(255,255,255,0.60)"
             style={styles.inputSize}
             selectionColor={"#fff"}
             autoCapitalize="none"
             value={store.signUpConfirmSeedField}
             onChangeText={changeSeed}
+            keyboardAppearance="dark"
+            // returnKeyType={'return'}
+            keyboardType="default"
+            autoFocus
+            blurOnSubmit={true}
           />
         </View>
       );
@@ -130,6 +138,7 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
       <Background fullscreen={true}/>
+
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader}>
             <BackButton onBack={back}/>
@@ -137,16 +146,18 @@ export default ({ store, web3t }) => {
           <Body style={styles.viewFlexHeader} />
           <Right style={styles.viewFlexHeader} />
         </Header>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? "padding" : null} >
+      <ScrollView>
         <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <View style={styles.containerFlexStart}>
           <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} />
           <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
           <View style={styles.card1}>
-            <CardItem style={styles.cardItemSeed}>
+            <CardItem style={Platform.OS === 'ios' ? styles.cardItemSeed : styles.cardItemSeedAndroid}>
               <Body>
                 {seedPhrase(store)}
-                <View style={styles.marginBtn}>
-                  <GradientButton
+                <View style={Platform.OS === 'ios' ? styles.marginBtn : styles.marginBtnAndroid}>
+                  {/* <GradientButton
                     style={styles.gradientBtnPh}
                     text={lang.continue}
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -155,14 +166,19 @@ export default ({ store, web3t }) => {
                     gradientDirection="diagonal"
                     height={45}
                     width="98%"
-                    radius={5}
+                    radius={0}
                     onPressAction={done}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasActive} onPress={done}>
+                        <Text style={styles.textBtn}>{lang.continue}</Text>
+                      </Button>
                 </View>
               </Body>
             </CardItem>
           </View>
         </View>
+        </ScrollView>
+        </KeyboardAvoidingView>
     </View>
   );
 };

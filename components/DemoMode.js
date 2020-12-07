@@ -19,8 +19,9 @@ export default function DemoMode({store}) {
       <TouchableHighlight onPress={onDemoClick} onLongPress={onDemoClick} underlayColor="yellow">
         <View style={styles.demoView}>
             <Text style={styles.demoTxt}>
-              Please save your seed phrase
+              Please save your seed phrase!!
             </Text>
+            <Text/>
         </View>
       </TouchableHighlight>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, ImageBackground, ScrollView } from "react-native";
+import { Image, ImageBackground, ScrollView, Platform } from "react-native";
 import {
   Text,
   Button,
@@ -12,6 +12,7 @@ import {
   Left,
   Right
 } from "native-base";
+import { ifIphoneX } from "react-native-iphone-x-helper";
 import styles from "../Styles.js";
 import GradientButton from "../components/GradientButton.js";
 import Hyperlink from "react-native-hyperlink";
@@ -33,7 +34,7 @@ async function loadTerms(store) {
 
 async function loadTermsRecusion(store) {
   try {
-    const response = await fetch('https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md');
+    const response = await fetch('https://raw.githubusercontent.com/velas/mobile-wallet/master/TERMS.md');
     store.current.termsMarkdown = await response.text();
   }catch(e) {
     console.error(e);
@@ -53,24 +54,48 @@ const buttonAccept = (store, web3t) => {
   };
   const lang = getLang(store);
   return (
-    <GradientButton
-      style={styles.gradientBtnPh}
-      text={lang.accept}
-      textStyle={{ fontSize: 14, color: Images.color1 }}
-      gradientBegin="#fff"
-      gradientEnd="#fff"
-      gradientDirection="diagonal"
-      height={45}
-      width="100%"
-      radius={5}
-      onPressAction={accept}
-    />
+    // <GradientButton
+    //   style={styles.gradientBtnPh}
+    //   text={lang.accept}
+    //   textStyle={{ fontSize: 14, color: Images.color1 }}
+    //   gradientBegin="#fff"
+    //   gradientEnd="#fff"
+    //   gradientDirection="diagonal"
+    //   height={45}
+    //   width="100%"
+    //   radius={0}
+    //   onPressAction={accept}
+    // />
+    <Button block style={styles.btnVelasActive} onPress={accept}>
+      <Text style={styles.textBtn}>{lang.accept}</Text>
+    </Button>
   );
 };
 const markdownStyle = {
-  root: {
-    color: "#FFFFFF"
-  }
+  ...ifIphoneX(
+    { root: {
+      color: "#FFFFFF",
+      fontFamily: "Fontfabric-NexaRegular",
+      lineHeight: 20,
+    }},
+    {
+      ...Platform.select({
+        ios: { root: {
+          color: "#FFFFFF",
+          fontFamily: "Fontfabric-NexaRegular",
+          lineHeight: 20,
+          fontSize: 10
+        } },
+        android: { root: {
+          color: "#FFFFFF",
+          fontFamily: "Fontfabric-NexaRegular",
+          lineHeight: 20,
+          fontSize: 10
+        } },
+      }),
+    }
+  ),
+  
 };
 
 export default ({ store, web3t }) => {
@@ -111,7 +136,7 @@ export default ({ store, web3t }) => {
                   </ScrollView>
                 </View>
 
-                <Text style={{ fontSize: 14, color: "#fff", marginTop: 15 }}>
+                <Text style={{ fontSize: 14, color: "#fff", marginTop: 15, fontFamily: "Fontfabric-NexaRegular" }}>
                   {lang.terms}
                 </Text>
 

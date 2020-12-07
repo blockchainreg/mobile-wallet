@@ -61,10 +61,12 @@ export default ({ store }) => {
         inputIOS: {
           color: "#fff",
           fontSize: 17,
+          fontFamily: "Fontfabric-NexaRegular"
         },
         inputAndroid: {
           color: "#fff",
           fontSize: 17,
+          fontFamily: "Fontfabric-NexaRegular"
         }
       }}
     />

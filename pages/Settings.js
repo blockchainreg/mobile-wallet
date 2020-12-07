@@ -79,7 +79,7 @@ export default ({ store, web3t }) => {
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader} />
           <Body style={styles.viewFlexHeader}>
-            <Title style={styles.titleBlack}>{lang.settings}</Title>
+            <Title style={styles.title1}>{lang.settings}</Title>
           </Body>
           <Right style={styles.viewFlexHeader}/>
 

@@ -26,7 +26,7 @@ const InputComponent = ({ accountIndex, onValueChange }) => {
           onBlur={onBlur}
           returnKeyType="done"
           keyboardType="numeric"
-          style={styles.inputSize}
+          style={Platform.OS === 'ios' ? styles.inputSizeIos : styles.inputSize}
           selectionColor={"#fff"}
           keyboardAppearance="dark"
         />

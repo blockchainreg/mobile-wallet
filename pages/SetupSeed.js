@@ -97,20 +97,23 @@ export default ({ store }) => {
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
-                <GradientButton
+                {/* <GradientButton
                     style={styles.viewMt}
                     text={lang.newWallet}
                     textStyle={{ fontSize: 14, color: "#fff" }}
-                    gradientBegin="#60B687"
-                    gradientEnd="#60B687"
+                    gradientBegin="#0bffb7"
+                    gradientEnd="#0bffb7"
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={generateRandom}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasCreate} onPress={generateRandom}>
+                    <Text style={[styles.textBtn, {color: "#fff"}]}>{lang.newWallet}</Text>
+                  </Button>
                   <View style={{ padding: 10 }}></View>
-                  <GradientButton
+                  {/* <GradientButton
                     style={styles.viewMt}
                     text={lang.restoreSeed}
                     textStyle={{ fontSize: 14, color: Images.color1 }}
@@ -119,9 +122,12 @@ export default ({ store }) => {
                     gradientDirection="diagonal"
                     height={45}
                     width="100%"
-                    radius={5}
+                    radius={0}
                     onPressAction={restoreSeed}
-                  />
+                  /> */}
+                  <Button block style={styles.btnVelasRestore} onPress={restoreSeed}>
+                    <Text style={styles.textBtn}>{lang.restoreSeed}</Text>
+                  </Button>
 
                 </View>
               </Body>

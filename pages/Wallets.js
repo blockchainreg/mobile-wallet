@@ -122,15 +122,15 @@ const wallets = (store, web3t) => {
     if (wallet.balance !== "..") {
       balanceLayout = (
         <Text>
-          <Text style={{ color: "#fff" }}>{balance}</Text>
-          <Text note> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
+          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{balance}</Text>
+          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
         </Text>
       );
     } else {
       balanceLayout = (
         <Text>
           <Text style={{ color: "#fff" }}>-</Text>
-          <Text note> (pull to reload)</Text>
+          <Text note style={{ fontFamily: "Fontfabric-NexaRegular"}}> (pull to reload)</Text>
         </Text>
       );
     }
@@ -141,7 +141,7 @@ const wallets = (store, web3t) => {
       <ListItem
         key={wallet.coin.token}
         thumbnail
-        underlayColor={Images.color1}
+        underlayColor={Images.velasColor2}
         onPress={chooseWallet}
         style={styles.mbListItem}
       >
@@ -174,7 +174,12 @@ export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  const calcUsd = store.current.balanceUsd;
+  let calcUsd = parseFloat(store.current.balanceUsd);
+  if (isNaN(calcUsd)) {
+    calcUsd = store.current.balanceUsd;
+  } else {
+    calcUsd = calcUsd.toFixed(4)
+  }
 
   const refreshBalance = () => {
     store.current.refreshingBalances = true;
@@ -217,7 +222,7 @@ export default ({ store, web3t }) => {
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader}/>
               <Body style={styles.viewFlexHeader}>
-                <Text style={styles.title1}>{lang.yourWallets}</Text>
+                <Text style={styles.titleWallets}>{lang.yourWallets}</Text>
               </Body>
               <Right style={styles.viewFlexHeader}>
                 <Button
@@ -249,7 +254,7 @@ export default ({ store, web3t }) => {
         <View style={walletListStyle}>
 
           <LinearGradient
-            colors={[Images.color1, Images.color1, Images.color2]}
+            colors={[Images.velasColor4, Images.velasColor4]}
             style={styles.linearGradientBg}
           >
             <View style={styles.viewPt} />

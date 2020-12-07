@@ -11,9 +11,18 @@ import Images from "./Images.js";
 export default StyleSheet.create({
   size: 24,
   container: {
+    fontFamily: 'Fontfabric-NexaRegular',
     flex: 1,
     justifyContent: "center",
     padding: 0,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  colorBg: {
+    backgroundColor: Images.colorDarkBlue
   },
   containerAndroid: {
     flex: 1,
@@ -36,7 +45,7 @@ export default StyleSheet.create({
   footerHeight: {
     ...ifIphoneX(
       {
-        backgroundColor: "#1B1B74",
+        backgroundColor: Images.velasColor5,
         borderTopColor: "transparent",
 
       },
@@ -44,11 +53,11 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             borderTopColor: "transparent",
-            backgroundColor: "#1B1B74",
+            backgroundColor: Images.velasColor5,
 
           },
           android: {
-            backgroundColor: "#1B1B74",
+            backgroundColor: Images.velasColor5,
             borderTopColor: "transparent",
             // zIndex: 2
 
@@ -150,7 +159,9 @@ export default StyleSheet.create({
   },
   styleTxtSeparator: {
     color: "#fff",
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular",
+    marginTop: 10
   },
   iconTouchableBuy: {
     top: 2,
@@ -298,9 +309,8 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#fff",
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
         position: "absolute",
         left: 0,
         right: 0,
@@ -311,9 +321,8 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "#fff",
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
             position: "absolute",
             left: 0,
             right: 0,
@@ -322,9 +331,8 @@ export default StyleSheet.create({
           },
           android: {
             flex: 1,
-            backgroundColor: "#fff",
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
             position: "absolute",
             left: 0,
             right: 0,
@@ -550,11 +558,13 @@ export default StyleSheet.create({
         fontSize: 20,
         color: "rgba(49,49,49,100)",
         marginTop: "10%",
+        fontFamily: "Fontfabric-NexaRegular"
       },
       {
         fontSize: 18,
         color: "rgba(49,49,49,100)",
         marginVertical: "4%",
+        fontFamily: "Fontfabric-NexaRegular"
       }
     ),
   },
@@ -564,11 +574,13 @@ export default StyleSheet.create({
         fontSize: 20,
         color: "rgba(49,49,49,100)",
         marginTop: "10%",
+        fontFamily: "Fontfabric-NexaRegular"
       },
       {
         fontSize: 18,
         color: "rgba(49,49,49,100)",
         marginTop: "10%",
+        fontFamily: "Fontfabric-NexaRegular"
       }
     ),
   },
@@ -624,16 +636,19 @@ export default StyleSheet.create({
     fontSize: 14,
     marginVertical: 10,
     color: "rgba(255,255,255,0.80)",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textInputDownLeft: {
     fontSize: 14,
     marginTop: 10,
     color: "rgba(255,255,255,0.80)",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textInputDown: {
     fontSize: 16,
     marginTop: 20,
     marginHorizontal: 20,
+    fontFamily: "Fontfabric-NexaRegular"
     // color: '#fff',
   },
   btnCloseModal: {
@@ -645,6 +660,7 @@ export default StyleSheet.create({
     marginTop: 10,
     color: "#fff",
     marginLeft: 20,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   containerBuy: {
     position: "absolute",
@@ -664,41 +680,49 @@ export default StyleSheet.create({
     fontSize: 30,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   refreshHeaderIcon: {
     fontSize: 30,
     color: "rgba(255, 255, 255, 0.35)",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   addHeaderIcon: {
     fontSize: 20,
     color: "rgba(255, 255, 255, 0.35)",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   arrowHeaderIconBlack: {
     fontSize: 30,
     // color: "#9d41eb",
     color: '#fff',
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   headerIcon: {
     // fontSize: 40,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   headerText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   arrowHeaderIconTransparent: {
     fontSize: 30,
     color: "transparent",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   arrowHeaderIconNoTransparent: {
     fontSize: 36,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   titleHeader: {
     ...ifIphoneX(
@@ -707,6 +731,7 @@ export default StyleSheet.create({
         color: "#fff",
         fontSize: 22,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -715,12 +740,16 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 18,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
+
           },
           android: {
             marginTop: 5,
             color: "#fff",
             fontSize: 18,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
+
           },
         }),
       }
@@ -732,6 +761,7 @@ export default StyleSheet.create({
         marginTop: 10,
         color: "#fff",
         fontSize: 18,
+        fontFamily: "Fontfabric-NexaRegular"
         // fontWeight: "bold",
       },
       {
@@ -741,12 +771,14 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 18,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             marginTop: 5,
             color: "#fff",
             fontSize: 18,
-            fontWeight: "bold",
+            fontWeight: Platform.OS === 'ios' ? "bold" : null,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -756,6 +788,7 @@ export default StyleSheet.create({
     color: "#fff",
     fontSize: 22,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   title: {
     ...ifIphoneX(
@@ -765,7 +798,8 @@ export default StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center",
         height: 30,
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#fff",
@@ -773,6 +807,7 @@ export default StyleSheet.create({
         height: 30,
         fontWeight: "bold",
         alignSelf: "center",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -787,15 +822,42 @@ export default StyleSheet.create({
         marginTop: 10,
         textAlign: "center",
         width: "150%",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#fff",
         fontSize: 20,
         height: 30,
-        fontWeight: "bold",
+        fontWeight: Platform.OS === 'ios' ? "bold" : null,
+        fontFamily: "Fontfabric-NexaBold",
         alignSelf: "center",
         textAlign: "center",
+        width: "170%",
+      }
+    ),
+  },
+  titleWallets: {
+    ...ifIphoneX(
+      {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "bold",
+        alignSelf: "center",
+        height: 30,
+        marginTop: 10,
+        textAlign: "center",
         width: "150%",
+        fontFamily: "Fontfabric-NexaBold"
+      },
+      {
+        color: "#fff",
+        fontSize: 20,
+        height: 30,
+        fontWeight: Platform.OS === 'ios' ? "bold" : null,
+        alignSelf: "center",
+        textAlign: "center",
+        width: "170%",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -805,12 +867,14 @@ export default StyleSheet.create({
     // fontWeight: "bold",
     marginLeft: 20,
     marginBottom: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   titleAbsolute: {
     color: "#fff",
     fontSize: 18,
     left: 20,
     bottom: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   titleBlack: {
     ...ifIphoneX(
@@ -821,19 +885,22 @@ export default StyleSheet.create({
         alignSelf: "center",
         height: 30,
         marginTop: 10,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#fff",
         fontSize: 20,
         height: 30,
-        fontWeight: "bold",
+        fontWeight: Platform.OS === 'ios' ? "bold" : null,
         alignSelf: "center",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
   txtLocked: {
     color: "#fff",
     marginTop: 15,
+    fontFamily: "Nexa-Book"
   },
 
   h1TextBuy: {
@@ -844,6 +911,7 @@ export default StyleSheet.create({
         color: "#fff",
         fontSize: 36,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -853,13 +921,15 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 28,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             marginTop: 10,
             // paddingRight: '10%',
             color: "#fff",
             fontSize: 24,
-            fontWeight: "bold",
+            fontWeight: Platform.OS === 'ios' ? "bold" : null,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -943,6 +1013,7 @@ export default StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   inputStyleNumberCard: {
     ...ifIphoneX(
@@ -952,6 +1023,7 @@ export default StyleSheet.create({
         paddingLeft: 0,
         fontSize: 28,
         marginTop: 10,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -961,6 +1033,7 @@ export default StyleSheet.create({
             paddingLeft: 0,
             fontSize: 22,
             marginTop: 10,
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             color: "#fff",
@@ -969,6 +1042,7 @@ export default StyleSheet.create({
             width: "100%",
             fontSize: 20,
             marginTop: 10,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -979,6 +1053,7 @@ export default StyleSheet.create({
     fontSize: 20,
     // fontWeight: 'bold',
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   buttonInput: {
     flexDirection: "row",
@@ -991,12 +1066,14 @@ export default StyleSheet.create({
     fontSize: 18,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textButtonTransparent: {
     fontSize: 18,
     color: "rgba(255,255,255,0.50)",
     fontWeight: "bold",
     paddingRight: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   viewSuccessModal: {
     ...ifIphoneX(
@@ -1034,24 +1111,28 @@ export default StyleSheet.create({
     color: "rgba(255,255,255,0.80)",
     fontSize: 14,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textCurrentQr: {
     marginBottom: "5%",
     color: "rgba(255,255,255,0.80)",
     fontSize: 14,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textCurrentH1: {
     marginTop: "2%",
     color: "rgba(255,255,255,100)",
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textCurrentH3: {
     marginTop: "2%",
     color: "rgba(255,255,255,0.80)",
     fontSize: 13,
     fontWeight: "200",
+    fontFamily: "Nexa-Book"
   },
   // Dashboard
   headerLayoutStyle: {
@@ -1147,8 +1228,8 @@ export default StyleSheet.create({
       {
         ...Platform.select({
           ios: {
-            paddingTop: hp("5%"),
-        paddingBottom: hp("3%"),
+            // paddingTop: hp("5%"),
+            paddingBottom: hp("3%"),
           },
           android: {
             // paddingTop: 70,
@@ -1224,9 +1305,8 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#fff",
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
         position: "absolute",
         left: 0,
         right: 0,
@@ -1235,9 +1315,8 @@ export default StyleSheet.create({
       },
       {
         flex: 1,
-        backgroundColor: "#fff",
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
         position: "absolute",
         left: 0,
         right: 0,
@@ -1255,6 +1334,7 @@ export default StyleSheet.create({
         fontWeight: "bold",
         marginTop: 10,
         marginBottom: 5,
+        fontFamily: "Fontfabric-NexaBold"
       },
       android: {
         color: "#313131",
@@ -1263,6 +1343,7 @@ export default StyleSheet.create({
         marginTop: 5,
         marginBottom: 5,
         textTransform: "capitalize",
+        fontFamily: "Fontfabric-NexaBold"
       },
     }),
   },
@@ -1273,6 +1354,7 @@ export default StyleSheet.create({
         color: "#fff",
         fontSize: 36,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -1281,12 +1363,14 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 28,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             // marginTop: 10,
             color: "#fff",
             fontSize: 24,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -1295,7 +1379,9 @@ export default StyleSheet.create({
   viewPt: {
     paddingTop: 10,
     color: "#fff",
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular",
+    lineHeight: 20
   },
   viewPt1: {
     paddingTop: 20,
@@ -1303,7 +1389,8 @@ export default StyleSheet.create({
   userHistoryRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    width: "100%"
+    width: "100%",
+
   },
   userHistoryRow1: {
     flexDirection: 'row',
@@ -1321,7 +1408,7 @@ export default StyleSheet.create({
     borderBottomColor: "transparent"
   },
   seperatorStyle: {
-    backgroundColor: Images.color1,
+    backgroundColor: Images.velasColor3,
     opacity: 0.60,
     borderColor: "transparent",
     height: Platform.OS === "android" ? 40 : null,
@@ -1358,11 +1445,13 @@ export default StyleSheet.create({
     color: "rgba(34,34,34,0.30)",
     fontSize: 20,
     top: 8,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   iconStyleArrow: {
     color: "rgba(34,34,34,0.30)",
     fontSize: 20,
     top: 3,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   containerAlignLeft: {
     flex: 1,
@@ -1383,11 +1472,13 @@ export default StyleSheet.create({
         fontSize: 26,
         color: "#313131",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         fontSize: 20,
         color: "#313131",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -1395,6 +1486,7 @@ export default StyleSheet.create({
     fontSize: 15,
     color: "#313131",
     marginTop: 16,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   gradientBtnMargin: {
     marginTop: 20,
@@ -1459,6 +1551,7 @@ export default StyleSheet.create({
         color: "#fff",
         fontSize: 36,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -1466,11 +1559,13 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 28,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             color: "#fff",
             fontSize: 24,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -1528,6 +1623,7 @@ export default StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     paddingRight: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   gradientBtn: {
     paddingLeft: 20,
@@ -1582,6 +1678,7 @@ export default StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   viewTextCrypto: {
     flex: 1,
@@ -1625,12 +1722,14 @@ export default StyleSheet.create({
     color: "#009EFD",
     fontSize: 18,
     marginBottom: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textBtnModal: {
     marginTop: "4%",
     color: "rgba(255,255,255,0.80)",
     fontSize: 14,
     fontWeight: "200",
+    fontFamily: "Fontfabric-NexaBold"
   },
   viewBuyFront4: {
     ...ifIphoneX(
@@ -1719,6 +1818,7 @@ export default StyleSheet.create({
     marginTop: 57,
     width: 245,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   card: {
     ...Platform.select({
@@ -1772,12 +1872,14 @@ export default StyleSheet.create({
   iconTopError: {
     top: 2,
   },
-  inputSize: {
+  inputSizeIos: {
     ...ifIphoneX(
       {
         fontSize: 14,
         color: "#fff",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold",
+        top: -1
       },
       {
         ...Platform.select({
@@ -1785,11 +1887,39 @@ export default StyleSheet.create({
             fontSize: 14,
             color: "#fff",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 14,
             color: "#fff",
+            fontWeight: Platform.OS === 'ios' ? "bold" : null,
+            fontFamily: "Fontfabric-NexaBold",
+          },
+        }),
+      }
+    ),
+  },
+  inputSize: {
+    ...ifIphoneX(
+      {
+        fontSize: 14,
+        color: "#fff",
+        fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
+      },
+      {
+        ...Platform.select({
+          ios: {
+            fontSize: 14,
+            color: "#fff",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
+          },
+          android: {
+            fontSize: 14,
+            color: "#fff",
+            fontWeight: Platform.OS === 'ios' ? "bold" : null,
+            fontFamily: "Fontfabric-NexaBold",
           },
         }),
       }
@@ -1801,6 +1931,7 @@ export default StyleSheet.create({
         fontSize: 14,
         color: "#fff",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -1808,11 +1939,13 @@ export default StyleSheet.create({
             fontSize: 12,
             color: "#fff",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 12,
             color: "#fff",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -1821,11 +1954,13 @@ export default StyleSheet.create({
   errorSend: {
     fontSize: 12,
     color: "#ff9999",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   error: {
     fontSize: 14,
     color: "red",
     top: 2,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   mgTopInput: {
     ...Platform.select({
@@ -1839,18 +1974,26 @@ export default StyleSheet.create({
     marginBottom: 200,
     marginTop: 20,
   },
+  marginBtnAndroid: {
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 200,
+    marginTop: 20,
+    zIndex: 8888
+  },
   marginBtn1: {
     width: "100%",
     marginBottom: 15,
     marginTop: 20,
     flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textErrorField: {
     marginTop: 3,
     fontSize: 14,
     color: "red",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   gradientBtnPh: {
     marginVertical: 30,
@@ -1858,13 +2001,14 @@ export default StyleSheet.create({
   buttonInactive: {
     backgroundColor: "#F2F2F2",
     marginVertical: 30,
-    borderRadius: 5
+    borderRadius: 0
   },
   buttonTextInactive: {
     color: "#C6C5C5",
-    fontWeight: "bold",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
     fontSize: 14,
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    fontFamily: "Fontfabric-NexaBold"
   },
   gradientBtnBorder: {
     paddingHorizontal: 0,
@@ -1883,6 +2027,7 @@ export default StyleSheet.create({
     marginTop: 40,
     width: 245,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // MailEdit
   arrowHeaderLeft1: {
@@ -1899,6 +2044,7 @@ export default StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   phItem: {
     paddingHorizontal: 20,
@@ -1906,6 +2052,7 @@ export default StyleSheet.create({
   textInputMail: {
     fontSize: 14,
     paddingLeft: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textInputPhone: {
     ...Platform.select({
@@ -1915,6 +2062,7 @@ export default StyleSheet.create({
         left: 100,
         top: -3,
         width: "100%",
+        fontFamily: "Fontfabric-NexaRegular"
       },
       android: {
         fontSize: 16,
@@ -1922,6 +2070,7 @@ export default StyleSheet.create({
         left: 80,
         // top: -3,
         width: "100%",
+        fontFamily: "Fontfabric-NexaRegular"
       },
     }),
   },
@@ -1946,6 +2095,7 @@ export default StyleSheet.create({
     color: "rgba(34,34,34,100)",
     fontWeight: "bold",
     marginTop: 40,
+    fontFamily: "Fontfabric-NexaBold"
   },
   textSmallStyleImg: {
     fontSize: 16,
@@ -1954,6 +2104,7 @@ export default StyleSheet.create({
     width: 229,
     marginTop: 40,
     lineHeight: 22,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textBold: {
     fontWeight: "bold",
@@ -1967,19 +2118,23 @@ export default StyleSheet.create({
   constMail: {
     color: "#313131",
     fontSize: 17,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   constMail1: {
     color: "rgba(49,49,49,100)",
     fontSize: 17,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   numbersFaq1: {
     color: "rgba(49,49,49,100)",
     fontSize: 17,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   txtSettings: {
     color: "#fff",
     fontSize: 17,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   colorIcon: {
     color: "rgba(34,34,34,0.30)",
@@ -2014,6 +2169,7 @@ export default StyleSheet.create({
     color: "#32383E",
     fontWeight: "bold",
     marginTop: 25,
+    fontFamily: "Fontfabric-NexaBold"
   },
   textH1Seed2: {
     ...ifIphoneX(
@@ -2021,6 +2177,7 @@ export default StyleSheet.create({
         fontSize: 25,
         color: "#fff",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -2028,11 +2185,13 @@ export default StyleSheet.create({
             fontSize: 20,
             color: "#fff",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 20,
             color: "#fff",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -2045,6 +2204,7 @@ export default StyleSheet.create({
         color: "#fff",
         fontWeight: "bold",
         marginTop: 20,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -2053,12 +2213,15 @@ export default StyleSheet.create({
             color: "#fff",
             fontWeight: "bold",
             marginTop: 15,
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 20,
             color: "#fff",
-            fontWeight: "bold",
+            // fontWeight: "bold",
             marginTop: 15,
+            // fontFamily: ("Fontfabric-NexaBold") && ("Fontfabric-NexaBold"),
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -2123,11 +2286,13 @@ export default StyleSheet.create({
     fontSize: 30,
     color: "#32383E",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   arrowIcon: {
     fontSize: 30,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textSmallSign: {
     fontSize: 14,
@@ -2135,6 +2300,7 @@ export default StyleSheet.create({
     marginTop: 10,
     width: 245,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   cardItem2: {
     backgroundColor: "#fff",
@@ -2154,15 +2320,18 @@ export default StyleSheet.create({
     // width: "90%",
     // height: '100%',
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textCardLine: {
     fontSize: 14,
     color: "#fff",
     textDecorationLine: "underline",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textTerms: {
     fontSize: 12,
     color: "#009EFD",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   viewBlockCheckmark: {
     marginTop: 21,
@@ -2174,6 +2343,7 @@ export default StyleSheet.create({
     color: "#74EBEE",
     fontSize: 36,
     marginTop: -10,
+    fontFamily: "Fontfabric-NexaRegular"
     // position: 'absolute',
   },
   textCheckmark: {
@@ -2181,6 +2351,7 @@ export default StyleSheet.create({
     color: "rgba(42,42,42,0.50)",
     textAlign: "left",
     marginLeft: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // Support
   iconLeftBottom: {
@@ -2198,6 +2369,7 @@ export default StyleSheet.create({
     color: "#313131",
     fontSize: 17,
     paddingLeft: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   viewBlockSocialIconLeft: {
     flexDirection: "row",
@@ -2304,6 +2476,8 @@ export default StyleSheet.create({
     // color: 'rgba(57,57,57,0.80)',
     color: "#fff",
     marginBottom: 5,
+    fontFamily: "Fontfabric-NexaRegular",
+    lineHeight: 20
   },
   heightListItem1: {
     height: 90,
@@ -2315,6 +2489,7 @@ export default StyleSheet.create({
     marginTop: 45,
     width: 245,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textCard2: {
     fontSize: 14,
@@ -2322,12 +2497,14 @@ export default StyleSheet.create({
     marginTop: 40,
     width: 245,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // VerificationPhone
   inputSize2: {
     fontSize: 14,
     left: -50,
     top: 0,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // VerificationSettings
   gradientBtnMt2: {
@@ -2343,6 +2520,7 @@ export default StyleSheet.create({
         color: "#fff",
         fontSize: 36,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -2351,12 +2529,14 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 30,
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             marginTop: 5,
             color: "#fff",
             fontSize: 30,
-            fontWeight: "bold",
+            fontWeight: Platform.OS === 'ios' ? "bold" : null,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -2367,6 +2547,7 @@ export default StyleSheet.create({
     color: "#fff",
     fontSize: 28,
     fontWeight: "200",
+    fontFamily: "Fontfabric-NexaBold"
   },
   conversionToken: {
     marginLeft: 20,
@@ -2374,6 +2555,7 @@ export default StyleSheet.create({
     color: "rgba(255,255,255,0.80)",
     fontSize: 16,
     fontWeight: "300",
+    fontFamily: "Fontfabric-NexaBold"
   },
   iconTouchable: {
     color: "#fff",
@@ -2386,6 +2568,7 @@ export default StyleSheet.create({
     fontSize: 40,
     padding: 2,
     top: 2,
+    fontFamily: "Fontfabric-NexaRegular"
     // alignItems: 'center',
     // justifyContent: 'center',
   },
@@ -2496,7 +2679,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         width: 56,
         height: 56,
-        backgroundColor: Images.color4,
+        backgroundColor: Images.colorOrange,
         borderRadius: 30,
       },
       {
@@ -2504,7 +2687,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         width: 56,
         height: 56,
-        backgroundColor: Images.color4,
+        backgroundColor: Images.colorOrange,
         borderRadius: 30,
       }
     ),
@@ -2517,6 +2700,7 @@ export default StyleSheet.create({
   textTouchable: {
     marginTop: 10,
     color: "#fff",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   headerLayoutStyle1: {
     width,
@@ -2557,6 +2741,7 @@ export default StyleSheet.create({
         fontWeight: "300",
         // marginLeft: 20,
         marginTop: 20,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -2564,6 +2749,7 @@ export default StyleSheet.create({
             color: "#fff",
             fontSize: 17,
             fontWeight: "300",
+            fontFamily: "Fontfabric-NexaBold"
             // marginLeft: 20,
           },
           android: {
@@ -2571,6 +2757,7 @@ export default StyleSheet.create({
             fontSize: 17,
             fontWeight: "300",
             marginTop: 20,
+            fontFamily: "Fontfabric-NexaBold"
             // marginLeft: 20,
           },
         }),
@@ -2584,12 +2771,14 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: "300",
         marginVertical: 20,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#fff",
         fontSize: 17,
         fontWeight: "300",
         marginVertical: 10,
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -2598,44 +2787,53 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     marginTop: 20,
+    fontFamily: "Fontfabric-NexaBold"
   },
   // WalletHistory
   constName1: {
     fontSize: 16,
     fontWeight: "bold",
     color: "rgba(57,57,57,100)",
+    fontFamily: "Fontfabric-NexaBold"
   },
   constDate: {
     fontSize: 13,
     // fontWeight: 'bold',
     color: 'rgba(255,255,255,0.70)',
+    fontFamily: "Fontfabric-NexaRegular"
   },
   constCoins: {
     fontSize: 17,
     // fontWeight: 'bold',
     color: "rgba(82, 220, 144,100)",
+    fontFamily: "Fontfabric-NexaRegular"
     // paddingRight: 20,
   },
   constCoinsOrange: {
     fontSize: 17,
     // fontWeight: 'bold',
     color: "#F76B1C",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   historyCoins: {
     fontSize: 17,
     fontWeight: "bold",
     color: "black",
+    fontFamily: "Fontfabric-NexaBold"
   },
   constCoinsExclude: {
     fontSize: 17,
     // fontWeight: 'bold',
     color: "rgba(255, 93, 113,100)",
+    fontFamily: "Fontfabric-NexaRegular"
     // paddingRight: 20,
   },
   txtSizeHistory: {
     fontSize: 17,
     fontWeight: "500",
-    color: "#fff"
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaRegular",
+    lineHeight: 30
   },
   titleHistory: {
     fontSize: 17,
@@ -2643,6 +2841,8 @@ export default StyleSheet.create({
     alignSelf: "center",
     color: "rgba(255, 255, 255, 0.70)",
     height: 20,
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 20
   },
 
   modalAmountStyle: {
@@ -2651,6 +2851,7 @@ export default StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     color: "rgba(82, 220, 144,100)",
+    fontFamily: "Fontfabric-NexaBold"
   },
   modalAmountStyleExclude: {
     marginTop: 10,
@@ -2658,6 +2859,7 @@ export default StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     color: "rgba(255, 93, 113,100)",
+    fontFamily: "Fontfabric-NexaBold"
   },
   viewList: {
     flexDirection: "row",
@@ -2679,12 +2881,14 @@ export default StyleSheet.create({
     color: "rgba(5, 157, 247, 100)",
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   btnRefuse: {
     color: "rgba(57,57,57,0.60)",
     fontSize: 16,
     paddingLeft: 5,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   leftBtn: {
     marginLeft: -18,
@@ -2713,6 +2917,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textSmContainer: {
     fontSize: 17,
@@ -2721,6 +2926,7 @@ export default StyleSheet.create({
     paddingRight: 40,
     textAlign: "center",
     marginTop: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   btnTextContainer: {
     color: "#059DF7",
@@ -2733,6 +2939,7 @@ export default StyleSheet.create({
   listitemText: {
     color: "#313131",
     fontSize: 16,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   iconPicker: {
     marginLeft: 10,
@@ -2752,6 +2959,7 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   iconAddress: {
     marginRight: 10,
@@ -2775,6 +2983,7 @@ export default StyleSheet.create({
     paddingHorizontal: 40,
     paddingVertical: 10,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textSnackBar: {
     color: "rgba(34,34,34,100)",
@@ -2782,6 +2991,7 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 40,
     paddingVertical: 10,
+    fontFamily: "Fontfabric-NexaRegular"
     // fontWeight: 'bold',
   },
   textModalRender2: {
@@ -2790,6 +3000,7 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingTop: 20,
     paddingHorizontal: 80,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   modalContent: {
     backgroundColor: "rgba(0,0,0,0.5)",
@@ -2826,17 +3037,20 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 5,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textSendedCoin: {
     color: "#009EFD",
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textToName: {
     color: "#515151",
     fontSize: 13,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textModalRender3: {
     color: "#222222",
@@ -2844,10 +3058,11 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingTop: 30,
     paddingHorizontal: 80,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   modalContent2: {
     backgroundColor: "white",
-    borderRadius: 16,
+    borderRadius: 0,
     // height: '70%',
     justifyContent: "center",
     alignItems: "center",
@@ -2897,12 +3112,14 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 5,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textCoinModal: {
     color: "#20D64D",
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   // TransferSuccessModal
   textValueModalMinus: {
@@ -2912,12 +3129,14 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 5,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textCoinModal2: {
     color: "#FF5D71",
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   // Filters
   gradientBtn3: {
@@ -2927,7 +3146,7 @@ export default StyleSheet.create({
   },
   iconFilter: {
     ...ifIphoneX(
-      { color: "#fff", fontSize: 20, right: 0, top: 5 },
+      { color: "#fff", fontSize: 20, right: 0, top: 5, fontFamily: "Fontfabric-NexaRegular" },
       {
         ...Platform.select({
           ios: {
@@ -2935,12 +3154,14 @@ export default StyleSheet.create({
             fontSize: 20,
             top: 5,
             left: 0,
+            fontFamily: "Fontfabric-NexaRegular"
           },
           android: {
             color: "#fff",
             fontSize: 20,
             top: 5,
             left: 0,
+            fontFamily: "Fontfabric-NexaRegular"
           },
         }),
       }
@@ -2950,6 +3171,7 @@ export default StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     top: 5,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textFilter: {
     paddingLeft: 15,
@@ -2958,6 +3180,7 @@ export default StyleSheet.create({
     color: "#071019",
     fontSize: 36,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textCheckFilters: {
     paddingLeft: 15,
@@ -2966,6 +3189,7 @@ export default StyleSheet.create({
     color: "#071019",
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   modalContent3: {
     backgroundColor: "white",
@@ -2991,6 +3215,8 @@ export default StyleSheet.create({
   textCurrency: {
     color: "#fff",
     fontSize: 24,
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontFamily: "Fontfabric-NexaBold"
   },
   containerHeader: {
     zIndex: 1,
@@ -3013,21 +3239,24 @@ export default StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     marginLeft: 20,
+    fontFamily: "Fontfabric-NexaBold"
   },
   textBalanceAbsolute: {
     color: "#fff",
     fontSize: 36,
-    fontWeight: "bold",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
     left: 20,
     top: 20,
     position: "absolute",
-    width: '100%'
+    width: '100%',
+    fontFamily: "Fontfabric-NexaBold"
   },
   // LogOutModal
   textCancel: {
     color: "rgba(5, 157, 247,100)",
     fontSize: 17,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   iconLogout: {
     marginVertical: 25,
@@ -3041,6 +3270,7 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     paddingLeft: 15,
+    fontFamily: "Fontfabric-NexaBold"
   },
   // PasswordInput
   colorIconLock: {
@@ -3048,11 +3278,13 @@ export default StyleSheet.create({
     top: 10,
     fontSize: 25,
     position: "absolute",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   passwordInput: {
     fontSize: 14,
     marginLeft: 25,
     borderBottomColor: "transparent",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // PickerChooseDate
   containerPicker: {
@@ -3065,6 +3297,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: "#313131",
     paddingTop: 13,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // PickerEnglishSignUp
   paddingPicker: {
@@ -3076,20 +3309,24 @@ export default StyleSheet.create({
     fontSize: 14,
     left: -1,
     width: "85%",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   placeholderPicker: {
     color: "rgba(42,42,42,0.70)",
     fontSize: 14,
     left: -1,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   placeHolderSeed: {
     color: "rgba(42,42,42,0.70)",
     fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   iconPickerSignUp: {
     color: "rgba(42,42,42,0.70)",
     fontSize: 17,
     top: 2,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // PickerInvoice
   textPickerInvoice: {
@@ -3119,21 +3356,24 @@ export default StyleSheet.create({
     color: "#000",
     fontSize: 14,
     left: -1,
+    fontFamily: "Fontfabric-NexaRegular"
     // width: 70,
   },
   placeholderTextPicker: {
     color: "rgba(42,42,42,0.50)",
     fontSize: 14,
     left: -1,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   iconPickerPhone: {
     ...Platform.select({
-      ios: { color: "rgba(42,42,42,0.50)", fontSize: 17, top: 1, left: -25 },
+      ios: { color: "rgba(42,42,42,0.50)", fontSize: 17, top: 1, left: -25, fontFamily: "Fontfabric-NexaRegular" },
       android: {
         color: "rgba(42,42,42,0.50)",
         fontSize: 17,
         top: 1,
         left: -25,
+        fontFamily: "Fontfabric-NexaRegular"
       },
     }),
   },
@@ -3141,6 +3381,7 @@ export default StyleSheet.create({
   h3AlignLeft1: {
     fontSize: 15,
     color: "#313131",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // ReferralLink
   itemRef: {
@@ -3152,6 +3393,7 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   iconRef: {
     marginRight: 10,
@@ -3230,17 +3472,20 @@ export default StyleSheet.create({
         color: "#fff",
         fontSize: 20,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#fff",
         fontSize: 17,
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
   textTokenSwiper: {
     color: "#fff",
     fontSize: 26,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   btnTopSwiper: {
     ...ifIphoneX(
@@ -3258,11 +3503,13 @@ export default StyleSheet.create({
         color: "white",
         fontSize: 22,
         left: -15,
+        fontFamily: "Fontfabric-NexaRegular"
       },
       {
         color: "white",
         fontSize: 18,
         left: -15,
+        fontFamily: "Fontfabric-NexaRegular"
       }
     ),
   },
@@ -3271,10 +3518,12 @@ export default StyleSheet.create({
       {
         color: "#fff",
         fontSize: 18,
+        fontFamily: "Fontfabric-NexaRegular"
       },
       {
         color: "#fff",
         fontSize: 14,
+        fontFamily: "Fontfabric-NexaRegular"
       }
     ),
   },
@@ -3311,11 +3560,13 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
         color: "#fff",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         fontWeight: "bold",
         fontSize: 17,
         color: "#fff",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -3345,12 +3596,14 @@ export default StyleSheet.create({
         fontSize: 36,
         fontWeight: "bold",
         paddingTop: 20,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#fff",
         fontSize: 36,
         fontWeight: "bold",
         paddingTop: 10,
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -3360,11 +3613,13 @@ export default StyleSheet.create({
         color: "rgba(255,255,255,0.80)",
         fontSize: 16,
         paddingTop: 20,
+        fontFamily: "Fontfabric-NexaRegular"
       },
       {
         color: "rgba(255,255,255,0.80)",
         fontSize: 13,
         paddingTop: 10,
+        fontFamily: "Fontfabric-NexaRegular"
       }
     ),
   },
@@ -3372,6 +3627,7 @@ export default StyleSheet.create({
     color: "rgba(255,255,255,0.80)",
     fontSize: 16,
     paddingTop: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   iconArrowForward: {
     color: "#fff",
@@ -3388,6 +3644,7 @@ export default StyleSheet.create({
     right: 40,
     fontSize: 24,
     color: "#000",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   containerTransfer: {
     flex: 1,
@@ -3403,6 +3660,7 @@ export default StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#fff",
     fontSize: 16,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   viewMono2: {
     flex: 1,
@@ -3418,16 +3676,19 @@ export default StyleSheet.create({
   nameContact: {
     fontSize: 16,
     color: "rgba(49,49,49,0.75)",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   infoContact: {
     fontSize: 17,
     color: "rgba(49,49,49,100)",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   seperatorContact: {
     fontWeight: "bold",
     fontSize: 20,
     color: "#313131",
+    fontFamily: "Fontfabric-NexaBold"
   },
   scrollContact: {
     paddingTop: 15,
@@ -3524,6 +3785,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "rgba(49,49,49,100)",
     marginTop: "3%",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   // Deposit
   nameTokenSwiper3: {
@@ -3531,6 +3793,7 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     marginTop: 10,
+    fontFamily: "Fontfabric-NexaBold"
   },
   viewMt1: {
     marginTop: 25,
@@ -3541,12 +3804,14 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   iconPickerMethod: {
     color: "rgba(255,255,255,100)",
     fontSize: 17,
     top: 6,
     left: -15,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   inputAddress1: {
     marginTop: "2%",
@@ -3554,12 +3819,14 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   textFront: {
     marginTop: 0,
     color: "rgba(255,255,255,100)",
     fontSize: 14,
     fontWeight: "200",
+    fontFamily: "Fontfabric-NexaBold"
   },
   rightBtnMore: {
     ...Platform.select({
@@ -3600,6 +3867,7 @@ export default StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     color: "rgba(0,0,0,0.50)",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   nameWallet: {
     fontSize: 14,
@@ -3607,12 +3875,14 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     color: "rgba(0,0,0,0.70)",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textFrom: {
     fontSize: 16,
     marginTop: 20,
     marginHorizontal: 20,
     color: "rgba(0,0,0,0.70)",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   iosViewNone: {
     ...Platform.select({
@@ -3845,11 +4115,13 @@ export default StyleSheet.create({
   txtCard: {
     color: "rgba(255, 255,255, 0.5)",
     fontSize: 15,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   secureNumber: {
     color: "#fff",
     fontSize: 15,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   rowAmountCard: {
     flexDirection: "row",
@@ -3861,10 +4133,12 @@ export default StyleSheet.create({
   amountCard: {
     color: "#fff",
     fontSize: 23,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   currencyCard: {
     color: "#fff",
     fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   rowValueNumber: {
     flexDirection: "row",
@@ -3877,6 +4151,7 @@ export default StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     letterSpacing: 1.88,
+    fontFamily: "Fontfabric-NexaBold"
   },
   rowDate: {
     flexDirection: "row",
@@ -3904,6 +4179,7 @@ export default StyleSheet.create({
     color: "rgba(255, 255,255, 0.5)",
     fontWeight: "bold",
     fontSize: 15,
+    fontFamily: "Fontfabric-NexaBold"
   },
   rowSecureNumber: {
     flexDirection: "row",
@@ -3932,6 +4208,7 @@ export default StyleSheet.create({
   iconCardSettings: {
     color: "#fff",
     fontSize: 18,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   viewCardSettings: {
     ...ifIphoneX(
@@ -4012,11 +4289,12 @@ export default StyleSheet.create({
   },
   titleHeaderCards: {
     ...Platform.select({
-      ios: { marginTop: 20, color: "#313131", fontSize: 17 },
+      ios: { marginTop: 20, color: "#313131", fontSize: 17, fontFamily: "Fontfabric-NexaRegular" },
       android: {
         marginTop: 20,
         color: "#313131",
         fontSize: 15,
+        fontFamily: "Fontfabric-NexaRegular"
       },
     }),
   },
@@ -4026,12 +4304,14 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   iconPickerCurrency: {
     color: "#313131",
     fontSize: 17,
     top: 6,
     left: -15,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   viewChooseCrypto: {
     paddingHorizontal: 20,
@@ -4071,16 +4351,18 @@ export default StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     paddingLeft: 0,
+    fontFamily: "Fontfabric-NexaBold"
   },
   textComing: {
     color: "#fff",
     fontSize: 36,
     fontWeight: "bold",
     paddingBottom: "20%",
+    fontFamily: "Fontfabric-NexaBold"
   },
   textTitleAddNewCard: {
     ...ifIphoneX(
-      { color: "#fff", fontSize: 36, fontWeight: "bold", paddingBottom: "20%" },
+      { color: "#fff", fontSize: 36, fontWeight: "bold", paddingBottom: "20%", fontFamily: "Fontfabric-NexaBold" },
       {
         ...Platform.select({
           ios: {
@@ -4088,12 +4370,14 @@ export default StyleSheet.create({
             fontSize: 30,
             fontWeight: "bold",
             paddingBottom: "10%",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             color: "#fff",
             fontSize: 30,
             fontWeight: "bold",
             paddingBottom: "10%",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -4102,6 +4386,7 @@ export default StyleSheet.create({
   iconTitleAddNewCard: {
     fontSize: 150,
     color: "#fff",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   gradientBtnAddNewCard: {
     ...ifIphoneX(
@@ -4123,6 +4408,7 @@ export default StyleSheet.create({
   },
   textStyleBtnSend: {
     fontSize: 18,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   viewBtnStyle: {
     flexDirection: "row",
@@ -4154,7 +4440,7 @@ export default StyleSheet.create({
   btnTxtPayWalletIosNone: {
     ...Platform.select({
       ios: { display: "none" },
-      android: { fontWeight: "bold", color: "#fff", fontSize: 20 },
+      android: { fontWeight: "bold", color: "#fff", fontSize: 20, fontFamily: "Fontfabric-NexaBold" },
     }),
   },
   btnImgPayWalletIos: {
@@ -4171,10 +4457,10 @@ export default StyleSheet.create({
   },
   btnTxtPayWalletAndroidNone: {
     ...ifIphoneX(
-      { fontWeight: "bold", color: "#fff", fontSize: 20 },
+      { fontWeight: "bold", color: "#fff", fontSize: 20, fontFamily: "Fontfabric-NexaBold" },
       {
         ...Platform.select({
-          ios: { fontWeight: "bold", color: "#fff", fontSize: 16 },
+          ios: { fontWeight: "bold", color: "#fff", fontSize: 16, fontFamily: "Fontfabric-NexaBold" },
           android: { display: "none" },
         }),
       }
@@ -4182,10 +4468,10 @@ export default StyleSheet.create({
   },
   txtPaywalletAndroidNone: {
     ...ifIphoneX(
-      { color: "#fff", fontSize: 20 },
+      { color: "#fff", fontSize: 20, fontFamily: "Fontfabric-NexaRegular" },
       {
         ...Platform.select({
-          ios: { color: "#fff", fontSize: 16 },
+          ios: { color: "#fff", fontSize: 16, fontFamily: "Fontfabric-NexaRegular" },
           android: { display: "none" },
         }),
       }
@@ -4195,6 +4481,7 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     marginLeft: -15,
+    fontFamily: "Fontfabric-NexaBold"
   },
   pickerItemStyle: {
     textAlign: "center",
@@ -4202,18 +4489,20 @@ export default StyleSheet.create({
   },
   constNameCards: {
     ...ifIphoneX(
-      { fontSize: 16, fontWeight: "bold", color: "rgba(57,57,57,100)" },
+      { fontSize: 16, fontWeight: "bold", color: "rgba(57,57,57,100)", fontFamily: "Fontfabric-NexaBold" },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
             fontWeight: "bold",
             color: "rgba(57,57,57,100)",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 14,
             fontWeight: "bold",
             color: "rgba(57,57,57,100)",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -4221,14 +4510,15 @@ export default StyleSheet.create({
   },
   constDateCards: {
     ...ifIphoneX(
-      { fontSize: 13, fontWeight: "bold", color: "rgba(0,0,0,0.50)" },
+      { fontSize: 13, fontWeight: "bold", color: "rgba(0,0,0,0.50)", fontFamily: "Fontfabric-NexaBold" },
       {
         ...Platform.select({
-          ios: { fontSize: 12, fontWeight: "bold", color: "rgba(0,0,0,0.50)" },
+          ios: { fontSize: 12, fontWeight: "bold", color: "rgba(0,0,0,0.50)", fontFamily: "Fontfabric-NexaBold" },
           android: {
             fontSize: 12,
             fontWeight: "bold",
             color: "rgba(0,0,0,0.50)",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -4241,6 +4531,7 @@ export default StyleSheet.create({
         fontWeight: "bold",
         color: "rgba(82, 220, 144,100)",
         paddingRight: 20,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -4249,12 +4540,14 @@ export default StyleSheet.create({
             fontWeight: "bold",
             color: "rgba(82, 220, 144,100)",
             paddingRight: 20,
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 14,
             fontWeight: "bold",
             color: "rgba(82, 220, 144,100)",
             paddingRight: 20,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -4267,6 +4560,7 @@ export default StyleSheet.create({
         fontWeight: "bold",
         color: "rgba(255, 93, 113,100)",
         paddingRight: 20,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -4275,12 +4569,14 @@ export default StyleSheet.create({
             fontWeight: "bold",
             color: "rgba(255, 93, 113,100)",
             paddingRight: 20,
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 14,
             fontWeight: "bold",
             color: "rgba(255, 93, 113,100)",
             paddingRight: 20,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -4370,14 +4666,17 @@ export default StyleSheet.create({
   },
   detail: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#fff"
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 20
   },
   detailInfoAmount: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#fff",
     paddingTop: 20,
+    fontFamily: "Fontfabric-NexaBold"
     // paddingBottom: 10,
   },
   icon: {
@@ -4418,6 +4717,7 @@ export default StyleSheet.create({
     color: "#707070",
     fontSize: 15,
     textAlign: "center",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   borderItem: {
     // borderRadius: 10,
@@ -4445,9 +4745,11 @@ export default StyleSheet.create({
   iconBtn: {
     color: "#fff",
     fontSize: 28,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   mbListItem: {
-    marginBottom: 10,
+    // paddingVertical: 10,
+    // height: 'auto'
   },
   lineMono: {
     borderBottomWidth: 1,
@@ -4476,12 +4778,14 @@ export default StyleSheet.create({
   iconCopy: {
     color: "#fff",
     fontSize: 20,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   textAddrQr: {
-    fontWeight: "bold",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
     color: "#fff",
     textAlign: "center",
     fontSize: 18,
+    fontFamily: "Fontfabric-NexaBold"
   },
   styleQr: {
     width: 220,
@@ -4665,10 +4969,12 @@ export default StyleSheet.create({
         color: "#fff",
         top: 2,
         fontSize: 25,
+        fontFamily: "Fontfabric-NexaRegular"
       },
       android: {
         color: "#fff",
         fontSize: 25,
+        fontFamily: "Fontfabric-NexaRegular"
       },
     }),
   },
@@ -4681,6 +4987,7 @@ export default StyleSheet.create({
     color: "#009EFD",
     fontSize: 18,
     marginBottom: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   containerModal: {
     flex: 1,
@@ -4689,7 +4996,7 @@ export default StyleSheet.create({
   },
   modalContent2: {
     backgroundColor: "white",
-    borderRadius: 16,
+    borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 40,
@@ -4704,7 +5011,8 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 40,
     paddingVertical: 10,
-    fontWeight: "bold",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontFamily: "Fontfabric-NexaBold"
   },
   textModalStyle: {
     fontSize: 17,
@@ -4712,6 +5020,7 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: "center",
     marginVertical: 10,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   valueModalStyle: {
     color: "rgba(49,49,49,0.60)",
@@ -4727,6 +5036,7 @@ export default StyleSheet.create({
     fontSize: 30,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   bodyConfirm: {
     width: "100%",
@@ -4752,7 +5062,7 @@ export default StyleSheet.create({
 
     // marginLeft: 10,
     // marginRight: 20,
-    borderRadius: 5,
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -4761,7 +5071,7 @@ export default StyleSheet.create({
     width: "45%",
     height: 45,
     marginHorizontal: 10,
-    borderRadius: 5,
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -4770,7 +5080,7 @@ export default StyleSheet.create({
     width: "45%",
     height: 45,
     marginHorizontal: 10,
-    borderRadius: 5,
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
 
@@ -4781,6 +5091,7 @@ export default StyleSheet.create({
     paddingVertical: 15,
     color: Images.color1,
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   txtBtnPrint: {
     fontSize: 14,
@@ -4788,6 +5099,7 @@ export default StyleSheet.create({
     paddingVertical: 15,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   txtBtnBack: {
     fontSize: 14,
@@ -4795,6 +5107,7 @@ export default StyleSheet.create({
     paddingVertical: 15,
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Fontfabric-NexaBold"
   },
   containerBtn: {
     flexDirection: "row",
@@ -4847,15 +5160,26 @@ export default StyleSheet.create({
   cardItemSeed: {
     ...Platform.select({
       ios: {
-        backgroundColor: Images.color8,
+        backgroundColor: Images.velasColor4,
+        // backgroundColor: transparent,
         borderRadius: 0,
       },
-      android: { backgroundColor: Images.color8, borderRadius: 0 },
+      android: { backgroundColor: Images.velasColor4, borderRadius: 0, },
+    }),
+  },
+  cardItemSeedAndroid: {
+    ...Platform.select({
+      ios: {
+        backgroundColor: Images.velasColor4,
+        // backgroundColor: transparent,
+        borderRadius: 0,
+      },
+      android: { backgroundColor: Images.velasColor4, borderRadius: 0, height: "70%" },
     }),
   },
   bodyTerms: {
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 0,
     width: "100%",
     borderColor: "#fff",
     marginTop: 20,
@@ -4869,8 +5193,10 @@ export default StyleSheet.create({
   },
   spinnerTextStyle: {
     color: "#FFF",
-    textShadowColor: "#000",
+    textShadowColor: "transparent",
     textShadowRadius: 5,
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontFamily: "Fontfabric-NexaBold",
   },
   titleInput: {
     alignItems: "center",
@@ -4889,29 +5215,39 @@ export default StyleSheet.create({
   styleLogoHead: {
     width: 277 / 2,
     height: 241 / 2,
+    alignSelf: "center"
   },
   styleCoinIn: {
-    color: "#3CD5AF",
+    color: Images.colorGreen,
     fontSize: 17,
     fontWeight: "500",
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 30
   },
   styleCoinOut: {
-    color: "#E84E74",
+    color: Images.colorBlue,
     fontSize: 17,
     fontWeight: "500",
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 30
+
   },
   detailInfoIn: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: "#3CD5AF",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    color: Images.colorGreen,
     paddingTop: 20,
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 20
     // paddingBottom: 10,
   },
   detailInfoOut: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: "#E84E74",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    color: Images.colorBlue,
     paddingTop: 20,
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 20
     // paddingBottom: 10,
   },
   createWordBlock: {
@@ -4991,11 +5327,13 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     top: 1,
+    fontFamily: "Fontfabric-NexaBold"
   },
   styleSeedWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
     paddingBottom: 10,
+    left: Platform.OS === "ios" ? null : 5,
   },
   heightQW: {
     borderColor: "red",
@@ -5044,6 +5382,7 @@ export default StyleSheet.create({
     fontWeight: "bold",
     left: -10,
     top: -5,
+    fontFamily: "Fontfabric-NexaBold"
   },
   itemPickerLang: {
     borderRadius: 10,
@@ -5063,6 +5402,7 @@ export default StyleSheet.create({
   langPage: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   thumbnailStyle: {
     width: 26,
@@ -5089,12 +5429,14 @@ export default StyleSheet.create({
         alignSelf: "center",
         height: 30,
         marginTop: 10,
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         color: "#000",
         fontSize: 20,
         fontWeight: "bold",
         alignSelf: "center",
+        fontFamily: "Fontfabric-NexaBold"
       }
     ),
   },
@@ -5112,8 +5454,8 @@ export default StyleSheet.create({
     flex: 1,
     marginTop: "90%",
     backgroundColor: "#fff",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     position: "absolute",
     left: 0,
     right: 0,
@@ -5134,10 +5476,16 @@ export default StyleSheet.create({
     height: 173 / 2,
     marginTop: 40
   },
+  imageScan: {
+    width: 320 / 5,
+    height: 480 / 5,
+    marginTop: 40
+  },
   textFp: {
     alignSelf: "center",
     fontSize: 22,
     paddingTop: 20,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   introBackgroundFp: {
     backgroundColor: "#290C64",
@@ -5169,6 +5517,7 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
     bottom: -30,
+    // bottom: 0,
   },
   topView: {
     ...ifIphoneX(
@@ -5330,7 +5679,7 @@ export default StyleSheet.create({
     flex: 0,
   },
   autocompleteListStyle: {
-    backgroundColor: Images.color3,
+    backgroundColor: Images.velasColor2,
     borderWidth: 0.4,
     borderColor: "rgba(255,255,255,0.60)",
     width: "100%",
@@ -5343,7 +5692,8 @@ export default StyleSheet.create({
   autocompleteListItemStyle: {
     fontSize: 15,
     margin: 2,
-    color: "white"
+    color: "white",
+    fontFamily: "Fontfabric-NexaRegular"
   },
   autocompleteInputIncorrect: {
     ...ifIphoneX(
@@ -5351,6 +5701,7 @@ export default StyleSheet.create({
         fontSize: 14,
         color: "#FB746E",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
@@ -5358,11 +5709,13 @@ export default StyleSheet.create({
             fontSize: 14,
             color: "#FB746E",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 14,
             color: "#FB746E",
-            fontWeight: "bold",
+            fontWeight: Platform.OS === 'ios' ? "bold" : null,
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
@@ -5372,27 +5725,30 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "#60B687",
+        color: "#0bffb7",
         fontWeight: "bold",
+        fontFamily: "Fontfabric-NexaBold"
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "#60B687",
+            color: "#0bffb7",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
           android: {
             fontSize: 14,
-            color: "#60B687",
+            color: "#0bffb7",
             fontWeight: "bold",
+            fontFamily: "Fontfabric-NexaBold"
           },
         }),
       }
     ),
   },
   scrollViewAndroid: {
-    width: Platform.OS === "android" ? "90%" : null
+    width: Platform.OS === "ios" ? null : "100%",
   },
 
   containerBarCode: {
@@ -5500,10 +5856,12 @@ export default StyleSheet.create({
   txtRadio: {
     fontSize: 14,
     color: 'rgba(255,255,255,0.50)',
+    fontFamily: "Fontfabric-NexaRegular"
   },
   txtRadioCheck: {
     fontSize: 14,
     color: 'yellow',
+    fontFamily: "Fontfabric-NexaRegular"
   },
   inputContainerRadio: {
     flex: 1,
@@ -5519,10 +5877,12 @@ export default StyleSheet.create({
   inputStyleRadio: {
     color: 'rgba(255,255,255,0.50)',
     fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   inputStyleRadioCheck: {
     color: 'yellow',
     fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular"
   },
   borderItemRadio: {
     borderBottomColor: 'transparent',
@@ -5549,14 +5909,65 @@ export default StyleSheet.create({
     opacity: 0.4
    },
   demoView: {
-    backgroundColor: 'orange',
-    height: 50
+    backgroundColor: '#ebab28',
+    // height: 'auto',
+    paddingTop: 5,
+    // paddingBottom: 5
   },
   demoTxt: {
     paddingHorizontal: 20,
+    // paddingBottom: Platform.OS === 'android' ? null : 20,
     alignSelf: "center",
     textAlign: 'center',
-    fontSize: 16
-  }
+    fontSize: 16,
+    fontFamily: "Fontfabric-NexaBold",
+    lineHeight: 20
+  },
+  textBtnTransparent: {
+    fontSize: 14, 
+    color: "rgba(255,255,255,0.50)", 
+    fontFamily: "Fontfabric-NexaRegular", 
+    textTransform: 'capitalize'
+  },
+  btnVelasActive: {
+    borderRadius: 0,
+    backgroundColor: 'white',
+    marginVertical: 30,
+  },
+  btnVelasCreate: {
+    borderRadius: 0,
+    backgroundColor: Images.colorGreen,
+    marginVertical: 10
+  },
+  btnVelasRestore: {
+    borderRadius: 0,
+    backgroundColor: 'white',
+    marginVertical: 10
+  },
+  btnVelasCopy: {
+    marginVertical: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 0,
+    backgroundColor: Images.colorOrange
+  },
+  btnVelasShare: {
+    marginVertical: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 0,
+    backgroundColor: Images.colorGreen
+  },
+  textBtn: {
+    fontSize: 14, 
+    color: Images.color1, 
+    fontFamily: "Fontfabric-NexaBold", 
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    textTransform: 'capitalize',
+  },
+  btnVelasInactive: {
+    borderRadius: 0,
+    backgroundColor: 'white'
+  },
 
 });

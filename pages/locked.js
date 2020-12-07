@@ -13,9 +13,9 @@ import {
   Separator,
   Toast
 } from "native-base";
-import { Image, ImageBackground, Platform, } from "react-native";
+import { Image, ImageBackground, Platform, KeyboardAvoidingView } from "react-native";
 import Constants from 'expo-constants';
-import GradientButton from "../components/GradientButton.js";
+import GradientButton from "react-native-gradient-buttons";
 import * as LocalAuthentication from 'expo-local-authentication';
 import * as SecureStore from 'expo-secure-store';
 import styles from "../Styles.js";
@@ -167,18 +167,9 @@ export default ({ store, web3t }) => {
       store.userWallet = 200;
     });
     return (
-      <GradientButton
-        style={styles.gradientBtnPh}
-        text={lang.continue}
-        textStyle={{ fontSize: 14, color: Images.color1 }}
-        gradientBegin="#fff"
-        gradientEnd="#fff"
-        gradientDirection="diagonal"
-        height={45}
-        width="100%"
-        radius={5}
-        onPressAction={loginAction}
-      />
+    <Button block style={styles.btnVelasActive} onPress={() => setImmediate(loginAction)}>
+      <Text style={styles.textBtn}>{lang.continue}</Text>
+    </Button>
     );
   };
 
@@ -203,15 +194,10 @@ export default ({ store, web3t }) => {
       );
     }
     return (
-      <GradientButton
-        text={lang.createAcc}
-        textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
-        gradientBegin="transparent"
-        gradientEnd="transparent"
-        height={45}
-        width="100%"
-        onPressAction={anotherAccount}
-      />
+      <Button block transparent onPress={anotherAccount}>
+        <Text style={styles.textBtnTransparent}>{lang.createAcc}</Text>
+      </Button>
+
     );
   };
 
@@ -275,7 +261,8 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background fullscreen={true}/>
+        <ImageBackground source={Images.bg} style={styles.image}>
+      {/* <Background fullscreen={true}/> */}
       <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
         <Header transparent style={styles.mtIphoneX}>
           <Left style={styles.viewFlexHeader} />
@@ -287,6 +274,7 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
+          
           <View style={styles.styleVersion}>
               <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
             </View>
@@ -302,7 +290,7 @@ export default ({ store, web3t }) => {
           </View>
         </View>
 
-
+        </ImageBackground>
 
       </View>
   );

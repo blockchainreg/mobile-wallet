@@ -33,7 +33,7 @@ function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
   switch(status) {
     case "unavailable":
-      return<Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
+      return <Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
     case "waiting":
       Promise.all([
         LocalAuthentication.hasHardwareAsync(),
@@ -79,18 +79,21 @@ function RequestPin({store, web3t}) {
     };
     const loginText = lang.login;
     return (
-      <GradientButton
-        style={styles.gradientBtnPh}
-        text={capitalize(lang.confirm)}
-        textStyle={{ fontSize: 14, color: Images.color1 }}
-        gradientBegin="#fff"
-        gradientEnd="#fff"
-        gradientDirection="diagonal"
-        height={45}
-        width="100%"
-        radius={5}
-        onPressAction={login}
-      />
+      // <GradientButton
+      //   style={styles.gradientBtnPh}
+      //   text={capitalize(lang.confirm)}
+      //   textStyle={{ fontSize: 14, color: Images.color1 }}
+      //   gradientBegin="#fff"
+      //   gradientEnd="#fff"
+      //   gradientDirection="diagonal"
+      //   height={45}
+      //   width="100%"
+      //   radius={0}
+      //   onPressAction={login}
+      // />
+      <Button block style={styles.btnVelasActive} onPress={login}>
+        <Text style={styles.textBtn}>{capitalize(lang.confirm)}</Text>
+      </Button>
     );
   };
 

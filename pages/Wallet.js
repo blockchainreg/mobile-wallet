@@ -119,7 +119,7 @@ export default ({ store, web3t }) => {
         return (
             <View style={{ ...styles.viewMono, height: '80%' }}>
             <LinearGradient
-            colors={[Images.color1, Images.color1, Images.color2]}
+            colors={[Images.velasColor4, Images.velasColor4]}
             style={styles.linearGradientBg}>
               <View style={styles.bodyBlockTitle} >
                 <Text style={styles.titleHistory}>{lang.txLast}</Text>
@@ -136,7 +136,7 @@ export default ({ store, web3t }) => {
       return (
           <View style={styles.viewMono}>
             <LinearGradient
-            colors={[Images.color1, Images.color1, Images.color2]}
+            colors={[Images.velasColor4, Images.velasColor4]}
             style={styles.linearGradientBg}>
             <View style={styles.bodyBlockTitle} >
               <Text style={styles.titleHistory}>{lang.txLast}</Text>
@@ -206,7 +206,7 @@ export default ({ store, web3t }) => {
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={sendLocal}
-                      style={{ ...styles.touchables, backgroundColor: '#FB746E' }}
+                      style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}
                     >
                       <Image
                         source={Images.withdrawImage}
@@ -232,7 +232,7 @@ export default ({ store, web3t }) => {
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={changePage("invoice")}
-                      style={{ ...styles.touchables, backgroundColor: '#60B687' }}
+                      style={{ ...styles.touchables, backgroundColor: Images.colorGreen }}
                     >
                       <Image
                         source={Images.withdrawImage}

@@ -8,12 +8,15 @@ import { ImageBackground } from "react-native";
 
 export default ({ children, fullscreen }) => {
   return (
-    <ImageBackground
-    source={require("../assets/bg-mob.png")}
-    style={[styles.fixedBg, styles.containterBg, {zIndex: -1, top: fullscreen && Platform.OS === "android" ? 0:0}]} 
-    >
+    // <ImageBackground
+    // source={require("../assets/bg-mob.jpg")}
+    // style={[styles.fixedBg, styles.containterBg, {zIndex: -1, top: fullscreen && Platform.OS === "android" ? 0:0}]} 
+    // >
+    //   {children}
+    // </ImageBackground>
+    <View style={[styles.colorBg, styles.fixedBg, styles.containterBg1]}>
       {children}
-    </ImageBackground>
+    </View>
     
   );
 };

@@ -48,14 +48,14 @@ export default ({ store, web3t }) => {
             <Header transparent style={styles.mtIphoneX}>
               <Left style={styles.viewFlexHeader} />
               <Body style={styles.viewFlexHeader}>
-              <Text style={styles.title}>{lang.history}</Text>
+              <Text style={styles.title1}>{lang.history}</Text>
               </Body>
               <Right style={styles.viewFlexHeader} />
             </Header>
             <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
           <View style={styles.viewMono1}>
           <LinearGradient
-            colors={[Images.color1, Images.color1, Images.color2]}
+            colors={[Images.velasColor4, Images.velasColor4]}
             style={styles.linearGradientBg}>
             <View style={styles.viewPt} />
             <ScrollView>

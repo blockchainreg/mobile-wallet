@@ -86,13 +86,13 @@ export default (store, web3t) => {
               </View>
             </View>
 
-            <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20}}>
+            <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20, paddingVertical: 5}}>
             <Text style={amountStyle(store.infoTransaction.type)}>
               {index(store.infoTransaction.type)}
               {parseFloat(store.infoTransaction.amount).toFixed(7)} {store.infoTransaction.token.toUpperCase()}
             </Text>
             </View>
-            <Text style={{color: "rgba(255, 255, 255, 0.70)"}}>
+            <Text style={{color: "rgba(255, 255, 255, 0.70)", fontFamily: "Fontfabric-NexaRegular", lineHeight: 20}}>
               {moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
             </Text>
 
