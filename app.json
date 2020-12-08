@@ -10,11 +10,6 @@
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/velas-icon.png",
-    "splash": {
-      "backgroundColor": "#0038c1",
-      "resizeMode": "contain",
-      "image": "./assets/ic_launcher.png"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -33,7 +28,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 132,
+      "versionCode": 133,
       "icon": "./assets/ic_launcher.png"
     },
     "description": "Premium quality cryptocurrency wallet!",
