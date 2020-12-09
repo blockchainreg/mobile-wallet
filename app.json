@@ -11,8 +11,8 @@
     "orientation": "portrait",
     "icon": "./assets/velas-icon.png",
     "splash": {
-      "image": "./assets/bg-mob.jpg",
-      "backgroundColor": "#0b0c27",
+      "image": "./assets/bg-mob.png",
+      "backgroundColor": "#00001b",
       "resizeMode": "cover"
     },
     "updates": {
@@ -33,8 +33,14 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 133,
-      "icon": "./assets/ic_launcher.png"
+      "versionCode": 135,
+      "icon": "./assets/ic_launcher.png",
+      "permissions": [
+        "CAMERA",
+        "USE_FINGERPRINT",
+        "USE_BIOMETRIC",
+        "VIBRATE"
+      ]
     },
     "description": "Premium quality cryptocurrency wallet!",
     "detach": {

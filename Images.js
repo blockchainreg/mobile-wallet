@@ -19,7 +19,7 @@ const btnSettings = require("./assets/settings.png");
 
 const fingerPrint = require("./assets/finger-print.png");
 const scan = require("./assets/scan.png");
-const bg = require("./assets/bg-mob.jpg");
+const bg = require("./assets/bg-mob.png");
 
 
 var color1 = "#1B1B74";
