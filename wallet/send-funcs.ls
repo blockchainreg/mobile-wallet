@@ -66,8 +66,8 @@ module.exports = (store, web3t)->
             | err? => send.to
             | _ => to
         send.to = resolved
-        #send.error = err.message ? err if err?
-        #return cb err if err?
+        send.error = err.message ? err if err?
+        return cb err if err?
         send-tx { wallet, ...send }, cb
     perform-send-unsafe = (cb)->
         send-tx { wallet, ...send }, cb
