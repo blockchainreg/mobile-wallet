@@ -83,7 +83,11 @@
       };
       return createTransaction(tx, function(err, data){
         if (err != null) {
-          return cb(err);
+          send.error = err;	
+          // return cb(err);
+	        return confirm(store, "An error occurred!\n\n " + err , function(agree){
+		        return cb("Please contact to dev team!"); 	
+	        })
         }
         return confirm(store, "Are you sure to send " + tx.amount + " " + send.coin.token + " to " + send.to/*, "Yes, Send!"*/, function(agree){
           if (!agree) {
@@ -112,6 +116,7 @@
       });
     };
     performSendSafe = function(cb){
+    	console.log("send", send.to);
       return resolveAddress(web3t, send.to, send.coin, send.network, function(err, to){
         var resolved;
         resolved = (function(){
@@ -123,6 +128,10 @@
           }
         }());
         send.to = resolved;
+        if(err !== null){
+        	console.error("err:", err);
+        	return cb(err.message ? err.message : err);
+        }
         return sendTx((import$({
           wallet: wallet
         }, send)), cb);

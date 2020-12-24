@@ -2,13 +2,20 @@
 (function(){
   var ref$, map, split, find, head, filter, isValid, verify, toString$ = {}.toString;
   ref$ = require('prelude-ls'), map = ref$.map, split = ref$.split, find = ref$.find, head = ref$.head, filter = ref$.filter;
+  var validate = require('bitcoin-address-validation');
   isValid = function(coin, network){
     return function(address){
       var ref$, type, addr;
       if (address == null) {
         return false;
       }
-      if (toString$.call(address).slice(8, -1) !== 'String') {
+
+      var isValidAddress = validate(address);
+      if(!isValidAddress){
+      	return false;
+      }
+      
+      if (toString$.call(address).slice(8, -1) !== 'String' || toString$.call(address).trim().length === 0) {
         return false;
       }
       ref$ = address.split(':'), type = ref$[0], addr = ref$[1];

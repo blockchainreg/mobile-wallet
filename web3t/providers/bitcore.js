@@ -401,9 +401,13 @@
       return addOutputsPrivate(config, cb);
     }
     rest = minus(minus(total, value), fee);
-    tx.addOutput(recipient, +value);
-    if (+rest !== 0) {
-      tx.addOutput(account.address, +rest);
+	try{
+	  tx.addOutput(recipient, +value);
+	  if (+rest !== 0) {
+		tx.addOutput(account.address, +rest);
+	  }
+    }catch (err) {
+		return cb(err)
     }
     return cb(null);
   };
@@ -474,7 +478,11 @@
           recipient: recipient,
           network: network,
           account: account
-        }, function(err){
+        }, function(err, res){
+	        if(err != null){           
+		        return cb(err);    // TODO: deal with thrown error with React
+	        }                             
+	        console.log("...loading...");
           var apply, sign, rawTx;
           if (err != null) {
             return cb(err);
@@ -490,7 +498,7 @@
           outputs.forEach(apply);
           outputs.forEach(sign);
           rawTx = tx.build().toHex();
-          return cb(null, {
+          return cb(err, {
             rawTx: rawTx
           });
         });
