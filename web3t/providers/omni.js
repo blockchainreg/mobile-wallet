@@ -7,6 +7,7 @@
   ref$ = require('./superagent.js'), get = ref$.get, post = ref$.post;
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
+  var validate = require('bitcoin-address-validation');
   ref$ = require('./deps.js'), BitcoinLib = ref$.BitcoinLib, bip39 = ref$.bip39;
   getBitcoinFullpairByIndex = function(mnemonic, index, network){
     var seed, hdnode, address, privateKey, publicKey;
@@ -180,6 +181,16 @@
     calcFee = getCalcFeeFunc(network);
     return calcFee(config, cb);
   };
+	out$.isValidAddress = isValidAddress = function(arg$, cb){
+		var address;
+		address = arg$.address;
+		var addressIsValid = validate(address);
+		console.log("addressIsValid", addressIsValid);
+		if(!addressIsValid){
+			return cb("Address is not valid*");
+		}
+		return cb(null, address);
+	};
   out$.getKeys = getKeys = function(arg$, cb){
     var network, mnemonic, index, result;
     network = arg$.network, mnemonic = arg$.mnemonic, index = arg$.index;
