@@ -185,7 +185,6 @@
 		var address;
 		address = arg$.address;
 		var addressIsValid = validate(address);
-		console.log("addressIsValid", addressIsValid);
 		if(!addressIsValid){
 			return cb("Address is not valid*");
 		}
