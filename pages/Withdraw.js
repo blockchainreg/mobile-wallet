@@ -112,13 +112,11 @@ const btnWithdrawBtc = ({ store, web3t }) => {
           checkingSpinner = null;
         }
         if (!store.current.send.sending) {
-          // console.log("Disposing observers spinner");
           disposerSend();
           disposerCurrent();
           return;
         }
 
-        // console.log("Confirmation", store.current.confirmation);
         if (store.current.confirmation && checkingSpinner) {
           checkingSpinner.finish();
           checkingSpinner = null;
@@ -143,35 +141,12 @@ const btnWithdrawBtc = ({ store, web3t }) => {
     }
   };
   const lang = getLang(store);
-
-  const sendText = /*store.current.send.sending === true ? "..." : */ lang.send;
-
+  const sendText = lang.send;
+  const disabled = !((send.error.length === 0) && (+send.amountSend > 0));
   return (
-    // <GradientButton
-    //   style={styles.gradientBtnPh}
-    //   text={sendText}
-    //   textStyle={{ fontSize: 14, color: Images.color1 }}
-    //   gradientBegin="#fff"
-    //     gradientEnd="#fff"
-    //     gradientDirection="diagonal"
-    //     height={45}
-    //     width="100%"
-    //     radius={0}
-    //   onPressAction={withdrawBtc}
-    // />
-    <Button block style={styles.btnVelasActive} onPress={withdrawBtc}>
+    <Button block style={disabled ? styles.buttonInactive : styles.btnVelasActive} onPress={withdrawBtc} disabled={disabled}>
       <Text style={styles.textBtn}>{sendText}</Text>
     </Button>
-  );
-};
-
-const buttonInactive = ({ store }) => {
-  const lang = getLang(store);
-  return (
-    <Button block style={styles.buttonInactive}>
-    <Text style={styles.buttonTextInactive}>{lang.send}</Text>
-  </Button>
-
   );
 };
 
@@ -307,7 +282,8 @@ export default ({ store, web3t }) => {
       pending,
       recipientChange,
       amountChange,
-      amountUsdChange,
+      amountUsdChange, 
+	  checkRecipientAddress,
       amountEurChange,
       useMaxAmount,
       showData,
@@ -355,12 +331,13 @@ export default ({ store, web3t }) => {
       //
       //});
 
-}
+	}  
 
     const InputAddressWithdrawBtc = ({ send }) => (
       <Item style={styles.borderItem}>
         <Input
           onChangeText={(text) => recipientChange(wrap(text))}
+          onBlur={() => checkRecipientAddress()}
           returnKeyType="done"
           selectionColor={"#fff"}
           keyboardAppearance="dark"
@@ -382,10 +359,8 @@ export default ({ store, web3t }) => {
       </Item>
     );
 
-    const SendButton = ({ send }) =>
-      send.amountSend
-        ? btnWithdrawBtc({ store, web3t })
-        : buttonInactive({ store, web3t })
+    const SendButton = ({ send, error }) =>
+        btnWithdrawBtc({ store, web3t})
     ;
 
     const refreshToken = async (bool) => {
@@ -488,7 +463,7 @@ export default ({ store, web3t }) => {
             </View>
             <View style={styles.containerScreen}>
               {/* <View style={styles.marginBtn}> */}
-                {SendButton({send: store.current.send})}
+                {SendButton({send: store.current.send, error: send.error})}
               {/* </View> */}
             </View>
           </View>

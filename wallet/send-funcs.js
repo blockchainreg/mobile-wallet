@@ -44,7 +44,7 @@
 
 
   module.exports = function(store, web3t){
-    var lang, sendTo, send, wallet, color, primaryButtonStyle, defaultButtonStyle, sendTx, performSendSafe, performSendUnsafe, checkEnough, sendMoney, sendEscrow, sendAnyway, sendTitle, cancel, recipientChange, getValue, amountChange, performAmountEurChange, performAmountUsdChange, amountEurChange, amountUsdChange, encodeDecode, showData, showLabel, whenEmpty, debug, history, network, invoice, token, feeToken, ref$, isData, chooseAuto, chooseCheap, chosenCheap, chosenAuto, sendOptions, pending, calcAmountAndFee, useMax, useMaxTryCatch, useMaxAmount;
+    var lang, sendTo, send, wallet, color, primaryButtonStyle, defaultButtonStyle, sendTx, performSendSafe, performSendUnsafe, checkEnough, checkRecipientAddress, sendMoney, sendEscrow, sendAnyway, sendTitle, cancel, recipientChange, getValue, amountChange, performAmountEurChange, performAmountUsdChange, amountEurChange, amountUsdChange, encodeDecode, showData, showLabel, whenEmpty, debug, history, network, invoice, token, feeToken, ref$, isData, chooseAuto, chooseCheap, chosenCheap, chosenAuto, sendOptions, pending, calcAmountAndFee, useMax, useMaxTryCatch, useMaxAmount;
     if (store == null || web3t == null) {
       console.log("no store or web3t");
       return null;
@@ -128,8 +128,16 @@
         wallet: wallet
       }, send)), cb);
     };
+	let sendingAmountMoreThanZero = function () {
+		return +send.amountSend > 0;
+	};
     checkEnough = function(cb){
       var amount, ref$, err;
+
+      if(!sendingAmountMoreThanZero()){
+	    return cb("Amount should be more than 0"); 
+      }      
+      
       try {
         amount = minus(minus(minus(wallet.balance, send.amountSend), (ref$ = wallet.pendingSent) != null ? ref$ : 0), send.amountSendFee);
         if (+amount < 0) {
@@ -200,6 +208,18 @@
       navigate(store, web3t, 'wallets');
       return notifyFormResult(send.id, "Cancelled by user");
     };
+	checkRecipientAddress = function(){
+		console.log("checkRecipientAddress");
+		const recipientAddress = send.to;
+		return resolveAddress(web3t, recipientAddress, send.coin, send.network, function(err, to) {
+			if (err !== null) {
+				var errMessage = err.message ? err.message : err;
+				return send.error = errMessage;
+			}
+			send.error = "";
+			send.to = recipientAddress;
+		})	
+	};
     recipientChange = function(event){
       var ref$;
       return send.to = (ref$ = event.target.value) != null ? ref$ : "";
@@ -437,7 +457,8 @@
       pending: pending,
       feeToken: feeToken,
       primaryButtonStyle: primaryButtonStyle,
-      recipientChange: recipientChange,
+      recipientChange: recipientChange, 
+	  checkRecipientAddress: checkRecipientAddress,  
       amountChange: amountChange,
       amountUsdChange: amountUsdChange,
       amountEurChange: amountEurChange,
