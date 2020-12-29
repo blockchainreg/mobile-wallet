@@ -62,6 +62,19 @@
       if (wallet == null) {
         return send.error = "Balance is not loaded";
       }
+      
+      /*
+      * Restrict amount of decimals input more than specified in coin config.
+      * */
+      var decimalsConfig = send.network.decimals;
+      if(amountSend) {
+	      var decimals = amountSend.toString().split(".")[1];
+	      if (decimals) {
+		      if(decimals.length > decimalsConfig){
+		      	return false;
+		      }
+	      }
+      }
       resultAmountSend = amountSend != null ? amountSend : 0;
       ref$ = store.current.send, feeType = ref$.feeType, txType = ref$.txType;
       usdRate = (ref$ = wallet != null ? wallet.usdRate : void 8) != null ? ref$ : 0;
