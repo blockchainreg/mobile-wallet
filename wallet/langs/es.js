@@ -125,7 +125,7 @@
       txLast: "Últimas Transacciones",
       explorer: "Explorador",
       address: "Dirección",
-      sent: "Enviar",
+      sent: "Enviado",
       filter: "Filtrar",
       continue: "Continuar",
       sender: "Desde",

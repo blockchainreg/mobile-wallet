@@ -33,7 +33,6 @@ Add any other context about the problem here.
 
 **Environment:**
  - Build [e.g. 1.0.1]
- - Device [e.g. Iphone 6]
- - OS [e.g. iOS]
+ - OS [e.g. Windows]
  - Browser [e.g. chrome, safari]
  - Version [e.g. 22]
