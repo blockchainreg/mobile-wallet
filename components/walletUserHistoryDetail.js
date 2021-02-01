@@ -76,7 +76,7 @@ export default (store, web3t) => {
   const {linktx, url} = wallet.network.api;
   const {tx} = store.infoTransaction;
   const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
-
+  let token = store.infoTransaction.token === 'vlx2' ? "vlx" : store.infoTransaction.token;
   return (
         <View style={styles.container}>
           <View style={styles.detailsHistory}>
@@ -89,7 +89,7 @@ export default (store, web3t) => {
             <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20, paddingVertical: 5}}>
             <Text style={amountStyle(store.infoTransaction.type)}>
               {index(store.infoTransaction.type)}
-              {parseFloat(store.infoTransaction.amount).toFixed(7)} {store.infoTransaction.token.toUpperCase()}
+              {parseFloat(store.infoTransaction.amount).toFixed(7)} {token.toUpperCase()}
             </Text>
             </View>
             <Text style={{color: "rgba(255, 255, 255, 0.70)", fontFamily: "Fontfabric-NexaRegular", lineHeight: 20}}>
@@ -132,7 +132,7 @@ export default (store, web3t) => {
             <Text style={styles.detail}>{lang.amount}:</Text>
             <Text style={styles.viewPt}>
               {store.infoTransaction.amount}
-              {" "}{store.infoTransaction.token.toUpperCase()}
+              {" "}{token.toUpperCase()}
             </Text>
           </View>
 
@@ -140,7 +140,7 @@ export default (store, web3t) => {
             <Text style={styles.detail}>{lang.fee}:</Text>
             <Text style={styles.viewPt}>
               {store.infoTransaction.fee}
-              {" "}{store.infoTransaction.token.toUpperCase()}
+              {" "}{token.toUpperCase()}
             </Text>
           </View>
 
