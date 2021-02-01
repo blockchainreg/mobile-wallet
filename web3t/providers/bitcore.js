@@ -399,12 +399,17 @@ addOutputs = function(config, cb){
   if (txType === 'private') {
 	return addOutputsPrivate(config, cb);
   }
-  rest = minus(minus(total, value), fee);
-  tx.addOutput(recipient, +value);
-  if (+rest !== 0) {
-	tx.addOutput(account.address, +rest);
+  try{
+	rest = minus(minus(total, value), fee);
+	tx.addOutput(recipient, +value);
+	if (+rest !== 0) {
+	  tx.addOutput(account.address, +rest);
+	}
+	return cb(null);  
+  } catch (e) {
+	cb(e)
   }
-  return cb(null);
+  
 };
 getError = function(config, fields){
   var result;

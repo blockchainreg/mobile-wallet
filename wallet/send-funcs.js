@@ -83,6 +83,9 @@
       };
       return createTransaction(tx, function(err, data){
         if (err != null) {
+          	if (err.toString().indexOf("has no matching Script") !== -1){
+          		err = "Address is not valid";  
+			}
 	        return cb(err);
         }
         return confirm(store, "Are you sure to send " + tx.amount + " " + send.coin.token + " to " + send.to/*, "Yes, Send!"*/, function(agree){
