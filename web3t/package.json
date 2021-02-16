@@ -19,6 +19,7 @@
     "ethereumjs-util": "^6.0.0",
     "hdkey": "^1.1.0",
     "moment": "2.22.2",
+    "multicoin-address-validator": "^0.4.16",
     "prelude-ls": "1.1.2",
     "qs": "6.5.2",
     "randombytes": "^2.0.6",
