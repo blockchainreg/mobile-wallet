@@ -431,6 +431,7 @@ export default ({ store, web3t }) => {
                           placeholderTextColor="rgba(255,255,255,0.60)"
                         />
                     </Item>
+				  {!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
                     <Item style={styles.borderItem}>
                         <Text style={{color: "white"}}>$ </Text>
                         <Input
@@ -445,7 +446,8 @@ export default ({ store, web3t }) => {
                           keyboardType="numeric"
                           placeholderTextColor="rgba(255,255,255,0.60)"
                         />
-                    </Item>
+                    </Item> 
+				  }
                </View>
 
 
