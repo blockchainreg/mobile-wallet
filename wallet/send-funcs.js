@@ -68,6 +68,9 @@
       var to, wallet, network, amountSend, amountSendFee, data, coin, txType, token, tx;
       to = arg$.to, wallet = arg$.wallet, network = arg$.network, amountSend = arg$.amountSend, amountSendFee = arg$.amountSendFee, data = arg$.data, coin = arg$.coin, txType = arg$.txType;
       token = send.coin.token;
+	  if(+amountSendFee === 0){
+		return cb("Fee must be more then 0");
+	  }
       tx = {
         account: {
           address: wallet.address,
@@ -115,7 +118,13 @@
       });
     };
     performSendSafe = function(cb){
-      return resolveAddress(web3t, send.to, send.coin, send.network, function(err, to){
+      return resolveAddress(
+		  {
+			store: store,
+			address: send.to,
+			coin: send.coin,
+			network: send.network
+		  }, function(err, to){
         if(err !== null){ 
 	        var errMessage = err.message ? err.message : err
 	        send.error = errMessage;
@@ -214,7 +223,14 @@
 	checkRecipientAddress = function(){
 		console.log("checkRecipientAddress");
 		const recipientAddress = send.to;
-		return resolveAddress(web3t, recipientAddress, send.coin, send.network, function(err, to) {
+		return resolveAddress(
+			{
+			  store: store,
+			  address: recipientAddress,
+			  coin: send.coin,
+			  network: send.network
+			},
+			function(err, to) {
 			if (err !== null) {
 				var errMessage = err.message ? err.message : err;
 				return send.error = errMessage;
