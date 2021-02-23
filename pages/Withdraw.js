@@ -142,7 +142,7 @@ const btnWithdrawBtc = ({ store, web3t }) => {
   };
   const lang = getLang(store);
   const sendText = lang.send;
-  const disabled = !((send.error.length === 0) && (+send.amountSend > 0));
+  const disabled = (!((send.error.length === 0) && (+send.amountSend > 0))) || send.amountChanging === true;
   return (
     <Button block style={disabled ? styles.buttonInactive : styles.btnVelasActive} onPress={withdrawBtc} disabled={disabled}>
       <Text style={styles.textBtn}>{sendText}</Text>
@@ -319,18 +319,9 @@ export default ({ store, web3t }) => {
 
     const send = store.current.send;
     const scanQRSend = () => {
-
-      if(wallet.balance == "..") return;
+      if (isNaN(wallet.balance)) return;
       store.current.returnPage = 'send';
       return store.current.page = 'Scanner';
-      //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
-      //store.current.send.wallet = wallet;
-      //store.current.send.coin = wallet.coin;
-      //store.current.send.network = wallet.network;
-      //navigate(store, web3t, "send", x=> {
-      //
-      //});
-
 	}  
 
     const InputAddressWithdrawBtc = ({ send }) => (
@@ -372,10 +363,6 @@ export default ({ store, web3t }) => {
     const pad =
       { paddingTop: 10 };
     const back = changePage("wallet", true);
-    // var feeToken = wallet.coin.token.toUpperCase();
-    // if (wallett.network.txFeeIn) {
-    //   feeToken = wallet.network.txFeeIn.toUpperCase();
-    // }
     return (
       <View style={styles.viewFlex}>
         <Background fullscreen={true}/>

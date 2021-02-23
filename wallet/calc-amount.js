@@ -75,6 +75,7 @@
 		      }
 	      }
       }
+	  send.amountChanging = true;
       resultAmountSend = amountSend != null ? amountSend : 0;
       ref$ = store.current.send, feeType = ref$.feeType, txType = ref$.txType;
       usdRate = (ref$ = wallet != null ? wallet.usdRate : void 8) != null ? ref$ : 0;
@@ -132,6 +133,7 @@
         }());
         send.amountChargedUsd = times(send.amountCharged, usdRate);
         send.amountSendFeeUsd = times(txFee, feeUsdRate);
+		send.amountChanging = false;
         return send.error = (function(){
           switch (false) {
           case wallet.balance !== '...':
