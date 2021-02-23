@@ -7,7 +7,7 @@ require! {
     \../json-parse.js
     \../deadline.js
     \bs58 : { decode }
-    \multicoin-address-validator : \WAValidator      
+    #\multicoin-address-validator : \WAValidator      
 }
 segwit-address = (public-key)->
     witnessScript = BitcoinLib.script.witnessPubKeyHash.output.encode(BitcoinLib.crypto.hash160(public-key))

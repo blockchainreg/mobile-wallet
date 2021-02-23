@@ -9,7 +9,7 @@
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   decode = require('bs58').decode;
-  WAValidator = require('multicoin-address-validator');
+  var validate = require('bitcoin-address-validation');
   segwitAddress = function(publicKey){
 	var witnessScript, scriptPubKey;
 	witnessScript = BitcoinLib.script.witnessPubKeyHash.output.encode(BitcoinLib.crypto.hash160(publicKey));
@@ -805,7 +805,7 @@
   out$.isValidAddress = isValidAddress = function(arg$, cb){
 	var address, network, addressIsValid;
 	address = arg$.address, network = arg$.network;
-	addressIsValid = WAValidator.validate(address, 'BTC', 'both');
+	addressIsValid = validate(address);
 	if (!addressIsValid) {
 	  return cb("Address is not valid");
 	}
