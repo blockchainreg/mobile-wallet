@@ -60,9 +60,6 @@
     return provider.pushTx(config, cb);
   });
   out$.isValidAddress = isValidAddress = action(function(provider, config, cb){
-  	if(typeof provider.isValidAddress === 'undefined'){
-  		return cb("NON_EXISTED_METHOD")
-    }
-	return provider.isValidAddress(config, cb);
+	return provider.isValidAddress ? provider.isValidAddress(config, cb) : cb("method is not supported");
   });
 }).call(this);
