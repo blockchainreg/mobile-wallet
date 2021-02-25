@@ -3,6 +3,11 @@
     "name": "Velas wallet",
     "slug": "expo-web3",
     "privacy": "public",
+    "extra": {
+      "bugsnag": {
+      "apiKey": "f1914f9d965ef7f047077e0ca409487a"
+      }
+    },
     "platforms": [
       "ios",
       "android"
@@ -33,7 +38,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 168,
+      "versionCode": 169,
       "icon": "./assets/ic_launcher.png",
       "permissions": [
         "CAMERA",
