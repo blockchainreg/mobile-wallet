@@ -7,6 +7,7 @@ import Images from "../Images.js";
 import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
+import roundHuman from "../wallet/round-human";
 
 
 export default ({ store, web3t }) => {
@@ -64,46 +65,50 @@ export default ({ store, web3t }) => {
         applyTransactions(store);
     }
 
-    const renderTransaction = (transaction) => (
-      //{ token, tx, amount, fee, time, url, type, pending } = tran
-      <ListItem
-        thumbnail
-        underlayColor={Images.color1}
-        onPress={() => {
-          showTransaction(transaction);
-        }}
-        key={transaction.token+transaction.tx+transaction.type}
-      >
-        <Left>{thumbnail(transaction.type)}</Left>
-        <Body style={{ paddingRight: 10 }}>
-          <Text style={styles.txtSizeHistory}>
-            {checkType(transaction.type)}
-          </Text>
-          <Text style={styles.constDate}>
-            {transaction.time
-              ? moment(transaction.time * 1000).format(
-                "MMM D YYYY h:mm A"
-              )
-              : null
-            }
-          </Text>
-        </Body>
-        <Right>
-          <Text style={amountStyle(transaction.type)}>
-            {index(transaction.type)}
-            {roundNumber(transaction.amount, {decimals: 2})}{"\u00A0"}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-          </Text>
-            {transaction.fee
-                ?(
-                  <Text style={styles.constDate}>
-                  ({lang.fee}: {Math.floor(transaction.fee)}{" "}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-                  </Text>
-                )
-                : null
-            }
-        </Right>
-      </ListItem>
-    );
+    const renderTransaction = (transaction) => {
+	  var r_amount = roundNumber(transaction.amount, {decimals: 2});
+	  var amount = roundHuman(r_amount);
+      return (
+		  //{ token, tx, amount, fee, time, url, type, pending } = tran
+		  <ListItem
+			  thumbnail
+			  underlayColor={Images.color1}
+			  onPress={() => {
+				showTransaction(transaction);
+			  }}
+			  key={transaction.token+transaction.tx+transaction.type}
+		  >
+			<Left>{thumbnail(transaction.type)}</Left>
+			<Body style={{ paddingRight: 10 }}>
+			  <Text style={styles.txtSizeHistory}>
+				{checkType(transaction.type)}
+			  </Text>
+			  <Text style={styles.constDate}>
+				{transaction.time
+					? moment(transaction.time * 1000).format(
+						"MMM D YYYY h:mm A"
+					)
+					: null
+				}
+			  </Text>
+			</Body>
+			<Right>
+			  <Text style={amountStyle(transaction.type)}>
+				{index(transaction.type)}
+				{amount}{"\u00A0"}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+			  </Text>
+			  {transaction.fee
+				  ?(
+					  <Text style={styles.constDate}>
+						({lang.fee}: {Math.floor(transaction.fee)}{" "}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+					  </Text>
+				  )
+				  : null
+			  }
+			</Right>
+		  </ListItem>
+	  );
+	}
 
 
     return (
