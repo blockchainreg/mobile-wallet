@@ -5239,8 +5239,7 @@ export default StyleSheet.create({
     color: Images.colorGreen,
     paddingTop: 20,
     fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 20
-    // paddingBottom: 10,
+    lineHeight: 30
   },
   detailInfoOut: {
     fontSize: 32,
@@ -5248,8 +5247,7 @@ export default StyleSheet.create({
     color: Images.colorBlue,
     paddingTop: 20,
     fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 20
-    // paddingBottom: 10,
+    lineHeight: 30
   },
   createWordBlock: {
     ...ifIphoneX(
