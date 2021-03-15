@@ -69,7 +69,6 @@ export default ({ store, web3t }) => {
 	  var r_amount = roundNumber(transaction.amount, {decimals: 2});
 	  var amount = roundHuman(r_amount);
       return (
-		  //{ token, tx, amount, fee, time, url, type, pending } = tran
 		  <ListItem
 			  thumbnail
 			  underlayColor={Images.color1}
