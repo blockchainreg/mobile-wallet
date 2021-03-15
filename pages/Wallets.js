@@ -121,13 +121,15 @@ const wallets = (store, web3t) => {
       );
     };
     let balanceLayout = null;
-	const r_balance = roundNumber(balance, {decimals: 6});
-	const walletBalance = roundHuman(r_balance);
+	const balanceRounded = roundNumber(balance, {decimals: 6});
+	const walletBalance = roundHuman(balanceRounded);
+	const balanceUsdRounded = roundNumber(balanceUsd, {decimals: 2});
+	const walletBalanceUsd = roundHuman(balanceUsdRounded);
     if (wallet.balance !== "..") {
       balanceLayout = (
         <Text>
           <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{walletBalance}</Text>
-          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
+          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}> ({walletBalanceUsd} USD)</Text>
         </Text>
       );
     } else {
