@@ -73,7 +73,7 @@
             case usdRate !== '..':
               return '..';
             default:
-              return times(balance, usdRate);
+              return times(balance+"", usdRate+"");
             }
           }());
           state.balanceUsd = (function(){
