@@ -40,6 +40,8 @@ import Background from "../components/Background.js";
 import Images from '../Images.js';
 import BackButton from "../components/BackButton.js";
 import { LinearGradient } from "expo-linear-gradient";
+import roundNumber from "../round-number";
+import roundHuman from "../wallet/round-human";
 // import Scanner from './Scanner.js';
 
 
@@ -88,15 +90,18 @@ export default ({ store, web3t }) => {
         return mapping[wallet.coin.token] || 'address';
     }
 
-    const Balance = ({wallet}) =>
-      <Text style={styles.totalBalance}>
-        {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,5})?/)[0]}{" "}
-        {/* {parseFloat(wallet.balance).toFixed(5)}{" "} */}
-        <Text style={styles.nameToken}>
-          {(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
-        </Text>
-      </Text>
-    ;
+    const Balance = ({wallet}) => {
+	  const balance = wallet.balance || 0;
+	  const r_amount = roundNumber(balance, {decimals: 6});
+	  const walletBalance = roundHuman(r_amount);
+	  return (
+		<Text style={styles.totalBalance}>
+		  {walletBalance}
+		  <Text style={styles.nameToken}>
+			{" "+ (wallet.coin.nickname || wallet.coin.token).toUpperCase()}
+		  </Text>
+		</Text>
+	)};
 
     const prefix = hardCodedStrategyGetAddessPrefix();
 
@@ -200,9 +205,7 @@ export default ({ store, web3t }) => {
                 <View style={styles.bodyBlock3}>
                   <Balance wallet={wallet}/>
                 </View>
-
                 <View style={styles.viewTouchablesWallet}>
-
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={sendLocal}

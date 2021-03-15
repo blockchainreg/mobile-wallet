@@ -6,6 +6,7 @@ import moment from "moment";
 import Images from "../Images.js";
 import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
+import roundNumber from '../round-number.js';
 
 
 export default ({ store, web3t }) => {
@@ -22,8 +23,8 @@ export default ({ store, web3t }) => {
     };
 
     const index = type => {
-      if (type === "IN") return null;
-      else if (type === "OUT") return <Text>-</Text>;
+      if (type === "IN") return <Text>+ </Text>;
+      else if (type === "OUT") return <Text>- </Text>;
     };
     const amountStyle = type => {
       if (type === "IN") return styles.styleCoinIn;
@@ -90,7 +91,7 @@ export default ({ store, web3t }) => {
         <Right>
           <Text style={amountStyle(transaction.type)}>
             {index(transaction.type)}
-            {parseFloat(transaction.amount).toFixed(5)}{"\u00A0"}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+            {roundNumber(transaction.amount, {decimals: 2})}{"\u00A0"}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
           </Text>
             {transaction.fee
                 ?(

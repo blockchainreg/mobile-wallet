@@ -24,7 +24,8 @@ import getLang from '../wallet/get-lang.js';
 import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
 import walletsFuncs from "../wallet/wallets-funcs.js";
-
+import roundNumber from "../round-number";
+import roundHuman from "../wallet/round-human"
 
 
 export default (store, web3t) => {
@@ -51,7 +52,7 @@ export default (store, web3t) => {
     writeToClipboard(store.infoTransaction.from);
   };
   const index = type => {
-    if (type === "IN") return null;
+    if (type === "IN") return <Text style={styles.detailInfoIn}>+</Text>;
     else if (type === "OUT") return <Text style={styles.detailInfoOut}>-</Text>;
   };
   const amountStyle = type => {
@@ -77,6 +78,9 @@ export default (store, web3t) => {
   const {tx} = store.infoTransaction;
   const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
   let token = store.infoTransaction.token === 'vlx2' ? "vlx" : store.infoTransaction.token;
+  const tokenLabel = token.toUpperCase();
+  const r_amount = roundNumber(store.infoTransaction.amount, {decimals: 4});
+  const amount = roundHuman(r_amount);
   return (
         <View style={styles.container}>
           <View style={styles.detailsHistory}>
@@ -89,7 +93,7 @@ export default (store, web3t) => {
             <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20, paddingVertical: 5}}>
             <Text style={amountStyle(store.infoTransaction.type)}>
               {index(store.infoTransaction.type)}
-              {parseFloat(store.infoTransaction.amount).toFixed(7)} {token.toUpperCase()}
+              {amount} {tokenLabel}
             </Text>
             </View>
             <Text style={{color: "rgba(255, 255, 255, 0.70)", fontFamily: "Fontfabric-NexaRegular", lineHeight: 20}}>

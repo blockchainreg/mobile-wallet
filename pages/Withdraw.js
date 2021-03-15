@@ -29,11 +29,12 @@ import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import Images from "../Images.js";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   Image, TouchableOpacity
 } from "react-native";
 import { RadioButton } from 'react-native-paper';
+import roundNumber from '../round-number';
+import roundHuman from '../wallet/round-human';
 
 
 const btnWithdrawBtc = ({ store, web3t }) => {
@@ -363,6 +364,9 @@ export default ({ store, web3t }) => {
     const pad =
       { paddingTop: 10 };
     const back = changePage("wallet", true);
+  	const balance = wallet.balance;
+  	const r_amount = roundNumber(balance, {decimals: 6});
+  	const walletBalance = roundHuman(r_amount);
     return (
       <View style={styles.viewFlex}>
         <Background fullscreen={true}/>
@@ -385,9 +389,9 @@ export default ({ store, web3t }) => {
             </View>
             <View style={styles.bodyBlock3}>
               <Text style={styles.totalBalance}>
-                {(wallet.balance || 0).toString().match(/^-?\d*(?:\.\d{0,8})?/)[0]}{" "}
+                {walletBalance}
                 <Text style={styles.nameToken}>
-                  {(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
+                  {" "+(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
                 </Text>
               </Text>
             </View>
