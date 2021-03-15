@@ -35,6 +35,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import DemoMode from "../components/DemoMode.js"
+import roundNumber from "../round-number";
+import roundHuman from "../wallet/round-human";
 
 
 
@@ -119,10 +121,12 @@ const wallets = (store, web3t) => {
       );
     };
     let balanceLayout = null;
+	const r_balance = roundNumber(balance, {decimals: 6});
+	const walletBalance = roundHuman(r_balance);
     if (wallet.balance !== "..") {
       balanceLayout = (
         <Text>
-          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{balance}</Text>
+          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{walletBalance}</Text>
           <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}> ({parseFloat(balanceUsd).toFixed(2)} USD)</Text>
         </Text>
       );
