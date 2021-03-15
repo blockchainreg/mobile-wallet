@@ -3244,7 +3244,7 @@ export default StyleSheet.create({
   },
   textBalanceAbsolute: {
     color: "#fff",
-    fontSize: 36,
+    fontSize: 30,
     fontWeight: Platform.OS === 'ios' ? "bold" : null,
     left: 20,
     top: 20,
