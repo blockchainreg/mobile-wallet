@@ -182,7 +182,8 @@ export default ({ store, web3t }) => {
   if (isNaN(calcUsd)) {
     calcUsd = store.current.balanceUsd;
   } else {
-    calcUsd = calcUsd.toFixed(4)
+	const r_calcUsd = roundNumber(calcUsd, {decimals: 2});
+	calcUsd = roundHuman(r_calcUsd);
   }
 
   const refreshBalance = () => {
