@@ -83,13 +83,9 @@ export default ({ store, web3t }) => {
         onSeedConfirmed(store.current.seedWords.join(' '));
     }
     catch (e) {
-        confirm(
-          store,
-          "Seed phrase checksum not match. Do you want to continue?",
-          (sure) => {
-            if (sure) {
-              return onSeedConfirmed(store.current.seedWords.join(' '));
-            }
+	  alert(
+          "Seed phrase checksum not match. Go back and select custom seed phrase if you need.",
+          () => {
             store.current.seedIndex = 0;
             store.current.seedWords = store.current.seedWords.map(() => "");
           }
