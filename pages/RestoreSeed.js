@@ -84,7 +84,7 @@ export default ({ store, web3t }) => {
     }
     catch (e) {
 	  alert(
-          "Seed phrase checksum not match. Go back and select custom seed phrase if you need.",
+          "Seed phrase checksum does not match. Go back and select custom seed phrase if you need.",
           () => {
             store.current.seedIndex = 0;
             store.current.seedWords = store.current.seedWords.map(() => "");
