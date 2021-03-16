@@ -9,6 +9,8 @@ addCommas = function(x){
   return x;
 };
 module.exports = function(value){
+  const MIN_VALUE_LEAVE_TWO_DECIMAL = 1000;
+  const MIN_VALUE_REMOVE_DECIMAL = 1000000;
   var ref$, head, dec, firstHead;
   if (value == null) {
 	return '..';
@@ -18,6 +20,9 @@ module.exports = function(value){
   }
   ref$ = value.toString().split('.'), head = ref$[0], dec = ref$[1];
   firstHead = addCommas(head);
+  if (+value >= MIN_VALUE_REMOVE_DECIMAL){
+    return firstHead;
+  }
   if ((dec != null ? dec : "").length === 0) {
 	return firstHead + ".00";
   }

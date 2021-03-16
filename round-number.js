@@ -1,4 +1,6 @@
-module.exports = function(value, config){
+module.exports = function(value, config = null){
+  const MIN_VALUE_LEAVE_TWO_DECIMAL = 1000;
+  const MIN_VALUE_REMOVE_DECIMAL = 1000000;
   var decimals, digits, maxValue, ref$, head, dec;
   if (value == null) {
 	return "0";
@@ -6,6 +8,15 @@ module.exports = function(value, config){
   decimals = config.decimals, digits = config.digits, maxValue = config.maxValue;
   if (maxValue != null && +value > +maxValue) {
 	return maxValue;
+  }
+  if (+value >= MIN_VALUE_LEAVE_TWO_DECIMAL && +value < MIN_VALUE_REMOVE_DECIMAL){
+	ref$ = value.toString().split('.'), head = ref$[0], dec = ref$[1];
+	var dec_ = dec.substr(0, 2);
+	return head + "." + dec_;
+  }
+  if (+value >= MIN_VALUE_REMOVE_DECIMAL){
+	ref$ = value.toString().split('.'), head = ref$[0];
+	return head;
   }
   if (decimals == null) {
 	decimals = 10;
