@@ -9,7 +9,7 @@
   applyTransactions = require('./apply-transactions.js');
   times = require('./math.js').times;
   module.exports = function(store, web3t, wallets, wallet){
-    var index, send, receive, usdRate, ref$, uninstall, expand, active, big, balanceOrigin, balance, balanceUsd, pending, style, buttonStyle, last;
+    var index, send, receive, usdRate, ref$, uninstall, expand, active, big, balance, balanceUsd, pending, style, buttonStyle, last;
     if (store == null || web3t == null || wallets == null || wallet == null) {
       return null;
     }
@@ -71,11 +71,12 @@
         return "";
       }
     }());
-    balanceOrigin = round5(wallet.balance);
-    var tokenDisplay = (wallet.coin.nickname || wallet.coin.token).toUpperCase();
-    balance = balanceOrigin + ' ' + tokenDisplay;
-    balanceUsd = round5(times(balanceOrigin, usdRate)) + " USD";
-    pending = round5(wallet.pendingSent) + ' ' + tokenDisplay;
+    var token = wallet.coin.token.toUpperCase();
+    if(token === 'VLX2') token = "VLX";
+    
+    balance = round5(wallet.balance);
+    balanceUsd = round5(times(balance, usdRate)) + " USD";
+    pending = round5(wallet.pendingSent) + ' ' + token;
     style = getPrimaryInfo(store);
     buttonStyle = {
       color: style.app.text,
@@ -95,6 +96,7 @@
       wallet: wallet,
       active: active,
       big: big,
+	  token: token,
       balance: balance,
       balanceUsd: balanceUsd,
       pending: pending,
