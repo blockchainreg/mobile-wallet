@@ -67,7 +67,7 @@ const wallets = (store, web3t) => {
       }
     };
 
-    const { active, balance, balanceUsd, pending, usdRate } = walletFuncs(
+    const { active, balance, balanceUsd, pending, usdRate, token } = walletFuncs(
       store,
       web3t,
       wallets,
@@ -128,7 +128,7 @@ const wallets = (store, web3t) => {
     if (wallet.balance !== "..") {
       balanceLayout = (
         <Text>
-          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{walletBalance}</Text>
+          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{walletBalance} {token}</Text>
           <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}> ({walletBalanceUsd} USD)</Text>
         </Text>
       );
