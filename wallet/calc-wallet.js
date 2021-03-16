@@ -68,6 +68,7 @@
           })(
           store.transactions.all))));
           wallet.pendingSent = pendingSent;
+          // balance = balance * 1000000 + '';
           wallet.balance = balance;
           wallet.balanceUsd = (function(){
             switch (false) {
