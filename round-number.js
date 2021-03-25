@@ -2,6 +2,7 @@ module.exports = function(value, config = null){
   const MIN_VALUE_LEAVE_TWO_DECIMAL = 1000;
   const MIN_VALUE_REMOVE_DECIMAL = 1000000;
   var decimals, digits, maxValue, ref$, head, dec;
+  try {
   if (value == null) {
 	return "0";
   }
@@ -11,6 +12,9 @@ module.exports = function(value, config = null){
   }
   if (+value >= MIN_VALUE_LEAVE_TWO_DECIMAL && +value < MIN_VALUE_REMOVE_DECIMAL){
 	ref$ = value.toString().split('.'), head = ref$[0], dec = ref$[1];
+  if (!dec) {
+    return head;
+  }
 	var dec_ = dec.substr(0, 2);
 	return head + "." + dec_;
   }
@@ -33,4 +37,9 @@ module.exports = function(value, config = null){
   }
   dec = dec.substr(0, decimals);
   return head + "." + dec;
+
+}catch(e){
+  console.error(e);
+  return "-";
+}
 };
