@@ -53,7 +53,6 @@
         }, function(err, balance){
           var pendingSent, this$ = this;
           if (err != null) {
-			store.current.balanceUsd = store.balanceUsdSnapshot || "..";
 			return cb(err);
           }
           pendingSent = foldl(plus, 0)(

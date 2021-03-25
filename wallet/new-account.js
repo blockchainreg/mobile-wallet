@@ -25,18 +25,9 @@
         if (err != null) {
           return cb(err);
         }
-		let wallet_snapshot = null;
-        if(store.current.account && store.current.account.wallets){
-		  wallet_snapshot = find(function(x){ return x.coin.token === coin.token})(store.current.account.wallets);  
-		}
 		balance = '..';
 		balanceUsd = '..';
 		usdRate = '..';
-        if (wallet_snapshot != null) {    
-		  balance = wallet_snapshot.balance;
-		  balanceUsd = wallet_snapshot.balanceUsd;
-		  usdRate = wallet_snapshot.usdRate;
-		}
         wallet.coin = coin;
         wallet.network = network;
         wallet.balance = balance;

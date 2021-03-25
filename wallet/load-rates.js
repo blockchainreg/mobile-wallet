@@ -154,9 +154,7 @@
       if (err != null) {
         return cb(err);
       }
-      if(rates) {
-		store.rates = rates;
-	  }
+	  store.rates = rates;
       return cb(null);
     });
   };

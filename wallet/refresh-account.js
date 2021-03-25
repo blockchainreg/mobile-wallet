@@ -61,12 +61,7 @@
           store.current.filter.push('IN');
           store.current.filter.push('OUT');
           store.current.filter.push(bgStore.current.account.wallets[store.current.walletIndex].coin.token);
-		  if (store.balanceUsdSnapshot && +store.balanceUsdSnapshot > 0) {
-			store.current.balanceUsd = store.balanceUsdSnapshot
-		  } else {
-			store.current.balanceUsd = bgStore.current.balanceUsd;
-			store.balanceUsdSnapshot = bgStore.current.balanceUsd;
-		  }
+		  store.current.balanceUsd = bgStore.current.balanceUsd;
           store.transactions = bgStore.transactions;
           return applyTransactions(store);
         } catch (e$) {

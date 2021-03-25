@@ -71,7 +71,7 @@
         return "";
       }
     }());
-    var token = wallet.coin.token.toUpperCase();
+    var token = (wallet.coin.nickname || wallet.coin.token).toUpperCase();
     if(token === 'VLX2') token = "VLX";
     
     balance = round5(wallet.balance);
