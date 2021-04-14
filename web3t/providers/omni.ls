@@ -33,7 +33,14 @@ calc-fee-per-byte = (config, cb)->
     #bytes = decode(data.raw-tx).to-string(\hex).length / 2
     bytes = data.rawtx.length / 2
     infelicity = 1
-    calc-fee = (bytes + infelicity) `times` o.fee-per-byte
+    err, data <- get "#{get-api-url network}/fee/6" .timeout { deadline } .end
+    return cb err if err?
+    vals = values data.body
+    calced-fee-per-kb = 
+        | vals.0 is -1 => network.tx-fee
+        | _ => vals.0
+    fee-per-byte = calced-fee-per-kb `div` 1000    
+    calc-fee = (bytes + infelicity) `times` fee-per-byte
     final-price =
         | calc-fee > +o.cheap => calc-fee
         | _ => o.cheap
