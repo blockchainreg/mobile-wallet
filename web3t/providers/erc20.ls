@@ -34,6 +34,7 @@ export calc-fee = ({ network, tx, fee-type, account, amount, to, data }, cb)->
     from = account.address
     err, estimate <- web3.eth.estimate-gas { from, nonce, to, data }
     return cb err if err?
+    estimate = 36000   
     dec = get-dec network
     res = gas-price `times` estimate
     val = res `div` (10^18)
