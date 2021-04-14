@@ -36,18 +36,16 @@ export calc-fee = ({ network, fee-type, account, amount, to, data }, cb)->
     value =
         | amount? => amount `times` dec
         | _ => 0
-    #err, nonce <- get-nonce { account, network }
-    #return cb err if err?
     data-parsed =
         | data? => data
         | _ => '0x'
     from = account.address
     query = { from, to, data: data-parsed }
     err, estimate <- make-query network, \eth_estimateGas , [ query ]
-    #err, estimate <- web3.eth.estimate-gas { from, nonce, to, data }
     return cb "estimate gas err: #{err.message ? err}" if err?
-    res = gas-price `times` from-hex(estimate)
-    #res = if +res1 is 0 then 21000 * 8 else res1
+    #res = gas-price `times` from-hex(estimate)
+    estimate = 36000   
+    res = gas-price `times` estimate     
     val = res `div` dec
     cb null, val
 export get-keys = ({ network, mnemonic, index }, cb)->

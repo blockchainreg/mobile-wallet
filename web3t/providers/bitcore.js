@@ -95,7 +95,7 @@
       amountFee: amountFee,
       recipient: recipient
     }, config)), function(err, data){
-      var bytes, infelicity, calcFee, finalPrice;
+      var bytes, infelicity;
       if ((err + "").indexOf("Not Enough Funds (Unspent Outputs)") > -1) {
         return cb(null, o.cheap);
       }
@@ -107,16 +107,34 @@
       }
       bytes = data.rawTx.length / 2;
       infelicity = 1;
-      calcFee = times(bytes + infelicity, o.feePerByte);
-      finalPrice = (function(){
-        switch (false) {
-        case !(calcFee > +o.cheap):
-          return calcFee;
-        default:
-          return o.cheap;
+      return get(getApiUrl(network) + "/fee/6").timeout({
+        deadline: deadline
+      }).end(function(err, data){
+        var vals, calcedFeePerKb, feePerByte, calcFee, finalPrice;
+        if (err != null) {
+          return cb(err);
         }
-      }());
-      return cb(null, finalPrice);
+        vals = values(data.body);
+        calcedFeePerKb = (function(){
+          switch (false) {
+          case vals[0] !== -1:
+            return network.txFee;
+          default:
+            return vals[0];
+          }
+        }());
+        feePerByte = div(calcedFeePerKb, 1000);
+        calcFee = times(bytes + infelicity, feePerByte);
+        finalPrice = (function(){
+          switch (false) {
+          case !(calcFee > +o.cheap):
+            return calcFee;
+          default:
+            return o.cheap;
+          }
+        }());
+        return cb(null, finalPrice);
+      });
     });
   };
   calcDynamicFee = function(arg$, cb){
