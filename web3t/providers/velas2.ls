@@ -293,6 +293,8 @@ export create-transaction = ({ network, account, recipient, amount, amount-fee, 
     err, networkId <- make-query network, \net_version , []
     return cb err if err?
     common = Common.forCustomChain 'mainnet', { networkId }
+    err, chainId <- make-query network, \eth_chainId , []
+    return cb err if err?
     gas-price = buffer.gas-price
     if fee-type is \custom or !gas-price
         gas-price = (amount-fee `times` dec) `div` gas-estimate
@@ -304,6 +306,7 @@ export create-transaction = ({ network, account, recipient, amount, amount-fee, 
         to: recipient
         from: address
         data: data || "0x"
+        chainId: chainId
     }
     tx = new Tx tx-obj, { common }
     tx.sign private-key
