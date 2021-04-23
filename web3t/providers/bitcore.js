@@ -6,6 +6,7 @@
   ref$ = require('./superagent.js'), get = ref$.get, post = ref$.post;
   ref$ = require('../math.js'), plus = ref$.plus, minus = ref$.minus, div = ref$.div, times = ref$.times;
   ref$ = require('./deps.js'), BitcoinLib = ref$.BitcoinLib, bip39 = ref$.bip39;
+  var bignumber = require('bignumber.js');
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   decode = require('bs58').decode;
@@ -123,8 +124,9 @@
             return vals[0];
           }
         }());
-        feePerByte = div(calcedFeePerKb, 1000);
+        feePerByte = div(calcedFeePerKb, 2000);    
         calcFee = times(bytes + infelicity, feePerByte);
+		calcFee = new bignumber(calcFee).toFixed(network.decimals);
         finalPrice = (function(){
           switch (false) {
           case !(calcFee > +o.cheap):
