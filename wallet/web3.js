@@ -11,7 +11,6 @@
   getBalance = require('./api.js').getBalance;
   ref$ = require('./install-plugin.js'), buildInstall = ref$.buildInstall, buildUninstall = ref$.buildUninstall, buildInstallByName = ref$.buildInstallByName, buildQuickInstall = ref$.buildQuickInstall;
   ref$ = require('./refresh-account.js'), backgroundRefreshAccount = ref$.backgroundRefreshAccount, setAccount = ref$.setAccount;
-  //Web3 = require('web3');
   ethnamed = require('../api/ethnamed.js');
   getRecord = require('./get-record.js');
   setPageTheme = require('./set-page-theme.js');
@@ -252,7 +251,7 @@
       return it.token;
     })(
     store.coins));
-    return getCoins(function(err, coins){
+    return getCoins(store, function(err, coins){
       if (err != null) {
         return cb(err);
       }

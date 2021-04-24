@@ -10,7 +10,7 @@
       if ((config != null ? (ref$ = config.network) != null ? (ref1$ = ref$.api) != null ? ref1$.provider : void 8 : void 8 : void 8) == null) {
         return cb("provider is not defined");
       }
-      provider = (ref2$ = providers[config.network.api.provider]) != null ? ref2$ : insight;
+      provider = providers[config.network.api.provider];
       return func(provider, config, cb);
     };
   };
