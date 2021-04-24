@@ -12,6 +12,8 @@ import roundHuman from "../wallet/round-human";
 
 export default ({ store, web3t }) => {
     const lang = getLang(store);
+    let wallet = store.current.account.wallets[store.current.walletIndex];
+    const currency = (wallet.coin.nickname != null ? wallet.coin.nickname : wallet.coin.token).toUpperCase();
     const checkType = type => {
       switch (type) {
         case "IN":
@@ -94,12 +96,12 @@ export default ({ store, web3t }) => {
 			<Right>
 			  <Text style={amountStyle(transaction.type)}>
 				{index(transaction.type)}
-				{amount}{"\u00A0"}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+				{amount}{"\u00A0"}{currency}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
 			  </Text>
 			  {transaction.fee
 				  ?(
 					  <Text style={styles.constDate}>
-						({lang.fee}: {Math.floor(transaction.fee)}{" "}{(transaction.token === 'vlx2' ? 'vlx' : transaction.token).toUpperCase()}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+						({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
 					  </Text>
 				  )
 				  : null
