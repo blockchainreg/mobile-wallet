@@ -36,7 +36,8 @@
       decodedData: "",
       showDataMode: 'encoded',
       error: '',
-      sending: false
+      sending: false,
+	  chekingBalance: null
     };
   };
   store = {
