@@ -75,7 +75,7 @@
         account: {
           address: wallet.address,
           privateKey: wallet.privateKey
-        },
+		},
         recipient: to,
         network: network,
         token: token,
@@ -91,7 +91,8 @@
 			}
 	        return cb(err);
         }
-        return confirm(store, "Are you sure to send " + tx.amount + " " + send.coin.token + " to " + send.to/*, "Yes, Send!"*/, function(agree){
+        var currency = (send.coin.nickname || send.coin.token).toUpperCase();
+        return confirm(store, "Are you sure to send " + tx.amount + " " + currency + " to " + send.to/*, "Yes, Send!"*/, function(agree){
           if (!agree) {
             return cb("You are not agree");
           }
@@ -369,10 +370,7 @@
     token = (send.coin.nickname + send.coin.token).toUpperCase();
     feeToken = ((ref$ = wallet.network.txFeeIn) != null
       ? ref$
-      : send.coin.token).toUpperCase();
-    if (feeToken === 'VLX2') {
-      feeToken = 'VLX';
-    }
+      : (send.coin.nickname || send.coin.token)).toUpperCase();
     isData = ((ref$ = send.data) != null ? ref$ : "").length > 0;
     chooseAuto = function(){
       send.feeType = 'auto';
