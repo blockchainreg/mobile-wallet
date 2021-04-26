@@ -222,8 +222,7 @@
 	return cb(null, {
 	  address: publicKey,
 	  privateKey: privateKey,
-	  publicKey: publicKey,
-	  secretKey: privateKeyBuff
+	  publicKey: publicKey
 	});
   };
   freeOwnership = function(){
@@ -288,18 +287,16 @@
 	return transaction;
   };
   out$.createTransaction = createTransaction = function(config, cb){
-	var err, network, account, recipient, amount, amountFee, data, feeType, txType, gasPrice, gas, swap, dec, payAccount;
+	var err, network, recipient, amount, amountFee, data, feeType, txType, gasPrice, gas, swap, dec, payAccount;
 	err = getError(config, ['network', 'account', 'amount', 'amountFee', 'recipient']);
 	if (err != null) {
 	  return cb(err);
 	}
-	network = config.network, account = config.account, recipient = config.recipient, amount = config.amount, amountFee = config.amountFee, data = config.data, feeType = config.feeType, txType = config.txType, gasPrice = config.gasPrice, gas = config.gas, swap = config.swap;
+	network = config.network, recipient = config.recipient, amount = config.amount, amountFee = config.amountFee, data = config.data, feeType = config.feeType, txType = config.txType, gasPrice = config.gasPrice, gas = config.gas, swap = config.swap;
 	dec = getDec(network);
-	console.log("config", config)
-	payAccount = new solanaWeb3.Account(config.account.secretKey);
-	console.log("payAccount", payAccount)
+	var secretKey = bs58.decode(config.account.privateKey);
+	payAccount = new solanaWeb3.Account(secretKey);
 	return getRecentBlockhash(network, function(err, recentBlockhash){
-	  console.log("recentBlockhash", recentBlockhash)
 	  var transactionData, amount, transaction, toHex, encoded;
 	  if (err != null) {
 		return cb(err);
@@ -311,7 +308,6 @@
 		return new BN(it);
 	  };
 	  if (swap != null && swap === true) {
-		console.log("---> swapNativeToEvm");
 		transaction = swapNativeToEvm(payAccount.publicKey, amount, recipient);
 		transaction.recentBlockhash = recentBlockhash;
 	  } else {
