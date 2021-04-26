@@ -124,7 +124,7 @@
             return vals[0];
           }
         }());
-        feePerByte = div(calcedFeePerKb, 2000);    
+        feePerByte = div(calcedFeePerKb, 1000);    
         calcFee = times(bytes + infelicity, feePerByte);
 		calcFee = new bignumber(calcFee).toFixed(network.decimals);
         finalPrice = (function(){
