@@ -18,8 +18,6 @@ import {
 } from "native-base";
 import { observe } from "mobx";
 import styles from "../Styles.js";
-// import StandardLinearGradient from "../components/StandardLinearGradient.js";
-import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
@@ -37,119 +35,6 @@ import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 
 
-const btnWithdrawBtc = ({ store, web3t }) => {
-  const {
-    token,
-    feeToken,
-    network,
-    send,
-    wallet,
-    pending,
-    recipientChange,
-    amountChange,
-    amountUsdChange,
-    amountEurChange,
-    useMaxAmount,
-    showData,
-    showLabel,
-    topup,
-    history,
-    cancel,
-    sendAnyway,
-    chooseAuto,
-    chooseCheap,
-    chosenAuto,
-    chosenCheap,
-    getAddressLink,
-    getAddressTitle,
-    round5edit,
-    round5,
-    sendOptions,
-    sendTitle,
-    isData,
-    encodeDecode,
-    changeAmount,
-    invoice,
-  } = sendFuncs(store, web3t);
-
-  const withdrawBtc = async () => {
-    try {
-      let withdrawSpinner = null;
-      let checkingSpinner = new Spinner(store, "Checking balance", {
-        displayDescription: true,
-      });
-      let disposerSend = null;
-      let disposerCurrent = null;
-      //The next code is made to watch sending process and display spinners with adequate text
-      //Store's data changes step-by-step in the following way
-      //0. sending is true, confirmation is null - checking balance, we display Checking balance spinner
-      //1. sending is true, confirmation is not null - user is asked to confirm transaction - we must hide all spinners
-      //2. sending is true, confirmation is again null - user confirmed, so we display Sending funds spinner
-      //   If the user declined confirmation, we will see this state for a short time
-      //3. sending is false, confirmation is null - sending is completed and we must hide all spinners
-
-      store.current.send.error = "";
-      // console.log("Before Change", store.current.send.sending, store.current.confirmation);
-      const onChange = () => {
-        // console.log("Change detected", store.current.send.sending, store.current.confirmation);
-        if (
-          store.current.send.sending &&
-          !withdrawSpinner &&
-          !store.current.confirmation &&
-          !checkingSpinner
-        ) {
-          // console.log("Making withdraw spinner");
-          withdrawSpinner = new Spinner(store, "Sending funds", {
-            displayDescription: true,
-          });
-          return;
-        }
-        if (!store.current.send.sending && withdrawSpinner) {
-          withdrawSpinner.finish();
-          withdrawSpinner = null;
-        }
-        if (!store.current.send.sending && checkingSpinner) {
-          checkingSpinner.finish();
-          checkingSpinner = null;
-        }
-        if (!store.current.send.sending) {
-          disposerSend();
-          disposerCurrent();
-          return;
-        }
-
-        if (store.current.confirmation && checkingSpinner) {
-          checkingSpinner.finish();
-          checkingSpinner = null;
-          store.current.send["to"] = "";
-          store.current.send.amountSend = '0';
-          store.current.send.amountSendUsd = '0';
-          store.current.send.amountSendFee = '0';
-          store.current.send.amountSendFeeUsd = '0';
-          store.current.send.error = "";
-
-          return;
-        }
-      };
-
-      disposerSend = observe(store.current.send, onChange);
-      disposerCurrent = observe(store.current, onChange);
-
-      sendAnyway();
-    } catch (e) {
-      console.error(e);
-      Toast.show({text: e.message});
-    }
-  };
-  const lang = getLang(store);
-  const sendText = lang.send;
-  const disabled = (!((send.error.length === 0) && (+send.amountSend > 0))) || send.amountChanging === true;
-  return (
-    <Button block style={disabled ? styles.buttonInactive : styles.btnVelasActive} onPress={withdrawBtc} disabled={disabled}>
-      <Text style={styles.textBtn}>{sendText}</Text>
-    </Button>
-  );
-};
 
 const wrapNumber = (text) => {
   return {
@@ -266,52 +151,63 @@ const RadioButtons = () => {
               />
           </Item>
         </TouchableOpacity>
-
-
-
-
     </View>
   );
 };
 
+var doSpinner = ({spinner, store}) => {
+  let withdrawSpinner = null;
+  spinner = new Spinner(store, "Checking balance", {
+	displayDescription: true,
+  });
+  // if (store.current.send.sending && !store.current.confirmation) {
+	// withdrawSpinner = new Spinner(store, "Sending funds", {
+	//   displayDescription: true,
+	// });
+	// return;
+  // }
+  // if (!store.current.send.chekingBalance && !store.current.send.sending ) {
+	// if (withdrawSpinner){
+	//   withdrawSpinner.finish();
+	//   withdrawSpinner = null;
+	// }
+	// return;
+  // }
+
+  // if (!store.current.send.chekingBalance === null) {
+	// console.log("isnt sending and check spinner");
+	// if(checkingSpinner){
+	//   checkingSpinner.finish();
+	//   checkingSpinner = null;
+	// }
+  // }
+
+  // if (store.current.confirmation && store.current.send.chekingBalance) {
+  //   if(checkingSpinner) {
+	//   checkingSpinner.finish();
+	//   checkingSpinner = null;
+	// }
+	// store.current.send["to"] = "";
+	// store.current.send.amountSend = '0';
+	// store.current.send.amountSendUsd = '0';
+	// store.current.send.amountSendFee = '0';
+	// store.current.send.amountSendFeeUsd = '0';
+	// store.current.send.error = "";
+	// return;
+  // } 
+}
+
 export default ({ store, web3t }) => {
     const lang = getLang(store);
     const {
-      token,
       feeToken,
-      network,
-      pending,
       recipientChange,
       amountChange,
       amountUsdChange, 
 	  checkRecipientAddress,
-      amountEurChange,
-      useMaxAmount,
-      showData,
-      showLabel,
-      topup,
-      history,
-      cancel,
-      sendAnyway,
-      chooseAuto,
-      chooseCheap,
-      chosenAuto,
-      chosenCheap,
-      getAddressLink,
-      getAddressTitle,
-      round5edit,
-      round5,
-      sendOptions,
-      sendTitle,
-      isData,
-      encodeDecode,
-      changeAmount,
-      invoice,
     } = sendFuncs(store, web3t);
 
-
     const wallets = walletsFuncs(store, web3t).wallets;
-
     const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 
     const changePage = (tab) => () => {
@@ -323,7 +219,33 @@ export default ({ store, web3t }) => {
       if (isNaN(wallet.balance)) return;
       store.current.returnPage = 'send';
       return store.current.page = 'Scanner';
-	}  
+	}
+	
+	const btnWithdraw = ({ store, web3t }) => {
+	  const {
+		send,
+		sendAnyway,
+	  } = sendFuncs(store, web3t);
+	  console.log("Withdraw btnWithdrawBtc")
+  
+	  const withdraw = async () => {
+		try {
+		  store.current.send.error = "";
+		  sendAnyway();
+		} catch (e) {
+		  console.error(e);
+		  Toast.show({text: e.message});
+		}
+	  };
+	  const lang = getLang(store);
+	  const sendText = lang.send;
+	  const disabled = (!((send.error.length === 0) && (+send.amountSend > 0))) || send.amountChanging === true;
+	  return (
+		  <Button block style={disabled ? styles.buttonInactive : styles.btnVelasActive} onPress={withdraw} disabled={disabled}>
+			<Text style={styles.textBtn}>{sendText}</Text>
+		  </Button>
+	  );
+	};
 
     const InputAddressWithdrawBtc = ({ send }) => (
       <Item style={styles.borderItem}>
@@ -352,7 +274,7 @@ export default ({ store, web3t }) => {
     );
 
     const SendButton = ({ send, error }) =>
-        btnWithdrawBtc({ store, web3t})
+        btnWithdraw({ store, web3t})
     ;
 
     const refreshToken = async (bool) => {
