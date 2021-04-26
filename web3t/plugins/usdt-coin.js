@@ -60,6 +60,7 @@
   };
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
+  out$.nickname = "usdt";
   out$.token = token = 'usdt';
   out$.name = name = "USDT Omni";
   out$.color = color = '#26A17B';

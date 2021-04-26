@@ -36,6 +36,7 @@
   out$.color = color = '#000000';
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
+  out$.nickname = "trx";
   out$.token = token = 'trx';
   out$.image = image = 'https://s2.coinmarketcap.com/static/img/coins/200x200/1958.png';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=TRX&tsyms=USD).TRX.USD";

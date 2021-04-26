@@ -31,6 +31,7 @@
   out$.testnet = testnet = ropsten;
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
+  out$.nickname = "sprkl";
   out$.token = token = 'sprkl';
   out$.image = image = './res/sparkle-ethnamed.png';
   out$.usdInfo = usdInfo = 1;
