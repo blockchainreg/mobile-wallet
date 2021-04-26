@@ -64,9 +64,7 @@ export default ({ store, web3t }) => {
           store.current.send.wallet = wallet;
           store.current.send.coin = wallet.coin;
           store.current.send.network = wallet.network;
-          navigate(store, web3t, "send", x=> {
-
-          });
+          navigate(store, web3t, "send");
 
     }
 
