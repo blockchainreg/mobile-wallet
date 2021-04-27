@@ -709,10 +709,11 @@
       return cb("Url is not defined");
     }
     return get(getApiUrl(network) + "/address/" + address + "/txs?limit=100").timeout({
-      deadline: 15000
+      deadline: 5000
     }).end(function(err, data){
       if (err != null) {
-        return cb(err);
+        console.log("[BTC] Get txs by address error", err);
+        return cb(null, []);
       }
       return jsonParse(data.text, function(err, result){
         var _result;
