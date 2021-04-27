@@ -4,6 +4,7 @@
   mainnetConfig = {
     disabled: false,
     decimals: 9,
+	txFeeIn: "vlx",
     txFee: '0.0014',
     txFeeOptions: {
       auto: '0.0020',
@@ -33,6 +34,7 @@
   testnetConfig = {
     decimals: 9,
     txFee: '0.0014',
+	txFeeIn: "vlx",
     txFeeOptions: {
       auto: '0.0020',
       cheap: '0.0020'
