@@ -155,47 +155,6 @@ const RadioButtons = () => {
   );
 };
 
-var doSpinner = ({spinner, store}) => {
-  let withdrawSpinner = null;
-  spinner = new Spinner(store, "Checking balance", {
-	displayDescription: true,
-  });
-  // if (store.current.send.sending && !store.current.confirmation) {
-	// withdrawSpinner = new Spinner(store, "Sending funds", {
-	//   displayDescription: true,
-	// });
-	// return;
-  // }
-  // if (!store.current.send.chekingBalance && !store.current.send.sending ) {
-	// if (withdrawSpinner){
-	//   withdrawSpinner.finish();
-	//   withdrawSpinner = null;
-	// }
-	// return;
-  // }
-
-  // if (!store.current.send.chekingBalance === null) {
-	// console.log("isnt sending and check spinner");
-	// if(checkingSpinner){
-	//   checkingSpinner.finish();
-	//   checkingSpinner = null;
-	// }
-  // }
-
-  // if (store.current.confirmation && store.current.send.chekingBalance) {
-  //   if(checkingSpinner) {
-	//   checkingSpinner.finish();
-	//   checkingSpinner = null;
-	// }
-	// store.current.send["to"] = "";
-	// store.current.send.amountSend = '0';
-	// store.current.send.amountSendUsd = '0';
-	// store.current.send.amountSendFee = '0';
-	// store.current.send.amountSendFeeUsd = '0';
-	// store.current.send.error = "";
-	// return;
-  // } 
-}
 
 export default ({ store, web3t }) => {
     const lang = getLang(store);
@@ -222,12 +181,7 @@ export default ({ store, web3t }) => {
 	}
 	
 	const btnWithdraw = ({ store, web3t }) => {
-	  const {
-		send,
-		sendAnyway,
-	  } = sendFuncs(store, web3t);
-	  console.log("Withdraw btnWithdrawBtc")
-  
+	  const { send, sendAnyway } = sendFuncs(store, web3t);
 	  const withdraw = async () => {
 		try {
 		  store.current.send.error = "";
@@ -247,7 +201,7 @@ export default ({ store, web3t }) => {
 	  );
 	};
 
-    const InputAddressWithdrawBtc = ({ send }) => (
+    const InputAddressWithdraw = ({ send }) => (
       <Item style={styles.borderItem}>
         <Input
           onChangeText={(text) => recipientChange(wrap(text))}
@@ -321,7 +275,7 @@ export default ({ store, web3t }) => {
             <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang["to"]}:</Text>
               </View>
-              {InputAddressWithdrawBtc({send: store.current.send})}
+              {InputAddressWithdraw({send: store.current.send})}
               <View style={pad}></View>
 
               <View style={styles.titleInputSend}>
