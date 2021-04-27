@@ -86,20 +86,19 @@ import Spinner from "../utils/spinner";
         amountFee: amountSendFee,
         data: data
       };
-	  var balanceSpinner = new Spinner(store, "Checking balance", {
-		displayDescription: true,
-	  });
+	  store.current.creatingTransaction = true;
 		return createTransaction(tx, function(err, data){
-		balanceSpinner.finish();
         if (err != null) {
-          	if (err.toString().indexOf("has no matching Script") !== -1){
-          		err = "Address is not valid";  
-			}
-	        return cb(err);
+		  store.current.creatingTransaction = false;
+		  if (err.toString().indexOf("has no matching Script") !== -1){
+			err = "Address is not valid";  
+		  }
+		  return cb(err);
         }
         var currency = (send.coin.nickname || send.coin.token).toUpperCase();
         return confirm(store, "Are you sure to send " + tx.amount + " " + currency + " to " + send.to/*, "Yes, Send!"*/, function(agree){
           if (!agree) {
+			store.current.creatingTransaction = false;
             return cb("You are not agree");
           }
 		  var txSpinner = new Spinner(store, "Sending funds", {
@@ -110,6 +109,7 @@ import Spinner from "../utils/spinner";
             txType: txType,
             network: network
           }, data)), function(err, tx){
+			store.current.creatingTransaction = false;
 			txSpinner.finish();
             if (err != null) {
               return cb(err);

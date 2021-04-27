@@ -193,7 +193,7 @@ export default ({ store, web3t }) => {
 	  };
 	  const lang = getLang(store);
 	  const sendText = lang.send;
-	  const disabled = (!((send.error.length === 0) && (+send.amountSend > 0))) || send.amountChanging === true;
+	  const disabled = (!((send.error.length === 0) && (+send.amountSend > 0))) || (send.amountChanging === true) || (store.current.creatingTransaction === true);
 	  return (
 		  <Button block style={disabled ? styles.buttonInactive : styles.btnVelasActive} onPress={withdraw} disabled={disabled}>
 			<Text style={styles.textBtn}>{sendText}</Text>

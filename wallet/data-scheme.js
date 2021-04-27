@@ -96,6 +96,7 @@
       manageAccount: false,
       filterPlugins: "",
       confirmation: null,
+	  creatingTransaction: false,
       demo: location.href.indexOf('web3.space/wallet') > -1,
       network: 'mainnet',
       pin: "",
