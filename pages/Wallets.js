@@ -12,7 +12,7 @@ import {
   Title,
   Icon,
   Content,
-  Header,
+  Header, Toast,
 } from "native-base";
 import styles from "../Styles.js";
 import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, } from "react-native";
@@ -51,20 +51,20 @@ const wallets = (store, web3t) => {
 
   const listItem = (wallet) => {
     const chooseWallet = () => {
-      try {
-        store.current.wallet = wallet.coin.token;
-        store.current.walletIndex = wallets.indexOf(wallet);
-        store.current.filter.length = 0;
-        store.current.filter.push("IN");
-        store.current.filter.push("OUT");
-        store.current.filter.push(wallet.coin.token);
-        store.current.filterVal.temp = "";
-        store.current.filterVal.apply = "";
-        applyTransactions(store);
-        store.current.page = "wallet";
-      } catch (err) {
-        console.log(err);
-      }
+	  store.current.wallet = wallet.coin.token;
+	  store.current.walletIndex = wallets.indexOf(wallet);
+	  store.current.filter.length = 0;
+	  store.current.filter.push("IN");
+	  store.current.filter.push("OUT");
+	  store.current.filter.push(wallet.coin.token);
+	  store.current.filterVal.temp = "";
+	  store.current.filterVal.apply = "";
+	  store.current.page = "wallet";
+	  try {
+		applyTransactions(store); 
+	  } catch (err) {
+		return Toast.show({text: err + ""});
+	  }
     };
 
     const { active, balance, balanceUsd, pending, usdRate, token } = walletFuncs(
@@ -75,6 +75,7 @@ const wallets = (store, web3t) => {
     );
 
     const send = () => {
+      	console.log("send")
           if(wallet.balance == "..") return;
           store.current.wallet = wallet.coin.token;
           store.current.walletIndex = wallets.indexOf(wallet);
