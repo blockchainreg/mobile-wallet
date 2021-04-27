@@ -3,11 +3,8 @@ import { View, Text, PanResponder, SafeAreaView} from "react-native";
 import { observable, intercept, observe } from "mobx";
 import { observer } from "mobx-react";
 import { Root } from "native-base";
-//import Store from "./Store.js";
 import pages from "./Pages.js";
 import styles from "./Styles.js";
-// import StartPage from "./pages/StartPage";
-//import web3t from './web3t.js';
 import Store from './wallet/data-scheme.js';
 import web3 from './wallet/web3.js';
 import { saved } from './wallet/seed.js';
@@ -25,8 +22,6 @@ Store.current.filterVal = { apply: "", temp: "" }
 Store.current.seedIndex = 0
 Store.current.seedIndexes = [];
 Store.current.seedWords = [];
-// if ((localStorage.getItem("lang") || "").length === 0)
-//   Store.current.page = "LangPage"
 Store.lang = localStorage.getItem("lang") || "en";
 Store.current.auth = {
     isLocalAuthEnabled: null,
@@ -67,10 +62,6 @@ const renderSpinner = ({ store }) => {
 };
 
 const Main = observer(({ store, current }) => {
-
-  // console.log("current descriptions", current.loadingDescriptions);
-
-
   const page = pages[current.page];
   console.log('Rendering', current.page);
   if (!page) {
@@ -137,17 +128,13 @@ export default class AppReady extends React.Component {
       ready: true
     };
   }
-
-
+  
   _panResponder = {};
-
-
 
   componentDidMount() {
     store.current.page = saved() === true ? "locked" : "register";
 
     this._panResponder = PanResponder.create({
-
       onStartShouldSetPanResponder: resetTimer,
       onMoveShouldSetPanResponder: resetTimer,
       onStartShouldSetPanResponderCapture: resetTimer,
@@ -156,7 +143,6 @@ export default class AppReady extends React.Component {
       onShouldBlockNativeResponder: resetTimer,
     });
     resetTimer();
-
   }
 
 
