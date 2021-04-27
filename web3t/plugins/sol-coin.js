@@ -7,8 +7,8 @@
 	txFeeIn: "vlx",
     txFee: '0.0014',
     txFeeOptions: {
-      auto: '0.0020',
-      cheap: '0.0020'
+      auto: '0.000042',
+      cheap: '0.000042'
     },
     messagePrefix: 'Ethereum',
     mask: '',
@@ -36,8 +36,8 @@
     txFee: '0.0014',
 	txFeeIn: "vlx",
     txFeeOptions: {
-      auto: '0.0020',
-      cheap: '0.0020'
+      auto: '0.000042',
+      cheap: '0.000042'
     },
     messagePrefix: 'Ethereum',
     mask: '',
