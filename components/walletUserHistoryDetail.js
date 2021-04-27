@@ -78,7 +78,8 @@ export default (store, web3t) => {
   const {tx} = store.infoTransaction;
   const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
   let token = store.infoTransaction.token === 'vlx2' ? "vlx" : store.infoTransaction.token;
-  const tokenLabel = token.toUpperCase();
+  const tokenLabel = (wallet.coin.nickname || token).toUpperCase();
+  const feeToken = (wallet.network.txFeeIn || wallet.coin.nickname).toUpperCase();
   const r_amount = roundNumber(store.infoTransaction.amount, {decimals: 4});
   const amount = roundHuman(r_amount);
   return (
@@ -136,7 +137,7 @@ export default (store, web3t) => {
             <Text style={styles.detail}>{lang.amount}:</Text>
             <Text style={styles.viewPt}>
               {store.infoTransaction.amount}
-              {" "}{token.toUpperCase()}
+              {" "}{tokenLabel}
             </Text>
           </View>
 
@@ -144,7 +145,7 @@ export default (store, web3t) => {
             <Text style={styles.detail}>{lang.fee}:</Text>
             <Text style={styles.viewPt}>
               {store.infoTransaction.fee}
-              {" "}{token.toUpperCase()}
+              {" "}{feeToken}
             </Text>
           </View>
 
