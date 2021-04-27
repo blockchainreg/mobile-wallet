@@ -46,19 +46,20 @@ const web3t = web3(store);
 const renderSpinner = ({ store }) => {
     const {current} = store;
     const text = current.loadingDescriptions.length === 0 ? "" : current.loadingDescriptions[0];
-    const isVisible = current.loadingSpinners.length > 0;
-    return (
-      <Spinner
-        visible={isVisible}
-        overlayColor="rgba(11, 12, 39, 0.70)"
-        indicatorStyle={{ color: 'white', justifyContent: 'flex-start', top: 50 }}
-        size="small"
-        animation="fade"
-        textContent={text}
-        textStyle={styles.spinnerTextStyle}
-        cancelable={true}
-      />
-    );
+    const isVisible = current.loadingSpinners.length > 0 && !current.confirmation;
+   	if(!isVisible) return null;
+	return (
+	  <Spinner
+		visible={isVisible}
+		overlayColor="rgba(11, 12, 39, 0.70)"
+		indicatorStyle={{ color: 'white', justifyContent: 'flex-start', top: 50 }}
+		size="small"
+		animation="fade"
+		textContent={text}
+		textStyle={styles.spinnerTextStyle}
+		cancelable={true}
+	  />
+	);
 };
 
 const Main = observer(({ store, current }) => {
