@@ -5186,12 +5186,6 @@ export default StyleSheet.create({
     marginTop: 20,
     height: "50%",
   },
-  marginBtn: {
-    alignItems: "center",
-    width: "100%",
-    marginBottom: 15,
-    marginTop: 20,
-  },
   spinnerTextStyle: {
     color: "#FFF",
     textShadowColor: "transparent",
@@ -5932,6 +5926,8 @@ export default StyleSheet.create({
     borderRadius: 0,
     backgroundColor: 'white',
     marginVertical: 30,
+	opacity: 1,
+	zIndex: 1
   },
   btnVelasCreate: {
     borderRadius: 0,
