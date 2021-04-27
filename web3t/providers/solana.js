@@ -304,21 +304,23 @@
 	  transactionData = {};
 	  amount = times(config.amount, dec);
 	  transaction = {};
-	  toHex = function(it){
-		return new BN(it);
-	  };
-	  if (swap != null && swap === true) {
-		transaction = swapNativeToEvm(payAccount.publicKey, amount, recipient);
-		transaction.recentBlockhash = recentBlockhash;
-	  } else {
-		transactionData = solanaWeb3.SystemProgram.transfer({
-		  fromPubkey: payAccount.publicKey,
-		  toPubkey: recipient,
-		  lamports: amount
-		});
-		transaction = new solanaWeb3.Transaction({
-		  recentBlockhash: recentBlockhash
-		}).add(transactionData);
+	  try {
+		if (swap != null && swap === true) {
+		  transaction = swapNativeToEvm(payAccount.publicKey, amount, recipient);
+		  transaction.recentBlockhash = recentBlockhash;
+		} else {
+		  transactionData = solanaWeb3.SystemProgram.transfer({
+			fromPubkey: payAccount.publicKey,
+			toPubkey: recipient,
+			lamports: amount
+		  });
+		  transaction = new solanaWeb3.Transaction({
+			recentBlockhash: recentBlockhash
+		  }).add(transactionData);
+		}
+	  } catch (e) {
+		console.error("Form tx error:", e);
+		return cb(e);
 	  }
 	  try {
 		transaction.sign(payAccount);
