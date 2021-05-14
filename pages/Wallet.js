@@ -36,6 +36,8 @@ import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
 import {swap} from "../wallet/wallet-funcs.js";
 import {swapIcon} from "../wallet/icons.js";
+import {filter, map, objToPairs, pairsToObj} from "prelude-ls";
+import tokenNetworks from "../wallet/swapping/networks";
 
 
 export default ({ store, web3t }) => {
@@ -85,8 +87,32 @@ export default ({ store, web3t }) => {
 		store.current.send.wallet = wallet;
 		store.current.send.coin = wallet.coin;
 		store.current.send.network = wallet.network;
+
+		setDefaultSwapNetwork();
 		navigate(store, web3t, "send");
 	}
+	/**
+	 * Set default network for swap in Send screen.
+	 * */
+	const setDefaultSwapNetwork = () => {
+		let availableNetworks = pairsToObj(
+			filter(function(it){
+				return it[1].disabled == null || it[1].disabled === false;
+			})(
+				objToPairs(
+					wallet.network.networks)));
+
+		let walletSwapNetworksIds = Object.keys(availableNetworks);
+		if (walletSwapNetworksIds.length > 0) {
+			let defaultNetwork = wallet.network.networks[walletSwapNetworksIds[0]];
+			store.current.send.chosenNetwork = defaultNetwork;
+			store.current.send.to = tokenNetworks.getDefaultRecipientAddress(store);
+			console.log("store.current.send.to", store.current.send.to)
+		} else {
+			console.error("networks prop in " + store.current.send.token + " wallet is defined but is empty");
+		}
+	}
+
 	const changePage = (tab) => () => {
 		store.current.page = tab;
 	};

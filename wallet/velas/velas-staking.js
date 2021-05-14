@@ -26,7 +26,6 @@ class VelasStaking {
     }
 
     getAccountPublicKey() {
-        console.log("return public key", this.authorization.publicKey);
         return new PublicKey(this.authorization.publicKey)
     };
 
@@ -49,7 +48,7 @@ class VelasStaking {
         return await this.connection.getSlot();
     }
     async getFirstAvailableBlock() {
-        return await this.connection.getFirstAvailableBlock(); 
+        return await this.connection.getFirstAvailableBlock();
     }
     async getConfirmedBlock(slot) {
         return await this.connection.getConfirmedBlock(slot);
@@ -78,7 +77,7 @@ class VelasStaking {
             return undefined;
         };
     };
-    
+
     async splitStakeAccount(stakeAccount, splitStakePubkey, lamports){
         let transaction = new Transaction();
         const authorizedPubkey = this.getAccountPublicKey();
@@ -93,14 +92,14 @@ class VelasStaking {
             seed,
             base: authorizedPubkey
         };
-        
+
         try {
             transaction.add(StakeProgram.split(params));
         } catch (e) {
             return {
                 error: "split_stake_account_error",
                 description: e.message,
-            };    
+            };
         }
         return this.sendTransaction(transaction);
     }
@@ -199,9 +198,9 @@ class VelasStaking {
 
         for (let i = 0; i < 1000; i++) {
             const stakeAccountWithSeed = await PublicKey.createWithSeed(
-                fromPubkey,
-                i.toString(),
-                StakeProgram.programId,
+              fromPubkey,
+              i.toString(),
+              StakeProgram.programId,
             );
 
             if (this.accounts.filter(item => { return item.address === stakeAccountWithSeed.toBase58()}).length === 0) {
@@ -209,7 +208,7 @@ class VelasStaking {
             };
         };
     };
-    
+
     async createNewStakeAccountWithSeed(){
 
         let stakeAccountWithSeed;
@@ -218,9 +217,9 @@ class VelasStaking {
             const seed       = await this.getNextSeed();
 
             stakeAccountWithSeed = await PublicKey.createWithSeed(
-                this.getAccountPublicKey(),
-                seed,
-                StakeProgram.programId,
+              this.getAccountPublicKey(),
+              seed,
+              StakeProgram.programId,
             );
 
         } catch(e) {
@@ -230,7 +229,7 @@ class VelasStaking {
             };
         };
 
-        return stakeAccountWithSeed;   
+        return stakeAccountWithSeed;
     }
 
     async createAccount(amount_sol = (this.min_stake * this.sol)) {
@@ -247,13 +246,13 @@ class VelasStaking {
             const seed       = await this.getNextSeed();
 
             const stakeAccountWithSeed = await PublicKey.createWithSeed(
-                fromPubkey,
-                seed,
-                StakeProgram.programId,
+              fromPubkey,
+              seed,
+              StakeProgram.programId,
             );
 
             const lockup = new Lockup(0,0, fromPubkey);
-            
+
             const config = {
                 authorized,
                 basePubkey: fromPubkey,
@@ -279,9 +278,9 @@ class VelasStaking {
         const fromPubkey = this.getAccountPublicKey();
         for (let i = 0; i < 1000; i++) {
             const stakeAccountWithSeed = await PublicKey.createWithSeed(
-                fromPubkey,
-                i.toString(),
-                StakeProgram.programId,
+              fromPubkey,
+              i.toString(),
+              StakeProgram.programId,
             );
             if (stakeAccountWithSeed.toBase58() === base58PublicKey) return `stake:${i}`;
         };
@@ -291,7 +290,6 @@ class VelasStaking {
     async getOwnStakingAccounts(accounts) {
         var ref$, ref1$, ref2$, ref3$, ref4$, ref5$;
         let owner = this.getAccountPublicKey();
-        console.log("filter from accounts", owner);
         accounts = accounts.filter(item => {
             if (deepEq$(typeof item != 'undefined' && item !== null ? (ref$ = item.account) != null ? (ref1$ = ref$.data) != null ? (ref2$ = ref1$.parsed) != null ? (ref3$ = ref2$.info) != null ? (ref4$ = ref3$.meta) != null ? (ref5$ = ref4$.authorized) != null ? ref5$.staker : void 8 : void 8 : void 8 : void 8 : void 8 : void 8 : void 8, owner.toBase58(), '===')) {
                 return true;
@@ -358,12 +356,12 @@ class VelasStaking {
                 };
             };
         };
-        
+
         this.accounts = accounts;
 
         return accounts;
     };
-    
+
     async getParsedProgramAccounts(){
         const accounts = await this.connection.getParsedProgramAccounts(StakeProgram.programId);
         const delegators = {};
@@ -379,10 +377,10 @@ class VelasStaking {
                 }
                 ;
             }
-        }; 
+        };
         return accounts;
     }
-    
+
     async getInfo() {
         const accounts = await this.connection.getParsedProgramAccounts(StakeProgram.programId);
         console.log("accounts", accounts)
@@ -441,16 +439,16 @@ class VelasStaking {
                 description: e.message,
             };
         };
-       
+
         const payAccount = new Account(this.secretKey);
         let result = await this.connection.sendTransaction(
-            transaction,
-            [payAccount]
+          transaction,
+          [payAccount]
         );
         console.log("result !", result);
-         
+
         return result;
-        
+
     };
 
     async userinfo() {
@@ -469,7 +467,7 @@ class VelasStaking {
 
 function deepEq$(x, y, type){
     var toString = {}.toString, hasOwnProperty = {}.hasOwnProperty,
-        has = function (obj, key) { return hasOwnProperty.call(obj, key); };
+      has = function (obj, key) { return hasOwnProperty.call(obj, key); };
     var first = true;
     return eq(x, y, []);
     function eq(a, b, stack) {
@@ -488,9 +486,9 @@ function deepEq$(x, y, type){
                 return +a == +b;
             case '[object RegExp]':
                 return a.source == b.source &&
-                    a.global == b.global &&
-                    a.multiline == b.multiline &&
-                    a.ignoreCase == b.ignoreCase;
+                  a.global == b.global &&
+                  a.multiline == b.multiline &&
+                  a.ignoreCase == b.ignoreCase;
         }
         if (typeof a != 'object' || typeof b != 'object') { return false; }
         length = stack.length;

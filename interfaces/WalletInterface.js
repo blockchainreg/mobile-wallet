@@ -1,5 +1,9 @@
 
 
 class WalletInterface {
-  send = () => {}
+
+  /**
+   * Send transaction
+   * */
+  sendTx = () => {}
 }

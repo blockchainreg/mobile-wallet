@@ -73,6 +73,7 @@
   }
   out$.isValidAddress = isValidAddress = function(arg$, cb){
     var address;
+    console.log("arg$", arg$)
     address = arg$.address;
     if (address[0] !== 'V') {
       return cb("Given address is not valid Velas address");
@@ -546,7 +547,7 @@
   out$.createTransaction = createTransaction = curry$(function(arg$, cb){
     var network, account, recipient, amount, amountFee, data, feeType, txType, gasPrice, gas, dec;
     network = arg$.network, account = arg$.account, recipient = arg$.recipient, amount = arg$.amount, amountFee = arg$.amountFee, data = arg$.data, feeType = arg$.feeType, txType = arg$.txType, gasPrice = arg$.gasPrice, gas = arg$.gas;
-    console.log("Legacy vlx2 [create-transaction]");
+    console.log("Legacy vlx2 [create-transaction]", recipient);
     dec = getDec(network);
     return toEthAddress(recipient, function(err, $recipient){
       var privateKey;
