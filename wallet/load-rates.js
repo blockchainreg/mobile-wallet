@@ -5,7 +5,6 @@
   ref$ = require('prelude-ls'), map = ref$.map, groupBy = ref$.groupBy, objToPairs = ref$.objToPairs, pairsToObj = ref$.pairsToObj, flatten = ref$.flatten, filter = ref$.filter;
   ref$ = require('./workflow.js'), task = ref$.task, run = ref$.run;
   div = require('./math.js').div;
-  console.log("		[load rates]");
   parseRateString = function(usdInfo){
     var ref$, _, div, url, extract;    
     ref$ = usdInfo.match(/(1\/)?url\(([^)]+)\)(.+)?/), _ = ref$[0], div = ref$[1], url = ref$[2], extract = ref$[3];
@@ -58,7 +57,6 @@
         });
       }
       return get(url).end(function(err, data){
-        console.log("[createTask] ", url, err, data);
         return cb({
           err: err,
           data: data,
@@ -149,7 +147,6 @@
     })(
     map(makeLoader)(
     wallets)))));
-    console.log("tasks", tasks)
     return run([tasks]).then(function(res){
       return setVals(res, cb);
     });
