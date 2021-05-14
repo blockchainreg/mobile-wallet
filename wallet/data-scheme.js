@@ -37,7 +37,8 @@
       showDataMode: 'encoded',
       error: '',
       sending: false,
-	  chekingBalance: null
+	  chekingBalance: null,
+	  chosenNetwork: null
     };
   };
   store = {
@@ -85,6 +86,12 @@
     current: {
       account: {wallets:[]},
       device: getDevice(),
+	  filterTxsTypes: ['IN', 'OUT'],
+	  filter: {
+		from: null,
+		to: null,
+		token: null
+	  },
       list: 0,
       promptAnswer: "",
       prompt: false,

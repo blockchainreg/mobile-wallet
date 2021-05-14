@@ -34,7 +34,6 @@
   };
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
-  out$.nickname = "xem";
   out$.token = token = 'xem';
   out$.image = image = './res/nem-ethnamed.png';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,DASH,XEM,USDT,ETC&tsyms=USD).XEM.USD";

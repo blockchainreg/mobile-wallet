@@ -44,7 +44,7 @@
   //   return caches[key](cb);
   // };
 
-  out$.getKeys = action(function(provider, config, cb){
+  out$.getKeys = getKeys = action(function(provider, config, cb){
     return provider.getKeys(config, cb);
   });
   out$.getBalance = getBalance = action(function(provider, config, cb){

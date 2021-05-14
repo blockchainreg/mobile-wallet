@@ -26,7 +26,6 @@
   };
   out$.type = type = 'coin';
   out$.enabled = enabled = false;
-  out$.nickname = "xrp";
   out$.token = token = 'xrp';
   out$.image = image = './res/xrp-ethnamed.png';
 }).call(this);

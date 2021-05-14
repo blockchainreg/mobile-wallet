@@ -8,7 +8,7 @@ mainnet-config =
     messagePrefix: 'Ethereum'
     mask: '3000000000000000000000000000000000'
     api:  
-        provider: 'solana'
+        provider: 'native'
         web3Provider: 'https://api.velas.com'
         url: 'https://native.velas.com',
         apiUrl: 'https://api.velas.com'
@@ -30,7 +30,7 @@ testnet-config =
     messagePrefix: 'Ethereum'
     mask: '3000000000000000000000000000000000'
     api: 
-        provider: 'solana'
+        provider: 'native'
         web3Provider: 'https://explorer.testnet.velas.com/rpc'
         url: 'https://native.velas.com'
         apiUrl: 'https://explorer.testnet.velas.com/api'

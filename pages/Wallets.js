@@ -9,14 +9,12 @@ import {
   Text,
   Button,
   View,
-  Title,
   Icon,
   Content,
   Header, Toast,
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, } from "react-native";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
+import { ScrollView, RefreshControl, Alert, Vibration, } from "react-native";
 import CustomRefreshControl from "../components/RefreshControl.js";
 import Footer from "./Footer.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
@@ -27,18 +25,14 @@ import getLang from "../wallet/get-lang.js";
 import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from "../Images.js";
-import Modal from 'react-native-modal';
 import navigate from "../wallet/navigate.js";
 import spin from "../utils/spin.js";
 import {
-  widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import DemoMode from "../components/DemoMode.js"
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
-
-
 
 
 const wallets = (store, web3t) => {
@@ -54,9 +48,10 @@ const wallets = (store, web3t) => {
 	  store.current.wallet = wallet.coin.token;
 	  store.current.walletIndex = wallets.indexOf(wallet);
 	  store.current.filter.length = 0;
-	  store.current.filter.push("IN");
-	  store.current.filter.push("OUT");
-	  store.current.filter.push(wallet.coin.token);
+	  store.current.filter.filterTxsTypes = ['IN', 'OUT'];
+	  store.current.filter = {
+		token: wallet.coin.token
+	  };
 	  store.current.filterVal.temp = "";
 	  store.current.filterVal.apply = "";
 	  store.current.page = "wallet";
@@ -80,9 +75,10 @@ const wallets = (store, web3t) => {
           store.current.wallet = wallet.coin.token;
           store.current.walletIndex = wallets.indexOf(wallet);
           store.current.filter.length = 0;
-          store.current.filter.push("IN");
-          store.current.filter.push("OUT");
-          store.current.filter.push(wallet.coin.token);
+		  store.current.filter.filterTxsTypes = ['IN', 'OUT'];
+		  store.current.filter = {
+			token: wallet.coin.token
+		  };
           store.current.filterVal.temp = "";
           store.current.filterVal.apply = "";
           applyTransactions(store);

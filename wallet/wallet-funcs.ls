@@ -25,6 +25,7 @@ module.exports = (store, web3t, wallets, wallet)->
         value = 0
         err <- send-transaction { to, value }
         #console.log err if err?
+    swap = (store, wallet)-->
     receive = (wallet, event)-->
         #console.log { event }
         event.stop-propagation!

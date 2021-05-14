@@ -21,7 +21,6 @@
   out$.testnet = testnet = ropsten;
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
-  out$.nickname = "eth rs";
   out$.token = token = 'eth_rs';
   out$.image = image = './res/eth-ethnamed.png';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,DASH,XEM,USDT,ETC&tsyms=USD).ETH.USD";
