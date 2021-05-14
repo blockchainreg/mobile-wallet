@@ -37,7 +37,6 @@
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
   out$.token = token = 'xlm';
-  out$.nickname = "xlm";
   out$.image = image = 'https://crushcrypto.com/wp-content/uploads/2018/08/Stellar-Logo.jpg';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=XLM&tsyms=USD).XLM.USD";
 }).call(this);

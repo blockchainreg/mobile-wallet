@@ -23,6 +23,7 @@ import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import Spinner from "../utils/spinner.js";
 import StatusBar from "../components/StatusBar.js";
+import NetworkSlider from "../components/sliders/network-slider"
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
@@ -84,8 +85,6 @@ const RadioButtons = () => {
                 placeholderTextColor="rgba(255,255,255,0.60)"
                 disabled={true}
               />
-
-
           </Item>
         </TouchableOpacity>
       </View>
@@ -117,12 +116,10 @@ const RadioButtons = () => {
                 placeholderTextColor="rgba(255,255,255,0.60)"
                 disabled={true}
               />
-
           </Item>
         </TouchableOpacity>
       </View>
-
-
+	  
         <TouchableOpacity
           style={checked === 'fast' ? styles.borderRadioCheck : styles.borderRadio}
           onPress={() => setChecked('fast')}>
@@ -157,17 +154,35 @@ const RadioButtons = () => {
 
 
 export default ({ store, web3t }) => {
-    const lang = getLang(store);
-    const {
-      feeToken,
-      recipientChange,
-      amountChange,
-      amountUsdChange, 
-	  checkRecipientAddress,
-    } = sendFuncs(store, web3t);
+	const lang = getLang(store);
+	const {
+		feeToken,
+		recipientChange,
+		amountChange,
+		amountUsdChange, 
+	checkRecipientAddress,
+	} = sendFuncs(store, web3t);
 
-    const wallets = walletsFuncs(store, web3t).wallets;
-    const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+	const wallets = walletsFuncs(store, web3t).wallets;
+	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  
+	/* If it is Swap! */
+	// if (wallet.network.networks != null && store.current.send.isSwap === true) {
+	//   let availableNetworks = pairsToObj(
+	// 	  filter(function(it){
+	// 		return it[1].disabled == null || it[1].disabled === false;
+	// 	  })(
+	// 		  objToPairs(
+	// 			  wallet.network.networks)));
+	//   const walletSwapNetworksIds = Object.keys(availableNetworks);
+	//   if (walletSwapNetworksIds.length > 0) {
+	// 	const defaultNetwork = wallet.network.networks[walletSwapNetworksIds[0]];
+	// 	store.current.send.chosenNetwork = defaultNetwork;
+	// 	store.current.send.to = tokenNetworks.getDefaultRecipientAddress(store);
+	//   } else {
+	// 	console.error("networks prop in " + store.current.send.token + " wallet is defined but is empty");
+	//   }
+	// }
 
     const changePage = (tab) => () => {
       store.current.page = tab;
@@ -272,9 +287,10 @@ export default ({ store, web3t }) => {
               </Text>
             </View>
             <View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
+			{NetworkSlider({store, web3t, wallet})}
             <View style={styles.titleInputSend}>
                 <Text style={styles.titleInput1}>{lang["to"]}:</Text>
-              </View>
+			</View>
               {InputAddressWithdraw({send: store.current.send})}
               <View style={pad}></View>
 

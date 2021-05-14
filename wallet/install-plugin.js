@@ -11,6 +11,7 @@
   var eth = require('../web3t/plugins/eth-coin.js');
   var etc = require('../web3t/plugins/etc-coin.js');
   var syx = require('../web3t/plugins/symblox.js');
+  var syx2 = require('../web3t/plugins/symblox-v2.js');
   var ltc = require('../web3t/plugins/ltc-coin.js');
   var usdt = require('../web3t/plugins/usdt-coin.js');
   var usdt_erc20 = require("../registry/usdt_erc20.json");
@@ -18,9 +19,10 @@
     dash: dash,
     eth: eth,
     syx: syx,
+	syx2: syx2,
     usdt: usdt,
-    usdt_erc20,
-    ltc
+    usdt_erc20: usdt_erc20,
+    ltc: ltc
   };
   notIn = function(arr, arr2){
     return any(function(it){

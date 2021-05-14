@@ -22,7 +22,6 @@
   out$.type = type = 'coin';
   out$.color = color = '#FF6601';
   out$.enabled = enabled = false;
-  out$.nickname = "xmr";
   out$.token = token = 'xmr';
   out$.image = image = './res/xml-ethnamed.png';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=XMR&tsyms=USD).XMR.USD";
