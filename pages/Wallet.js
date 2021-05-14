@@ -42,9 +42,9 @@ export default ({ store, web3t }) => {
 
 	const lang = getLang(store);
 	const wallets = walletsFuncs(store, web3t).wallets;
-	const wallet = wallets.find((x) => x.coin.token === store.current.wallet); 	
-  
-	
+	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  let hasSwap = wallet.network.networks != null && Object.keys(wallet.network.networks).length > 0
+
 	/*******  Listeners  ********/
 	const usdRate = wallet.usdRate || 0;  
 	const sendLocal = () => {
@@ -214,16 +214,17 @@ export default ({ store, web3t }) => {
 									</TouchableOpacity>
 									<Text style={styles.textTouchable}>{lang.send}</Text>
 								</View>
+					{ hasSwap && (
+						<View style={{ alignItems: "center" }}>
+							<TouchableOpacity
+								onPress={swapClick}
+								style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}>
+								<Thumbnail square small source={{uri: swapIcon}} style={styles.sizeIconBtn} />
 
-				  <View style={{ alignItems: "center" }}>
-						<TouchableOpacity
-							onPress={swapClick}
-							style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}>
-							<Thumbnail square small source={{uri: swapIcon}} style={styles.sizeIconBtn} />
-							
-						</TouchableOpacity>
-						<Text style={styles.textTouchable}>Swap</Text>
-				  </View>
+							</TouchableOpacity>
+							<Text style={styles.textTouchable}>Swap</Text>
+						</View>
+					)}
 					<View style={{ alignItems: "center" }}>
 						<TouchableOpacity
 							onPress={scanQRSend}
