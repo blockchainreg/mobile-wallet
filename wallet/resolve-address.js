@@ -17,7 +17,7 @@
 			wallet = find(function(it){
 				return it.coin.token === $token;
 			})(
-				store.current.account.wallets);
+					store.current.account.wallets);
 			if (wallet == null) {
 				return cb("Wallet for token " + chosenNetwork.name + " not found!");
 			}
