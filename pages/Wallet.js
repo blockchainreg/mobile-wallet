@@ -241,7 +241,10 @@ export default ({ store, web3t }) => {
 											<TouchableOpacity
 													onPress={swapClick}
 													style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}>
-												<Thumbnail square small source={{uri: swapIcon}} style={styles.sizeIconBtn} />
+												<Image
+														source={Images.swapImage}
+														style={styles.sizeIconBtnSwap}
+												/>
 											</TouchableOpacity>
 											<Text style={styles.textTouchable}>Swap</Text>
 										</View>
