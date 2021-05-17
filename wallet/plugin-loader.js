@@ -18,15 +18,18 @@
 	  return !it[network].disabled === true;
 	})(
 		filter(function(it){
-		  return it.enabled;
+		  return !it[network].disabled;
 		})(
-			filter(function(it){
-			  return it.type === 'coin';
-			})(
-				filter(function(it){
-				  return it != null;
-				})(
-					common(store)))));
+		  filter(function(it){
+			return it.enabled;
+		  })(
+			  filter(function(it){
+				return it.type === 'coin';
+			  })(
+				  filter(function(it){
+					return it != null;
+				  })(
+					  common(store))))));
 	return getInstallList(function(err, items){
 	  var installed, all;
 	  if (err != null) {

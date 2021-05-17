@@ -53,19 +53,19 @@
         }, function(err, balance){
           var pendingSent, this$ = this;
           if (err != null) {
-			return cb(err);
+			      return cb(err);
           }
-          pendingSent = foldl(plus, 0)(
-          map(function(it){
-            return it.amount;
-          })(
-          filter(function(it){
-            return it.pending === true;
-          })(
-          filter(function(it){
-            return it.token === token;
-          })(
-          store.transactions.all))));
+          pendingSent = 0
+          // map(function(it){
+          //   return it.amount;
+          // })(
+          // filter(function(it){
+          //   return it.pending === true;
+          // })(
+          // filter(function(it){
+          //   return it.token === token;
+          // })(
+          // store.transactions.all))));
           wallet.pendingSent = pendingSent;
           // balance = balance * 1000000 + '';
           wallet.balance = balance;
