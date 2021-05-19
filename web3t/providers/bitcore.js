@@ -807,7 +807,6 @@
         inputs = result.inputs, outputs = result.outputs;
         sender = inputs[0].address;
         receiver = getReceiver(address, sender, outputs);
-        console.log("receiver", receiver);
         value = getValue(outputs, receiver);
         return get(getApiUrl(network) + "/tx/" + mintTxid).timeout({
           deadline: 15000
