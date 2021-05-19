@@ -252,8 +252,7 @@
       return it.token;
     })(
     store.coins));
-    console.log("velas", cweb3);
-    // cweb3.velas = velasApi(store);
+    cweb3.velas = velasApi(store);
     return getCoins(store, function(err, coins){
       if (err != null) {
         return cb(err);
@@ -267,6 +266,7 @@
         return cb(null);
       });
     });
+		store.current.send.sending = false;
   };
   setupRefreshTimer = function(arg$){
     var refreshTimer, refreshBalances;
