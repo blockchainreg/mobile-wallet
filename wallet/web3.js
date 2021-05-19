@@ -259,14 +259,14 @@
       }
       store.coins = coins;
       return getApis(cweb3, store, function(err, apis){
-        if (err != null) {
+				store.current.send.sending = false;
+				if (err != null) {
           return cb(err);
         }
         importAll$(cweb3, apis);
         return cb(null);
       });
     });
-		store.current.send.sending = false;
   };
   setupRefreshTimer = function(arg$){
     var refreshTimer, refreshBalances;
