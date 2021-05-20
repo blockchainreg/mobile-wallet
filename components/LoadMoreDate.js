@@ -77,14 +77,7 @@ export default ({ store, web3t }) => {
       }
     };
 
-    const txs = reverse(
-			sortBy(function(it){
-				return it.time;
-			})(
-					filter(function(it){
-						return in$(it.type, store.current.filterTxsTypes);
-					})(
-						store.transactions.all)));
+    const txs = store.transactions.applied;		
 
     const showTransaction = (transaction) => {
         store.infoTransaction = transaction;
