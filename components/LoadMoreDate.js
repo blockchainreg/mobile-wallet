@@ -8,7 +8,38 @@ import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
 import roundHuman from "../wallet/round-human";
+var ref$ = require('prelude-ls'), sortBy = ref$.sortBy, reverse = ref$.reverse, filter = ref$.filter, find = ref$.find, keys = ref$.keys, map = ref$.map;
 
+
+const filterTxs = curry$(function(store, tx){
+	var type, token, from, to, filterProps, found;
+	type = tx.type, token = tx.token, from = tx.from, to = tx.to;
+	filterProps = keys(
+			store.current.filter);
+	found = filter(function(prop){
+		return store.current.filter[prop] === tx[prop];
+	})(
+			filterProps);
+	return found.length === filterProps.length;
+});
+function curry$(f, bound){
+	var context,
+			_curry = function(args) {
+				return f.length > 1 ? function(){
+					var params = args ? args.concat() : [];
+					context = bound ? context || this : this;
+					return params.push.apply(params, arguments) <
+					f.length && arguments.length ?
+							_curry.call(context, params) : f.apply(context, params);
+				} : f;
+			};
+	return _curry();
+}
+function in$(x, xs){
+	var i = -1, l = xs.length >>> 0;
+	while (++i < l) if (x === xs[i]) return true;
+	return false;
+}
 
 export default ({ store, web3t }) => {
     const lang = getLang(store);
@@ -46,7 +77,14 @@ export default ({ store, web3t }) => {
       }
     };
 
-    const txs = store.transactions.applied;
+    const txs = reverse(
+			sortBy(function(it){
+				return it.time;
+			})(
+					filter(function(it){
+						return in$(it.type, store.current.filterTxsTypes);
+					})(
+						store.transactions.all)));
 
     const showTransaction = (transaction) => {
         store.infoTransaction = transaction;
@@ -68,48 +106,59 @@ export default ({ store, web3t }) => {
     }
 
     const renderTransaction = (transaction) => {
-	  var r_amount = roundNumber(transaction.amount, {decimals: 2});
-	  var amount = roundHuman(r_amount);
-      return (
-		  <ListItem
-			  thumbnail
-			  underlayColor={Images.color1}
-			  onPress={() => {
-				showTransaction(transaction);
-			  }}
-			  key={transaction.token+transaction.tx+transaction.type}
-		  >
-			<Left>{thumbnail(transaction.type)}</Left>
-			<Body style={{ paddingRight: 10 }}>
-			  <Text style={styles.txtSizeHistory}>
-				{checkType(transaction.type)}
-			  </Text>
-			  <Text style={styles.constDate}>
-				{transaction.time
-					? moment(transaction.time * 1000).format(
-						"MMM D YYYY h:mm A"
-					)
-					: null
+			var r_amount = roundNumber(transaction.amount, {decimals: 2});
+			var amount = roundHuman(r_amount);
+			var curr = transaction.token;
+			let currency_display = (function() {
+				switch (curr) {
+					case "vlx_native":
+					case "vlx_evm":
+					case "vlx2":
+					case "vlx": return "VLX";
+					default: return transaction.token
 				}
-			  </Text>
-			</Body>
-			<Right>
-			  <Text style={amountStyle(transaction.type)}>
-				{index(transaction.type)}
-				{amount}{"\u00A0"}{currency}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-			  </Text>
-			  {transaction.fee
-				  ?(
-					  <Text style={styles.constDate}>
-						({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-					  </Text>
-				  )
-				  : null
-			  }
-			</Right>
-		  </ListItem>
-	  );
-	}
+			}());
+			currency_display = currency_display.toUpperCase();
+				return (
+				<ListItem
+					thumbnail
+					underlayColor={Images.color1}
+					onPress={() => {
+					showTransaction(transaction);
+					}}
+					key={transaction.token+transaction.tx+transaction.type}
+				>
+				<Left>{thumbnail(transaction.type)}</Left>
+				<Body style={{ paddingRight: 10 }}>
+					<Text style={styles.txtSizeHistory}>
+					{checkType(transaction.type)}
+					</Text>
+					<Text style={styles.constDate}>
+					{transaction.time
+						? moment(transaction.time * 1000).format(
+							"MMM D YYYY h:mm A"
+						)
+						: null
+					}
+					</Text>
+				</Body>
+				<Right>
+					<Text style={amountStyle(transaction.type)}>
+					{index(transaction.type)}
+					{amount}{"\u00A0"}{currency_display}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+					</Text>
+					{transaction.fee
+						?(
+							<Text style={styles.constDate}>
+							({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+							</Text>
+						)
+						: null
+					}
+				</Right>
+				</ListItem>
+			);
+		}
 
 
     return (
