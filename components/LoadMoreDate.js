@@ -114,28 +114,27 @@ export default ({ store, web3t }) => {
 
     return (
       <View style={styles.container}>
-
         {store.history.filterOpen ? (
           <Header searchBar style={styles.headerSearchBar}>
-                <Item style={{ backgroundColor: Images.color4}}>
-                  <Icon name="ios-search" style={{ color: "#fff"}}/>
-                  <Input
-                    placeholder="Search"
-                    value={store.current.filterVal.temp}
-                    placeholderTextColor="#fff"
-                    onChangeText={changeSearch}
-                    selectionColor={"#fff"}
-                    style={{ color: "#fff", backgroundColor: "transparent"}}
-                  />
-                  <Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>
-                </Item>
-                <Button transparent onPress={applyFilter}>
-                  <Text style={{ color: "#fff"}}>{lang.filter}</Text>
-                </Button>
+						<Item style={{ backgroundColor: Images.color4}}>
+							<Icon name="ios-search" style={{ color: "#fff"}}/>
+							<Input
+								placeholder="Search"
+								value={store.current.filterVal.temp}
+								placeholderTextColor="#fff"
+								onChangeText={changeSearch}
+								selectionColor={"#fff"}
+								style={{ color: "#fff", backgroundColor: "transparent"}}
+							/>
+							<Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>
+						</Item>
+						<Button transparent onPress={applyFilter}>
+							<Text style={{ color: "#fff"}}>{lang.filter}</Text>
+						</Button>
           </Header>
         ) : null}
 
-        {store.current.refreshing ? (
+        {store.current.refreshing || store.current.transactionsAreLoading ? (
           <ActivityIndicator color="#fff" />
         ) : (
           <View>
@@ -147,8 +146,6 @@ export default ({ store, web3t }) => {
                 />
               </View>
             )}
-
-
             <List>
               {txs.map(renderTransaction)}
             </List>
