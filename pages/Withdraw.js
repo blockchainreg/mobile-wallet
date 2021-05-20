@@ -239,6 +239,7 @@ export default ({ store, web3t }) => {
 	const balance = wallet.balance;
 	const r_amount = roundNumber(balance, {decimals: 6});
 	const walletBalance = roundHuman(r_amount);
+	const ScreenTitle = send.isSwap ? "Swap" : lang.send;
 	return (
 			<View style={styles.viewFlex}>
 				<Background fullscreen={true}/>
@@ -247,7 +248,7 @@ export default ({ store, web3t }) => {
 						<BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
 					</Left>
 					<Body style={styles.viewFlexHeader}>
-						<Title style={styles.titleBlack}>{lang.send}</Title>
+						<Title style={styles.titleBlack}>{ScreenTitle}</Title>
 					</Body>
 					<Right style={styles.viewFlexHeader}>
 						<Thumbnail square small source={{ uri: wallet.coin.image }} />
