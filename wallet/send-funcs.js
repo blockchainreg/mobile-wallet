@@ -204,7 +204,11 @@ import swapNativeToEvm from "./Native-swap";
 				
 				/* Important cover sending tx in setImmediate to avoid "send freezing" screen (for solana derivatives tokens). */
 				setImmediate(() => {
-					return confirm(store, "Are you sure to send " + transaction.amount + " " + currency + " to " + transaction.recipient, function (agree) {
+					let confirmText = "Are you sure to send " + transaction.amount + " " + currency + " to " + transaction.recipient;
+					if(store.current.send.isSwap === true){
+						confirmText = "Are you sure to swap " + transaction.amount + " " + currency + " to " + store.current.send.to;
+					}
+					return confirm(store, confirmText, function (agree) {
 						if (!agree) {
 							store.current.creatingTransaction = false;
 							return cb("You are not agree");
