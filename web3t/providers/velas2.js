@@ -654,7 +654,12 @@
 										tx = new Tx(txObj, {
 											common: common
 										});
-										tx.sign(privateKey);
+										try {
+											tx.sign(privateKey);
+										}catch (e) {
+											console.log("tx.sign error:", e);	
+											return cb(e);
+										}
 										rawtx = '0x' + tx.serialize().toString('hex');
 										return cb(null, {
 											rawtx: rawtx
