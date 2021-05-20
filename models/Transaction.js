@@ -25,19 +25,6 @@ export class Transaction {
 			privateKey: wallet.privateKey
 		}
 	}
-
-	get = (prop) => {
-		if(this[prop] == null) {
-			throw new Error(`Cannot get property ${prop} of Transaction object!`);
-		}
-		return this[prop];
-	}
-
-	set = (prop, value) => {
-		if (this[prop] == null) {
-			throw new Error(`Cannot set property ${prop} of Transaction object!`);
-		}
-		this[prop] = value;
-	}
+	
 
 }
