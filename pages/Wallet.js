@@ -33,8 +33,6 @@ import BackButton from "../components/BackButton.js";
 import { LinearGradient } from "expo-linear-gradient";
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
-import {swap} from "../wallet/wallet-funcs.js";
-import {swapIcon} from "../wallet/icons.js";
 import {filter, map, objToPairs, pairsToObj} from "prelude-ls";
 import tokenNetworks from "../wallet/swapping/networks";
 
@@ -45,10 +43,13 @@ export default ({ store, web3t }) => {
 	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 	let hasSwap = wallet.network.networks != null && Object.keys(wallet.network.networks).length > 0
 	/*******  Listeners  ********/
-	const usdRate = wallet.usdRate || 0;
 	const sendLocal = () => {
+		store.current.send.isSwap = false;
+		store.current.send.chosenNetwork = null;
+		store.current.send.contractAddress = null;
 		if(wallet.balance == "..") return;
 		store.current.send["to"] = "";
+		store.current.send.data = null;
 		store.current.send.amountSend = '0';
 		store.current.send.amountSendUsd = '0';
 		store.current.send.amountSendFee = '0';
@@ -61,8 +62,8 @@ export default ({ store, web3t }) => {
 	};
 
 	const swapClick = () => {
-		console.log("swap click!");
 		store.current.send.contractAddress = null;
+		store.current.send.data = null;
 		store.current.send.isSwap = true;
 		if (wallet == null) {
 			// return alert("Not yet loaded");
