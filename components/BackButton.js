@@ -4,7 +4,7 @@ import {Button, Icon} from "native-base";
 
 import styles from "../Styles.js";
 
-export default ({onBack, style}) => {
+export default ({onBack, style, props}) => {
   const back = () => {
     onBack();
     return true;
@@ -22,8 +22,9 @@ export default ({onBack, style}) => {
       onPress={onBack}
     >
       <Icon
+      {...props}
         name="ios-arrow-back"
-        style={style || [styles.arrowHeaderIconBlack, { color: "#fff" }]}
+        style={style || [styles.arrowHeaderIconBlack, { color: props.color || "#fff" }]}
       />
     </Button>
   );

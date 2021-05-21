@@ -1,3 +1,5 @@
+import { Icon } from "native-base";
+
 const tick = require("./assets/tick.png");
 const logo = require("./assets/velas-logo1.png");
 const trx = require("./assets/nothing.png");
@@ -14,6 +16,7 @@ const generate = require("./assets/generate_icon.jpg");
 const confirmation = require("./assets/confirmation_icon.jpg");
 
 const btnWallet = require("./assets/wallet.png");
+// const btnStake = require("./assets/wallet.png");
 const btnHistory = require("./assets/history.png");
 const btnSettings = require("./assets/settings.png");
 
@@ -59,6 +62,7 @@ export default {
   generate,
   confirmation,
   btnWallet,
+  // btnStake,
   btnHistory,
   btnSettings,
   fingerPrint,

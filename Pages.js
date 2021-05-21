@@ -20,6 +20,7 @@ import LocalAuthenticationSettings from "./pages/LocalAuthenticationSettings";
 import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
 import printseed from "./pages/PrintSeed";
 import Scanner from "./pages/Scanner";
+import stakePage from "./pages/StakePage";
 
 export default {
   Scanner,
@@ -43,5 +44,6 @@ export default {
   sent,
   LocalAuthenticationEnable,
   LocalAuthenticationSettings,
-  printseed
+  printseed,
+  stakePage
 };
