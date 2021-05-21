@@ -65,7 +65,12 @@ export default ({store, wallet}) => {
 		padding: 5,
 		backgroundColor: Images.colorBlue,
 		flex: 1,
-		textAlign: "center"
+		textAlign: "center",
+		justiftyContent:"center",
+		display: "flex",
+		flexDirection: "row",
+		alignItems:"center",
+		alignSelf:'center'
 	}
 	const inputStyle = {
 		color: "#fff",
@@ -75,6 +80,16 @@ export default ({store, wallet}) => {
 		fontFamily: "Fontfabric-NexaBold",
 		flex: 4,
 		textAlign: "center"
+	}
+	const arrowIcon = {
+		fontSize: 30,
+		color: '#fff',
+		fontWeight: "bold",
+		fontFamily: "Fontfabric-NexaBold",
+		margin: "auto",
+		flex: 1,
+		textAlign: "center",
+		width: 30
 	}
 
 	return (
@@ -86,7 +101,7 @@ export default ({store, wallet}) => {
 				>
 					<Icon
 							name="ios-arrow-back"
-							style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
+							style={arrowIcon}
 					/>
 				</Button>
 				<Input
@@ -106,7 +121,7 @@ export default ({store, wallet}) => {
 				>
 					<Icon
 							name="ios-arrow-forward"
-							style={[styles.arrowHeaderIconBlack, { color: "#fff" }]}
+							style={arrowIcon}
 					/>
 				</Button>
 			</View>
