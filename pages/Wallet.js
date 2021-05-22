@@ -130,7 +130,6 @@ export default ({ store, web3t }) => {
 			console.log("refresh done", err, data);
 		})
 	}
-	//TODO: Refactor this piece of shit later.
 	const hardCodedStrategyGetAddessPrefix = () => {
 		const mapping = {
 			vlx: "wallet"
