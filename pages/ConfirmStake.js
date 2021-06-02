@@ -30,7 +30,7 @@ export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  store.isStaker = true; // change to false to show other steps. This is a test demo to visualize.
+
   return (
     <Container>
       <StatusBar />

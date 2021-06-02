@@ -115,15 +115,18 @@ const style = StyleSheet.create({
   styleTitle: {
     color: "#fff",
     fontSize: 13,
+    fontFamily: "Fontfabric-NexaRegular",
   },
   styleBalance: {
     marginTop: 3,
     fontSize: 13,
+    fontFamily: "Fontfabric-NexaRegular",
   },
   styleSubTitle: {
     color: "rgba(255, 255, 255, 0.3)",
     fontSize: 10,
     marginTop: 10,
+    fontFamily: "Fontfabric-NexaRegular",
   },
   active: {
     backgroundColor: Images.colorGreen,
@@ -143,6 +146,7 @@ const style = StyleSheet.create({
     color: "#0B0B25",
     fontSize: 6,
     textTransform: "uppercase",
+    fontFamily: "Fontfabric-NexaRegular",
   },
   listItemStyle: {
     marginHorizontal: 20,

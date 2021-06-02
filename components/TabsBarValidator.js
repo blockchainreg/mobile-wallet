@@ -68,14 +68,14 @@ const validatorData = [
   },
   {
     id: 5,
-    type: "other",
+    type: "withdraw",
     value: "15000",
     subtitle: "TOTAL WITHDRAW REQUESTED",
     icon: <ChartIcon />,
   },
   {
     id: 6,
-    type: "other",
+    type: "withdraw",
     value: "5000",
     subtitle: "AVAILABLE FOR WITHDRAW",
     icon: <ChartIcon />,
@@ -87,11 +87,26 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
 const filterStake = validatorData.filter((item) => {
   return item.type.includes("stake");
 });
-const filterOther = validatorData.filter((item) => {
-  return item.type.includes("other");
+const filterWithdraw = validatorData.filter((item) => {
+  return item.type.includes("withdraw");
 });
+const filterOther = validatorData.slice(0, 2);
 
-const renderValidatorCards = filterStake.map((el) => (
+const renderStakeCards = filterStake.map((el) => (
+  <ValidatorCard
+    key={el.id}
+    value={el.value}
+    subtitle={el.subtitle}
+    info={el.info}
+    readMore={el.btnTooltip}
+    link={el.link}
+    cardSymbol={el.symbol}
+    cardIcon={el.icon}
+    type={el.type}
+  />
+));
+
+const renderWithdrawCards = filterWithdraw.map((el) => (
   <ValidatorCard
     key={el.id}
     value={el.value}
@@ -128,6 +143,7 @@ export default ({ store, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+  store.isStaker = true; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
   
   return (
     <>
@@ -141,6 +157,8 @@ export default ({ store, props }) => {
       />
 
       <View>
+        {store.isStaker ? (
+
         <Tabs
           initialPage={0}
           onChangeTab={onChangeTab}
@@ -166,7 +184,7 @@ export default ({ store, props }) => {
               </TabHeading>
             }
           >
-            <View style={style.container}>{renderValidatorCards}</View>
+            <View style={style.container}>{renderStakeCards}</View>
             <View>
 
               <ButtonBlock type={"STAKE_MORE"} onPress={changePage("sendStake")}/>
@@ -192,7 +210,7 @@ export default ({ store, props }) => {
               </TabHeading>
             }
           >
-            <View style={style.container}>{renderOtherCards}</View>
+            <View style={style.container}>{renderWithdrawCards}</View>
             <View style={style.btnTop}>
               <ButtonBlock type={"WITHDRAW"} />
             </View>
@@ -219,6 +237,15 @@ export default ({ store, props }) => {
             <TableRewards />
           </Tab>
         </Tabs>
+        ) : (
+          <>
+          <View style={style.container}>{renderOtherCards}</View>
+            <View>
+
+              <ButtonBlock type={"STAKE"} onPress={changePage("sendStake")}/>
+            </View>
+            </>
+        )}
       </View>
     </>
   );
