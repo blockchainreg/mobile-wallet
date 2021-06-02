@@ -33,6 +33,7 @@ export default ({ store }) => {
           active={store.current.page == "stakePage"}
           style={styles.footerButtonStyle}
           onPress={changeTab("stakePage")}
+          // onPress={changeTab("sendStake")}
         >
         <StakeIcon fill={store.current.page == "stakePage" && Images.colorGreen} onPress={changeTab("stakePage")}/>
         </Button>

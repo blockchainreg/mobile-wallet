@@ -45,6 +45,7 @@ var colorGray = '#f0f1f5';
 var colorDarkBlue = '#05061f';
 var colorOrange = '#ebab28';
 var colorPink= "#db1571";
+var coral = "#FB5252"
 
 // var velasColor5 = "#292b55";
 
@@ -86,5 +87,6 @@ export default {
   colorGray,
   colorDarkBlue,
   colorOrange,
-  colorPink
+  colorPink,
+  coral
 };

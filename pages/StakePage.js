@@ -10,25 +10,16 @@ import {
   Title,
   Text,
   Content,
+  List,
+  ListItem,
 } from "native-base";
 import Footer from "./Footer.js";
-import {
-  View,
-  ScrollView,
-  Clipboard,
-  Alert,
-  Vibration,
-  StyleSheet,
-  Dimensions,
-  TextInput,
-} from "react-native";
+import { View, StyleSheet, Dimensions, Alert } from "react-native";
 import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import BackButton from "../components/BackButton.js";
-import StakeCard from "../components/StakeCard.js";
-import Switch from "../components/Switch.js";
-import { formatBalance } from "../utils/format-value";
+import StakeItem from "../components/StakeItem.js";
 
 var width = Dimensions.get("window").width;
 
@@ -37,50 +28,93 @@ export default ({ store, web3t, props }) => {
     store.current.page = tab;
   };
   const lang = getLang(store);
-  const validators = [
+  const testData = [
     {
       id: 1,
-      staked: "10000000",
-      stakers: "101",
-      mine: '30000',
+      my_stake: "20000",
+      apr: "10.3",
+      status: "Active",
+      address: "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK",
     },
     {
       id: 2,
-      staked: "400000",
-      stakers: "201",
-      mine: '50000',
+      my_stake: "50000",
+      apr: "18.3",
+      status: "Active",
+      address: "eon93Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
     },
     {
       id: 3,
-      staked: "11000000",
-      stakers: "301",
-      status: true,
-      active: true
+      total_staked: "400000",
+      total_stakers: "392",
+      status: "Active",
+      validator: "ValidatorName",
     },
     {
       id: 4,
-      staked: "6000000",
-      stakers: "401",
-      status: true
+      total_staked: "400000",
+      total_stakers: "232",
+      status: "Inactive",
+      address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
+    },
+    {
+      id: 5,
+      total_staked: "230000",
+      total_stakers: "232",
+      status: "Active",
+      address: "8PsBJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
+    },
+    {
+      id: 6,
+      total_staked: "450000",
+      total_stakers: "123",
+      status: "Inactive",
+      address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
+    },
+    {
+      id: 7,
+      total_staked: "9900000",
+      total_stakers: "863",
+      status: "Inactive",
+      address: "1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3Vvs",
     },
   ];
-  const stakeComponents = validators.map((el) => (
-    <StakeCard
+  const filterStake = testData.filter((el) => el.my_stake);
+  const filterTotalStaked = testData.filter((el) => el.total_staked);
+
+  const renderItemsMyStake = filterStake.map((el) => (
+    <StakeItem
       key={el.id}
-      totalStaked={formatBalance(Number(el.staked))}
-      totalStakers={el.stakers}
-      isMine={formatBalance(Number(el.mine))}
-      isStatus={el.status}
-      isActive={el.active}
+      typeBadge={el.status}
+      styleBadge={el.status}
+      address={el.address}
+      validatorName={el.validator}
+      myStake={el.my_stake}
+      totalStaked={el.total_staked}
+      totalStakers={el.total_stakers}
+      apr={el.apr}
+      onPress={changePage("detailsValidator")}
     />
   ));
-
+  const renderItemsTotalValidators = filterTotalStaked.map((el) => (
+    <StakeItem
+      key={el.id}
+      typeBadge={el.status}
+      styleBadge={el.status}
+      address={el.address}
+      validatorName={el.validator}
+      myStake={el.my_stake}
+      totalStaked={el.total_staked}
+      totalStakers={el.total_stakers}
+      apr={el.apr}
+      onPress={changePage("detailsValidator")}
+    />
+  ));
   return (
     <Container>
+        <StatusBar/>
       <Header style={style.headerBg}>
-        <Left>
-          <BackButton onBack={changePage("history")} style={style.leftBtn} />
-        </Left>
+        <Left/>
         <Body>
           <Title style={style.headerTitle}>Stake</Title>
         </Body>
@@ -88,12 +122,16 @@ export default ({ store, web3t, props }) => {
       </Header>
 
       <Content style={{ backgroundColor: Images.velasColor4 }}>
-        <View style={style.titleContent}>
-          <Text style={style.titleText}>All Validators</Text>
-        </View>
-        <View style={style.content}>
-          <>{stakeComponents}</>
-        </View>
+        <List>
+          <ListItem itemHeader noBorder>
+            <Text style={style.titleText}>My Stakes</Text>
+          </ListItem>
+          {renderItemsMyStake}
+          <ListItem itemHeader noBorder>
+            <Text style={style.titleText}>Other Validators</Text>
+          </ListItem>
+          {renderItemsTotalValidators}
+        </List>
       </Content>
       <Footer store={store}></Footer>
     </Container>
