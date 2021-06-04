@@ -124,7 +124,7 @@ export default ({ store, web3t, props }) => {
       <Content style={{ backgroundColor: Images.velasColor4 }}>
         <List>
           <ListItem itemHeader noBorder>
-            <Text style={style.titleText}>My Stakes</Text>
+            <Text style={style.titleText}>Staked Validators</Text>
           </ListItem>
           {renderItemsMyStake}
           <ListItem itemHeader noBorder>

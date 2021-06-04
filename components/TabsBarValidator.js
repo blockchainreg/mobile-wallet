@@ -37,7 +37,7 @@ const validatorData = [
     type: "stake",
     value: "-0.12",
     subtitle: "DOMINANCE",
-    info: "Relative validator weight compared to the average. Closer to zero is better",
+    info: "Relative validator weight compared to the average. Lower is better",
     icon: <ChartIcon />,
   },
   {
@@ -143,7 +143,7 @@ export default ({ store, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  store.isStaker = true; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
+  store.isStaker = false; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
   
   return (
     <>
@@ -153,7 +153,7 @@ export default ({ store, props }) => {
         value1={"9"}
         value2={formatValue("300000")}
         subtitle1={"VALIDATOR INTEREST"}
-        subtitle2={"TOTAL STAKE"}
+        subtitle2={store.isStaker ? "MY STAKE" : "TOTAL STAKE"}
       />
 
       <View>
