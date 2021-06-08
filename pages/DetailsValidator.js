@@ -1,26 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
-  Header,
-  Left,
-  Body,
-  Right,
-  Button,
-  Icon,
-  Title,
-  Text,
   Content,
 } from "native-base";
 import Footer from "./Footer.js";
-import { View, StyleSheet, Dimensions, Alert } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
-import BackButton from "../components/BackButton.js";
-import DetailsValidatorComponent from "../components/DetailsValidatorComponent.js";
 import TabsValidator from "../components/TabsBarValidator.js";
-import { formatBalance } from "../utils/format-value.js";
-import ButtonBlock from "../components/ButtonBlock.js";
-import StatusBar from "../components/StatusBar.js";
+import Header from '../components/Header'
+import DialogComponent from "../components/DialogComponent.js";
+
 
 var width = Dimensions.get("window").width;
 
@@ -33,17 +23,8 @@ export default ({ store, web3t, props }) => {
 
   return (
     <Container>
-      <StatusBar />
-      <Header style={style.headerBg}>
-        <Left>
-          <BackButton onBack={changePage("stakePage")} style={style.leftBtn} />
-        </Left>
-        <Body>
-          <Title style={style.headerTitle}>Validator Details</Title>
-        </Body>
-        <Right />
-      </Header>
-
+      <Header onBack={changePage("stakePage")} title={'Validator Details'} greenBack/>
+      {/* <DialogComponent success/> */}
       <Content style={style.contentBg}>
         <TabsValidator store={store}/>
       </Content>
@@ -52,33 +33,7 @@ export default ({ store, web3t, props }) => {
 };
 
 const style = StyleSheet.create({
-  headerBg: {
-    backgroundColor: Images.colorDarkBlue,
-    borderBottomColor: "transparent",
-  },
   contentBg: {
     backgroundColor: Images.velasColor4
-  },
-  headerTitle: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 20,
-    fontWeight: "bold",
-    width: width * 0.7,
-  },
-  leftBtn: {
-    color: Images.colorGreen,
-  },
-  titleContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    margin: 20,
-  },
-  titleText: {
-    color: "#fff",
-    fontSize: 18,
-    fontFamily: "Fontfabric-NexaBold",
-    // marginRight: 10
   },
 });

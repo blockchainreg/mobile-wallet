@@ -13,6 +13,7 @@ const IdentIcon = (props) => {
         padding: 3,
         borderRadius: 0,
         backgroundColor: props.backgroundColor || null,
+        // marginRight: props.marginRight || null
     }
 
     return (

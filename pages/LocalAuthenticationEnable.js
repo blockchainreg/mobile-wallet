@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {
   Text,
   View,
-  Header,
   Item,
   Input,
   Body,
@@ -27,6 +26,7 @@ import * as SecureStore from 'expo-secure-store';
 import Fingerprint from "../components/Fingerprint.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 import Background from "../components/Background.js";
+import Header from '../components/Header'
 
 
 
@@ -170,12 +170,7 @@ function RequestPin({store, web3t}) {
   return (
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader} />
-          <Body style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+        <Header transparent/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}

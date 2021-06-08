@@ -9,16 +9,13 @@ import {
   Text,
   Button,
   View,
-  Title,
   Icon,
   Content,
-  Header
 } from "native-base";
 import styles from "../Styles.js";
 import { ScrollView} from "react-native";
 import RefreshControl from "../components/RefreshControl.js";
 import spin from "../utils/spin.js";
-import StatusBar from "../components/StatusBar.js";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -38,6 +35,7 @@ import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
+import Header from '../components/Header'
 //
 
 const coinItems = [/*etc, */eth, ltc, /*dash, */usdt, usdt_erc20, syx];
@@ -116,20 +114,9 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      {/* <StatusBar /> */}
       <Background fullscreen={true}/>
         {RefreshControl({swipeRefresh: refreshToken, store, children: <>
-          <Header transparent style={styles.mtIphoneX}>
-            <Left style={styles.viewFlexHeader}>
-              <BackButton onBack={back}/>
-            </Left>
-            <Body style={styles.viewFlexHeader}>
-              <Text style={styles.title1}>{lang.manageWallet}</Text>
-            </Body>
-            {/* <Right style={styles.viewFlexHeader}><Button transparent><Icon name="ios-add" style={{color: '#fff'}}></Icon></Button></Right> */}
-            <Right style={styles.viewFlex} />
-          </Header>
-          <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+          <Header title={lang.manageWallet} onBack={back}/>
         </>})}
       <View style={[styles.viewMono1, {height: hp("85%")}]}>
       <LinearGradient

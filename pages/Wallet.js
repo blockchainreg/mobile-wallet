@@ -1,17 +1,7 @@
 import React from "react";
 import {
-  ListItem,
-  Left,
-  Body,
-  Right,
-  Thumbnail,
   Text,
-  Button,
   View,
-  Title,
-  Icon,
-  Header,
-  Badge
 } from "native-base";
 import { transaction } from "mobx";
 import {observer} from "mobx-react";
@@ -20,28 +10,21 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  BackHandler,
-  StyleSheet
 } from "react-native";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
 //import ModalComponent from "react-native-modal-component";
 import moment from "moment";
 import RefreshControl from "../components/RefreshControl.js";
 import LoadMoreDate from "../components/LoadMoreDate.js";
 // import walletFuncs from '../wallet/wallet-funcs.js';
 import walletsFuncs from "../wallet/wallets-funcs.js";
-import { Linking } from "react-native";
-
 import navigate from "../wallet/navigate.js";
-import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
-import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 import Images from '../Images.js';
-import BackButton from "../components/BackButton.js";
 import { LinearGradient } from "expo-linear-gradient";
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
+import Header from '../components/Header'
 // import Scanner from './Scanner.js';
 
 
@@ -181,20 +164,7 @@ export default ({ store, web3t }) => {
     return (
       <View style={styles.viewFlex}>
           <Background fullscreen={true}/>
-            <StatusBar />
-            <Header transparent style={styles.mtIphoneX}>
-              <Left style={styles.viewFlexHeader}>
-                <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
-              </Left>
-              <Body style={styles.viewFlexHeader}>
-                <Title style={styles.titleBlack}>
-                  {wallet.coin.name}
-                </Title>
-              </Body>
-              <Right style={styles.viewFlexHeader}>
-                <Thumbnail square small source={{uri: wallet.coin.image}} />
-              </Right>
-            </Header>
+            <Header title={wallet.coin.name} onBack={back} coin={wallet.coin.image}/>
             {RefreshControl({transparent: true, swipeRefresh: refreshToken, store, children: <>
               <View style={styles.bodyBlockWallet}>
                 <View style={styles.bodyBlock3}>

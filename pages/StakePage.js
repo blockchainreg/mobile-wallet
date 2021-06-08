@@ -1,25 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
-  Header,
-  Left,
-  Body,
-  Right,
-  Button,
-  Icon,
-  Title,
   Text,
   Content,
   List,
   ListItem,
 } from "native-base";
 import Footer from "./Footer.js";
-import { View, StyleSheet, Dimensions, Alert } from "react-native";
-import StatusBar from "../components/StatusBar.js";
+import { StyleSheet, Dimensions } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
-import BackButton from "../components/BackButton.js";
 import StakeItem from "../components/StakeItem.js";
+import Header from "../components/Header.js";
 
 var width = Dimensions.get("window").width;
 
@@ -27,6 +19,8 @@ export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
+
   const lang = getLang(store);
   const testData = [
     {
@@ -112,15 +106,9 @@ export default ({ store, web3t, props }) => {
   ));
   return (
     <Container>
-        <StatusBar/>
-      <Header style={style.headerBg}>
-        <Left/>
-        <Body>
-          <Title style={style.headerTitle}>Stake</Title>
-        </Body>
-        <Right />
-      </Header>
-
+      <Header
+      title={'Stake'}
+      />
       <Content style={{ backgroundColor: Images.velasColor4 }}>
         <List>
           <ListItem itemHeader noBorder>
@@ -139,33 +127,6 @@ export default ({ store, web3t, props }) => {
 };
 
 const style = StyleSheet.create({
-  headerBg: {
-    backgroundColor: Images.colorDarkBlue,
-    borderBottomColor: "transparent",
-  },
-  content: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    paddingHorizontal: width * 0.02,
-  },
-  headerTitle: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  leftBtn: {
-    color: Images.colorGreen,
-  },
-  titleContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    margin: 20,
-  },
   titleText: {
     color: "#fff",
     fontSize: 18,

@@ -1,19 +1,11 @@
 
-import React, { useState } from "react";
+import React from "react";
 import {
-  Left,
-  Right,
   Text,
   Button,
   View,
-  Icon,
   Item,
   Input,
-  Title,
-  Body,
-  Header,
-  Thumbnail,
-  Label,
   Toast
 } from "native-base";
 import { observe } from "mobx";
@@ -21,10 +13,7 @@ import styles from "../Styles.js";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
-import Spinner from "../utils/spinner.js";
-import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
-import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import Images from "../Images.js";
 import {
@@ -33,6 +22,7 @@ import {
 import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
+import Header from '../components/Header'
 
 
 
@@ -246,18 +236,7 @@ export default ({ store, web3t }) => {
     return (
       <View style={styles.viewFlex}>
         <Background fullscreen={true}/>
-        <Header transparent style={styles.mtAndroid}>
-          <Left style={styles.viewFlexHeader}>
-            <BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
-          </Left>
-          <Body style={styles.viewFlexHeader}>
-            <Title style={styles.titleBlack}>{lang.send}</Title>
-          </Body>
-          <Right style={styles.viewFlexHeader}>
-            <Thumbnail square small source={{ uri: wallet.coin.image }} />
-          </Right>
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+            <Header title={lang.send} onBack={back} coin={wallet.coin.image}/>
         {RefreshControl({swipeRefresh:refreshToken, store, children:<>
           <View style={styles.bodyBlockWallet}>
             <View style={styles.bodyBlock3}>

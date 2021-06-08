@@ -2,20 +2,14 @@ import React from "react";
 import {
   Text,
   View,
-  Header,
   Item,
   Input,
-  Body,
-  Left,
-  Right,
   Icon,
   Button,
-  Separator,
   Toast
 } from "native-base";
-import { Image, ImageBackground, Platform, KeyboardAvoidingView } from "react-native";
+import { Image, ImageBackground } from "react-native";
 import Constants from 'expo-constants';
-import GradientButton from "react-native-gradient-buttons";
 import * as LocalAuthentication from 'expo-local-authentication';
 import * as SecureStore from 'expo-secure-store';
 import styles from "../Styles.js";
@@ -25,9 +19,8 @@ import {check, set} from "../wallet/pin.js";
 import spin from "../utils/spin.js";
 //import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
-import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
-import Background from "../components/Background.js";
+import Header from '../components/Header'
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -167,7 +160,7 @@ export default ({ store, web3t }) => {
       store.userWallet = 200;
     });
     return (
-    <Button block style={styles.btnVelasActive} onPress={() => setImmediate(loginAction)}>
+    <Button block style={styles.btnVelasActive} onPress={() => setImmediate(loginAction)} >
       <Text style={styles.textBtn}>{lang.continue}</Text>
     </Button>
     );
@@ -175,7 +168,7 @@ export default ({ store, web3t }) => {
 
   const buttonInactive = store => {
     return (
-      <Button block style={styles.buttonInactive}>
+      <Button block style={styles.buttonInactive} >
       <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
     </Button>
     );
@@ -263,12 +256,7 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
         <ImageBackground source={Images.bg} style={styles.image}>
       {/* <Background fullscreen={true}/> */}
-      <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader} />
-          <Body style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
+        <Header transparent/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}

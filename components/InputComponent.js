@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, View } from "react-native";
-import { Text, Input, Item, Label } from "native-base";
+import { StyleSheet, Image, View, Alert } from "react-native";
+import { Text, Input, Item, Label, Button } from "native-base";
 import Images from "../Images";
 import { formatValue, wrapNumber } from "../utils/format-value";
-
+import { Badge } from "react-native-elements";
 
 export default (props) => {
   const [value, setValue] = useState("");
-  
+
   return (
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
@@ -23,17 +23,24 @@ export default (props) => {
           placeholder="0.00"
           keyboardType="numeric"
           placeholderTextColor="rgba(255,255,255,0.60)"
-          />
+        />
         <Image source={Images.logo} style={style.labelLogo} />
         <Text style={style.tokenStyle}>{props.token}</Text>
       </Item>
 
       <View style={style.containerBottomInput}>
-        <Text style={style.labelTextBottom}>
-          Your Total Stake: {formatValue(props.total_stake)}
-        </Text>
-        <Image source={Images.logo} style={style.labelLogo} />
-        <Text style={style.labelTokenStyle}>{props.token}</Text>
+        <View style={style.subContainerInput}>
+          <Text style={style.labelTextBottom}>
+            Your Total Stake: {formatValue(props.total_stake)}
+          </Text>
+          <Image source={Images.logo} style={style.labelLogo} />
+          <Text style={style.labelTokenStyle}>{props.token}</Text>
+        </View>
+        <Badge
+          onPress={props.onPressMax}
+          value={<Text style={style.txtBtnSendMax}>Use max</Text>}
+          badgeStyle={style.btnSendMax}
+        />
       </View>
     </>
   );
@@ -45,6 +52,25 @@ const style = StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+  },
+  subContainerInput: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  btnSendMax: {
+    backgroundColor: "#fff",
+    borderColor: "#fff",
+    paddingHorizontal: 3,
+    height: 13,
+    borderRadius: 10,
+    marginHorizontal: 20,
+  },
+  txtBtnSendMax: {
+    color: "#9d41eb",
+    fontSize: 8,
+    alignItems: "center",
+    fontFamily: "Fontfabric-NexaRegular",
   },
   labelTextBottom: {
     color: "#fff",
@@ -55,14 +81,14 @@ const style = StyleSheet.create({
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
     fontSize: 10,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   tokenStyle: {
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
     fontSize: 12,
-    marginRight:10,
-    textTransform: "uppercase"
+    marginRight: 10,
+    textTransform: "uppercase",
   },
   labelTextTop: {
     color: "#fff",
@@ -83,6 +109,7 @@ const style = StyleSheet.create({
     paddingLeft: 10,
   },
   input: {
-    color: "#fff", fontFamily: "Fontfabric-NexaRegular"
-  }
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaRegular",
+  },
 });

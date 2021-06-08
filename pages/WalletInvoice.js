@@ -1,32 +1,23 @@
 import React from "react";
 import {
-  Header,
-  Left,
-  Body,
-  Right,
   Text,
   Button,
-  Title,
-  Icon,
-  Thumbnail
 } from "native-base";
 import { Clipboard, Alert, Vibration, Share, View } from "react-native";
 import styles from "../Styles.js";
-
-import GradientButton from "../components/GradientButton.js";
 import RefreshControl from "../components/RefreshControl.js";
 // import { QRCode } from 'react-native-custom-qr-codes-expo';
 // import QRCode from 'react-native-qrcode';
 import QRCode from 'react-native-qrcode-svg';
 import walletsFuncs from '../wallet/wallets-funcs.js';
-import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
-import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import Header from '../components/Header'
+
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -38,18 +29,6 @@ export default ({ store, web3t }) => {
       Alert.alert(lang.copied, "", [{ text: lang.ok }]);
     };
     return (
-      // <GradientButton
-      //   style={styles.gradientBtn2}
-      //   text={lang.copy}
-      //   textStyle={{ fontSize: 14, fontFamily: "Fontfabric-NexaRegular"  }}
-      //   gradientBegin="#9d41eb"
-      //   gradientEnd="#9d41eb"
-      //   gradientDirection="diagonal"
-      //   height={45}
-      //   width={"100%"}
-      //   radius={0}
-      //   onPressAction={writeToClipboardAddr}
-      // />
       <Button block style={styles.btnVelasCopy} onPress={writeToClipboardAddr}>
       <Text style={[styles.textBtn, {color: "#fff"}]}>{lang.copy}</Text>
     </Button>
@@ -64,18 +43,6 @@ export default ({ store, web3t }) => {
       }
     };
     return (
-      // <GradientButton
-      //   style={styles.gradientBtn2}
-      //   text={lang.share}
-      //   textStyle={{ fontSize: 14, fontFamily: "Fontfabric-NexaRegular" }}
-      //   gradientBegin="#3CD5AF"
-      //   gradientEnd="#3CD5AF"
-      //   gradientDirection="diagonal"
-      //   height={45}
-      //   width={"100%"}
-      //   radius={0}
-      //   onPressAction={onShare}
-      // />
       <Button block style={styles.btnVelasShare} onPress={onShare}>
       <Text style={[styles.textBtn, {color: "#000"}]}>{lang.share}</Text>
     </Button>
@@ -100,18 +67,8 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
         <Background fullscreen={true}/>
-        <Header transparent style={styles.mtAndroid}>
-          <Left style={styles.viewFlexHeader}>
-            <BackButton onBack={back} style={styles.arrowHeaderIconBlack}/>
-          </Left>
-          <Body style={styles.viewFlexHeader}>
-            <Title style={styles.titleBlack}>{lang.receive}</Title>
-          </Body>
-          <Right style={styles.viewFlexHeader}>
-            <Thumbnail square small source={{ uri: wallet.coin.image }} />
-          </Right>
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+            <Header title={lang.receive} onBack={back} coin={wallet.coin.image}/>
+
         {RefreshControl({swipeRefresh: refreshToken, store, children: <>
           <View style={styles.bodyBlock}>
             <View>

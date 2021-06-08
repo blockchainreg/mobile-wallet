@@ -1,17 +1,17 @@
 import React from "react";
-import { Footer, FooterTab, Button,Thumbnail } from "native-base";
+import { Footer, FooterTab, Button, Thumbnail } from "native-base";
 import { observer } from "mobx-react";
 import styles from "../Styles.js";
 import applyTransactions from "../wallet/apply-transactions.js";
-import getLang from '../wallet/get-lang.js';
+import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
-import { StakeIcon } from '../svg/index'
+import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
 
 export default ({ store }) => {
   const changeTab = (tab) => () => {
     store.current.page = tab;
-    if(tab == "history") {
-      store.current.filter = [ '*' ]
+    if (tab == "history") {
+      store.current.filter = ["*"];
       store.current.filterVal.temp = "";
       store.current.filterVal.apply = "";
       applyTransactions(store);
@@ -27,15 +27,20 @@ export default ({ store }) => {
           style={styles.footerButtonStyle}
           onPress={changeTab("wallets")}
         >
-          <Thumbnail square small source={Images.btnWallet} style={styles.iconFooter1} onPress={changeTab("wallets")}/>
+          <WalletIcon
+            fill={store.current.page == "wallets" && Images.colorGreen}
+            onPress={changeTab("wallets")}
+          />
         </Button>
         <Button
           active={store.current.page == "stakePage"}
           style={styles.footerButtonStyle}
           onPress={changeTab("stakePage")}
-          // onPress={changeTab("sendStake")}
         >
-        <StakeIcon fill={store.current.page == "stakePage" && Images.colorGreen} onPress={changeTab("stakePage")}/>
+          <StakeIcon
+            fill={store.current.page == "stakePage" && Images.colorGreen}
+            onPress={changeTab("stakePage")}
+          />
         </Button>
         <Button
           vertical
@@ -43,7 +48,10 @@ export default ({ store }) => {
           style={styles.footerButtonStyle}
           onPress={changeTab("history")}
         >
-          <Thumbnail square small source={Images.btnHistory} style={styles.iconFooter2} onPress={changeTab("history")}/>
+          <HistoryIcon
+            fill={store.current.page == "history" && Images.colorGreen}
+            onPress={changeTab("history")}
+          />
         </Button>
         <Button
           vertical
@@ -51,7 +59,10 @@ export default ({ store }) => {
           style={styles.footerButtonStyle}
           onPress={changeTab("settings")}
         >
-          <Thumbnail square small source={Images.btnSettings} style={styles.iconFooter2} onPress={changeTab("settings")}/>
+          <SettingsIcon
+            fill={store.current.page == "settings" && Images.colorGreen}
+            onPress={changeTab("settings")}
+          />
         </Button>
       </FooterTab>
     </Footer>

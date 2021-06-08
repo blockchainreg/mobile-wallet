@@ -1,11 +1,10 @@
 import React from "react";
-import { Container, Header, Left, Body, Right, Title, Text } from "native-base";
+import { Container, Text } from "native-base";
 import { View, StyleSheet, Dimensions, Linking } from "react-native";
 import Images from "../Images.js";
-import BackButton from "../components/BackButton.js";
 import ButtonBlock from "../components/ButtonBlock.js";
-import StatusBar from "../components/StatusBar.js";
 import { StakingEnteranceIcon } from "../svg/index";
+import Header from '../components/Header'
 
 var width = Dimensions.get("window").width;
 const URL = "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown";
@@ -19,20 +18,7 @@ export default ({ store, web3t, props }) => {
   };
   return (
     <Container>
-      <StatusBar />
-      <Header style={style.headerBg}>
-        <Left>
-          <BackButton
-            onBack={changePage("confirmStake")}
-            style={style.leftBtn}
-          />
-        </Left>
-        <Body>
-          <Title style={style.headerTitle}>Staking Enterance</Title>
-        </Body>
-        <Right />
-      </Header>
-
+      <Header onBack={changePage("confirmStake")} title={'Staking Enterance'} greenBack/>
       <View style={style.contentBg}>
         <View style={style.container}>
           <StakingEnteranceIcon />
@@ -56,24 +42,10 @@ export default ({ store, web3t, props }) => {
 };
 
 const style = StyleSheet.create({
-  headerBg: {
-    backgroundColor: Images.colorDarkBlue,
-    borderBottomColor: "transparent",
-  },
   contentBg: {
     backgroundColor: Images.velasColor4,
     justifyContent: "space-between",
     flex: 1,
-  },
-  headerTitle: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 20,
-    fontWeight: "bold",
-    width: width * 0.7,
-  },
-  leftBtn: {
-    color: Images.colorGreen,
   },
   buttonBottom: {
     marginBottom: 60,

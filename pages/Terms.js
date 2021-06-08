@@ -1,29 +1,22 @@
 import React from "react";
-import { Image, ImageBackground, ScrollView, Platform } from "react-native";
+import { Image, ScrollView, Platform } from "react-native";
 import {
   Text,
   Button,
   View,
-  Item,
-  Input,
   CardItem,
   Body,
-  Header,
-  Left,
-  Right
 } from "native-base";
 import { ifIphoneX } from "react-native-iphone-x-helper";
 import styles from "../Styles.js";
-import GradientButton from "../components/GradientButton.js";
-import Hyperlink from "react-native-hyperlink";
 import { set } from "../wallet/seed.js";
 import Markdown from "react-native-markdown-display";
 import Images from "../Images.js";
-import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/Background.js";
 import Spinner from "../utils/spinner.js";
 import setupWallet from '../setupWallet.js';
+import Header from '../components/Header'
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -54,18 +47,6 @@ const buttonAccept = (store, web3t) => {
   };
   const lang = getLang(store);
   return (
-    // <GradientButton
-    //   style={styles.gradientBtnPh}
-    //   text={lang.accept}
-    //   textStyle={{ fontSize: 14, color: Images.color1 }}
-    //   gradientBegin="#fff"
-    //   gradientEnd="#fff"
-    //   gradientDirection="diagonal"
-    //   height={45}
-    //   width="100%"
-    //   radius={0}
-    //   onPressAction={accept}
-    // />
     <Button block style={styles.btnVelasActive} onPress={accept}>
       <Text style={styles.textBtn}>{lang.accept}</Text>
     </Button>
@@ -118,12 +99,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader} />
-          <Body style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+        <Header transparent/>
         <View style={styles.containerFlexStart}>
           <Image source={Images.logo} style={styles.styleLogo} />
           <Text style={styles.textH1Seed}>{lang.termsOfUse}</Text>

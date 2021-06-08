@@ -6,3 +6,6 @@ export * from './line-chart-icon';
 export * from './stake-confirm';
 export * from './staking-enterance';
 export * from './withdrawal-request';
+export * from './wallet-icon';
+export * from './history-icon';
+export * from './settings-icon';

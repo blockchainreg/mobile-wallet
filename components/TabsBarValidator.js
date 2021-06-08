@@ -143,7 +143,7 @@ export default ({ store, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  store.isStaker = false; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
+  store.isStaker = true; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
   
   return (
     <>

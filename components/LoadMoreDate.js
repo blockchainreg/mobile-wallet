@@ -73,7 +73,7 @@ export default ({ store, web3t }) => {
       return (
 		  <ListItem
 			  thumbnail
-			  underlayColor={Images.color1}
+			  underlayColor={Images.velasColor2}
 			  onPress={() => {
 				showTransaction(transaction);
 			  }}

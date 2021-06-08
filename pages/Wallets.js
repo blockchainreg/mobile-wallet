@@ -12,17 +12,16 @@ import {
   Title,
   Icon,
   Content,
-  Header, Toast,
+  // Header, 
+  Toast,
 } from "native-base";
 import styles from "../Styles.js";
 import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, } from "react-native";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import CustomRefreshControl from "../components/RefreshControl.js";
 import Footer from "./Footer.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import walletFuncs from "../wallet/wallet-funcs.js";
 import applyTransactions from "../wallet/apply-transactions.js";
-import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
@@ -37,6 +36,8 @@ import {
 import DemoMode from "../components/DemoMode.js"
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
+import Header from "../components/Header.js"
+
 
 
 
@@ -227,29 +228,7 @@ export default ({ store, web3t }) => {
           })}
         </View>
         <View style={styles.topView}>
-            <Header transparent style={styles.mtIphoneX}>
-              <Left style={styles.viewFlexHeader}/>
-              <Body style={styles.viewFlexHeader}>
-                <Text style={styles.titleWallets}>{lang.yourWallets}</Text>
-              </Body>
-              <Right style={styles.viewFlexHeader}>
-                <Button
-                  transparent
-                  style={styles.arrowHeaderLeft}
-                  onPress={changePage("add")}
-                >
-                  <Icon name="md-create" style={styles.refreshHeaderIcon} />
-                </Button>
-              </Right>
-            </Header>
-
-            <StatusBar
-              barStyle="light-content"
-              translucent={true}
-              backgroundColor={"transparent"}
-            />
-
-
+        <Header title={lang.yourWallets} addWalletIcon onForward={changePage("add")} transparent/>
           <View style={styles.viewWalletAbsolute}>
             <Text style={styles.titleAbsolute}>{lang.totalBalance}</Text>
             <Text style={styles.textBalanceAbsolute}>
