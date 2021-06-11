@@ -6,6 +6,7 @@ import applyTransactions from "../wallet/apply-transactions.js";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
+import { StakingStore } from "../staking/staking-store.js";
 
 export default ({ store }) => {
   const changeTab = (tab) => () => {
@@ -16,6 +17,19 @@ export default ({ store }) => {
       store.current.filterVal.apply = "";
       applyTransactions(store);
     }
+  };
+  const goToStaking = () => {
+    const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
+    if (wallet == null) {
+      return;
+    }
+    const stakingStore = new StakingStore(
+      wallet.network.api.apiUrl,
+      wallet.privateKey,
+      wallet.publicKey
+    );
+    store.stakingStore = stakingStore;
+    changeTab("stakePage")();
   };
   //DO NOT generate footer if transaction info is visible
   if (store.infoTransaction != null) return null;
@@ -35,11 +49,11 @@ export default ({ store }) => {
         <Button
           active={store.current.page == "stakePage"}
           style={styles.footerButtonStyle}
-          onPress={changeTab("stakePage")}
+          onPress={goToStaking}
         >
           <StakeIcon
             fill={store.current.page == "stakePage" && Images.colorGreen}
-            onPress={changeTab("stakePage")}
+            onPress={goToStaking}
           />
         </Button>
         <Button

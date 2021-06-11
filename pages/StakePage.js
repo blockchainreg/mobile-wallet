@@ -19,6 +19,12 @@ export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+  debugger;
+  const { stakingStore } = store;
+  if (!stakingStore.validators) {
+    return null;
+  }
+
   const lang = getLang(store);
 
   const testData = [
@@ -81,7 +87,7 @@ export default ({ store, web3t, props }) => {
   ];
   const filterStake = testData.filter((el) => el.staked);
   const filterTotalStaked = testData.filter((el) => el.unstaked);
-  
+
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
       key={el.id}
@@ -96,7 +102,7 @@ export default ({ store, web3t, props }) => {
       isStaked
     />
     ));
-    
+
   const renderItemsTotalValidators = filterTotalStaked.map((el) => (
     <StakeItem
       key={el.id}
