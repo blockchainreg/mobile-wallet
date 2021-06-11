@@ -5974,7 +5974,7 @@ export default StyleSheet.create({
     fontFamily: "Fontfabric-NexaBold",
     fontSize: 20,
     fontWeight: "bold",
-    width: "150%",
+    width: "160%",
   },
   leftBtnColor: {
     color: Images.colorGreen,

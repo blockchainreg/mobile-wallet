@@ -8,12 +8,15 @@ import {
   Linking,
 } from "react-native";
 import Images from "../Images";
+import getLang from "../wallet/get-lang.js";
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 const URL = "https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q";
-export default () => {
+export default ({store}) => {
+  const lang = getLang(store);
         
-  const columns = ["# Epoch", "Reward", "APR"];
+  const columns = [lang.epoch || "# Epoch", lang.reward || "Reward",lang.apr ||  "APR"];
+
     const epoch = [
       {
         epoch: "#33",
@@ -66,7 +69,7 @@ export default () => {
         apr: "10.9%",
       }
     ];
-//   const epoch = [];
+  // const epoch = [];
 
   const onPressLink = () => {
     Linking.openURL(URL);
@@ -93,10 +96,10 @@ export default () => {
         }}
       >
         <Text style={styles.emptyMessageStyle}>
-          We did not find any reward records for this validator.{" "}
+          {lang.rewardsEmptyTitle || "We did not find any reward records for this validator."}
         </Text>
         <Text style={{ ...styles.emptyMessageStyle, marginTop: 40 }}>
-          Read about how rewards are{" "}
+          {lang.rewardsEmptyText || "Read about how rewards are"}
           <Text
             style={{
               color: Images.colorGreen,
@@ -104,7 +107,7 @@ export default () => {
             }}
             onPress={onPressLink}
           >
-            getting credited.
+            {lang.rewardsEmptyLink || "getting credited."}
           </Text>
         </Text>
       </View>

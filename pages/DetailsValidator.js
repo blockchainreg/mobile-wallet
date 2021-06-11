@@ -23,7 +23,7 @@ export default ({ store, web3t, props }) => {
 
   return (
     <Container>
-      <Header onBack={changePage("stakePage")} title={'Validator Details'} greenBack/>
+      <Header onBack={changePage("stakePage")} title={lang.titleValidatorDetail || 'Validator Details'} greenBack/>
       {/* <DialogComponent success/> */}
       <Content style={style.contentBg}>
         <TabsValidator store={store}/>

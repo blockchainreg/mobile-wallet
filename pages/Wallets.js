@@ -38,16 +38,12 @@ import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
 import Header from "../components/Header.js"
 
-
-
-
-
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
 
-  // const lang = getLang(store);
+  const lang = getLang(store);
   const wallets = walletsFuncs(store, web3t).wallets;
 
   const listItem = (wallet) => {
@@ -138,7 +134,7 @@ const wallets = (store, web3t) => {
       balanceLayout = (
         <Text>
           <Text style={{ color: "#fff" }}>-</Text>
-          <Text note style={{ fontFamily: "Fontfabric-NexaRegular"}}> (pull to reload)</Text>
+          <Text note style={{ fontFamily: "Fontfabric-NexaRegular"}}> {lang.pullToReload || "(Pull to reload)"}</Text>
         </Text>
       );
     }

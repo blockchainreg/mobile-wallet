@@ -96,12 +96,12 @@ import Spinner from "../utils/spinner";
 		  return cb(err);
         }
         var currency = (send.coin.nickname || send.coin.token).toUpperCase();
-        return confirm(store, "Are you sure to send " + tx.amount + " " + currency + " to " + send.to/*, "Yes, Send!"*/, function(agree){
+        return confirm(store, lang.areYouSure + " " + tx.amount + " " + currency + "?" + " " + lang.recipient + ":" + " " + send.to/*, "Yes, Send!"*/, function(agree){
           if (!agree) {
 			store.current.creatingTransaction = false;
-            return cb("You are not agree");
+            return cb(lang.youDidntAgree);
           }
-		  var txSpinner = new Spinner(store, "Sending funds", {
+		  var txSpinner = new Spinner(store, lang.sendingFunds, {
 			displayDescription: true,
 		  });
           return pushTx((import$({

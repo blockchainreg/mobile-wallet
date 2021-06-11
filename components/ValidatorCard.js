@@ -29,7 +29,6 @@ export default (props) => {
       >
         <Tooltip
         ref={tooltipRef}
-
           withOverlay={false}
           containerStyle={style.tooltipContainerStyle}
           pointerColor="#27282C"
@@ -144,8 +143,8 @@ const style = StyleSheet.create({
     // marginTop: -10,
   },
   tooltipContainerStyle: {
-    height: 60,
-    marginTop: -20,
+    height: 'auto',
+    // marginTop: -20,
     backgroundColor: "#27282C",
     borderRadius: 0,
   },

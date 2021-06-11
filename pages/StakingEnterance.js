@@ -5,6 +5,7 @@ import Images from "../Images.js";
 import ButtonBlock from "../components/ButtonBlock.js";
 import { StakingEnteranceIcon } from "../svg/index";
 import Header from '../components/Header'
+import getLang from "../wallet/get-lang.js";
 
 var width = Dimensions.get("window").width;
 const URL = "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown";
@@ -16,25 +17,26 @@ export default ({ store, web3t, props }) => {
   const onPressLink = () => {
     Linking.openURL(URL);
   };
+  const lang = getLang(store);
+
   return (
     <Container>
-      <Header onBack={changePage("confirmStake")} title={'Staking Enterance'} greenBack/>
+      <Header onBack={changePage("confirmStake")} title={lang.stakingEnterance || "Staking Enterance"} greenBack/>
       <View style={style.contentBg}>
         <View style={style.container}>
           <StakingEnteranceIcon />
           <Text style={style.title}>
-            Stake account has been created successfully
+            {lang.stakingEnteranceTitle || "Stake account has been created successfully"}
           </Text>
           <Text style={style.subTitle}>
-            It is not fully active immediately, it may take multiple epochs to
-            warm it up.
+            {lang.stakingEnteranceSubTitle || "It is not fully active immediately, it may take multiple epochs to warm it up."}
           </Text>
           <Text style={style.link} onPress={onPressLink}>
-            Read more
+            {lang.read || "Read more"}
           </Text>
         </View>
         <View style={style.buttonBottom}>
-          <ButtonBlock type={"OK"} onPress={changePage("detailsValidator")} />
+          <ButtonBlock type={"OK"} text={lang.ok || "Ok"} onPress={changePage("detailsValidator")} />
         </View>
       </View>
     </Container>

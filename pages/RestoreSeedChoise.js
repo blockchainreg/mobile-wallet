@@ -73,7 +73,7 @@ export default ({ store, web3t }) => {
                   </Button>
                   <View style={{ padding: 10 }}></View>
                   <Button block style={styles.btnVelasRestore} onPress={restoreCustom}>
-                    <Text style={styles.textBtn}>Custom</Text>
+                    <Text style={styles.textBtn}>{lang.customBtn}</Text>
                   </Button>
                 </View>
               </Body>

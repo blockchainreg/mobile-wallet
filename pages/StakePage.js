@@ -19,9 +19,8 @@ export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
-
   const lang = getLang(store);
+
   const testData = [
     {
       id: 1,
@@ -29,6 +28,7 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       apr: "10.3",
       status: "Active",
       address: "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK",
+      staked: true
     },
     {
       id: 2,
@@ -36,13 +36,15 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       apr: "18.3",
       status: "Active",
       address: "eon93Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
+      staked: true
     },
     {
       id: 3,
       total_staked: "400000",
       total_stakers: "392",
       status: "Active",
-      validator: "ValidatorName",
+      address: "rtn13Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
+      unstaked: true
     },
     {
       id: 4,
@@ -50,6 +52,7 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       total_stakers: "232",
       status: "Inactive",
       address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
+      unstaked: true
     },
     {
       id: 5,
@@ -57,6 +60,7 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       total_stakers: "232",
       status: "Active",
       address: "8PsBJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
+      unstaked: true
     },
     {
       id: 6,
@@ -64,6 +68,7 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       total_stakers: "123",
       status: "Inactive",
       address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
+      unstaked: true
     },
     {
       id: 7,
@@ -71,30 +76,31 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       total_stakers: "863",
       status: "Inactive",
       address: "1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3Vvs",
+      unstaked: true
     },
   ];
-  const filterStake = testData.filter((el) => el.my_stake);
-  const filterTotalStaked = testData.filter((el) => el.total_staked);
-
+  const filterStake = testData.filter((el) => el.staked);
+  const filterTotalStaked = testData.filter((el) => el.unstaked);
+  
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
       key={el.id}
       typeBadge={el.status}
-      styleBadge={el.status}
       address={el.address}
-      validatorName={el.validator}
       myStake={el.my_stake}
       totalStaked={el.total_staked}
       totalStakers={el.total_stakers}
       apr={el.apr}
       onPress={changePage("detailsValidator")}
+      store={store}
+      isStaked
     />
-  ));
+    ));
+    
   const renderItemsTotalValidators = filterTotalStaked.map((el) => (
     <StakeItem
       key={el.id}
       typeBadge={el.status}
-      styleBadge={el.status}
       address={el.address}
       validatorName={el.validator}
       myStake={el.my_stake}
@@ -102,21 +108,22 @@ const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
       totalStakers={el.total_stakers}
       apr={el.apr}
       onPress={changePage("detailsValidator")}
+      store={store}
     />
   ));
   return (
     <Container>
       <Header
-      title={'Stake'}
+      title={lang.titleStake || "Stake"}
       />
       <Content style={{ backgroundColor: Images.velasColor4 }}>
         <List>
           <ListItem itemHeader noBorder>
-            <Text style={style.titleText}>Staked Validators</Text>
+            <Text style={style.titleText}>{lang.itemStakedTitle || "Staked Validators"}</Text>
           </ListItem>
           {renderItemsMyStake}
           <ListItem itemHeader noBorder>
-            <Text style={style.titleText}>Other Validators</Text>
+            <Text style={style.titleText}>{lang.itemValidatorsTitle || "Other Validators"}</Text>
           </ListItem>
           {renderItemsTotalValidators}
         </List>

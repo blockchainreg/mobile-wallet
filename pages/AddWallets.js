@@ -48,7 +48,8 @@ const renderCoin = (store, web3t) => item => {
 
 
   const addItem = () => {
-    spin(store, `Installing ${name}`, web3t.installQuick.bind(web3t))
+  const lang = getLang(store);
+    spin(store, `${lang.installing || "Installing"} ${name}`, web3t.installQuick.bind(web3t))
       (item, (err, data) => {
       //console.log("install", err, data);
       //store.current.page = "wallets";
@@ -56,9 +57,10 @@ const renderCoin = (store, web3t) => item => {
   };
 
   const deleteItem = () => {
+  const lang = getLang(store);
     //console.log("Removing coin", name);
     //BUG: This works unstable
-    spin(store, `Uninstalling ${name}`, web3t.uninstall.bind(web3t))(item.token, (err, data) => {
+    spin(store, `${lang.uninstalling || "Uninstalling"} ${name}`, web3t.uninstall.bind(web3t))(item.token, (err, data) => {
       //console.log("Remove coin result", err, data);
       //store.current.page = "wallets";
     });

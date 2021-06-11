@@ -59,10 +59,10 @@ export default ({ store, web3t }) => {
   };
   const done = () => {
 
-    if(store.signUpConfirmSeedField == "") return Toast.show({text: "Empty word is not allowed"});
+    if(store.signUpConfirmSeedField == "") return Toast.show({text: lang.emptyWord});
 
     if (store.current.seedWords.length > 1 && bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
-      return Toast.show({text: "You have mistake in your word"});
+      return Toast.show({text: lang.youHaveMistake});
     }
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;

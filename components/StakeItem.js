@@ -1,69 +1,43 @@
-import React, { useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  Dimensions,
-  Alert,
-  Touchable,
-  TouchableOpacity,
-  Text,
-} from "react-native";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Thumbnail,
-  Button,
-  Icon,
-  Left,
-  Body,
-  Right,
-  ListItem,
-} from "native-base";
+import React from "react";
+import { StyleSheet, Dimensions, Text } from "react-native";
+import { Left, Body, Right, ListItem } from "native-base";
 import Images from "../Images";
 import { Avatar } from "../svg";
 import { Badge } from "react-native-elements";
 import IdentIcon from "./Identicon";
 import { formatBalance } from "../utils/format-value";
+import getLang from "../wallet/get-lang.js";
 
 var width = Dimensions.get("window").width;
 const BG_COLOR = "#161A3F";
 
-export default (props) => {
+export default ({ store, isStaked, ...props }) => {
+  const lang = getLang(store);
+
   const typeBadge = (type) => {
     switch (type) {
       case "Active":
-        return "Active";
+        return lang.badgeActive || "Active";
       case "Inactive":
-        return "Inactive";
+        return lang.badgeInactive || "Inactive";
       default:
         return null;
     }
   };
-  const styleBadge = (type) => {
-    switch (type) {
-      case "Active":
-        return style.active;
-      case "Inactive":
-        return style.inactive;
-      default:
-        return null;
-    }
-  };
+
   const badgeStatus = () => {
     return (
       <Badge
         value={
           <Text style={style.txtStyleBadge}>{typeBadge(props.typeBadge)}</Text>
         }
-        badgeStyle={styleBadge(props.styleBadge)}
+        badgeStyle={
+          props.typeBadge === "Active" ? style.active : style.inactive
+        }
       />
     );
   };
-  
+
   return (
     <ListItem
       noBorder
@@ -72,7 +46,7 @@ export default (props) => {
       onPress={props.onPress}
       style={[
         style.listItemStyle,
-        { backgroundColor: props.myStake ? "#1F2853" : "#161A3F" },
+        { backgroundColor: isStaked ? "#1F2853" : "#161A3F" },
       ]}
     >
       <Left style={{ marginLeft: 10 }}>
@@ -87,12 +61,12 @@ export default (props) => {
           {props.address || props.validatorName}
         </Text>
         <Text style={style.styleSubTitle}>
-          {props.myStake ? "My Stake" : "Total Staked"}
+          {isStaked ? lang.myStake || "My Stake" : lang.totalStaked || "Total Staked"}
         </Text>
         <Text
           style={[
             style.styleBalance,
-            { color: props.myStake ? Images.colorGreen : "#fff" },
+            { color: isStaked ? Images.colorGreen : "#fff" },
           ]}
         >
           {formatBalance(Number(props.myStake || props.totalStaked || 0))} VLX
@@ -101,10 +75,10 @@ export default (props) => {
       <Body style={{ alignItems: "flex-end", marginRight: 20 }}>
         {badgeStatus()}
         <Text style={[style.styleSubTitle, { marginRight: 0 }]}>
-          {props.myStake ? "APR,%" : "Total Stakers"}
+          {isStaked ? lang.apr + "," + "%"|| "APR,%" : lang.totalStakers || "Total Stakers"}
         </Text>
         <Text style={[style.styleTitle, { marginRight: 0, marginTop: 3 }]}>
-          {props.myStake ? props.apr + "%" : props.totalStakers}
+          {isStaked ? props.apr + "%" : props.totalStakers}
         </Text>
       </Body>
     </ListItem>

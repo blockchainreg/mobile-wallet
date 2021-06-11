@@ -1,21 +1,15 @@
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, {  useState } from "react";
 import {
   StyleSheet,
   View,
   Dimensions,
   Text,
-  Alert,
-  ScrollView,
 } from "react-native";
 import {
   Icon,
   Tab,
   Tabs,
   TabHeading,
-  Card,
-  Container,
-  Content,
-  Button,
 } from "native-base";
 import Images from "../Images";
 import { ChartIcon, ValidatorsIcon } from "../svg/index";
@@ -24,115 +18,11 @@ import ButtonBlock from "../components/ButtonBlock.js";
 import DetailsValidatorComponent from "../components/DetailsValidatorComponent.js";
 import { formatValue } from "../utils/format-value.js";
 import TableRewards from "../components/TableRewards";
+import getLang from "../wallet/get-lang.js";
 
-// import store from "../wallet/data-scheme";
-
-var width = Dimensions.get("window").width;
-var height = Dimensions.get("window").height;
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
-const validatorData = [
-  {
-    id: 1,
-    type: "stake",
-    value: "-0.12",
-    subtitle: "DOMINANCE",
-    info: "Relative validator weight compared to the average. Lower is better",
-    icon: <ChartIcon />,
-  },
-  {
-    id: 2,
-    type: "stake",
-    value: "0.1",
-    subtitle: "QUALITY",
-    info: "Relative performence metric. Higher is better",
-    symbol: "+",
-  },
-  {
-    id: 3,
-    type: "stake",
-    value: "18.3",
-    subtitle: "ANNUAL PERCENTAGE RATE",
-    info: "APR is calculated based on the resalts of the previous epoch",
-    symbol: "%",
-  },
-  {
-    id: 4,
-    type: "stake",
-    value: "33",
-    subtitle: "YOUR ACTIVE STAKE",
-    info: "Only 25% of active stake can be activated per epoch. ",
-    btnTooltip: "Read more",
-    link: "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown",
-    symbol: "%",
-  },
-  {
-    id: 5,
-    type: "withdraw",
-    value: "15000",
-    subtitle: "TOTAL WITHDRAW REQUESTED",
-    icon: <ChartIcon />,
-  },
-  {
-    id: 6,
-    type: "withdraw",
-    value: "5000",
-    subtitle: "AVAILABLE FOR WITHDRAW",
-    icon: <ChartIcon />,
-  },
-];
-
 const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
-
-const filterStake = validatorData.filter((item) => {
-  return item.type.includes("stake");
-});
-const filterWithdraw = validatorData.filter((item) => {
-  return item.type.includes("withdraw");
-});
-const filterOther = validatorData.slice(0, 2);
-
-const renderStakeCards = filterStake.map((el) => (
-  <ValidatorCard
-    key={el.id}
-    value={el.value}
-    subtitle={el.subtitle}
-    info={el.info}
-    readMore={el.btnTooltip}
-    link={el.link}
-    cardSymbol={el.symbol}
-    cardIcon={el.icon}
-    type={el.type}
-  />
-));
-
-const renderWithdrawCards = filterWithdraw.map((el) => (
-  <ValidatorCard
-    key={el.id}
-    value={el.value}
-    subtitle={el.subtitle}
-    info={el.info}
-    readMore={el.btnTooltip}
-    link={el.link}
-    cardSymbol={el.symbol}
-    cardIcon={el.icon}
-    type={el.type}
-  />
-));
-
-const renderOtherCards = filterOther.map((el) => (
-  <ValidatorCard
-    key={el.id}
-    value={el.value}
-    subtitle={el.subtitle}
-    info={el.info}
-    readMore={el.btnTooltip}
-    link={el.link}
-    cardSymbol={el.symbol}
-    cardIcon={el.icon}
-    type={el.type}
-  />
-));
 
 export default ({ store, props }) => {
   const [page, setPage] = useState(0);
@@ -143,6 +33,8 @@ export default ({ store, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+  const lang = getLang(store);
+
   store.isStaker = true; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
   
   return (
@@ -152,8 +44,9 @@ export default ({ store, props }) => {
         isActive={true}
         value1={"9"}
         value2={formatValue("300000")}
-        subtitle1={"VALIDATOR INTEREST"}
-        subtitle2={store.isStaker ? "MY STAKE" : "TOTAL STAKE"}
+        subtitle1={lang.validatorInterest || "VALIDATOR INTEREST"}
+        subtitle2={store.isStaker ? lang.myStake || "MY STAKE" : lang.totalStake || "TOTAL STAKE"}
+        store={store}
       />
 
       <View>
@@ -179,16 +72,43 @@ export default ({ store, props }) => {
                     page === 0 ? style.activeTextStyle : style.inactiveTextStyle
                   }
                 >
-                  Stake
+                  {lang.tabStake || "Stake"}
                 </Text>
               </TabHeading>
             }
           >
-            <View style={style.container}>{renderStakeCards}</View>
+            <View style={style.container}>
+              <ValidatorCard
+                value={"-0.12"}
+                subtitle={lang.dominance || "DOMINANCE"}
+                info={lang.info1 || "Relative validator weight compared to the average. Lower is better"}
+                cardIcon={<ChartIcon />}
+              />
+              <ValidatorCard
+                value={"0.1"}
+                subtitle={lang.quality || "QUALITY"}
+                info={lang.info2 || "Relative performence metric. Higher is better"}
+                cardSymbol={"+"}
+              />
+              <ValidatorCard
+                value={"18.3"}
+                subtitle={lang.annual || "ANNUAL PERCENTAGE RATE"}
+                info={lang.info3 || "APR is calculated based on the resalts of the previous epoch"}
+                cardSymbol={"%"}
+              />
+              <ValidatorCard
+                value={"33"}
+                subtitle={lang.activeStake || "YOUR ACTIVE STAKE"}
+                info={lang.info4 || "Only 25% of active stake can be activated per epoch. "}
+                readMore={lang.read || "Read more"}
+                link={"https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown"}
+                cardSymbol={"%"}
+              />
+            </View>
             <View>
 
-              <ButtonBlock type={"STAKE_MORE"} onPress={changePage("sendStake")}/>
-              <ButtonBlock type={"REQUEST_WITHDRAW"} onPress={changePage("exitValidator")}/>
+              <ButtonBlock type={"STAKE_MORE"} text={lang.stakeMore || "Stake More"} onPress={changePage("sendStake")}/>
+              <ButtonBlock type={"REQUEST_WITHDRAW"} text={lang.requestWithdraw || "Request Withdraw"} onPress={changePage("exitValidator")}/>
             </View>
           </Tab>
 
@@ -205,14 +125,26 @@ export default ({ store, props }) => {
                     page === 1 ? style.activeTextStyle : style.inactiveTextStyle
                   }
                 >
-                  Withdrawals
+                  {lang.tabWithdrawals || "Withdrawals"}
                 </Text>
               </TabHeading>
             }
           >
-            <View style={style.container}>{renderWithdrawCards}</View>
+            <View style={style.container}>
+              <ValidatorCard
+                value={"15000"}
+                subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
+                cardIcon={<ChartIcon />}
+              />
+              <ValidatorCard
+                value={"5000"}
+                subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
+                cardIcon={<ChartIcon />}
+              />
+
+            </View>
             <View style={style.btnTop}>
-              <ButtonBlock type={"WITHDRAW"} />
+              <ButtonBlock type={"WITHDRAW"} text={lang.withdraw || "Withdraw"}/>
             </View>
           </Tab>
           <Tab
@@ -229,20 +161,33 @@ export default ({ store, props }) => {
                     page === 2 ? style.activeTextStyle : style.inactiveTextStyle
                   }
                 >
-                  Rewards
+                  {lang.tabRewards || "Rewards"}
                 </Text>
               </TabHeading>
             }
           >
-            <TableRewards />
+            <TableRewards store={store}/>
           </Tab>
         </Tabs>
         ) : (
           <>
-          <View style={style.container}>{renderOtherCards}</View>
+          <View style={style.container}>
+            <ValidatorCard
+                value={"-0.12"}
+                subtitle={lang.dominance || "DOMINANCE"}
+                info={lang.info1 || "Relative validator weight compared to the average. Lower is better"}
+                cardIcon={<ChartIcon />}
+              />
+              <ValidatorCard
+                value={"0.1"}
+                subtitle={lang.quality || "QUALITY"}
+                info={lang.info2 || "Relative performence metric. Higher is better"}
+                cardSymbol={"+"}
+              />
+          </View>
             <View>
 
-              <ButtonBlock type={"STAKE"} onPress={changePage("sendStake")}/>
+              <ButtonBlock type={"STAKE"} text={lang.stake || "Stake"} onPress={changePage("sendStake")}/>
             </View>
             </>
         )}

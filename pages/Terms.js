@@ -20,7 +20,8 @@ import Header from '../components/Header'
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
-  const spinner = new Spinner(store, "Loading terms");
+  const lang = getLang(store);
+  const spinner = new Spinner(store, lang.loadingTerms);
   await loadTermsRecusion(store);
   spinner.finish();
 }

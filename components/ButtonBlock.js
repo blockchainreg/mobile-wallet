@@ -4,27 +4,6 @@ import { Button } from "native-base";
 import Images from "../Images";
 
 export default (props) => {
-  const checkType = (type) => {
-    switch (type) {
-      case "STAKE_MORE":
-        return "STAKE MORE";
-      case "STAKE":
-        return "STAKE";
-      case "OK":
-        return "OK";
-      case "NEXT":
-        return "NEXT";
-      case "CONFIRM":
-        return "CONFIRM";
-      case "REQUEST_WITHDRAW":
-        return "REQUEST WITHDRAW";
-      case "WITHDRAW":
-        return "WITHDRAW";
-
-      default:
-        return null;
-    }
-  };
   const checkStyle = (type) => {
     switch (type) {
       case "STAKE_MORE":
@@ -63,7 +42,7 @@ export default (props) => {
       onPress={props.onPress}
     >
       <Text style={[style.textBtn, checkTextStyle(props.type)]}>
-        {checkType(props.type) || props.text}
+        {props.text}
       </Text>
     </Button>
   );

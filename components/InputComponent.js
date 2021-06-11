@@ -31,14 +31,14 @@ export default (props) => {
       <View style={style.containerBottomInput}>
         <View style={style.subContainerInput}>
           <Text style={style.labelTextBottom}>
-            Your Total Stake: {formatValue(props.total_stake)}
+            {props.sub_text} {formatValue(props.total_stake)}
           </Text>
           <Image source={Images.logo} style={style.labelLogo} />
           <Text style={style.labelTokenStyle}>{props.token}</Text>
         </View>
         <Badge
           onPress={props.onPressMax}
-          value={<Text style={style.txtBtnSendMax}>Use max</Text>}
+          value={<Text style={style.txtBtnSendMax}>{props.btnTxt}</Text>}
           badgeStyle={style.btnSendMax}
         />
       </View>

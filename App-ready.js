@@ -77,9 +77,11 @@ const Main = observer(({ store, current }) => {
       {renderSpinner({ store })}
       {current.confirmation
         ?<Confirm
+          title={current.title}
           confirmation={current.confirmation}
           onYes={() => {current.confirmationCallback(true)}}
           onNo={() => {current.confirmationCallback(false)}}
+          store={store}
         />
         :null
       }

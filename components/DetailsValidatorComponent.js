@@ -26,12 +26,15 @@ import {
 import Images from "../Images";
 import { Badge } from "react-native-elements";
 import IdentIcon from "./Identicon";
+import getLang from "../wallet/get-lang.js";
 
 var width = Dimensions.get("window").width;
 const BORDER_COLOR = "rgba(255, 255, 255, 0.18)";
 const GRAY_COLOR = "rgba(255, 255, 255, 0.50)";
 
-export default (props) => {
+export default ({store, ...props}) => {
+  const lang = getLang(store);
+
   const badgeStatus = () => {
     return (
       <Badge
@@ -43,7 +46,7 @@ export default (props) => {
               textTransform: "uppercase",
             }}
           >
-            {props.isActive ? "Active" : "Inactive"}
+            {props.isActive ? lang.badgeActive || "Active" : lang.badgeInActive ||"Inactive"}
           </Text>
         }
         badgeStyle={{
