@@ -258,10 +258,12 @@ class StakingStore {
       authorizedPubkey,
       splitStakePubkey,
       lamports: lamports.add(rent),
+      seed,
+      base: authorizedPubkey,
     };
 
     try {
-      transaction = solanaWeb3.StakeProgram.split(params);
+      transaction = solanaWeb3.StakeProgram.splitWithSeed(params);
     } catch (e) {
       return {
         error: "split_stake_account_error",
