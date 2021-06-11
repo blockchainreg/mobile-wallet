@@ -16,9 +16,13 @@ import Header from "../components/Header.js";
 var width = Dimensions.get("window").width;
 
 export default ({ store, web3t, props }) => {
+  const { stakingStore } = store;
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+  if (!stakingStore.validators) {
+    return null;
+  }
   const lang = getLang(store);
 
   const testData = [
