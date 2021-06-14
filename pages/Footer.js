@@ -23,15 +23,14 @@ export default ({ store }) => {
     if (wallet == null) {
       return;
     }
-    debugger;
     const stakingStore = new StakingStore(
-      wallet.network.api,
-      wallet.secretKey,
+      wallet.network.api.apiUrl,
+      wallet.privateKey,
       wallet.publicKey
     );
     store.stakingStore = stakingStore;
+    changeTab("stakePage")();
   };
-  
   //DO NOT generate footer if transaction info is visible
   if (store.infoTransaction != null) return null;
   return (
@@ -50,11 +49,11 @@ export default ({ store }) => {
         <Button
           active={store.current.page == "stakePage"}
           style={styles.footerButtonStyle}
-          onPress={changeTab("stakePage")}
+          onPress={goToStaking}
         >
           <StakeIcon
             fill={store.current.page == "stakePage" && Images.colorGreen}
-            onPress={changeTab("stakePage")}
+            onPress={goToStaking}
           />
         </Button>
         <Button

@@ -1,28 +1,29 @@
 import React from "react";
-import {
-  Container,
-  Text,
-  Content,
-  List,
-  ListItem,
-} from "native-base";
+import { Container, Text, Content, List, ListItem } from "native-base";
 import Footer from "./Footer.js";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, View } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import StakeItem from "../components/StakeItem.js";
 import Header from "../components/Header.js";
+import Spinner from "../components/Spinner.js";
+
+
 
 var width = Dimensions.get("window").width;
 
 export default ({ store, web3t, props }) => {
-  const { stakingStore } = store;
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+
+  const { stakingStore } = store;
   if (!stakingStore.validators) {
-    return null;
+    return <Spinner/>;
+
   }
+  // console.log('stakingStore', stakingStore.validators)
+  // debugger;
   const lang = getLang(store);
 
   const testData = [
@@ -32,7 +33,7 @@ export default ({ store, web3t, props }) => {
       apr: "10.3",
       status: "Active",
       address: "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK",
-      staked: true
+      staked: true,
     },
     {
       id: 2,
@@ -40,7 +41,7 @@ export default ({ store, web3t, props }) => {
       apr: "18.3",
       status: "Active",
       address: "eon93Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
-      staked: true
+      staked: true,
     },
     {
       id: 3,
@@ -48,7 +49,7 @@ export default ({ store, web3t, props }) => {
       total_stakers: "392",
       status: "Active",
       address: "rtn13Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
-      unstaked: true
+      unstaked: true,
     },
     {
       id: 4,
@@ -56,7 +57,7 @@ export default ({ store, web3t, props }) => {
       total_stakers: "232",
       status: "Inactive",
       address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
-      unstaked: true
+      unstaked: true,
     },
     {
       id: 5,
@@ -64,7 +65,7 @@ export default ({ store, web3t, props }) => {
       total_stakers: "232",
       status: "Active",
       address: "8PsBJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
-      unstaked: true
+      unstaked: true,
     },
     {
       id: 6,
@@ -72,7 +73,7 @@ export default ({ store, web3t, props }) => {
       total_stakers: "123",
       status: "Inactive",
       address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
-      unstaked: true
+      unstaked: true,
     },
     {
       id: 7,
@@ -80,12 +81,12 @@ export default ({ store, web3t, props }) => {
       total_stakers: "863",
       status: "Inactive",
       address: "1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3Vvs",
-      unstaked: true
+      unstaked: true,
     },
   ];
   const filterStake = testData.filter((el) => el.staked);
   const filterTotalStaked = testData.filter((el) => el.unstaked);
-  
+
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
       key={el.id}
@@ -99,8 +100,8 @@ export default ({ store, web3t, props }) => {
       store={store}
       isStaked
     />
-    ));
-    
+  ));
+
   const renderItemsTotalValidators = filterTotalStaked.map((el) => (
     <StakeItem
       key={el.id}
@@ -117,17 +118,19 @@ export default ({ store, web3t, props }) => {
   ));
   return (
     <Container>
-      <Header
-      title={lang.titleStake || "Stake"}
-      />
+      <Header title={lang.titleStake || "Stake"} />
       <Content style={{ backgroundColor: Images.velasColor4 }}>
         <List>
           <ListItem itemHeader noBorder>
-            <Text style={style.titleText}>{lang.itemStakedTitle || "Staked Validators"}</Text>
+            <Text style={style.titleText}>
+              {lang.itemStakedTitle || "Staked Validators"}
+            </Text>
           </ListItem>
           {renderItemsMyStake}
           <ListItem itemHeader noBorder>
-            <Text style={style.titleText}>{lang.itemValidatorsTitle || "Other Validators"}</Text>
+            <Text style={style.titleText}>
+              {lang.itemValidatorsTitle || "Other Validators"}
+            </Text>
           </ListItem>
           {renderItemsTotalValidators}
         </List>

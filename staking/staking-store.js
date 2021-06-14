@@ -1,13 +1,15 @@
-import mobx from "mobx";
+import { decorate, observable, action } from "mobx";
 import BN from "bn.js";
-import solanaWeb3 from '@velas/solana-web3';
+// import * as solanaWeb3 from ;
 import bs58 from 'bs58';
 import { ValidatorModel } from './validator-model.js';
 import { StakingAccountModel } from './staking-account-model.js';
 
+const solanaWeb3 = require('./index.cjs.js');
+
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
-const { decorate, observable, action } = mobx;
+// const  = mobx;
 
 
 class StakingStore {
@@ -20,6 +22,9 @@ class StakingStore {
   seedUsed = Object.create(null);
 
   constructor(API_HOST, secretKey, publicKey) {
+    if (typeof secretKey === 'string') {
+      secretKey = bs58.decode(secretKey);
+    }
     this.secretKey = secretKey;
     this.publicKeyBuffer = bs58.decode(publicKey);
     this.publicKey58 = publicKey;
@@ -263,7 +268,7 @@ class StakingStore {
     };
 
     try {
-      transaction = solanaWeb3.StakeProgram.splitWithSeed(params);
+      transaction = solanaWeb3.StakeProgram.split(params);
     } catch (e) {
       return {
         error: "split_stake_account_error",
