@@ -20,6 +20,7 @@ class StakingStore {
   isRefreshing = false;
   rent = null;
   seedUsed = Object.create(null);
+  connection = null;
 
   constructor(API_HOST, secretKey, publicKey) {
     if (typeof secretKey === 'string') {
@@ -59,13 +60,21 @@ class StakingStore {
 
   async reload() {
     const { current, delinquent } = await this.connection.getVoteAccounts();
-    const stakingAccounts = (await this.connection.getParsedProgramAccounts(solanaWeb3.StakeProgram.programId, {
-      filters:
-        [{memcmp: {
-          offset: 0xc,
-          bytes: this.publicKey58,
-        }}]
-    })).map(account => new StakingAccountModel(account));
+    const filter = {memcmp: {
+      offset: 0xc,
+      bytes: this.publicKey58,
+    }};
+    const nativeAccounts = await this.connection.getParsedProgramAccounts(
+      solanaWeb3.StakeProgram.programId,
+      { filters: [filter] }
+    );
+    const filteredAccounts = nativeAccounts.filter(({ account }) =>
+      account.data.parsed.info.meta.authorized &&
+      account.data.parsed.info.meta.authorized.staker === this.publicKey58
+    );
+    const stakingAccounts = filteredAccounts.map(account =>
+      new StakingAccountModel(account, this.connection)
+    );
     const validators = (
       current.map((validator) => new ValidatorModel(validator, false))
       .concat(delinquent.map((validator) => new ValidatorModel(validator, true)))
@@ -221,12 +230,16 @@ class StakingStore {
         return result;
   }
 
+  getValidatorDetails(validator) {
+
+  }
+
   getSwapAmountByStakeAmount(amount) {
     if (!this.vlxNativeBalance) {
       return null;
     }
     if (this.vlxNativeBalance.gte(amount.plus(PRESERVE_BALANCE))) {
-      return new BN('0', 10);
+      return new BN(0);
     }
     if (!this.vlxEvmBalance) {
       return null;

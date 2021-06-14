@@ -19,7 +19,6 @@ export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  debugger;
   const { stakingStore } = store;
   if (!stakingStore.validators) {
     return null;
