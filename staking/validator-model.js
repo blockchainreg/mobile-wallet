@@ -1,3 +1,4 @@
+import { decorate, observable, action } from "mobx";
 import BN from "bn.js";
 import { StakingAccountModel } from './staking-account-model.js';
 
@@ -5,6 +6,7 @@ class ValidatorModel {
   status = 'active';
   solanaValidator = null;
   stakingAccounts = [];
+  apr = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -15,7 +17,7 @@ class ValidatorModel {
   }
 
   get activatedStake() {
-    return solanaValidator.activatedStake;
+    return this.solanaValidator.activatedStake;
   }
 
   get myStake() {
@@ -26,6 +28,20 @@ class ValidatorModel {
     }
     return myStake;
   }
+
+  get apr() {
+    let stake = new BN(0);
+    let sum = new BN(0);
+
+    for (let i = 0; i < this.stakingAccounts.length; i++) {
+      const acc = this.stakingAccounts[i];
+      if (!acc.apr || acc.apr.isZero()) {
+        continue;
+      }
+      // stake = stake.add(acc.apr.mul(acc.));
+    }
+  }
+
 
   constructor(solanaValidator, isDelinquent) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
@@ -38,10 +54,25 @@ class ValidatorModel {
       this.status = 'inactive';
     }
     this.solanaValidator = solanaValidator;
+    decorate(this, {
+      solanaValidator: observable,
+      status: observable,
+    });
   }
 
-  updateValidator(solanaValidator) {
+  updateValidator(solanaValidator, isDelinquent) {
+    if (!solanaValidator || !solanaValidator.votePubkey) {
+      throw new Error('solanaValidator invalid');
+    }
+    if (typeof isDelinquent !== 'boolean') {
+      throw new Error('isDelinquent bool required');
+    }
     this.solanaValidator = solanaValidator;
+    if (isDelinquent) {
+      this.status = 'inactive';
+    } else {
+      this.status = 'active';
+    }
   }
 
   addStakingAccount(stakingAccount) {

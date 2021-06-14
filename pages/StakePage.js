@@ -16,7 +16,6 @@ export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-
   const { stakingStore } = store;
   if (!stakingStore.validators) {
     return <Spinner/>;
