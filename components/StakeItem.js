@@ -5,7 +5,7 @@ import Images from "../Images";
 import { Avatar } from "../svg";
 import { Badge } from "react-native-elements";
 import IdentIcon from "./Identicon";
-import { formatBalance } from "../utils/format-value";
+import { formatStakeAmount } from "../utils/format-value";
 import getLang from "../wallet/get-lang.js";
 
 var width = Dimensions.get("window").width;
@@ -16,9 +16,9 @@ export default ({ store, isStaked, ...props }) => {
 
   const typeBadge = (type) => {
     switch (type) {
-      case "Active":
+      case "active":
         return lang.badgeActive || "Active";
-      case "Inactive":
+      case "inactive":
         return lang.badgeInactive || "Inactive";
       default:
         return null;
@@ -32,7 +32,7 @@ export default ({ store, isStaked, ...props }) => {
           <Text style={style.txtStyleBadge}>{typeBadge(props.typeBadge)}</Text>
         }
         badgeStyle={
-          props.typeBadge === "Active" ? style.active : style.inactive
+          props.typeBadge === "active" ? style.active : style.inactive
         }
       />
     );
@@ -58,7 +58,7 @@ export default ({ store, isStaked, ...props }) => {
           numberOfLines={1}
           ellipsizeMode="middle"
         >
-          {props.address || props.validatorName}
+          {props.address}
         </Text>
         <Text style={style.styleSubTitle}>
           {isStaked ? lang.myStake || "My Stake" : lang.totalStaked || "Total Staked"}
@@ -69,7 +69,7 @@ export default ({ store, isStaked, ...props }) => {
             { color: isStaked ? Images.colorGreen : "#fff" },
           ]}
         >
-          {formatBalance(Number(props.myStake || props.totalStaked || 0))} VLX
+          {formatStakeAmount(props.myStake || props.totalStaked || 0)} VLX
         </Text>
       </Body>
       <Body style={{ alignItems: "flex-end", marginRight: 20 }}>

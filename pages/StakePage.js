@@ -8,113 +8,46 @@ import StakeItem from "../components/StakeItem.js";
 import Header from "../components/Header.js";
 import Spinner from "../components/Spinner.js";
 
-
-
-var width = Dimensions.get("window").width;
-
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
   const { stakingStore } = store;
   if (!stakingStore.validators) {
-    return <Spinner/>;
-
+    // return null;
+    return <Spinner />;
   }
-  // console.log('stakingStore', stakingStore.validators)
-  // debugger;
+
   const lang = getLang(store);
 
-  const testData = [
-    {
-      id: 1,
-      my_stake: "20000",
-      apr: "10.3",
-      status: "Active",
-      address: "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK",
-      staked: true,
-    },
-    {
-      id: 2,
-      my_stake: "50000",
-      apr: "18.3",
-      status: "Active",
-      address: "eon93Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
-      staked: true,
-    },
-    {
-      id: 3,
-      total_staked: "400000",
-      total_stakers: "392",
-      status: "Active",
-      address: "rtn13Yhg7bjKgdwnt79TRfeLbePqddLEFP9H1iQBufN",
-      unstaked: true,
-    },
-    {
-      id: 4,
-      total_staked: "400000",
-      total_stakers: "232",
-      status: "Inactive",
-      address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
-      unstaked: true,
-    },
-    {
-      id: 5,
-      total_staked: "230000",
-      total_stakers: "232",
-      status: "Active",
-      address: "8PsBJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
-      unstaked: true,
-    },
-    {
-      id: 6,
-      total_staked: "450000",
-      total_stakers: "123",
-      status: "Inactive",
-      address: "vs1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3V",
-      unstaked: true,
-    },
-    {
-      id: 7,
-      total_staked: "9900000",
-      total_stakers: "863",
-      status: "Inactive",
-      address: "1BJogNvLYbSRfzpNGtgvh9KqsCULdrXrhPywz4S3Vvs",
-      unstaked: true,
-    },
-  ];
-  const filterStake = testData.filter((el) => el.staked);
-  const filterTotalStaked = testData.filter((el) => el.unstaked);
+  const filterStake = stakingStore.getStakedValidators();
+  const filterTotalStaked = stakingStore.getNotStakedValidators();
+  
 
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
-      key={el.id}
+      key={el.address}
       typeBadge={el.status}
       address={el.address}
-      myStake={el.my_stake}
-      totalStaked={el.total_staked}
-      totalStakers={el.total_stakers}
-      apr={el.apr}
-      onPress={changePage("detailsValidator")}
+      myStake={el.myStake}
+      apr={el.aprStake}
+      // onPress={changePage("detailsValidator")}
       store={store}
       isStaked
     />
   ));
-
   const renderItemsTotalValidators = filterTotalStaked.map((el) => (
     <StakeItem
-      key={el.id}
+      key={el.address}
       typeBadge={el.status}
       address={el.address}
-      validatorName={el.validator}
-      myStake={el.my_stake}
-      totalStaked={el.total_staked}
-      totalStakers={el.total_stakers}
-      apr={el.apr}
-      onPress={changePage("detailsValidator")}
+      totalStaked={el.activatedStake}
+      totalStakers={el.totalStakers}
+      // onPress={changePage("detailsValidator")}
       store={store}
     />
   ));
+
   return (
     <Container>
       <Header title={lang.titleStake || "Stake"} />

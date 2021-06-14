@@ -17,7 +17,7 @@ class ValidatorModel {
   }
 
   get activatedStake() {
-    return this.solanaValidator.activatedStake;
+    return new BN(this.solanaValidator.activatedStake+'', 10);
   }
 
   get myStake() {
@@ -40,6 +40,14 @@ class ValidatorModel {
       }
       // stake = stake.add(acc.apr.mul(acc.));
     }
+  }
+
+  get aprStake() {  //demo
+    return 10;
+  }
+
+  get totalStakers() { //demo
+    return 200;
   }
 
 
