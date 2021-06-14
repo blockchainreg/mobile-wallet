@@ -16,15 +16,22 @@ import { ChartIcon, ValidatorsIcon } from "../svg/index";
 import ValidatorCard from "./ValidatorCard";
 import ButtonBlock from "../components/ButtonBlock.js";
 import DetailsValidatorComponent from "../components/DetailsValidatorComponent.js";
-import { formatValue } from "../utils/format-value.js";
 import TableRewards from "../components/TableRewards";
 import getLang from "../wallet/get-lang.js";
+import { formatStakeAmount } from "../utils/format-value";
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
-const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
 
 export default ({ store, props }) => {
+  const { stakingStore } = store;
+
+  const filterStake = stakingStore.getStakedValidators();
+
+  const ADDRESS = filterStake[0].address;
+  const VALIDATOR_INTEREST = filterStake[0].validatorInterest;
+  const MY_STAKE = filterStake[0].myStake;
+
   const [page, setPage] = useState(0);
   const onChangeTab = (changeTabProps) => {
     const newTabIndex = changeTabProps.i;
@@ -42,8 +49,8 @@ export default ({ store, props }) => {
       <DetailsValidatorComponent
         address={ADDRESS}
         isActive={true}
-        value1={"9"}
-        value2={formatValue("300000")}
+        value1={VALIDATOR_INTEREST}
+        value2={`${formatStakeAmount(MY_STAKE)} VLX`}
         subtitle1={lang.validatorInterest || "VALIDATOR INTEREST"}
         subtitle2={store.isStaker ? lang.myStake || "MY STAKE" : lang.totalStake || "TOTAL STAKE"}
         store={store}

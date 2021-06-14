@@ -31,7 +31,7 @@ export default ({ store, web3t, props }) => {
       address={el.address}
       myStake={el.myStake}
       apr={el.aprStake}
-      // onPress={changePage("detailsValidator")}
+      onPress={changePage("detailsValidator")}
       store={store}
       isStaked
     />
@@ -43,7 +43,7 @@ export default ({ store, web3t, props }) => {
       address={el.address}
       totalStaked={el.activatedStake}
       totalStakers={el.totalStakers}
-      // onPress={changePage("detailsValidator")}
+      onPress={changePage("detailsValidator")}
       store={store}
     />
   ));

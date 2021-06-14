@@ -50,6 +50,10 @@ class ValidatorModel {
     return 200;
   }
 
+  get validatorInterest() { //demo
+    return 10;
+  }
+
 
   constructor(solanaValidator, isDelinquent) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
