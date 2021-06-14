@@ -6,7 +6,6 @@ class ValidatorModel {
   status = 'active';
   solanaValidator = null;
   stakingAccounts = [];
-  apr = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -17,7 +16,7 @@ class ValidatorModel {
   }
 
   get activatedStake() {
-    return new BN(this.solanaValidator.activatedStake+'', 10);
+    return this.solanaValidator.activatedStake;
   }
 
   get myStake() {
@@ -40,16 +39,16 @@ class ValidatorModel {
       }
       // stake = stake.add(acc.apr.mul(acc.));
     }
+    return 12.2;
   }
 
-  get aprStake() {  //demo
-    return 10;
-  }
-
-  get totalStakers() { //demo
+  get totalStakers() {
     return 200;
   }
 
+  get commission() {
+    return this.solanaValidator.commission;
+  }
 
   constructor(solanaValidator, isDelinquent) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
