@@ -37,7 +37,7 @@ export default ({ store, isStaked, ...props }) => {
       />
     );
   };
-
+  debugger;
   return (
     <ListItem
       noBorder
@@ -69,7 +69,7 @@ export default ({ store, isStaked, ...props }) => {
             { color: isStaked ? Images.colorGreen : "#fff" },
           ]}
         >
-          {formatStakeAmount(props.myStake || props.totalStaked || 0)} VLX
+          {formatStakeAmount(props.myStake || props.totalStaked)} VLX
         </Text>
       </Body>
       <Body style={{ alignItems: "flex-end", marginRight: 20 }}>

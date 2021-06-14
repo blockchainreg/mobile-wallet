@@ -9,10 +9,11 @@ import Header from "../components/Header.js";
 import Spinner from "../components/Spinner.js";
 
 export default ({ store, web3t, props }) => {
-  const changePage = (tab) => () => {
+  const { stakingStore } = store;
+  const changePage = (tab, validatorAddress) => () => {
+    stakingStore.openedValidatorAddress = validatorAddress;
     store.current.page = tab;
   };
-  const { stakingStore } = store;
   if (!stakingStore.validators) {
     // return null;
     return <Spinner />;
@@ -30,8 +31,8 @@ export default ({ store, web3t, props }) => {
       typeBadge={el.status}
       address={el.address}
       myStake={el.myStake}
-      apr={el.aprStake}
-      onPress={changePage("detailsValidator")}
+      apr={el.apr}
+      onPress={changePage("detailsValidator", el.address)}
       store={store}
       isStaked
     />
@@ -43,7 +44,7 @@ export default ({ store, web3t, props }) => {
       address={el.address}
       totalStaked={el.activatedStake}
       totalStakers={el.totalStakers}
-      onPress={changePage("detailsValidator")}
+      onPress={changePage("detailsValidator", el.address)}
       store={store}
     />
   ));

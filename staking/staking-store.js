@@ -6,6 +6,7 @@ import { ValidatorModel } from './validator-model.js';
 import { StakingAccountModel } from './staking-account-model.js';
 
 const solanaWeb3 = require('./index.cjs.js');
+import { callWithRetries } from './utils';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
@@ -21,6 +22,7 @@ class StakingStore {
   rent = null;
   seedUsed = Object.create(null);
   connection = null;
+  openedValidatorAddress = null;
 
   constructor(API_HOST, secretKey, publicKey) {
     if (typeof secretKey === 'string') {
@@ -38,6 +40,7 @@ class StakingStore {
       vlxNativeBalance: observable,
       isRefreshing: observable,
       accounts: observable,
+      openedValidatorAddress: observable,
     });
 
     this.reloadWithRetry();
@@ -46,16 +49,19 @@ class StakingStore {
   async reloadWithRetry() {
     let tries = 0;
     this.isRefreshing = true;
-    while(true) {
-      try {
-        await this.reload();
-        break;
-      } catch(e) {
-        tries++;
-        console.error(e);
-        await new Promise(resolve => setTimeout(resolve, 1000*tries));
-      }
-    }
+    // while(true) {
+    //   try {
+    //     await this.reload();
+    //     break;
+    //   } catch(e) {
+    //     tries++;
+    //     console.error(e);
+    //     await new Promise(resolve => setTimeout(resolve, 1000*tries));
+    //   }
+    // }
+    callWithRetries(
+      () => this.reload()
+    );
   }
 
   async reload() {
@@ -116,11 +122,34 @@ class StakingStore {
     return this.validators.filter(({myStake}) => myStake.isZero());
   }
 
-  getValidatorDetails(validatorAddress) {
-    if (typeof address !== 'string') {
-      throw new Error('Address string expected');
+  getValidatorDetails() {
+    const validatorAddress = this.openedValidatorAddress;
+    if (typeof validatorAddress !== 'string') {
+      throw new Error('openedValidatorAddress need to be set');
     }
-    return this.validators.find(({address}) => address === validatorAddress);
+    const validator = this.validators.find(({address}) => address === validatorAddress);
+    if (!validator) {
+      throw new Error('Validator not found');
+    }
+    return {
+      address: validatorAddress,
+      dominance: this.getDominance(validator),
+      quality: this.getQuality(validator),
+      apr: validator.apr,
+      commission: validator.commission,
+      myStake: validator.myStake,
+      status: validator.status,
+      activeStake: validator.activeStake,
+      totalStake: new BN('10000000000000', 10),
+    };
+  }
+
+  getDominance(validator) {
+    return 0.1;
+  }
+
+  getQuality(validator) {
+    return 1;
   }
 
   getBalance() {
@@ -230,9 +259,6 @@ class StakingStore {
         return result;
   }
 
-  getValidatorDetails(validator) {
-
-  }
 
   getSwapAmountByStakeAmount(amount) {
     if (!this.vlxNativeBalance) {

@@ -6,7 +6,6 @@ class ValidatorModel {
   status = 'active';
   solanaValidator = null;
   stakingAccounts = [];
-  apr = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -33,27 +32,23 @@ class ValidatorModel {
     let stake = new BN(0);
     let sum = new BN(0);
 
-    for (let i = 0; i < this.stakingAccounts.length; i++) {
-      const acc = this.stakingAccounts[i];
-      if (!acc.apr || acc.apr.isZero()) {
-        continue;
-      }
-      // stake = stake.add(acc.apr.mul(acc.));
-    }
+    // for (let i = 0; i < this.stakingAccounts.length; i++) {
+    //   const acc = this.stakingAccounts[i];
+    //   if (!acc.apr || acc.apr.isZero()) {
+    //     continue;
+    //   }
+    //   // stake = stake.add(acc.apr.mul(acc.));
+    // }
+    return 12.2;
   }
 
-  get aprStake() {  //demo
-    return 10;
-  }
-
-  get totalStakers() { //demo
+  get totalStakers() {
     return 200;
   }
 
-  get validatorInterest() { //demo
-    return 10;
+  get commission() {
+    return this.solanaValidator.commission;
   }
-
 
   constructor(solanaValidator, isDelinquent) {
     if (!solanaValidator || !solanaValidator.votePubkey) {

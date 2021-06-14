@@ -1,14 +1,5 @@
 import BN from "bn.js";
-import { ManyKeysMap } from "./many-keys-map.js"
-
-const cacheMap = new ManyKeysMap();
-
-async function cachedCall(params, call) {
-  if (!cacheMap.has(params)) {
-    cacheMap.set(params, call());
-  }
-  return await cacheMap.get(params);
-}
+import { cachedCallWithRetries } from './utils';
 
 class StakingAccountModel {
   parsedAccoount = null;
@@ -71,28 +62,28 @@ class StakingAccountModel {
   //     cb null, rewards
 
   async getEpochSchedule() {
-    return await cachedCall(
+    return await cachedCallWithRetries(
       ['getEpochSchedule', this.connection],
       () => this.connection.getEpochSchedule(),
     );
   }
 
   async getEpochInfo() {
-    return await cachedCall(
+    return await cachedCallWithRetries(
       ['getEpochInfo', this.connection],
       () => this.connection.getEpochInfo(),
     );
   }
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
-    return await cachedCall(
+    return await cachedCallWithRetries(
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
     );
   }
 
   async getConfirmedBlock(blockNumber) {
-    return await cachedCall(
+    return await cachedCallWithRetries(
       ['getConfirmedBlock', this.connection, blockNumber],
       () => this.connection.getConfirmedBlock(blockNumber, 1),
     );
@@ -118,10 +109,12 @@ class StakingAccountModel {
       const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
       const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
       const address = this.address;
-      this.rewards = blockResult.rewards.filter(r => r.pubKey === address);
+      this.rewards = blockResult.rewards.filter(r => r.pubkey === address);
+
       if (this.rewards.length === 0) {
         return;
       }
+      // debugger;
       // fetchEpochRewards(account.address, activationEpoch)
     } catch(e) {
       console.error(e);
