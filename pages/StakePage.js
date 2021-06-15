@@ -50,7 +50,7 @@ export default ({ store, web3t, props }) => {
   const EmptyList = () => {
     return (
       <View style={style.listItemStyle}>
-        <Text style={style.styleSubTitle}>Empty now!!</Text>
+        <Text style={style.styleSubTitle}>{lang.nothingToShow}</Text>
       </View>
     );
   };

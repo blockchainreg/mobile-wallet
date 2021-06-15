@@ -5,7 +5,7 @@ import Images from "../Images";
 import { formatValue, wrapNumber } from "../utils/format-value";
 import { Badge } from "react-native-elements";
 
-export default (props) => {
+export default ({isWithdraw, ...props}) => {
   const [value, setValue] = useState("");
 
   return (
@@ -31,7 +31,7 @@ export default (props) => {
       <View style={style.containerBottomInput}>
         <View style={style.subContainerInput}>
           <Text style={style.labelTextBottom}>
-            {props.sub_text} {formatValue(props.total_stake)}
+            {props.sub_text} {isWithdraw ? props.total_stake : props.available_balance}
           </Text>
           <Image source={Images.logo} style={style.labelLogo} />
           <Text style={style.labelTokenStyle}>{props.token}</Text>

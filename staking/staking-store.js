@@ -16,8 +16,8 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 class StakingStore {
   validators = null;
   accounts = null;
-  vlxEvmBalance = null;
-  vlxNativeBalance = null;
+  vlxEvmBalance = new BN("17000000000", 10);
+  vlxNativeBalance = new BN("12000000000", 10);
   isRefreshing = false;
   rent = null;
   seedUsed = Object.create(null);
@@ -143,11 +143,10 @@ class StakingStore {
       annualPercentageRate: this.getAnnualRate(validator),
       apr: validator.apr,
       commission: validator.commission,
-      activeStake: validator.activeStake,
       status: validator.status,
       myStake: validator.myStake,
       activatedStake: validator.activatedStake,
-      totalStake: new BN('10000000000000', 10),
+      available_balance: this.getBalance(),
     };
   }
 
@@ -178,14 +177,17 @@ class StakingStore {
   }
 
   getBalance() {
-    return {
-      vlxEvmBalance, vlxNativeBalance,
-    };
+    if (!this.vlxEvmBalance || !this.vlxNativeBalance) {
+      return null;
+    }
+    return this.vlxEvmBalance.add(this.vlxNativeBalance);
   }
   getAnnualRate(validator) {
     return validator.apr;
   }
-
+  getNewAccountAddress() {
+      return 'F3RZb2HFM6hs4yN9VQZckFdB';
+  }
   async getNextSeed() {
       const fromPubkey = this.publicKey;
       const addressesHs = Object.create(null);
@@ -292,21 +294,21 @@ class StakingStore {
     if (!this.vlxNativeBalance) {
       return null;
     }
-    if (this.vlxNativeBalance.gte(amount.plus(PRESERVE_BALANCE))) {
+    if (this.vlxNativeBalance.gte(amount.add(PRESERVE_BALANCE))) {
       return new BN(0);
     }
     if (!this.vlxEvmBalance) {
       return null;
     }
-    if (this.vlxNativeBalance.plus(this.vlxEvmBalance).lt(amount)) {
+    if (this.vlxNativeBalance.add(this.vlxEvmBalance).lt(amount)) {
       return null;
     }
 
-    if (this.vlxNativeBalance.plus(this.vlxEvmBalance).lte(amount.plus(PRESERVE_BALANCE))) {
+    if (this.vlxNativeBalance.add(this.vlxEvmBalance).lte(amount.add(PRESERVE_BALANCE))) {
       return this.vlxEvmBalance;
     }
 
-    return amount.plus(PRESERVE_BALANCE).sub(this.vlxNativeBalance);
+    return amount.add(PRESERVE_BALANCE).sub(this.vlxNativeBalance);
   }
 
   async splitStakeAccount(stakeAccount, lamports){

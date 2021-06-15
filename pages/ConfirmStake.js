@@ -7,17 +7,22 @@ import ButtonBlock from "../components/ButtonBlock.js";
 import StepItem from "../components/StepItem";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
+import { formatStakeAmount } from "../utils/format-value.js";
 
 var width = Dimensions.get("window").width;
-const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
-const ADDRESS_2 = "F3RZb2HFM6hs4yN9VQZckFdB";
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+  const fakeAmount = 11;
   const lang = getLang(store);
-
+  const { stakingStore } = store;
+  const details = stakingStore.getValidatorDetails();
+  const ADDRESS = details.address;
+  const NEW_ADDRESS = stakingStore.getNewAccountAddress();
+  const swapAmount = stakingStore.getSwapAmountByStakeAmount(fakeAmount);
+  debugger;
   return (
     <Container>
       <Header
@@ -30,22 +35,23 @@ export default ({ store, web3t, props }) => {
       <View style={style.contentBg}>
         <View style={style.container}>
           <Text style={style.title}>{lang.titleItemsStake || "These actions will be made"}</Text>
-          {store.isStaker ? (
+          {!details.myStake.isZero() ? (
             <View style={style.steps}>
               <StepItem
                 index="1"
-                text={lang.stepItem1 || "Convert 1,000,000 VLX to VLX Native"}
-                address={ADDRESS_2}
+                // text={lang.stepItem1 || "Convert 1,000,000 VLX to VLX Native"}
+                text={`Convert ${formatStakeAmount(swapAmount)} VLX to VLX Native`}
+                address={NEW_ADDRESS}
               />
               <StepItem
                 index="2"
                 text={lang.stepItem2 + " " + "-" || "Create Stake Account -"}
-                address={ADDRESS_2}
+                address={NEW_ADDRESS}
               />
               <StepItem
                 index="3"
                 text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
-                address={ADDRESS_2}
+                address={NEW_ADDRESS}
               />
             </View>
           ) : (
@@ -53,12 +59,12 @@ export default ({ store, web3t, props }) => {
               <StepItem
                 index="1"
                 text={lang.stepItem2 + " " + "-" || "Create Stake Account -"}
-                address={ADDRESS_2}
+                address={NEW_ADDRESS}
               />
               <StepItem
                 index="2"
                 text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
-                address={ADDRESS_2}
+                address={NEW_ADDRESS}
               />
             </View>
           )}

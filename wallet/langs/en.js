@@ -229,6 +229,7 @@
 	givenAddressNotValid: "Given address is not valid Velas address",
 	addressNotValid: "Address is not valid",
 	youDidntAgree: "You didn't agree",
-	sendingFunds: "Sending funds"
+	sendingFunds: "Sending funds",
+	availableStaking: "Available for staking",
   };
 }).call(this);

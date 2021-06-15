@@ -20,14 +20,16 @@ export default ({ store }) => {
   };
   const goToStaking = () => {
     const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
+    const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
     if (wallet == null) {
       return;
     }
+
     const stakingStore = new StakingStore(
       wallet.network.api.apiUrl,
       wallet.privateKey,
       wallet.publicKey,
-      '0x8b25711fbb1dd97cf4a373a7fe94e83d83956b8e' //evm address
+      walletEvm.address2 //evm address
     );
     store.stakingStore = stakingStore;
     changeTab("stakePage")();
