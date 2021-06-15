@@ -23,7 +23,6 @@ export default ({ store, web3t, props }) => {
 
   const filterStake = stakingStore.getStakedValidators();
   const filterTotalStaked = stakingStore.getNotStakedValidators();
-  
 
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
@@ -48,6 +47,13 @@ export default ({ store, web3t, props }) => {
       store={store}
     />
   ));
+  const EmptyList = () => {
+    return (
+      <View style={style.listItemStyle}>
+        <Text style={style.styleSubTitle}>Empty now!!</Text>
+      </View>
+    );
+  };
 
   return (
     <Container>
@@ -59,13 +65,13 @@ export default ({ store, web3t, props }) => {
               {lang.itemStakedTitle || "Staked Validators"}
             </Text>
           </ListItem>
-          {renderItemsMyStake}
+          {!renderItemsMyStake.length ? <EmptyList /> : renderItemsMyStake}
           <ListItem itemHeader noBorder>
             <Text style={style.titleText}>
               {lang.itemValidatorsTitle || "Other Validators"}
             </Text>
           </ListItem>
-          {renderItemsTotalValidators}
+          {!renderItemsTotalValidators.length ? <EmptyList /> : renderItemsTotalValidators}
         </List>
       </Content>
       <Footer store={store}></Footer>
@@ -79,5 +85,17 @@ const style = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Fontfabric-NexaBold",
     // marginRight: 10
+  },
+  listItemStyle: {
+    marginHorizontal: 20,
+
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  styleSubTitle: {
+    color: "#fff",
+    fontSize: 14,
+    fontFamily: "Fontfabric-NexaRegular",
   },
 });

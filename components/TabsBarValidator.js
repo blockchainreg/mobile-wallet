@@ -19,26 +19,28 @@ export default ({ store, props }) => {
 
   const [page, setPage] = useState(0);
   const onChangeTab = (changeTabProps) => {
-  const newTabIndex = changeTabProps.i;
-  setPage(newTabIndex);
+    const newTabIndex = changeTabProps.i;
+    setPage(newTabIndex);
   };
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
   const lang = getLang(store);
-
-  store.isStaker = true; // change to false to show without tabs and steps in the file ConfirmStake.js. This is a test demo to visualize.
-
+  
+  const DOMINANCE_VALUE = details.dominance;
+  const QUALITY_VALUE = details.quality;
+  const ANNUAL_RATE = details.annualPercentageRate;
+  const ACTIVE_STAKE = details.activeStake;
   return (
     <>
       <DetailsValidatorComponent
         address={details.address}
-        isActive={true}
+        isActive={details.status === "active" ? true : false}
         value1={details.commission}
-        value2={`${formatStakeAmount(details.myStake)} VLX`}
+        value2={!details.myStake.isZero() ? `${formatStakeAmount(details.myStake)} VLX` : `${formatStakeAmount(details.activatedStake)} VLX`}
         subtitle1={lang.validatorInterest || "VALIDATOR INTEREST"}
         subtitle2={
-          store.isStaker
+          !details.myStake.isZero()
             ? lang.myStake || "MY STAKE"
             : lang.totalStake || "TOTAL STAKE"
         }
@@ -46,7 +48,7 @@ export default ({ store, props }) => {
       />
 
       <View>
-        {store.isStaker ? (
+        {!details.myStake.isZero() ? (
           <Tabs
             initialPage={0}
             onChangeTab={onChangeTab}
@@ -76,7 +78,7 @@ export default ({ store, props }) => {
             >
               <View style={style.container}>
                 <ValidatorCard
-                  value={"-0.12"}
+                  value={DOMINANCE_VALUE}
                   subtitle={lang.dominance || "DOMINANCE"}
                   info={
                     lang.info1 ||
@@ -85,7 +87,7 @@ export default ({ store, props }) => {
                   cardIcon={<ChartIcon />}
                 />
                 <ValidatorCard
-                  value={"0.1"}
+                  value={QUALITY_VALUE}
                   subtitle={lang.quality || "QUALITY"}
                   info={
                     lang.info2 ||
@@ -94,7 +96,7 @@ export default ({ store, props }) => {
                   cardSymbol={"+"}
                 />
                 <ValidatorCard
-                  value={"18.3"}
+                  value={ANNUAL_RATE}
                   subtitle={lang.annual || "ANNUAL PERCENTAGE RATE"}
                   info={
                     lang.info3 ||
@@ -103,7 +105,7 @@ export default ({ store, props }) => {
                   cardSymbol={"%"}
                 />
                 <ValidatorCard
-                  value={"33"}
+                  value={ACTIVE_STAKE}
                   subtitle={lang.activeStake || "YOUR ACTIVE STAKE"}
                   info={
                     lang.info4 ||
@@ -197,7 +199,7 @@ export default ({ store, props }) => {
           <>
             <View style={style.container}>
               <ValidatorCard
-                value={"-0.12"}
+                value={DOMINANCE_VALUE}
                 subtitle={lang.dominance || "DOMINANCE"}
                 info={
                   lang.info1 ||
@@ -206,7 +208,7 @@ export default ({ store, props }) => {
                 cardIcon={<ChartIcon />}
               />
               <ValidatorCard
-                value={"0.1"}
+                value={QUALITY_VALUE}
                 subtitle={lang.quality || "QUALITY"}
                 info={
                   lang.info2 || "Relative performence metric. Higher is better"

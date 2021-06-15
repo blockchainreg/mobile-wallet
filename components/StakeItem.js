@@ -37,7 +37,6 @@ export default ({ store, isStaked, ...props }) => {
       />
     );
   };
-  debugger;
   return (
     <ListItem
       noBorder

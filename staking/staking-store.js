@@ -135,11 +135,13 @@ class StakingStore {
       address: validatorAddress,
       dominance: this.getDominance(validator),
       quality: this.getQuality(validator),
+      annualPercentageRate: this.getAnnualRate(validator),
       apr: validator.apr,
       commission: validator.commission,
-      myStake: validator.myStake,
-      status: validator.status,
       activeStake: validator.activeStake,
+      status: validator.status,
+      myStake: validator.myStake,
+      activatedStake: validator.activatedStake,
       totalStake: new BN('10000000000000', 10),
     };
   }
@@ -156,6 +158,9 @@ class StakingStore {
     return {
       vlxEvmBalance, vlxNativeBalance,
     };
+  }
+  getAnnualRate(validator) {
+    return 10.3;
   }
 
   async getNextSeed() {
