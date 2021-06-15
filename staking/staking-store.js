@@ -4,7 +4,7 @@ import BN from "bn.js";
 import bs58 from 'bs58';
 import { ValidatorModel } from './validator-model.js';
 import { StakingAccountModel } from './staking-account-model.js';
-
+import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
 import { callWithRetries } from './utils';
 
@@ -23,8 +23,9 @@ class StakingStore {
   seedUsed = Object.create(null);
   connection = null;
   openedValidatorAddress = null;
+  evmAddress = null;
 
-  constructor(API_HOST, secretKey, publicKey) {
+  constructor(API_HOST, secretKey, publicKey, evmAddress) {
     if (typeof secretKey === 'string') {
       secretKey = bs58.decode(secretKey);
     }
@@ -33,6 +34,7 @@ class StakingStore {
     this.publicKey58 = publicKey;
     this.publicKey = new solanaWeb3.PublicKey(publicKey);
     this.connection = new solanaWeb3.Connection(API_HOST, 'singleGossip');
+    this.evmAddress = evmAddress;
 
     decorate(this, {
       validators: observable,
@@ -47,24 +49,28 @@ class StakingStore {
   }
 
   async reloadWithRetry() {
-    let tries = 0;
     this.isRefreshing = true;
-    // while(true) {
-    //   try {
-    //     await this.reload();
-    //     break;
-    //   } catch(e) {
-    //     tries++;
-    //     console.error(e);
-    //     await new Promise(resolve => setTimeout(resolve, 1000*tries));
-    //   }
-    // }
-    callWithRetries(
+    await callWithRetries(
       () => this.reload()
     );
+    this.isRefreshing = false;
   }
 
   async reload() {
+    const balanceRes = await this.connection.getBalance(this.publicKey);
+    this.vlxNativeBalance = new BN(balanceRes + '', 10);
+    const balanceEvmRes = await fetch('https://explorer.velas.com/rpc', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
+    });
+    const balanceEvmJson = await balanceEvmRes.json();
+    this.balanceEvmRes = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(100000));
+    // console.log(this.balanceEvmRes.toString(10));
+    // debugger;
     const { current, delinquent } = await this.connection.getVoteAccounts();
     const filter = {memcmp: {
       offset: 0xc,
@@ -74,10 +80,10 @@ class StakingStore {
       solanaWeb3.StakeProgram.programId,
       { filters: [filter] }
     );
-    const filteredAccounts = nativeAccounts.filter(({ account }) =>
-      account.data.parsed.info.meta.authorized &&
-      account.data.parsed.info.meta.authorized.staker === this.publicKey58
-    );
+    const filteredAccounts = nativeAccounts.filter(({ account }) => {
+      const { authorized } = account.data.parsed.info.meta;
+      return authorized && authorized.staker === this.publicKey58;
+    });
     const stakingAccounts = filteredAccounts.map(account =>
       new StakingAccountModel(account, this.connection)
     );
@@ -105,7 +111,6 @@ class StakingStore {
     this.rent = new BN(rent);
     this.validators = validators;
     this.accounts = stakingAccounts;
-    this.isRefreshing = false;
   }
 
   getStakedValidators() {
@@ -147,11 +152,29 @@ class StakingStore {
   }
 
   getDominance(validator) {
-    return 0.1;
+    if (!this.validators) {
+      return null;
+    }
+    const activeValidators = this.validators.filter(v => v.status === 'active');
+    let totalStake = new BN(0);
+    for (let i = 0; i < activeValidators.length; i++) {
+      totalStake = totalStake.add(activeValidators[i].activatedStake);
+    }
+    let part = validator.activatedStake.mul(new BN(1000)).div(totalStake).toNumber() / 1000;
+
+    return part - 1/activeValidators.length;
   }
 
   getQuality(validator) {
-    return 1;
+    if (!this.validators) {
+      return null;
+    }
+    const activeValidators = this.validators.filter(v => v.status === 'active');
+    let sumBlocks = 0;
+    for (let i = 0; i < activeValidators.length; i++) {
+      sumBlocks =+ activeValidators[i].lastBlock;
+    }
+    return validator.lastBlock - sumBlocks;
   }
 
   getBalance() {
@@ -160,7 +183,7 @@ class StakingStore {
     };
   }
   getAnnualRate(validator) {
-    return 10.3;
+    return validator.apr;
   }
 
   async getNextSeed() {

@@ -26,7 +26,8 @@ export default ({ store }) => {
     const stakingStore = new StakingStore(
       wallet.network.api.apiUrl,
       wallet.privateKey,
-      wallet.publicKey
+      wallet.publicKey,
+      '0x8b25711fbb1dd97cf4a373a7fe94e83d83956b8e' //evm address
     );
     store.stakingStore = stakingStore;
     changeTab("stakePage")();
