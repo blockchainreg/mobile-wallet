@@ -290,7 +290,8 @@ class StakingStore {
   }
 
 
-  getSwapAmountByStakeAmount(amount) {
+  getSwapAmountByStakeAmount(amountStr) {
+    const amount = new BN(amountStr * 1e9 + '', 10);
     if (!this.vlxNativeBalance) {
       return null;
     }
