@@ -27,10 +27,10 @@ export default ({ store, props }) => {
   };
   const lang = getLang(store);
   
-  const DOMINANCE_VALUE = details.dominance;
+  const DOMINANCE_VALUE = (details.dominance).toFixed(4);
   const QUALITY_VALUE = details.quality;
   const ANNUAL_RATE = details.annualPercentageRate;
-  const ACTIVE_STAKE = details.activeStake;
+  const ACTIVE_STAKE = details.myActiveStake;
   return (
     <>
       <DetailsValidatorComponent

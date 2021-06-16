@@ -7,6 +7,7 @@ import { StakingAccountModel } from './staking-account-model.js';
 import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
 import { callWithRetries } from './utils';
+import crypto from 'isomorphic-webcrypto';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
@@ -16,8 +17,8 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 class StakingStore {
   validators = null;
   accounts = null;
-  vlxEvmBalance = new BN("17000000000", 10);
-  vlxNativeBalance = new BN("12000000000", 10);
+  vlxEvmBalance = null;
+  vlxNativeBalance = null;
   isRefreshing = false;
   rent = null;
   seedUsed = Object.create(null);
@@ -57,6 +58,15 @@ class StakingStore {
   }
 
   async reload() {
+    await crypto.ensureSecure();
+    const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
+    crypto.subtle.digest = (algorithm, buffer) => {
+      if (typeof algorithm === 'string') {
+        algorithm = { name: algorithm };
+      }
+      return originalDigest(algorithm, buffer);
+    };
+    global.globalThis.crypto = crypto;
     const balanceRes = await this.connection.getBalance(this.publicKey);
     this.vlxNativeBalance = new BN(balanceRes + '', 10);
     const balanceEvmRes = await fetch('https://explorer.velas.com/rpc', {
@@ -68,9 +78,9 @@ class StakingStore {
       body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
     });
     const balanceEvmJson = await balanceEvmRes.json();
-    this.balanceEvmRes = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(100000));
-    // console.log(this.balanceEvmRes.toString(10));
+    this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
     // debugger;
+    // console.log(this.balanceEvmRes.toString(10));
     const { current, delinquent } = await this.connection.getVoteAccounts();
     const filter = {memcmp: {
       offset: 0xc,
@@ -147,6 +157,7 @@ class StakingStore {
       myStake: validator.myStake,
       activatedStake: validator.activatedStake,
       available_balance: this.getBalance(),
+      myActiveStake: this.getActiveStake(),
     };
   }
 
@@ -184,6 +195,9 @@ class StakingStore {
   }
   getAnnualRate(validator) {
     return validator.apr;
+  }
+  getActiveStake () {
+    return 33;
   }
   getNewAccountAddress() {
       return 'F3RZb2HFM6hs4yN9VQZckFdB';
@@ -282,9 +296,6 @@ class StakingStore {
         };
 
         const result = await this.sendTransaction(transaction);
-        if (result && !result.error) {
-          //TODO: add account
-        }
         this.reloadWithRetry();
         return result;
   }

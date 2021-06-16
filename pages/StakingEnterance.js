@@ -36,7 +36,7 @@ export default ({ store, web3t, props }) => {
           </Text>
         </View>
         <View style={style.buttonBottom}>
-          <ButtonBlock type={"OK"} text={lang.ok || "Ok"} onPress={changePage("detailsValidator")} />
+          <ButtonBlock type={"OK"} text={lang.ok || "Ok"} onPress={changePage("stakePage")} />
         </View>
       </View>
     </Container>

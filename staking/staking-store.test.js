@@ -2,7 +2,8 @@ import mobx from 'mobx';
 import BN from "bn.js";
 import process from 'process';
 import { StakingStore } from './staking-store.js';
-
+import crypto from 'isomorphic-webcrypto'
+global.crypto = crypto;
 const { when } = mobx;
 
 async function main() {

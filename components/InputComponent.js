@@ -2,19 +2,17 @@ import React, { useState } from "react";
 import { StyleSheet, Image, View, Alert } from "react-native";
 import { Text, Input, Item, Label, Button } from "native-base";
 import Images from "../Images";
-import { formatValue, wrapNumber } from "../utils/format-value";
 import { Badge } from "react-native-elements";
 
 export default ({isWithdraw, ...props}) => {
-  const [value, setValue] = useState("");
-
+  
   return (
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
       <Item style={style.styleItem}>
         <Input
-          onChangeText={setValue}
-          value={wrapNumber(value)}
+          value={props.value}
+          onChangeText={props.onChange}
           returnKeyType="done"
           autoCompleteType="off"
           style={style.input}
@@ -23,6 +21,7 @@ export default ({isWithdraw, ...props}) => {
           placeholder="0.00"
           keyboardType="numeric"
           placeholderTextColor="rgba(255,255,255,0.60)"
+          maxLength={10}
         />
         <Image source={Images.logo} style={style.labelLogo} />
         <Text style={style.tokenStyle}>{props.token}</Text>

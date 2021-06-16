@@ -20,6 +20,8 @@ export default (props) => {
         return { backgroundColor: Images.coral };
       case "WITHDRAW":
         return { backgroundColor: Images.coral };
+      case "DISABLED":
+        return { backgroundColor: Images.colorGray };
       default:
         return null;
     }
@@ -31,6 +33,8 @@ export default (props) => {
         return { color: "#fff" };
       case "WITHDRAW":
         return { color: "#fff" };
+        case "DISABLED":
+          return { color: 'gray' }
       default:
         return null;
     }

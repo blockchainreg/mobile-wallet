@@ -18,12 +18,15 @@ export default ({ store }) => {
       applyTransactions(store);
     }
   };
+  
   const goToStaking = () => {
     const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
     const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
     if (wallet == null) {
       return;
     }
+    // store.walletBalance = wallet.balance;
+    // store.walletEvmBalance = walletEvm.balance;
 
     const stakingStore = new StakingStore(
       wallet.network.api.apiUrl,

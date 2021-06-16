@@ -8,21 +8,26 @@ import StepItem from "../components/StepItem";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
 import { formatStakeAmount } from "../utils/format-value.js";
-
-var width = Dimensions.get("window").width;
+import BN from 'bn.js';
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  const fakeAmount = 11;
   const lang = getLang(store);
   const { stakingStore } = store;
   const details = stakingStore.getValidatorDetails();
   const ADDRESS = details.address;
   const NEW_ADDRESS = stakingStore.getNewAccountAddress();
-  const swapAmount = stakingStore.getSwapAmountByStakeAmount(fakeAmount);
-  debugger;
+  const swapAmount = stakingStore.getSwapAmountByStakeAmount(store.amount);
+  const confirm = () => {
+    if (!store.amount) return null;
+    const amount = new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10);
+    // debugger;
+    stakingStore.stake(ADDRESS, amount).then((res) => console.log("stake!!", res), (err) => console.error("stake!! err", err));
+    changePage("stakingEnterance")();
+    store.amount = null;
+  }
   return (
     <Container>
       <Header
@@ -76,7 +81,7 @@ export default ({ store, web3t, props }) => {
           />
           <ButtonBlock
             type={"CONFIRM"}
-            onPress={changePage("stakingEnterance")}
+            onPress={confirm}
             text={lang.confirm || "Confirm"}
           />
         </View>

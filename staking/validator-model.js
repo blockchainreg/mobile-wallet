@@ -61,7 +61,7 @@ class ValidatorModel {
       this.status = 'inactive';
     }
     this.solanaValidator = solanaValidator;
-    console.log(solanaValidator);
+    // console.log(solanaValidator);
     decorate(this, {
       solanaValidator: observable,
       status: observable,
