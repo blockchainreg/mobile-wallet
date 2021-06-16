@@ -348,15 +348,14 @@ class StakingStore {
     return await this.sendTransaction(transaction);
   }
 
-  async undelegate(account) {
+  async undelegate(stakePubkey) {
 
-      const transaction = new Transaction();
+      const transaction = new solanaWeb3.Transaction();
 
       try {
-          const authorizedPubkey = this.getAccountPublicKey();
-          const stakePubkey      = new PublicKey(account);
+          const authorizedPubkey = this.publicKey;
 
-          transaction.add(StakeProgram.deactivate({
+          transaction.add(solanaWeb3.StakeProgram.deactivate({
               authorizedPubkey,
               stakePubkey,
           }));
@@ -367,7 +366,7 @@ class StakingStore {
           };
       };
 
-      return this.sendTransaction(transaction);
+      return await this.sendTransaction(transaction);
   };
 
   async requestWithdraw(address, amount) {
@@ -388,9 +387,14 @@ class StakingStore {
     }
     while (!amount.isZero() && !amount.isNeg()) {
       const account = sortedAccounts.pop();
-      const currAmount = BN.min(amount, account.myStake);
-      amount = amount.sub(currAmount);
-
+      if (amount.gte(account.myStake)) {
+        await this.undelegate(account.publicKey);
+        amount = amount.sub(account.myStake);
+      } else {
+        await this.splitStakeAccount(account, account.myStake.sub(amount));
+        await this.undelegate(account.publicKey);
+        break;
+      }
     }
   }
 

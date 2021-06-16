@@ -12,6 +12,10 @@ class StakingAccountModel {
     return this.parsedAccoount.pubkey.toBase58();
   }
 
+  get publicKey() {
+    return this.parsedAccoount.pubkey;
+  }
+
   get validatorAddress() {
     const { account } = this.parsedAccoount;
     if (!account.data.parsed.info.stake) {
