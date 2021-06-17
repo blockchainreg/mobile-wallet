@@ -20,16 +20,13 @@ export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  // store.isRetryRequest = true; // change to false to show without notice message. This is a test demo to visualize.
-  // const TOTAL_STAKE = '51000';
-  const AVAILABLE_BALANCE = details.available_balance;
   const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activatedStake);
   const ADDRESS = details.address;
 
   const handleChange = async text => {
     store.amountWithdraw = text;
   };
-  debugger;
+
   const onPressMax = () => {
     store.amountWithdraw = TOTAL_STAKE;
   }
@@ -37,11 +34,11 @@ export default ({ store, web3t, props }) => {
     if (!store.amountWithdraw) return null;
     const amountWithdraw = store.amountWithdraw;
     // console.log('amountWithdraw', amountWithdraw)
+    debugger;
     stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
   }
 
-  // console.log('store.amountWithdraw', store.amountWithdraw)
   return (
     <Container>
       <Header
