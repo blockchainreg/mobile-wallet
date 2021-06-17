@@ -8,9 +8,13 @@ import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
 import { callWithRetries } from './utils';
 import crypto from 'isomorphic-webcrypto';
+import web3 from 'web3';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
+import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
+import ethereum from "ethereumjs-tx";
+
 // const  = mobx;
 
 
@@ -254,11 +258,45 @@ class StakingStore {
 
   };
 
+  async swapEvmToNative(swapAmount) {
+    const evmToNativeBridgeContract = (
+      web3.eth.contract(EvmToNativeBridgeAbi)
+        .at("0x56454c41532d434841494e000000000053574150")
+      );
+
+    const data = evmToNativeBridgeContract.transferToNative.getData(this.evmAddress);
+
+    const privateKey = Buffer.from(this.evmPrivateKey, 'hex');
+    const nonce = web3.eth.getTransactionCount(this.evmAddress);
+
+    var rawTx = {
+      nonce,
+      gasPrice: '9600000',
+      gasLimit: '210000',
+      to: "0x56454c41532d434841494e000000000053574150",
+      value: '0x00',
+      data
+    }
+
+    var tx = new ethereum.Transaction(rawTx, {'chain':'ropsten'});
+    tx.sign(privateKey);
+
+    var serializedTx = tx.serialize();
+
+    // console.log(serializedTx.toString('hex'));
+    // 0xf889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
+
+    console.log(await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')));
+    // .on('receipt', console.log);
+
+
+  }
   async stake(address, amount_sol) {
         // check balance and amount
         const transaction = new solanaWeb3.Transaction();
 
         try {
+            const swapAmount = this.getSwapAmountByStakeAmount(amount_sol);
             const rent       = this.rent;
             const fromPubkey = this.publicKey;
             const authorized = new solanaWeb3.Authorized(fromPubkey, fromPubkey);
@@ -283,7 +321,9 @@ class StakingStore {
                 seed,
                 stakePubkey,
             };
-
+            if (!swapAmount.isZero()) {
+              await this.swapEvmToNative(swapAmount);
+            }
             transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
             transaction.add(solanaWeb3.StakeProgram.delegate({
                 authorizedPubkey: fromPubkey,
@@ -304,7 +344,11 @@ class StakingStore {
 
 
   getSwapAmountByStakeAmount(amountStr) {
-    const amount = new BN(amountStr * 1e9 + '', 10);
+    const amount = (
+      typeof amountStr === 'string'
+      ? new BN(amountStr * 1e9 + '', 10)
+      : amountStr
+    );
     if (!this.vlxNativeBalance) {
       return null;
     }
