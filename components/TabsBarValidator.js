@@ -27,12 +27,12 @@ export default ({ store, props }) => {
     store.current.page = tab;
   };
   const lang = getLang(store);
-  
+
   const DOMINANCE_VALUE = (details.dominance).toFixed(4);
   const QUALITY_VALUE = details.quality;
   const ANNUAL_RATE = details.annualPercentageRate;
   const ACTIVE_STAKE = details.myActiveStake;
-  
+
   const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
   const AVAILABLE_WITHDRAW = details.availableWithdrawRequested
   // console.log('details.myStake', details.myStake.toString())
@@ -131,7 +131,7 @@ export default ({ store, props }) => {
                   onPress={changePage("sendStake")}
                 />
                 {details.myStake.eq(details.totalWithdrawRequested) ? null :
-                
+
                 <ButtonBlock
                   type={"REQUEST_WITHDRAW"}
                   text={lang.requestWithdraw || "Request Withdraw"}

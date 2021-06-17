@@ -427,8 +427,15 @@ class StakingStore {
   };
 
   async requestWithdraw(address, amount) {
+    if (!this.validators) {
+      throw new Error('Not loaded');
+    }
+    const validator = this.validators.find(v => v.address === address);
+    if (!validator) {
+      throw new Error('Not found');
+    }
     const sortedAccounts = (
-      this.accounts
+      validator.stakingAccounts
         .filter(a => a.isActivated)
         .sort((a, b) => b.myStake.cmp(a.myStake))
     );
@@ -455,8 +462,38 @@ class StakingStore {
     }
   }
 
-  async withdrawRequested(address) {
+  async withdraw(stakePubkey, amount) {
+      const transaction = new solanaWeb3.Transaction();
 
+      try {
+          const authorizedPubkey = this.publicKey;
+
+          transaction.add(solanaWeb3.StakeProgram.withdraw({
+              authorizedPubkey,
+              stakePubkey,
+              lamports: amount,
+              toPubkey: authorizedPubkey,
+          }));
+      } catch(e) {
+          return {
+              error: "prepare_transaction_error",
+              description: e.message,
+          };
+      };
+
+      return await this.sendTransaction(transaction);
+  };
+
+  async withdrawRequested(address) {
+    for (let i = 0; i < this.accounts.length; i++) {
+      const account = this.accounts[i];
+      const { inactive } = await this.connection.getStakeActivation(account.publicKey);
+      if (!inactive) {
+        continue;
+      }
+      const withdrawRes = await this.withdraw(account.publicKey, inactive);
+      console.log('withdrawRequested', account.address, withdrawRes);
+    }
   }
 }
 
