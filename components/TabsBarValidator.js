@@ -9,6 +9,7 @@ import DetailsValidatorComponent from "../components/DetailsValidatorComponent.j
 import TableRewards from "../components/TableRewards";
 import getLang from "../wallet/get-lang.js";
 import { formatStakeAmount } from "../utils/format-value";
+import BN from 'bn.js';
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
@@ -31,6 +32,13 @@ export default ({ store, props }) => {
   const QUALITY_VALUE = details.quality;
   const ANNUAL_RATE = details.annualPercentageRate;
   const ACTIVE_STAKE = details.myActiveStake;
+  // details.myStake
+  // console.log('details.myStake', details.myStake)
+  const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
+  const AVAILABLE_WITHDRAW = details.availableWithdrawRequested
+  console.log('details.myStake', details.myStake)
+  console.log('details.totalWithdrawRequested', details.totalWithdrawRequested)
+  // debugger;
   return (
     <>
       <DetailsValidatorComponent
@@ -46,7 +54,6 @@ export default ({ store, props }) => {
         }
         store={store}
       />
-
       <View>
         {!details.myStake.isZero() ? (
           <Tabs
@@ -124,11 +131,14 @@ export default ({ store, props }) => {
                   text={lang.stakeMore || "Stake More"}
                   onPress={changePage("sendStake")}
                 />
+                {details.myStake.eq(details.totalWithdrawRequested) ? null :
+                
                 <ButtonBlock
                   type={"REQUEST_WITHDRAW"}
                   text={lang.requestWithdraw || "Request Withdraw"}
                   onPress={changePage("exitValidator")}
                 />
+                }
               </View>
             </Tab>
 
@@ -154,12 +164,12 @@ export default ({ store, props }) => {
             >
               <View style={style.container}>
                 <ValidatorCard
-                  value={"15000"}
+                  value={WITHDRAW_REQUESTED}
                   subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
                   cardIcon={<ChartIcon />}
                 />
                 <ValidatorCard
-                  value={"5000"}
+                  value={AVAILABLE_WITHDRAW}
                   subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
                   cardIcon={<ChartIcon />}
                 />

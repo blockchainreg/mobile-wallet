@@ -7,18 +7,37 @@ import ButtonBlock from "../components/ButtonBlock.js";
 import InputComponent from "../components/InputComponent";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
+import { formatStakeAmount } from "../utils/format-value";
 
-var width = Dimensions.get("window").width;
-const ADDRESS = "G7qfVs595ykz2C6C8LHa2DEEk45GP3uHU6scs454s8HK";
+
+
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+  const { stakingStore } = store;
+  const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
   store.isRetryRequest = true; // change to false to show without notice message. This is a test demo to visualize.
-  const TOTAL_STAKE = '51000';
+  // const TOTAL_STAKE = '51000';
+  const AVAILABLE_BALANCE = details.available_balance;
+  const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activatedStake);
+  const ADDRESS = details.address;
 
+  const handleChange = async text => {
+    store.amountWithdraw = text;
+  };
+  const onPressMax = () => {
+    store.amountWithdraw = formatStakeAmount(TOTAL_STAKE);
+  }
+  const onPressButton = () => {
+    if (!store.amountWithdraw) return null;
+    changePage("confirmExit")();
+    // store.amountWithdraw = null;
+  }
+
+  console.log('store.amountWithdraw', store.amountWithdraw)
   return (
     <Container>
       <Header
@@ -31,12 +50,14 @@ export default ({ store, web3t, props }) => {
         <View>
           <InputComponent
             title={lang.enterAmount || "Enter Amount"}
-            title={lang.enterAmount || "Enter Amount"}
             sub_text={lang.yourTotalStake + ":" || "Your Total Stake:"}
             total_stake={TOTAL_STAKE}
             token="vlx"
             btnTxt={lang.useMax || "Use max"}
-            onPressMax={() => {}}
+            value={store.amountWithdraw}
+            onChange={text => handleChange(text)}
+            onPressMax={onPressMax}
+            isWithdraw
           />
         </View>
         <View style={style.buttonBottom}>
@@ -46,7 +67,7 @@ export default ({ store, web3t, props }) => {
               icon="warning"
             />
           ) : null}
-          <ButtonBlock type={"WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={changePage("confirmExit")} />
+          <ButtonBlock type={"WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
         </View>
       </View>
     </Container>

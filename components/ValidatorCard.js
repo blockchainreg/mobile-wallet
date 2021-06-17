@@ -83,7 +83,8 @@ export default (props) => {
       <CardItem style={style.bgCard}>
         <Left style={{ flex: 0 }} />
         <Body style={{ flex: 1 }}>
-          <Text style={style.textBody}>{formatValue(props.value || 0)}</Text>
+          <Text style={style.textBody}>{formatValue(props.value)}</Text>
+          
         </Body>
         <Right style={{ flex: 0 }} />
       </CardItem>
