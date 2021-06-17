@@ -30,10 +30,8 @@ export default ({ store, web3t, props }) => {
   const onPressButton = () => {
     if (!store.amount) return null;
     changePage("confirmStake")();
-    // store.amount = null;
   }
   const lang = getLang(store);
-  // console.log('store.amount', store.amount)
   return (
     <Container>
       <Header

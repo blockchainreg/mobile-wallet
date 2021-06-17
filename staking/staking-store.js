@@ -158,7 +158,7 @@ class StakingStore {
       activatedStake: validator.activatedStake,
       available_balance: this.getBalance(),
       myActiveStake: this.getActiveStake(),
-      totalWithdrawRequested: new BN('77586980', 10),
+      totalWithdrawRequested: new BN('2002282880', 10),
       availableWithdrawRequested: new BN('1200000000', 10)
     };
   }

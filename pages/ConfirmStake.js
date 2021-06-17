@@ -24,7 +24,7 @@ export default ({ store, web3t, props }) => {
     if (!store.amount) return null;
     const amount = new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10);
     // debugger;
-    stakingStore.stake(ADDRESS, amount).then((res) => console.log("stake!!", res), (err) => console.error("stake!! err", err));
+    stakingStore.stake(ADDRESS, amount);
     changePage("stakingEnterance")();
     store.amount = null;
   }

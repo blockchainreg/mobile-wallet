@@ -32,12 +32,11 @@ export default ({ store, props }) => {
   const QUALITY_VALUE = details.quality;
   const ANNUAL_RATE = details.annualPercentageRate;
   const ACTIVE_STAKE = details.myActiveStake;
-  // details.myStake
-  // console.log('details.myStake', details.myStake)
+  
   const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
   const AVAILABLE_WITHDRAW = details.availableWithdrawRequested
-  console.log('details.myStake', details.myStake)
-  console.log('details.totalWithdrawRequested', details.totalWithdrawRequested)
+  // console.log('details.myStake', details.myStake.toString())
+  // console.log('details.totalWithdrawRequested', details.totalWithdrawRequested.toString())
   // debugger;
   return (
     <>

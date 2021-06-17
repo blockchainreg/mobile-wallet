@@ -8,6 +8,7 @@ import InputComponent from "../components/InputComponent";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
 import { formatStakeAmount } from "../utils/format-value";
+import BN from 'bn.js';
 
 
 
@@ -19,7 +20,7 @@ export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  store.isRetryRequest = true; // change to false to show without notice message. This is a test demo to visualize.
+  // store.isRetryRequest = true; // change to false to show without notice message. This is a test demo to visualize.
   // const TOTAL_STAKE = '51000';
   const AVAILABLE_BALANCE = details.available_balance;
   const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activatedStake);
@@ -28,16 +29,19 @@ export default ({ store, web3t, props }) => {
   const handleChange = async text => {
     store.amountWithdraw = text;
   };
+  debugger;
   const onPressMax = () => {
-    store.amountWithdraw = formatStakeAmount(TOTAL_STAKE);
+    store.amountWithdraw = TOTAL_STAKE;
   }
   const onPressButton = () => {
     if (!store.amountWithdraw) return null;
+    const amountWithdraw = store.amountWithdraw;
+    // console.log('amountWithdraw', amountWithdraw)
+    stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
-    // store.amountWithdraw = null;
   }
 
-  console.log('store.amountWithdraw', store.amountWithdraw)
+  // console.log('store.amountWithdraw', store.amountWithdraw)
   return (
     <Container>
       <Header
@@ -61,7 +65,7 @@ export default ({ store, web3t, props }) => {
           />
         </View>
         <View style={style.buttonBottom}>
-          {store.isRetryRequest ? (
+          {store.amountWithdraw ? (
             <Notice
               text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
               icon="warning"
