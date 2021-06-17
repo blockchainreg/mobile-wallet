@@ -439,9 +439,9 @@ class StakingStore {
         .filter(a => a.isActivated)
         .sort((a, b) => b.myStake.cmp(a.myStake))
     );
-    const totalStake = new BN(0);
+    let totalStake = new BN(0);
     if (typeof amount === 'string') {
-      amount = new BN(amount, 10);
+      amount = new BN(parseFloat(amount) * 1e9 + '', 10);
     }
     for (let i = 0; i < sortedAccounts.length; i++) {
       totalStake = totalStake.add(sortedAccounts[i].myStake);

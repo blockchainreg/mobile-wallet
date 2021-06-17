@@ -50,6 +50,17 @@ class ValidatorModel {
     return this.solanaValidator.commission;
   }
 
+  get rewards() {
+    let rewards = [];
+    for (let acc of stakingAccounts) {
+      if (acc.rewards === null) {
+        return null;
+      }
+      rewards = rewards.concat(acc.rewards);
+    }
+    return rewards;
+  }
+
   constructor(solanaValidator, isDelinquent) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');
