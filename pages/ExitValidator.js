@@ -8,10 +8,6 @@ import InputComponent from "../components/InputComponent";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
 import { formatStakeAmount } from "../utils/format-value";
-import BN from 'bn.js';
-
-
-
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
@@ -34,7 +30,7 @@ export default ({ store, web3t, props }) => {
     if (!store.amountWithdraw) return null;
     const amountWithdraw = store.amountWithdraw;
     // console.log('amountWithdraw', amountWithdraw)
-    debugger;
+    // debugger;
     stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
   }

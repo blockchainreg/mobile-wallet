@@ -35,6 +35,9 @@ export default ({ store, props }) => {
 
   const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
   const AVAILABLE_WITHDRAW = details.availableWithdrawRequested
+  debugger;
+  // console.log('WITHDRAW_REQUESTED', WITHDRAW_REQUESTED)
+  // console.log('AVAILABLE_WITHDRAW', AVAILABLE_WITHDRAW)
   // console.log('details.myStake', details.myStake.toString())
   // console.log('details.totalWithdrawRequested', details.totalWithdrawRequested.toString())
   // debugger;
@@ -56,6 +59,7 @@ export default ({ store, props }) => {
       <View>
         {!details.myStake.isZero() ? (
           <Tabs
+            // initialPage={details.availableWithdrawRequested.isZero() ? 0 : 1} //for the future
             initialPage={0}
             onChangeTab={onChangeTab}
             tabBarUnderlineStyle={{
@@ -163,12 +167,12 @@ export default ({ store, props }) => {
             >
               <View style={style.container}>
                 <ValidatorCard
-                  value={WITHDRAW_REQUESTED}
+                  value={formatStakeAmount(WITHDRAW_REQUESTED)}
                   subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
                   cardIcon={<ChartIcon />}
                 />
                 <ValidatorCard
-                  value={AVAILABLE_WITHDRAW}
+                  value={formatStakeAmount(AVAILABLE_WITHDRAW)}
                   subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
                   cardIcon={<ChartIcon />}
                 />

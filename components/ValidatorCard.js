@@ -4,7 +4,7 @@ import { Card, CardItem, Text, Left, Body, Right } from "native-base";
 import Images from "../Images";
 import { InfoIcon } from "../svg";
 import { Tooltip } from "react-native-elements";
-import { formatBalance, formatValue } from "../utils/format-value";
+import { formatStakeAmount, formatValue } from "../utils/format-value";
 
 var width = Dimensions.get("window").width;
 const BG_COLOR = "#161A3F";
@@ -83,7 +83,7 @@ export default (props) => {
       <CardItem style={style.bgCard}>
         <Left style={{ flex: 0 }} />
         <Body style={{ flex: 1 }}>
-          <Text style={style.textBody}>{formatValue(props.value)}</Text>
+          <Text style={style.textBody}>{props.value}</Text>
           
         </Body>
         <Right style={{ flex: 0 }} />

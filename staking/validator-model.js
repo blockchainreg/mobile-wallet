@@ -52,7 +52,7 @@ class ValidatorModel {
 
   get rewards() {
     let rewards = [];
-    for (let acc of stakingAccounts) {
+    for (let acc of this.stakingAccounts) {
       if (acc.rewards === null) {
         return null;
       }

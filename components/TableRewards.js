@@ -14,7 +14,11 @@ const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 const URL = "https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q";
 export default ({store}) => {
   const lang = getLang(store);
-        
+  const { stakingStore } = store;
+  const details = stakingStore.getValidatorDetails();
+  // debugger;
+  // console.log('stakingStore.getValidatorDetails()', stakingStore.getValidatorDetails())
+  console.log('details.rewards', details.rewards)
   const columns = [lang.epoch || "# Epoch", lang.reward || "Reward",lang.apr ||  "APR"];
 
     const epoch = [
@@ -117,7 +121,8 @@ export default ({store}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={epoch.slice(0, 10)}
+        // data={epoch.slice(0, 10)}
+        data={details.rewards}
         style={{
           width: "100%",
           paddingHorizontal: 20,
@@ -125,9 +130,9 @@ export default ({store}) => {
           flexDirection: "column",
           height: "100%",
         }}
-        ListEmptyComponent={() => (!epoch.length ? <ListEmpty /> : null)}
+        ListEmptyComponent={() => (!details.rewards.length ? <ListEmpty /> : null)}
         keyExtractor={(item, index) => index + ""}
-        ListHeaderComponent={!epoch.length ? false : tableHeader}
+        ListHeaderComponent={!details.rewards.length ? false : tableHeader}
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => {
           return (
@@ -146,7 +151,7 @@ export default ({store}) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {item.reward}
+                {item.lamports}
               </Text>
               <Text
                 style={{
@@ -154,7 +159,8 @@ export default ({store}) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {item.apr}
+                {/* {item.apr} */}
+                {item.postBalance}
               </Text>
             </View>
           );
