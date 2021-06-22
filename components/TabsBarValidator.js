@@ -35,12 +35,23 @@ export default ({ store, props }) => {
 
   const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
   const AVAILABLE_WITHDRAW = details.availableWithdrawRequested
-  debugger;
+  // debugger;
+
+  // console.log('stakingStore.getStakedValidators()', stakingStore.getStakedValidators())
   // console.log('WITHDRAW_REQUESTED', WITHDRAW_REQUESTED)
   // console.log('AVAILABLE_WITHDRAW', AVAILABLE_WITHDRAW)
   // console.log('details.myStake', details.myStake.toString())
   // console.log('details.totalWithdrawRequested', details.totalWithdrawRequested.toString())
   // debugger;
+  const ADDRESS = details.address;
+
+  const onPressWithdraw = () => {
+    if (!details.totalWithdrawRequested) return null;
+    // console.log('amountWithdraw', amountWithdraw)
+    // debugger;
+    stakingStore.withdrawRequested(ADDRESS);
+    changePage("detailsValidator")();
+  }
   return (
     <>
       <DetailsValidatorComponent
@@ -178,10 +189,13 @@ export default ({ store, props }) => {
                 />
               </View>
               <View style={style.btnTop}>
+                {details.totalWithdrawRequested.isZero() ? null : 
                 <ButtonBlock
                   type={"WITHDRAW"}
                   text={lang.withdraw || "Withdraw"}
+                  onPress={onPressWithdraw}
                 />
+                }
               </View>
             </Tab>
             <Tab

@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import { RewardModel } from "./reward-model";
 import { cachedCallWithRetries } from './utils';
 
 class StakingAccountModel {
@@ -113,7 +114,11 @@ class StakingAccountModel {
       const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
       const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
       const address = this.address;
-      this.rewards = blockResult.rewards.filter(r => r.pubkey === address);
+      this.rewards = (
+        blockResult.rewards
+          .filter(r => r.pubkey === address)
+          .map(reward => new RewardModel(reward, epoch ))
+      );
 
       if (this.rewards.length === 0) {
         return;

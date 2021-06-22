@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Text, Content, List, ListItem } from "native-base";
 import Footer from "./Footer.js";
-import { StyleSheet, Dimensions, View } from "react-native";
+import { StyleSheet, Dimensions, View, RefreshControl } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import StakeItem from "../components/StakeItem.js";
@@ -54,11 +54,22 @@ export default ({ store, web3t, props }) => {
       </View>
     );
   };
+  const refreshStakeItem = () => {
+    stakingStore.reloadWithRetry();
+  };
 
   return (
     <Container>
       <Header title={lang.titleStake || "Stake"} />
-      <Content style={{ backgroundColor: Images.velasColor4 }}>
+      <Content style={{ backgroundColor: Images.velasColor4 }} 
+      refreshControl={
+        <RefreshControl
+        refreshing={false}
+        onRefresh={refreshStakeItem}
+        tintColor="#fff"
+        />
+      }
+      >
         <List>
           <ListItem itemHeader noBorder>
             <Text style={style.titleText}>

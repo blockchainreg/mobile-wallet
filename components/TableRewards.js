@@ -9,71 +9,20 @@ import {
 } from "react-native";
 import Images from "../Images";
 import getLang from "../wallet/get-lang.js";
+import BN from 'bn.js';
+import { formatStakeAmount } from "../utils/format-value";
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 const URL = "https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q";
 export default ({store}) => {
   const lang = getLang(store);
   const { stakingStore } = store;
+
   const details = stakingStore.getValidatorDetails();
   // debugger;
   // console.log('stakingStore.getValidatorDetails()', stakingStore.getValidatorDetails())
   console.log('details.rewards', details.rewards)
   const columns = [lang.epoch || "# Epoch", lang.reward || "Reward",lang.apr ||  "APR"];
-
-    const epoch = [
-      {
-        epoch: "#33",
-        reward: "0.100 VLX",
-        apr: "10.9%",
-      },
-      {
-        epoch: "#32",
-        reward: "0.200 VLX",
-        apr: "15.1%",
-      },
-      {
-        epoch: "#31",
-        reward: "0.300 VLX",
-        apr: "16.4%",
-      },
-      {
-        epoch: "#30",
-        reward: "0.600 VLX",
-        apr: "18.9%",
-      },
-      {
-        epoch: "#29",
-        reward: "0.50 VLX",
-        apr: "5.9%",
-      },
-      {
-        epoch: "#28",
-        reward: "0.100 VLX",
-        apr: "10.9%",
-      },
-      {
-        epoch: "#27",
-        reward: "0.100 VLX",
-        apr: "10.9%",
-      },
-      {
-        epoch: "#26",
-        reward: "0.100 VLX",
-        apr: "10.9%",
-      },
-      {
-        epoch: "#25",
-        reward: "0.100 VLX",
-        apr: "10.9%",
-      },
-      {
-        epoch: "#24",
-        reward: "0.100 VLX",
-        apr: "10.9%",
-      }
-    ];
-  // const epoch = [];
 
   const onPressLink = () => {
     Linking.openURL(URL);
@@ -111,7 +60,7 @@ export default ({store}) => {
             }}
             onPress={onPressLink}
           >
-            {lang.rewardsEmptyLink || "getting credited."}
+            {" " + lang.rewardsEmptyLink || "getting credited."}
           </Text>
         </Text>
       </View>
@@ -151,7 +100,7 @@ export default ({store}) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {item.lamports}
+                {item.amount}
               </Text>
               <Text
                 style={{
@@ -159,8 +108,7 @@ export default ({store}) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {/* {item.apr} */}
-                {item.postBalance}
+                {item.apr}
               </Text>
             </View>
           );

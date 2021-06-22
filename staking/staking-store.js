@@ -488,6 +488,7 @@ class StakingStore {
   async withdrawRequested(address) {
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
+      if (account.validatorAddress !== address) continue;
       const { inactive } = await this.connection.getStakeActivation(account.publicKey);
       if (!inactive) {
         continue;
