@@ -14,6 +14,7 @@ export default ({ store, web3t, props }) => {
     stakingStore.openedValidatorAddress = validatorAddress;
     store.current.page = tab;
   };
+  
   if (!stakingStore.validators) {
     // return null;
     return <Spinner />;

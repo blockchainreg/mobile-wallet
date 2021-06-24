@@ -18,5 +18,10 @@ const formatStakeAmount = (n) => {
    n = n.div(new BN('10000000', 10)).toNumber()/100;
    return n.toFixed(2);
 }
+// TO DO for large numbers 
+const formatReward = (n) => {
+  n = n.div(new BN('100000', 10)).toNumber()/10000;
+  return n.toFixed(4);
+}
 
-export { formatBalance, formatValue, wrapNumber, formatStakeAmount};
+export { formatBalance, formatValue, wrapNumber, formatStakeAmount, formatReward};

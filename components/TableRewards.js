@@ -12,7 +12,7 @@ import Images from "../Images";
 import getLang from "../wallet/get-lang.js";
 import BN from "bn.js";
 import { observer } from "mobx-react";
-import { formatStakeAmount } from "../utils/format-value";
+import { formatReward, formatStakeAmount } from "../utils/format-value";
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 const URL = "https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q";
@@ -27,7 +27,7 @@ export default observer(({ store }) => {
   const columns = [
     lang.epoch || "# Epoch",
     lang.reward || "Reward",
-    lang.apr || "APR",
+    lang.apr + ", %" || "APR, %",
   ];
 
   const onPressLink = () => {
@@ -101,7 +101,7 @@ export default observer(({ store }) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {item.epoch}
+                {!item.epoch ? "..." : item.epoch}
               </Text>
               <Text
                 style={{
@@ -109,7 +109,7 @@ export default observer(({ store }) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {formatStakeAmount(item.amount)}
+                {!item.amount ? "..." : formatReward(item.amount)}
               </Text>
               <Text
                 style={{
@@ -117,7 +117,7 @@ export default observer(({ store }) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {!!item.apr && (item.apr * 100).toFixed(2)}
+                {!item.apr ? "..." : !!item.apr && (item.apr * 100).toFixed(2)}
               </Text>
             </View>
           );

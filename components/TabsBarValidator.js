@@ -28,7 +28,6 @@ export default ({ store, props }) => {
     setPage(newTabIndex);
     // if (newTabIndex === 2) return Alert.alert('rewardssss');
   };
-  // console.log('rewards2', rewards.rewards)
 
   const changePage = (tab) => () => {
     store.current.page = tab;
@@ -41,25 +40,16 @@ export default ({ store, props }) => {
   const ACTIVE_STAKE = details.myActiveStake;
 
   const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
-  const AVAILABLE_WITHDRAW = details.availableWithdrawRequested
-  // debugger;
+  const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
 
-  // console.log('stakingStore.getStakedValidators()', stakingStore.getStakedValidators())
-  // console.log('WITHDRAW_REQUESTED', WITHDRAW_REQUESTED)
-  // console.log('AVAILABLE_WITHDRAW', AVAILABLE_WITHDRAW)
-  // console.log('details.myStake', details.myStake.toString())
-  // console.log('details.totalWithdrawRequested', details.totalWithdrawRequested.toString())
-  // debugger;
   const ADDRESS = details.address;
 
   const onPressWithdraw = () => {
     if (!details.totalWithdrawRequested) return null;
-    // console.log('amountWithdraw', amountWithdraw)
-    // debugger;
     stakingStore.withdrawRequested(ADDRESS);
-    changePage("detailsValidator")();
+    changePage("stakePage")();
   }
-
+ 
     const copyAddress = async () => {
       const DURATION = 1000/10;
       await Clipboard.setString(details.address);
