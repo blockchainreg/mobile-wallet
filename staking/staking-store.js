@@ -48,6 +48,7 @@ class StakingStore {
       isRefreshing: observable,
       accounts: observable,
       openedValidatorAddress: observable,
+      // isLoaded: observable
     });
 
     this.reloadWithRetry();
@@ -164,10 +165,25 @@ class StakingStore {
       myActiveStake: this.getActiveStake(),
       totalWithdrawRequested: new BN('2002282880', 10),
       availableWithdrawRequested: new BN('1', 10),
-      rewards: validator.rewards
+      // rewards: validator.rewards
     };
   }
-
+  getRewards() {
+    const validatorAddress = this.openedValidatorAddress;
+    if (typeof validatorAddress !== 'string') {
+      throw new Error('openedValidatorAddress need to be set');
+    }
+    const validator = this.validators.find(({address}) => address === validatorAddress);
+    if (!validator) {
+      throw new Error('Validator not found');
+    }
+    validator.loadMoreRewards();
+    return {
+      rewards: validator.rewards,
+      isLoading: validator.isRewardsLoading
+    };
+  }
+  
   getDominance(validator) {
     if (!this.validators) {
       return null;

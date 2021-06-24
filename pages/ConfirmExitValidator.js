@@ -15,10 +15,18 @@ export default ({ store, web3t, props }) => {
   };
   const lang = getLang(store);
 
+  const back = () => {
+    changePage("exitValidator")();
+    store.amountWithdraw = null;
+  }
+  const okBtn = () => {
+    changePage("detailsValidator")();
+    store.amountWithdraw = null;
+  }
   return (
     <Container>
       <Header
-        onBack={changePage("exitValidator")}
+        onBack={back}
         greenBack
         title={lang.exitValidator || "Exit from Validator"}
       />
@@ -37,7 +45,7 @@ export default ({ store, web3t, props }) => {
           <ButtonBlock
             type={"OK"}
             text={lang.ok || "Ok"}
-            onPress={changePage("detailsValidator")}
+            onPress={okBtn}
           />
         </View>
       </View>

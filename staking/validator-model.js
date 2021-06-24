@@ -61,6 +61,22 @@ class ValidatorModel {
     return rewards;
   }
 
+  get isRewardsLoading() {
+    for (let acc of this.stakingAccounts) {
+      if (acc.isRewardsLoading) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  loadMoreRewards() {
+    for (let acc of this.stakingAccounts) {
+      acc.loadMoreRewards();
+    }
+  }
+
+
   constructor(solanaValidator, isDelinquent) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');

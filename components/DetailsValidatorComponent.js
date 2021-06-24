@@ -71,7 +71,7 @@ export default ({store, ...props}) => {
           backgroundColor={"rgba(22, 26, 63, 1)"}
         />
         {badgeStatus()}
-        <Text style={style.addressStyle}>{props.address}</Text>
+        <Text style={style.addressStyle} onPress={props.copyAddress}>{props.address}</Text>
       </View>
       <View style={style.row}>
         <View style={[style.column, {borderRightWidth: 0.5, borderRightColor: BORDER_COLOR}]}>

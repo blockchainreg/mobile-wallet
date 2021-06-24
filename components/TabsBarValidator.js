@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, Text } from "react-native";
+import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert } from "react-native";
 import { Icon, Tab, Tabs, TabHeading } from "native-base";
 import Images from "../Images";
-import { ChartIcon, ValidatorsIcon } from "../svg/index";
+import { ChartIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
 import ValidatorCard from "./ValidatorCard";
 import ButtonBlock from "../components/ButtonBlock.js";
 import DetailsValidatorComponent from "../components/DetailsValidatorComponent.js";
@@ -17,12 +17,19 @@ export default ({ store, props }) => {
   const { stakingStore } = store;
 
   const details = stakingStore.getValidatorDetails();
+  // const rewards = stakingStore.getRewards();
+
+  // const rewards = stakingStore.getRewards();
+  // console.log('stakingStore.getRewards()', stakingStore.getRewards())
 
   const [page, setPage] = useState(0);
   const onChangeTab = (changeTabProps) => {
     const newTabIndex = changeTabProps.i;
     setPage(newTabIndex);
+    // if (newTabIndex === 2) return Alert.alert('rewardssss');
   };
+  // console.log('rewards2', rewards.rewards)
+
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
@@ -52,10 +59,19 @@ export default ({ store, props }) => {
     stakingStore.withdrawRequested(ADDRESS);
     changePage("detailsValidator")();
   }
+
+    const copyAddress = async () => {
+      const DURATION = 1000/10;
+      await Clipboard.setString(details.address);
+      Vibration.vibrate(DURATION);
+      Alert.alert(lang.copied, "", [{ text: lang.ok }]);
+    };
+
   return (
     <>
       <DetailsValidatorComponent
         address={details.address}
+        copyAddress={copyAddress}
         isActive={details.status === "active" ? true : false}
         value1={details.commission}
         value2={!details.myStake.isZero() ? `${formatStakeAmount(details.myStake)} VLX` : `${formatStakeAmount(details.activatedStake)} VLX`}
@@ -180,16 +196,16 @@ export default ({ store, props }) => {
                 <ValidatorCard
                   value={formatStakeAmount(WITHDRAW_REQUESTED)}
                   subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
-                  cardIcon={<ChartIcon />}
+                  cardIcon={<VelasIcon />}
                 />
                 <ValidatorCard
                   value={formatStakeAmount(AVAILABLE_WITHDRAW)}
                   subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
-                  cardIcon={<ChartIcon />}
+                  cardIcon={<VelasIcon />}
                 />
               </View>
               <View style={style.btnTop}>
-                {details.totalWithdrawRequested.isZero() ? null : 
+                {details.availableWithdrawRequested.isZero() ? null : 
                 <ButtonBlock
                   type={"WITHDRAW"}
                   text={lang.withdraw || "Withdraw"}

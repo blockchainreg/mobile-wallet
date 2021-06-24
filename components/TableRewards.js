@@ -6,6 +6,7 @@ import {
   FlatList,
   Dimensions,
   Linking,
+  Alert,
 } from "react-native";
 import Images from "../Images";
 import getLang from "../wallet/get-lang.js";
@@ -18,10 +19,9 @@ export default ({store}) => {
   const lang = getLang(store);
   const { stakingStore } = store;
 
-  const details = stakingStore.getValidatorDetails();
-  // debugger;
-  // console.log('stakingStore.getValidatorDetails()', stakingStore.getValidatorDetails())
-  console.log('details.rewards', details.rewards)
+  const rewards = stakingStore.getRewards();
+  // console.log('rewards.isLoading', rewards.isLoading === '1Loaded')
+ 
   const columns = [lang.epoch || "# Epoch", lang.reward || "Reward",lang.apr ||  "APR"];
 
   const onPressLink = () => {
@@ -71,7 +71,7 @@ export default ({store}) => {
     <View style={styles.container}>
       <FlatList
         // data={epoch.slice(0, 10)}
-        data={details.rewards}
+        data={rewards.rewards}
         style={{
           width: "100%",
           paddingHorizontal: 20,
@@ -79,9 +79,9 @@ export default ({store}) => {
           flexDirection: "column",
           height: "100%",
         }}
-        ListEmptyComponent={() => (!details.rewards.length ? <ListEmpty /> : null)}
+        ListEmptyComponent={() => (!rewards.rewards.length ? <ListEmpty /> : null)}
         keyExtractor={(item, index) => index + ""}
-        ListHeaderComponent={!details.rewards.length ? false : tableHeader}
+        ListHeaderComponent={!rewards.rewards.length ? false : tableHeader}
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => {
           return (

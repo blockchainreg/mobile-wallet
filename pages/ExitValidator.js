@@ -29,8 +29,6 @@ export default ({ store, web3t, props }) => {
   const onPressButton = () => {
     if (!store.amountWithdraw) return null;
     const amountWithdraw = store.amountWithdraw;
-    // console.log('amountWithdraw', amountWithdraw)
-    // debugger;
     stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
   }
@@ -58,13 +56,13 @@ export default ({ store, web3t, props }) => {
           />
         </View>
         <View style={style.buttonBottom}>
-          {store.amountWithdraw ? (
+          {details.totalWithdrawRequested.isZero() ? null : (
             <Notice
               text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
               icon="warning"
             />
-          ) : null}
-          <ButtonBlock type={"WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
+          )}
+          <ButtonBlock type={!store.amountWithdraw ? "DISABLED" : "WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
         </View>
       </View>
     </Container>

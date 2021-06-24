@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import { when, decorate, observable } from "mobx";
 import { RewardModel } from "./reward-model";
 import { cachedCallWithRetries } from './utils';
 
@@ -8,6 +9,7 @@ class StakingAccountModel {
   isActivated = null;
   connection = null;
   rewards = null;
+  rewardsStatus = 'NotLoaded';
 
   get address() {
     return this.parsedAccoount.pubkey.toBase58();
@@ -33,6 +35,61 @@ class StakingAccountModel {
   get activatedStake() {
     return 10.2;
   }
+  get isRewardsLoading() {
+    switch (this.rewardsStatus) {
+      case "NotLoaded":
+        return true;
+      case "1Loaded":
+        return false;
+      case "LoadingMore":
+        return true;
+      case "LoadedAll":
+        return false;
+    }
+  }
+
+  async loadMoreRewards() {
+    switch (this.rewardsStatus) {
+      case "NotLoaded":
+        await when(() => this.rewardsStatus === '1Loaded');
+        if (this.rewardsStatus !== '1Loaded') {
+          return;
+        }
+        break;
+      case "1Loaded":
+        break;
+      case "LoadingMore":
+        return;
+      case "LoadedAll":
+        return;
+    }
+    if (this.rewards.length === 0) {
+      this.rewardsStatus = "LoadedAll";
+      return;
+    }
+    this.rewardsStatus = "LoadingMore";
+    for (let i = 1; i < 10; i++) {
+      const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
+      const info = await this.getEpochInfo();
+      const { epoch, blockHeight, slotIndex, slotsInEpoch, transactionCount } = info;
+      const firstSlotInEpoch = (epoch - i - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
+      const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
+      const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
+      const address = this.address;
+      const rewards = (
+        blockResult.rewards
+          .filter(r => r.pubkey === address)
+          .map(reward => new RewardModel(reward, epoch ))
+      );
+      if (rewards.length === 0) {
+        break;
+      }
+      for (let reward of rewards) {
+        this.rewards.push(reward);
+      }
+    }
+    this.rewardsStatus = "LoadedAll";
+  }
 
   constructor(parsedAccoount, connection) {
     this.parsedAccoount = parsedAccoount;
@@ -48,6 +105,11 @@ class StakingAccountModel {
     // console.log(this.parsedAccoount.pubkey.toBase58())
     this.myStake = new BN(lamports+'', 10);
     this.loadRewards();
+
+    decorate(this, {
+      rewardsStatus: observable,
+      // loadMoreRewards: observable
+    });
   }
   // fetchEpochRewards = (address, activationEpoch, cb)->
   //     return cb null, [] if (not store.staking.chosenAccount.validator? or store.staking.chosenAccount.validator.toString!.length is 0)
@@ -106,7 +168,7 @@ class StakingAccountModel {
         return;
       }
 
-      const { activationEpoch } = account.data.parsed.info.stake.delegation;
+      // const { activationEpoch } = account.data.parsed.info.stake.delegation;
       const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
       const info = await this.getEpochInfo();
       const { epoch, blockHeight, slotIndex, slotsInEpoch, transactionCount } = info;
@@ -119,7 +181,7 @@ class StakingAccountModel {
           .filter(r => r.pubkey === address)
           .map(reward => new RewardModel(reward, epoch ))
       );
-
+      this.rewardsStatus = '1Loaded';
       if (this.rewards.length === 0) {
         return;
       }
