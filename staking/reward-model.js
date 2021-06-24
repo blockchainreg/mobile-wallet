@@ -6,7 +6,7 @@ class RewardModel {
   epoch = null;
 
   get amount() {
-    return this.solanaReward.lamports;
+    return new BN(this.solanaReward.lamports+'', 10);
   }
 
   get apr() {

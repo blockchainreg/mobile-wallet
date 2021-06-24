@@ -51,14 +51,28 @@ class ValidatorModel {
   }
 
   get rewards() {
-    let rewards = [];
+    let rewards = new Map();
     for (let acc of this.stakingAccounts) {
       if (acc.rewards === null) {
         return null;
       }
-      rewards = rewards.concat(acc.rewards);
+      for (const reward of acc.rewards) {
+        if (!rewards.has(reward.epoch)) {
+          rewards.set(reward.epoch, {
+            epoch: reward.epoch,
+            amount: reward.amount,
+            apr: reward.apr
+          });
+          continue;
+        }
+        rewards.set(reward.epoch, {
+          epoch: reward.epoch,
+          amount: rewards.get(reward.epoch).amount.add(reward.amount),
+          apr: reward.apr
+        });
+      }
     }
-    return rewards;
+    return Array.from(rewards.values()).sort((a, b) => b.epoch - a.epoch);
   }
 
   get isRewardsLoading() {
@@ -71,9 +85,9 @@ class ValidatorModel {
   }
 
   loadMoreRewards() {
-    for (let acc of this.stakingAccounts) {
-      acc.loadMoreRewards();
-    }
+    return Promise.all(
+      this.stakingAccounts.map(acc => acc.loadMoreRewards())
+    );
   }
 
 

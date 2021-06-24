@@ -79,14 +79,15 @@ class StakingAccountModel {
       const rewards = (
         blockResult.rewards
           .filter(r => r.pubkey === address)
-          .map(reward => new RewardModel(reward, epoch ))
+          .map(reward => new RewardModel(reward, epoch - i - 1))
       );
       if (rewards.length === 0) {
         break;
       }
-      for (let reward of rewards) {
-        this.rewards.push(reward);
-      }
+      this.rewards = [...this.rewards, ...rewards];
+      // for (let reward of rewards) {
+      //   this.rewards.push(reward);
+      // }
     }
     this.rewardsStatus = "LoadedAll";
   }
@@ -108,7 +109,7 @@ class StakingAccountModel {
 
     decorate(this, {
       rewardsStatus: observable,
-      // loadMoreRewards: observable
+      rewards: observable
     });
   }
   // fetchEpochRewards = (address, activationEpoch, cb)->
@@ -158,10 +159,10 @@ class StakingAccountModel {
 
   async loadRewards() {
     try {
-      if (this.myStake.lt(new BN('1200000000', 10))) {
-        this.rewards = [];
-        return;
-      }
+      // if (this.myStake.lt(new BN('1200000000', 10))) {
+      //   this.rewards = [];
+      //   return;
+      // }
       const { account } = this.parsedAccoount;
       if (!account.data.parsed.info.stake) {
         this.rewards = [];
@@ -179,7 +180,7 @@ class StakingAccountModel {
       this.rewards = (
         blockResult.rewards
           .filter(r => r.pubkey === address)
-          .map(reward => new RewardModel(reward, epoch ))
+          .map(reward => new RewardModel(reward, epoch - 1))
       );
       this.rewardsStatus = '1Loaded';
       if (this.rewards.length === 0) {
