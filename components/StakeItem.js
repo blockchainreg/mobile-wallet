@@ -77,7 +77,7 @@ export default ({ store, isStaked, ...props }) => {
           {isStaked ? lang.apr + "," + "%"|| "APR,%" : lang.totalStakers || "Total Stakers"}
         </Text>
         <Text style={[style.styleTitle, { marginRight: 0, marginTop: 3 }]}>
-          {isStaked ? props.apr + "%" : props.totalStakers}
+          {isStaked && props.apr ? (props.apr * 100).toFixed(2) + "%" : props.totalStakers}
         </Text>
       </Body>
     </ListItem>

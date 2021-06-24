@@ -183,7 +183,7 @@ class StakingStore {
       isLoading: validator.isRewardsLoading
     };
   }
-  
+
   getDominance(validator) {
     if (!this.validators) {
       return null;
@@ -217,7 +217,7 @@ class StakingStore {
     return this.vlxEvmBalance.add(this.vlxNativeBalance);
   }
   getAnnualRate(validator) {
-    return validator.apr;
+    return !!validator.apr && (validator.apr * 100).toFixed(2);
   }
   getActiveStake () {
     return 33;

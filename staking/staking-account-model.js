@@ -70,8 +70,7 @@ class StakingAccountModel {
     this.rewardsStatus = "LoadingMore";
     for (let i = 1; i < 10; i++) {
       const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
-      const info = await this.getEpochInfo();
-      const { epoch, blockHeight, slotIndex, slotsInEpoch, transactionCount } = info;
+      const epoch = await this.getLastEpoch();
       const firstSlotInEpoch = (epoch - i - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
       const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
       const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
@@ -79,12 +78,12 @@ class StakingAccountModel {
       const rewards = (
         blockResult.rewards
           .filter(r => r.pubkey === address)
-          .map(reward => new RewardModel(reward, epoch - i - 1))
+          .map(reward => new RewardModel(reward, epoch - i - 1, this.connection))
       );
       if (rewards.length === 0) {
         break;
       }
-      this.rewards = [...this.rewards, ...rewards];
+      this.rewards = this.rewards.concat(rewards);
       // for (let reward of rewards) {
       //   this.rewards.push(reward);
       // }
@@ -124,9 +123,9 @@ class StakingAccountModel {
   //     err, epochInfo <- as-callback web3t.velas.NativeStaking.getCurrentEpochInfo()
   //     console.error err if err?
   //     return cb null if err?
-  //     { epoch, blockHeight, slotIndex, slotsInEpoch, transactionCount } = epochInfo
+  //     { epoch } = epochInfo
   //     # make loop here!
-  //     err, rewards <- query-rewards-loop(address, activationEpoch, firstNormalSlot, slotsPerEpoch, slotsInEpoch, firstAvailableBlock, firstNormalEpoch, epoch)
+  //     err, rewards <- query-rewards-loop(address, activationEpoch, firstNormalSlot, slotsPerEpoch, firstAvailableBlock, firstNormalEpoch, epoch)
   //     cb null, rewards
 
   async getEpochSchedule() {
@@ -144,6 +143,9 @@ class StakingAccountModel {
   }
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
+    if (!firstSlotInEpoch) {
+      debugger;
+    }
     return await cachedCallWithRetries(
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
@@ -171,8 +173,7 @@ class StakingAccountModel {
 
       // const { activationEpoch } = account.data.parsed.info.stake.delegation;
       const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
-      const info = await this.getEpochInfo();
-      const { epoch, blockHeight, slotIndex, slotsInEpoch, transactionCount } = info;
+      const epoch = await this.getLastEpoch();
       const firstSlotInEpoch = (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
       const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
       const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
@@ -180,7 +181,7 @@ class StakingAccountModel {
       this.rewards = (
         blockResult.rewards
           .filter(r => r.pubkey === address)
-          .map(reward => new RewardModel(reward, epoch - 1))
+          .map(reward => new RewardModel(reward, epoch - 1, this.connection))
       );
       this.rewardsStatus = '1Loaded';
       if (this.rewards.length === 0) {
@@ -191,6 +192,18 @@ class StakingAccountModel {
     } catch(e) {
       console.error(e);
     }
+  }
+
+  async getLastEpoch() {
+    const info = await this.getEpochInfo();
+    const { epoch } = info;
+
+    if (this.isActivated) {
+      return epoch;
+    }
+    const { account } = this.parsedAccoount;
+    const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
+    return Math.min(parseInt(deactivationEpoch) + 1, epoch);
   }
 }
 export { StakingAccountModel };

@@ -29,17 +29,11 @@ class ValidatorModel {
   }
 
   get apr() {
-    let stake = new BN(0);
-    let sum = new BN(0);
-
-    // for (let i = 0; i < this.stakingAccounts.length; i++) {
-    //   const acc = this.stakingAccounts[i];
-    //   if (!acc.apr || acc.apr.isZero()) {
-    //     continue;
-    //   }
-    //   // stake = stake.add(acc.apr.mul(acc.));
-    // }
-    return 12.2;
+    const rewards = this.rewards;
+    if (!rewards || !rewards.length) {
+      return null;
+    }
+    return rewards[0].apr;
   }
 
   get totalStakers() {
@@ -61,14 +55,27 @@ class ValidatorModel {
           rewards.set(reward.epoch, {
             epoch: reward.epoch,
             amount: reward.amount,
-            apr: reward.apr
+            apr: reward.apr || 0,
+            postBalance: reward.apr ? reward.solanaReward.postBalance: 0
+          });
+          continue;
+        }
+        const prev = rewards.get(reward.epoch);
+        if (reward.apr) {
+          const postBalance = reward.solanaReward.postBalance + prev.postBalance;
+          rewards.set(reward.epoch, {
+            epoch: reward.epoch,
+            amount: prev.amount.add(reward.amount),
+            apr: (prev.apr * prev.postBalance + reward.apr * reward.solanaReward.postBalance) / postBalance,
+            postBalance
           });
           continue;
         }
         rewards.set(reward.epoch, {
           epoch: reward.epoch,
-          amount: rewards.get(reward.epoch).amount.add(reward.amount),
-          apr: reward.apr
+          amount: prev.amount.add(reward.amount),
+          apr: prev.apr,
+          postBalance: prev.postBalance
         });
       }
     }

@@ -117,7 +117,7 @@ export default observer(({ store }) => {
                   backgroundColor: index % 2 == 1 ? "#252847" : "#161A3F",
                 }}
               >
-                {item.apr}
+                {!!item.apr && (item.apr * 100).toFixed(2)}
               </Text>
             </View>
           );
