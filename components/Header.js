@@ -1,5 +1,5 @@
 import React from "react";
-  import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail} from "native-base";
+  import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail, Text} from "native-base";
 import IdentIcon from "../components/Identicon.js";
 import BackButton from "../components/BackButton.js";
 import StatusBar from "../components/StatusBar.js";
@@ -9,7 +9,7 @@ export default (props) => {
   return (
     <>
       <StatusBar />
-      <Header style={props.transparent ? {backgroundColor: "transparent", borderBottomColor: "transparent"} : styles.headerBg}>
+      <Header style={[props.transparent ? {backgroundColor: "transparent", borderBottomColor: "transparent"} : styles.headerBg, styles.marginTopAndroid]} androidStatusBarColor="black" noShadow={false}>
         <Left>
           {props.onBack && (
             <BackButton onBack={props.onBack} style={props.greenBack ? styles.leftBtnColor : {color: "#fff"}} />

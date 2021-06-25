@@ -5973,8 +5973,12 @@ export default StyleSheet.create({
     color: "#fff",
     fontFamily: "Fontfabric-NexaBold",
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
     width: "160%",
+    textAlign: 'center'
+  },
+  marginTopAndroid: {
+    marginTop: Platform.OS === 'ios' ? null : 20,
   },
   leftBtnColor: {
     color: Images.colorGreen,

@@ -9,11 +9,6 @@ import * as React from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-import Background from "./components/Background.js"
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 
 export default class App extends React.Component {
   state = {
