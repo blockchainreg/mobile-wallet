@@ -32,11 +32,15 @@ export default ({ store, web3t, props }) => {
     stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
   }
+  const back = () => {
+    changePage("detailsValidator")();
+    store.amountWithdraw = null;
+  }
 
   return (
     <Container>
       <Header
-        onBack={changePage("detailsValidator")}
+        onBack={back}
         title={lang.exitValidator || "Exit from Validator"}
         identIcon={ADDRESS}
         greenBack

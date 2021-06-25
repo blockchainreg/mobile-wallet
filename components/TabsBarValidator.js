@@ -10,17 +10,14 @@ import TableRewards from "../components/TableRewards";
 import getLang from "../wallet/get-lang.js";
 import { formatStakeAmount } from "../utils/format-value";
 import BN from 'bn.js';
+import spin from "../utils/spin.js";
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
-export default ({ store, props }) => {
+export default ({ store, web3t }) => {
   const { stakingStore } = store;
 
   const details = stakingStore.getValidatorDetails();
-  // const rewards = stakingStore.getRewards();
-
-  // const rewards = stakingStore.getRewards();
-  // console.log('stakingStore.getRewards()', stakingStore.getRewards())
 
   const [page, setPage] = useState(0);
   const onChangeTab = (changeTabProps) => {

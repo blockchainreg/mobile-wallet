@@ -31,11 +31,15 @@ export default ({ store, web3t, props }) => {
     if (!store.amount) return null;
     changePage("confirmStake")();
   }
+  const back = () => {
+    changePage("detailsValidator")();
+    store.amount = null;
+  }
   const lang = getLang(store);
   return (
     <Container>
       <Header
-        onBack={changePage("detailsValidator")}
+        onBack={back}
         greenBack
         title={lang.stake || "Stake"}
         identIcon={ADDRESS}
@@ -57,7 +61,7 @@ export default ({ store, web3t, props }) => {
         <View style={style.buttonBottom}>
           {parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ? 
           <Notice
-              text={"When withdrawing all funds, you must leave about 1 VLX to pay the commission!!"}
+              text={"When stake all funds, you must leave about 1 VLX to pay the commission!!"}
               icon="warning"
             /> : null }
           <ButtonBlock type={!store.amount ? "DISABLED" : "NEXT"} text={lang.continue || "Next"} onPress={onPressButton} />
