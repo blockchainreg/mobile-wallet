@@ -16,7 +16,7 @@ export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activatedStake);
+  const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activeStake);
   const ADDRESS = details.address;
 
   const handleChange = async text => {

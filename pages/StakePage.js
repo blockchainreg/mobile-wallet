@@ -14,7 +14,7 @@ export default ({ store, web3t, props }) => {
     stakingStore.openedValidatorAddress = validatorAddress;
     store.current.page = tab;
   };
-  
+
   if (!stakingStore.validators) {
     // return null;
     return <Spinner />;
@@ -42,7 +42,7 @@ export default ({ store, web3t, props }) => {
       key={el.address}
       typeBadge={el.status}
       address={el.address}
-      totalStaked={el.activatedStake}
+      totalStaked={el.activeStake}
       totalStakers={el.totalStakers}
       onPress={changePage("detailsValidator", el.address)}
       store={store}
@@ -62,7 +62,7 @@ export default ({ store, web3t, props }) => {
   return (
     <Container>
       <Header title={lang.titleStake || "Stake"} />
-      <Content style={{ backgroundColor: Images.velasColor4 }} 
+      <Content style={{ backgroundColor: Images.velasColor4 }}
       refreshControl={
         <RefreshControl
         refreshing={false}

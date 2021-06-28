@@ -1,11 +1,14 @@
 import { decorate, observable, action } from "mobx";
 import BN from "bn.js";
 import { StakingAccountModel } from './staking-account-model.js';
+import { cachedCallWithRetries } from './utils';
+const solanaWeb3 = require('./index.cjs.js');
 
 class ValidatorModel {
   status = 'active';
   solanaValidator = null;
   stakingAccounts = [];
+  totalStakers = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -15,7 +18,7 @@ class ValidatorModel {
     return this.solanaValidator.lastVote;
   }
 
-  get activatedStake() {
+  get activeStake() {
     return new BN(this.solanaValidator.activatedStake+'', 10);
   }
 
@@ -34,10 +37,6 @@ class ValidatorModel {
       return null;
     }
     return rewards[0].apr;
-  }
-
-  get totalStakers() {
-    return 200;
   }
 
   get commission() {
@@ -91,14 +90,73 @@ class ValidatorModel {
     return false;
   }
 
+  get totalActiveStake() {
+    let total = new BN(0);
+
+    for (let acc of this.stakingAccounts) {
+      if (!acc.state) {
+        return null;
+      }
+      total = total.add(acc.activeStake);
+    }
+    return total;
+  }
+
+  get totalInactiveStake() {
+    let total = new BN(0);
+
+    for (let acc of this.stakingAccounts) {
+      if (!acc.state) {
+        return null;
+      }
+      total = total.add(acc.inactiveStake);
+    }
+    return total;
+  }
+
+  get totalWithdrawRequested() {
+    let total = new BN(0);
+
+    for (let acc of this.stakingAccounts) {
+      if (!acc.state) {
+        return null;
+      }
+      if (acc.state !== 'deactivating') {
+        continue;
+      }
+      if (!acc.activeStake) {
+        return null;
+      }
+      total = total.add(acc.activeStake);
+    }
+    return total;
+  }
+
+  get availableWithdrawRequested() {
+    let totalInactive = new BN(0);
+    // debugger;
+    for (let acc of this.stakingAccounts) {
+      if (!acc.state) {
+        return null;
+      }
+      if (acc.state !== 'inactive' && acc.state !== 'deactivating') {
+        continue;
+      }
+      if (!acc.inactiveStake) {
+        return null;
+      }
+      totalInactive = totalInactive.add(acc.inactiveStake);
+    }
+    return totalInactive;
+  }
+
   loadMoreRewards() {
     return Promise.all(
       this.stakingAccounts.map(acc => acc.loadMoreRewards())
     );
   }
 
-
-  constructor(solanaValidator, isDelinquent) {
+  constructor(solanaValidator, isDelinquent, connection) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');
     }
@@ -108,12 +166,31 @@ class ValidatorModel {
     if (isDelinquent) {
       this.status = 'inactive';
     }
+    this.connection = connection;
     this.solanaValidator = solanaValidator;
     // console.log(solanaValidator);
     decorate(this, {
       solanaValidator: observable,
       status: observable,
+      totalStakers: observable
     });
+    this.loadAccountStats();
+  }
+
+  async loadAccountStats() {
+    const nativeAccounts = await cachedCallWithRetries(
+      ['getParsedProgramAccounts', this.connection, solanaWeb3.StakeProgram.programId.toString()],
+      () => this.connection.getParsedProgramAccounts(
+          solanaWeb3.StakeProgram.programId
+        )
+    );
+    this.totalStakers = nativeAccounts.filter(({account}) =>{
+      if (!account.data.parsed.info.stake) {
+        return false;
+      }
+      const {voter} = account.data.parsed.info.stake.delegation;
+      return voter === this.address;
+    }).length;
   }
 
   updateValidator(solanaValidator, isDelinquent) {

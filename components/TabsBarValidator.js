@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert } from "react-native";
 import { Icon, Tab, Tabs, TabHeading } from "native-base";
+import { Observer, observer } from "mobx-react";
 import Images from "../Images";
 import { ChartIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
 import ValidatorCard from "./ValidatorCard";
@@ -16,14 +17,10 @@ const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
-
-  const details = stakingStore.getValidatorDetails();
-
   const [page, setPage] = useState(0);
   const onChangeTab = (changeTabProps) => {
     const newTabIndex = changeTabProps.i;
     setPage(newTabIndex);
-    // if (newTabIndex === 2) return Alert.alert('rewardssss');
   };
 
   const changePage = (tab) => () => {
@@ -31,37 +28,42 @@ export default ({ store, web3t }) => {
   };
   const lang = getLang(store);
 
-  const DOMINANCE_VALUE = (details.dominance).toFixed(4);
-  const QUALITY_VALUE = details.quality;
-  const ANNUAL_RATE = details.annualPercentageRate;
-  const ACTIVE_STAKE = details.myActiveStake;
-
-  const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
-  const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
-
-  const ADDRESS = details.address;
-
-  const onPressWithdraw = () => {
-    if (!details.totalWithdrawRequested) return null;
-    stakingStore.withdrawRequested(ADDRESS);
-    changePage("stakePage")();
-  }
- 
-    const copyAddress = async () => {
-      const DURATION = 1000/10;
-      await Clipboard.setString(details.address);
-      Vibration.vibrate(DURATION);
-      Alert.alert(lang.copied, "", [{ text: lang.ok }]);
-    };
-
   return (
-    <>
+    <Observer>{() => {
+      const details = stakingStore.getValidatorDetails();
+      const DOMINANCE_VALUE = (details.dominance).toFixed(4);
+      const QUALITY_VALUE = details.quality;
+      const ANNUAL_RATE = details.annualPercentageRate;
+      const ACTIVE_STAKE = details.myActiveStake;
+
+      const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
+      const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
+
+      const ADDRESS = details.address;
+
+      const onPressWithdraw = () => {
+        if (!details.totalWithdrawRequested) return null;
+        stakingStore.withdrawRequested(ADDRESS).then(() => {
+          changePage("stakePage")();
+        }).catch(e => {
+          debugger;
+          console.error(e);
+        })
+      }
+
+      const copyAddress = async () => {
+        const DURATION = 1000/10;
+        await Clipboard.setString(details.address);
+        Vibration.vibrate(DURATION);
+        Alert.alert(lang.copied, "", [{ text: lang.ok }]);
+      };
+      return <>
       <DetailsValidatorComponent
         address={details.address}
         copyAddress={copyAddress}
         isActive={details.status === "active" ? true : false}
         value1={details.commission}
-        value2={!details.myStake.isZero() ? `${formatStakeAmount(details.myStake)} VLX` : `${formatStakeAmount(details.activatedStake)} VLX`}
+        value2={!details.myStake.isZero() ? `${formatStakeAmount(details.myStake)} VLX` : `${formatStakeAmount(details.activeStake)} VLX`}
         subtitle1={lang.validatorInterest || "VALIDATOR INTEREST"}
         subtitle2={
           !details.myStake.isZero()
@@ -148,7 +150,7 @@ export default ({ store, web3t }) => {
                   text={lang.stakeMore || "Stake More"}
                   onPress={changePage("sendStake")}
                 />
-                {details.myStake.eq(details.totalWithdrawRequested) ? null :
+                {!details.totalWithdrawRequested || !details.myStake || details.myStake.eq(details.totalWithdrawRequested) ? null :
 
                 <ButtonBlock
                   type={"REQUEST_WITHDRAW"}
@@ -181,18 +183,18 @@ export default ({ store, web3t }) => {
             >
               <View style={style.container}>
                 <ValidatorCard
-                  value={formatStakeAmount(WITHDRAW_REQUESTED)}
+                  value={WITHDRAW_REQUESTED ? formatStakeAmount(WITHDRAW_REQUESTED) : ''}
                   subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
                   cardIcon={<VelasIcon />}
                 />
                 <ValidatorCard
-                  value={formatStakeAmount(AVAILABLE_WITHDRAW)}
+                  value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : ''}
                   subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
                   cardIcon={<VelasIcon />}
                 />
               </View>
               <View style={style.btnTop}>
-                {details.availableWithdrawRequested.isZero() ? null : 
+                {details.availableWithdrawRequested && details.availableWithdrawRequested.isZero() ? null :
                 <ButtonBlock
                   type={"WITHDRAW"}
                   text={lang.withdraw || "Withdraw"}
@@ -256,7 +258,7 @@ export default ({ store, web3t }) => {
           </>
         )}
       </View>
-    </>
+    </>}}</Observer>
   );
 };
 

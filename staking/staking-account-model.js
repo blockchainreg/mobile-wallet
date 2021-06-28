@@ -10,6 +10,10 @@ class StakingAccountModel {
   connection = null;
   rewards = null;
   rewardsStatus = 'NotLoaded';
+  isActivationRequested = false;
+  _activeStake = null;
+  _inactiveStake = null;
+  _state = null;
 
   get address() {
     return this.parsedAccoount.pubkey.toBase58();
@@ -32,9 +36,21 @@ class StakingAccountModel {
     return 10.2;
   }
 
-  get activatedStake() {
-    return 10.2;
+  get activeStake() {
+    this.requestActivation();
+    return this._activeStake;
   }
+
+  get inactiveStake() {
+    this.requestActivation();
+    return this._inactiveStake;
+  }
+
+  get state() {
+    this.requestActivation();
+    return this._state;
+  }
+
   get isRewardsLoading() {
     switch (this.rewardsStatus) {
       case "NotLoaded":
@@ -46,6 +62,28 @@ class StakingAccountModel {
       case "LoadedAll":
         return false;
     }
+    console.error('Invalid rewardsStatus', this.rewardsStatus);
+    return false;
+  }
+
+  async requestActivation() {
+    if (this.isActivationRequested) {
+      return;
+    }
+    this.isActivationRequested = true;
+
+    const activationRes = await cachedCallWithRetries(
+      ['getStakeActivation', this.connection, this.parsedAccoount.pubkey.toString()],
+      () => this.connection.getStakeActivation(this.parsedAccoount.pubkey)
+    );
+    if (!activationRes) {
+      console.error('Invalid activation response');
+      return;
+    }
+    const { active, inactive, state } = activationRes;
+    this._activeStake = new BN(active + '', 10);
+    this._inactiveStake = new BN(inactive + '', 10);
+    this._state = state;
   }
 
   async loadMoreRewards() {
@@ -108,7 +146,10 @@ class StakingAccountModel {
 
     decorate(this, {
       rewardsStatus: observable,
-      rewards: observable
+      rewards: observable,
+      _activeStake: observable,
+      _inactiveStake: observable,
+      _state: observable
     });
   }
   // fetchEpochRewards = (address, activationEpoch, cb)->

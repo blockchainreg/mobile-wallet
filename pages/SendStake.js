@@ -17,10 +17,10 @@ export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const details = stakingStore.getValidatorDetails();
   const ADDRESS = details.address;
-  const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activatedStake);
+  const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activeStake);
 
   const AVAILABLE_BALANCE = details.available_balance;
-  
+
   const handleChange = async text => {
     store.amount = text;
   };
@@ -59,7 +59,7 @@ export default ({ store, web3t, props }) => {
             />
         </View>
         <View style={style.buttonBottom}>
-          {parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ? 
+          {parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ?
           <Notice
               text={"When stake all funds, you must leave about 1 VLX to pay the commission!!"}
               icon="warning"

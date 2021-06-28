@@ -8,12 +8,13 @@ import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
 import { callWithRetries } from './utils';
 import crypto from 'isomorphic-webcrypto';
-import web3 from 'web3';
+import Web3 from 'web3';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
 import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
-import ethereum from "ethereumjs-tx";
+import * as ethereum from "ethereumjs-tx";
+import Common from "ethereumjs-common";
 
 // const  = mobx;
 
@@ -30,16 +31,19 @@ class StakingStore {
   openedValidatorAddress = null;
   evmAddress = null;
 
-  constructor(API_HOST, secretKey, publicKey, evmAddress) {
+  constructor(API_HOST, secretKey, publicKey, evmAddress, evmPrivateKey) {
     if (typeof secretKey === 'string') {
       secretKey = bs58.decode(secretKey);
     }
     this.secretKey = secretKey;
-    this.publicKeyBuffer = bs58.decode(publicKey);
+    this.publicKeyBuffer = Buffer.from(bs58.decode(publicKey));
     this.publicKey58 = publicKey;
     this.publicKey = new solanaWeb3.PublicKey(publicKey);
     this.connection = new solanaWeb3.Connection(API_HOST, 'singleGossip');
     this.evmAddress = evmAddress;
+    this.evmPrivateKey = evmPrivateKey;
+
+    this.web3 = new Web3('https://explorer.velas.com/rpc');
 
     decorate(this, {
       validators: observable,
@@ -62,16 +66,24 @@ class StakingStore {
     this.isRefreshing = false;
   }
 
+  async tryFixCrypto() {
+    try {
+      await crypto.ensureSecure();
+      const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
+      crypto.subtle.digest = (algorithm, buffer) => {
+        if (typeof algorithm === 'string') {
+          algorithm = { name: algorithm };
+        }
+        return originalDigest(algorithm, buffer);
+      };
+      global.globalThis.crypto = crypto;
+    } catch(e) {
+      console.warn('Cannot fix crypto');
+    }
+  }
+
   async reload() {
-    await crypto.ensureSecure();
-    const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
-    crypto.subtle.digest = (algorithm, buffer) => {
-      if (typeof algorithm === 'string') {
-        algorithm = { name: algorithm };
-      }
-      return originalDigest(algorithm, buffer);
-    };
-    global.globalThis.crypto = crypto;
+    await this.tryFixCrypto();
     const balanceRes = await this.connection.getBalance(this.publicKey);
     this.vlxNativeBalance = new BN(balanceRes + '', 10);
     const balanceEvmRes = await fetch('https://explorer.velas.com/rpc', {
@@ -87,6 +99,8 @@ class StakingStore {
     // debugger;
     // console.log(this.balanceEvmRes.toString(10));
     const { current, delinquent } = await this.connection.getVoteAccounts();
+    console.log('vote accounts');
+    console.log(current);
     const filter = {memcmp: {
       offset: 0xc,
       bytes: this.publicKey58,
@@ -103,8 +117,8 @@ class StakingStore {
       new StakingAccountModel(account, this.connection)
     );
     const validators = (
-      current.map((validator) => new ValidatorModel(validator, false))
-      .concat(delinquent.map((validator) => new ValidatorModel(validator, true)))
+      current.map((validator) => new ValidatorModel(validator, false, this.connection))
+      .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection)))
     );
     const validatorsMap = Object.create(null);
     for (var i = 0; i < validators.length; i++) {
@@ -160,11 +174,11 @@ class StakingStore {
       commission: validator.commission,
       status: validator.status,
       myStake: validator.myStake,
-      activatedStake: validator.activatedStake,
+      activeStake: validator.activeStake,
       available_balance: this.getBalance(),
-      myActiveStake: this.getActiveStake(),
-      totalWithdrawRequested: new BN('2002282880', 10),
-      availableWithdrawRequested: new BN('1', 10),
+      myActiveStake: validator.totalActiveStake && validator.totalInactiveStake && validator.totalActiveStake.mul(new BN(100)).div(validator.totalActiveStake.add(validator.totalInactiveStake)).toString(10),
+      totalWithdrawRequested: validator.totalWithdrawRequested,
+      availableWithdrawRequested: validator.availableWithdrawRequested,
       // rewards: validator.rewards
     };
   }
@@ -191,9 +205,9 @@ class StakingStore {
     const activeValidators = this.validators.filter(v => v.status === 'active');
     let totalStake = new BN(0);
     for (let i = 0; i < activeValidators.length; i++) {
-      totalStake = totalStake.add(activeValidators[i].activatedStake);
+      totalStake = totalStake.add(activeValidators[i].activeStake);
     }
-    let part = validator.activatedStake.mul(new BN(1000)).div(totalStake).toNumber() / 1000;
+    let part = validator.activeStake.mul(new BN(1000)).div(totalStake).toNumber() / 1000;
 
     return part - 1/activeValidators.length;
   }
@@ -216,15 +230,15 @@ class StakingStore {
     }
     return this.vlxEvmBalance.add(this.vlxNativeBalance);
   }
+
   getAnnualRate(validator) {
     return !!validator.apr && (validator.apr * 100).toFixed(2);
   }
+
   getActiveStake () {
     return 33;
   }
-  getNewAccountAddress() {
-      return 'F3RZb2HFM6hs4yN9VQZckFdB';
-  }
+
   async getNextSeed() {
       const fromPubkey = this.publicKey;
       const addressesHs = Object.create(null);
@@ -277,86 +291,94 @@ class StakingStore {
 
   async swapEvmToNative(swapAmount) {
     const evmToNativeBridgeContract = (
-      web3.eth.contract(EvmToNativeBridgeAbi)
-        .at("0x56454c41532d434841494e000000000053574150")
-      );
+      new this.web3.eth.Contract(EvmToNativeBridgeAbi, "0x56454c41532d434841494e000000000053574150")
+    );
 
-    const data = evmToNativeBridgeContract.transferToNative.getData(this.evmAddress);
+    const data = evmToNativeBridgeContract.methods.transferToNative('0x' + this.publicKeyBuffer.toString("hex")).encodeABI();
 
-    const privateKey = Buffer.from(this.evmPrivateKey, 'hex');
-    const nonce = web3.eth.getTransactionCount(this.evmAddress);
+    const privateKey = Buffer.from(this.evmPrivateKey.substr(2), 'hex');
+    const nonce = await this.web3.eth.getTransactionCount(this.evmAddress);
+    const customCommon = Common.forCustomChain(
+      'mainnet',
+      {
+        name: 'velas',
+        networkId: 106,
+        chainId: 106,
+      },
+      'istanbul',
+    )
 
     var rawTx = {
       nonce,
-      gasPrice: '9600000',
-      gasLimit: '210000',
+      gasPrice: '0x' + 9600000..toString(16),
+      gasLimit: '0x' + 210000..toString(16),
       to: "0x56454c41532d434841494e000000000053574150",
-      value: '0x00',
-      data
-    }
+      value: '0x' + swapAmount.mul(new BN(1e9)).toString(16),
+      data,
+    };
 
-    var tx = new ethereum.Transaction(rawTx, {'chain':'ropsten'});
+    var tx = new ethereum.Transaction(rawTx, {common: customCommon});
     tx.sign(privateKey);
 
     var serializedTx = tx.serialize();
+    const combinedResult = this.web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
 
-    // console.log(serializedTx.toString('hex'));
-    // 0xf889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
+    return await new Promise((resolve, reject) => {
+      combinedResult.on('confirmation', resolve);
+      combinedResult.on('error', reject);
+    });
 
-    console.log(await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')));
-    // .on('receipt', console.log);
-
-
+    // console.log(await );
   }
+
   async stake(address, amount_sol) {
-        // check balance and amount
-        const transaction = new solanaWeb3.Transaction();
+    // check balance and amount
+    const transaction = new solanaWeb3.Transaction();
 
-        try {
-            const swapAmount = this.getSwapAmountByStakeAmount(amount_sol);
-            const rent       = this.rent;
-            const fromPubkey = this.publicKey;
-            const authorized = new solanaWeb3.Authorized(fromPubkey, fromPubkey);
-            const lamportsBN = new BN(amount_sol).add(rent);
-            const seed       = await this.getNextSeed();
-            const votePubkey = new solanaWeb3.PublicKey(address);
+    try {
+      const swapAmount = this.getSwapAmountByStakeAmount(amount_sol);
+      const rent       = this.rent;
+      const fromPubkey = this.publicKey;
+      const authorized = new solanaWeb3.Authorized(fromPubkey, fromPubkey);
+      const lamportsBN = new BN(amount_sol).add(rent);
+      const seed       = await this.getNextSeed();
+      const votePubkey = new solanaWeb3.PublicKey(address);
+      const stakePubkey= await solanaWeb3.PublicKey.createWithSeed(
+        fromPubkey,
+        seed,
+        solanaWeb3.StakeProgram.programId,
+      );
+      const lockup = new solanaWeb3.Lockup(0, 0, fromPubkey);
 
-            const stakePubkey = await solanaWeb3.PublicKey.createWithSeed(
-                fromPubkey,
-                seed,
-                solanaWeb3.StakeProgram.programId,
-            );
+      const config = {
+        authorized,
+        basePubkey: fromPubkey,
+        fromPubkey,
+        lamports: lamportsBN.toString(),
+        lockup,
+        seed,
+        stakePubkey,
+      };
+      if (!swapAmount.isZero()) {
+        await this.swapEvmToNative(swapAmount);
+      }
+      transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
+      transaction.add(solanaWeb3.StakeProgram.delegate({
+        authorizedPubkey: fromPubkey,
+        stakePubkey,
+        votePubkey,
+      }));
+    } catch(e) {
+      return {
+        error: "prepare_transaction_error",
+        description: e.message,
+      };
+    };
 
-            const lockup = new solanaWeb3.Lockup(0,0, fromPubkey);
-
-            const config = {
-                authorized,
-                basePubkey: fromPubkey,
-                fromPubkey,
-                lamports: lamportsBN.toString(),
-                lockup,
-                seed,
-                stakePubkey,
-            };
-            if (!swapAmount.isZero()) {
-              await this.swapEvmToNative(swapAmount);
-            }
-            transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
-            transaction.add(solanaWeb3.StakeProgram.delegate({
-                authorizedPubkey: fromPubkey,
-                stakePubkey,
-                votePubkey,
-            }));
-        } catch(e) {
-            return {
-                error: "prepare_transaction_error",
-                description: e.message,
-            };
-        };
-
-        const result = await this.sendTransaction(transaction);
-        this.reloadWithRetry();
-        return result;
+    const result = await this.sendTransaction(transaction);
+    console.log('Stake result', result);
+    this.reloadWithRetry();
+    return result;
   }
 
 
@@ -423,7 +445,6 @@ class StakingStore {
   }
 
   async undelegate(stakePubkey) {
-
       const transaction = new solanaWeb3.Transaction();
 
       try {
@@ -479,16 +500,24 @@ class StakingStore {
     }
   }
 
-  async withdraw(stakePubkey, amount) {
-      const transaction = new solanaWeb3.Transaction();
+  async withdrawRequested(address) {
+    const transaction = new solanaWeb3.Transaction();
+    const authorizedPubkey = this.publicKey;
 
+    for (let i = 0; i < this.accounts.length; i++) {
+      const account = this.accounts[i];
+      if (account.validatorAddress !== address) continue;
+      const { inactive, state } = await this.connection.getStakeActivation(account.publicKey);
+      if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
+        continue;
+      }
+      debugger;
       try {
-          const authorizedPubkey = this.publicKey;
 
           transaction.add(solanaWeb3.StakeProgram.withdraw({
               authorizedPubkey,
-              stakePubkey,
-              lamports: amount,
+              stakePubkey: account.publicKey,
+              lamports: inactive,
               toPubkey: authorizedPubkey,
           }));
       } catch(e) {
@@ -498,19 +527,9 @@ class StakingStore {
           };
       };
 
-      return await this.sendTransaction(transaction);
-  };
-
-  async withdrawRequested(address) {
-    for (let i = 0; i < this.accounts.length; i++) {
-      const account = this.accounts[i];
-      if (account.validatorAddress !== address) continue;
-      const { inactive } = await this.connection.getStakeActivation(account.publicKey);
-      if (!inactive) {
-        continue;
-      }
-      const withdrawRes = await this.withdraw(account.publicKey, inactive);
-      console.log('withdrawRequested', account.address, withdrawRes);
+      const res = await this.sendTransaction(transaction);
+      debugger;
+      return res;
     }
   }
 }
