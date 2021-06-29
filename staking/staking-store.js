@@ -176,7 +176,10 @@ class StakingStore {
       myStake: validator.myStake,
       activeStake: validator.activeStake,
       available_balance: this.getBalance(),
-      myActiveStake: validator.totalActiveStake && validator.totalInactiveStake && validator.totalActiveStake.mul(new BN(100)).div(validator.totalActiveStake.add(validator.totalInactiveStake)).toString(10),
+      myActiveStake: validator.totalActiveStake &&
+        validator.totalInactiveStake &&
+        (!validator.totalActiveStake.isZero() || !validator.totalInactiveStake.isZero() || null) &&
+        validator.totalActiveStake.mul(new BN(100)).div(validator.totalActiveStake.add(validator.totalInactiveStake)).toString(10),
       totalWithdrawRequested: validator.totalWithdrawRequested,
       availableWithdrawRequested: validator.availableWithdrawRequested,
       // rewards: validator.rewards
@@ -517,7 +520,7 @@ class StakingStore {
           transaction.add(solanaWeb3.StakeProgram.withdraw({
               authorizedPubkey,
               stakePubkey: account.publicKey,
-              lamports: inactive,
+              lamports: inactive - 1e7,
               toPubkey: authorizedPubkey,
           }));
       } catch(e) {
