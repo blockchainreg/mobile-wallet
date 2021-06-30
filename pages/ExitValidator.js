@@ -14,13 +14,14 @@ export default ({ store, web3t, props }) => {
     store.current.page = tab;
   };
   const { stakingStore } = store;
+  if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
   const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activeStake);
   const ADDRESS = details.address;
 
   const handleChange = async text => {
-    store.amountWithdraw = text;
+    store.amountWithdraw = text.replace(",", ".");
   };
 
   const onPressMax = () => {

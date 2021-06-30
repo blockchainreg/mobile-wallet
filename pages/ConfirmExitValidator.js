@@ -14,7 +14,7 @@ export default ({ store, web3t, props }) => {
     store.current.page = tab;
   };
   const lang = getLang(store);
-
+  const { stakingStore } = store;
   const back = () => {
     changePage("exitValidator")();
     store.amountWithdraw = null;
@@ -22,6 +22,7 @@ export default ({ store, web3t, props }) => {
   const okBtn = () => {
     changePage("detailsValidator")();
     store.amountWithdraw = null;
+    stakingStore.reloadWithRetry();
   }
   return (
     <Container>

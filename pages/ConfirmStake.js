@@ -17,13 +17,14 @@ export default ({ store, web3t, props }) => {
   };
   const lang = getLang(store);
   const { stakingStore } = store;
+  if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const ADDRESS = details.address;
   const swapAmount = stakingStore.getSwapAmountByStakeAmount(store.amount);
   const confirm = async () => {
     if (!store.amount) return null;
     const amount = new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10);
-    // debugger;
+    // if (stakingStore.validators === null) return;
     spin(
       store,
       'Staking in progress',
@@ -57,7 +58,21 @@ export default ({ store, web3t, props }) => {
       <View style={style.contentBg}>
         <View style={style.container}>
           <Text style={style.title}>{lang.titleItemsStake || "These actions will be made"}</Text>
-          {!details.myStake.isZero() ? (
+          {/* {!details.myStake.isZero() ? ( */}
+          {swapAmount.isZero() ? (
+            <View style={style.steps}>
+            <StepItem
+              index="1"
+              text={lang.stepItem2 + " " || "Create Stake Account"}
+              address=""
+            />
+            <StepItem
+              index="2"
+              text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
+              address={ADDRESS}
+            />
+          </View>
+          ) : (
             <View style={style.steps}>
               <StepItem
                 index="1"
@@ -67,24 +82,11 @@ export default ({ store, web3t, props }) => {
               />
               <StepItem
                 index="2"
-                text={lang.stepItem2 + " " + "-" || "Create Stake Account -"}
+                text={lang.stepItem2 + " " || "Create Stake Account"}
                 address=""
               />
               <StepItem
                 index="3"
-                text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
-                address={ADDRESS}
-              />
-            </View>
-          ) : (
-            <View style={style.steps}>
-              <StepItem
-                index="1"
-                text={lang.stepItem2 + " " + "-" || "Create Stake Account -"}
-                address=""
-              />
-              <StepItem
-                index="2"
                 text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
                 address={ADDRESS}
               />
@@ -128,5 +130,6 @@ const style = StyleSheet.create({
   steps: {
     justifyContent: 'center',
   alignItems: 'flex-start',
+  width: "80%"
   }
 });

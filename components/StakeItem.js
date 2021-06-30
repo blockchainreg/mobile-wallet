@@ -1,17 +1,15 @@
 import React from "react";
-import { StyleSheet, Dimensions, Text } from "react-native";
-import { Left, Body, Right, ListItem } from "native-base";
+import { StyleSheet, Dimensions, Text, ActivityIndicator, Platform } from "react-native";
+import { Left, Body, Right, ListItem} from "native-base";
 import Images from "../Images";
 import { Avatar } from "../svg";
 import { Badge } from "react-native-elements";
 import IdentIcon from "./Identicon";
 import { formatStakeAmount } from "../utils/format-value";
 import getLang from "../wallet/get-lang.js";
+import { observer } from "mobx-react";
 
-var width = Dimensions.get("window").width;
-const BG_COLOR = "#161A3F";
-
-export default ({ store, isStaked, ...props }) => {
+export default observer(({ store, isStaked, ...props }) => {
   const lang = getLang(store);
 
   const typeBadge = (type) => {
@@ -77,12 +75,13 @@ export default ({ store, isStaked, ...props }) => {
           {isStaked ? lang.apr + "," + "%"|| "APR,%" : lang.totalStakers || "Total Stakers"}
         </Text>
         <Text style={[style.styleTitle, { marginRight: 0, marginTop: 3 }]}>
-          {isStaked && props.apr ? (props.apr * 100).toFixed(2) + "%" : props.totalStakers}
+          {isStaked && null !== props.apr ? (props.apr * 100).toFixed(2) + "%" : props.totalStakers}
+          {isStaked && null === props.apr && (Platform.OS === 'android' ? '...' : <ActivityIndicator/>)}
         </Text>
       </Body>
     </ListItem>
   );
-};
+});
 
 const style = StyleSheet.create({
   styleTitle: {

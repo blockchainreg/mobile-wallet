@@ -83,6 +83,12 @@ class StakingStore {
   }
 
   async reload() {
+    this.validators = null;
+    this.accounts = null;
+    this.rent = null;
+    this.vlxNativeBalance = null;
+    this.vlxEvmBalance = null;
+    
     await this.tryFixCrypto();
     const balanceRes = await this.connection.getBalance(this.publicKey);
     this.vlxNativeBalance = new BN(balanceRes + '', 10);
@@ -135,7 +141,6 @@ class StakingStore {
       }
       validator.addStakingAccount(account);
     }
-
     const rent = await this.connection.getMinimumBalanceForRentExemption(200);
     this.rent = new BN(rent);
     this.validators = validators;
@@ -148,7 +153,7 @@ class StakingStore {
     }
     return this.validators.filter((validator) => !validator.myStake.isZero());
   }
-
+  
   getNotStakedValidators() {
     if (!this.validators) {
       return null;
@@ -182,6 +187,7 @@ class StakingStore {
         validator.totalActiveStake.mul(new BN(100)).div(validator.totalActiveStake.add(validator.totalInactiveStake)).toString(10),
       totalWithdrawRequested: validator.totalWithdrawRequested,
       availableWithdrawRequested: validator.availableWithdrawRequested,
+      totalActiveStake: validator.totalActiveStake
       // rewards: validator.rewards
     };
   }
@@ -380,7 +386,7 @@ class StakingStore {
 
     const result = await this.sendTransaction(transaction);
     console.log('Stake result', result);
-    this.reloadWithRetry();
+    // setTimeout(() => this.reloadWithRetry(), 10000);
     return result;
   }
 
@@ -514,7 +520,6 @@ class StakingStore {
       if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
         continue;
       }
-      debugger;
       try {
 
           transaction.add(solanaWeb3.StakeProgram.withdraw({
@@ -531,7 +536,6 @@ class StakingStore {
       };
 
       const res = await this.sendTransaction(transaction);
-      debugger;
       return res;
     }
   }

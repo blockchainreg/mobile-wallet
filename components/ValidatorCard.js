@@ -83,6 +83,7 @@ export default (props) => {
       <CardItem style={style.bgCard}>
         <Left style={{ flex: 0 }} />
         <Body style={{ flex: 1 }}>
+          {/* <Text style={style.textBody}>{!props.value ? '...' : props.value}</Text> */}
           <Text style={style.textBody}>{props.value}</Text>
           
         </Body>

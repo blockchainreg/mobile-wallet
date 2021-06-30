@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert } from "react-native";
-import { Icon, Tab, Tabs, TabHeading } from "native-base";
+import { Icon, Tab, Tabs, TabHeading, Content } from "native-base";
 import { Observer, observer } from "mobx-react";
 import Images from "../Images";
 import { ChartIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
@@ -18,6 +18,7 @@ const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
   const [page, setPage] = useState(0);
+
   const onChangeTab = (changeTabProps) => {
     const newTabIndex = changeTabProps.i;
     setPage(newTabIndex);
@@ -27,19 +28,20 @@ export default ({ store, web3t }) => {
     store.current.page = tab;
   };
   const lang = getLang(store);
-
   return (
     <Observer>{() => {
+      if (stakingStore.isRefreshing) return null;
       const details = stakingStore.getValidatorDetails();
-      const DOMINANCE_VALUE = (details.dominance).toFixed(4);
-      const QUALITY_VALUE = details.quality;
-      const ANNUAL_RATE = details.annualPercentageRate;
-      const ACTIVE_STAKE = details.myActiveStake;
+      const DOMINANCE_VALUE = !details.dominance ? '...' : (details.dominance).toFixed(4);
+      const QUALITY_VALUE = details.quality >= -10 && details.quality <= 10 ? 0 : details.quality;
+      const ANNUAL_RATE = !details.annualPercentageRate ? '...' : details.annualPercentageRate;
+      const ACTIVE_STAKE = !details.myActiveStake ? '...' : details.myActiveStake;
 
       const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
       const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
 
       const ADDRESS = details.address;
+      const PRESERVE_BALANCE = new BN('1000000000', 10);
 
       const onPressWithdraw = () => {
         if (!details.totalWithdrawRequested) return null;
@@ -57,6 +59,7 @@ export default ({ store, web3t }) => {
         Vibration.vibrate(DURATION);
         Alert.alert(lang.copied, "", [{ text: lang.ok }]);
       };
+      
       return <>
       <DetailsValidatorComponent
         address={details.address}
@@ -115,10 +118,7 @@ export default ({ store, web3t }) => {
                 <ValidatorCard
                   value={QUALITY_VALUE}
                   subtitle={lang.quality || "QUALITY"}
-                  info={
-                    lang.info2 ||
-                    "Relative performence metric. Higher is better"
-                  }
+                  info={"0 means average"}
                   cardSymbol={"+"}
                 />
                 <ValidatorCard
@@ -150,8 +150,7 @@ export default ({ store, web3t }) => {
                   text={lang.stakeMore || "Stake More"}
                   onPress={changePage("sendStake")}
                 />
-                {!details.totalWithdrawRequested || !details.myStake || details.myStake.eq(details.totalWithdrawRequested) ? null :
-
+                { details.totalActiveStake && details.totalActiveStake.lte(stakingStore.rent) &&
                 <ButtonBlock
                   type={"REQUEST_WITHDRAW"}
                   text={lang.requestWithdraw || "Request Withdraw"}
@@ -242,9 +241,7 @@ export default ({ store, web3t }) => {
               <ValidatorCard
                 value={QUALITY_VALUE}
                 subtitle={lang.quality || "QUALITY"}
-                info={
-                  lang.info2 || "Relative performence metric. Higher is better"
-                }
+                info={"0 means average"}
                 cardSymbol={"+"}
               />
             </View>

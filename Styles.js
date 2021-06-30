@@ -3409,7 +3409,6 @@ export default StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-around",
-    // backgroundColor: '#00000010',
   },
   activityIndicatorWrapper: {
     backgroundColor: "#00000030",

@@ -15,6 +15,7 @@ export default ({ store, web3t, props }) => {
     store.current.page = tab;
   };
   const { stakingStore } = store;
+  if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const ADDRESS = details.address;
   const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activeStake);
@@ -22,13 +23,13 @@ export default ({ store, web3t, props }) => {
   const AVAILABLE_BALANCE = details.available_balance;
 
   const handleChange = async text => {
-    store.amount = text;
+    store.amount = text.replace(",", ".");
   };
   const onPressMax = () => {
     store.amount = formatStakeAmount(AVAILABLE_BALANCE.sub(new BN(1e9)));
   }
   const onPressButton = () => {
-    if (!store.amount) return null;
+    if (!store.amount || parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9)))) return null;
     changePage("confirmStake")();
   }
   const back = () => {
@@ -64,7 +65,7 @@ export default ({ store, web3t, props }) => {
               text={"When stake all funds, you must leave about 1 VLX to pay the commission!!"}
               icon="warning"
             /> : null }
-          <ButtonBlock type={!store.amount ? "DISABLED" : "NEXT"} text={lang.continue || "Next"} onPress={onPressButton} />
+          <ButtonBlock type={!store.amount || parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ? "DISABLED" : "NEXT"} text={lang.continue || "Next"} onPress={onPressButton} />
         </View>
       </View>
     </Container>

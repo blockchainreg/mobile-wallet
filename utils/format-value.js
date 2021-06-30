@@ -15,6 +15,9 @@ const wrapNumber = (n) => {
 };
 
 const formatStakeAmount = (n) => {
+  if (n.lt(new BN('10000000', 10))) {
+    return '< 0.01';
+  }
    n = n.div(new BN('10000000', 10)).toNumber()/100;
    return n.toFixed(2);
 }

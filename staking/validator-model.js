@@ -33,9 +33,10 @@ class ValidatorModel {
 
   get apr() {
     const rewards = this.rewards;
-    if (!rewards || !rewards.length) {
+    if (!rewards) {
       return null;
     }
+    if (!rewards.length) return 0;
     return rewards[0].apr;
   }
 
