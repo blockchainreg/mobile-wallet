@@ -10,7 +10,7 @@
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   decode = require('bs58').decode;
-  validate = require('bitcoin-address-validation');
+  validate = require('../embed_modules/bitcoin-address-validation/src/index.js');
   segwitAddress = function(publicKey){
     var witnessScript, scriptPubKey;
     witnessScript = BitcoinLib.script.witnessPubKeyHash.output.encode(BitcoinLib.crypto.hash160(publicKey));
@@ -807,7 +807,6 @@
         inputs = result.inputs, outputs = result.outputs;
         sender = inputs[0].address;
         receiver = getReceiver(address, sender, outputs);
-        console.log("receiver", receiver);
         value = getValue(outputs, receiver);
         return get(getApiUrl(network) + "/tx/" + mintTxid).timeout({
           deadline: 15000
@@ -858,7 +857,7 @@
   out$.isValidAddress = isValidAddress = function(arg$, cb){
     var address, network, addressIsValid;
     address = arg$.address, network = arg$.network;
-    addressIsValid = validate(address);
+    addressIsValid = validate.default(address);
     if (!addressIsValid) {
       return cb("Address is not valid");
     }

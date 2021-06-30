@@ -4801,6 +4801,11 @@ export default StyleSheet.create({
     height: 36 /2.5,
     left: 1,
   },
+	sizeIconBtnSwap: {
+		width: 64 / 2.5,
+		height: 25,
+		left: 1,
+	},
   sizeIconBtn1: {
     width: 64 / 4,
     height: 64 /4,

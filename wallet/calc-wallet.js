@@ -53,33 +53,39 @@
         }, function(err, balance){
           var pendingSent, this$ = this;
           if (err != null) {
-			return cb(err);
+          	console.log("build loader for " + token + " err", err);
           }
-          pendingSent = foldl(plus, 0)(
-          map(function(it){
-            return it.amount;
-          })(
-          filter(function(it){
-            return it.pending === true;
-          })(
-          filter(function(it){
-            return it.token === token;
-          })(
-          store.transactions.all))));
+          pendingSent = 0
+          // map(function(it){
+          //   return it.amount;
+          // })(
+          // filter(function(it){
+          //   return it.pending === true;
+          // })(
+          // filter(function(it){
+          //   return it.token === token;
+          // })(
+          // store.transactions.all))));
           wallet.pendingSent = pendingSent;
-          // balance = balance * 1000000 + '';
-          wallet.balance = balance;
+          wallet.balance = (function(){
+						switch (false) {
+							case !isNaN(balance):
+								return '..';
+							default:
+								return balance+"";
+						}
+					}());
           wallet.balanceUsd = (function(){
             switch (false) {
-            case usdRate !== '..':
-              return '..';
-            default:
-              return times(balance+"", usdRate+"");
+							case !isNaN(balance) && !isNaN(usdRate):
+								return '..';
+							default:
+								return times(balance+"", usdRate+"");
             }
           }());
           state.balanceUsd = (function(){
             switch (false) {
-            case usdRate !== '..':
+            case !isNaN(usdRate):
               return '..';
             default:
               return plus(state.balanceUsd, wallet.balanceUsd);

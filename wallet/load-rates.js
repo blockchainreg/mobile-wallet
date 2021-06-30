@@ -6,7 +6,7 @@
   ref$ = require('./workflow.js'), task = ref$.task, run = ref$.run;
   div = require('./math.js').div;
   parseRateString = function(usdInfo){
-    var ref$, _, div, url, extract;
+    var ref$, _, div, url, extract;    
     ref$ = usdInfo.match(/(1\/)?url\(([^)]+)\)(.+)?/), _ = ref$[0], div = ref$[1], url = ref$[2], extract = ref$[3];
     return {
       div: div,
@@ -69,9 +69,13 @@
   extractVal = function(data, arg$){
     var head, tail;
     head = arg$[0], tail = slice$.call(arg$, 1);
-    if (head == null) {
-      return data;
-    }
+	if (data == null && (tail == null || tail.length === 0)) {
+	  return "..";
+	}
+	if (data != null && (tail == null || tail.length === 0) && head === undefined) {
+	  return data;
+	}
+
     return extractVal(data[head], tail);
   };
   modifyItem = curry$(function(data, item){
