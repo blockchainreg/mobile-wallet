@@ -7,7 +7,7 @@ import ButtonBlock from "../components/ButtonBlock.js";
 import InputComponent from "../components/InputComponent";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
-import { formatStakeAmount } from "../utils/format-value";
+import { formatStakeAmount, formatAmount } from "../utils/format-value";
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
@@ -17,7 +17,7 @@ export default ({ store, web3t, props }) => {
   if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  const TOTAL_STAKE = !details.myStake.isZero() ? formatStakeAmount(details.myStake) : formatStakeAmount(details.activeStake);
+  const TOTAL_STAKE = !details.myStake.isZero() ? formatAmount(details.myStake) : formatAmount(details.activeStake);
   const ADDRESS = details.address;
 
   const handleChange = async text => {
@@ -27,8 +27,10 @@ export default ({ store, web3t, props }) => {
   const onPressMax = () => {
     store.amountWithdraw = TOTAL_STAKE;
   }
+  console.log('store.amountWithdraw', store.amountWithdraw)
   const onPressButton = () => {
     if (!store.amountWithdraw) return null;
+    if (store.amountWithdraw > TOTAL_STAKE) return null;
     const amountWithdraw = store.amountWithdraw;
     stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
@@ -50,7 +52,7 @@ export default ({ store, web3t, props }) => {
         <View>
           <InputComponent
             title={lang.enterAmount || "Enter Amount"}
-            sub_text={lang.yourTotalStake + ":" || "Your Total Stake:"}
+            sub_text={lang.yourTotalStake || "Your Total Stake"}
             total_stake={TOTAL_STAKE}
             token="vlx"
             btnTxt={lang.useMax || "Use max"}
@@ -61,13 +63,19 @@ export default ({ store, web3t, props }) => {
           />
         </View>
         <View style={style.buttonBottom}>
-          {details.totalWithdrawRequested.isZero() ? null : (
+          {store.amountWithdraw > TOTAL_STAKE && 
+            <Notice
+              text={"You are trying to withdraw more funds than you have."}
+              icon="warning"
+            />
+          }
+          {/* {details.totalWithdrawRequested.isZero() ? null : (
             <Notice
               text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
               icon="warning"
             />
-          )}
-          <ButtonBlock type={!store.amountWithdraw ? "DISABLED" : "WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
+          )} */}
+          <ButtonBlock type={!store.amountWithdraw || store.amountWithdraw > TOTAL_STAKE ? "DISABLED" : "WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
         </View>
       </View>
     </Container>

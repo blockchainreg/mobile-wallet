@@ -37,7 +37,7 @@ export default (props) => {
           popover={
             props.readMore ? (
               <Text style={style.txtInfo}>
-                {props.info}
+                {props.info}{' '}
                 <Text
                   style={[
                     style.txtInfo,

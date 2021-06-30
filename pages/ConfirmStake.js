@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Text } from "native-base";
+import { Container, Text, Content } from "native-base";
 import { View, StyleSheet, Dimensions } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
@@ -55,7 +55,7 @@ export default ({ store, web3t, props }) => {
         identIcon={ADDRESS}
       />
 
-      <View style={style.contentBg}>
+      <Content style={style.contentBg}>
         <View style={style.container}>
           <Text style={style.title}>{lang.titleItemsStake || "These actions will be made"}</Text>
           {/* {!details.myStake.isZero() ? ( */}
@@ -68,7 +68,7 @@ export default ({ store, web3t, props }) => {
             />
             <StepItem
               index="2"
-              text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
+              text={lang.stepItem3 + " " + "-" || "Stake to Validator -"}
               address={ADDRESS}
             />
           </View>
@@ -87,7 +87,7 @@ export default ({ store, web3t, props }) => {
               />
               <StepItem
                 index="3"
-                text={lang.stepItem3 + " " + "-" || "Stake on Validator -"}
+                text={lang.stepItem3 + " " + "-" || "Stake to Validator -"}
                 address={ADDRESS}
               />
             </View>
@@ -104,7 +104,7 @@ export default ({ store, web3t, props }) => {
             text={lang.confirm || "Confirm"}
           />
         </View>
-      </View>
+      </Content>
     </Container>
   );
 };
@@ -112,11 +112,11 @@ export default ({ store, web3t, props }) => {
 const style = StyleSheet.create({
   contentBg: {
     backgroundColor: Images.velasColor4,
-    justifyContent: "space-between",
-    flex: 1,
+    // justifyContent: "space-between",
+    // flex: 1,
   },
   buttonBottom: {
-    marginBottom: 60,
+    marginTop: 60,
   },
   title: {
     color: "#fff",

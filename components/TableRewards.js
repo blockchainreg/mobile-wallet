@@ -56,10 +56,10 @@ export default observer(({ store }) => {
       >
         <Text style={styles.emptyMessageStyle}>
           {lang.rewardsEmptyTitle ||
-            "We did not find any reward records for this validator."}
+            "We did not find any reward records for this validator"}{'.'}
         </Text>
         <Text style={{ ...styles.emptyMessageStyle, marginTop: 40 }}>
-          {lang.rewardsEmptyText || "Read about how rewards are"}
+          {lang.rewardsEmptyText || "Read about how rewards are"}{' '}
           <Text
             style={{
               color: Images.colorGreen,
@@ -67,7 +67,7 @@ export default observer(({ store }) => {
             }}
             onPress={onPressLink}
           >
-            {" " + lang.rewardsEmptyLink || "getting credited."}
+            {lang.rewardsEmptyLink || "getting credited"}{'.'}
           </Text>
         </Text>
       </View>

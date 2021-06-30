@@ -6,7 +6,7 @@ import Images from "../Images.js";
 import ButtonBlock from "../components/ButtonBlock.js";
 import InputComponent from "../components/InputComponent";
 import Header from "../components/Header";
-import { formatStakeAmount } from "../utils/format-value";
+import { formatStakeAmount, formatAmount } from "../utils/format-value";
 import Notice from "../components/Notice";
 import BN from 'bn.js';
 
@@ -26,8 +26,12 @@ export default ({ store, web3t, props }) => {
     store.amount = text.replace(",", ".");
   };
   const onPressMax = () => {
-    store.amount = formatStakeAmount(AVAILABLE_BALANCE.sub(new BN(1e9)));
+    if (AVAILABLE_BALANCE.sub(new BN(1e9)).lt(new BN('10000000', 10))) {
+      return null;
+    }
+    store.amount = formatAmount(AVAILABLE_BALANCE.sub(new BN(1e9)));
   }
+  console.log('store.amount', store.amount)
   const onPressButton = () => {
     if (!store.amount || parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9)))) return null;
     changePage("confirmStake")();
@@ -49,7 +53,7 @@ export default ({ store, web3t, props }) => {
         <View>
           <InputComponent
             title={lang.enterAmount || "Enter Amount"}
-            sub_text={lang.availableStaking + ":" || "Available for staking:"}
+            sub_text={lang.availableStaking || "Available for staking"}
             available_balance={formatStakeAmount(AVAILABLE_BALANCE)}
             total_stake={TOTAL_STAKE}
             token="vlx"

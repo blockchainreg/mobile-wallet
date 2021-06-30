@@ -23,23 +23,26 @@ export default ({isWithdraw, ...props}) => {
           placeholderTextColor="rgba(255,255,255,0.60)"
           maxLength={10}
         />
-        <Image source={Images.logo} style={style.labelLogo} />
-        <Text style={style.tokenStyle}>{props.token}</Text>
-      </Item>
-
-      <View style={style.containerBottomInput}>
-        <View style={style.subContainerInput}>
-          <Text style={style.labelTextBottom}>
-            {props.sub_text} {isWithdraw ? props.total_stake : props.available_balance}
-          </Text>
-          <Image source={Images.logo} style={style.labelLogo} />
-          <Text style={style.labelTokenStyle}>{props.token}</Text>
-        </View>
         <Badge
           onPress={props.onPressMax}
           value={<Text style={style.txtBtnSendMax}>{props.btnTxt}</Text>}
           badgeStyle={style.btnSendMax}
         />
+      </Item>
+
+      <View style={style.containerBottomInput}>
+        <View style={style.subContainerInput}>
+          <Text style={style.labelTextBottom}>
+            {props.sub_text + ":"} {isWithdraw ? props.total_stake : props.available_balance}
+          </Text>
+          <Image source={Images.logo} style={style.labelLogo} />
+          <Text style={style.labelTokenStyle}>{props.token}</Text>
+        </View>
+        {/* <Badge
+          onPress={props.onPressMax}
+          value={<Text style={style.txtBtnSendMax}>{props.btnTxt}</Text>}
+          badgeStyle={style.btnSendMax}
+        /> */}
       </View>
     </>
   );
@@ -58,28 +61,30 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   btnSendMax: {
-    backgroundColor: "#fff",
-    borderColor: "#fff",
-    paddingHorizontal: 3,
-    height: 13,
-    borderRadius: 10,
-    marginHorizontal: 20,
+    backgroundColor: Images.color4,
+    borderColor: Images.color4,
+    paddingHorizontal: 10,
+    height: 25,
+    marginHorizontal: 10,
+    borderRadius: 10
   },
   txtBtnSendMax: {
-    color: "#9d41eb",
-    fontSize: 8,
+    // color: "#9d41eb",
+    textDecorationLine: "underline",
+    color: "white",
+    fontSize: 12,
     alignItems: "center",
     fontFamily: "Fontfabric-NexaRegular",
   },
   labelTextBottom: {
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 10,
+    fontSize: 16,
   },
   labelTokenStyle: {
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 10,
+    fontSize: 16,
     textTransform: "uppercase",
   },
   tokenStyle: {
@@ -92,7 +97,7 @@ const style = StyleSheet.create({
   labelTextTop: {
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 13,
+    fontSize: 16,
     margin: 20,
   },
   labelLogo: {

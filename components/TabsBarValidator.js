@@ -126,7 +126,7 @@ export default ({ store, web3t }) => {
                   subtitle={lang.annual || "ANNUAL PERCENTAGE RATE"}
                   info={
                     lang.info3 ||
-                    "APR is calculated based on the resalts of the previous epoch"
+                    "APR is calculated based on the results of the previous epoch"
                   }
                   cardSymbol={"%"}
                 />
@@ -150,13 +150,13 @@ export default ({ store, web3t }) => {
                   text={lang.stakeMore || "Stake More"}
                   onPress={changePage("sendStake")}
                 />
-                { details.totalActiveStake && details.totalActiveStake.lte(stakingStore.rent) &&
+                {/* { details.totalActiveStake && details.totalActiveStake.lte(stakingStore.rent) && */}
                 <ButtonBlock
                   type={"REQUEST_WITHDRAW"}
                   text={lang.requestWithdraw || "Request Withdraw"}
                   onPress={changePage("exitValidator")}
                 />
-                }
+                {/* } */}
               </View>
             </Tab>
 
@@ -185,11 +185,13 @@ export default ({ store, web3t }) => {
                   value={WITHDRAW_REQUESTED ? formatStakeAmount(WITHDRAW_REQUESTED) : ''}
                   subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
                   cardIcon={<VelasIcon />}
+                  info={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
                 />
                 <ValidatorCard
                   value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : ''}
                   subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
                   cardIcon={<VelasIcon />}
+                  info={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
                 />
               </View>
               <View style={style.btnTop}>
