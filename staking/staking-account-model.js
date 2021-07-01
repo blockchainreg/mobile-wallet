@@ -14,6 +14,7 @@ class StakingAccountModel {
   _activeStake = null;
   _inactiveStake = null;
   _state = null;
+  latestReward = undefined;
 
   get address() {
     return this.parsedAccoount.pubkey.toBase58();
@@ -30,10 +31,6 @@ class StakingAccountModel {
     }
     const { voter } = account.data.parsed.info.stake.delegation;
     return voter;
-  }
-
-  get apr() {
-    return 10.2;
   }
 
   get activeStake() {
@@ -101,12 +98,9 @@ class StakingAccountModel {
       case "LoadedAll":
         return;
     }
-    if (this.rewards.length === 0) {
-      this.rewardsStatus = "LoadedAll";
-      return;
-    }
+    this.rewards = [];
     this.rewardsStatus = "LoadingMore";
-    for (let i = 1; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
       const epoch = await this.getLastEpoch();
       const firstSlotInEpoch = (epoch - i - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
@@ -149,7 +143,8 @@ class StakingAccountModel {
       rewards: observable,
       _activeStake: observable,
       _inactiveStake: observable,
-      _state: observable
+      _state: observable,
+      latestReward: observable
     });
   }
   // fetchEpochRewards = (address, activationEpoch, cb)->
@@ -208,28 +203,24 @@ class StakingAccountModel {
       // }
       const { account } = this.parsedAccoount;
       if (!account.data.parsed.info.stake) {
-        this.rewards = [];
+        this.latestReward = null;
         return;
       }
 
       // const { activationEpoch } = account.data.parsed.info.stake.delegation;
       const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
-      const epoch = await this.getLastEpoch();
+      const { epoch } = await this.getEpochInfo();
       const firstSlotInEpoch = (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
       const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
       const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
       const address = this.address;
-      this.rewards = (
+      this.latestReward = (
         blockResult.rewards
           .filter(r => r.pubkey === address)
+          .slice(0, 1)
           .map(reward => new RewardModel(reward, epoch - 1, this.connection))
-      );
+      )[0] || null;
       this.rewardsStatus = '1Loaded';
-      if (this.rewards.length === 0) {
-        return;
-      }
-      // debugger;
-      // fetchEpochRewards(account.address, activationEpoch)
     } catch(e) {
       console.error(e);
     }

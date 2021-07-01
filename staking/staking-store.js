@@ -1,4 +1,4 @@
-import { decorate, observable, action } from "mobx";
+import { decorate, observable, action, when } from "mobx";
 import BN from "bn.js";
 // import * as solanaWeb3 from ;
 import bs58 from 'bs58';
@@ -9,6 +9,7 @@ const solanaWeb3 = require('./index.cjs.js');
 import { callWithRetries } from './utils';
 import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
+import { rewardsStore } from './rewards-store';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
@@ -44,7 +45,7 @@ class StakingStore {
     this.evmPrivateKey = evmPrivateKey;
 
     this.web3 = new Web3('https://explorer.velas.com/rpc');
-
+    rewardsStore.setConnection(this.connection);
     decorate(this, {
       validators: observable,
       vlxEvmBalance: observable,
@@ -88,7 +89,7 @@ class StakingStore {
     this.rent = null;
     this.vlxNativeBalance = null;
     this.vlxEvmBalance = null;
-    
+
     await this.tryFixCrypto();
     const balanceRes = await this.connection.getBalance(this.publicKey);
     this.vlxNativeBalance = new BN(balanceRes + '', 10);
@@ -153,7 +154,7 @@ class StakingStore {
     }
     return this.validators.filter((validator) => !validator.myStake.isZero());
   }
-  
+
   getNotStakedValidators() {
     if (!this.validators) {
       return null;
@@ -187,8 +188,10 @@ class StakingStore {
         validator.totalActiveStake.mul(new BN(100)).div(validator.totalActiveStake.add(validator.totalInactiveStake)).toString(10),
       totalWithdrawRequested: validator.totalWithdrawRequested,
       availableWithdrawRequested: validator.availableWithdrawRequested,
-      totalActiveStake: validator.totalActiveStake
-      // rewards: validator.rewards
+      totalActiveStake: validator.totalActiveStake,
+      totalActivatingStake: validator.totalActivatingStake,
+      totalDeactivatingStake: validator.totalDeactivatingStake,
+      totalInactiveStake: validator.totalInactiveStake
     };
   }
   getRewards() {
@@ -244,13 +247,10 @@ class StakingStore {
     return !!validator.apr && (validator.apr * 100).toFixed(2);
   }
 
-  getActiveStake () {
-    return 33;
-  }
-
   async getNextSeed() {
       const fromPubkey = this.publicKey;
       const addressesHs = Object.create(null);
+      await when(() => !!this.accounts);
       for (let i = 0; i < this.accounts.length; i++) {
         addressesHs[this.accounts[i].address] = true;
       }
@@ -513,6 +513,7 @@ class StakingStore {
     const transaction = new solanaWeb3.Transaction();
     const authorizedPubkey = this.publicKey;
 
+    await when(() => !!this.accounts);
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
       if (account.validatorAddress !== address) continue;
@@ -521,11 +522,12 @@ class StakingStore {
         continue;
       }
       try {
-
           transaction.add(solanaWeb3.StakeProgram.withdraw({
               authorizedPubkey,
               stakePubkey: account.publicKey,
-              lamports: inactive - 1e7,
+              lamports: state === 'inactive'
+                ? parseFloat(account.myStake.toString(10)) + this.rentExemptReserve.toNumber()
+                : inactive - this.rentExemptReserve.toNumber(),
               toPubkey: authorizedPubkey,
           }));
       } catch(e) {

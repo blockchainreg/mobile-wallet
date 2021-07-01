@@ -19,7 +19,7 @@ export default ({ store, web3t, props }) => {
   //   return <Spinner/>;
   // }
 
-  
+
   if (stakingStore.isRefreshing) {
     const lang = getLang(store);
     return (
@@ -31,7 +31,7 @@ export default ({ store, web3t, props }) => {
               <ActivityIndicator color={"white"} size={'large'}/>
             </View>
           </View>
-        <Footer store={store}></Footer> 
+        <Footer store={store}></Footer>
       </Container>
     </>
     )
@@ -41,7 +41,7 @@ export default ({ store, web3t, props }) => {
 
   const filterStake = stakingStore.getStakedValidators();
   const filterTotalStaked = stakingStore.getNotStakedValidators();
-  
+
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
       key={el.address}
@@ -60,7 +60,7 @@ export default ({ store, web3t, props }) => {
       typeBadge={el.status}
       address={el.address}
       totalStaked={el.activeStake}
-      totalStakers={el.totalStakers}
+      apr={el.apr}
       onPress={changePage("detailsValidator", el.address)}
       store={store}
     />

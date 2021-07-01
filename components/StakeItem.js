@@ -72,12 +72,11 @@ export default observer(({ store, isStaked, ...props }) => {
       <Body style={{ alignItems: "flex-end", marginRight: 20, maxWidth: 100 }}>
         {badgeStatus()}
         <Text style={[style.styleSubTitle, { marginRight: 0 }]}>
-          {isStaked ? lang.apr + "," + "%"|| "APR,%" : lang.totalStakers || "Total Stakers"}
+          {lang.apr + "," + "%"|| "APR,%"}
         </Text>
         <Text style={[style.styleTitle, { marginRight: 0, marginTop: 3 }]}>
-          {isStaked && null !== props.apr ? (props.apr * 100).toFixed(2) + "%" : props.totalStakers}
-          {isStaked && null === props.apr && (Platform.OS === 'android' ? '...' : <ActivityIndicator/>)}
-          {!isStaked && null === props.totalStakers && (Platform.OS === 'android' ? '...' : <ActivityIndicator/>)}
+          {null !== props.apr && (props.apr * 100).toFixed(2) + "%"}
+          {null === props.apr && (Platform.OS === 'android' ? '...' : <ActivityIndicator/>)}
         </Text>
       </Body>
     </ListItem>
