@@ -18,6 +18,7 @@ export default ({ store, web3t, props }) => {
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
   const TOTAL_STAKE = formatAmount(details.totalActiveStake);
+  console.log('details.totalActiveStake', details.totalActiveStake.toString(10));
   const ADDRESS = details.address;
 
   const handleChange = async text => {
@@ -28,11 +29,11 @@ export default ({ store, web3t, props }) => {
     store.amountWithdraw = TOTAL_STAKE;
   }
   console.log('store.amountWithdraw', store.amountWithdraw)
-  const onPressButton = () => {
+  const onPressButton = async () => {
     if (!store.amountWithdraw) return null;
     if (store.amountWithdraw > TOTAL_STAKE) return null;
     const amountWithdraw = store.amountWithdraw;
-    stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
+    await stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
     changePage("confirmExit")();
   }
   const back = () => {

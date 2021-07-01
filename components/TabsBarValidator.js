@@ -42,7 +42,7 @@ export default ({ store, web3t }) => {
 
       const ADDRESS = details.address;
       const PRESERVE_BALANCE = new BN('1000000000', 10);
-
+      // console.log('details.totalActiveStake', details.totalActiveStake && details.totalActiveStake.toString(10));
       const onPressWithdraw = () => {
         if (!details.totalWithdrawRequested) return null;
         stakingStore.withdrawRequested(ADDRESS).then(() => {
@@ -59,7 +59,7 @@ export default ({ store, web3t }) => {
         Vibration.vibrate(DURATION);
         Alert.alert(lang.copied, "", [{ text: lang.ok }]);
       };
-      
+
       return <>
       <DetailsValidatorComponent
         address={details.address}
@@ -150,13 +150,13 @@ export default ({ store, web3t }) => {
                   text={lang.stakeMore || "Stake More"}
                   onPress={changePage("sendStake")}
                 />
-                {/* { details.totalActiveStake && details.totalActiveStake.lte(stakingStore.rent) && */}
-                <ButtonBlock
-                  type={"REQUEST_WITHDRAW"}
-                  text={lang.requestWithdraw || "Request Withdraw"}
-                  onPress={changePage("exitValidator")}
-                />
-                {/* } */}
+                { details.totalActiveStake && details.totalActiveStake.gte(stakingStore.rent) &&
+                  <ButtonBlock
+                    type={"REQUEST_WITHDRAW"}
+                    text={lang.requestWithdraw || "Request Withdraw"}
+                    onPress={changePage("exitValidator")}
+                  />
+                }
               </View>
             </Tab>
 

@@ -483,7 +483,7 @@ class StakingStore {
     }
     const sortedAccounts = (
       validator.stakingAccounts
-        .filter(a => a.isActivated)
+        .filter(a => a.state === 'active' || a.state === 'activating')
         .sort((a, b) => b.myStake.cmp(a.myStake))
     );
     let totalStake = new BN(0);
