@@ -23,10 +23,6 @@ export async function callWithRetries(call, params) {
     } finally {
       const ms = Date.now() - startAt;
       console.log('Call completed', ms, params && params.map(o => o.toString()).join());
-      if (ms > 10000) {
-        debugger;
-        console.log(call)
-      }
     }
   }
 }

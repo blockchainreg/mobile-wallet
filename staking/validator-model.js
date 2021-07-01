@@ -118,6 +118,21 @@ class ValidatorModel {
     return total;
   }
 
+  get totalAvailableForWithdrawRequestStake() {
+    let total = new BN(0);
+
+    for (let acc of this.stakingAccounts) {
+      if (!acc.state) {
+        return null;
+      }
+      if (acc.state !== 'activating' && acc.state !== 'active') {
+        continue;
+      }
+      total = total.add(acc.activeStake).add(acc.inactiveStake);
+    }
+    return total;
+  }
+
   get totalInactiveStake() {
     let total = new BN(0);
 

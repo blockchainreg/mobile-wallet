@@ -17,8 +17,8 @@ export default ({ store, web3t, props }) => {
   if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  const TOTAL_STAKE = formatAmount(details.totalActiveStake);
-  console.log('details.totalActiveStake', details.totalActiveStake.toString(10));
+  const TOTAL_STAKE = formatAmount(details.totalAvailableForWithdrawRequestStake);
+  console.log('details.totalAvailableForWithdrawRequestStake', details.totalAvailableForWithdrawRequestStake.toString(10));
   const ADDRESS = details.address;
 
   const handleChange = async text => {
@@ -64,7 +64,7 @@ export default ({ store, web3t, props }) => {
           />
         </View>
         <View style={style.buttonBottom}>
-          {store.amountWithdraw > TOTAL_STAKE &&
+          {parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) &&
             <Notice
               text={"You are trying to withdraw more funds than you have."}
               icon="warning"

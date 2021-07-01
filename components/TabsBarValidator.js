@@ -53,15 +53,16 @@ export default ({ store, web3t }) => {
 
       const ADDRESS = details.address;
       const PRESERVE_BALANCE = new BN('1000000000', 10);
-      // console.log('details.totalActiveStake', details.totalActiveStake && details.totalActiveStake.toString(10));
-      const onPressWithdraw = () => {
+      const onPressWithdraw = async () => {
         if (!details.availableWithdrawRequested) return null;
-        stakingStore.withdrawRequested(ADDRESS).then(() => {
+        try {
+          await stakingStore.withdrawRequested(ADDRESS);
+          await stakingStore.reloadWithRetry();
           changePage("stakePage")();
-        }).catch(e => {
+        } catch(e) {
           debugger;
           console.error(e);
-        })
+        }
       }
 
       const copyAddress = async () => {
@@ -162,7 +163,7 @@ export default ({ store, web3t }) => {
                   text={lang.stakeMore || "Stake More"}
                   onPress={changePage("sendStake")}
                 />
-                { details.totalActiveStake && details.totalActiveStake.gte(stakingStore.rent) &&
+                { details.totalAvailableForWithdrawRequestStake && details.totalAvailableForWithdrawRequestStake.gte(stakingStore.rent) &&
                   <ButtonBlock
                     type={"REQUEST_WITHDRAW"}
                     text={lang.requestWithdraw || "Request Withdraw"}

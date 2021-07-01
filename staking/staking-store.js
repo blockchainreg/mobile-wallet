@@ -197,7 +197,8 @@ class StakingStore {
       totalActiveStake: validator.totalActiveStake,
       totalActivatingStake: validator.totalActivatingStake,
       totalDeactivatingStake: validator.totalDeactivatingStake,
-      totalInactiveStake: validator.totalInactiveStake
+      totalInactiveStake: validator.totalInactiveStake,
+      totalAvailableForWithdrawRequestStake: validator.totalAvailableForWithdrawRequestStake
     };
   }
   getRewards() {
@@ -499,7 +500,7 @@ class StakingStore {
     for (let i = 0; i < sortedAccounts.length; i++) {
       totalStake = totalStake.add(sortedAccounts[i].myStake);
     }
-    if (totalStake.lt(amount)) {
+    if (totalStake.add(new BN(10000000)).lt(amount)) {
       amount = totalStake;
     }
     while (!amount.isZero() && !amount.isNeg()) {
@@ -531,9 +532,7 @@ class StakingStore {
           transaction.add(solanaWeb3.StakeProgram.withdraw({
               authorizedPubkey,
               stakePubkey: account.publicKey,
-              lamports: state === 'inactive'
-                ? parseFloat(account.myStake.toString(10)) + this.rent.toNumber()
-                : inactive,
+              lamports: inactive + this.rent.toNumber(),
               toPubkey: authorizedPubkey,
           }));
       } catch(e) {
