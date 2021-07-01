@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, View, Dimensions, Linking, Alert } from "react-native";
 import { Card, CardItem, Text, Left, Body, Right } from "native-base";
 import Images from "../Images";
@@ -12,13 +12,23 @@ const BG_COLOR = "#161A3F";
 
 export default (props) => {
   const tooltipRef = useRef(null);
-
+  const window = Dimensions.get("window");
+  const [dimensions, setDimensions] = useState({ window });
+  const onChange = ({ window }) => {
+    setDimensions({ window });
+  };
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChange);
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
+  });
   const onPressMore = () => {
     Linking.openURL(props.link);
     tooltipRef.current.toggleTooltip(false);
   };
   return (
-    <Card transparent style={{...style.card, height: props.info ? 120 : 105}}>
+    <Card transparent style={{...style.card, height: props.info ? 120 : 105, width: dimensions.window.width * 0.5 - 20,}}>
       {props.info && 
       
       <View
@@ -106,7 +116,6 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: BG_COLOR,
-    width: width * 0.5 - 20,
     marginTop: 0,
     paddingVertical: 5,
   },

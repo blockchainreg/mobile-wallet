@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert } from "react-native";
 import { Icon, Tab, Tabs, TabHeading, Content } from "native-base";
 import { Observer, observer } from "mobx-react";
@@ -15,15 +15,26 @@ import spin from "../utils/spin.js";
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
+
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
   const [page, setPage] = useState(0);
-
+  
   const onChangeTab = (changeTabProps) => {
     const newTabIndex = changeTabProps.i;
     setPage(newTabIndex);
   };
-
+  const window = Dimensions.get("window");
+  const [dimensions, setDimensions] = useState({ window });
+  const onChange = ({ window }) => {
+    setDimensions({ window });
+  };
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChange);
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
+  });
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
@@ -75,10 +86,11 @@ export default ({ store, web3t }) => {
         }
         store={store}
       />
-      <View>
+      <View style={{width: dimensions.window.width}}>
         {!details.myStake.isZero() ? (
           <Tabs
             // initialPage={details.availableWithdrawRequested.isZero() ? 0 : 1} //for the future
+            style={{width: dimensions.window.width}}
             initialPage={0}
             onChangeTab={onChangeTab}
             tabBarUnderlineStyle={{
