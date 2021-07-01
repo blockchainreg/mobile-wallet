@@ -103,7 +103,7 @@ export default (props) => {
       <CardItem style={style.bgCard}>
         <Left style={{ flex: 0 }} />
         <Body style={{ flex: 1 }}>
-          <Text style={style.textFooter} numberOfLines={1}>{props.subtitle}</Text>
+          <Text style={props.subtitleSmall ? style.subtitleSmall : style.textFooter} numberOfLines={1}>{props.subtitle}</Text>
         </Body>
         <Right style={{ flex: 0 }} />
       </CardItem>
@@ -129,6 +129,13 @@ const style = StyleSheet.create({
   },
   textFooter: {
     fontSize: 10,
+    textTransform: "uppercase",
+    color: "rgba(225, 225, 225, 0.50)",
+    fontFamily: "Fontfabric-NexaBold",
+    alignSelf: "center",
+  },
+  subtitleSmall: {
+    fontSize: 9,
     textTransform: "uppercase",
     color: "rgba(225, 225, 225, 0.50)",
     fontFamily: "Fontfabric-NexaBold",

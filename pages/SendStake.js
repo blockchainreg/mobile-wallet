@@ -25,6 +25,8 @@ export default ({ store, web3t, props }) => {
   const handleChange = async text => {
     store.amount = text.replace(",", ".");
   };
+  console.log('store.amount', store.amount)
+
   const onPressMax = () => {
     if (AVAILABLE_BALANCE.sub(new BN(1e9)).lt(new BN('10000000', 10))) {
       return null;
@@ -63,6 +65,12 @@ export default ({ store, web3t, props }) => {
             />
         </View>
         <View style={style.buttonBottom}>
+          {/* {store.amount > formatStakeAmount(AVAILABLE_BALANCE) ?
+            <Notice
+              text={"You are trying to enter more than you have available on the balance sheet!!"}
+              icon="warning"
+            /> 
+            : null } */}
           {parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ?
           <Notice
               text={"When stake all funds, you must leave about 1 VLX to pay the commission!!"}

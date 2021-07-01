@@ -214,12 +214,14 @@ export default ({ store, web3t }) => {
                   subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
                   cardIcon={<VelasIcon />}
                   info={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
+                  subtitleSmall
                 />
                 <ValidatorCard
                   value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : ''}
                   subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
                   cardIcon={<VelasIcon />}
                   info={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
+                  subtitleSmall
                 />
               </View>
               <View style={style.btnTop}>
