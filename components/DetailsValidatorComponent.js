@@ -125,7 +125,7 @@ const style = StyleSheet.create({
   value: {
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    fontSize: 20,
+    fontSize: 16,
   },
   subtitle: {
     color: GRAY_COLOR,
