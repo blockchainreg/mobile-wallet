@@ -349,6 +349,7 @@ class StakingStore {
 
   async stake(address, amount_sol) {
     // check balance and amount
+    
     const transaction = new solanaWeb3.Transaction();
 
     try {
@@ -481,6 +482,8 @@ class StakingStore {
   };
 
   async requestWithdraw(address, amount) {
+    
+
     if (!this.validators) {
       throw new Error('Not loaded');
     }
@@ -500,7 +503,7 @@ class StakingStore {
     for (let i = 0; i < sortedAccounts.length; i++) {
       totalStake = totalStake.add(sortedAccounts[i].myStake);
     }
-    if (totalStake.add(new BN(10000000)).lt(amount)) {
+    if (totalStake.sub(new BN(10000000)).lt(amount)) {
       amount = totalStake;
     }
     while (!amount.isZero() && !amount.isNeg()) {
@@ -517,6 +520,8 @@ class StakingStore {
   }
 
   async withdrawRequested(address) {
+    
+
     const transaction = new solanaWeb3.Transaction();
     const authorizedPubkey = this.publicKey;
 
@@ -532,7 +537,7 @@ class StakingStore {
           transaction.add(solanaWeb3.StakeProgram.withdraw({
               authorizedPubkey,
               stakePubkey: account.publicKey,
-              lamports: inactive + this.rent.toNumber(),
+              lamports: state === 'inactive' ? parseFloat(account.myStake.toString(10)) : (inactive + this.rent.toNumber()),
               toPubkey: authorizedPubkey,
           }));
       } catch(e) {

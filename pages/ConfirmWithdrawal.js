@@ -13,51 +13,26 @@ export default ({ store, web3t, props }) => {
     store.current.page = tab;
   };
   const lang = getLang(store);
-  const { stakingStore } = store;
-  const back = () => {
-    changePage("exitValidator")();
-    store.amountWithdraw = null;
-  }
-  const okBtn = async () => {
-    spin(
-      store,
-      'Validator is loading',
-      async (cb) => {
-        try {
-          const result = await stakingStore.reloadWithRetry();
-          cb(null, result);
-        } catch(err) {
-          cb(err);
-        }
-      }
-    )((err, result) => {
-      if (err) {
-        setTimeout(() => {
-          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
-        }, 1);
-        console.error(err);
-        return;
-      }
+  // const back = () => {
+  //   changePage("exitValidator")();
+  //   store.amountWithdraw = null;
+  // }
+  const okBtn = () => {
       changePage("detailsValidator")();
-      store.amountWithdraw = null;
-    });
   }
   return (
     <Container>
       <Header
         // onBack={back}
         // greenBack
-        title={lang.exitValidator || "Exit from Validator"}
+        title={"Withdrawal"}
       />
 
       <View style={style.contentBg}>
         <View style={style.container}>
           <WithdrawalRequest />
           <Text style={style.title}>
-            {lang.exitValidatorTitle || "Withdrawal request has been submitted successfully. It will start cooling down from the next epoch."}
-          </Text>
-          <Text style={{ ...style.title, marginTop: 20 }}>
-            {lang.exitValidatorSubTitle || "Please navigate the withdrawals tab to monitor the progress."}
+            {"Withdrawal has been submitted successfully. It may take a few minutes to appear on your balance."}
           </Text>
         </View>
         <View style={style.buttonBottom}>

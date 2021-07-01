@@ -16,23 +16,10 @@ export default (props) => {
       onTouchOutside={() => setModalVisible(!modalVisible)}
     >
       <View style={style.container}>
-        {props.success ? (
-          <>
-            <WithdrawalRequest />
-            <Text style={style.subTitle}>
-              It is not fully active immediately, it may take multiple epochs to
-              warm it up!!!
-            </Text>
-          </>
-        ) : (
-          <>
-            <StakingEnteranceIcon />
-            <Text style={style.subTitle}>
-              It is not fully active immediately, it may take multiple epochs to
-              warm it up.
-            </Text>
-          </>
-        )}
+        <StakingEnteranceIcon />
+        <Text style={style.subTitle}>
+          Something went wrong. Please contact support. You can still use web interface for full staking support. 
+        </Text>
       </View>
     </Dialog>
   );
@@ -43,7 +30,7 @@ const style = StyleSheet.create({
     backgroundColor: Images.velasColor4,
   },
   subTitle: {
-    color: "rgba(255, 255, 255, 0.60)",
+    color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
     fontSize: 18,
     textAlign: "center",

@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Text, Content } from "native-base";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, Alert } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import ButtonBlock from "../components/ButtonBlock.js";
@@ -17,6 +17,7 @@ export default ({ store, web3t, props }) => {
   };
   const lang = getLang(store);
   const { stakingStore } = store;
+
   if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const ADDRESS = details.address;
@@ -38,8 +39,11 @@ export default ({ store, web3t, props }) => {
       }
     )((err, result) => {
       if (err) {
+        setTimeout(() => {
+          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
+        }, 1);
         console.error(err);
-        //TODO: handle error
+        return;
       }
       changePage("stakingEnterance")();
       store.amount = null;
@@ -54,7 +58,6 @@ export default ({ store, web3t, props }) => {
         title={lang.stake || "Stake"}
         identIcon={ADDRESS}
       />
-
       <Content style={style.contentBg}>
         <View style={style.container}>
           <Text style={style.title}>{lang.titleItemsStake || "These actions will be made"}</Text>

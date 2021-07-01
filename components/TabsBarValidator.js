@@ -43,10 +43,10 @@ export default ({ store, web3t }) => {
     <Observer>{() => {
       if (stakingStore.isRefreshing) return null;
       const details = stakingStore.getValidatorDetails();
-      const DOMINANCE_VALUE = !details.dominance ? '...' : (details.dominance).toFixed(4);
+      const DOMINANCE_VALUE = details.dominance === null ? '...' : (details.dominance).toFixed(4);
       const QUALITY_VALUE = details.quality >= -10 && details.quality <= 10 ? 0 : details.quality;
-      const ANNUAL_RATE = !details.annualPercentageRate ? '...' : details.annualPercentageRate;
-      const ACTIVE_STAKE = !details.myActiveStake ? '...' : details.myActiveStake;
+      const ANNUAL_RATE = details.annualPercentageRate === null ? '...' : details.annualPercentageRate;
+      const ACTIVE_STAKE = details.myActiveStake === null ? '...' : details.myActiveStake;
 
       const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
       const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
@@ -55,14 +55,29 @@ export default ({ store, web3t }) => {
       const PRESERVE_BALANCE = new BN('1000000000', 10);
       const onPressWithdraw = async () => {
         if (!details.availableWithdrawRequested) return null;
-        try {
-          await stakingStore.withdrawRequested(ADDRESS);
-          await stakingStore.reloadWithRetry();
-          changePage("stakePage")();
-        } catch(e) {
-          debugger;
-          console.error(e);
+        spin(
+          store,
+          'Withdrawal in progress',
+          async (cb) => {
+          try {
+            const result = await stakingStore.withdrawRequested(ADDRESS);
+            const result1 = await stakingStore.reloadWithRetry();
+            cb(null, result, result1);
+          } catch(err) {
+            cb(err);
+          }
         }
+        )((err, result, result1) => {
+          if (err) {
+            setTimeout(() => {
+          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
+        }, 1);
+            console.error(err);
+            return;
+          }
+          changePage("confirmWithdrawal")();
+        });
+        
       }
 
       const copyAddress = async () => {

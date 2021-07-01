@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "native-base";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import ButtonBlock from "../components/ButtonBlock.js";
@@ -8,6 +8,7 @@ import InputComponent from "../components/InputComponent";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
 import { formatStakeAmount, formatAmount } from "../utils/format-value";
+import spin from "../utils/spin.js";
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
@@ -24,18 +25,40 @@ export default ({ store, web3t, props }) => {
   const handleChange = async text => {
     store.amountWithdraw = text.replace(",", ".");
   };
-
+ 
   const onPressMax = () => {
     store.amountWithdraw = TOTAL_STAKE;
   }
-  console.log('store.amountWithdraw', store.amountWithdraw)
+  // console.log('store.amountWithdraw', store.amountWithdraw)
   const onPressButton = async () => {
     if (!store.amountWithdraw) return null;
     if (store.amountWithdraw > TOTAL_STAKE) return null;
     const amountWithdraw = store.amountWithdraw;
-    await stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
-    changePage("confirmExit")();
+    spin(
+      store,
+      'Withdrawal in progress',
+      async (cb) => {
+        try {
+          const result = await stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
+          cb(null, result);
+        } catch(err) {
+          cb(err);
+        }
+      }
+    )((err, result) => {
+      if (err) {
+        setTimeout(() => {
+          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
+        }, 1);
+        console.error(err);
+        return;
+      }
+      changePage("confirmExit")();
+      store.amountWithdraw = null;
+    });
+
   }
+ 
   const back = () => {
     changePage("detailsValidator")();
     store.amountWithdraw = null;

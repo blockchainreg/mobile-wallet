@@ -31,7 +31,6 @@ export default ({ store, web3t, props }) => {
     }
     store.amount = formatAmount(AVAILABLE_BALANCE.sub(new BN(1e9)));
   }
-  console.log('store.amount', store.amount)
   const onPressButton = () => {
     if (!store.amount || parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9)))) return null;
     changePage("confirmStake")();
