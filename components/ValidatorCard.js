@@ -19,9 +19,9 @@ export default (props) => {
   };
   useEffect(() => {
     Dimensions.addEventListener("change", onChange);
-    // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
-    // };
+      return () => {
+        Dimensions.removeEventListener("change", onChange);
+      };
   });
   const onPressMore = () => {
     Linking.openURL(props.link);

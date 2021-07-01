@@ -31,9 +31,9 @@ export default ({ store, web3t }) => {
   };
   useEffect(() => {
     Dimensions.addEventListener("change", onChange);
-    // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
-    // };
+      return () => {
+        Dimensions.removeEventListener("change", onChange);
+      };
   });
   const changePage = (tab) => () => {
     store.current.page = tab;
