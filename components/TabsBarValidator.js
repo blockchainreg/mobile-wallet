@@ -44,7 +44,7 @@ export default ({ store, web3t }) => {
       const PRESERVE_BALANCE = new BN('1000000000', 10);
       // console.log('details.totalActiveStake', details.totalActiveStake && details.totalActiveStake.toString(10));
       const onPressWithdraw = () => {
-        if (!details.totalWithdrawRequested) return null;
+        if (!details.availableWithdrawRequested) return null;
         stakingStore.withdrawRequested(ADDRESS).then(() => {
           changePage("stakePage")();
         }).catch(e => {
@@ -195,7 +195,7 @@ export default ({ store, web3t }) => {
                 />
               </View>
               <View style={style.btnTop}>
-                {details.availableWithdrawRequested && details.availableWithdrawRequested.isZero() ? null :
+                {!details.availableWithdrawRequested || details.availableWithdrawRequested.isZero() ? null :
                 <ButtonBlock
                   type={"WITHDRAW"}
                   text={lang.withdraw || "Withdraw"}

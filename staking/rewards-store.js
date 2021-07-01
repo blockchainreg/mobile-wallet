@@ -32,7 +32,6 @@ class RewardsStore {
     this.isLatestRewardsLoading = true;
     const accounts = await this.getAccounts();
     const accountMap = new Map();
-    debugger;
     for (let account of accounts) {
       accountMap.set(account.pubkey.toBase58(), account);
     }
@@ -43,16 +42,28 @@ class RewardsStore {
     const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
     const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
     this.latestRewardsPerValidator = new observable.map();
-    debugger;
     for (let reward of blockResult.rewards) {
       let account = accountMap.get(reward.pubkey);
       if (!account) continue;
       const { voter } = account.account.data.parsed.info.stake.delegation;
-      if (this.latestRewardsPerValidator.has(voter)) {
+      if (!this.latestRewardsPerValidator.has(voter)) {
+        this.latestRewardsPerValidator.set(voter, []);
         continue;
       }
-      this.latestRewardsPerValidator.set(voter, [new RewardModel(reward, epoch - 1, this.connection)]);
+      this.latestRewardsPerValidator.get(voter).push(reward);
     }
+    this.latestRewardsPerValidator.forEach((value, key) => {
+      let maxAmount = -1;
+      let biggestReward = null;
+      if (value.length > 10) {
+        debugger;
+      }
+      for (let reward of value) if (reward.lamports > maxAmount) {
+        maxAmount = reward.lamports;
+        biggestReward = reward;
+      }
+      this.latestRewardsPerValidator.set(key, [new RewardModel(biggestReward, epoch - 1, this.connection)]);
+    });
     this.isLatestRewardsLoading = false;
   }
 

@@ -19,9 +19,6 @@ class RewardModel {
   }
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
-    if (!firstSlotInEpoch) {
-      debugger;
-    }
     return await cachedCallWithRetries(
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),

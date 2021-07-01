@@ -64,6 +64,12 @@ class StakingStore {
     await callWithRetries(
       () => this.reload()
     );
+    if (this.validators.length > 0) {
+      await when(() => this.validators[0].apr !== null);
+      this.validators.replace(
+        this.validators.slice().sort((v1, v2) => v2.apr - v1.apr)
+      );
+    }
     this.isRefreshing = false;
   }
 
@@ -205,7 +211,7 @@ class StakingStore {
     }
     validator.loadMoreRewards();
     return {
-      rewards: validator.rewards,
+      rewards: validator.rewards || [],
       isLoading: validator.isRewardsLoading
     };
   }
@@ -494,7 +500,7 @@ class StakingStore {
       totalStake = totalStake.add(sortedAccounts[i].myStake);
     }
     if (totalStake.lt(amount)) {
-      throw new Error('Too much amount');
+      amount = totalStake;
     }
     while (!amount.isZero() && !amount.isNeg()) {
       const account = sortedAccounts.pop();
@@ -526,15 +532,16 @@ class StakingStore {
               authorizedPubkey,
               stakePubkey: account.publicKey,
               lamports: state === 'inactive'
-                ? parseFloat(account.myStake.toString(10)) + this.rentExemptReserve.toNumber()
-                : inactive - this.rentExemptReserve.toNumber(),
+                ? parseFloat(account.myStake.toString(10)) + this.rent.toNumber()
+                : inactive,
               toPubkey: authorizedPubkey,
           }));
       } catch(e) {
-          return {
-              error: "prepare_transaction_error",
-              description: e.message,
-          };
+        console.error(e);
+        return {
+            error: "prepare_transaction_error",
+            description: e.message,
+        };
       };
 
       const res = await this.sendTransaction(transaction);
