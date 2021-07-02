@@ -91,7 +91,7 @@ export default observer(({ store }) => {
         }
         keyExtractor={(item, index) => index + ""}
         ListHeaderComponent={!rewards.rewards.length ? false : tableHeader}
-        stickyHeaderIndices={[0]}
+        //stickyHeaderIndices={[0]} - this causes Androids to crash
         renderItem={({ item, index }) => {
           return (
             <View style={styles.tableRow}>
