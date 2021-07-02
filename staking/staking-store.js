@@ -6,7 +6,7 @@ import { ValidatorModel } from './validator-model.js';
 import { StakingAccountModel } from './staking-account-model.js';
 import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
-import { callWithRetries } from './utils';
+import { callWithRetries, invalidateCache } from './utils';
 import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
 import { rewardsStore } from './rewards-store';
@@ -61,6 +61,7 @@ class StakingStore {
 
   async reloadWithRetry() {
     this.isRefreshing = true;
+    invalidateCache();
     await callWithRetries(
       () => this.reload()
     );
@@ -109,8 +110,6 @@ class StakingStore {
     });
     const balanceEvmJson = await balanceEvmRes.json();
     this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
-    // debugger;
-    // console.log(this.balanceEvmRes.toString(10));
     const { current, delinquent } = await this.connection.getVoteAccounts();
     console.log('vote accounts');
     console.log(current);
@@ -348,53 +347,47 @@ class StakingStore {
   }
 
   async stake(address, amount_sol) {
-    // check balance and amount
-    
     const transaction = new solanaWeb3.Transaction();
+    const swapAmount = this.getSwapAmountByStakeAmount(amount_sol);
+    const rent       = this.rent;
+    const fromPubkey = this.publicKey;
+    const authorized = new solanaWeb3.Authorized(fromPubkey, fromPubkey);
+    const lamportsBN = new BN(amount_sol).add(rent);
+    const seed       = await this.getNextSeed();
+    const votePubkey = new solanaWeb3.PublicKey(address);
+    const stakePubkey= await solanaWeb3.PublicKey.createWithSeed(
+      fromPubkey,
+      seed,
+      solanaWeb3.StakeProgram.programId,
+    );
+    const lockup = new solanaWeb3.Lockup(0, 0, fromPubkey);
 
-    try {
-      const swapAmount = this.getSwapAmountByStakeAmount(amount_sol);
-      const rent       = this.rent;
-      const fromPubkey = this.publicKey;
-      const authorized = new solanaWeb3.Authorized(fromPubkey, fromPubkey);
-      const lamportsBN = new BN(amount_sol).add(rent);
-      const seed       = await this.getNextSeed();
-      const votePubkey = new solanaWeb3.PublicKey(address);
-      const stakePubkey= await solanaWeb3.PublicKey.createWithSeed(
-        fromPubkey,
-        seed,
-        solanaWeb3.StakeProgram.programId,
-      );
-      const lockup = new solanaWeb3.Lockup(0, 0, fromPubkey);
-
-      const config = {
-        authorized,
-        basePubkey: fromPubkey,
-        fromPubkey,
-        lamports: lamportsBN.toString(),
-        lockup,
-        seed,
-        stakePubkey,
-      };
-      if (!swapAmount.isZero()) {
-        await this.swapEvmToNative(swapAmount);
-      }
-      transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
-      transaction.add(solanaWeb3.StakeProgram.delegate({
-        authorizedPubkey: fromPubkey,
-        stakePubkey,
-        votePubkey,
-      }));
-    } catch(e) {
-      return {
-        error: "prepare_transaction_error",
-        description: e.message,
-      };
+    const config = {
+      authorized,
+      basePubkey: fromPubkey,
+      fromPubkey,
+      lamports: lamportsBN.toString(),
+      lockup,
+      seed,
+      stakePubkey,
     };
+    if (!swapAmount.isZero()) {
+      console.log('Start swap');
+      await this.swapEvmToNative(swapAmount);
+      console.log('End swap');
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+    transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
+    transaction.add(solanaWeb3.StakeProgram.delegate({
+      authorizedPubkey: fromPubkey,
+      stakePubkey,
+      votePubkey,
+    }));
 
+    console.log('Start stake');
     const result = await this.sendTransaction(transaction);
-    console.log('Stake result', result);
-    // setTimeout(() => this.reloadWithRetry(), 10000);
+    console.log('End stake result', result);
+    await this.reloadWithRetry();
     return result;
   }
 
@@ -440,7 +433,6 @@ class StakingStore {
       solanaWeb3.StakeProgram.programId,
     );
 
-    console.log('splitStakePubkey', splitStakePubkey);
     const params      = {
       stakePubkey,
       authorizedPubkey,
@@ -450,40 +442,23 @@ class StakingStore {
       base: authorizedPubkey,
     };
 
-    try {
-      transaction = solanaWeb3.StakeProgram.split(params);
-    } catch (e) {
-      return {
-        error: "split_stake_account_error",
-        description: e.message,
-      };
-    }
+    transaction = solanaWeb3.StakeProgram.split(params);
     return await this.sendTransaction(transaction);
   }
 
   async undelegate(stakePubkey) {
-      const transaction = new solanaWeb3.Transaction();
+    const transaction = new solanaWeb3.Transaction();
+    const authorizedPubkey = this.publicKey;
 
-      try {
-          const authorizedPubkey = this.publicKey;
+    transaction.add(solanaWeb3.StakeProgram.deactivate({
+        authorizedPubkey,
+        stakePubkey,
+    }));
 
-          transaction.add(solanaWeb3.StakeProgram.deactivate({
-              authorizedPubkey,
-              stakePubkey,
-          }));
-      } catch(e) {
-          return {
-              error: "prepare_transaction_error",
-              description: e.message,
-          };
-      };
-
-      return await this.sendTransaction(transaction);
+    return await this.sendTransaction(transaction);
   };
 
   async requestWithdraw(address, amount) {
-    
-
     if (!this.validators) {
       throw new Error('Not loaded');
     }
@@ -517,11 +492,10 @@ class StakingStore {
         break;
       }
     }
+    await this.reloadWithRetry();
   }
 
   async withdrawRequested(address) {
-    
-
     const transaction = new solanaWeb3.Transaction();
     const authorizedPubkey = this.publicKey;
 
@@ -529,28 +503,24 @@ class StakingStore {
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
       if (account.validatorAddress !== address) continue;
-      const { inactive, state } = await this.connection.getStakeActivation(account.publicKey);
-      if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
-        continue;
-      }
       try {
-          transaction.add(solanaWeb3.StakeProgram.withdraw({
-              authorizedPubkey,
-              stakePubkey: account.publicKey,
-              lamports: state === 'inactive' ? parseFloat(account.myStake.toString(10)) : (inactive + this.rent.toNumber()),
-              toPubkey: authorizedPubkey,
-          }));
+        const { inactive, state } = await this.connection.getStakeActivation(account.publicKey);
+        if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
+          continue;
+        }
+        transaction.add(solanaWeb3.StakeProgram.withdraw({
+            authorizedPubkey,
+            stakePubkey: account.publicKey,
+            lamports: state === 'inactive' ? parseFloat(account.myStake.toString(10)) : (inactive + this.rent.toNumber()),
+            toPubkey: authorizedPubkey,
+        }));
       } catch(e) {
-        console.error(e);
-        return {
-            error: "prepare_transaction_error",
-            description: e.message,
-        };
-      };
-
-      const res = await this.sendTransaction(transaction);
-      return res;
+        console.warn(e);
+      }
     }
+    const res = await this.sendTransaction(transaction);
+    await this.reloadWithRetry();
+    return res;
   }
 }
 

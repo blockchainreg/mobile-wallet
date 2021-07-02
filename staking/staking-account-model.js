@@ -71,10 +71,23 @@ class StakingAccountModel {
 
     const activationRes = await cachedCallWithRetries(
       ['getStakeActivation', this.connection, this.parsedAccoount.pubkey.toString()],
-      () => this.connection.getStakeActivation(this.parsedAccoount.pubkey)
+      async () => {
+        try {
+          return await this.connection.getStakeActivation(this.parsedAccoount.pubkey);
+        } catch(e) {
+          if (!e.message || !e.message.includes('failed to get Stake Activation')) {
+            throw e;
+          }
+          console.warn(e);
+          return null;
+        }
+      }
     );
     if (!activationRes) {
-      console.error('Invalid activation response');
+      console.warn('Invalid activation response');
+      this._activeStake = new BN(0);
+      this._inactiveStake = new BN(0);
+      this._state = 'inactive';
       return;
     }
     const { active, inactive, state } = activationRes;
@@ -179,9 +192,6 @@ class StakingAccountModel {
   }
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
-    if (!firstSlotInEpoch) {
-      debugger;
-    }
     return await cachedCallWithRetries(
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),

@@ -201,7 +201,6 @@ class ValidatorModel {
 
   get availableWithdrawRequested() {
     let totalInactive = new BN(0);
-    // debugger;
     for (let acc of this.stakingAccounts) {
       if (!acc.state) {
         return null;

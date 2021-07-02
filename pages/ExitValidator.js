@@ -18,14 +18,14 @@ export default ({ store, web3t, props }) => {
   if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  const TOTAL_STAKE = formatAmount(details.totalAvailableForWithdrawRequestStake);
-  console.log('details.totalAvailableForWithdrawRequestStake', details.totalAvailableForWithdrawRequestStake.toString(10));
+  const TOTAL_STAKE = details.totalAvailableForWithdrawRequestStake && formatAmount(details.totalAvailableForWithdrawRequestStake);
+  if (!TOTAL_STAKE) return null;
   const ADDRESS = details.address;
 
   const handleChange = async text => {
     store.amountWithdraw = text.replace(",", ".");
   };
- 
+
   const onPressMax = () => {
     store.amountWithdraw = TOTAL_STAKE;
   }
@@ -49,7 +49,7 @@ export default ({ store, web3t, props }) => {
       if (err) {
         setTimeout(() => {
           Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
-        }, 1);
+        }, 1000);
         console.error(err);
         return;
       }
@@ -58,7 +58,7 @@ export default ({ store, web3t, props }) => {
     });
 
   }
- 
+
   const back = () => {
     changePage("detailsValidator")();
     store.amountWithdraw = null;
