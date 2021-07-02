@@ -42,6 +42,9 @@ export default ({ store, web3t, props }) => {
   const filterStake = stakingStore.getStakedValidators();
   const filterTotalStaked = stakingStore.getNotStakedValidators();
 
+  if (!filterStake || !filterTotalStaked) {
+    return null;
+  }
   const renderItemsMyStake = filterStake.map((el) => (
     <StakeItem
       key={el.address}

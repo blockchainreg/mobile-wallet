@@ -4801,7 +4801,7 @@ var solanaWeb3 = (function (exports) {
     }
   });
 
-  //      
+  //
   const toBuffer = arr => {
     if (arr instanceof buffer.Buffer) {
       return arr;
@@ -8321,7 +8321,7 @@ var solanaWeb3 = (function (exports) {
   /* eslint-env browser */
 
   // Ponyfill for `globalThis`
-  const _globalThis = (() => {
+  let _globalThis = (() => {
     if (typeof globalThis !== 'undefined') {
       return globalThis;
     }
@@ -8361,7 +8361,8 @@ var solanaWeb3 = (function (exports) {
       outputFormat: 'hex',
       ...options
     };
-
+    // console.warn('typeof globalThis', typeof _globalThis.crypto.subtle);
+    _globalThis = globalThis;
     const hash = await _globalThis.crypto.subtle.digest(algorithm, buffer);
 
     return options.outputFormat === 'hex' ? bufferToHex(hash) : hash;
@@ -8595,7 +8596,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   const BPF_LOADER_DEPRECATED_PROGRAM_ID = new PublicKey('BPFLoader1111111111111111111111111111111111');
 
   var global$1 = (typeof global !== "undefined" ? global :
@@ -10662,7 +10663,7 @@ var solanaWeb3 = (function (exports) {
   /** Factory for {@link Blob} values. */
   var blob = ((length, property) => new Blob(length, property));
 
-  //      
+  //
   /**
    * Layout for a public key
    */
@@ -10726,7 +10727,7 @@ var solanaWeb3 = (function (exports) {
     return alloc;
   }
 
-  //      
+  //
   function decodeLength(bytes) {
     let len = 0;
     let size = 0;
@@ -11592,7 +11593,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   const SYSVAR_CLOCK_PUBKEY = new PublicKey('SysvarC1ock11111111111111111111111111111111');
   const SYSVAR_RECENT_BLOCKHASHES_PUBKEY = new PublicKey('SysvarRecentB1ockHashes11111111111111111111');
   const SYSVAR_RENT_PUBKEY = new PublicKey('SysvarRent111111111111111111111111111111111');
@@ -17013,7 +17014,7 @@ var solanaWeb3 = (function (exports) {
     exports.Client = Client;
   });
 
-  //      
+  //
   /**
    * https://github.com/solana-labs/solana/blob/90bedd7e067b5b8f3ddbb45da00a4e9cabb22c62/sdk/src/fee_calculator.rs#L7-L11
    *
@@ -17062,7 +17063,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   // TODO: These constants should be removed in favor of reading them out of a
   // Syscall account
 
@@ -17086,13 +17087,13 @@ var solanaWeb3 = (function (exports) {
 
   const MS_PER_SLOT = 1000 / NUM_SLOTS_PER_SECOND;
 
-  //      
+  //
   // zzz
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  //      
+  //
   function promiseTimeout(promise, timeoutMs) {
     let timeoutId;
     const timeoutPromise = new Promise(resolve => {
@@ -18393,7 +18394,7 @@ var solanaWeb3 = (function (exports) {
       assert(typeof res.result !== 'undefined');
       return res.result;
     }
-    
+
     /**
      * Fetch the estimated production time of a block
      */
@@ -20254,7 +20255,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   /**
    * Sign, send and confirm a transaction.
    *
@@ -20282,7 +20283,7 @@ var solanaWeb3 = (function (exports) {
     return signature;
   }
 
-  //      
+  //
   /**
    * @typedef {Object} InstructionType
    * @property (index} The Instruction index (from solana upstream program)
@@ -20322,7 +20323,7 @@ var solanaWeb3 = (function (exports) {
     return data;
   }
 
-  //      
+  //
   /**
    * Create account system transaction params
    * @typedef {Object} CreateAccountParams
@@ -21140,7 +21141,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   /**
    * Program loader interface
    */
@@ -21307,7 +21308,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   const BPF_LOADER_PROGRAM_ID = new PublicKey('BPFLoader2111111111111111111111111111111111');
   /**
    * Factory class for transactions to interact with a program loader
@@ -28852,7 +28853,7 @@ var solanaWeb3 = (function (exports) {
     })();
   });
 
-  //      
+  //
   const {
     publicKeyCreate,
     ecdsaSign
@@ -29119,7 +29120,7 @@ var solanaWeb3 = (function (exports) {
 
   }
 
-  //      
+  //
   /**
    * Send and confirm a raw transaction
    *
@@ -29146,7 +29147,7 @@ var solanaWeb3 = (function (exports) {
     return signature;
   }
 
-  //     
+  //
 
   /**
    * @private
@@ -29183,7 +29184,7 @@ var solanaWeb3 = (function (exports) {
     return url;
   }
 
-  //      
+  //
   /**
    * There are 1-billion lamports in one SOL
    */

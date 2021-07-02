@@ -63,6 +63,7 @@ class ValidatorModel {
         return null;
       }
       for (const reward of acc.rewards) {
+        if (!reward.amount) continue;
         if (!rewards.has(reward.epoch)) {
           rewards.set(reward.epoch, {
             epoch: reward.epoch,

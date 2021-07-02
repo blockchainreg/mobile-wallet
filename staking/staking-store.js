@@ -25,7 +25,7 @@ class StakingStore {
   accounts = null;
   vlxEvmBalance = null;
   vlxNativeBalance = null;
-  isRefreshing = false;
+  isRefreshing = true;
   rent = null;
   seedUsed = Object.create(null);
   connection = null;
@@ -55,8 +55,12 @@ class StakingStore {
       openedValidatorAddress: observable,
       // isLoaded: observable
     });
+    this.init();
+  }
 
-    this.reloadWithRetry();
+  async init() {
+    await this.tryFixCrypto();
+    await this.reloadWithRetry();
   }
 
   async reloadWithRetry() {
@@ -84,9 +88,12 @@ class StakingStore {
         }
         return originalDigest(algorithm, buffer);
       };
+      if (!global.globalThis) {
+        global.globalThis = {};
+      }
       global.globalThis.crypto = crypto;
     } catch(e) {
-      console.warn('Cannot fix crypto');
+      console.warn('Cannot fix crypto', e.message);
     }
   }
 
@@ -97,7 +104,6 @@ class StakingStore {
     this.vlxNativeBalance = null;
     this.vlxEvmBalance = null;
 
-    await this.tryFixCrypto();
     const balanceRes = await this.connection.getBalance(this.publicKey);
     this.vlxNativeBalance = new BN(balanceRes + '', 10);
     const balanceEvmRes = await fetch('https://explorer.velas.com/rpc', {
@@ -111,8 +117,6 @@ class StakingStore {
     const balanceEvmJson = await balanceEvmRes.json();
     this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
     const { current, delinquent } = await this.connection.getVoteAccounts();
-    console.log('vote accounts');
-    console.log(current);
     const filter = {memcmp: {
       offset: 0xc,
       bytes: this.publicKey58,
