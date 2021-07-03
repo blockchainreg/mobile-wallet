@@ -7,23 +7,19 @@ import {
   Item,
   Input,
   Body,
-  Header,
   Left,
   Right,
   Toast
 } from "native-base";
 import { Image, ImageBackground } from "react-native";
 import Constants from 'expo-constants';
-import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
 import { set, check } from '../wallet/pin.js';
 import Images from '../Images.js';
-import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
-import Background from "../components/Background.js";
-import { LinearGradient } from "expo-linear-gradient";
 import * as SecureStore from "expo-secure-store";
 import PickerSetLang from "../components/PickerSetLang.js";
+import Header from '../components/Header'
 
 
 const buttonActive = store => {
@@ -49,18 +45,6 @@ const buttonActive = store => {
   };
 
   return (
-    // <GradientButton
-    //   style={styles.gradientBtnPh}
-    //   text={lang.continue + " "}
-    //   textStyle={{ fontSize: 14, color: Images.color1 }}
-    //   gradientBegin="#fff"
-    //   gradientEnd="#fff"
-    //   gradientDirection="diagonal"
-    //   height={45}
-    //   width="100%"
-    //   radius={0}
-    //   onPressAction={signup}
-    // />
     <Button block style={styles.btnVelasActive} onPress={signup}>
       <Text style={styles.textBtn}>{lang.continue}</Text>
     </Button>
@@ -142,14 +126,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
         <ImageBackground source={Images.bg} style={styles.image}>
-
-        {/* <Background fullscreen={true}/> */}
-        <Header transparent style={styles.mtIphoneX}>
-          {/*}<Left  style={styles.viewFlexHeader}>{logIn(store)}</Left>{*/}
-          <Body  style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+        <Header transparent/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}

@@ -20,6 +20,15 @@ import LocalAuthenticationSettings from "./pages/LocalAuthenticationSettings";
 import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
 import printseed from "./pages/PrintSeed";
 import Scanner from "./pages/Scanner";
+import stakePage from "./pages/StakePage";
+import detailsValidator from "./pages/DetailsValidator";
+import sendStake from "./pages/SendStake";
+import confirmStake from "./pages/ConfirmStake";
+import stakingEnterance from "./pages/StakingEnterance";
+import exitValidator from './pages/ExitValidator'
+import confirmExit from './pages/ConfirmExitValidator'
+import confirmWithdrawal from './pages/ConfirmWithdrawal'
+
 
 export default {
   Scanner,
@@ -43,5 +52,13 @@ export default {
   sent,
   LocalAuthenticationEnable,
   LocalAuthenticationSettings,
-  printseed
+  printseed,
+  stakePage,
+  detailsValidator,
+  sendStake,
+  confirmStake,
+  stakingEnterance,
+  exitValidator,
+  confirmExit,
+  confirmWithdrawal
 };

@@ -2,27 +2,25 @@ import React, { Component } from "react";//import react in our code.
 import { ConfirmDialog } from 'react-native-simple-dialogs';
 import getLang from '../wallet/get-lang.js';
 
-export default class Confirm extends Component {
+export default ({store, ...props}) => {
 
-  render() {
-    //const lang = getLang(store);
+    const lang = getLang(store);
     return (
       <ConfirmDialog
-        title="Confirm Dialog"
-        message={this.props.confirmation}
+        title={lang.confirmDialog}
+        message={props.confirmation}
         visible={true}
-        onTouchOutside={this.props.onNo}
+        onTouchOutside={props.onNo}
         titleStyle={{fontFamily: "Fontfabric-NexaBold", color: '#000'}}
         messageStyle={{fontFamily: "Fontfabric-NexaRegular", color: '#000'}}
         positiveButton={{
-            title: "Yes",
-            onPress: this.props.onYes
+            title: lang.yes,
+            onPress: props.onYes
         }}
         negativeButton={{
-            title: "No",
-            onPress: this.props.onNo
+            title: lang.no,
+            onPress: props.onNo
         }}
       />
     );
   }
-}

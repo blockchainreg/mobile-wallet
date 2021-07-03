@@ -9,17 +9,12 @@ import * as React from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-import Background from "./components/Background.js"
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 
 export default class App extends React.Component {
   state = {
     AppReady: null,
   };
-  
+
 
   async loadFonts() {
     await Font.loadAsync({
@@ -28,8 +23,8 @@ export default class App extends React.Component {
       'Nexa-Regular': require("./assets/fonts/NexaRegular.ttf"),
       'Nexa-Bold': require("./assets/fonts/Nexa-Bold.ttf"),
       'Nexa-Light': require("./assets/fonts/Nexa-Light.ttf"),
-      'Nexa-Book': require("./assets/fonts/Nexa-Book.ttf"), 
-      'Fontfabric-NexaBold': require("./assets/fonts/Fontfabric-NexaBold.otf"), 
+      'Nexa-Book': require("./assets/fonts/Nexa-Book.ttf"),
+      'Fontfabric-NexaBold': require("./assets/fonts/Fontfabric-NexaBold.otf"),
       'Fontfabric-NexaRegular': require("./assets/fonts/Fontfabric-NexaRegular.otf"), 
     });
   }
