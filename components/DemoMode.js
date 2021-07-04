@@ -6,6 +6,8 @@ import {
     heightPercentageToDP as hp,
   } from "react-native-responsive-screen";
 import {shuffle} from "../utils/array.js";
+import getLang from '../wallet/get-lang.js';
+
 
 export default function DemoMode({store}) {
   function onDemoClick() {
@@ -13,13 +15,15 @@ export default function DemoMode({store}) {
     store.current.seedIndexes = shuffle([...Array(store.current.seed.split(' ').length).keys()]);
     store.current.page = "generatedseed";
   };
+  const lang = getLang(store);
+
 
   function DemoModeContent() {
     return (
       <TouchableHighlight onPress={onDemoClick} onLongPress={onDemoClick} underlayColor="yellow">
         <View style={styles.demoView}>
             <Text style={styles.demoTxt}>
-              Please save your seed phrase!!
+              {lang.demoSeedTxt}
             </Text>
             <Text/>
         </View>

@@ -1,30 +1,16 @@
 import React from "react";
 import {
-  Left,
-  Body,
-  Right,
-  Button,
-  Icon,
-  Title,
-  Text,
-  Item,
-  List,
-  ListItem,
-  Header,
-  Thumbnail,
-  Badge
+  Content
 } from "native-base";
 import Footer from "./Footer.js";
-import { View, ScrollView, Clipboard, Alert, Vibration } from "react-native";
+import { View } from "react-native";
 import styles from "../Styles.js";
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import moment from "moment";
 import LoadMoreDate from "../components/LoadMoreDate";
-import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 import Images from '../Images.js';
-import { LinearGradient } from "expo-linear-gradient";
+import Header from '../components/Header'
 
 
 export default ({ store, web3t }) => {
@@ -45,26 +31,10 @@ export default ({ store, web3t }) => {
       <View style={styles.container}>
         <View style={styles.viewFlex}>
           <Background fullscreen={true}/>
-            <Header transparent style={styles.mtIphoneX}>
-              <Left style={styles.viewFlexHeader} />
-              <Body style={styles.viewFlexHeader}>
-              <Text style={styles.title1}>{lang.history}</Text>
-              </Body>
-              <Right style={styles.viewFlexHeader} />
-            </Header>
-            <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-          <View style={styles.viewMono1}>
-          <LinearGradient
-            colors={[Images.velasColor4, Images.velasColor4]}
-            style={styles.linearGradientBg}>
-            <View style={styles.viewPt} />
-            <ScrollView>
-              <View style={styles.viewPt} />
-              { LoadMoreDate({ store }) }
-              <View style={{ paddingBottom: 100 }} />
-            </ScrollView>
-          </LinearGradient>
-          </View>
+            <Header title={lang.history}/>
+          <Content style={{backgroundColor: Images.velasColor4}}>
+          { LoadMoreDate({ store }) }
+          </Content>
         </View>
         <Footer store={store}></Footer>
       </View>

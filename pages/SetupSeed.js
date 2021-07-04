@@ -1,38 +1,20 @@
 import React from "react";
 import {
   Image,
-  Clipboard,
-  Keyboard,
-  TouchableOpacity,
-  ImageBackground,
 } from "react-native";
 import {
   Text,
   Button,
   View,
-  Icon,
-  Container,
-  Content,
-  Item,
-  Input,
-  Card,
   CardItem,
   Body,
-  Header,
-  Left,
-  Right,
-  Form,
-  Textarea
 } from "native-base";
 import styles from "../Styles.js";
-import GradientButton from "../components/GradientButton.js";
-import SaveSeedModal from "../components/SaveSeedModal.js";
 import { generateMnemonic } from "bip39";
 import Images from '../Images.js';
-import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
-import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
+import Header from '../components/Header'
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -77,14 +59,7 @@ export default ({ store }) => {
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
       <Background fullscreen={true}/>
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader}>
-            <BackButton onBack={changePage("register")}/>
-          </Left>
-          <Body style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+<Header onBack={changePage("register")}/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.logo}
@@ -97,34 +72,10 @@ export default ({ store }) => {
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
-                {/* <GradientButton
-                    style={styles.viewMt}
-                    text={lang.newWallet}
-                    textStyle={{ fontSize: 14, color: "#fff" }}
-                    gradientBegin="#0bffb7"
-                    gradientEnd="#0bffb7"
-                    gradientDirection="diagonal"
-                    height={45}
-                    width="100%"
-                    radius={0}
-                    onPressAction={generateRandom}
-                  /> */}
                   <Button block style={styles.btnVelasCreate} onPress={generateRandom}>
                     <Text style={[styles.textBtn, {color: "#fff"}]}>{lang.newWallet}</Text>
                   </Button>
                   <View style={{ padding: 10 }}></View>
-                  {/* <GradientButton
-                    style={styles.viewMt}
-                    text={lang.restoreSeed}
-                    textStyle={{ fontSize: 14, color: Images.color1 }}
-                    gradientBegin="#fff"
-                    gradientEnd="#fff"
-                    gradientDirection="diagonal"
-                    height={45}
-                    width="100%"
-                    radius={0}
-                    onPressAction={restoreSeed}
-                  /> */}
                   <Button block style={styles.btnVelasRestore} onPress={restoreSeed}>
                     <Text style={styles.textBtn}>{lang.restoreSeed}</Text>
                   </Button>

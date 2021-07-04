@@ -9,7 +9,6 @@ import {
   View,
   Title,
   Icon,
-  Header,
   Separator,
   Button
 } from "native-base";
@@ -17,14 +16,12 @@ import { Linking, Platform, ScrollView } from "react-native";
 import Constants from 'expo-constants';
 import styles from "../Styles.js";
 import Footer from "./Footer.js";
-import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
 import PickerSetLang from "../components/PickerSetLang.js";
 import PickerAccountIndex from "../components/PickerAccountIndex.js";
-import * as LocalAuthentication from 'expo-local-authentication';
 import Background from "../components/Background.js";
 import Images from "../Images.js";
-import { LinearGradient } from "expo-linear-gradient";
+import Header from '../components/Header'
 
 const LocalAuthListView = ({store}) => {
   const lang = getLang(store);
@@ -74,22 +71,7 @@ export default ({ store, web3t }) => {
 
       <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-
-
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader} />
-          <Body style={styles.viewFlexHeader}>
-            <Title style={styles.title1}>{lang.settings}</Title>
-          </Body>
-          <Right style={styles.viewFlexHeader}/>
-
-        </Header>
-        <StatusBar
-              barStyle="light-content"
-              translucent={true}
-              backgroundColor={"transparent"}
-            />
-
+      <Header title={lang.settings}/>
         <Content>
           <Separator bordered style={styles.seperatorStyle}>
             <Text style={styles.styleTxtSeparator}>{lang.help}</Text>
@@ -99,7 +81,7 @@ export default ({ store, web3t }) => {
             onPress={() => {
               Linking.openURL(`https://support.velas.com/hc/en-150`);
             }}
-            underlayColor={Images.color1}
+            underlayColor={Images.velasColor2}
             style={styles.heightListItem}
           >
             <Left>
@@ -118,7 +100,7 @@ export default ({ store, web3t }) => {
             onPress={() => {
               Linking.openURL(`https://raw.githubusercontent.com/askucher/expo-web3/dev/Privacy.md`);
             }}
-            underlayColor={Images.color1}
+            underlayColor={Images.velasColor2}
             style={styles.heightListItem}
           >
             <Left>
@@ -139,7 +121,7 @@ export default ({ store, web3t }) => {
                 `https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md`
               );
             }}
-            underlayColor={Images.color1}
+            underlayColor={Images.velasColor2}
             style={styles.heightListItem}
           >
             <Left>
@@ -156,7 +138,7 @@ export default ({ store, web3t }) => {
           <Separator bordered style={styles.seperatorStyle}>
             <Text style={styles.styleTxtSeparator}>{lang.profile}</Text>
           </Separator>
-          <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
+          <ListItem icon style={styles.heightListItem} underlayColor={Images.velasColor2}>
             <Left>
               <Icon name="ios-wallet" style={styles.styleTxtSettings}/>
             </Left>
@@ -165,7 +147,7 @@ export default ({ store, web3t }) => {
             </Body>
             <Right style={styles.heightListItem}/>
           </ListItem>
-          <ListItem icon style={styles.heightListItem} underlayColor={Images.color1}>
+          <ListItem icon style={styles.heightListItem} underlayColor={Images.velasColor2}>
             <Left>
               <Icon name="md-globe" style={styles.styleTxtSettings}/>
             </Left>
@@ -180,7 +162,7 @@ export default ({ store, web3t }) => {
             <Text style={styles.styleTxtSeparator}>{lang.security}</Text>
           </Separator>
 
-          <ListItem icon style={styles.heightListItem} last underlayColor={Images.color1} onPress={logoutBtn}>
+          <ListItem icon style={styles.heightListItem} last underlayColor={Images.velasColor2} onPress={logoutBtn}>
             <Left>
               <Icon name="ios-log-out" style={styles.styleTxtSettings}/>
             </Left>

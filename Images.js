@@ -1,3 +1,5 @@
+import { Icon } from "native-base";
+
 const tick = require("./assets/tick.png");
 const logo = require("./assets/velas-logo1.png");
 const trx = require("./assets/nothing.png");
@@ -15,6 +17,7 @@ const generate = require("./assets/generate_icon.jpg");
 const confirmation = require("./assets/confirmation_icon.jpg");
 
 const btnWallet = require("./assets/wallet.png");
+// const btnStake = require("./assets/wallet.png");
 const btnHistory = require("./assets/history.png");
 const btnSettings = require("./assets/settings.png");
 
@@ -43,6 +46,7 @@ var colorGray = '#f0f1f5';
 var colorDarkBlue = '#05061f';
 var colorOrange = '#ebab28';
 var colorPink= "#db1571";
+var coral = "#FB5252"
 
 // var velasColor5 = "#292b55";
 
@@ -61,6 +65,7 @@ export default {
   generate,
   confirmation,
   btnWallet,
+  // btnStake,
   btnHistory,
   btnSettings,
   fingerPrint,
@@ -84,5 +89,6 @@ export default {
   colorGray,
   colorDarkBlue,
   colorOrange,
-  colorPink
+  colorPink,
+  coral
 };

@@ -9,16 +9,12 @@ import {
   View,
   CardItem,
   Body,
-  Header,
-  Left,
-  Right,
 } from "native-base";
 import styles from "../Styles.js";
 import Images from "../Images.js";
-import StatusBar from "../components/StatusBar.js";
 import getLang from "../wallet/get-lang.js";
-import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
+import Header from '../components/Header'
 
 export default ({ store }) => {
   const changePage = (tab) => () => {
@@ -46,18 +42,7 @@ export default ({ store }) => {
   return (
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-      <Header transparent style={styles.mtIphoneX}>
-        <Left style={styles.viewFlexHeader}>
-          <BackButton onBack={back} />
-        </Left>
-        <Body style={styles.viewFlexHeader} />
-        <Right style={styles.viewFlexHeader} />
-      </Header>
-      <StatusBar
-        barStyle="light-content"
-        translucent={true}
-        backgroundColor={"transparent"}
-      />
+      <Header onBack={back}/>
       <View style={styles.containerFlexStart}>
         <Image source={Images.generate} style={styles.setupImg} />
         <View style={styles.stylePrint}>
