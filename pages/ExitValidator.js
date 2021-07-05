@@ -23,7 +23,7 @@ export default ({ store, web3t, props }) => {
   const ADDRESS = details.address;
 
   const handleChange = async text => {
-    store.amountWithdraw = text.replace(",", ".");
+    store.amountWithdraw = text.replace(",", ".").replace(/[^0-9\.]/g, "");
   };
 
   const onPressMax = () => {

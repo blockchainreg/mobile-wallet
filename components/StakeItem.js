@@ -72,7 +72,7 @@ export default observer(({ store, isStaked, ...props }) => {
       <Body style={{ alignItems: "flex-end", marginRight: 20, maxWidth: 100 }}>
         {badgeStatus()}
         <Text style={[style.styleSubTitle, { marginRight: 0 }]}>
-          {lang.apr + "," + "%"|| "APR,%"}
+          {lang.apr || "APR"}{","}{"%"}
         </Text>
         <Text style={[style.styleTitle, { marginRight: 0, marginTop: 3 }]}>
           {null !== props.apr && (props.apr * 100).toFixed(2) + "%"}
@@ -93,6 +93,7 @@ const style = StyleSheet.create({
     marginTop: 3,
     fontSize: 13,
     fontFamily: "Fontfabric-NexaRegular",
+    maxWidth: 200,
   },
   styleSubTitle: {
     color: "rgba(255, 255, 255, 0.3)",

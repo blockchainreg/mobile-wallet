@@ -27,7 +27,7 @@ export default observer(({ store }) => {
   const columns = [
     lang.epoch || "# Epoch",
     lang.reward || "Reward",
-    lang.apr + ", %" || "APR, %",
+    `${lang.apr || "APR"}, %`,
   ];
 
   const onPressLink = () => {

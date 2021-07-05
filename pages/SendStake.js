@@ -23,7 +23,7 @@ export default ({ store, web3t, props }) => {
   const AVAILABLE_BALANCE = details.available_balance;
 
   const handleChange = async text => {
-    store.amount = text.replace(",", ".");
+    store.amount = text.replace(",", ".").replace(/[^0-9\.]/g, "");
   };
   console.log('store.amount', store.amount)
 
@@ -73,7 +73,7 @@ export default ({ store, web3t, props }) => {
             : null } */}
           {parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ?
           <Notice
-              text={"When stake all funds, you must leave about 1 VLX to pay the commission!!"}
+              text={"When stake all funds, you must leave about 1 VLX to pay the commission!"}
               icon="warning"
             /> : null }
           <ButtonBlock type={!store.amount || parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ? "DISABLED" : "NEXT"} text={lang.continue || "Next"} onPress={onPressButton} />

@@ -66,12 +66,12 @@ export default ({ store, web3t, props }) => {
             <View style={style.steps}>
             <StepItem
               index="1"
-              text={lang.stepItem2 + " " || "Create Stake Account"}
+              text={lang.stepItem2 || "Create Stake Account"}
               address=""
             />
             <StepItem
               index="2"
-              text={lang.stepItem3 + " " + "-" || "Stake to Validator -"}
+              text={lang.stepItem3 || "Stake to Validator -"}
               address={ADDRESS}
             />
           </View>
@@ -85,12 +85,12 @@ export default ({ store, web3t, props }) => {
               />
               <StepItem
                 index="2"
-                text={lang.stepItem2 + " " || "Create Stake Account"}
+                text={lang.stepItem2 || "Create Stake Account"}
                 address=""
               />
               <StepItem
                 index="3"
-                text={lang.stepItem3 + " " + "-" || "Stake to Validator -"}
+                text={lang.stepItem3 || "Stake to Validator -"}
                 address={ADDRESS}
               />
             </View>
