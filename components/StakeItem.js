@@ -46,12 +46,12 @@ export default observer(({ store, isStaked, ...props }) => {
         { backgroundColor: isStaked ? "#1F2853" : "#161A3F" },
       ]}
     >
-      <Left style={{ marginLeft: 10 }}>
+      <Left style={style.leftSide}>
         <IdentIcon {...props} />
       </Left>
-      <Body>
+      <Body style={style.bodyPadding}>
         <Text
-          style={[style.styleTitle, { maxWidth: 150 }]}
+          style={style.styleTitle}
           numberOfLines={1}
           ellipsizeMode="middle"
         >
@@ -69,16 +69,16 @@ export default observer(({ store, isStaked, ...props }) => {
           {formatStakeAmount(props.myStake || props.totalStaked)} VLX
         </Text>
       </Body>
-      <Body style={{ alignItems: "flex-end", marginRight: 20, maxWidth: 100 }}>
+      <Right style={style.rightSide}>
         {badgeStatus()}
-        <Text style={[style.styleSubTitle, { marginRight: 0 }]}>
+        <Text style={[style.styleSubTitle, {marginTop: 15}]}>
           {lang.apr || "APR"}{","}{"%"}
         </Text>
-        <Text style={[style.styleTitle, { marginRight: 0, marginTop: 3 }]}>
+        <Text style={style.styleTitle}>
           {null !== props.apr && (props.apr * 100).toFixed(2) + "%"}
           {null === props.apr && (Platform.OS === 'android' ? '...' : <ActivityIndicator/>)}
         </Text>
-      </Body>
+      </Right>
     </ListItem>
   );
 });
@@ -93,7 +93,6 @@ const style = StyleSheet.create({
     marginTop: 3,
     fontSize: 13,
     fontFamily: "Fontfabric-NexaRegular",
-    maxWidth: 200,
   },
   styleSubTitle: {
     color: "rgba(255, 255, 255, 0.3)",
@@ -107,6 +106,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 3,
     height: 11,
     borderRadius: 10,
+    marginTop: 5
   },
   inactive: {
     backgroundColor: "#8A8A8A",
@@ -114,6 +114,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 3,
     height: 11,
     borderRadius: 10,
+    marginTop: 5
   },
   txtStyleBadge: {
     color: "#0B0B25",
@@ -127,4 +128,13 @@ const style = StyleSheet.create({
     borderBottomColor: Images.velasColor4,
     height: 90,
   },
+  rightSide: {
+    paddingLeft: 10, paddingRight: 10
+  },
+  leftSide: {
+    marginLeft: 10
+  },
+  bodyPadding: {
+    paddingRight: 5
+  }
 });
