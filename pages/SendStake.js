@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "native-base";
+import { Container, Content } from "native-base";
 import { View, StyleSheet, Dimensions } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
@@ -50,7 +50,7 @@ export default ({ store, web3t, props }) => {
         title={lang.stake || "Stake"}
         identIcon={ADDRESS}
       />
-      <View style={style.contentBg}>
+      <Content style={style.contentBg}>
         <View>
           <InputComponent
             title={lang.enterAmount || "Enter Amount"}
@@ -78,7 +78,7 @@ export default ({ store, web3t, props }) => {
             /> : null }
           <ButtonBlock type={!store.amount || parseFloat(store.amount) && new BN(Math.floor(parseFloat(store.amount) * 1e9)+'', 10).gte(AVAILABLE_BALANCE.sub(new BN(1e9))) ? "DISABLED" : "NEXT"} text={lang.continue || "Next"} onPress={onPressButton} />
         </View>
-      </View>
+      </Content>
     </Container>
   );
 };
@@ -87,10 +87,10 @@ export default ({ store, web3t, props }) => {
 const style = StyleSheet.create({
   contentBg: {
     backgroundColor: Images.velasColor4,
-    justifyContent: "space-between",
-    flex: 1,
+    // justifyContent: "space-between",
+    // flex: 1,
   },
   buttonBottom: {
-    marginBottom: 60,
+    marginTop: 60,
   },
 });

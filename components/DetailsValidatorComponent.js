@@ -74,12 +74,12 @@ export default ({store, ...props}) => {
         <Text style={style.addressStyle} onPress={props.copyAddress}>{props.address}</Text>
       </View>
       <View style={style.row}>
-        <View style={[style.column, {borderRightWidth: 0.5, borderRightColor: BORDER_COLOR}]}>
+        <View style={style.column}>
           <Text style={style.value}>{props.value1}%</Text>
           <Text style={style.subtitle}>{props.subtitle1}</Text>
         </View>
         {props.value2 && 
-        <View style={style.column}>
+        <View style={[style.column, {borderLeftWidth: 0.5, borderLeftColor: BORDER_COLOR}]}>
           <Text style={style.value}>{props.value2}</Text>
           <Text style={style.subtitle}>{props.subtitle2}</Text>
         </View>
@@ -108,7 +108,7 @@ const style = StyleSheet.create({
     marginHorizontal: 20,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
     paddingVertical: 10,
     borderTopWidth: 0.5, 
     borderTopColor: BORDER_COLOR,
@@ -126,6 +126,7 @@ const style = StyleSheet.create({
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
     fontSize: 16,
+    textAlign: "center"
   },
   subtitle: {
     color: GRAY_COLOR,

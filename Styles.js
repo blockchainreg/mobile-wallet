@@ -5977,7 +5977,7 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   marginTopAndroid: {
-    marginTop: Platform.OS === 'ios' ? null : 25,
+    marginTop: Platform.OS === 'ios' ? null : 30,
   },
   leftBtnColor: {
     color: Images.colorGreen,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Text } from "native-base";
+import { Container, Text, Content } from "native-base";
 import { View, StyleSheet, Dimensions, Alert } from "react-native";
 import Images from "../Images.js";
 import ButtonBlock from "../components/ButtonBlock.js";
@@ -50,7 +50,7 @@ export default ({ store, web3t, props }) => {
         title={lang.exitValidator || "Exit from Validator"}
       />
 
-      <View style={style.contentBg}>
+      <Content style={style.contentBg}>
         <View style={style.container}>
           <WithdrawalRequest />
           <Text style={style.title}>
@@ -67,7 +67,7 @@ export default ({ store, web3t, props }) => {
             onPress={okBtn}
           />
         </View>
-      </View>
+      </Content>
     </Container>
   );
 };
@@ -75,12 +75,12 @@ export default ({ store, web3t, props }) => {
 const style = StyleSheet.create({
   contentBg: {
     backgroundColor: Images.velasColor4,
-    justifyContent: "space-between",
-    flex: 1,
+    // justifyContent: "space-between",
+    // flex: 1,
   },
 
   buttonBottom: {
-    marginBottom: 60,
+    marginTop: 60,
   },
   title: {
     color: "#fff",

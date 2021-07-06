@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert } from "react-native";
-import { Icon, Tab, Tabs, TabHeading, Content } from "native-base";
+import { Icon, Tab, Tabs, TabHeading, ScrollableTab } from "native-base";
 import { Observer, observer } from "mobx-react";
 import Images from "../Images";
 import { ChartIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
