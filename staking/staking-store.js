@@ -44,7 +44,7 @@ class StakingStore {
     this.evmAddress = evmAddress;
     this.evmPrivateKey = evmPrivateKey;
 
-    this.web3 = new Web3('https://explorer.velas.com/rpc');
+    this.web3 = new Web3(new Web3.providers.HttpProvider('https://explorer.velas.com/rpc'));
     rewardsStore.setConnection(this.connection);
     decorate(this, {
       validators: observable,
@@ -308,15 +308,38 @@ class StakingStore {
 
   };
 
+  waitTransactionMined(txHash, interval, resolve, reject) {
+    const self = this;
+    const transactionReceiptAsync = () => {
+        this.web3.eth.getTransactionReceipt(txHash, (error, receipt) => {
+            if (error) {
+                reject(error);
+            } else if (receipt == null) {
+                setTimeout(
+                    () => transactionReceiptAsync(),
+                    interval ? interval : 500);
+            } else {
+                resolve(receipt);
+            }
+        });
+    };
+    transactionReceiptAsync();
+  }
+
   async swapEvmToNative(swapAmount) {
     const evmToNativeBridgeContract = (
-      new this.web3.eth.Contract(EvmToNativeBridgeAbi, "0x56454c41532d434841494e000000000053574150")
+      this.web3.eth.contract(EvmToNativeBridgeAbi).at("0x56454c41532d434841494e000000000053574150")
     );
 
-    const data = evmToNativeBridgeContract.methods.transferToNative('0x' + this.publicKeyBuffer.toString("hex")).encodeABI();
+    const data = evmToNativeBridgeContract.transferToNative.getData('0x' + this.publicKeyBuffer.toString("hex"));
 
     const privateKey = Buffer.from(this.evmPrivateKey.substr(2), 'hex');
-    const nonce = await this.web3.eth.getTransactionCount(this.evmAddress);
+    const nonce = await new Promise((resolve, reject) => {
+      this.web3.eth.getTransactionCount(this.evmAddress, 'pending', (err, value) => {
+        if (err) return reject(err);
+        resolve(value);
+      });
+    });
     const customCommon = Common.forCustomChain(
       'mainnet',
       {
@@ -340,14 +363,14 @@ class StakingStore {
     tx.sign(privateKey);
 
     var serializedTx = tx.serialize();
-    const combinedResult = this.web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
-
     return await new Promise((resolve, reject) => {
-      combinedResult.on('confirmation', resolve);
-      combinedResult.on('error', reject);
+      this.web3.eth.sendRawTransaction('0x' + serializedTx.toString('hex'), (err, transactionHash) => {
+        if (err) {
+          return reject(err);
+        }
+        this.waitTransactionMined(transactionHash, 1000, resolve, reject);
+      });
     });
-
-    // console.log(await );
   }
 
   async stake(address, amount_sol) {
