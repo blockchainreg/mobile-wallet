@@ -22,8 +22,8 @@ export default ({ store, web3t, props }) => {
   if (!TOTAL_STAKE) return null;
   const ADDRESS = details.address;
 
-  const handleChange = async text => {
-    store.amountWithdraw = text.replace(",", ".").replace(/[^0-9\.]/g, "");
+  const handleChange = (text) => {
+    store.amountWithdraw = text;
   };
 
   const onPressMax = () => {
@@ -65,7 +65,7 @@ export default ({ store, web3t, props }) => {
   }
 
   return (
-    <Container>
+    <Container> 
       <Header
         onBack={back}
         title={lang.exitValidator || "Exit from Validator"}
@@ -80,26 +80,27 @@ export default ({ store, web3t, props }) => {
             total_stake={TOTAL_STAKE}
             token="vlx"
             btnTxt={lang.useMax || "Use max"}
-            value={store.amountWithdraw}
+            value={store.amountWithdraw || ""}
             onChange={text => handleChange(text)}
             onPressMax={onPressMax}
             isWithdraw
           />
         </View>
-        <View style={style.buttonBottom}>
+        <View style={style.buttonTop}>
           {parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) &&
             <Notice
               text={"You are trying to withdraw more funds than you have."}
               icon="warning"
             />
           }
-          {/* {details.totalWithdrawRequested.isZero() ? null : (
+          {/* On which withdrawal of funds to set a notification!!! */}
+          {details.totalWithdrawRequested.isZero() ? null : (
             <Notice
               text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
               icon="warning"
             />
-          )} */}
-          <ButtonBlock type={!store.amountWithdraw || store.amountWithdraw > TOTAL_STAKE ? "DISABLED" : "WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
+          )}
+          <ButtonBlock type={!store.amountWithdraw || parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) ? "DISABLED" : "WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
         </View>
       </Content>
     </Container>
@@ -112,7 +113,7 @@ const style = StyleSheet.create({
     // justifyContent: "space-between",
     // flex: 1,
   },
-  buttonBottom: {
-    marginTop: 60,
+  buttonTop: {
+    marginTop: 20,
   },
 });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert } from "react-native";
-import { Icon, Tab, Tabs, TabHeading, ScrollableTab } from "native-base";
+import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert, ScrollView } from "react-native";
+import { Icon, Tab, Tabs, TabHeading, ScrollableTab, Container } from "native-base";
 import { Observer, observer } from "mobx-react";
 import Images from "../Images";
 import { ChartIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
@@ -12,32 +12,27 @@ import getLang from "../wallet/get-lang.js";
 import { formatStakeAmount } from "../utils/format-value";
 import BN from 'bn.js';
 import spin from "../utils/spin.js";
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+
 
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
 
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
-  const [page, setPage] = useState(0);
   
-  const onChangeTab = (changeTabProps) => {
-    const newTabIndex = changeTabProps.i;
-    setPage(newTabIndex);
-  };
-  const window = Dimensions.get("window");
-  const [dimensions, setDimensions] = useState({ window });
-  const onChange = ({ window }) => {
-    setDimensions({ window });
-  };
-  useEffect(() => {
-    Dimensions.addEventListener("change", onChange);
-      return () => {
-        Dimensions.removeEventListener("change", onChange);
-      };
-  });
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Stake', type: "STAKE" },
+    { key: 'second', title: 'Withdrawals', type: "WITHDRAW" },
+    { key: 'third', title: 'Rewards', type: "REWARDS"}
+  ]);
+
+  
   const lang = getLang(store);
   return (
     <Observer>{() => {
@@ -50,9 +45,8 @@ export default ({ store, web3t }) => {
 
       const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
       const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
-
+    
       const ADDRESS = details.address;
-      const PRESERVE_BALANCE = new BN('1000000000', 10);
       const onPressWithdraw = async () => {
         if (!details.availableWithdrawRequested) return null;
         spin(
@@ -86,207 +80,184 @@ export default ({ store, web3t }) => {
         Vibration.vibrate(DURATION);
         Alert.alert(lang.copied, "", [{ text: lang.ok }]);
       };
-
-      return <>
-      <DetailsValidatorComponent
-        address={details.address}
-        copyAddress={copyAddress}
-        isActive={details.status === "active" ? true : false}
-        value1={details.commission}
-        value2={!details.myStake.isZero() ? `${formatStakeAmount(details.myStake)} VLX` : `${formatStakeAmount(details.activeStake)} VLX`}
-        subtitle1={lang.validatorInterest || "VALIDATOR INTEREST"}
-        subtitle2={
-          !details.myStake.isZero()
-            ? lang.myStake || "MY STAKE"
-            : lang.totalStake || "TOTAL STAKE"
-        }
-        store={store}
-      />
-      <View style={{width: dimensions.window.width}}>
-        {!details.myStake.isZero() ? (
-          <Tabs
-            // initialPage={details.availableWithdrawRequested.isZero() ? 0 : 1} //for the future
-            style={{width: dimensions.window.width}}
-            initialPage={0}
-            onChangeTab={onChangeTab}
-            tabBarUnderlineStyle={{
-              backgroundColor: Images.colorGreen,
-            }}
-          >
-            <Tab
-              style={style.tabStyle}
-              heading={
-                <TabHeading style={{ backgroundColor: Images.velasColor4 }}>
-                  <ValidatorsIcon
-                    fill={page === 0 ? Images.colorGreen : GRAY_COLOR}
-                    type={"STAKE"}
-                  />
-                  <Text
-                    style={
-                      page === 0
-                        ? style.activeTextStyle
-                        : style.inactiveTextStyle
-                    }
-                  >
-                    {lang.tabStake || "Stake"}
-                  </Text>
-                </TabHeading>
+      const Stake = () => {
+        return (
+        <ScrollView>
+          <View style={style.container}>
+            <ValidatorCard
+              value={DOMINANCE_VALUE}
+              subtitle={lang.dominance || "DOMINANCE"}
+              info={
+                lang.info1 ||
+                "Relative validator weight compared to the average. Lower is better"
               }
-            >
-              <View style={style.container}>
-                <ValidatorCard
-                  value={DOMINANCE_VALUE}
-                  subtitle={lang.dominance || "DOMINANCE"}
-                  info={
-                    lang.info1 ||
-                    "Relative validator weight compared to the average. Lower is better"
-                  }
-                  cardIcon={<ChartIcon />}
-                />
-                <ValidatorCard
-                  value={QUALITY_VALUE}
-                  subtitle={lang.quality || "QUALITY"}
-                  info={"0 means average"}
-                  cardSymbol={"+"}
-                />
-                <ValidatorCard
-                  value={ANNUAL_RATE}
-                  subtitle={lang.annual || "ANNUAL PERCENTAGE RATE"}
-                  info={
-                    lang.info3 ||
-                    "APR is calculated based on the results of the previous epoch"
-                  }
-                  cardSymbol={"%"}
-                />
-                <ValidatorCard
-                  value={ACTIVE_STAKE}
-                  subtitle={lang.activeStake || "YOUR ACTIVE STAKE"}
-                  info={
-                    lang.info4 ||
-                    "Only 25% of active stake can be activated per epoch. "
-                  }
-                  readMore={lang.read || "Read more"}
-                  link={
-                    "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown"
-                  }
-                  cardSymbol={"%"}
-                />
-              </View>
-              <View>
-                <ButtonBlock
-                  type={"STAKE_MORE"}
-                  text={lang.stakeMore || "Stake More"}
-                  onPress={changePage("sendStake")}
-                />
-                { details.totalAvailableForWithdrawRequestStake && details.totalAvailableForWithdrawRequestStake.gte(stakingStore.rent) &&
-                  <ButtonBlock
-                    type={"REQUEST_WITHDRAW"}
-                    text={lang.requestWithdraw || "Request Withdraw"}
-                    onPress={changePage("exitValidator")}
-                  />
-                }
-              </View>
-            </Tab>
-
-            <Tab
-              style={style.tabStyle}
-              heading={
-                <TabHeading style={{ backgroundColor: Images.velasColor4 }}>
-                  <ValidatorsIcon
-                    fill={page === 1 ? Images.colorGreen : GRAY_COLOR}
-                    type={"WITHDRAW"}
-                  />
-                  <Text
-                    style={
-                      page === 1
-                        ? style.activeTextStyle
-                        : style.inactiveTextStyle
-                    }
-                  >
-                    {lang.tabWithdrawals || "Withdrawals"}
-                  </Text>
-                </TabHeading>
+              cardIcon={<ChartIcon />}
+            />
+            <ValidatorCard
+              value={QUALITY_VALUE}
+              subtitle={lang.quality || "QUALITY"}
+              info={"0 means average"}
+              cardSymbol={"+"}
+            />
+            <ValidatorCard
+              value={ANNUAL_RATE}
+              subtitle={lang.annual || "ANNUAL PERCENTAGE RATE"}
+              info={
+                lang.info3 ||
+                "APR is calculated based on the results of the previous epoch"
               }
-            >
-              <View style={style.container}>
-                <ValidatorCard
-                  value={WITHDRAW_REQUESTED ? formatStakeAmount(WITHDRAW_REQUESTED) : ''}
-                  subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
-                  cardIcon={<VelasIcon />}
-                  info={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
-                  subtitleSmall
-                />
-                <ValidatorCard
-                  value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : ''}
-                  subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
-                  cardIcon={<VelasIcon />}
-                  info={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
-                  subtitleSmall
-                />
-              </View>
-              <View style={style.btnTop}>
-                {!details.availableWithdrawRequested || details.availableWithdrawRequested.isZero() ? null :
-                <ButtonBlock
-                  type={"WITHDRAW"}
-                  text={lang.withdraw || "Withdraw"}
-                  onPress={onPressWithdraw}
-                />
-                }
-              </View>
-            </Tab>
-            <Tab
-              tabStyle={{ backgroundColor: "pink", height: "100%" }}
-              style={style.tabStyle}
-              heading={
-                <TabHeading style={{ backgroundColor: Images.velasColor4 }}>
-                  <ValidatorsIcon
-                    fill={page === 2 ? Images.colorGreen : GRAY_COLOR}
-                    type={"REWARDS"}
-                  />
-                  <Text
-                    style={
-                      page === 2
-                        ? style.activeTextStyle
-                        : style.inactiveTextStyle
-                    }
-                  >
-                    {lang.tabRewards || "Rewards"}
-                  </Text>
-                </TabHeading>
+              cardSymbol={"%"}
+            />
+            <ValidatorCard
+              value={ACTIVE_STAKE}
+              subtitle={lang.activeStake || "YOUR ACTIVE STAKE"}
+              info={
+                lang.info4 ||
+                "Only 25% of active stake can be activated per epoch. "
               }
-            >
-              <TableRewards store={store} />
-            </Tab>
-          </Tabs>
-        ) : (
-          <>
-            <View style={style.container}>
-              <ValidatorCard
-                value={DOMINANCE_VALUE}
-                subtitle={lang.dominance || "DOMINANCE"}
-                info={
-                  lang.info1 ||
-                  "Relative validator weight compared to the average. Lower is better"
-                }
-                cardIcon={<ChartIcon />}
-              />
-              <ValidatorCard
-                value={QUALITY_VALUE}
-                subtitle={lang.quality || "QUALITY"}
-                info={"0 means average"}
-                cardSymbol={"+"}
-              />
-            </View>
-            <View>
+              readMore={lang.read || "Read more"}
+              link={
+                "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown"
+              }
+              cardSymbol={"%"}
+            />
+          </View>
+            <ButtonBlock
+              type={"STAKE_MORE"}
+              text={lang.stakeMore || "Stake More"}
+              onPress={changePage("sendStake")}
+            />
+            { details.totalAvailableForWithdrawRequestStake && details.totalAvailableForWithdrawRequestStake.gte(stakingStore.rent) &&
               <ButtonBlock
-                type={"STAKE"}
-                text={lang.stake || "Stake"}
-                onPress={changePage("sendStake")}
+                type={"REQUEST_WITHDRAW"}
+                text={lang.requestWithdraw || "Request Withdraw"}
+                onPress={changePage("exitValidator")}
               />
-            </View>
-          </>
-        )}
+            }
+        </ScrollView>
+        )
+      };
+      const Withdrawals  = () => {
+        return (
+        <ScrollView>
+          <View style={style.container}>
+            <ValidatorCard
+              value={WITHDRAW_REQUESTED ? formatStakeAmount(WITHDRAW_REQUESTED) : ''}
+              subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
+              cardIcon={<VelasIcon />}
+              info={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
+              subtitleSmall
+            />
+            <ValidatorCard
+              value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : ''}
+              subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
+              cardIcon={<VelasIcon />}
+              info={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
+              subtitleSmall
+            />
+        </View>
+          {!details.availableWithdrawRequested || details.availableWithdrawRequested.isZero() ? null :
+          <ButtonBlock
+            type={"WITHDRAW"}
+            text={lang.withdraw || "Withdraw"}
+            onPress={onPressWithdraw}
+          />
+          }
+        </ScrollView>
+        )
+      };
+      const Rewards  = () => {
+        return (
+        <>
+          <TableRewards store={store} />
+        </>
+        )
+      };
+      const renderScene = ({ route }) => {
+        switch (route.key) {
+          case 'first':
+            return <Stake/>;
+          case 'second':
+            return <Withdrawals />;
+          case 'third':
+            return <Rewards />;
+          default:
+            return null;
+        }
+      };
+      const BORDER_COLOR = "rgba(255, 255, 255, 0.18)";
+
+      const renderTabBar = props => (
+        <TabBar
+          {...props}
+          renderIcon={({ route, focused }) => (
+            <ValidatorsIcon
+              fill={focused ? Images.colorGreen : GRAY_COLOR}
+              type={route.type}
+            />
+          )}
+          renderLabel={({ route, focused, color }) => (
+            <Text style={{ color: focused ? Images.colorGreen : GRAY_COLOR, fontFamily: "Fontfabric-NexaRegular", fontSize: 14 }}>
+              {route.title}
+            </Text>
+          )}
+          indicatorStyle={{ backgroundColor: Images.colorGreen }}
+          style={{ backgroundColor: Images.velasColor4,  }}
+          activeColor={Images.colorGreen}
+          inactiveColor={GRAY_COLOR}
+          tabStyle={{flexDirection: 'row', borderBottomColor: BORDER_COLOR, borderBottomWidth: 0.5}}
+        />
+      );
+      return <>
+        <DetailsValidatorComponent
+          address={details.address}
+          copyAddress={copyAddress}
+          isActive={details.status === "active" ? true : false}
+          value1={details.commission}
+          value2={!details.myStake.isZero() ? `${formatStakeAmount(details.myStake)} VLX` : `${formatStakeAmount(details.activeStake)} VLX`}
+          subtitle1={lang.validatorInterest || "VALIDATOR INTEREST"}
+          subtitle2={
+            !details.myStake.isZero()
+              ? lang.myStake || "MY STAKE"
+              : lang.totalStake || "TOTAL STAKE"
+          }
+          store={store}
+        />
+      {!details.myStake.isZero() ? 
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          style={{backgroundColor: Images.velasColor4}}
+          initialLayout={{ width: Dimensions.get('window').width}}
+          renderTabBar={renderTabBar}
+        />
+      :
+      <ScrollView>
+        <View style={style.container}>
+          <ValidatorCard
+            value={DOMINANCE_VALUE}
+            subtitle={lang.dominance || "DOMINANCE"}
+            info={
+              lang.info1 ||
+              "Relative validator weight compared to the average. Lower is better"
+            }
+            cardIcon={<ChartIcon />}
+          />
+          <ValidatorCard
+            value={QUALITY_VALUE}
+            subtitle={lang.quality || "QUALITY"}
+            info={"0 means average"}
+            cardSymbol={"+"}
+          />
       </View>
+        <ButtonBlock
+          type={"STAKE"}
+          text={lang.stake || "Stake"}
+          onPress={changePage("sendStake")}
+        />
+      </ScrollView>
+    }
     </>}}</Observer>
   );
 };
@@ -311,14 +282,10 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     flexWrap: "wrap",
-    flex: 1,
     justifyContent: "center",
-    marginVertical: 15,
+    paddingVertical: 15,
   },
-  btnTop: {
-    top: 140,
-    position: "absolute",
-    left: 0,
-    right: 0,
+  btnBottom: {  
+    marginBottom: 20
   },
 });

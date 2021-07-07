@@ -4,7 +4,7 @@ import {
   Content,
 } from "native-base";
 import Footer from "./Footer.js";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, View } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import TabsValidator from "../components/TabsBarValidator.js";
@@ -24,15 +24,16 @@ export default ({ store, web3t, props }) => {
   return (
     <Container>
       <Header onBack={changePage("stakePage")} title={lang.titleValidatorDetail || 'Validator Details'} greenBack/>
-      <Content style={style.contentBg}>
+      <View style={style.contentBg}>
         <TabsValidator store={store}/>
-      </Content>
+      </View>
     </Container>
   );
 };
 
 const style = StyleSheet.create({
   contentBg: {
+    flex: 1,
     backgroundColor: Images.velasColor4
   },
 });

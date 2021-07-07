@@ -3,6 +3,7 @@ import { StyleSheet, Image, View, Alert } from "react-native";
 import { Text, Input, Item, Label, Button } from "native-base";
 import Images from "../Images";
 import { Badge } from "react-native-elements";
+import InputAmount from "./InputAmount";
 
 export default ({isWithdraw, ...props}) => {
   
@@ -10,19 +11,18 @@ export default ({isWithdraw, ...props}) => {
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
       <Item style={style.styleItem}>
-        <Input
+        <InputAmount 
+          placeholder="0.00"
+          placeholderTextColor="rgba(255,255,255,0.60)"
           value={props.value}
           onChangeText={props.onChange}
-          returnKeyType="done"
-          autoCompleteType="off"
           style={style.input}
+          returnKeyType="done"
           selectionColor={"#fff"}
           keyboardAppearance="dark"
-          placeholder="0.00"
           keyboardType="numeric"
-          placeholderTextColor="rgba(255,255,255,0.60)"
-          maxLength={10}
-        />
+          maxLength={14}
+      />
         <Badge
           onPress={props.onPressMax}
           value={<Text style={style.txtBtnSendMax}>{props.btnTxt}</Text>}
@@ -38,11 +38,6 @@ export default ({isWithdraw, ...props}) => {
           <Image source={Images.logo} style={style.labelLogo} />
           <Text style={style.labelTokenStyle}>{props.token}</Text>
         </View>
-        {/* <Badge
-          onPress={props.onPressMax}
-          value={<Text style={style.txtBtnSendMax}>{props.btnTxt}</Text>}
-          badgeStyle={style.btnSendMax}
-        /> */}
       </View>
     </>
   );
@@ -111,9 +106,15 @@ const style = StyleSheet.create({
     backgroundColor: "#12173E",
     borderBottomColor: "transparent",
     paddingLeft: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   input: {
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
+    height: 50,
+    // width: '70%'
+    flex: 1
   },
 });
