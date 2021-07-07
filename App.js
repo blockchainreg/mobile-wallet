@@ -1,5 +1,5 @@
-//import Bugsnag from '@bugsnag/expo';
-//Bugsnag.start();
+import Bugsnag from '@bugsnag/expo';
+Bugsnag.start();
 
 import * as Font from "expo-font";
 import "./global.js";
@@ -9,8 +9,9 @@ import * as React from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
+const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React)
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     AppReady: null,
   };
@@ -25,7 +26,7 @@ export default class App extends React.Component {
       'Nexa-Light': require("./assets/fonts/Nexa-Light.ttf"),
       'Nexa-Book': require("./assets/fonts/Nexa-Book.ttf"),
       'Fontfabric-NexaBold': require("./assets/fonts/Fontfabric-NexaBold.otf"),
-      'Fontfabric-NexaRegular': require("./assets/fonts/Fontfabric-NexaRegular.otf"), 
+      'Fontfabric-NexaRegular': require("./assets/fonts/Fontfabric-NexaRegular.otf"),
     });
   }
 
@@ -36,9 +37,6 @@ export default class App extends React.Component {
         this.setState({ AppReady: require("./App-ready.js").default });
       });
     // }, 1500);
-
-
-
   }
 
   render() {
@@ -57,6 +55,22 @@ export default class App extends React.Component {
     return (
       <View style={[styles.viewFlex, {backgroundColor: '#05061f'}]}>
         <AppReady />
+      </View>
+    );
+  }
+}
+
+export default () => (
+  <ErrorBoundary FallbackComponent={ErrorView}>
+    <App />
+  </ErrorBoundary>
+);
+
+class ErrorView extends React.Component {
+  render() {
+    return (
+      <View style={[styles.viewFlex, {backgroundColor: '#05061f'}]}>
+        <Text>Error occured</Text>
       </View>
     );
   }
