@@ -16,7 +16,7 @@ import {
   Toast,
 } from "native-base";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, } from "react-native";
+import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, StyleSheet} from "react-native";
 import CustomRefreshControl from "../components/RefreshControl.js";
 import Footer from "./Footer.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
@@ -206,7 +206,7 @@ export default ({ store, web3t }) => {
     );
   };
 
-  const walletListStyle = Object.assign({}, styles.viewMonoWallets);
+  const walletListStyle = Object.assign({}, style.viewMonoWallets);
   if (isDemoMode) {
     if (typeof walletListStyle.height === "string") {
       walletListStyle.height = (walletListStyle.height.substr(0, walletListStyle.height.length - 1) - 3) + "%";
@@ -215,36 +215,25 @@ export default ({ store, web3t }) => {
     }
   }
   return (
-    <View style={styles.container}>
-<View style={styles.viewFlex}>
-      <Background fullscreen={true}>
-        <View style={[styles.topView, {backgroundColor: "transparent", height: "20%", marginTop: hp("5%"), marginHorizontal: "17%", width: "66%", zIndex: 999}]}>
+      <View style={styles.viewFlex}>
+        <View style={{backgroundColor: "transparent", height: "18%", marginTop: hp("5%"), alignSelf: 'center', width: "66%", zIndex: 999, position: "absolute"}}>
         {CustomRefreshControl({swipeRefresh: refreshBalance, store, children: <>
         </>
           })}
         </View>
-        <View style={styles.topView}>
+        <View style={style.topView}>
         <Header title={lang.yourWallets} addWalletIcon onForward={changePage("add")} transparent/>
-          <View style={styles.viewWalletAbsolute}>
-            <Text style={styles.titleAbsolute}>{lang.totalBalance}</Text>
-            <Text style={styles.textBalanceAbsolute}>
-              {calcUsd} <Text style={styles.textCurrency}>$</Text>
+          <View style={style.viewWallet}>
+            <Text style={style.balance}>{lang.totalBalance}</Text>
+            <Text style={style.balanceAmount}>
+              {calcUsd} <Text style={style.balanceAmount}>$</Text>
             </Text>
           </View>
 
         </View>
 
         <View style={walletListStyle}>
-
-          <LinearGradient
-            colors={[Images.velasColor4, Images.velasColor4]}
-            style={styles.linearGradientBg}
-          >
-            <View style={styles.viewPt} />
             <ScrollView
-            // onScrollBeginDrag={refreshBalance}
-
-
               refreshControl={
                 <RefreshControl
                   refreshing={false}
@@ -253,13 +242,36 @@ export default ({ store, web3t }) => {
                 />
               }
             >{wallets(store, web3t)}</ScrollView>
-          </LinearGradient>
         </View>
 
-      </Background>
+      <View style={{position: "absolute", bottom: 0, left: 0, right: 0}}>
+        <Footer store={store}></Footer>
+        {renderDemoMode()}
       </View>
-            <Footer store={store}></Footer>
-            {renderDemoMode()}
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  topView: {
+    flex: 0.25,
+  },
+  viewWallet: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginLeft: 20,
+    marginBottom: 15,
+    flex: 1
+  },
+  viewMonoWallets: {
+    flex: 0.75,
+    backgroundColor: Images.velasColor4,
+  },
+  balance: {
+    fontSize: 18, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  },
+  balanceAmount: {
+    fontSize: 28, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  }
+
+});

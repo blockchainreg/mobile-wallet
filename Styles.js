@@ -225,41 +225,6 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-  viewMonoWallets: {
-    ...ifIphoneX(
-      {
-        flex: 1,
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: "73%",
-        zIndex: 1,
-      },
-      {
-        ...Platform.select({
-          ios: {
-            flex: 1,
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: hp("64%"),
-            zIndex: 1,
-          },
-          android: {
-            flex: 1,
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: hp("64%"),
-            zIndex: 0,
-          },
-        }),
-      }
-    ),
-  },
   // viewWalletBalance: {
   //   ...ifIphoneX(
   //     {
