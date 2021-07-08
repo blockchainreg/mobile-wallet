@@ -46,7 +46,7 @@ export default class InputAmount extends Component{
         continue;
       }
     }
-    while (int.length > 1 && (int[0] === '0' || int[0] === ',')) int = int.slice(1);
+    while (int.split('|').join('').length > 1 && (int[0] === '0' || int[0] === ',')) int = int.slice(1);
     fraction = Array.from(fraction).filter(c => c === '.' || isDigit(c)).join('').slice(0, maxFractionLength);
     return int + fraction;
   }
