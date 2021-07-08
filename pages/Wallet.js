@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  StyleSheet
 } from "react-native";
 //import ModalComponent from "react-native-modal-component";
 import moment from "moment";
@@ -26,7 +27,10 @@ import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
 import Header from '../components/Header'
 // import Scanner from './Scanner.js';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default ({ store, web3t }) => {
 
@@ -100,30 +104,27 @@ export default ({ store, web3t }) => {
     }
 
     const getTxContainer = () => {
-      if (store.history.filterOpen == true)
-        //return { ...styles.viewMono, height: '80%' }
-        return (
-            <View style={{ ...styles.viewMono, height: '80%' }}>
-            <LinearGradient
-            colors={[Images.velasColor4, Images.velasColor4]}
-            style={styles.linearGradientBg}>
-              <View style={styles.bodyBlockTitle} >
-                <Text style={styles.titleHistory}>{lang.txLast}</Text>
-              </View>
-              <ScrollView>
-                <View style={styles.viewPt} />
-                {LoadMoreDate({ store })}
-                <View style={{ paddingBottom: 150 }} />
-              </ScrollView>
-              </LinearGradient>
-            </View>
-        )
+      // if (store.history.filterOpen == true)
+      //   //return { ...styles.viewMono, height: '80%' }
+      //   return (
+      //       <View style={{ ...styles.viewMono, height: '80%' }}>
+      //       <LinearGradient
+      //       colors={[Images.velasColor4, Images.velasColor4]}
+      //       style={styles.linearGradientBg}>
+      //         <View style={styles.bodyBlockTitle} >
+      //           <Text style={styles.titleHistory}>{lang.txLast}</Text>
+      //         </View>
+      //         <ScrollView>
+      //           <View style={styles.viewPt} />
+      //           {LoadMoreDate({ store })}
+      //           <View style={{ paddingBottom: 150 }} />
+      //         </ScrollView>
+      //         </LinearGradient>
+      //       </View>
+      //   )
 
       return (
-          <View style={styles.viewMono}>
-            <LinearGradient
-            colors={[Images.velasColor4, Images.velasColor4]}
-            style={styles.linearGradientBg}>
+          <View style={style.viewMonoWallets}>
             <View style={styles.bodyBlockTitle} >
               <Text style={styles.titleHistory}>{lang.txLast}</Text>
             </View>
@@ -132,8 +133,6 @@ export default ({ store, web3t }) => {
               {LoadMoreDate({ store })}
               <View style={{ paddingBottom: 150 }} />
             </ScrollView>
-          </LinearGradient>
-
           </View>
         )
     };
@@ -163,17 +162,22 @@ export default ({ store, web3t }) => {
 
     return (
       <View style={styles.viewFlex}>
-          <Background fullscreen={true}/>
             <Header title={wallet.coin.name} onBack={back} coin={wallet.coin.image}/>
-            {RefreshControl({transparent: true, swipeRefresh: refreshToken, store, children: <>
-              <View style={styles.bodyBlockWallet}>
+              <View style={{backgroundColor: "transparent", height: "16%", marginTop: hp("5%"), alignSelf: 'center', width: "66%", zIndex: 999, position: "absolute"}}>
+            {RefreshControl({ swipeRefresh: refreshToken, store, children: <>
+              </>})}
+              </View>
+
+
+              <View style={style.topView}>
                 <View style={styles.bodyBlock3}>
                   <Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
                 </View>
                 <View style={styles.bodyBlock3}>
                   <Balance wallet={wallet}/>
                 </View>
-                <View style={styles.viewTouchablesWallet}>
+              </View>
+                <View style={style.buttons}>
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
                       onPress={sendLocal}
@@ -213,12 +217,37 @@ export default ({ store, web3t }) => {
                     <Text style={styles.textTouchable}>{lang.receive}</Text>
                   </View>
                 </View>
-              </View>
-            </>})}
+
 
           {getTxContainer()}
+
       </View>
     );
 };
 
 //export default ({ store, web3t }) => <Wallet store={store} web3t={web3t} />;
+const style = StyleSheet.create({
+  topView: {
+    flex: 0.15,
+    justifyContent: 'space-around',
+  alignItems: 'flex-start',
+  },
+  viewMonoWallets: {
+    flex: 0.7,
+    backgroundColor: Images.velasColor4
+  },
+  balance: {
+    fontSize: 18, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  },
+  balanceAmount: {
+    fontSize: 28, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: Platform.OS === 'ios' ? 0.15 : 0.20,
+
+  }
+
+});

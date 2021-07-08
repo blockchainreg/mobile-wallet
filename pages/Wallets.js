@@ -206,14 +206,14 @@ export default ({ store, web3t }) => {
     );
   };
 
-  const walletListStyle = Object.assign({}, style.viewMonoWallets);
-  if (isDemoMode) {
-    if (typeof walletListStyle.height === "string") {
-      walletListStyle.height = (walletListStyle.height.substr(0, walletListStyle.height.length - 1) - 3) + "%";
-    } else {
-      walletListStyle.height -= 50;
-    }
-  }
+  // const walletListStyle = Object.assign({}, style.viewMonoWallets);
+  // if (isDemoMode) {
+  //   if (typeof walletListStyle.height === "string") {
+  //     walletListStyle.height = (walletListStyle.height.substr(0, walletListStyle.height.length - 1) - 3) + "%";
+  //   } else {
+  //     walletListStyle.height -= 50;
+  //   }
+  // }
   return (
       <View style={styles.viewFlex}>
         <View style={{backgroundColor: "transparent", height: "18%", marginTop: hp("5%"), alignSelf: 'center', width: "66%", zIndex: 999, position: "absolute"}}>
@@ -232,7 +232,7 @@ export default ({ store, web3t }) => {
 
         </View>
 
-        <View style={walletListStyle}>
+        <View style={style.viewMonoWallets}> 
             <ScrollView
               refreshControl={
                 <RefreshControl
