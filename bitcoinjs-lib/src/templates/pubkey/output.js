@@ -14,14 +14,14 @@ function check (script) {
 check.toJSON = function () { return 'pubKey output' }
 
 function encode (pubKey) {
-  typeforce(bscript.isCanonicalPubKey, pubKey)
+  void(bscript.isCanonicalPubKey, pubKey)
 
   return bscript.compile([pubKey, OPS.OP_CHECKSIG])
 }
 
 function decode (buffer) {
   var chunks = bscript.decompile(buffer)
-  typeforce(check, chunks)
+  void(check, chunks)
 
   return chunks[0]
 }

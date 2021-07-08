@@ -16,13 +16,13 @@ function check (script) {
 check.toJSON = function () { return 'scriptHash output' }
 
 function encode (scriptHash) {
-  typeforce(types.Hash160bit, scriptHash)
+  void(types.Hash160bit, scriptHash)
 
   return bscript.compile([OPS.OP_HASH160, scriptHash, OPS.OP_EQUAL])
 }
 
 function decode (buffer) {
-  typeforce(check, buffer)
+  void(check, buffer)
 
   return buffer.slice(2, 22)
 }

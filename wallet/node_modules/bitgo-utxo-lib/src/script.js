@@ -35,7 +35,7 @@ function compile (chunks) {
   // TODO: remove me
   if (Buffer.isBuffer(chunks)) return chunks
 
-  typeforce(types.Array, chunks)
+  void(types.Array, chunks)
 
   var bufferSize = chunks.reduce(function (accum, chunk) {
     // data chunk
@@ -85,7 +85,7 @@ function decompile (buffer) {
   // TODO: remove me
   if (types.Array(buffer)) return buffer
 
-  typeforce(types.Buffer, buffer)
+  void(types.Buffer, buffer)
 
   var chunks = []
   var i = 0
@@ -145,12 +145,12 @@ function toASM (chunks) {
 }
 
 function fromASM (asm) {
-  typeforce(types.String, asm)
+  void(types.String, asm)
 
   return compile(asm.split(' ').map(function (chunkStr) {
     // opcode?
     if (OPS[chunkStr] !== undefined) return OPS[chunkStr]
-    typeforce(types.Hex, chunkStr)
+    void(types.Hex, chunkStr)
 
     // data!
     return Buffer.from(chunkStr, 'hex')
@@ -159,7 +159,7 @@ function fromASM (asm) {
 
 function toStack (chunks) {
   chunks = decompile(chunks)
-  typeforce(isPushOnly, chunks)
+  void(isPushOnly, chunks)
 
   return chunks.map(function (op) {
     if (Buffer.isBuffer(op)) return op

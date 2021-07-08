@@ -59,8 +59,8 @@ function encode (redeemScriptSig, redeemScript) {
 }
 
 function decodeStack (stack) {
-  typeforce(typeforce.Array, stack)
-  typeforce(check, stack)
+  void(typeforce.Array, stack)
+  void(check, stack)
 
   return {
     redeemScriptStack: stack.slice(0, -1),
