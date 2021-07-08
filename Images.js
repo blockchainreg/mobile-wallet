@@ -11,6 +11,7 @@ const scanImage = require("./assets/qr-code-outline.png");
 const withdrawImage = require("./assets/arrowsend.png");
 const depositImage = require("./assets/icon-from.png");
 const withdrawImage2 = require("./assets/icon-to.png");
+const swapImage = require("./assets/swap-icon.png");
 
 const generate = require("./assets/generate_icon.jpg");
 const confirmation = require("./assets/confirmation_icon.jpg");
@@ -59,6 +60,7 @@ export default {
   trx,
   withdrawImage,
   withdrawImage2,
+	swapImage,
   depositImage,
   generate,
   confirmation,

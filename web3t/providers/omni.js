@@ -8,6 +8,8 @@
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   ref$ = require('./deps.js'), BitcoinLib = ref$.BitcoinLib, bip39 = ref$.bip39;
+  var validate = require('../embed_modules/bitcoin-address-validation');
+
   //WAValidator = require('multicoin-address-validator');
   getBitcoinFullpairByIndex = function(mnemonic, index, network){
     var seed, hdnode, address, privateKey, publicKey;
@@ -504,15 +506,16 @@
       });
     });
   };
-  // out$.isValidAddress = isValidAddress = function(arg$, cb){
-  //   var address, network, addressIsValid;
-  //   address = arg$.address, network = arg$.network;
-  //   addressIsValid = WAValidator.validate(address, 'BTC', 'both');
-  //   if (!addressIsValid) {
-  //     return cb("Address is not valid");
-  //   }
-  //   return cb(null, address);
-  // };
+  out$.isValidAddress = isValidAddress = function(arg$, cb){
+    var address, network, addressIsValid;
+    address = arg$.address, network = arg$.network;
+    console.log("validate", validate);
+    addressIsValid = validate.default(address);
+    if (!addressIsValid) {
+      return cb("Address is not valid");
+    }
+    return cb(null, address);
+  };
 
   function import$(obj, src){
     var own = {}.hasOwnProperty;

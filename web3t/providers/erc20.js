@@ -387,10 +387,10 @@
         feeType: feeType
       }, function(err, gasPriceBn){
         var gasPrice, gasMinimal, gasEstimate;
-        gasPrice = gasPriceBn.toFixed();
         if (err != null) {
           return cb(err);
         }
+				gasPrice = gasPriceBn.toFixed();
         gasMinimal = div(toWeiEth(amountFee), gasPrice);
         gasEstimate = round(times(gasMinimal, 5));
         if (toString$.call(web3.eth.getBalance).slice(8, -1) !== 'Function') {
@@ -500,6 +500,7 @@
     network = arg$.network, address = arg$.address;
     web3 = getWeb3(network);
     contract = getContractInstance(web3, network.address);
+    console.log(contract.balanceOf);
     balanceOf = (function(){
       switch (false) {
       case contract.methods == null:
@@ -512,15 +513,20 @@
         };
       }
     }());
-    return balanceOf(address, function(err, number){
-      var dec, balance;
-      if (err != null) {
-        return cb(err);
-      }
-      dec = getDec(network);
-      balance = div(number, dec);
-      return cb(null, balance);
-    });
+    try {
+			return balanceOf(address, function (err, number) {
+				var dec, balance;
+				if (err != null) {
+					return cb(err);
+				}
+				dec = getDec(network);
+				balance = div(number, dec);
+				return cb(null, balance);
+			});
+		} catch (e) {
+    	console.log("Caught error, balanceOf:", e);
+			return cb(null, "..");
+		}
   };
   out$.isValidAddress = isValidAddress = function(arg$, cb){
     var address, network, valid;

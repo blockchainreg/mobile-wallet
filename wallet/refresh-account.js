@@ -40,7 +40,10 @@
 	});
   });
   refreshTxs = curry$(function(web3, store, cb){
-	return refreshWaletTxs(web3, store, function(){});
+  	setTimeout(()=>{
+			refreshWaletTxs(web3, store, function(){});
+		},1);
+
   });
   out$.backgroundRefreshAccount = backgroundRefreshAccount = function(web3, store, cb){
 	var bgStore;
@@ -71,7 +74,7 @@
 			return applyTransactions(store);
 		  });
 		} catch (e) {
-		  state.err = e; 
+		  state.err = e;
 		}
 	  });
 	  return cb(state.err);
