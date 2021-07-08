@@ -10,7 +10,6 @@ import {
 	Input,
 	Title,
 	Body,
-	Header,
 	Thumbnail,
 	Label,
 	Toast
@@ -33,6 +32,8 @@ import {
 import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
+import Header from '../components/Header'
+
 
 
 
@@ -243,7 +244,7 @@ export default ({ store, web3t }) => {
 	return (
 			<View style={styles.viewFlex}>
 				<Background fullscreen={true}/>
-				<Header transparent style={styles.mtAndroid}>
+				{/* <Header transparent style={styles.mtAndroid}>
 					<Left style={styles.viewFlexHeader}>
 						<BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
 					</Left>
@@ -253,7 +254,9 @@ export default ({ store, web3t }) => {
 					<Right style={styles.viewFlexHeader}>
 						<Thumbnail square small source={{ uri: wallet.coin.image }} />
 					</Right>
-				</Header>
+				</Header> */}
+            <Header title={ScreenTitle} onBack={back} coin={wallet.coin.image}/>
+
 				<StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
 				{RefreshControl({swipeRefresh:refreshToken, store, children:<>
 						<View style={styles.bodyBlockWallet}>
