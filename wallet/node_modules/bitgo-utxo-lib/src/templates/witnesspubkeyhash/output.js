@@ -15,13 +15,13 @@ function check (script) {
 check.toJSON = function () { return 'Witness pubKeyHash output' }
 
 function encode (pubKeyHash) {
-  typeforce(types.Hash160bit, pubKeyHash)
+  void(types.Hash160bit, pubKeyHash)
 
   return bscript.compile([OPS.OP_0, pubKeyHash])
 }
 
 function decode (buffer) {
-  typeforce(check, buffer)
+  void(check, buffer)
 
   return buffer.slice(2)
 }

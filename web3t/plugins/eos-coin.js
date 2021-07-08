@@ -31,7 +31,6 @@
   out$.color = color = '#272431';
   out$.type = type = 'coin';
   out$.enabled = enabled = true;
-  out$.nickname = "eos";
   out$.token = token = 'eos';
   out$.image = image = 'https://res.cloudinary.com/nixar-work/image/upload/v1550938232/EOS.png';
   out$.usdInfo = usdInfo = "url(https://min-api.cryptocompare.com/data/pricemulti?fsyms=EOS&tsyms=USD).EOS.USD";

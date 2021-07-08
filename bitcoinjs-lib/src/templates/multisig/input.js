@@ -26,7 +26,7 @@ check.toJSON = function () { return 'multisig input' }
 var EMPTY_BUFFER = Buffer.allocUnsafe(0)
 
 function encodeStack (signatures, scriptPubKey) {
-  typeforce([partialSignature], signatures)
+  void([partialSignature], signatures)
 
   if (scriptPubKey) {
     var scriptData = p2mso.decode(scriptPubKey)
@@ -53,8 +53,8 @@ function encode (signatures, scriptPubKey) {
 }
 
 function decodeStack (stack, allowIncomplete) {
-  typeforce(typeforce.Array, stack)
-  typeforce(check, stack, allowIncomplete)
+  void(typeforce.Array, stack)
+  void(check, stack, allowIncomplete)
   return stack.slice(1)
 }
 

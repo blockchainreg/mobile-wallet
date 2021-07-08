@@ -9,7 +9,7 @@
   applyTransactions = require('./apply-transactions.js');
   times = require('./math.js').times;
   module.exports = function(store, web3t, wallets, wallet){
-    var index, send, receive, usdRate, ref$, uninstall, expand, active, big, balance, balanceUsd, pending, style, buttonStyle, last;
+    var index, send, swap, receive, usdRate, ref$, uninstall, expand, active, big, balance, balanceUsd, pending, style, buttonStyle, last;
     if (store == null || web3t == null || wallets == null || wallet == null) {
       return null;
     }
@@ -45,6 +45,34 @@
       });
       return navigate(store, web3t, 'invoice');
     });
+		swap = curry$(  function(wallet, event) {
+			console.log("prepare Swap fnction...");
+			var cb, sendTransaction, config;
+			cb = console.log;
+			store.current.send.contractAddress = null;
+			store.current.send.isSwap = true;
+			if (wallet == null) {
+				return alert("Not yet loaded");
+			}
+			if (web3t[wallet.coin.token] == null) {
+				return alert("Not yet loaded");
+			}
+			sendTransaction = web3t[wallet.coin.token].sendTransaction;
+			config = {
+				to: "",
+				value: 0,
+				swap: true,
+				gas: 1000000
+			};
+			return sendTransaction(config, function (err) {
+				if (err != null) {
+					store.current.send.error = err;
+				}
+				if (err != null) {
+					return cb(err);
+				}
+			});
+		})
     usdRate = (ref$ = wallet != null ? wallet.usdRate : void 8) != null ? ref$ : 0;
     uninstall = function(){
       if (store.current.refreshing) {
@@ -96,11 +124,12 @@
       wallet: wallet,
       active: active,
       big: big,
-	  token: token,
+	  	token: token,
       balance: balance,
       balanceUsd: balanceUsd,
       pending: pending,
       send: send,
+			swap: swap,
       expand: expand,
       usdRate: usdRate,
       last: last,

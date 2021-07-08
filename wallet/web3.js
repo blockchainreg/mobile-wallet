@@ -3,6 +3,7 @@
   var ref$, objToPairs, map, pairsToObj, each, find, keys, guid, waitFormResult, changeAmount, div, plus, times, protect, navigate, useNetwork, getBalance, buildInstall, buildUninstall, buildInstallByName, buildQuickInstall, backgroundRefreshAccount, setAccount, Web3, ethnamed, getRecord, setPageTheme, mirror, getCoins, state, titles, showCases, buildGetBalance, buildUnlock, buildSendTransaction, getContractInstance, buildContract, buildNetworkEthereum, buildOtherNetworks, buildNetworkSpecific, buildGetUsdAmount, buildApi, buildUse, getApis, refreshApis, setupRefreshTimer, buildGetAccountName, buildGetSupportedTokens, buildGetAddress, slice$ = [].slice, toString$ = {}.toString;
   ref$ = require('prelude-ls'), objToPairs = ref$.objToPairs, map = ref$.map, pairsToObj = ref$.pairsToObj, each = ref$.each, find = ref$.find, keys = ref$.keys;
   guid = require('./guid.js');
+  const velasApi = require("./velas/velas-api");
   waitFormResult = require('./send-form.js').waitFormResult;
   changeAmount = require('./calc-amount.js').changeAmount;
   ref$ = require('./math.js'), div = ref$.div, plus = ref$.plus, times = ref$.times;
@@ -251,6 +252,8 @@
       return it.token;
     })(
     store.coins));
+    console.log("velas", cweb3);
+    // cweb3.velas = velasApi(store);
     return getCoins(store, function(err, coins){
       if (err != null) {
         return cb(err);

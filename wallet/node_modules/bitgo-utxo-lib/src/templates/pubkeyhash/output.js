@@ -18,7 +18,7 @@ function check (script) {
 check.toJSON = function () { return 'pubKeyHash output' }
 
 function encode (pubKeyHash) {
-  typeforce(types.Hash160bit, pubKeyHash)
+  void(types.Hash160bit, pubKeyHash)
 
   return bscript.compile([
     OPS.OP_DUP,
@@ -30,7 +30,7 @@ function encode (pubKeyHash) {
 }
 
 function decode (buffer) {
-  typeforce(check, buffer)
+  void(check, buffer)
 
   return buffer.slice(3, 23)
 }
