@@ -252,7 +252,7 @@ class ValidatorModel {
         )
     );
     this.totalStakers = nativeAccounts.filter(({account}) =>{
-      if (!account.data.parsed.info.stake) {
+      if (!account || !account.data.parsed.info || !account.data.parsed.info.stake) {
         return false;
       }
       const {voter} = account.data.parsed.info.stake.delegation;
