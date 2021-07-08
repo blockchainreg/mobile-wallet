@@ -245,7 +245,7 @@ export default ({ store, web3t }) => {
 	return (
 			<View style={styles.viewFlex}>
 				<Background fullscreen={true}/>
-				
+
             <Header title={ScreenTitle} onBack={back} coin={wallet.coin.image}/>
 
 				<StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
@@ -287,10 +287,10 @@ export default ({ store, web3t }) => {
 												value={send.amountSend}
 												keyboardType="numeric"
 												placeholderTextColor="rgba(255,255,255,0.60)"
-											maxLength={14}
-
+											maxLength={20}
+                      maxFractionLength={9}
 										/>
-										
+
 									</Item>
 
 									{!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
@@ -307,7 +307,7 @@ export default ({ store, web3t }) => {
 												value={send.amountSendUsd}
 												keyboardType="numeric"
 												placeholderTextColor="rgba(255,255,255,0.60)"
-											maxLength={14}
+											maxLength={20}
 
 										/>
 									</Item>

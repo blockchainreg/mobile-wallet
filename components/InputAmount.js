@@ -17,7 +17,7 @@ export default class InputAmount extends Component{
     return value.split(',').join('').split('.', 2).join('.');
   }
 
-  static getFormattedValue(value) {
+  static getFormattedValue(value, maxFractionLength = 3) {
     let parts = value.split('.', 2);
     let fraction = parts.length === 2 ? "." + parts[1] : "";
     let int = parts[0];
@@ -46,7 +46,7 @@ export default class InputAmount extends Component{
       }
     }
     while (int.length > 1 && (int[0] === '0' || int[0] === ',')) int = int.slice(1);
-    fraction = Array.from(fraction).filter(c => c === '.' || isDigit(c)).join('').slice(0, 3);
+    fraction = Array.from(fraction).filter(c => c === '.' || isDigit(c)).join('').slice(0, maxFractionLength);
     return int + fraction;
   }
 
@@ -61,7 +61,7 @@ export default class InputAmount extends Component{
 
   handleTextChange = (text) => {
     const text2 = [text.slice(0, this.state.selection.end+1), '|', text.slice(this.state.selection.end+1)].join('');
-    const formatted = InputAmount.getFormattedValue(text2);
+    const formatted = InputAmount.getFormattedValue(text2, this.props.maxFractionLength);
     const newSelection = Math.max(0, formatted.indexOf("|"));
     const value = formatted.split('|').join('');
     this.setState({value});
@@ -98,7 +98,7 @@ export default class InputAmount extends Component{
         console.warn('Expected string value', props.value);
         return null;
       }
-      return {value: InputAmount.getFormattedValue(props.value)};
+      return {value: InputAmount.getFormattedValue(props.value, props.maxFractionLength)};
     }
     return null;
   }
