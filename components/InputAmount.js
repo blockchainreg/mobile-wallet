@@ -55,7 +55,7 @@ export default class InputAmount extends Component{
     if (this.state.fixSelection) {
       return;
     }
-  
+
     this.setState({selection});
   };
 
@@ -70,13 +70,13 @@ export default class InputAmount extends Component{
         start: newSelection,
         end: newSelection,
       };
-      this.inputRef.current.setNativeProps({selection});
+      // this.inputRef.current.setNativeProps({selection});
     }
     this.props.onChangeText && this.props.onChangeText(this.getNormalizedValue(value));
   };
 
   render() {
-    return <TextInput 
+    return <TextInput
       value={this.state.value}
       placeholder={this.props.placeholder}
       onSelectionChange={this.handleSelectionChange}
