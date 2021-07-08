@@ -1,19 +1,11 @@
 
-import React, { useState } from "react";
+import React from "react";
 import {
-  Left,
-  Right,
   Text,
   Button,
   View,
-  Icon,
   Item,
   Input,
-  Title,
-  Body,
-  Header,
-  Thumbnail,
-  Label,
   Toast
 } from "native-base";
 import { observe } from "mobx";
@@ -21,11 +13,7 @@ import styles from "../Styles.js";
 import RefreshControl from "../components/RefreshControl.js";
 import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
-import Spinner from "../utils/spinner.js";
-import StatusBar from "../components/StatusBar.js";
-import NetworkSlider from "../components/sliders/network-slider"
 import getLang from "../wallet/get-lang.js";
-import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import Images from "../Images.js";
 import {
@@ -34,6 +22,7 @@ import {
 import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
+import Header from '../components/Header'
 
 
 
@@ -85,6 +74,8 @@ const RadioButtons = () => {
                 placeholderTextColor="rgba(255,255,255,0.60)"
                 disabled={true}
               />
+
+
           </Item>
         </TouchableOpacity>
       </View>
@@ -116,10 +107,12 @@ const RadioButtons = () => {
                 placeholderTextColor="rgba(255,255,255,0.60)"
                 disabled={true}
               />
+
           </Item>
         </TouchableOpacity>
       </View>
-	  
+
+
         <TouchableOpacity
           style={checked === 'fast' ? styles.borderRadioCheck : styles.borderRadio}
           onPress={() => setChecked('fast')}>
@@ -154,35 +147,35 @@ const RadioButtons = () => {
 
 
 export default ({ store, web3t }) => {
-	const lang = getLang(store);
-	const {
-		feeToken,
-		recipientChange,
-		amountChange,
-		amountUsdChange, 
-	checkRecipientAddress,
-	} = sendFuncs(store, web3t);
+    const lang = getLang(store);
+    const {
+      feeToken,
+      recipientChange,
+      amountChange,
+      amountUsdChange, 
+	  checkRecipientAddress,
+    } = sendFuncs(store, web3t);
 
-	const wallets = walletsFuncs(store, web3t).wallets;
-	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+    const wallets = walletsFuncs(store, web3t).wallets;
+    const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 
-	const changePage = (tab) => () => {
-		store.current.page = tab;
-	};
+    const changePage = (tab) => () => {
+      store.current.page = tab;
+    };
 
-	const send = store.current.send;
-	const scanQRSend = () => {
-		if (isNaN(wallet.balance)) return;
-		store.current.returnPage = 'send';
-		return store.current.page = 'Scanner';
+    const send = store.current.send;
+    const scanQRSend = () => {
+      if (isNaN(wallet.balance)) return;
+      store.current.returnPage = 'send';
+      return store.current.page = 'Scanner';
 	}
 	
 	const btnWithdraw = ({ store, web3t }) => {
-	  const { send, beforeSendAnyway } = sendFuncs(store, web3t);
+	  const { send, sendAnyway } = sendFuncs(store, web3t);
 	  const withdraw = async () => {
 		try {
 		  store.current.send.error = "";
-			beforeSendAnyway();
+		  sendAnyway();
 		} catch (e) {
 		  console.error(e);
 		  Toast.show({text: e.message});
@@ -198,144 +191,132 @@ export default ({ store, web3t }) => {
 	  );
 	};
 
-	const InputAddressWithdraw = ({ send }) => (
-			<Item style={styles.borderItem}>
-				<Input
-						onChangeText={(text) => recipientChange(wrap(text))}
-						onBlur={() => checkRecipientAddress()}
-						returnKeyType="done"
-						selectionColor={"#fff"}
-						keyboardAppearance="dark"
-						placeholder={wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..."}
-						style={[styles.inputStyle, { fontSize: 18 }]}
-						value={send["to"]}
-						keyboardType={"default"}
-						placeholderTextColor="rgba(255,255,255,0.60)"
-				/>
-				<TouchableOpacity
-						onPress={scanQRSend}
-						style={{ backgroundColor: 'transparent',  width: 50}}
-				>
-					<Image
-							source={Images.scanImage}
-							style={styles.sizeIconBtn1}
-					/>
-				</TouchableOpacity>
-			</Item>
-	);
+    const InputAddressWithdraw = ({ send }) => (
+      <Item style={styles.borderItem}>
+        <Input
+          onChangeText={(text) => recipientChange(wrap(text))}
+          onBlur={() => checkRecipientAddress()}
+          returnKeyType="done"
+          selectionColor={"#fff"}
+          keyboardAppearance="dark"
+          placeholder={wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..."}
+          style={[styles.inputStyle, { fontSize: 18 }]}
+          value={send["to"]}
+          keyboardType={"default"}
+          placeholderTextColor="rgba(255,255,255,0.60)"
+        />
+        <TouchableOpacity
+          onPress={scanQRSend}
+          style={{ backgroundColor: 'transparent',  width: 50}}
+        >
+        <Image
+          source={Images.scanImage}
+          style={styles.sizeIconBtn1}
+        />
+        </TouchableOpacity>
+      </Item>
+    );
 
-	const SendButton = ({ send, error }) =>
-			btnWithdraw({ store, web3t})
-	;
+    const SendButton = ({ send, error }) =>
+        btnWithdraw({ store, web3t})
+    ;
 
-	const refreshToken = async (bool) => {
-		store.current.refreshingBalances = true;
-		web3t.refresh((err, data) => {
-			store.current.refreshingBalances = false;
-		});
-	};
-	const pad =
-			{ paddingTop: 10 };
-	const back = changePage("wallet", true);
-	const balance = wallet.balance;
-	const r_amount = roundNumber(balance, {decimals: 6});
-	const walletBalance = roundHuman(r_amount);
-	return (
-			<View style={styles.viewFlex}>
-				<Background fullscreen={true}/>
-				<Header transparent style={styles.mtAndroid}>
-					<Left style={styles.viewFlexHeader}>
-						<BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
-					</Left>
-					<Body style={styles.viewFlexHeader}>
-						<Title style={styles.titleBlack}>{lang.send}</Title>
-					</Body>
-					<Right style={styles.viewFlexHeader}>
-						<Thumbnail square small source={{ uri: wallet.coin.image }} />
-					</Right>
-				</Header>
-				<StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-				{RefreshControl({swipeRefresh:refreshToken, store, children:<>
-						<View style={styles.bodyBlockWallet}>
-							<View style={styles.bodyBlock3}>
-								<Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
-							</View>
-							<View style={styles.bodyBlock3}>
-								<Text style={styles.totalBalance}>
-									{walletBalance}
-									<Text style={styles.nameToken}>
-										{" "+(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
-									</Text>
-								</Text>
-							</View>
-							<View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
-								{NetworkSlider({store, web3t, wallet})}
-								<View style={styles.titleInputSend}>
-									<Text style={styles.titleInput1}>{lang["to"]}:</Text>
-								</View>
-								{InputAddressWithdraw({send: store.current.send})}
-								<View style={pad}></View>
+    const refreshToken = async (bool) => {
+      store.current.refreshingBalances = true;
+      web3t.refresh((err, data) => {
+        store.current.refreshingBalances = false;
+      });
+    };
+    const pad =
+      { paddingTop: 10 };
+    const back = changePage("wallet", true);
+  	const balance = wallet.balance;
+  	const r_amount = roundNumber(balance, {decimals: 6});
+  	const walletBalance = roundHuman(r_amount);
+    return (
+      <View style={styles.viewFlex}>
+        <Background fullscreen={true}/>
+            <Header title={lang.send} onBack={back} coin={wallet.coin.image}/>
+        {RefreshControl({swipeRefresh:refreshToken, store, children:<>
+          <View style={styles.bodyBlockWallet}>
+            <View style={styles.bodyBlock3}>
+              <Text style={styles.nameTokenSwiper1}>{lang.totalBalance}</Text>
+            </View>
+            <View style={styles.bodyBlock3}>
+              <Text style={styles.totalBalance}>
+                {walletBalance}
+                <Text style={styles.nameToken}>
+                  {" "+(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
+                </Text>
+              </Text>
+            </View>
+            <View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
+            <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang["to"]}:</Text>
+              </View>
+              {InputAddressWithdraw({send: store.current.send})}
+              <View style={pad}></View>
 
-								<View style={styles.titleInputSend}>
-									<Text style={styles.titleInput1}>{lang.amount}:</Text>
-								</View>
+              <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang.amount}:</Text>
+              </View>
 
-								<View >
-									<Item style={styles.borderItem}>
-										{/* <Label style={{ color: Images.color6}}>{wallet.coin.token.toUpperCase()}</Label> */}
-										<Input
-												onChangeText={(text) => amountChange(wrapNumber(text))}
-												returnKeyType="done"
-												autoCompleteType="off"
-												style={[styles.inputStyle, { fontSize: 18 }]}
-												selectionColor={"#fff"}
-												keyboardAppearance="dark"
-												placeholder="0.00"
-												value={send.amountSend}
-												keyboardType="numeric"
-												placeholderTextColor="rgba(255,255,255,0.60)"
-										/>
-									</Item>
-									{!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
-									<Item style={styles.borderItem}>
-										<Text style={{color: "white"}}>$ </Text>
-										<Input
-												onChangeText={(text) => amountUsdChange(wrapNumber(text))}
-												returnKeyType="done"
-												autoCompleteType="off"
-												style={[styles.inputStyle, { fontSize: 18}]}
-												selectionColor={"#fff"}
-												keyboardAppearance="dark"
-												placeholder="0.00"
-												value={send.amountSendUsd}
-												keyboardType="numeric"
-												placeholderTextColor="rgba(255,255,255,0.60)"
-										/>
-									</Item>
-									}
-								</View>
+                <View >
+                    <Item style={styles.borderItem}>
+                      {/* <Label style={{ color: Images.color6}}>{wallet.coin.token.toUpperCase()}</Label> */}
+                        <Input
+                          onChangeText={(text) => amountChange(wrapNumber(text))}
+                          returnKeyType="done"
+                          autoCompleteType="off"
+                          style={[styles.inputStyle, { fontSize: 18 }]}
+                          selectionColor={"#fff"}
+                          keyboardAppearance="dark"
+                          placeholder="0.00"
+                          value={send.amountSend}
+                          keyboardType="numeric"
+                          placeholderTextColor="rgba(255,255,255,0.60)"
+                        />
+                    </Item>
+				  {!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
+                    <Item style={styles.borderItem}>
+                        <Text style={{color: "white"}}>$ </Text>
+                        <Input
+                          onChangeText={(text) => amountUsdChange(wrapNumber(text))}
+                          returnKeyType="done"
+                          autoCompleteType="off"
+                          style={[styles.inputStyle, { fontSize: 18}]}
+                          selectionColor={"#fff"}
+                          keyboardAppearance="dark"
+                          placeholder="0.00"
+                          value={send.amountSendUsd}
+                          keyboardType="numeric"
+                          placeholderTextColor="rgba(255,255,255,0.60)"
+                        />
+                    </Item> 
+				  }
+               </View>
 
 
-								<View style={pad}></View>
+                <View style={pad}></View>
 
-								<View style={styles.titleInputSend}>
-									<Text style={styles.titleInput1}>{lang.fee}:</Text>
-								</View>
-								{/* <RadioButtons/> */}
-								<Text style={styles.textInputDownRight}>
-									{lang.fee} {send.amountSendFee}{" "} {feeToken} (${send.amountSendFeeUsd})
-								</Text>
-								<Text style={styles.error}>{send.error}</Text>
+              <View style={styles.titleInputSend}>
+                <Text style={styles.titleInput1}>{lang.fee}:</Text>
+              </View>
+              {/* <RadioButtons/> */}
+                <Text style={styles.textInputDownRight}>
+                  {lang.fee} {send.amountSendFee}{" "} {feeToken} (${send.amountSendFeeUsd})
+                </Text>
+                <Text style={styles.error}>{send.error}</Text>
 
-							</View>
-							<View style={styles.containerScreen}>
-								{/* <View style={styles.marginBtn}> */}
-								{SendButton({send: store.current.send, error: send.error})}
-								{/* </View> */}
-							</View>
-						</View>
-						<View style={styles.paddingWithdraw}/>
-					</>})}
-			</View>
-	);
+            </View>
+            <View style={styles.containerScreen}>
+              {/* <View style={styles.marginBtn}> */}
+                {SendButton({send: store.current.send, error: send.error})}
+              {/* </View> */}
+            </View>
+          </View>
+          <View style={styles.paddingWithdraw}/>
+        </>})}
+      </View>
+    );
 }

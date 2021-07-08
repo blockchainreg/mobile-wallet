@@ -68,48 +68,48 @@ export default ({ store, web3t }) => {
     }
 
     const renderTransaction = (transaction) => {
-	  	var r_amount = roundNumber(transaction.amount, {decimals: 2});
-	  	var amount = roundHuman(r_amount);
+	  var r_amount = roundNumber(transaction.amount, {decimals: 2});
+	  var amount = roundHuman(r_amount);
       return (
-				<ListItem
-					thumbnail
-					underlayColor={Images.color1}
-					onPress={() => {
-					showTransaction(transaction);
-					}}
-					key={transaction.token+transaction.tx+transaction.type}
-				>
-				<Left>{thumbnail(transaction.type)}</Left>
-				<Body style={{ paddingRight: 10 }}>
-					<Text style={styles.txtSizeHistory}>
-					{checkType(transaction.type)}
-					</Text>
-					<Text style={styles.constDate}>
-					{transaction.time
-						? moment(transaction.time * 1000).format(
-							"MMM D YYYY h:mm A"
-						)
-						: null
-					}
-					</Text>
-				</Body>
-				<Right>
-					<Text style={amountStyle(transaction.type)}>
-					{index(transaction.type)}
-					{amount}{"\u00A0"}{currency}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-					</Text>
-					{transaction.fee
-						?(
-							<Text style={styles.constDate}>
-							({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-							</Text>
-						)
-						: null
-					}
-				</Right>
-				</ListItem>
-			);
-		}
+		  <ListItem
+			  thumbnail
+			  underlayColor={Images.velasColor2}
+			  onPress={() => {
+				showTransaction(transaction);
+			  }}
+			  key={transaction.token+transaction.tx+transaction.type}
+		  >
+			<Left>{thumbnail(transaction.type)}</Left>
+			<Body style={{ paddingRight: 10 }}>
+			  <Text style={styles.txtSizeHistory}>
+				{checkType(transaction.type)}
+			  </Text>
+			  <Text style={styles.constDate}>
+				{transaction.time
+					? moment(transaction.time * 1000).format(
+						"MMM D YYYY h:mm A"
+					)
+					: null
+				}
+			  </Text>
+			</Body>
+			<Right>
+			  <Text style={amountStyle(transaction.type)}>
+				{index(transaction.type)}
+				{amount}{"\u00A0"}{currency}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+			  </Text>
+			  {transaction.fee
+				  ?(
+					  <Text style={styles.constDate}>
+						({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+					  </Text>
+				  )
+				  : null
+			  }
+			</Right>
+		  </ListItem>
+	  );
+	}
 
 
     return (
@@ -129,6 +129,9 @@ export default ({ store, web3t }) => {
                   />
                   <Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>
                 </Item>
+                <Button transparent onPress={applyFilter}>
+                  <Text style={{ color: "#fff"}}>{lang.filter}</Text>
+                </Button>
           </Header>
         ) : null}
 

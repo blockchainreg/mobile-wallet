@@ -9,7 +9,7 @@ var p2pk = require('../pubkey/')
 var p2pkh = require('../pubkeyhash/')
 
 function check (chunks, allowIncomplete) {
-  typeforce(types.Array, chunks)
+  void(types.Array, chunks)
   if (chunks.length < 1) return false
 
   var witnessScript = chunks[chunks.length - 1]
@@ -37,7 +37,7 @@ function check (chunks, allowIncomplete) {
 check.toJSON = function () { return 'witnessScriptHash input' }
 
 function encodeStack (witnessData, witnessScript) {
-  typeforce({
+  void({
     witnessData: [types.Buffer],
     witnessScript: types.Buffer
   }, {
@@ -49,8 +49,8 @@ function encodeStack (witnessData, witnessScript) {
 }
 
 function decodeStack (stack) {
-  typeforce(typeforce.Array, stack)
-  typeforce(check, stack)
+  void(typeforce.Array, stack)
+  void(check, stack)
   return {
     witnessData: stack.slice(0, -1),
     witnessScript: stack[stack.length - 1]

@@ -6,6 +6,7 @@
   calcFee = require('./api.js').calcFee;
   find = require('prelude-ls').find;
   round5 = require('./round5.js');
+  getLang = require('./get-lang.js');
   calcCryptoGeneric = function(name){
     return function(store, val){
       var send, wallet, token, rate, ref$;
@@ -62,6 +63,7 @@
       if (wallet == null) {
         return send.error = "Balance is not loaded";
       }
+    lang = getLang(store);
       
       /*
       * Restrict amount of decimals input more than specified in coin config.
@@ -99,7 +101,8 @@
         amount: resultAmountSend,
         feeType: feeType,
         txType: txType,
-        account: account
+        account: account,
+        store: store
       }, function(err, calcedFee){
         var ref$, txFee;
         if (err != null) {
@@ -139,7 +142,7 @@
           case wallet.balance !== '...':
             return "Balance is not yet loaded";
           case !(parseFloat(minus(wallet.balance, resultAmountSend)) < 0):
-            return "Insufficient funds";
+            return lang.insufficientFunds;
           default:
             return "";
           }

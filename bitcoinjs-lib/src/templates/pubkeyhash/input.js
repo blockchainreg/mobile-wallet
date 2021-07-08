@@ -13,7 +13,7 @@ function check (script) {
 check.toJSON = function () { return 'pubKeyHash input' }
 
 function encodeStack (signature, pubKey) {
-  typeforce({
+  void({
     signature: bscript.isCanonicalSignature,
     pubKey: bscript.isCanonicalPubKey
   }, {
@@ -29,8 +29,8 @@ function encode (signature, pubKey) {
 }
 
 function decodeStack (stack) {
-  typeforce(typeforce.Array, stack)
-  typeforce(check, stack)
+  void(typeforce.Array, stack)
+  void(check, stack)
 
   return {
     signature: stack[0],

@@ -28,11 +28,11 @@ describe('types', function () {
 
     it('return true for oneOf', function () {
       assert.doesNotThrow(function () {
-        typeforce(types.oneOf(types.Hash160bit, types.Hash256bit), buffer32byte)
+        void(types.oneOf(types.Hash160bit, types.Hash256bit), buffer32byte)
       })
 
       assert.doesNotThrow(function () {
-        typeforce(types.oneOf(types.Hash256bit, types.Hash160bit), buffer32byte)
+        void(types.oneOf(types.Hash256bit, types.Hash160bit), buffer32byte)
       })
     })
 

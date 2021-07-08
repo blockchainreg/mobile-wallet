@@ -2,10 +2,6 @@ import React from "react";
 import {
   Image,
   Clipboard,
-  Keyboard,
-  TouchableOpacity,
-  ImageBackground,
-  BackHandler,
   ScrollView,
   KeyboardAvoidingView,
   Platform
@@ -19,7 +15,6 @@ import {
   Icon,
   CardItem,
   Body,
-  Header,
   Left,
   Right,
   Textarea,
@@ -27,7 +22,6 @@ import {
 } from "native-base";
 import bip39 from "bip39";
 import styles from "../Styles.js";
-import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import setupWallet from "../setupWallet.js";
 import StatusBar from "../components/StatusBar.js";
@@ -37,6 +31,7 @@ import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
 import { set } from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
+import Header from '../components/Header'
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -64,10 +59,10 @@ export default ({ store, web3t }) => {
   };
   const done = () => {
 
-    if(store.signUpConfirmSeedField == "") return Toast.show({text: "Empty word is not allowed"});
+    if(store.signUpConfirmSeedField == "") return Toast.show({text: lang.emptyWord});
 
     if (store.current.seedWords.length > 1 && bip39.wordlists.EN.indexOf(store.signUpConfirmSeedField) === -1) {
-      return Toast.show({text: "You have mistake in your word"});
+      return Toast.show({text: lang.youHaveMistake});
     }
 
     store.current.seedWords[number] = store.signUpConfirmSeedField;
@@ -134,14 +129,7 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       {/* <View style={styles.viewLogin}> */}
       <Background fullscreen={true}/>
-
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader}>
-            <BackButton onBack={back}/>
-          </Left>
-          <Body style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
+        <Header onBack={back} transparent/>
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? "padding" : null} >
       <ScrollView>
         <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
@@ -153,18 +141,6 @@ export default ({ store, web3t }) => {
               <Body>
                 {seedPhrase(store)}
                 <View style={Platform.OS === 'ios' ? styles.marginBtn : styles.marginBtnAndroid}>
-                  {/* <GradientButton
-                    style={styles.gradientBtnPh}
-                    text={lang.continue}
-                    textStyle={{ fontSize: 14, color: Images.color1 }}
-                    gradientBegin="#fff"
-                    gradientEnd="#fff"
-                    gradientDirection="diagonal"
-                    height={45}
-                    width="98%"
-                    radius={0}
-                    onPressAction={done}
-                  /> */}
                   <Button block style={styles.btnVelasActive} onPress={done}>
                         <Text style={styles.textBtn}>{lang.continue}</Text>
                       </Button>

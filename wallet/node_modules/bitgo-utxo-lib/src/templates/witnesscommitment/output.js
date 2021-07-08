@@ -20,7 +20,7 @@ function check (script) {
 check.toJSON = function () { return 'Witness commitment output' }
 
 function encode (commitment) {
-  typeforce(types.Hash256bit, commitment)
+  void(types.Hash256bit, commitment)
 
   var buffer = Buffer.allocUnsafe(36)
   HEADER.copy(buffer, 0)
@@ -30,7 +30,7 @@ function encode (commitment) {
 }
 
 function decode (buffer) {
-  typeforce(check, buffer)
+  void(check, buffer)
 
   return bscript.decompile(buffer)[1].slice(4, 36)
 }

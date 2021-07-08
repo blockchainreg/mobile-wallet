@@ -14,7 +14,7 @@ var secp256k1 = ecurve.getCurveByName('secp256k1')
 
 // https://tools.ietf.org/html/rfc6979#section-3.2
 function deterministicGenerateK (hash, x, checkSig) {
-  typeforce(types.tuple(
+  void(types.tuple(
     types.Hash256bit,
     types.Buffer256bit,
     types.Function
@@ -75,7 +75,7 @@ function deterministicGenerateK (hash, x, checkSig) {
 var N_OVER_TWO = secp256k1.n.shiftRight(1)
 
 function sign (hash, d) {
-  typeforce(types.tuple(types.Hash256bit, types.BigInt), arguments)
+  void(types.tuple(types.Hash256bit, types.BigInt), arguments)
 
   var x = d.toBuffer(32)
   var e = BigInteger.fromBuffer(hash)
@@ -106,7 +106,7 @@ function sign (hash, d) {
 }
 
 function verify (hash, signature, Q) {
-  typeforce(types.tuple(
+  void(types.tuple(
     types.Hash256bit,
     types.ECSignature,
     types.ECPoint

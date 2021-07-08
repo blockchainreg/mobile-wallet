@@ -53,7 +53,7 @@ blockchain.faucetMany = function faucetMany (outputs, callback) {
   blockchain.addresses.unspents(kpAddress, function (err, unspents) {
     if (err) return callback(err)
 
-    typeforce([{
+    void([{
       txId: types.Hex,
       vout: types.UInt32,
       value: types.Satoshi

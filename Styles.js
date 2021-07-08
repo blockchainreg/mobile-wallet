@@ -225,41 +225,6 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-  viewMonoWallets: {
-    ...ifIphoneX(
-      {
-        flex: 1,
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: "75%",
-        zIndex: 1,
-      },
-      {
-        ...Platform.select({
-          ios: {
-            flex: 1,
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: hp("67%"),
-            zIndex: 1,
-          },
-          android: {
-            flex: 1,
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: hp("67%"),
-            zIndex: 0,
-          },
-        }),
-      }
-    ),
-  },
   // viewWalletBalance: {
   //   ...ifIphoneX(
   //     {
@@ -280,7 +245,7 @@ export default StyleSheet.create({
   viewWalletAbsolute: {
     ...ifIphoneX(
       {
-        top: hp("13%"), position: "absolute", width: '80%'
+        top: hp("15%"), position: "absolute", width: '80%'
       },
       {
         ...Platform.select({
@@ -671,7 +636,7 @@ export default StyleSheet.create({
     zIndex: 1,
   },
   arrowHeaderLeft: {
-    paddingLeft: 15,
+    // paddingLeft: 15,
   },
   arrowHeaderRight: {
     paddingRight: 15,
@@ -1224,6 +1189,7 @@ export default StyleSheet.create({
       {
         // paddingTop: hp("5%"),
         paddingBottom: hp("3%"),
+        backgroundColor: "pink"
       },
       {
         ...Platform.select({
@@ -1246,6 +1212,8 @@ export default StyleSheet.create({
       {
         // paddingTop: hp("5%"),
         paddingBottom: hp("3%"),
+        backgroundColor: "green"
+
       },
       {
         ...Platform.select({
@@ -1971,7 +1939,7 @@ export default StyleSheet.create({
   marginBtn: {
     alignItems: "center",
     width: "100%",
-    marginBottom: 200,
+    // marginBottom: 200,
     marginTop: 20,
   },
   marginBtnAndroid: {
@@ -1999,13 +1967,12 @@ export default StyleSheet.create({
     marginVertical: 30,
   },
   buttonInactive: {
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "#F2F2F290",
     marginVertical: 30,
     borderRadius: 0, 
-	opacity: 0.3
   },
   buttonTextInactive: {
-    color: "#C6C5C5",
+    color: "#00000050",
     fontWeight: Platform.OS === 'ios' ? "bold" : null,
     fontSize: 14,
     textTransform: "capitalize",
@@ -3407,7 +3374,6 @@ export default StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-around",
-    // backgroundColor: '#00000010',
   },
   activityIndicatorWrapper: {
     backgroundColor: "#00000030",
@@ -5926,8 +5892,7 @@ export default StyleSheet.create({
     borderRadius: 0,
     backgroundColor: 'white',
     marginVertical: 30,
-	opacity: 1,
-	zIndex: 1
+	  zIndex: 1
   },
   btnVelasCreate: {
     borderRadius: 0,
@@ -5964,5 +5929,22 @@ export default StyleSheet.create({
     borderRadius: 0,
     backgroundColor: 'white'
   },
-
+  headerBg: {
+    backgroundColor: Images.colorDarkBlue,
+    borderBottomColor: "transparent",
+  },
+  headerTitle: {
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaBold",
+    fontSize: 20,
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    width: "160%",
+    textAlign: 'center'
+  },
+  marginTopAndroid: {
+    marginTop: Platform.OS === 'ios' ? null : 30,
+  },
+  leftBtnColor: {
+    color: Images.colorGreen,
+  },
 });

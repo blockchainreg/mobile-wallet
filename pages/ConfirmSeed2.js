@@ -1,31 +1,23 @@
 import React from "react";
 import {
   Image,
-  ImageBackground,
   Platform
 } from "react-native";
-import GradientButton from "../components/GradientButton.js";
 import {
   Text,
   Button,
   View,
-  Icon,
-  Item,
-  Input,
   CardItem,
   Body,
-  Header,
-  Left,
-  Right,
   Toast
 } from "native-base";
-import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
 import Images from '../Images.js';
 import getLang from '../wallet/get-lang.js';
-import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
+import Header from '../components/Header'
+
 
 
 const DEV_SKIP = "...";
@@ -79,14 +71,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-        <Header transparent style={styles.mtIphoneX}>
-          <Left style={styles.viewFlexHeader}>
-            <BackButton onBack={back}/>
-          </Left>
-          <Body style={styles.viewFlexHeader} />
-          <Right style={styles.viewFlexHeader} />
-        </Header>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+        <Header onBack={back}/>
         <View style={styles.containerFlexStart}>
           <Image
             source={Images.confirmation}

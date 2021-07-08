@@ -28,7 +28,7 @@ function check (script, allowIncomplete) {
 check.toJSON = function () { return 'multi-sig output' }
 
 function encode (m, pubKeys) {
-  typeforce({
+  void({
     m: types.Number,
     pubKeys: [bscript.isCanonicalPubKey]
   }, {
@@ -49,7 +49,7 @@ function encode (m, pubKeys) {
 
 function decode (buffer, allowIncomplete) {
   var chunks = bscript.decompile(buffer)
-  typeforce(check, chunks, allowIncomplete)
+  void(check, chunks, allowIncomplete)
 
   return {
     m: chunks[0] - OP_INT_BASE,

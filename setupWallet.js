@@ -7,6 +7,7 @@ import eth from "./registry/eth.json";
 import ltc from "./registry/ltc.json";
 import usdt from "./registry/usdt.json";
 import {installPluginWORefresh} from "./wallet/install-plugin.js";
+import getLang from './wallet/get-lang.js';
 
 
 module.exports = (store, web3t) => {
@@ -41,10 +42,11 @@ module.exports = (store, web3t) => {
       preinstallCoins([eth, /*ltc, */usdt], cb)
     })
   }
+  const lang = getLang(store);
 
   function initWallet(cb) {
       SecureStore.deleteItemAsync("localAuthToken")
-      spin(store, `Setting up your wallet`, (cb) => web3t.init(function(err, data) {
+      spin(store, lang.settingUp, (cb) => web3t.init(function(err, data) {
           if (err) {
             return cb(err);
           }

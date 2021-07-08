@@ -6,24 +6,14 @@ import * as Permissions from "expo-permissions";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import walletFuncs from "../wallet/wallet-funcs.js";
 import navigate from "../wallet/navigate.js";
-import BackButton, { HiddenBackButton } from "../components/BackButton.js";
 import styles from "../Styles.js";
-import StatusBar from "../components/StatusBar.js";
 import {
-  Content,
-  ListItem,
-  Left,
-  Body,
-  Right,
   Text,
   View,
-  Title,
-  Icon,
-  Header,
-  Separator,
-  Button,
 } from "native-base";
 import Images from '../Images.js';
+import Header from '../components/Header'
+
 
 
 function Scanner({ onScan }) {
@@ -97,14 +87,6 @@ function Scanner({ onScan }) {
 
   return (
     <View style={styles.viewFlex}>
-      {/* <StatusBar translucent={true} backgroundColor={"transparent"} />
-      <Header transparent style={styles.mtAndroid}>
-        <Left style={styles.viewFlexHeader}>
-          <BackButton onBack={onBack} />
-        </Left>
-        <Body style={styles.viewFlexHeader} />
-        <Right style={styles.viewFlexHeader} />
-      </Header> */}
 
       {/* <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
@@ -119,13 +101,8 @@ function Scanner({ onScan }) {
         onBarCodeScanned={handleBarCodeScanned}
         style={[StyleSheet.absoluteFill, styles.containerBarCode]}
       >
-        <Header transparent style={[styles.mtAndroid, {backgroundColor: "transparent", borderBottomColor: "transparent"}]}>
-        <Left style={styles.viewFlexHeader}>
-          <BackButton onBack={onBack} />
-        </Left>
-        <Body style={styles.viewFlexHeader} />
-        <Right style={styles.viewFlexHeader} />
-      </Header>
+            <Header onBack={onBack} transparent/>
+      
         <View style={styles.layerTop} />
         <View style={styles.layerCenter}>
           <View style={styles.layerLeft} />
