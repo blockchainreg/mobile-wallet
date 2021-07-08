@@ -26,7 +26,7 @@ class StakingAccountModel {
 
   get validatorAddress() {
     const { account } = this.parsedAccoount;
-    if (!account.data.parsed.info.stake) {
+    if (!account || !account.data.parsed.info || !account.data.parsed.info.stake) {
       return null;
     }
     const { voter } = account.data.parsed.info.stake.delegation;
@@ -141,7 +141,7 @@ class StakingAccountModel {
     this.connection = connection;
     const { account } = parsedAccoount;
     const { lamports } = account;
-    if (account.data.parsed.info.stake) {
+    if (account.data.parsed.info && account.data.parsed.info.stake) {
       const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
       this.isActivated = deactivationEpoch === '18446744073709551615';
     } else {
@@ -239,11 +239,10 @@ class StakingAccountModel {
   async getLastEpoch() {
     const info = await this.getEpochInfo();
     const { epoch } = info;
-
-    if (this.isActivated) {
+    const { account } = this.parsedAccoount;
+    if (this.isActivated || !account || !account.data.parsed.info || !account.data.parsed.info.stake) {
       return epoch;
     }
-    const { account } = this.parsedAccoount;
     const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
     return Math.min(parseInt(deactivationEpoch) + 1, epoch);
   }

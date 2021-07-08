@@ -46,7 +46,7 @@ class RewardsStore {
 
     for (let reward of blockResult.rewards) {
       let account = accountMap.get(reward.pubkey);
-      if (!account) continue;
+      if (!account || !account.account.data.parsed.info || !account.account.data.parsed.info.stake) continue;
       const { voter } = account.account.data.parsed.info.stake.delegation;
       if (!tmpMap.has(voter)) {
         tmpMap.set(voter, []);
