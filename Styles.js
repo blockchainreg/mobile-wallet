@@ -2641,24 +2641,13 @@ export default StyleSheet.create({
     ),
   },
   touchables: {
-    ...ifIphoneX(
-      {
         alignItems: "center",
         justifyContent: "center",
-        width: 56,
-        height: 56,
+        width: 50,
+        height: 50,
         backgroundColor: Images.colorOrange,
         borderRadius: 30,
-      },
-      {
-        alignItems: "center",
-        justifyContent: "center",
-        width: 56,
-        height: 56,
-        backgroundColor: Images.colorOrange,
-        borderRadius: 30,
-      }
-    ),
+     
   },
   headerSearchBar: {
     // paddingBottom: 40,
