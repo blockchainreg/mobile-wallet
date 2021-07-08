@@ -33,6 +33,7 @@ import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 import Header from '../components/Header'
+import InputAmount from '../components/InputAmount'
 
 
 
@@ -244,17 +245,7 @@ export default ({ store, web3t }) => {
 	return (
 			<View style={styles.viewFlex}>
 				<Background fullscreen={true}/>
-				{/* <Header transparent style={styles.mtAndroid}>
-					<Left style={styles.viewFlexHeader}>
-						<BackButton onBack={back} style={styles.arrowHeaderIconBlack} />
-					</Left>
-					<Body style={styles.viewFlexHeader}>
-						<Title style={styles.titleBlack}>{ScreenTitle}</Title>
-					</Body>
-					<Right style={styles.viewFlexHeader}>
-						<Thumbnail square small source={{ uri: wallet.coin.image }} />
-					</Right>
-				</Header> */}
+				
             <Header title={ScreenTitle} onBack={back} coin={wallet.coin.image}/>
 
 				<StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
@@ -284,35 +275,40 @@ export default ({ store, web3t }) => {
 								</View>
 
 								<View >
-									<Item style={styles.borderItem}>
-										{/* <Label style={{ color: Images.color6}}>{wallet.coin.token.toUpperCase()}</Label> */}
-										<Input
+									<Item style={[styles.borderItem, {height: 50}]}>
+										<InputAmount
 												onChangeText={(text) => amountChange(wrapNumber(text))}
 												returnKeyType="done"
 												autoCompleteType="off"
-												style={[styles.inputStyle, { fontSize: 18 }]}
+												style={[styles.inputStyle, { fontSize: 18, width: "100%" }]}
 												selectionColor={"#fff"}
 												keyboardAppearance="dark"
 												placeholder="0.00"
 												value={send.amountSend}
 												keyboardType="numeric"
 												placeholderTextColor="rgba(255,255,255,0.60)"
+											maxLength={14}
+
 										/>
+										
 									</Item>
+
 									{!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
-									<Item style={styles.borderItem}>
+									<Item style={[styles.borderItem, {height: 50}]}>
 										<Text style={{color: "white"}}>$ </Text>
-										<Input
+										<InputAmount
 												onChangeText={(text) => amountUsdChange(wrapNumber(text))}
 												returnKeyType="done"
 												autoCompleteType="off"
-												style={[styles.inputStyle, { fontSize: 18}]}
+												style={[styles.inputStyle, { fontSize: 18, width: "100%"}]}
 												selectionColor={"#fff"}
 												keyboardAppearance="dark"
 												placeholder="0.00"
 												value={send.amountSendUsd}
 												keyboardType="numeric"
 												placeholderTextColor="rgba(255,255,255,0.60)"
+											maxLength={14}
+
 										/>
 									</Item>
 									}
