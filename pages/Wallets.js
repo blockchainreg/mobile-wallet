@@ -12,7 +12,7 @@ import {
   Title,
   Icon,
   Content,
-  // Header, 
+  // Header,
   Toast,
 } from "native-base";
 import StatusBar from "../components/StatusBar.js";
@@ -79,9 +79,11 @@ const wallets = (store, web3t) => {
           store.current.wallet = wallet.coin.token;
           store.current.walletIndex = wallets.indexOf(wallet);
           store.current.filter.length = 0;
-          store.current.filter.push("IN");
-          store.current.filter.push("OUT");
-          store.current.filter.push(wallet.coin.token);
+          if (store.current.filter.push) {
+            store.current.filter.push("IN");
+            store.current.filter.push("OUT");
+            store.current.filter.push(wallet.coin.token);
+          }
           store.current.filterVal.temp = "";
           store.current.filterVal.apply = "";
           applyTransactions(store);
@@ -234,7 +236,7 @@ export default ({ store, web3t }) => {
 
         </View>
 
-        <View style={style.viewMonoWallets}> 
+        <View style={style.viewMonoWallets}>
             <ScrollView
               refreshControl={
                 <RefreshControl

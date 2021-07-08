@@ -9,7 +9,8 @@ export default class InputAmount extends Component{
   state = {
     selection: {start: 0, end: 0},
     value: "",
-    fixSelection: null
+    fixSelection: null,
+    skipOnChange: false
   };
   inputRef = React.createRef();
 
@@ -53,6 +54,7 @@ export default class InputAmount extends Component{
   handleSelectionChange = (e) => {
     const {selection} = e.nativeEvent;
     if (this.state.fixSelection) {
+      this.setState({fixSelection: false});
       return;
     }
 
@@ -60,6 +62,10 @@ export default class InputAmount extends Component{
   };
 
   handleTextChange = (text) => {
+    if (this.state.skipOnChange) {
+      this.setState({skipOnChange: false});
+      return
+    }
     const text2 = [text.slice(0, this.state.selection.end+1), '|', text.slice(this.state.selection.end+1)].join('');
     const formatted = InputAmount.getFormattedValue(text2, this.props.maxFractionLength);
     const newSelection = Math.max(0, formatted.indexOf("|"));
@@ -70,14 +76,28 @@ export default class InputAmount extends Component{
         start: newSelection,
         end: newSelection,
       };
-      // this.inputRef.current.setNativeProps({selection});
+      this.setState({selection, fixSelection: true});
     }
     this.props.onChangeText && this.props.onChangeText(this.getNormalizedValue(value));
   };
 
+  handleKeyPress = (event) => {
+    if (event.nativeEvent.key === ',') {
+      const {value} = this.state;
+      const {start, end} = this.state.selection;
+      const newValue = [value.slice(0, this.state.selection.start), '.', value.slice(this.state.selection.end)].join('');
+      this.handleTextChange(newValue);
+      this.setState({skipOnChange: true});
+      setTimeout(() => {
+        this.setState({skipOnChange: false});
+      }, 1);
+    }
+  }
+
   render() {
     return <TextInput
       value={this.state.value}
+      onKeyPress={this.handleKeyPress}
       placeholder={this.props.placeholder}
       onSelectionChange={this.handleSelectionChange}
       onChangeText={this.handleTextChange}
