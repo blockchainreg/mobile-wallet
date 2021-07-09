@@ -19,7 +19,7 @@ import Common from "ethereumjs-common";
 
 // const  = mobx;
 
-
+const MIN_VALIDATOR_STAKE = new BN('1000000000000000', 10);
 class StakingStore {
   validators = null;
   accounts = null;
@@ -72,7 +72,7 @@ class StakingStore {
     if (this.validators.length > 0) {
       await when(() => this.validators[0].apr !== null);
       this.validators.replace(
-        this.validators.slice().sort((v1, v2) => v2.apr - v1.apr)
+        this.validators.slice().sort((v1, v2) => v2.apr - v1.apr - (v1.activeStake && v1.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0) + (v2.activeStake && v2.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0))
       );
     }
     this.isRefreshing = false;
