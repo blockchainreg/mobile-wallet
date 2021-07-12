@@ -72,7 +72,13 @@ class StakingStore {
     if (this.validators.length > 0) {
       await when(() => this.validators[0].apr !== null);
       this.validators.replace(
-        this.validators.slice().sort((v1, v2) => v2.apr - v1.apr - (v1.activeStake && v1.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0) + (v2.activeStake && v2.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0))
+        this.validators.slice().sort((v1, v2) =>
+          v2.apr - v1.apr
+          - (v1.activeStake && v1.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0)
+          + (v2.activeStake && v2.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0)
+          - (v1.status === 'active' ? 2000 : 0)
+          + (v2.status === 'active' ? 2000 : 0)
+        )
       );
     }
     this.isRefreshing = false;
@@ -302,7 +308,7 @@ class StakingStore {
           transaction,
           [payAccount]
       );
-      console.log("result !", result);
+      console.log("Transaction result", result);
 
       return result;
 
@@ -399,9 +405,7 @@ class StakingStore {
       stakePubkey,
     };
     if (!swapAmount.isZero()) {
-      console.log('Start swap');
       await this.swapEvmToNative(swapAmount);
-      console.log('End swap');
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
     transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
@@ -411,9 +415,7 @@ class StakingStore {
       votePubkey,
     }));
 
-    console.log('Start stake');
     const result = await this.sendTransaction(transaction);
-    console.log('End stake result', result);
     await this.reloadWithRetry();
     return result;
   }

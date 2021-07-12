@@ -235,7 +235,6 @@ class ValidatorModel {
     }
     this.connection = connection;
     this.solanaValidator = solanaValidator;
-    // console.log(solanaValidator);
     decorate(this, {
       solanaValidator: observable,
       status: observable,

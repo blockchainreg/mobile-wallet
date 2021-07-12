@@ -147,7 +147,6 @@ class StakingAccountModel {
     } else {
       this.isActivated = false;
     }
-    // console.log(this.parsedAccoount.pubkey.toBase58())
     this.myStake = new BN(lamports+'', 10);
     this.loadRewards();
 

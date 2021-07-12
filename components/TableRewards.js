@@ -21,9 +21,6 @@ export default observer(({ store }) => {
   const { stakingStore } = store;
 
   const rewards = stakingStore.getRewards();
-  console.log('rewards', rewards)
-  // console.log('rewards.isLoading', rewards.isLoading === '1Loaded')
-
   const columns = [
     lang.epoch || "# Epoch",
     lang.reward || "Reward",
