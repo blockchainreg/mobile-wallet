@@ -57,7 +57,7 @@ export default ({ store, web3t, props }) => {
             {lang.exitValidatorTitle || "Withdrawal request has been submitted successfully. It will start cooling down from the next epoch."}
           </Text>
           <Text style={{ ...style.title, marginTop: 20 }}>
-            {lang.exitValidatorSubTitle || "Please navigate the withdrawals tab to monitor the progress."}
+            {lang.exitValidatorSubTitle || "Please navigate to the withdrawals tab to monitor the progress."}
           </Text>
         </View>
         <View style={style.buttonBottom}>

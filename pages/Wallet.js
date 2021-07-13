@@ -298,7 +298,7 @@ const style = StyleSheet.create({
   alignItems: 'flex-start',
   },
   viewMonoWallets: {
-    flex: 0.7,
+    flex: 0.65,
     backgroundColor: Images.velasColor4
   },
   balance: {

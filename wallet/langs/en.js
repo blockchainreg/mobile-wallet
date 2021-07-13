@@ -204,7 +204,7 @@
 	stakingEnterance: "Staking Enterance",
 	noticeExitValidator: "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one.",
 	exitValidator: "Exit from Validator",
-	exitValidatorSubTitle: "Please navigate the withdrawals tab to monitor the progress.",
+	exitValidatorSubTitle: "Please navigate to the withdrawals tab to monitor the progress.",
 	exitValidatorTitle: "Withdrawal request has been submitted successfully. It will start cooling down from the next epoch.",
 	epoch: "# Epoch",
 	reward: "Reward",
