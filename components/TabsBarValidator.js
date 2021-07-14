@@ -15,6 +15,7 @@ import spin from "../utils/spin.js";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 
+
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
 
@@ -80,6 +81,7 @@ export default ({ store, web3t }) => {
         Vibration.vibrate(DURATION);
         Alert.alert(lang.copied, "", [{ text: lang.ok }]);
       };
+      
       const Stake = () => {
         return (
         <ScrollView>
@@ -124,7 +126,7 @@ export default ({ store, web3t }) => {
           </View>
             <ButtonBlock
               type={"STAKE_MORE"}
-              text={details.totalActiveStake ? lang.stakeMore || "Stake More" : <ActivityIndicator/>}
+              text={details.totalActiveStake ? lang.stakeMore || "Stake More" : "Loading..."}
               onPress={changePage("sendStake")}
             />
             { details.totalAvailableForWithdrawRequestStake && details.totalAvailableForWithdrawRequestStake.gte(stakingStore.rent) &&

@@ -8,6 +8,7 @@ import Images from "../Images.js";
 import StakeItem from "../components/StakeItem.js";
 import Header from "../components/Header.js";
 // import Spinner from "../components/Spinner.js";
+import { SkypeIndicator } from 'react-native-indicators';
 
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
@@ -71,7 +72,8 @@ export default ({ store, web3t, props }) => {
             return (
               <Content contentContainerStyle={{flex: 1, alignItems: 'center',}}  >
                 {/* <View style={[style.activityIndicatorWrapper, {backgroundColor: "#ffffff30"}]}> */}
-                  <ActivityIndicator color={"white"} size={'small'}/>
+                  {/* <ActivityIndicator color={"white"} size={'small'}/> */}
+                  <SkypeIndicator color={"white"}/>
                 {/* </View> */}
               </Content>
             );
