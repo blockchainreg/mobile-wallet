@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Text, Content, List, ListItem} from "native-base";
+import { Container, Text, Content, List, ListItem, Grid, Col, Row} from "native-base";
 import Footer from "./Footer.js";
 import { StyleSheet, Dimensions, View, RefreshControl, ActivityIndicator, Modal, Platform } from "react-native";
 import { Observer } from "mobx-react"
@@ -59,7 +59,7 @@ export default ({ store, web3t, props }) => {
         <RefreshControl
         refreshing={false}
         onRefresh={refreshStakeItem}
-        tintColor="#fff"
+        tintColor="transparent"
         />
       }
       >
@@ -69,12 +69,11 @@ export default ({ store, web3t, props }) => {
 
           if (!filterStake || !filterTotalStaked || stakingStore.isRefreshing) {
             return (
-              <View style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <ActivityIndicator color={"white"} size={'large'}/>
-              </View>
+              <Content contentContainerStyle={{flex: 1, alignItems: 'center',}}  >
+                {/* <View style={[style.activityIndicatorWrapper, {backgroundColor: "#ffffff30"}]}> */}
+                  <ActivityIndicator color={"white"} size={'small'}/>
+                {/* </View> */}
+              </Content>
             );
           }
           const renderItemsMyStake = filterStake.map((el) => (
@@ -144,18 +143,28 @@ const style = StyleSheet.create({
   },
   modalBackground: {
     flex: 1,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
+    // alignItems: "center",
+    // flexDirection: "row",
+    // justifyContent: "center",
     backgroundColor: Images.velasColor4
   },
   activityIndicatorWrapper: {
+    flex: 1,
     backgroundColor: "#00000030",
     height: 100,
     width: 100,
     borderRadius: 10,
-    display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
+  containerIndicator: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  horizontalIndicator: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
+
 });
