@@ -32,6 +32,7 @@ export default ({ store, web3t, props }) => {
       async (cb) => {
         try {
           const result = await stakingStore.stake(ADDRESS, amount);
+          console.log('Stake done!');
           cb(null, result);
         } catch(err) {
           cb(err);
@@ -45,6 +46,7 @@ export default ({ store, web3t, props }) => {
         console.error(err);
         return;
       }
+      console.log('Switch page!');
       changePage("stakingEnterance")();
       store.amount = null;
     });
