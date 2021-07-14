@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert, ScrollView } from "react-native";
+import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert, ScrollView, ActivityIndicator } from "react-native";
 import { Icon, Tab, Tabs, TabHeading, ScrollableTab, Container } from "native-base";
 import { Observer, observer } from "mobx-react";
 import Images from "../Images";
@@ -20,7 +20,7 @@ const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
-  
+
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
@@ -32,7 +32,7 @@ export default ({ store, web3t }) => {
     { key: 'third', title: 'Rewards', type: "REWARDS"}
   ]);
 
-  
+
   const lang = getLang(store);
   return (
     <Observer>{() => {
@@ -45,7 +45,7 @@ export default ({ store, web3t }) => {
 
       const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
       const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
-    
+
       const ADDRESS = details.address;
       const onPressWithdraw = async () => {
         if (!details.availableWithdrawRequested) return null;
@@ -71,7 +71,7 @@ export default ({ store, web3t }) => {
           }
           changePage("confirmWithdrawal")();
         });
-        
+
       }
 
       const copyAddress = async () => {
@@ -124,7 +124,7 @@ export default ({ store, web3t }) => {
           </View>
             <ButtonBlock
               type={"STAKE_MORE"}
-              text={lang.stakeMore || "Stake More"}
+              text={details.totalActiveStake ? lang.stakeMore || "Stake More" : <ActivityIndicator/>}
               onPress={changePage("sendStake")}
             />
             { details.totalAvailableForWithdrawRequestStake && details.totalAvailableForWithdrawRequestStake.gte(stakingStore.rent) &&
@@ -223,7 +223,7 @@ export default ({ store, web3t }) => {
           }
           store={store}
         />
-      {!details.myStake.isZero() ? 
+      {!details.myStake.isZero() ?
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
@@ -285,7 +285,7 @@ const style = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 15,
   },
-  btnBottom: {  
+  btnBottom: {
     marginBottom: 20
   },
 });
