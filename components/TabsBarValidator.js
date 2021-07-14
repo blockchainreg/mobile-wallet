@@ -81,8 +81,7 @@ export default ({ store, web3t }) => {
         Vibration.vibrate(DURATION);
         Alert.alert(lang.copied, "", [{ text: lang.ok }]);
       };
-      
-      const Stake = () => {
+      const Stake = observer(() => {
         return (
         <ScrollView>
           <View style={style.container}>
@@ -138,8 +137,8 @@ export default ({ store, web3t }) => {
             }
         </ScrollView>
         )
-      };
-      const Withdrawals  = () => {
+      });
+      const Withdrawals  = observer(() => {
         return (
         <ScrollView>
           <View style={style.container}>
@@ -167,7 +166,7 @@ export default ({ store, web3t }) => {
           }
         </ScrollView>
         )
-      };
+      });
       const Rewards  = () => {
         return (
         <>
