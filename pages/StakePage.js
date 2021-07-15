@@ -71,10 +71,9 @@ export default ({ store, web3t, props }) => {
           if (!filterStake || !filterTotalStaked || stakingStore.isRefreshing) {
             return (
               <Content contentContainerStyle={{flex: 1, alignItems: 'center',}}  >
-                {/* <View style={[style.activityIndicatorWrapper, {backgroundColor: "#ffffff30"}]}> */}
-                  {/* <ActivityIndicator color={"white"} size={'small'}/> */}
+                <View style={{marginTop: 10}}>
                   <SkypeIndicator color={"white"}/>
-                {/* </View> */}
+                </View>
               </Content>
             );
           }

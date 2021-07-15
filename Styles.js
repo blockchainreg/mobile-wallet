@@ -4753,7 +4753,7 @@ export default StyleSheet.create({
     color: "#fff",
   },
   sizeIconBtn: {
-    width: normalize(64 / 2.),
+    width: normalize(64 / 2.5),
     height: normalize(36 /2.5),
     left: normalize(1),
   },
