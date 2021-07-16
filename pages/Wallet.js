@@ -228,6 +228,9 @@ export default ({ store, web3t }) => {
                   <Balance wallet={wallet}/>
                 </View>
               </View>
+
+              <View style={style.emptyBlock}/>
+
                 <View style={style.buttons}>
                   <View style={{ alignItems: "center" }}>
                     <TouchableOpacity
@@ -283,7 +286,7 @@ export default ({ store, web3t }) => {
                   </View>
                 </View>
 
-
+          <View style={style.emptyBlock}/>
           {getTxContainer()}
 
       </View>
@@ -298,8 +301,8 @@ const style = StyleSheet.create({
   alignItems: 'flex-start',
   },
   viewMonoWallets: {
-    flex: 0.65,
-    backgroundColor: Images.velasColor4
+    flex: 0.70,
+    backgroundColor: Images.velasColor4,
   },
   balance: {
     fontSize: 18, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
@@ -312,7 +315,10 @@ const style = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flex: Platform.OS === 'ios' ? 0.15 : 0.20,
-
+  },
+  emptyBlock: {
+    height: 10, 
+    backgroundColor: "transparent"
   }
 
 });

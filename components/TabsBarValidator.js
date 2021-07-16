@@ -3,7 +3,7 @@ import { StyleSheet, View, Dimensions, Text, Clipboard, Vibration, Alert, Scroll
 import { Icon, Tab, Tabs, TabHeading, ScrollableTab, Container } from "native-base";
 import { Observer, observer } from "mobx-react";
 import Images from "../Images";
-import { ChartIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
+import { ChartIcon, PercentIcon, PlusIcon, ValidatorsIcon, VelasIcon } from "../svg/index";
 import ValidatorCard from "./ValidatorCard";
 import ButtonBlock from "../components/ButtonBlock.js";
 import DetailsValidatorComponent from "../components/DetailsValidatorComponent.js";
@@ -98,7 +98,8 @@ export default ({ store, web3t }) => {
               value={QUALITY_VALUE}
               subtitle={lang.quality || "QUALITY"}
               info={"0 means average"}
-              cardSymbol={"+"}
+              cardIcon={<PlusIcon />}
+
             />
             <ValidatorCard
               value={ANNUAL_RATE}
@@ -107,7 +108,7 @@ export default ({ store, web3t }) => {
                 lang.info3 ||
                 "APR is calculated based on the results of the previous epoch"
               }
-              cardSymbol={"%"}
+              cardIcon={<PercentIcon />}
             />
             <ValidatorCard
               value={ACTIVE_STAKE}
@@ -120,7 +121,7 @@ export default ({ store, web3t }) => {
               link={
                 "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown"
               }
-              cardSymbol={"%"}
+              cardIcon={<PercentIcon />}
             />
           </View>
             <ButtonBlock
@@ -143,14 +144,14 @@ export default ({ store, web3t }) => {
         <ScrollView>
           <View style={style.container}>
             <ValidatorCard
-              value={WITHDRAW_REQUESTED ? formatStakeAmount(WITHDRAW_REQUESTED) : ''}
+              value={WITHDRAW_REQUESTED ? formatStakeAmount(WITHDRAW_REQUESTED) : '...'}
               subtitle={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
               cardIcon={<VelasIcon />}
               info={lang.totalWithdraw || "TOTAL WITHDRAW REQUESTED"}
               subtitleSmall
             />
             <ValidatorCard
-              value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : ''}
+              value={AVAILABLE_WITHDRAW ? formatStakeAmount(AVAILABLE_WITHDRAW) : '...'}
               subtitle={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}
               cardIcon={<VelasIcon />}
               info={lang.availableWithdraw || "AVAILABLE FOR WITHDRAW"}

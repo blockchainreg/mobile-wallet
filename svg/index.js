@@ -10,3 +10,5 @@ export * from './wallet-icon';
 export * from './history-icon';
 export * from './settings-icon';
 export * from './velas-icon';
+export * from './plus-icon';
+export * from './percent-icon';

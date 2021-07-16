@@ -73,7 +73,7 @@ export default (props) => {
 
       <CardItem style={style.bgCard}>
         <Left style={{ flex: 0 }} />
-        <Body style={{ flex: 1, height: 20 }}>
+        <Body style={{ flex: 1 }}>
           {props.cardSymbol && (
             <Text style={style.textHeader}>{props.cardSymbol}</Text>
           )}
