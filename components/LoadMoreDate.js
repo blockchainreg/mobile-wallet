@@ -47,10 +47,10 @@ export default ({ store, web3t }) => {
     const currency = (wallet.coin.nickname != null ? wallet.coin.nickname : wallet.coin.token).toUpperCase();
     const checkType = ({type, to, txType}) => {
 		if (txType) {
-			return <Text style={styles.txtSizeHistory}>{txType}</Text>;
+			return <Text style={[styles.txtSizeHistory, {textTransform: "capitalize" }]}>{txType}</Text>;
 		}
 		if (to === "V8sA8Q5jR44E4q6S59eUhhSJQiRBBFdZA8" || to === "0x56454c41532d434841494e000000000053574150")
-			return <Text style={styles.txtSizeHistory}>Swap EVM to Native</Text>;
+			return <Text style={styles.txtSizeHistory}>{lang.swapEvm || "Swap EVM to Native"}</Text>;
 
 		switch (type) {
         case "IN":

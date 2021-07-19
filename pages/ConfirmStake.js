@@ -28,7 +28,7 @@ export default ({ store, web3t, props }) => {
     // if (stakingStore.validators === null) return;
     spin(
       store,
-      'Staking in progress',
+      lang.progressStaking || 'Staking in progress',
       async (cb) => {
         try {
           const result = await stakingStore.stake(ADDRESS, amount);
@@ -41,7 +41,7 @@ export default ({ store, web3t, props }) => {
     )((err, result) => {
       if (err) {
         setTimeout(() => {
-          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
+          Alert.alert(lang.wrong || 'Something went wrong. Please contact support. You can still use web interface for full staking support.');
         }, 1000);
         console.error(err);
         return;

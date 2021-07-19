@@ -25,16 +25,17 @@ export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-
+  
   const [index, setIndex] = React.useState(0);
+  const lang = getLang(store);
   const [routes] = React.useState([
-    { key: 'first', title: 'Stake', type: "STAKE" },
-    { key: 'second', title: 'Withdrawals', type: "WITHDRAW" },
-    { key: 'third', title: 'Rewards', type: "REWARDS"}
+    { key: 'first', title: lang.tabStake || "Stake", type: "STAKE" },
+    { key: 'second', title: lang.tabWithdrawals || 'Withdrawals', type: "WITHDRAW" },
+    { key: 'third', title: lang.tabRewards || 'Rewards', type: "REWARDS"}
   ]);
 
 
-  const lang = getLang(store);
+  // const lang = getLang(store);
   return (
     <Observer>{() => {
       if (stakingStore.isRefreshing) return null;
@@ -52,7 +53,7 @@ export default ({ store, web3t }) => {
         if (!details.availableWithdrawRequested) return null;
         spin(
           store,
-          'Withdrawal in progress',
+          lang.progressWithdraw || 'Withdrawal in progress',
           async (cb) => {
           try {
             const result = await stakingStore.withdrawRequested(ADDRESS);
@@ -65,8 +66,8 @@ export default ({ store, web3t }) => {
         )((err, result, result1) => {
           if (err) {
             setTimeout(() => {
-          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
-        }, 1);
+          Alert.alert(lang.wrong || 'Something went wrong. Please contact support. You can still use web interface for full staking support.');
+        }, 1000);
             console.error(err);
             return;
           }
@@ -97,7 +98,7 @@ export default ({ store, web3t }) => {
             <ValidatorCard
               value={QUALITY_VALUE}
               subtitle={lang.quality || "QUALITY"}
-              info={"0 means average"}
+              info={lang.infoMeans || "0 means average"}
               cardIcon={<PlusIcon />}
 
             />
@@ -249,8 +250,8 @@ export default ({ store, web3t }) => {
           <ValidatorCard
             value={QUALITY_VALUE}
             subtitle={lang.quality || "QUALITY"}
-            info={"0 means average"}
-            cardSymbol={"+"}
+            info={lang.infoMeans || "0 means average"}
+            cardIcon={<PlusIcon />}
           />
       </View>
         <ButtonBlock

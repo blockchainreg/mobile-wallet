@@ -255,7 +255,7 @@ export default ({ store, web3t }) => {
                           style={styles.sizeIconBtnSwap}
                         />
                       </TouchableOpacity>
-                      <Text style={styles.textTouchable}>Swap</Text>
+                      <Text style={styles.textTouchable}>{lang.swapBtn || "Swap"}</Text>
                     </View>
                   )}
 

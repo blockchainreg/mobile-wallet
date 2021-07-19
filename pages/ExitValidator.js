@@ -36,7 +36,7 @@ export default ({ store, web3t, props }) => {
     const amountWithdraw = store.amountWithdraw;
     spin(
       store,
-      'Withdrawal in progress',
+      lang.progressWithdraw || 'Withdrawal in progress',
       async (cb) => {
         try {
           const result = await stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
@@ -48,7 +48,7 @@ export default ({ store, web3t, props }) => {
     )((err, result) => {
       if (err) {
         setTimeout(() => {
-          Alert.alert('Something went wrong. Please contact support. You can still use web interface for full staking support.');
+          Alert.alert(lang.wrong || 'Something went wrong. Please contact support. You can still use web interface for full staking support.');
         }, 1000);
         console.error(err);
         return;
@@ -89,7 +89,7 @@ export default ({ store, web3t, props }) => {
         <View style={style.buttonTop}>
           {parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) &&
             <Notice
-              text={"You are trying to withdraw more funds than you have."}
+              text={lang.noticeTrying || "You are trying to withdraw more funds than you have."}
               icon="warning"
             />
           }
