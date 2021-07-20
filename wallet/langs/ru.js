@@ -232,16 +232,16 @@
     youDidntAgree: "Вы отменили действие",
     sendingFunds: "Отправляем средства",
     availableStaking: "Доступно для стейкинга",
-    swapEvm: "Swap EVM to Native",
-    infoMeans: "0 means average",
-    wrong: "Something went wrong. Please contact support. You can still use web interface for full staking support.",
-    progressWithdraw: "Withdrawal in progress",
-    progressStaking: "Staking in progress",
-    progressValidator: "Validator is loading",
-    swapBtn: "Swap",
-    withdrawal: "Withdrawal",
-    withdrawalSuccessfully: "Withdrawal has been submitted successfully. It may take a few minutes to appear on your balance.",
-    dontStake: "Don’t stake all coins, leave some (~1 VLX) to pay transaction fees in the future and be able to initiate stake withdrawals.",
-    noticeTrying: "You are trying to withdraw more funds than you have."
+    swapEvm: "Свап EVM в Native",
+    infoMeans: "0 означает средний",
+    wrong: "Что-то пошло не так. Пожалуйста, обратитесь в поддержку. Вы можете продолжить пользоваться веб интерфейсом с полной поддержкой стейкинга.",
+    progressWithdraw: "Вывод в процессе",
+    progressStaking: "Стейк в процессе",
+    progressValidator: "Валидатор загружается",
+    swapBtn: "Свап",
+    withdrawal: "Вывод",
+    withdrawalSuccessfully: "Вывод запрошен успешно. Может понадобиться несколько минут чтобы он отобразился в балансе.",
+    dontStake: "Не отправляйте все средства в стейк, оставьте небольшую сумму (~1 VLX) чтобы покрыть комиссию будущих транзакций, чтобы иметь возможность выводить средства. ",
+    noticeTrying: "Вы пытаетесь вывести больше средств чем доступно"
   };
 }).call(this);
