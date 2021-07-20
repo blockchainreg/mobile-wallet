@@ -5941,7 +5941,7 @@ export default StyleSheet.create({
     fontFamily: "Fontfabric-NexaBold",
     fontSize: 18,
     fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    width: "200%",
+    width: Platform.OS === 'ios' ? "200%" : "170%",
     textAlign: 'center'
   },
   marginTopAndroid: {
