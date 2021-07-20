@@ -45,9 +45,8 @@ export default ({ store, web3t, props }) => {
   return (
     <Container>
       <Header
-        // onBack={back}
-        // greenBack
         title={lang.exitValidator || "Exit from Validator"}
+        smallTitle={lang.exitValidator.length > 15 ? true : false}
       />
 
       <Content style={style.contentBg}>

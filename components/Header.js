@@ -15,7 +15,7 @@ export default (props) => {
             )}
         </Left>
         <Body>
-          <Title style={styles.headerTitle}>{props.title}</Title>
+          <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{props.title}</Title>
         </Body>
         <Right>
           {props.identIcon && (

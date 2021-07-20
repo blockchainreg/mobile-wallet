@@ -2791,7 +2791,7 @@ export default StyleSheet.create({
     fontWeight: "500",
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    lineHeight: 30
+    // lineHeight: 30
   },
   titleHistory: {
     fontSize: 17,
@@ -5934,6 +5934,14 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: Platform.OS === 'ios' ? "bold" : null,
     width: "160%",
+    textAlign: 'center'
+  },
+  headerTitleSmall: {
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaBold",
+    fontSize: 18,
+    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    width: "200%",
     textAlign: 'center'
   },
   marginTopAndroid: {

@@ -69,6 +69,7 @@ export default ({ store, web3t, props }) => {
       <Header
         onBack={back}
         title={lang.exitValidator || "Exit from Validator"}
+        smallTitle={lang.exitValidator.length > 15 ? true : false}
         identIcon={ADDRESS}
         greenBack
       />

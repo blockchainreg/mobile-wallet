@@ -110,6 +110,7 @@ export default ({ store, web3t }) => {
                 "APR is calculated based on the results of the previous epoch"
               }
               cardIcon={<PercentIcon />}
+              subtitleSmall
             />
             <ValidatorCard
               value={ACTIVE_STAKE}
@@ -123,6 +124,7 @@ export default ({ store, web3t }) => {
                 "https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown"
               }
               cardIcon={<PercentIcon />}
+              subtitleSmall
             />
           </View>
             <ButtonBlock
