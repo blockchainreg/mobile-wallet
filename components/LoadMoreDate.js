@@ -115,6 +115,7 @@ export default ({ store, web3t }) => {
 					case "vlx_evm":
 					case "vlx2":
 					case "vlx": return "VLX";
+					case "usdt_erc20": return "usdt"
 					default: return transaction.token
 				}
 			}());

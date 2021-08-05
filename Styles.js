@@ -2791,7 +2791,7 @@ export default StyleSheet.create({
     fontWeight: "500",
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    // lineHeight: 30
+    lineHeight: 30
   },
   titleHistory: {
     fontSize: 17,
@@ -5639,7 +5639,7 @@ export default StyleSheet.create({
     width: "100%",
     minHeight: '10%',
     maxHeight: 150,
-    // left: Platform.OS === "android" ? -9 : 1,
+    left: Platform.OS === "android" ? -9 : 1,
     // zIndex: 9999,
     // position: 'absolute'
   },
