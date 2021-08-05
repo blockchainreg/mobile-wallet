@@ -1941,7 +1941,7 @@ export default StyleSheet.create({
     alignItems: "center",
     width: "100%",
     // marginBottom: 200,
-    marginTop: 20,
+    // marginTop: 20,
   },
   marginBtnAndroid: {
     alignItems: "center",
@@ -5145,7 +5145,7 @@ export default StyleSheet.create({
     width: "100%",
     borderColor: "#fff",
     marginTop: 20,
-    height: "50%",
+    height: "40%",
   },
   spinnerTextStyle: {
     color: "#FFF",
@@ -5639,9 +5639,9 @@ export default StyleSheet.create({
     width: "100%",
     minHeight: '10%',
     maxHeight: 150,
-    left: Platform.OS === "android" ? -9 : 1,
-    zIndex: 9999,
-    position: 'absolute'
+    // left: Platform.OS === "android" ? -9 : 1,
+    // zIndex: 9999,
+    // position: 'absolute'
   },
   autocompleteListItemStyle: {
     fontSize: 15,
@@ -5887,7 +5887,7 @@ export default StyleSheet.create({
     borderRadius: 0,
     backgroundColor: 'white',
     marginVertical: 30,
-	  zIndex: 1
+	  // zIndex: 8888
   },
   btnVelasCreate: {
     borderRadius: 0,

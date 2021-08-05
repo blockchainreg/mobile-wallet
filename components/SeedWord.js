@@ -7,7 +7,8 @@ import {
   Keyboard,
   TouchableOpacity,
   ImageBackground,
-  BackHandler
+  BackHandler,
+  Platform
 } from "react-native";
 import {
   Input,
@@ -70,7 +71,7 @@ export default (store, changeSeed, number) => {
         placeholder={lang.placeholderConfirmSeed + " " +  "#" + (number + 1)}
         placeholderTextColor="rgba(255,255,255,0.60)"
         style={inputStyle}
-        selectionColor={"#fff"}
+        selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
         keyboardAppearance="dark"
         />
         </Item>

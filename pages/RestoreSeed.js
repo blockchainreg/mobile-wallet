@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   Clipboard,
   ScrollView,
   KeyboardAvoidingView,
-  Platform
+  Alert,
 } from "react-native";
+import { View, TextInput, StyleSheet, Platform, TouchableWithoutFeedback, Keyboard  } from 'react-native';
 import {
   Input,
   Item,
   Text,
   Button,
-  View,
   Icon,
   CardItem,
   Body,
   Left,
   Right,
   Textarea,
-  Toast
+  Toast,
+  Content,
+  Container
 } from "native-base";
 import bip39 from "bip39";
 import styles from "../Styles.js";
@@ -47,6 +49,29 @@ const seedContainerStyle = {
 };
 
 export default ({ store, web3t }) => {
+  // const ImageHideShow = () => {
+  //   useEffect(() => {
+  //     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
+  //     Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
+  
+  //     // cleanup function
+  //     return () => {
+  //       Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
+  //       Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
+  //     };
+  //   }, []);
+  
+  //   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+  //   const _keyboardDidShow = () => setKeyboardStatus("Keyboard Shown");
+  //   const _keyboardDidHide = () => setKeyboardStatus("Keyboard Hidden");
+  //   return (
+  //     keyboardStatus === "Keyboard Shown" ? null : 
+  //     <View style={{alignSelf: "center"}}>
+  //     <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} /> 
+  //     <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
+  //     </View>
+  //   )
+  // }
   const changePage = tab => () => {
     store.signUpConfirmSeedField = "";
     store.current.page = tab;
@@ -107,12 +132,12 @@ export default ({ store, web3t }) => {
             placeholder={lang.placeholderSeed}
             placeholderTextColor="rgba(255,255,255,0.60)"
             style={styles.inputSize}
-            selectionColor={"#fff"}
+            selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
             autoCapitalize="none"
             value={store.signUpConfirmSeedField}
             onChangeText={changeSeed}
             keyboardAppearance="dark"
-            // returnKeyType={'return'}
+            returnKeyType={'return'}
             keyboardType="default"
             autoFocus
             blurOnSubmit={true}
@@ -126,31 +151,43 @@ export default ({ store, web3t }) => {
   const back = changePage("newseed");
 
   return (
-    <View style={styles.viewFlex}>
-      {/* <View style={styles.viewLogin}> */}
-      <Background fullscreen={true}/>
-        <Header onBack={back} transparent/>
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? "padding" : null} >
-      <ScrollView>
-        <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-        <View style={styles.containerFlexStart}>
-          <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} />
-          <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
-          <View style={styles.card1}>
-            <CardItem style={Platform.OS === 'ios' ? styles.cardItemSeed : styles.cardItemSeedAndroid}>
-              <Body>
-                {seedPhrase(store)}
-                <View style={Platform.OS === 'ios' ? styles.marginBtn : styles.marginBtnAndroid}>
-                  <Button block style={styles.btnVelasActive} onPress={done}>
-                        <Text style={styles.textBtn}>{lang.continue}</Text>
-                      </Button>
-                </View>
-              </Body>
-            </CardItem>
+    <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={style.container}
+      >
+      <Header onBack={back} transparent/>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={style.inner}>
+          <View style={{alignSelf: "center"}}>
+            <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} /> 
+            <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
+          </View>
+
+          <View style={{paddingHorizontal: 20, paddingTop: 20}}>
+            {seedPhrase(store)}
+            <View style={style.marginBtn}>
+              <Button block style={styles.btnVelasActive} onPress={done}>
+                <Text style={styles.textBtn}>{lang.continue}</Text>
+              </Button>
+            </View>
           </View>
         </View>
-        </ScrollView>
-        </KeyboardAvoidingView>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  inner: {
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  marginBtn: {
+    alignItems: "center",
+    width: "100%",
+  },
+});

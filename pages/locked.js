@@ -1,27 +1,27 @@
 import React from "react";
+import { Text, View, Item, Icon, Button, Toast } from "native-base";
 import {
-  Text,
-  View,
-  Item,
-  Icon,
-  Button,
-  Toast
-} from "native-base";
-import { Image, ImageBackground } from "react-native";
-import Constants from 'expo-constants';
-import * as LocalAuthentication from 'expo-local-authentication';
-import * as SecureStore from 'expo-secure-store';
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Keyboard,
+} from "react-native";
+import Constants from "expo-constants";
+import * as LocalAuthentication from "expo-local-authentication";
+import * as SecureStore from "expo-secure-store";
 import styles from "../Styles.js";
-import {get} from "../wallet/seed.js";
-import {confirm} from "../wallet/pages/confirmation.js";
-import {check, set} from "../wallet/pin.js";
+import { get } from "../wallet/seed.js";
+import { confirm } from "../wallet/pages/confirmation.js";
+import { check, set } from "../wallet/pin.js";
 import spin from "../utils/spin.js";
 //import navigate from '../wallet/navigate.js';
-import Images from '../Images.js';
-import getLang from '../wallet/get-lang.js';
-import Header from '../components/Header'
-import Input from '../components/InputSecure'
-
+import Images from "../Images.js";
+import getLang from "../wallet/get-lang.js";
+import Header from "../components/Header";
+import Input from "../components/InputSecure";
+import StatusBar from "../components/StatusBar.js";
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -33,9 +33,13 @@ export default ({ store, web3t }) => {
     store.current.auth.failedCount = 0;
     store.current.auth.isLoggingIn = false;
     store.current.pin = "";
-	console.log("loginQuick");
-    spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
-	  console.log("after loginQuick");
+    console.log("loginQuick");
+    spin(
+      store,
+      lang.loadingBalance,
+      web3t.refresh.bind(web3t)
+    )(function (err, data) {
+      console.log("after loginQuick");
       store.current.auth.isLoggingIn = false;
       if (err) {
         store.current.page = "error";
@@ -46,9 +50,13 @@ export default ({ store, web3t }) => {
 
   const loginSlow = () => {
     console.log("[loginSlow]");
-    spin(store, lang.walletDecrypting, web3t.init.bind(web3t))(function(err, data){
+    spin(
+      store,
+      lang.walletDecrypting,
+      web3t.init.bind(web3t)
+    )(function (err, data) {
       if (err) {
-        return Toast.show({text: err + ""});
+        return Toast.show({ text: err + "" });
       }
 
       store.current.page = "wallets";
@@ -58,7 +66,11 @@ export default ({ store, web3t }) => {
       store.current.auth.isLoggingIn = false;
       store.current.pin = "";
 
-      spin(store, lang.loadingBalance, web3t.refresh.bind(web3t))(function(err, data){
+      spin(
+        store,
+        lang.loadingBalance,
+        web3t.refresh.bind(web3t)
+      )(function (err, data) {
         store.current.auth.isLoggingIn = false;
         if (err) {
           store.current.page = "error";
@@ -74,7 +86,7 @@ export default ({ store, web3t }) => {
     }
     try {
       LocalAuthentication.cancelAuthenticate().catch(() => {});
-    }catch(e){}
+    } catch (e) {}
 
     if (store.current.auth.isLoggingIn) {
       return;
@@ -82,30 +94,37 @@ export default ({ store, web3t }) => {
 
     store.current.seed = seed;
     //in case when we already have built objects we can just show it
-    if(store.current.account.wallets && store.current.account.wallets.length > 0) {
+    if (
+      store.current.account.wallets &&
+      store.current.account.wallets.length > 0
+    ) {
       loginQuick();
       return;
     }
     loginSlow();
   };
 
-  const LocalAuth = ({store}) => {
+  const LocalAuth = ({ store }) => {
     if (store.current.auth.isLocalAuthEnabled === null) {
-        setImmediate(() => {
-          store.current.auth.isLocalAuthEnabled = false;
-          Promise.all([
-            LocalAuthentication.hasHardwareAsync(),
-            LocalAuthentication.supportedAuthenticationTypesAsync(),
-            LocalAuthentication.isEnrolledAsync(),
-            SecureStore.getItemAsync("localAuthToken")
-          ]).then(([hasHardware, supportedAuthTypes, isEnrolled, token]) => {
-              if (token && token.length > 20) {
-                //Stored seed phrase? Delete!
-                SecureStore.deleteItemAsync("localAuthToken")
-                token = null;
-              }
-              store.current.auth.isLocalAuthEnabled = hasHardware && supportedAuthTypes.length > 0 && isEnrolled && !!token;
-            });
+      setImmediate(() => {
+        store.current.auth.isLocalAuthEnabled = false;
+        Promise.all([
+          LocalAuthentication.hasHardwareAsync(),
+          LocalAuthentication.supportedAuthenticationTypesAsync(),
+          LocalAuthentication.isEnrolledAsync(),
+          SecureStore.getItemAsync("localAuthToken"),
+        ]).then(([hasHardware, supportedAuthTypes, isEnrolled, token]) => {
+          if (token && token.length > 20) {
+            //Stored seed phrase? Delete!
+            SecureStore.deleteItemAsync("localAuthToken");
+            token = null;
+          }
+          store.current.auth.isLocalAuthEnabled =
+            hasHardware &&
+            supportedAuthTypes.length > 0 &&
+            isEnrolled &&
+            !!token;
+        });
       });
     }
 
@@ -119,43 +138,56 @@ export default ({ store, web3t }) => {
       }
       if (!check(await SecureStore.getItemAsync("localAuthToken"))) {
         SecureStore.deleteItemAsync("localAuthToken");
-        return Toast.show({text: "Cannot authenticate. Please enter password."});
+        return Toast.show({
+          text: "Cannot authenticate. Please enter password.",
+        });
       }
       login(get());
       store.userWallet = 200;
     };
 
     const getAuthError = () => {
-      switch(store.current.auth.localAuthError) {
+      switch (store.current.auth.localAuthError) {
         case "authentication_failed":
-            return "Authentication failed"
+          return "Authentication failed";
         case "lockout":
-            return "Too many tries. Please enter password"
+          return "Too many tries. Please enter password";
         default:
-            return store.current.auth.localAuthError;
+          return store.current.auth.localAuthError;
       }
-    }
+    };
 
-    const {isLocalAuthEnabled, isAuthenticating, failedCount} = store.current.auth;
+    const { isLocalAuthEnabled, isAuthenticating, failedCount } =
+      store.current.auth;
     if (!isLocalAuthEnabled) {
       return <Text style={styles.txtLocked}></Text>;
     }
     if (isAuthenticating) {
       if (failedCount) {
-        return <Text style={styles.txtLocked}>{lang.lockedNotificationIos} {failedCount} {getAuthError()}</Text>;
+        return (
+          <Text style={styles.txtLocked}>
+            {lang.lockedNotificationIos} {failedCount} {getAuthError()}
+          </Text>
+        );
       }
-      return <Text style={styles.txtLocked}>{lang.lockedNotificationIos1}</Text>;
+      return (
+        <Text style={styles.txtLocked}>{lang.lockedNotificationIos1}</Text>
+      );
     }
 
-    return <Text onPress={useLocalAuth} style={styles.txtLocked}>{lang.lockedNotificationAndroid}</Text>;
+    return (
+      <Text onPress={useLocalAuth} style={styles.txtLocked}>
+        {lang.lockedNotificationAndroid}
+      </Text>
+    );
   };
 
-  const buttonActive = store => {
+  const buttonActive = (store) => {
     const lang = getLang(store);
     const loginAction = spin(store, lang.checkingPin, () => {
       if (!check(store.current.pin)) {
         store.current.pin = "";
-        return Toast.show({text: lang.incorrectPass ||  "Incorrect password"});
+        return Toast.show({ text: lang.incorrectPass || "Incorrect password" });
       }
 
       login(get());
@@ -163,57 +195,57 @@ export default ({ store, web3t }) => {
       store.userWallet = 200;
     });
     return (
-    <Button block style={styles.btnVelasActive} onPress={() => setImmediate(loginAction)} >
-      <Text style={styles.textBtn}>{lang.continue}</Text>
-    </Button>
+      <Button
+        block
+        style={styles.btnVelasActive}
+        onPress={() => setImmediate(loginAction)}
+      >
+        <Text style={styles.textBtn}>{lang.continue}</Text>
+      </Button>
     );
   };
 
-  const buttonInactive = store => {
+  const buttonInactive = (store) => {
     return (
-      <Button block style={styles.buttonInactive} >
-      <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
-    </Button>
+      <Button block style={styles.buttonInactive}>
+        <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
+      </Button>
     );
   };
 
-  const anotherAccount = store => {
+  const anotherAccount = (store) => {
     const anotherAccount = () => {
-      confirm(
-        store,
-        lang.dataOverridden,
-        (sure) => {
-          if (sure) {
-            store.current.page = "register";
-          }
+      confirm(store, lang.dataOverridden, (sure) => {
+        if (sure) {
+          store.current.page = "register";
         }
-      );
-    }
+      });
+    };
     return (
       <Button block transparent onPress={anotherAccount}>
         <Text style={styles.textBtnTransparent}>{lang.createAcc}</Text>
       </Button>
-
     );
   };
 
-  const unlock = store => {
+  const unlock = (store) => {
     // Validation start
     const regexPin = /[0-9a-zA-Z]{6,}/;
-    const validInputPin = (
-      !store.current.pin ||
-      regexPin.test(store.current.pin)
-    );
+    const validInputPin =
+      !store.current.pin || regexPin.test(store.current.pin);
     // Validation end
-    return (<View style={styles.marginBtn}>
-      {
-      store.current.pin && validInputPin
-      ? buttonActive(store)
-      : buttonInactive(store)}
-      <View height={15}></View>
-      {anotherAccount(store)}
-      {LocalAuth({store})}
-    </View>);
+    return (
+      <>
+      <View style={styles.marginBtn}>
+        {store.current.pin && validInputPin
+          ? buttonActive(store)
+          : buttonInactive(store)}
+        {/* <View height={15}></View> */}
+      </View>
+        {anotherAccount(store)}
+        {LocalAuth({ store })}
+      </>
+    );
   };
   const changePage = (tab) => () => {
     store.tab = tab;
@@ -221,59 +253,79 @@ export default ({ store, web3t }) => {
   };
   // Validation start
   const regexPin = /[0-9a-zA-Z]{6,}/;
-  const validInputPin = (
-    !store.current.pin ||
-    regexPin.test(store.current.pin)
-  );
+  const validInputPin = !store.current.pin || regexPin.test(store.current.pin);
   // Validation end
 
   // Input pin start
 
-  const handleChangePin = async text => {
+  const handleChangePin = async (text) => {
     store.current.pin = text;
   };
-  const inputSuccessPin = store => {
+  const inputSuccessPin = (store) => {
     return (
       <Item style={styles.borderItem}>
-        <Icon active name='lock' style={{color: "#fff"}}/>
-         <Input
-            placeholder={lang.placeholderSignup}
-            value={store.current.pin}
-            onChangeText={text => handleChangePin(text)}
-          />
+        <Icon active name="lock" style={{ color: "#fff" }} />
+        <Input
+          placeholder={lang.placeholderSignup}
+          value={store.current.pin}
+          onChangeText={(text) => handleChangePin(text)}
+        />
       </Item>
-
     );
   };
 
   return (
-    <View style={styles.viewFlex}>
-        <ImageBackground source={Images.bg} style={styles.image}>
-      {/* <Background fullscreen={true}/> */}
-        <Header transparent/>
-        <View style={styles.containerFlexStart}>
-          <Image
-            source={Images.logo}
-            style={styles.styleLogo}
-          />
-          
-          <View style={styles.styleVersion}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
-            </View>
-          <View style={styles.widthCard}>
-            <View style={styles.titleInput}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={style.container}
+    >
+      <ImageBackground source={Images.bg} style={styles.image}>
+        {/* <Header transparent /> */}
+      <StatusBar />
+        
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={style.inner}>
+            <View style={{ alignSelf: "center" }}>
+              <Image
+                source={Images.logo}
+                style={[styles.styleLogo, { alignSelf: "center" }]}
+              />
+              <View style={styles.styleVersion}>
+                <Text
+                  style={[styles.styleTxtSeparator, { textAlign: "center" }]}
+                >
+                  v.{Constants.manifest.version}
+                </Text>
+              </View>
               <Text style={styles.textH1Seed}>{lang.enterPin}</Text>
             </View>
-            {inputSuccessPin(store)}
-            {/* {!validInputPin && (
+            <View style={style.paddingBlock}>
+              {inputSuccessPin(store)}
+              {/* {!validInputPin && (
               <Text style={styles.error}>{lang.validPin}</Text>
             )} */}
-            {unlock(store)}
+              {unlock(store)}
+            </View>
           </View>
-        </View>
-
-        </ImageBackground>
-
-      </View>
+        </TouchableWithoutFeedback>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inner: {
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  marginBtn: {
+    alignItems: "center",
+    width: "100%",
+  },
+  paddingBlock: {
+    paddingHorizontal: 20, 
+    paddingTop: 20
+  }
+});

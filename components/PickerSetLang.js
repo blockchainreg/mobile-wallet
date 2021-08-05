@@ -3,7 +3,7 @@ import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default ({ store }) => {
+export default ({ store, width, align }) => {
   const onValueChangeValue = async value => {
     store.lang = value;
     localStorage.setItem("lang", value);
@@ -61,12 +61,16 @@ export default ({ store }) => {
         inputIOS: {
           color: "#fff",
           fontSize: 17,
-          fontFamily: "Fontfabric-NexaRegular"
+          fontFamily: "Fontfabric-NexaRegular",
+          minWidth: width,
+          textAlign: align
         },
         inputAndroid: {
           color: "#fff",
           fontSize: 17,
-          fontFamily: "Fontfabric-NexaRegular"
+          fontFamily: "Fontfabric-NexaRegular",
+          minWidth: width,
+          textAlign: align
         }
       }}
     />

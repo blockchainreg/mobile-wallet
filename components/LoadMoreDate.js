@@ -172,7 +172,7 @@ export default ({ store, web3t }) => {
 								value={store.current.filterVal.temp}
 								placeholderTextColor="#fff"
 								onChangeText={changeSearch}
-								selectionColor={"#fff"}
+								selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
 								style={{ color: "#fff", backgroundColor: "transparent"}}
 							/>
 							<Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>

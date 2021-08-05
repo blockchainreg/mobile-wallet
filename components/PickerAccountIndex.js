@@ -4,6 +4,7 @@ import { Input, Item, Text } from "native-base";
 import styles from "../Styles.js";
 import spin from "../utils/spin.js";
 import getLang from "../wallet/get-lang.js";
+import { Platform } from "react-native";
 
 
 const InputComponent = ({ accountIndex, onValueChange }) => {
@@ -27,7 +28,7 @@ const InputComponent = ({ accountIndex, onValueChange }) => {
           returnKeyType="done"
           keyboardType="numeric"
           style={Platform.OS === 'ios' ? styles.inputSizeIos : styles.inputSize}
-          selectionColor={"#fff"}
+          selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
           keyboardAppearance="dark"
         />
       </Item>

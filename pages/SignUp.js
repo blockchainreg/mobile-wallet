@@ -8,21 +8,28 @@ import {
   Body,
   Left,
   Right,
-  Toast
+  Toast,
 } from "native-base";
-import { Image, ImageBackground } from "react-native";
-import Constants from 'expo-constants';
+import {
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Keyboard,
+} from "react-native";
+import Constants from "expo-constants";
 import styles from "../Styles.js";
-import { set, check } from '../wallet/pin.js';
-import Images from '../Images.js';
-import getLang from '../wallet/get-lang.js';
+import { set, check } from "../wallet/pin.js";
+import Images from "../Images.js";
+import getLang from "../wallet/get-lang.js";
 import * as SecureStore from "expo-secure-store";
 import PickerSetLang from "../components/PickerSetLang.js";
-import Header from '../components/Header'
-import Input from '../components/InputSecure'
+import Header from "../components/Header";
+import Input from "../components/InputSecure";
+import StatusBar from "../components/StatusBar.js";
 
-
-const buttonActive = store => {
+const buttonActive = (store) => {
   const lang = getLang(store);
 
   const changePage = (tab) => () => {
@@ -32,7 +39,7 @@ const buttonActive = store => {
   const signup = async () => {
     if (store.current.signUpInputPinField.length < 6) {
       store.current.signUpInputPinField = "";
-      return Toast.show({text: lang.validPin});
+      return Toast.show({ text: lang.validPin });
     }
     await localStorage.clear();
     set(store.current.signUpInputPinField);
@@ -51,11 +58,16 @@ const buttonActive = store => {
   );
 };
 
-const buttonInactive = store => {
+const buttonInactive = (store) => {
   const lang = getLang(store);
-
+  const notice = () => {
+    if (store.current.signUpInputPinField.length < 6) {
+      store.current.signUpInputPinField = "";
+      return Toast.show({ text: lang.validPin });
+    }
+  }
   return (
-    <Button block style={styles.buttonInactive}>
+    <Button block style={styles.buttonInactive} onPress={notice}>
       <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
     </Button>
   );
@@ -84,30 +96,27 @@ export default ({ store }) => {
     store.current.signUpInputPinField = null;
   };
 
-  const regexPin = /[0-9a-zA-Z]{1,}/;
-  const validInputPinSignUp = (
+  const regexPin = /[0-9a-zA-Z]{6,}/;
+  const validInputPinSignUp =
     !store.current.signUpInputPinField ||
-    regexPin.test(store.current.signUpInputPinField)
-  );
+    regexPin.test(store.current.signUpInputPinField);
 
-  const buttonsChangeSignUp = (
-    validInputPinSignUp &&
-    store.current.signUpInputPinField
+  const buttonsChangeSignUp =
+    validInputPinSignUp && store.current.signUpInputPinField
       ? buttonActive
-      : buttonInactive
-  );
+      : buttonInactive;
 
-  const handleChangePin = async text => {
+  const handleChangePin = async (text) => {
     store.current.signUpInputPinField = text;
     // store.current.pinSave = store.current.signUpInputPinField;
   };
-  const inputSuccessPin = store => {
+  const inputSuccessPin = (store) => {
     return (
       <Item style={styles.borderItem}>
-        <Icon active name='lock' style={{color: "#fff"}}/>
+        <Icon active name="lock" style={{ color: "#fff" }} />
         <Input
           value={store.current.signUpInputPinField}
-          onChangeText={text => handleChangePin(text)}
+          onChangeText={(text) => handleChangePin(text)}
           placeholder={lang.placeholderSignup}
         />
       </Item>
@@ -115,30 +124,55 @@ export default ({ store }) => {
   };
 
   return (
-    <View style={styles.viewFlex}>
-        <ImageBackground source={Images.bg} style={styles.image}>
-        <Header transparent/>
-        <View style={styles.containerFlexStart}>
-          <Image
-            source={Images.logo}
-            style={styles.styleLogo}
-          />
-          <View style={{ opacity: 0.60, marginTop: 5}}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
-            </View>
-          <View style={styles.widthCard}>
-          <View style={styles.titleInput}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={style.container}
+    >
+      <ImageBackground source={Images.bg} style={styles.image}>
+        {/* <Header transparent /> */}
+      <StatusBar />
+        
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={style.inner}>
+            <View style={{ alignSelf: "center" }}>
+              <Image source={Images.logo} style={[styles.styleLogo, { alignSelf: "center" }]} />
+              <View style={styles.styleVersion}>
+                <Text
+                  style={[styles.styleTxtSeparator, { textAlign: "center" }]}
+                >
+                  v.{Constants.manifest.version}
+                </Text>
+              </View>
               <Text style={styles.textH1Seed}>{lang.setupPin}</Text>
             </View>
-            {inputSuccessPin(store)}
-            {/* {!validInputPinSignUp && (
+            <View style={style.paddingBlock}>
+              {inputSuccessPin(store)}
+              {/* {!validInputPinSignUp && (
               <Text style={styles.error}>{lang.validPin}</Text>
             )} */}
-            <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
-            <View style={styles.marginBtn1}>{PickerSetLang({ store })}</View>
+              <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
+            </View>
+            <View style={styles.marginBtn1}>{PickerSetLang({ store, width: '100%', align: 'center' })}</View>
           </View>
-        </View>
-        </ImageBackground>
-    </View>
+        </TouchableWithoutFeedback>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inner: {
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  marginBtn: {
+    alignItems: "center",
+    width: "100%",
+  },
+  paddingBlock: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+});
