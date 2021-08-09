@@ -1,6 +1,7 @@
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from '@expo/vector-icons';
+import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
 
 
 export default ({ store, width, align }) => {
@@ -12,37 +13,53 @@ export default ({ store, width, align }) => {
   };
   const langItems = [
     {
-      label: "English 🇺🇸",
-      value: "en"
+      label: "🇺🇸 English",
+      value: "en",
     },
     {
-      label: "Русский 🇷🇺",
+      label: "🇷🇺 Русский",
       value: "ru"
     },
     {
-      label: "Українська 🇺🇦",
+      label: "🇺🇦 Українська",
       value: "ua"
     },
-    // {
-    //   label: "Français 🇫🇷",
-    //   value: "fr"
-    // },
     {
-      label: "中文 🇨🇳",
+      label: "🇨🇳 中文",
       value: "zh"
     },
     {
-      label: "Español 🇪🇸",
+      label: "🇪🇸 Español",
       value: "es"
     },
-    // {
-    //   label: "韓語 🇰🇷",
-    //   value: "ko"
-    // },
-    // {
-    //   label: "عرب 🇦🇪",
-    //   value: "ar"
-    // }
+    {
+      label: "🇰🇷 한국어",
+      value: "ko"
+    },
+    {
+      label: "🇦🇪 العربية ",
+      value: "ar"
+    },
+    {
+      label: "🇮🇩 Bahasa Indonesia",
+      value: "id"
+    },
+    {
+      label: "🇵🇭 Filipino",
+      value: "ph"
+    },
+    {
+      label: "🇳🇬 Yorùbá",
+      value: "yr"
+    },
+    {
+      label: "🇻🇳 Tiếng Việt",
+      value: "vn"
+    },
+    {
+      label: "🇮🇳 हिन्दी",
+      value: "hi"
+    }
   ];
 
   return (
