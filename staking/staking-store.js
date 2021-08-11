@@ -71,7 +71,7 @@ class StakingStore {
       () => this.reload()
     );
     if (this.validators.length > 0) {
-      await when(() => this.validators[0].apr !== null);
+      await when(() => this.validators && this.validators.length && this.validators[0].apr !== null);
       this.validators.replace(
         this.validators.slice().sort((v1, v2) =>
           v2.apr - v1.apr
@@ -572,6 +572,5 @@ class StakingStore {
     return res;
   }
 }
-
 
 export { StakingStore };
