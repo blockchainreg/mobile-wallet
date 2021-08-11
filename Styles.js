@@ -866,7 +866,8 @@ export default StyleSheet.create({
   txtLocked: {
     color: "#fff",
     marginTop: 15,
-    fontFamily: "Nexa-Book"
+    fontFamily: "Nexa-Book",
+    textAlign: "center"
   },
 
   h1TextBuy: {
@@ -5950,4 +5951,13 @@ export default StyleSheet.create({
   leftBtnColor: {
     color: Images.colorGreen,
   },
+  viewNetInfo: {
+    backgroundColor: 'orange', zIndex: 9999, position: "absolute", 
+    // width: "100%",
+    paddingHorizontal: 10,
+    borderRadius: 10
+  },
+  textNetInfo: {
+    textAlign: "center", fontSize: 16, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  }
 });

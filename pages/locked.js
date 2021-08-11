@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   StyleSheet,
-  Keyboard,
+  Keyboard, Alert
 } from "react-native";
 import Constants from "expo-constants";
 import * as LocalAuthentication from "expo-local-authentication";
@@ -22,6 +22,7 @@ import getLang from "../wallet/get-lang.js";
 import Header from "../components/Header";
 import Input from "../components/InputSecure";
 import StatusBar from "../components/StatusBar.js";
+import { StakingStore } from "../staking/staking-store.js";
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -46,6 +47,22 @@ export default ({ store, web3t }) => {
         store.current.error = err + "";
       }
     });
+    const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
+      const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
+      if (wallet == null) {
+        return;
+      }
+      // store.walletBalance = wallet.balance;
+      // store.walletEvmBalance = walletEvm.balance;
+
+      const stakingStore = new StakingStore(
+        wallet.network.api.apiUrl,
+        wallet.privateKey,
+        wallet.publicKey,
+        walletEvm.address2, //evm address
+        walletEvm.privateKey
+      );
+      store.stakingStore = stakingStore;
   };
 
   const loginSlow = () => {
@@ -77,6 +94,22 @@ export default ({ store, web3t }) => {
           store.current.error = err + "";
         }
       });
+      const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
+      const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
+      if (wallet == null) {
+        return;
+      }
+      // store.walletBalance = wallet.balance;
+      // store.walletEvmBalance = walletEvm.balance;
+
+      const stakingStore = new StakingStore(
+        wallet.network.api.apiUrl,
+        wallet.privateKey,
+        wallet.publicKey,
+        walletEvm.address2, //evm address
+        walletEvm.privateKey
+      );
+      store.stakingStore = stakingStore;
     });
   };
 
@@ -97,12 +130,12 @@ export default ({ store, web3t }) => {
     if (
       store.current.account.wallets &&
       store.current.account.wallets.length > 0
-    ) {
-      loginQuick();
-      return;
-    }
-    loginSlow();
-  };
+      ) {
+        loginQuick();
+        return;
+      }
+      loginSlow();
+    };
 
   const LocalAuth = ({ store }) => {
     if (store.current.auth.isLocalAuthEnabled === null) {
@@ -133,6 +166,7 @@ export default ({ store, web3t }) => {
       const result = await LocalAuthentication.authenticateAsync();
       store.current.auth.isAuthenticating = false;
       if (!result.success) {
+        Alert.alert("Cannot authenticate. Please enter password or try again later.");
         store.current.auth.localAuthError = result.error;
         return;
       }
@@ -189,7 +223,7 @@ export default ({ store, web3t }) => {
         store.current.pin = "";
         return Toast.show({ text: lang.incorrectPass || "Incorrect password" });
       }
-
+      
       login(get());
       store.current.pin = "";
       store.userWallet = 200;

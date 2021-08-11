@@ -1,11 +1,18 @@
-import React from "react";
-  import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail, Text} from "native-base";
+import React, { useState, useEffect } from 'react';
+import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail, Text, View, Toast} from "native-base";
 import IdentIcon from "../components/Identicon.js";
 import BackButton from "../components/BackButton.js";
 import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
+import {useNetInfo} from '@react-native-community/netinfo';
 
 export default (props) => {
+  const InfoNetwork = () => {
+    const netInfo = useNetInfo();
+    return (
+      <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{netInfo.isConnected === true && netInfo.type === 'cellular' || netInfo.type === 'wifi' ? props.title : <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>No connection...</Title>}</Title>
+    )
+  };
   return (
     <>
       <Header style={[props.transparent ? {backgroundColor: "transparent", borderBottomColor: "transparent"} : styles.headerBg, styles.marginTopAndroid]} androidStatusBarColor="black" noShadow={false}>
@@ -15,7 +22,8 @@ export default (props) => {
             )}
         </Left>
         <Body>
-          <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{props.title}</Title>
+          <InfoNetwork/>
+          {/* <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{props.title}</Title> */}
         </Body>
         <Right>
           {props.identIcon && (

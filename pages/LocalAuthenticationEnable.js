@@ -9,9 +9,15 @@ import {
   Button,
   Icon,
   Toast,
-  Alert
 } from "native-base";
-import { Image, ImageBackground, runAfterInteractions } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Keyboard, Alert
+} from "react-native";
 import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
 import {get} from "../wallet/seed.js";
@@ -89,18 +95,6 @@ function RequestPin({store, web3t}) {
     };
     const loginText = lang.login;
     return (
-      // <GradientButton
-      //   style={styles.gradientBtnPh}
-      //   text={capitalize(lang.confirm)}
-      //   textStyle={{ fontSize: 14, color: Images.color1 }}
-      //   gradientBegin="#fff"
-      //   gradientEnd="#fff"
-      //   gradientDirection="diagonal"
-      //   height={45}
-      //   width="100%"
-      //   radius={0}
-      //   onPressAction={login}
-      // />
       <Button block style={styles.btnVelasActive} onPress={login}>
         <Text style={styles.textBtn}>{capitalize(lang.confirm)}</Text>
       </Button>
@@ -158,29 +152,55 @@ function RequestPin({store, web3t}) {
   };
 
   return (
-    <View style={styles.viewFlex}>
-      <Background fullscreen={true}/>
-        <Header transparent/>
-        <View style={styles.containerFlexStart}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={style.container}
+    >
+      <ImageBackground source={Images.bg} style={styles.image}>
+        {/* <Header transparent /> */}
+      <StatusBar />
+        
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={style.inner}>
+            <View style={{ alignSelf: "center" }}>
           <Image
             source={Images.logo}
-            style={styles.styleLogo}
+            style={[styles.styleLogo, { alignSelf: "center" }]}
           />
-          <View style={styles.widthCard}>
-            <View style={styles.titleInput}>
+        
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
+            <View style={style.paddingBlock}>
+
             {inputSuccessPin(store)}
             {/* {!validInputPin && (
               <Text style={styles.error}>{lang.validPin}</Text>
             )} */}
             {checkpin(store)}
-          </View>
-        </View>
-      </View>
+            </View>
+            </View>
+        </TouchableWithoutFeedback>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
-
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inner: {
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  marginBtn: {
+    alignItems: "center",
+    width: "100%",
+  },
+  paddingBlock: {
+    paddingHorizontal: 20, 
+    paddingTop: 20
+  }
+});
 function capitalize(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

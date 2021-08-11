@@ -88,7 +88,7 @@ export default class Fingerprint extends React.Component {
           animationType="slide"
           transparent={true}
           visible={true}
-          onShow={this.scanFingerPrint}
+          // onShow={this.scanFingerPrint}
         >
           <View style={styles.modalFp}>
             <LinearGradient
@@ -110,22 +110,10 @@ export default class Fingerprint extends React.Component {
                 </Text>
               )}
                 <View style={styles.marginBtn}>
-                  {/* <GradientButton
-                    style={styles.gradientBtnPh}
-                    text={"Cancel"}
-                    textStyle={{ fontSize: 14, color: Images.color1 }}
-                    gradientBegin="#fff"
-                    gradientEnd="#fff"
-                    gradientDirection="diagonal"
-                    height={45}
-                    width="100%"
-                    radius={0}
-                    onPressAction={async () => {
-                      LocalAuthentication.cancelAuthenticate();
-                      this.props.onCancel && this.props.onCancel();
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}
-                  /> */}
+                  <Button block style={styles.btnVelasActive} 
+                    onPress={this.scanFingerPrint}>
+                    <Text style={styles.textBtn}>{"Press to scan"}</Text>
+                  </Button>
                   <Button block style={styles.btnVelasActive} 
                     onPress={() => {
                       LocalAuthentication.cancelAuthenticate();

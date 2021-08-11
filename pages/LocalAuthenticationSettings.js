@@ -38,7 +38,7 @@ export default ({ store, web3t }) => {
     if (pin) {
       SecureStore.deleteItemAsync("localAuthToken").then(() => {
         store.current.page = "settings";
-        Toast.show({ text: "Local Authentication now disabled" });
+        Alert.alert("Local Authentication now disabled" );
       });
     } else {
       store.current.page = "LocalAuthenticationEnable";

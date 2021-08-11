@@ -34,10 +34,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import DemoMode from "../components/DemoMode.js"
+import DemoMode from "../components/DemoMode.js";
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
-import Header from "../components/Header.js"
+import Header from "../components/Header.js";
+import { Observer } from "mobx-react";
+import { formatStakeAmount } from "../utils/format-value";
 
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
@@ -176,8 +178,9 @@ const wallets = (store, web3t) => {
   );
 };
 
-
 export default ({ store, web3t }) => {
+  const { stakingStore } = store;
+
   const lang = getLang(store);
   const changePage = (tab) => () => {
     store.current.page = tab;
@@ -218,6 +221,7 @@ export default ({ store, web3t }) => {
   //     walletListStyle.height -= 50;
   //   }
   // }
+  
   return (
       <View style={styles.viewFlex}>
         <View style={{backgroundColor: "transparent", height: "18%", marginTop: hp("5%"), alignSelf: 'center', width: "66%", zIndex: 999, position: "absolute"}}>
@@ -231,8 +235,35 @@ export default ({ store, web3t }) => {
             <Text style={style.balance}>{lang.totalBalance}</Text>
             <Text style={style.balanceAmount}>
               {calcUsd} <Text style={style.balanceAmount}>$</Text>
+              {" "}<Text style={[style.balanceAmount, {fontSize: 16}]}>({!store.myStakeBalance ? "..." : store.myStakeBalance} VLX)</Text>
             </Text>
           </View>
+
+          {/* <Observer>{() => {
+          const filterStake = stakingStore.getStakedValidators();
+          const myStakeBalance = filterStake.map((el) => (formatStakeAmount(el.myStake)));
+          console.log('myStakeBalance', myStakeBalance)
+          const arraySumStake = arraySum(myStakeBalance);
+          console.log(arraySumStake);
+          function arraySum(arr) {
+              let sum = 0;
+              if (arr.length) {
+                  sum = arr.reduce((a, b) => {
+                      return (parseFloat(a) || 0) + (parseFloat(b) || 0);
+                  });
+              } else {
+                  sum = 0;
+              }
+              return sum;
+          }
+          store.myStakeBalance = arraySumStake;
+          console.log('store.myStakeBalance', store.myStakeBalance)
+
+          
+          return (
+            <Text style={{color: "white"}}>{arraySumStake}</Text>
+          )
+        }}</Observer> */}
 
         </View>
 
