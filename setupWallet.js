@@ -8,7 +8,7 @@ import ltc from "./registry/ltc.json";
 import usdt from "./registry/usdt.json";
 import {installPluginWORefresh} from "./wallet/install-plugin.js";
 import getLang from './wallet/get-lang.js';
-
+import initStaking from './initStaking.js';
 
 module.exports = (store, web3t) => {
   function preinstallCoins([coin, ...coins], cb) {
@@ -59,6 +59,7 @@ module.exports = (store, web3t) => {
         store.current.error = err + "";
         return;
     }
+    initStaking(store);
     store.current.page = "wallets";
   });
   // store.current.termsMarkdown = terms;

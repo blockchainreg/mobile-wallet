@@ -33,7 +33,7 @@ import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
 import { set } from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";

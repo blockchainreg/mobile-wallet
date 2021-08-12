@@ -22,12 +22,13 @@ import getLang from "../wallet/get-lang.js";
 import Header from "../components/Header";
 import Input from "../components/InputSecure";
 import StatusBar from "../components/StatusBar.js";
-import { StakingStore } from "../staking/staking-store.js";
+import initStaking from '../initStaking.js';
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
 
   const loginQuick = () => {
+    initStaking(store);
     store.current.page = "wallets";
     store.current.auth.isLocalAuthEnabled = null;
     store.current.auth.isAuthenticating = false;
@@ -47,22 +48,7 @@ export default ({ store, web3t }) => {
         store.current.error = err + "";
       }
     });
-    const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
-      const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
-      if (wallet == null) {
-        return;
-      }
-      // store.walletBalance = wallet.balance;
-      // store.walletEvmBalance = walletEvm.balance;
-
-      const stakingStore = new StakingStore(
-        wallet.network.api.apiUrl,
-        wallet.privateKey,
-        wallet.publicKey,
-        walletEvm.address2, //evm address
-        walletEvm.privateKey
-      );
-      store.stakingStore = stakingStore;
+   
   };
 
   const loginSlow = () => {
@@ -75,6 +61,8 @@ export default ({ store, web3t }) => {
       if (err) {
         return Toast.show({ text: err + "" });
       }
+
+      initStaking(store);
 
       store.current.page = "wallets";
       store.current.auth.isLocalAuthEnabled = null;
@@ -94,22 +82,6 @@ export default ({ store, web3t }) => {
           store.current.error = err + "";
         }
       });
-      const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
-      const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
-      if (wallet == null) {
-        return;
-      }
-      // store.walletBalance = wallet.balance;
-      // store.walletEvmBalance = walletEvm.balance;
-
-      const stakingStore = new StakingStore(
-        wallet.network.api.apiUrl,
-        wallet.privateKey,
-        wallet.publicKey,
-        walletEvm.address2, //evm address
-        walletEvm.privateKey
-      );
-      store.stakingStore = stakingStore;
     });
   };
 

@@ -79,24 +79,6 @@ export default ({ store, web3t, props }) => {
             );
           }
 
-          // const myStakeBalance = filterStake.map((el) => (formatStakeAmount(el.myStake)));
-          // console.log('myStakeBalance', myStakeBalance)
-          // const arraySumStake = arraySum(myStakeBalance);
-          // console.log(arraySumStake);
-          // function arraySum(arr) {
-          //     let sum = 0;
-          //     if (arr.length) {
-          //         sum = arr.reduce((a, b) => {
-          //             return (parseFloat(a) || 0) + (parseFloat(b) || 0);
-          //         });
-          //     } else {
-          //         sum = 0;
-          //     }
-          //     return sum;
-          // }
-          // store.myStakeBalance = arraySumStake;
-          // console.log('store.myStakeBalance', store.myStakeBalance)
-
           const renderItemsMyStake = filterStake.map((el) => (
             <StakeItem
               key={el.address}

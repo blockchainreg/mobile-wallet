@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail, Text, View, Toast} from "native-base";
 import IdentIcon from "../components/Identicon.js";
 import BackButton from "../components/BackButton.js";
@@ -6,12 +6,28 @@ import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
 import {useNetInfo} from '@react-native-community/netinfo';
 
+
 export default (props) => {
-  const InfoNetwork = () => {
+  const connectivityChange = () => {
     const netInfo = useNetInfo();
-    return (
-      <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{netInfo.isConnected === true && netInfo.type === 'cellular' || netInfo.type === 'wifi' ? props.title : <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>No connection...</Title>}</Title>
-    )
+    // console.log('netInfo', netInfo)
+    if (
+      !netInfo.details ||
+      netInfo.isConnected === true ||
+      netInfo.type === "cellular" ||
+      netInfo.type === "wifi"
+    ) {
+      return null;
+    } else {
+      console.log("No Internet");
+      Toast.show({
+        text: "No Internet Connection",
+        position: "top",
+        duration: 3000,
+        type: "warning",
+        style: { top: 15 },
+      });
+    }
   };
   return (
     <>
@@ -22,8 +38,7 @@ export default (props) => {
             )}
         </Left>
         <Body>
-          <InfoNetwork/>
-          {/* <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{props.title}</Title> */}
+          <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{props.title}</Title>
         </Body>
         <Right>
           {props.identIcon && (
@@ -50,6 +65,7 @@ export default (props) => {
         </Right>
       </Header>
       <StatusBar />
+      {connectivityChange()}
     </>
   );
 };
