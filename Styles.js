@@ -5407,15 +5407,16 @@ export default StyleSheet.create({
   },
   modalFp: {
     flex: 1,
-    marginTop: "90%",
-    backgroundColor: "#fff",
+    // marginTop: "90%",
+    // backgroundColor: "#fff",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     position: "absolute",
     left: 0,
     right: 0,
     bottom: 0,
-    height: hp("50%"),
+    // height: hp("50%"),
+    height: 'auto',
     justifyContent: "center",
     alignItems: "center",
   },
@@ -5429,7 +5430,7 @@ export default StyleSheet.create({
   imageFinger: {
     width: 150 / 2,
     height: 173 / 2,
-    marginTop: 40
+    // marginTop: 40
   },
   imageScan: {
     width: 320 / 5,

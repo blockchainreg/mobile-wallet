@@ -5,10 +5,9 @@ import {
   Image,
   Platform,
   ImageBackground,
-  Text
 } from "react-native";
 import {
-  Button,
+  Button, Text
 } from "native-base";
 import * as LocalAuthentication from "expo-local-authentication";
 import GradientButton from "react-native-gradient-buttons";
@@ -78,7 +77,7 @@ export default class Fingerprint extends React.Component {
 
   render() {
     return (
-      <View style={styles.viewFlexFp}>
+      <View style={styles.container}>
         <Background fullscreen={true}/>
         {this.state.authenticated && (
           <Text style={styles.textFp}>Authentication Successful! 🎉</Text>
@@ -90,42 +89,35 @@ export default class Fingerprint extends React.Component {
           visible={true}
           // onShow={this.scanFingerPrint}
         >
-          <View style={styles.modalFp}>
-            <LinearGradient
-              colors={[Images.velasColor4, Images.velasColor4]}
-              style={styles.linearGradientBg}
-            >
-              <View style={styles.containerScreen}>
-                <Text style={[styles.titleBlack , {paddingVertical: 20}]}>
-                  {/* Authenticate with fingerprint */}
-                  Please Authenticate!
-                </Text>
+          <View style={[styles.modalFp, {backgroundColor: Images.velasColor4}]}>
+              <View style={styles.titleInput}>
+              <Text style={styles.textH1Seed}>Please Authenticate!</Text>
+            </View>
+                
                 <Image
                   style={styles.imageFinger}
                   source={Images.fingerPrint}
                 />
                 {this.state.failedCount > 0 && (
-                <Text style={{ color: "white", fontSize: 14 }}>
+                <Text style={[styles.textH1Seed, { color: "red", fontSize: 16 }]}>
                   Try again
                 </Text>
               )}
-                <View style={styles.marginBtn}>
-                  <Button block style={styles.btnVelasActive} 
-                    onPress={this.scanFingerPrint}>
-                    <Text style={styles.textBtn}>{"Press to scan"}</Text>
+                <View style={[styles.marginBtn, {paddingHorizontal: 20, marginTop: 20, marginBottom: 30}]}>
+                  <Button block style={styles.btnVelasCreate} onPress={this.scanFingerPrint}>
+                    <Text style={[styles.textBtn, {color: "#fff"}]}>Press to scan</Text>
                   </Button>
-                  <Button block style={styles.btnVelasActive} 
-                    onPress={() => {
+                  <View style={{ padding: 10 }}></View>
+                  <Button block style={styles.btnVelasRestore} onPress={() => {
                       LocalAuthentication.cancelAuthenticate();
                       this.props.onCancel && this.props.onCancel();
                       this.setModalVisible(!this.state.modalVisible);
                     }}>
-                    <Text style={styles.textBtn}>{"Cancel"}</Text>
+                    <Text style={styles.textBtn}>Cancel</Text>
                   </Button>
+
                 </View>
               </View>
-            </LinearGradient>
-          </View>
         </Modal>
       </View>
     );
