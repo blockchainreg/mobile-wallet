@@ -25,7 +25,7 @@ export default ({ store }) => {
     changeTab("stakePage")();
   };
   const goToWallets = () => {
-    initStaking(store);
+    // initStaking(store);
     changeTab("wallets")();
   }
   //DO NOT generate footer if transaction info is visible

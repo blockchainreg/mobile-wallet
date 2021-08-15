@@ -46,8 +46,8 @@ import DemoMode from "../components/DemoMode.js";
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
 import Header from "../components/Header.js";
-import { Observer, observer } from "mobx-react";
-import { formatStakeAmount } from "../utils/format-value";
+import { Observer } from "mobx-react";
+import { formatAmount } from "../utils/format-value";
 
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
@@ -200,15 +200,8 @@ export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  let calcUsd = parseFloat(store.current.balanceUsd);
-  if (isNaN(calcUsd)) {
-    calcUsd = store.current.balanceUsd;
-  } else {
-    const r_calcUsd = roundNumber(calcUsd, { decimals: 2 });
-    calcUsd = roundHuman(r_calcUsd);
-  }
-
-  const refreshBalance = () => {
+ 
+   const refreshBalance = () => {
     store.current.refreshingBalances = true;
     console.log("refresh balance start");
     stakingStore.reloadWithRetry();
@@ -227,14 +220,16 @@ export default ({ store, web3t }) => {
     return <DemoMode store={store} />;
   };
 
-  const stakeBalance = () => {
+  const totalBalance = () => {
     const filterStake = stakingStore.getStakedValidators();
     if (!filterStake || stakingStore.isRefreshing) {
       return (
-        <Text note style={style.balanceStake}>{lang.myStake}: ... </Text>
+        <Text style={style.balanceAmount}>
+          ... <Text style={style.balanceAmount}>$</Text>{" "}
+        </Text>
       );
     }
-    const myStakeBalance = filterStake.map((el) => formatStakeAmount(el.myStake));
+    let myStakeBalance = filterStake.map((el) => formatAmount(el.myStake));
     // console.log("myStakeBalance", myStakeBalance);
     function arraySum(arr) {
       let sum = 0;
@@ -248,15 +243,33 @@ export default ({ store, web3t }) => {
       return sum;
     }
     let arraySumStake = arraySum(myStakeBalance);
-    // console.log('arraySumStake', arraySumStake)
+    // console.log("arraySumStake", arraySumStake);
     arraySumStake = Math.floor(arraySumStake * 100) / 100;
+    // console.log('arraySumStake', arraySumStake)
     const arraySumStakeUsd = arraySumStake * store.rates.vlx2;
+    // console.log("arraySumStake", arraySumStake);
+    // console.log("store.rates.vlx2", store.rates.vlx2);
+    // console.log("arraySumStakeUsd", arraySumStakeUsd);
+
+    let calcUsd = parseFloat(store.current.balanceUsd);
+    // console.log("calcUsd", calcUsd);
+    // console.log("store.current.balanceUsd", store.current.balanceUsd);
+    if (isNaN(calcUsd)) {
+      calcUsd = store.current.balanceUsd;
+    } else {
+      const r_calcUsd = roundNumber(calcUsd + arraySumStakeUsd, {
+        decimals: 2,
+      });
+      calcUsd = roundHuman(r_calcUsd);
+      // console.log("calcUsd", calcUsd);
+    }
     return (
       <Observer>
         {() => {
           return (
-            <Text note style={style.balanceStake}>
-              {lang.myStake}: {!arraySumStake || !myStakeBalance  ? "0.00" : arraySumStake} VLX ({!arraySumStakeUsd || !arraySumStake || !myStakeBalance ? "0.00" : arraySumStakeUsd.toFixed(2)} USD)
+            <Text style={style.balanceAmount}>
+              {!calcUsd ? "..." : calcUsd}{" "}
+              <Text style={style.balanceAmount}>$</Text>
             </Text>
           );
         }}
@@ -292,10 +305,10 @@ export default ({ store, web3t }) => {
         />
         <View style={style.viewWallet}>
           <Text style={style.balance}>{lang.totalBalance}</Text>
-          <Text style={style.balanceAmount}>
+          {totalBalance()}
+          {/* <Text style={style.balanceAmount}>
             {calcUsd} <Text style={style.balanceAmount}>$</Text>{" "}
-          </Text>
-            {stakeBalance()}
+          </Text> */}
         </View>
       </View>
 
@@ -326,7 +339,7 @@ const style = StyleSheet.create({
     flex: 0.25,
   },
   viewWallet: {
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "flex-start",
     marginLeft: 20,
     marginBottom: 15,
