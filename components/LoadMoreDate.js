@@ -1,6 +1,6 @@
 import React, { Component } from "react"; //import react in our code.
 import { View, Text, TouchableOpacity, ActivityIndicator, Image, Platform } from "react-native";
-import { List, ListItem, Left, Body, Right, Thumbnail, Header, Item, Icon, Button, Input } from "native-base";
+import { List, ListItem, Left, Body, Right, Thumbnail, Header, Item, Icon, Button, Input, Content } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
 import Images from "../Images.js";
@@ -8,6 +8,8 @@ import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
 import roundHuman from "../wallet/round-human";
+import { SkypeIndicator } from 'react-native-indicators';
+
 var ref$ = require('prelude-ls'), sortBy = ref$.sortBy, reverse = ref$.reverse, filter = ref$.filter, find = ref$.find, keys = ref$.keys, map = ref$.map;
 
 
@@ -185,7 +187,12 @@ export default ({ store, web3t }) => {
         ) : null}
 
         {store.current.refreshing || store.current.transactionsAreLoading ? (
-          <ActivityIndicator color="#fff" />
+        //   <ActivityIndicator color="#fff" />
+		<Content contentContainerStyle={{flex: 1, alignItems: 'center',}}  >
+                <View style={{marginTop: 10}}>
+                  <SkypeIndicator color={"white"}/>
+                </View>
+              </Content>
         ) : (
           <View>
             {txs.length == 0 && (

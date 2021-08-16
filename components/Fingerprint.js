@@ -1,23 +1,11 @@
 import * as React from "react";
-import {
-  View,
-  Modal,
-  Image,
-  Platform,
-  ImageBackground,
-} from "react-native";
-import {
-  Button, Text
-} from "native-base";
+import { Modal, Image, Platform, ImageBackground } from "react-native";
+import { Text, Button, View, Icon, CardItem, Body } from "native-base";
 import * as LocalAuthentication from "expo-local-authentication";
-import GradientButton from "react-native-gradient-buttons";
-// import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import styles from "../Styles.js";
 import Background from "./Background.js";
-import { LinearGradient } from "expo-linear-gradient";
-import getLang from '../wallet/get-lang.js';
-
+import Header from "../components/Header.js";
 
 export default class Fingerprint extends React.Component {
   constructor(props) {
@@ -28,7 +16,7 @@ export default class Fingerprint extends React.Component {
     authenticated: false,
     modalVisible: Platform.OS === "android",
     failedCount: 0,
-    error: null
+    error: null,
   };
 
   setModalVisible(visible) {
@@ -64,7 +52,7 @@ export default class Fingerprint extends React.Component {
         this.setState(
           {
             failedCount: this.state.failedCount + 1,
-            error: results.error
+            error: results.error,
           },
           this.scanFingerPrint
         );
@@ -73,52 +61,60 @@ export default class Fingerprint extends React.Component {
       console.log(e);
     }
   };
-  
 
   render() {
     return (
-      <View style={styles.container}>
-        <Background fullscreen={true}/>
-        {this.state.authenticated && (
-          <Text style={styles.textFp}>Authentication Successful! 🎉</Text>
-        )}
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={true}
-          // onShow={this.scanFingerPrint}
-        >
-          <View style={[styles.modalFp, {backgroundColor: Images.velasColor4}]}>
-              <View style={styles.titleInput}>
+      <View style={styles.viewFlex}>
+        <View style={{ display: "none" }}>
+          <Header
+            onBackHandlerOnly={() => {
+              LocalAuthentication.cancelAuthenticate();
+              this.props.onCancel && this.props.onCancel();
+              this.setModalVisible(!this.state.modalVisible);
+            }}
+          />
+        </View>
+        <View
+          style={{ justifyContent: "center", alignItems: "center", flex: 1  }}>
+          {/* <Image style={styles.imageFinger} source={Images.fingerPrint} /> */}
+          <View style={styles.card1}>
+            <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>Please Authenticate!</Text>
             </View>
-                
-                <Image
-                  style={styles.imageFinger}
-                  source={Images.fingerPrint}
-                />
-                {this.state.failedCount > 0 && (
-                <Text style={[styles.textH1Seed, { color: "red", fontSize: 16 }]}>
-                  Try again
-                </Text>
-              )}
-                <View style={[styles.marginBtn, {paddingHorizontal: 20, marginTop: 20, marginBottom: 30}]}>
-                  <Button block style={styles.btnVelasCreate} onPress={this.scanFingerPrint}>
-                    <Text style={[styles.textBtn, {color: "#fff"}]}>Press to scan</Text>
+            <CardItem style={styles.cardItemSeed}>
+              <Body>
+                <View style={styles.marginBtn}>
+                  <Button
+                    block
+                    style={styles.btnVelasCreate}
+                    onPress={this.scanFingerPrint}
+                  >
+                    <Text style={[styles.textBtn, { color: "#fff" }]}>
+                      Press to scan
+                    </Text>
                   </Button>
                   <View style={{ padding: 10 }}></View>
-                  <Button block style={styles.btnVelasRestore} onPress={() => {
+                  <Button
+                    block
+                    style={styles.btnVelasRestore}
+                    onPress={() => {
                       LocalAuthentication.cancelAuthenticate();
                       this.props.onCancel && this.props.onCancel();
                       this.setModalVisible(!this.state.modalVisible);
-                    }}>
+                    }}
+                  >
                     <Text style={styles.textBtn}>Cancel</Text>
                   </Button>
-
                 </View>
-              </View>
-        </Modal>
+              </Body>
+            </CardItem>
+            {this.state.failedCount > 0 && (
+            <Text style={[styles.textH1Seed, { color: "red", fontSize: 16 , textAlign: "center"}]}>
+              Try again
+            </Text>
+          )}
+          </View>
+        </View>
       </View>
     );
   }

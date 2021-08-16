@@ -5441,7 +5441,8 @@ export default StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
     paddingTop: 20,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: "Fontfabric-NexaRegular",
+    color: "white"
   },
   introBackgroundFp: {
     backgroundColor: "#290C64",

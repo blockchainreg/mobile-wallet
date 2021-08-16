@@ -36,6 +36,9 @@ export default (props) => {
           {props.onBack && (
             <BackButton onBack={props.onBack} style={props.greenBack ? styles.leftBtnColor : {color: "#fff"}} />
             )}
+            {props.onBackHandlerOnly && (
+            <BackButton onBack={props.onBackHandlerOnly} transparent/>
+            )}
         </Left>
         <Body>
           <Title style={props.smallTitle ? styles.headerTitleSmall : styles.headerTitle}>{props.title}</Title>
