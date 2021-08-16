@@ -36,11 +36,21 @@ import Input from '../components/InputSecure';
 
 
 
+
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
+  const changePage = tab => () => {
+    store.current.page = tab;
+  };
+  const back = changePage("settings");
+
   switch(status) {
     case "unavailable":
-      return <Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
+      return (
+      <>
+      <Header onBack={back}/>
+      <Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>
+      </> )
     case "waiting":
       Promise.all([
         LocalAuthentication.hasHardwareAsync(),
@@ -52,7 +62,7 @@ function LocalAuthenticationEnable({store, web3t}) {
           return;
         }
         setStatus("unavailable");
-        setTimeout(() => {store.current.page = "settings";}, 3000);
+        setTimeout(() => {store.current.page = "settings";}, 5000);
       });
       return <Text>...</Text>;
     case "localAuth":
