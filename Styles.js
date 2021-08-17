@@ -5737,6 +5737,12 @@ export default StyleSheet.create({
     flex: 1,
     // backgroundColor: "rgba(0, 0, 0, .6)"
   },
+  cameraContainer: {
+    marginHorizontal: 0, marginLeft: 0, marginStart: 0,
+    paddingHorizontal: 0, paddingLeft: 0, paddingStart: 0,
+    height: '115%',
+    padding: 0
+},
   focusedBorder1: {
     backgroundColor: "transparent",
     borderColor: "#fff",
@@ -5961,5 +5967,8 @@ export default StyleSheet.create({
   },
   textNetInfo: {
     textAlign: "center", fontSize: 16, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  },
+  textAuth: {
+    color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20
   }
 });

@@ -3,9 +3,6 @@ import {
   Text,
   View,
   Item,
-  Body,
-  Left,
-  Right,
   Button,
   Icon,
   Toast,
@@ -16,29 +13,22 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   StyleSheet,
-  Keyboard, Alert
+  Keyboard, Alert, Platform
 } from "react-native";
-import GradientButton from "../components/GradientButton.js";
 import styles from "../Styles.js";
-import {get} from "../wallet/seed.js";
-import {confirm} from "../wallet/pages/confirmation.js";
 import {check} from "../wallet/pin.js";
-//import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import * as SecureStore from 'expo-secure-store';
 import Fingerprint from "../components/Fingerprint.js";
 import * as LocalAuthentication from 'expo-local-authentication';
-import Background from "../components/Background.js";
 import Header from '../components/Header';
 import Input from '../components/InputSecure';
 
-
-
-
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
+
   const changePage = tab => () => {
     store.current.page = tab;
   };
@@ -49,7 +39,7 @@ function LocalAuthenticationEnable({store, web3t}) {
       return (
       <>
       <Header onBack={back}/>
-      <Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>
+      <Text style={styles.textAuth}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>
       </> )
     case "waiting":
       Promise.all([
@@ -94,7 +84,7 @@ function RequestPin({store, web3t}) {
         store.current.auth.isLocalAuthEnabled = null;
         store.current.page = "settings";
         Alert.alert(
-          "Touch ID / Face ID",
+          Platform.OS === 'ios' ? "Touch ID / Face ID" : "Fingerprint ID",
           "Enabled successfully",
           [
             { text: "OK", onPress: () => console.log("OK Pressed") }
@@ -181,11 +171,7 @@ function RequestPin({store, web3t}) {
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             <View style={style.paddingBlock}>
-
             {inputSuccessPin(store)}
-            {/* {!validInputPin && (
-              <Text style={styles.error}>{lang.validPin}</Text>
-            )} */}
             {checkpin(store)}
             </View>
             </View>

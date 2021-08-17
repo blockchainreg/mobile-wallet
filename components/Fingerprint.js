@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Modal, Image, Platform, ImageBackground } from "react-native";
+import { Modal, Image, Platform, Alert } from "react-native";
 import { Text, Button, View, Icon, CardItem, Body } from "native-base";
 import * as LocalAuthentication from "expo-local-authentication";
 import Images from "../Images.js";
 import styles from "../Styles.js";
 import Background from "./Background.js";
 import Header from "../components/Header.js";
+import * as SecureStore from "expo-secure-store";
 
 export default class Fingerprint extends React.Component {
   constructor(props) {
@@ -61,7 +62,24 @@ export default class Fingerprint extends React.Component {
       console.log(e);
     }
   };
-
+  onPressDisable = () => {
+    SecureStore.getItemAsync("localAuthToken").then(pin => {
+      if (pin) {
+        SecureStore.deleteItemAsync("localAuthToken").then(() => {
+          this.props.onCancel && this.props.onCancel();
+          Alert.alert(
+            Platform.OS === 'ios' ? "Touch ID / Face ID" : "Fingerprint ID",
+            "Disabled successfully",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
+        });
+      } else return null;
+    })
+  }
+  
   render() {
     return (
       <View style={styles.viewFlex}>
@@ -76,24 +94,44 @@ export default class Fingerprint extends React.Component {
         </View>
         <View
           style={{ justifyContent: "center", alignItems: "center", flex: 1  }}>
-          {/* <Image style={styles.imageFinger} source={Images.fingerPrint} /> */}
+          <Image style={styles.imageFinger} source={Images.fingerPrint} />
           <View style={styles.card1}>
             <View style={styles.titleInput}>
-              <Text style={styles.textH1Seed}>Please Authenticate!</Text>
+              <Text style={styles.textH1Seed}>Authenticate!</Text>
             </View>
             <CardItem style={styles.cardItemSeed}>
               <Body>
                 <View style={styles.marginBtn}>
+                  {this.props.onSuccess && (
+                  <>
                   <Button
                     block
                     style={styles.btnVelasCreate}
                     onPress={this.scanFingerPrint}
                   >
                     <Text style={[styles.textBtn, { color: "#fff" }]}>
-                      Press to scan
+                      Enable
                     </Text>
                   </Button>
                   <View style={{ padding: 10 }}></View>
+                  </>
+                  )}
+
+                  {this.props.onDisable && (
+                    <>
+                    <Button
+                      block
+                      style={[styles.btnVelasCreate, {backgroundColor: "orange"}]}
+                      onPress={this.onPressDisable}
+                    >
+                      <Text style={[styles.textBtn, { color: "#fff" }]}>
+                      Disable
+                      </Text>
+                    </Button>
+                    <View style={{ padding: 10 }}></View>
+                    </>
+                  )}
+
                   <Button
                     block
                     style={styles.btnVelasRestore}

@@ -36,10 +36,7 @@ export default ({ store, web3t }) => {
   const lang = getLang(store);
   SecureStore.getItemAsync("localAuthToken").then(pin => {
     if (pin) {
-      SecureStore.deleteItemAsync("localAuthToken").then(() => {
-        store.current.page = "settings";
-        Alert.alert("Local Authentication now disabled" );
-      });
+      store.current.page = "LocalAuthenticationDisable";
     } else {
       store.current.page = "LocalAuthenticationEnable";
     }
