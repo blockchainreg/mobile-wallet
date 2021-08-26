@@ -209,7 +209,22 @@ export default ({ store, web3t }) => {
       <DemoMode store={store}/>
     );
   };
+  const renderNetwork = () => {
+    if (store.current.network === 'mainnet') {
+      return null;
+    }
+    return (
+      <View style={styles.demoView}>
+        <Text style={styles.demoTxt}>
+        The default network for all transactions is Testnet
+        </Text>
+        <Text/>
+      </View>
+    )
+  }
 
+  
+  // console.log('store.current.network', store.current.network)
   // const walletListStyle = Object.assign({}, style.viewMonoWallets);
   // if (isDemoMode) {
   //   if (typeof walletListStyle.height === "string") {
@@ -251,6 +266,7 @@ export default ({ store, web3t }) => {
       <View style={{position: "absolute", bottom: 0, left: 0, right: 0}}>
         <Footer store={store}></Footer>
         {renderDemoMode()}
+        {renderNetwork()}
       </View>
     </View>
   );
