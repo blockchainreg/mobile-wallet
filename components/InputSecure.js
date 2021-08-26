@@ -27,6 +27,7 @@ export default ({placeholder, value, onChangeText, ...props}) => {
         style={styles.inputSize}
         selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
         keyboardAppearance="dark"
+        blurOnSubmit={true}
       />
       <Icon
         name={hidePass ? "eye-slash" : "eye"}
