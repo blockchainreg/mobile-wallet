@@ -51,6 +51,10 @@ class RewardModel {
   }
 
   async loadApr() {
+    if (!this.solanaReward) {
+      this.apr = 0;
+      return;
+    }
     const epochDuration = (
       (await this.getEpochTimeTs(this.epoch + 1)) -
       (await this.getEpochTimeTs(this.epoch))

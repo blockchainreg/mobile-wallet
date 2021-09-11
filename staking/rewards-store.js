@@ -61,6 +61,8 @@ class RewardsStore {
         maxAmount = reward.lamports;
         biggestReward = reward;
       }
+
+      if (!biggestReward) return null;
       this.latestRewardsPerValidator.set(key, [new RewardModel(biggestReward, epoch - 1, this.connection)]);
     });
     this.isLatestRewardsLoading = false;
