@@ -209,7 +209,8 @@ export default ({ store, web3t }) => {
       <DemoMode store={store}/>
     );
   };
-
+  
+  // console.log('store.current.network', store.current.network)
   // const walletListStyle = Object.assign({}, style.viewMonoWallets);
   // if (isDemoMode) {
   //   if (typeof walletListStyle.height === "string") {

@@ -211,7 +211,7 @@ class StakingAccountModel {
       //   return;
       // }
       const { account } = this.parsedAccoount;
-      if (!account.data.parsed.info.stake) {
+      if (!account.data.parsed.info || !account.data.parsed.info.stake) {
         this.latestReward = null;
         return;
       }
