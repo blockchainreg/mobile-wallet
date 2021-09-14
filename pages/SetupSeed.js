@@ -36,7 +36,7 @@ export default ({ store }) => {
   };
 
   const generateRandom = async () => {
-    store.current.seed = generateMnemonic() + ' ' + generateMnemonic();
+    store.current.seed = generateMnemonic(256);
     localStorage.setItem("is-demo-mode", "yes");
     store.current.page = "terms";
     //store.curren.newseedstep = "ganarate";
