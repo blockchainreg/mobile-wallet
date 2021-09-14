@@ -71,20 +71,28 @@ export default ({ store, web3t }) => {
       store.current.seedIndex += 1;
       return
     }
+		/* First check mnemonic generated with 256 bits length seed */
+		try {
+			bip39.mnemonicToEntropy(store.current.seedWords.join(" "));
+			return onSeedConfirmed(store.current.seedWords.join(' '));
+		}
+		catch (e) {}
+
+		/* Second check mnemonic generated with 2 seeds by 128 bits length */
     try {
-        for(let i = 0; i < store.current.seedWords.length - 11; i += 12) {
-            bip39.mnemonicToEntropy(store.current.seedWords.slice(i, i+12).join(" "));
-        }
-        onSeedConfirmed(store.current.seedWords.join(' '));
-    }
-    catch (e) {
-	  alert(
+			for(let i = 0; i < store.current.seedWords.length - 11; i += 12) {
+				bip39.mnemonicToEntropy(store.current.seedWords.slice(i, i+12).join(" "));
+			}
+			onSeedConfirmed(store.current.seedWords.join(' '));
+		}
+		catch (e) {
+	  	alert(
           "Seed phrase checksum does not match. Go back and select custom seed phrase if you need.",
           () => {
             store.current.seedIndex = 0;
             store.current.seedWords = store.current.seedWords.map(() => "");
           }
-        );
+			);
     }
   };
 
