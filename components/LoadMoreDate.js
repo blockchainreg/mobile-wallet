@@ -105,101 +105,91 @@ export default ({ store, web3t }) => {
     }
 
     const renderTransaction = (transaction) => {
-		debugger;
-			var r_amount = roundNumber(transaction.amount, {decimals: 2});
-			var amount = roundHuman(r_amount);
-			var curr = transaction.token;
-			let currency_display = (function() {
-				switch (curr) {
-					case "vlx_native":
-					case "vlx_evm":
-					case "vlx2":
-					case "vlx": return "VLX";
-					default: return transaction.token
+		var r_amount = roundNumber(transaction.amount, {decimals: 2});
+		var amount = roundHuman(r_amount);
+		let currency_display = currency.toUpperCase();
+		
+		return (
+			<ListItem
+				thumbnail
+				underlayColor={Images.color1}
+				onPress={() => {
+				showTransaction(transaction);
+				}}
+				key={transaction.token+transaction.tx+transaction.type}
+			>
+			<Left>{thumbnail(transaction.type)}</Left>
+			<Body style={{ paddingRight: 10 }}>
+				<Text style={styles.txtSizeHistory}>
+				{checkType(transaction)}
+				</Text>
+				<Text style={styles.constDate}>
+				{transaction.time
+					? moment(transaction.time * 1000).format(
+						"MMM D YYYY h:mm A"
+					)
+					: null
 				}
-			}());
-			currency_display = currency_display.toUpperCase();
-				return (
-				<ListItem
-					thumbnail
-					underlayColor={Images.color1}
-					onPress={() => {
-					showTransaction(transaction);
-					}}
-					key={transaction.token+transaction.tx+transaction.type}
-				>
-				<Left>{thumbnail(transaction.type)}</Left>
-				<Body style={{ paddingRight: 10 }}>
-					<Text style={styles.txtSizeHistory}>
-					{checkType(transaction)}
-					</Text>
-					<Text style={styles.constDate}>
-					{transaction.time
-						? moment(transaction.time * 1000).format(
-							"MMM D YYYY h:mm A"
-						)
-						: null
-					}
-					</Text>
-				</Body>
-				<Right>
-					<Text style={amountStyle(transaction.type)}>
-					{index(transaction.type)}
-					{amount}{"\u00A0"}{currency_display}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-					</Text>
-					{transaction.fee
-						?(
-							<Text style={styles.constDate}>
-							({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-							</Text>
-						)
-						: null
-					}
-				</Right>
-				</ListItem>
-			);
-		}
+				</Text>
+			</Body>
+			<Right>
+				<Text style={amountStyle(transaction.type)}>
+				{index(transaction.type)}
+				{amount}{"\u00A0"}{currency_display}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+				</Text>
+				{transaction.fee
+					?(
+						<Text style={styles.constDate}>
+						({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+						</Text>
+					)
+					: null
+				}
+			</Right>
+			</ListItem>
+		);
+	}
 
 
     return (
-      <View style={styles.container}>
-        {store.history.filterOpen ? (
-          <Header searchBar style={styles.headerSearchBar}>
-						<Item style={{ backgroundColor: Images.color4}}>
-							<Icon name="ios-search" style={{ color: "#fff"}}/>
-							<Input
-								placeholder="Search"
-								value={store.current.filterVal.temp}
-								placeholderTextColor="#fff"
-								onChangeText={changeSearch}
-								selectionColor={"#fff"}
-								style={{ color: "#fff", backgroundColor: "transparent"}}
-							/>
-							<Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>
-						</Item>
-						<Button transparent onPress={applyFilter}>
-							<Text style={{ color: "#fff"}}>{lang.filter}</Text>
-						</Button>
-          </Header>
-        ) : null}
+      	<View style={styles.container}>
+			{store.history.filterOpen ? (
+				<Header searchBar style={styles.headerSearchBar}>
+					<Item style={{ backgroundColor: Images.color4}}>
+						<Icon name="ios-search" style={{ color: "#fff"}}/>
+						<Input
+							placeholder="Search"
+							value={store.current.filterVal.temp}
+							placeholderTextColor="#fff"
+							onChangeText={changeSearch}
+							selectionColor={"#fff"}
+							style={{ color: "#fff", backgroundColor: "transparent"}}
+						/>
+						<Icon name="ios-trash" onPress={clearFilter} style={{ color: "#fff"}}/>
+					</Item>
+					<Button transparent onPress={applyFilter}>
+						<Text style={{ color: "#fff"}}>{lang.filter}</Text>
+					</Button>
+				</Header>
+			) : null}
 
-        {store.current.refreshing || store.current.transactionsAreLoading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <View>
-            {txs.length == 0 && (
-              <View style={styles.footer}>
-                <Image
-                source={Images.trx}
-                style={styles.styleLogo}
-                />
-              </View>
-            )}
-            <List>
-              {txs.map(renderTransaction)}
-            </List>
-          </View>
-        )}
-      </View>
+			{store.current.refreshing || store.current.transactionsAreLoading ? (
+				<ActivityIndicator color="#fff" />
+			) : (
+				<View>
+					{txs.length == 0 && (
+						<View style={styles.footer}>
+							<Image
+								source={Images.trx}
+								style={styles.styleLogo}
+							/>
+						</View>
+					)}
+					<List>
+						{txs.map(renderTransaction)}
+					</List>
+				</View>
+			)}
+      	</View>
     );
 }
