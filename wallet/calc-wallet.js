@@ -54,8 +54,9 @@
           var pendingSent, this$ = this;
           if (err != null) {
           	console.log("build loader for " + token + " err", err);
+          	balance = 0;
           }
-          pendingSent = 0
+          pendingSent = 0;
           // map(function(it){
           //   return it.amount;
           // })(
@@ -68,19 +69,19 @@
           // store.transactions.all))));
           wallet.pendingSent = pendingSent;
           wallet.balance = (function(){
-						switch (false) {
-							case !isNaN(balance):
-								return '..';
-							default:
-								return balance+"";
-						}
-					}());
+				switch (false) {
+					case !isNaN(balance):
+						return '..';
+					default:
+						return balance+"";
+				}
+			}());
           wallet.balanceUsd = (function(){
             switch (false) {
-							case !isNaN(balance) && !isNaN(usdRate):
-								return '..';
-							default:
-								return times(balance+"", usdRate+"");
+				case !isNaN(balance) && !isNaN(usdRate):
+					return '..';
+				default:
+					return times(balance+"", usdRate+"");
             }
           }());
           state.balanceUsd = (function(){
