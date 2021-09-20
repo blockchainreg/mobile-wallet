@@ -6,10 +6,11 @@ import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
 import * as React from "react";
-import { View, Image, Text, ImageBackground } from "react-native";
+import {View, Image, Text, ImageBackground, TextInput} from "react-native";
+import { Input } from "native-base";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React)
+const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
   state = {
@@ -37,6 +38,30 @@ class App extends React.Component {
         this.setState({ AppReady: require("./App-ready.js").default });
       });
     // }, 1500);
+	  
+	  
+	  /* Disable font scaling */
+	  
+	  if (Text.defaultProps == null) {
+		  Text.defaultProps = {};
+	  }
+	  Text.defaultProps.allowFontScaling = false;
+	
+	  if (TextInput.defaultProps == null) {
+		  TextInput.defaultProps = {};
+	  }
+	  TextInput.defaultProps.allowFontScaling = false;
+	
+	  if (Input.defaultProps == null) {
+		  Input.defaultProps = {};
+	  }
+	  Input.defaultProps.allowFontScaling = false;
+	  
+	  if (Text.defaultProps == null) {
+		  Text.defaultProps = {}
+	  }
+	  Text.defaultProps.allowFontScaling = false;
+	  
   }
 
   render() {
