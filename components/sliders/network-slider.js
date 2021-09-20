@@ -20,17 +20,14 @@ export default ({store, wallet}) => {
 	if (store.current.send.chosenNetwork == null) return null;
 
 	const wallets = pairsToObj(
-			map(function(it){
-				return [it.coin.token, it];
-			})(
-					store.current.account.wallets));
+		map(function(it){
+			return [it.coin.token, it];
+		})(store.current.account.wallets));
 
 	let availableNetworks = pairsToObj(
-			filter(function(it){
-				return wallets[it[1].referTo] != null && (it[1].disabled == null || it[1].disabled === false);
-			})(
-					objToPairs(
-							wallet.network.networks)));
+		filter(function(it){
+			return wallets[it[1].referTo] != null && (it[1].disabled == null || it[1].disabled === false);
+		})(objToPairs(wallet.network.networks)));
 	networkLabels = Object.keys(availableNetworks);
 	getNetworkById = function(id){
 		return availableNetworks[id + ""];
@@ -60,7 +57,7 @@ export default ({store, wallet}) => {
 	const containerStyles = {
 		display: "flex",
 		flexDirection: "row"
-	}
+	};
 	const buttonStyles = {
 		padding: 5,
 		backgroundColor: Images.colorBlue,
@@ -71,7 +68,7 @@ export default ({store, wallet}) => {
 		flexDirection: "row",
 		alignItems:"center",
 		alignSelf:'center'
-	}
+	};
 	const inputStyle = {
 		color: "#fff",
 		fontSize: 18,
@@ -80,7 +77,7 @@ export default ({store, wallet}) => {
 		fontFamily: "Fontfabric-NexaBold",
 		flex: 4,
 		textAlign: "center"
-	}
+	};
 	const arrowIcon = {
 		fontSize: 30,
 		color: '#fff',
@@ -90,41 +87,43 @@ export default ({store, wallet}) => {
 		flex: 1,
 		textAlign: "center",
 		width: 30
-	}
+	};
 
+	var mask = wallet.network.mask ? wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..." : "";
+	
 	return (
-			<View style={containerStyles}>
-				<Button
-						transparent
-						style={buttonStyles}
-						onPress={goback}
-				>
-					<Icon
-							name="ios-arrow-back"
-							style={arrowIcon}
-					/>
-				</Button>
-				<Input
-						disabled={true}
-						returnKeyType="done"
-						selectionColor={"#fff"}
-						keyboardAppearance="dark"
-						placeholder={wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..."}
-						style={inputStyle}
-						value={displayValue}
-						placeholderTextColor="rgba(255,255,255,0.60)"
+		<View style={containerStyles}>
+			<Button
+				transparent
+				style={buttonStyles}
+				onPress={goback}
+			>
+				<Icon
+					name="ios-arrow-back"
+					style={arrowIcon}
 				/>
-				<Button
-						transparent
-						style={buttonStyles}
-						onPress={goForw}
-				>
-					<Icon
-							name="ios-arrow-forward"
-							style={arrowIcon}
-					/>
-				</Button>
-			</View>
+			</Button>
+			<Input
+				disabled={true}
+				returnKeyType="done"
+				selectionColor={"#fff"}
+				keyboardAppearance="dark"
+				placeholder={mask}
+				style={inputStyle}
+				value={displayValue}
+				placeholderTextColor="rgba(255,255,255,0.60)"
+			/>
+			<Button
+				transparent
+				style={buttonStyles}
+				onPress={goForw}
+			>
+				<Icon
+					name="ios-arrow-forward"
+					style={arrowIcon}
+				/>
+			</Button>
+		</View>
 	)
 
 }
