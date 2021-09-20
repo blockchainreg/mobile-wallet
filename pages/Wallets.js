@@ -39,6 +39,12 @@ import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
 import Header from "../components/Header.js"
 
+function import$(obj, src){
+	var own = {}.hasOwnProperty;
+	for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+	return obj;
+}
+
 const wallets = (store, web3t) => {
   const changePage = (tab) => () => {
     store.current.page = tab;
@@ -127,7 +133,8 @@ const wallets = (store, web3t) => {
 	const walletBalance = roundHuman(balanceRounded);
 	const balanceUsdRounded = roundNumber(balanceUsd, {decimals: 2});
 	const walletBalanceUsd = roundHuman(balanceUsdRounded);
-    if (wallet.balance !== "..") {
+    
+	if (wallet.balance !== "..") {
       balanceLayout = (
         <Text>
           <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{walletBalance} {token}</Text>
@@ -144,6 +151,7 @@ const wallets = (store, web3t) => {
     }
   // It opens dialog on scroll - should be fixed
   //    onLongPress={actions}
+	var walletContainerStyle = isNaN(wallet.balance) ? import$({ opacity: 0.4 }, styles.mbListItem ) : styles.mbListItem;
 
     return (
       <ListItem
@@ -151,7 +159,7 @@ const wallets = (store, web3t) => {
         thumbnail
         underlayColor={Images.velasColor2}
         onPress={chooseWallet}
-        style={styles.mbListItem}
+        style={ walletContainerStyle }
       >
         <Left>
           <Thumbnail square source={{ uri: wallet.coin.image }} />
