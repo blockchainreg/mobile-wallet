@@ -3,6 +3,11 @@
 	var ref$, filter, sortBy, reverse, getInstallList, common, getCoins, out$ = typeof exports != 'undefined' && exports || this;
 	ref$ = require('prelude-ls'), filter = ref$.filter, sortBy = ref$.sortBy, reverse = ref$.reverse;
 	getInstallList = require('./install-plugin.js').getInstallList;
+	function in$(x, xs){
+		var i = -1, l = xs.length >>> 0;
+		while (++i < l) if (x === xs[i]) return true;
+		return false;
+	}
 	common = function(store){
 		var vlx2, btc, native, eth, vlx_evm, coins;
 		vlx2 = require('../web3t/plugins/vlx2-coin.js');
@@ -10,9 +15,11 @@
 		native = require('../web3t/plugins/sol-coin.js');
 		eth = require('../web3t/plugins/eth-coin.js');
 		vlx_evm = require('../web3t/plugins/vlx-coin.js');
-		coins = [native, vlx_evm, vlx2, btc, eth];
+		vlx_evm_legacy = require('../web3t/plugins/vlx-evm-legacy-coin.js');         
+		coins = [native, vlx_evm, vlx2, vlx_evm_legacy, btc, eth];
 		return coins;
 	};
+	var baseArray = ['vlx_native', 'vlx_evm_legacy', 'vlx_evm', 'vlx2', 'btc', 'eth'];
 	out$.getCoins = getCoins = function(store, cb){
 		var network, base;
 		network = store.current.network;
@@ -30,12 +37,14 @@
 				return cb(err);
 			}
 			installed = filter(function(it){
+				return !in$(it.token, baseArray);
+			})(
+			filter(function(it){
 				return it.enabled !== false;
 			})(
-					filter(function(it){
-						return it.type === 'coin';
-					})(
-							items));
+				filter(function(it){
+					return it.type === 'coin';
+				})(items)));
 			all = reverse(base.concat(installed));
 			return cb(null, all);
 		});
