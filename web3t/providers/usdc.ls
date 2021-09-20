@@ -2,7 +2,7 @@ require! {
     \qs : { stringify }
     \prelude-ls : { filter, map, foldl, each }
     \../math.js : { plus, minus, times, div }
-    \./superagent.js : { get }
+    \./superagent.js : { get, post }
     \./deps.js : { Web3, Tx, BN, hdkey, bip39 }
     \../addresses.js : { ethToVlx, vlxToEth }
     \../json-parse.js
@@ -12,8 +12,8 @@ require! {
 get-ethereum-fullpair-by-index = (mnemonic, index, network)->
     seed = bip39.mnemonic-to-seed(mnemonic)
     wallet = hdkey.from-master-seed(seed)
-    w = wallet.derive-path("m0").derive-child(index).get-wallet!
-    address = ethToVlx("0x" + w.get-address!.to-string(\hex))
+    w = wallet.derive-path("m/44'/60'/"+index+"'/0/0").get-wallet!
+    address = \0x + w.get-address!.to-string(\hex)
     private-key = w.get-private-key-string!
     public-key = w.get-public-key-string!
     { address, private-key, public-key }
@@ -34,10 +34,10 @@ export calc-fee = ({ network, tx, fee-type, account, amount, to, data }, cb)->
     err, gas-price <- calc-gas-price { web3, fee-type }
     return cb err if err?
     from = account.address
-    if to?.starts-with \V
-        to = vlxToEth to
-    if from?.starts-with \V
-        from = vlxToEth from
+    #if to?.starts-with \V
+        #to = vlxToEth to
+    #if from?.starts-with \V
+        #from = vlxToEth from
     err, nonce <- web3.eth.get-transaction-count from, \pending
     return cb err if err?
     err, estimate <- web3.eth.estimate-gas { from, nonce, to, data }
@@ -53,20 +53,22 @@ to-hex = ->
     new BN(it)
 transform-tx = (network, t)-->
     { url } = network.api
-    dec = get-dec network
+    { FOREIGN_BRIDGE } = network
+    dec = get-dec network 
     network = \eth
     tx = t.hash
     amount = t.value `div` dec
     time = t.time-stamp
     url = "#{url}/tx/#{tx}"
-    fee = t.cumulative-gas-used `times` t.gas-price `div` dec
-    { network, tx, amount, fee, time, url, t.from, t.to }
+    fee = t.cumulative-gas-used `times` t.gas-price `div` (10^18)
+    tx-type = 
+        | up(t.from) is up(FOREIGN_BRIDGE) => "EVM → ETHEREUM Swap"
+        | _ => null 
+    { network, tx, amount, fee, time, url, t.from, t.to, tx-type }
 up = (s)->
     (s ? "").to-upper-case!
 export get-transactions = ({ network, address }, cb)->
     { api-url } = network.api
-    if address.starts-with \V
-        address = vlxToEth address
     module = \account
     action = \tokentx
     startblock = 0
@@ -80,7 +82,7 @@ export get-transactions = ({ network, address }, cb)->
     return cb "Unexpected result" if typeof! result?result isnt \Array
     txs =
         result.result
-            |> filter -> it.contract-address is ethToVlx network.address
+            |> filter -> up(it.contract-address) is up(network.address) 
             |> map transform-tx network
     cb null, txs
 get-web3 = (network)->
@@ -94,16 +96,16 @@ calc-gas-price = ({ web3, fee-type }, cb)->
     web3.eth.get-gas-price cb
 round = (num)->
     Math.round +num
-export create-transaction = ({ network, account, recipient, amount, amount-fee, fee-type, tx-type} , cb)-->
+export create-transaction = ({ network, account, recipient, amount, amount-fee, fee-type, tx-type, data} , cb)-->
     return cb "address in not correct ethereum address" if not is-address recipient
     web3 = get-web3 network
     dec = get-dec network
     private-key = new Buffer account.private-key.replace(/^0x/,''), \hex
     from = account.address
-    if from?.starts-with \V
-        from = vlxToEth from
-    if recipient?.starts-with \V
-        recipient = vlxToEth recipient
+    #if from?.starts-with \V
+        #from = vlxToEth from
+    #if recipient?.starts-with \V
+        #recipient = vlxToEth recipient
     err, nonce <- web3.eth.get-transaction-count from, \pending
     return cb err if err?
     return cb "nonce is required" if not nonce?
@@ -122,21 +124,32 @@ export create-transaction = ({ network, account, recipient, amount, amount-fee, 
     err, balance <- web3.eth.get-balance from
     return cb err if err?
     balance-eth = to-eth balance
-    return cb "Balance is not enough to send tx" if +balance-eth < +amount-fee
+    return cb "There is not enough balance for the commission" if +balance-eth < +amount-fee
     err, erc-balance <- get-balance { network, address: from }
     return cb err if err?
     return cb "Balance is not enough to send this amount" if +erc-balance < +amount
-    data =
+    err, chainId <- make-query network, \eth_chainId , []
+    return cb err if err?
+    $data =
+        | data? and data isnt "0x" => data 
         | contract.methods? => contract.methods.transfer(recipient, value).encodeABI!
         | _ => contract.transfer.get-data recipient, value
+
+    gas-estimate = 200000
+    
+    $recipient =
+        | data? and data isnt "0x" => recipient
+        | _ => network.address   
+
     tx = new Tx do
         nonce: to-hex nonce
         gas-price: to-hex gas-price
         value: to-hex "0"
         gas: to-hex gas-estimate
-        to: network.address
+        to: $recipient
         from: from
-        data: data || \0x
+        data: $data || \0x
+        chainId: chainId 
     #console.log \sign
     tx.sign private-key
     rawtx = \0x + tx.serialize!.to-string \hex
@@ -162,8 +175,8 @@ export get-total-received = ({ address, network }, cb)->
 export get-unconfirmed-balance = ({ network, address} , cb)->
     cb "Not Implemented"
 export get-balance = ({ network, address} , cb)->
-    if address.starts-with \V
-        address = vlxToEth address
+    #if address.starts-with \V
+        #address = vlxToEth address
     web3 = get-web3 network
     contract = get-contract-instance web3, network.address
     balance-of =
@@ -186,6 +199,46 @@ export isValidAddress = ({ address, network }, cb)->
         valid = isChecksumAddress address
         return cb "Address is not valid" if not valid  
     cb null, yes
+    
+try-parse = (data, cb)->
+    <- set-immediate
+    return cb null, data if typeof! data.body is \Object
+    return cb "expected text" if typeof! data?text isnt \String
+    try
+        data.body = JSON.parse data.text
+        cb null, data
+    catch err
+        cb err
+    
+make-query = (network, method, params, cb)->
+    { web3-provider } = network.api
+    query = {
+        jsonrpc : \2.0
+        id : 1
+        method
+        params
+    }
+    err, data <- post web3-provider, query .end
+    return cb "query err: #{err.message ? err}" if err?
+    err, data <- try-parse data
+    return cb err if err?
+    return cb "expected object" if typeof! data.body isnt \Object
+    return cb data.body.error if data.body?error?
+    cb null, data.body.result
+    
+export get-transaction-info = (config, cb)->
+    { network, tx } = config
+    query = [tx]
+    err, tx <- make-query network, \eth_getTransactionReceipt , query
+    return cb err if err?
+    status =
+        | typeof! tx isnt \Object => \pending
+        | tx.status is \0x0 => \reverted
+        | tx.status is \0x1 => \confirmed
+        | _ => \pending
+    result = { tx?from, tx?to, status, info: tx }
+    cb null, result
+    
 isChecksumAddress = (address) ->
     address = address.replace '0x', ''
     addressHash = sha3 address.toLowerCase!
@@ -194,3 +247,12 @@ isChecksumAddress = (address) ->
         return no if (parseInt addressHash[i], 16) > 7 and address[i].toUpperCase! isnt address[i] or (parseInt addressHash[i], 16) <= 7 and address[i].toLowerCase! isnt address[i]
         i++
     yes      
+    
+export get-market-history-prices = (config, cb)->
+    { network, coin } = config  
+    {market} = coin    
+    err, resp <- get market .timeout { deadline } .end
+    return cb "cannot execute query - err #{err.message ? err }" if err?
+    err, result <- json-parse resp.text
+    return cb err if err?
+    cb null, result
