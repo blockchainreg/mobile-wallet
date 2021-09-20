@@ -8,7 +8,6 @@
     store.current.transactionsAreLoading = true;
     clearTimer = function(cb){
       delete cb.timer;
-      console.log("cleanup timer");
       return clearTimeout(cb.timer);
     };
     resetRequest = function(){
