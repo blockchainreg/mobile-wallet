@@ -55,10 +55,9 @@ import Header from '../components/Header'
 
 
 const coinItems = [
-	eth, ltc, usdt, usdt_erc20, syx,
-	bnb, bscVlx, busd, ethLegacy, huobi,
-	usdc, usdtErc20Legacy, vlxEth, vlxEvmLegacy,
-	vlxHuobi, vlxUsdt, vlxBusd, vlxUsdc, vlxErc20
+	ltc, usdt, usdt_erc20, syx,
+	/*bnb, bscVlx, busd, huobi, usdc, vlxHuobi, vlxUsdt, vlxBusd, vlxUsdc, vlxEth, vlxErc20, vlxEvmLegacy,*/
+	ethLegacy, usdtErc20Legacy		
 ];
 
 
