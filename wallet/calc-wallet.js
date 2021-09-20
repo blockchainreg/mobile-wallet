@@ -84,7 +84,6 @@
 					return times(balance+"", usdRate+"");
             }
           }());
-          console.log(wallet.coin.token, !isNaN(balance));
           var walletBalanceUSD = isNaN(wallet.balanceUsd) ? 0 : wallet.balanceUsd;
           state.balanceUsd = plus(state.balanceUsd, walletBalanceUSD);
           return cb();
