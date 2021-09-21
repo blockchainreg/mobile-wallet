@@ -43,8 +43,7 @@ class StakingStore {
     this.connection = new solanaWeb3.Connection(API_HOST, 'singleGossip');
     this.evmAddress = evmAddress;
     this.evmPrivateKey = evmPrivateKey;
-
-    this.web3 = new Web3(new Web3.providers.HttpProvider('https://explorer.velas.com/rpc'));
+    this.web3 = new Web3(new Web3.providers.HttpProvider(API_HOST));
     rewardsStore.setConnection(this.connection);
     decorate(this, {
       validators: observable,
