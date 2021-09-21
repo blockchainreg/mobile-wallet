@@ -31,16 +31,30 @@ class ValidatorModel {
     }
     return myStake;
   }
+  
+  loadApr() {
+      setTimeout(()=>{
+		  let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
+		  if (!rewards) { //Loading
+			  return this.apr = null;
+		  }
+		  if (rewards.length === 0) {
+			  return this.apr = 0;
+		  }
+		  this.apr = rewards[0].apr;	
+	  },1);					      
+  }
 
   get apr() {
-    let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
-    if (!rewards) { //Loading
-      return null;
-    }
-    if (rewards.length === 0) {
-      return 0;
-    }
-    return rewards[0].apr;
+  	return "..";
+    // let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
+    // if (!rewards) { //Loading
+    //   return null;
+    // }
+    // if (rewards.length === 0) {
+    //   return 0;
+    // }
+    // return rewards[0].apr;
     // if (this.stakingAccounts.length === 0) {
     //
     // }
@@ -240,9 +254,11 @@ class ValidatorModel {
     decorate(this, {
       solanaValidator: observable,
       status: observable,
-      totalStakers: observable
+      totalStakers: observable,
+	  apr: observable	
     });
     this.loadAccountStats();
+    this.loadApr();
   }
 
   async loadAccountStats() {

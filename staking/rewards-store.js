@@ -29,7 +29,7 @@ class RewardsStore {
     if (this.isLatestRewardsLoading) {
       return;
     }
-    this.isLatestRewardsLoading = true;
+    // this.isLatestRewardsLoading = true;
     const accounts = await this.getAccounts();
     const accountMap = new Map();
     for (let account of accounts) {
