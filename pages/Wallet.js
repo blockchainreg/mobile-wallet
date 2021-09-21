@@ -37,7 +37,7 @@ export default ({ store, web3t }) => {
 	const lang = getLang(store);
 	const wallets = walletsFuncs(store, web3t).wallets;
 	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
-	let hasSwap = wallet.network.networks != null && Object.keys(wallet.network.networks).length > 0 && (["usdt_erc20"].indexOf(wallet.coin.token) === -1)
+	let hasSwap = wallet.network.networks != null && Object.keys(wallet.network.networks).length > 0 && (["usdt_erc20", "eth_legacy"].indexOf(wallet.coin.token) === -1)
 	/*******  Listeners  ********/
 	const sendLocal = () => {
 		store.current.send.isSwap = false;
