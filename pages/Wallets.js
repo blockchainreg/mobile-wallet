@@ -219,15 +219,15 @@ export default ({ store, web3t }) => {
   };
 
   const totalBalance = () => {
-    const filterStake = stakingStore.getStakedValidators();
-    if (!filterStake || stakingStore.isRefreshing) {
-      return (
-        <Text style={style.balanceAmount}>
-          ... <Text style={style.balanceAmount}>$</Text>{" "}
-        </Text>
-      );
-    }
-    let myStakeBalance = filterStake.map((el) => formatAmount(el.myStake));
+    // const filterStake = stakingStore.getStakedValidators();
+    // if (!filterStake || stakingStore.isRefreshing) {
+    //   return (
+    //     <Text style={style.balanceAmount}>
+    //       ... <Text style={style.balanceAmount}>$</Text>{" "}
+    //     </Text>
+    //   );
+    // }
+    // let myStakeBalance = filterStake.map((el) => formatAmount(el.myStake));
     // console.log("myStakeBalance", myStakeBalance);
     function arraySum(arr) {
       let sum = 0;
@@ -240,22 +240,16 @@ export default ({ store, web3t }) => {
       }
       return sum;
     }
-    let arraySumStake = arraySum(myStakeBalance);
-    // console.log("arraySumStake", arraySumStake);
-    arraySumStake = Math.floor(arraySumStake * 100) / 100;
-    // console.log('arraySumStake', arraySumStake)
-    const arraySumStakeUsd = arraySumStake * store.rates.vlx2;
-    // console.log("arraySumStake", arraySumStake);
-    // console.log("store.rates.vlx2", store.rates.vlx2);
-    // console.log("arraySumStakeUsd", arraySumStakeUsd);
+    // let arraySumStake = arraySum(myStakeBalance);
+    // arraySumStake = Math.floor(arraySumStake * 100) / 100;
+    // const arraySumStakeUsd = arraySumStake * store.rates.vlx2;
 
     let calcUsd = parseFloat(store.current.balanceUsd);
-    // console.log("calcUsd", calcUsd);
-    // console.log("store.current.balanceUsd", store.current.balanceUsd);
     if (isNaN(calcUsd)) {
       calcUsd = store.current.balanceUsd;
     } else {
-      const r_calcUsd = roundNumber(calcUsd + arraySumStakeUsd, {
+      // const r_calcUsd = roundNumber(calcUsd + arraySumStakeUsd, {
+	  const r_calcUsd = roundNumber(calcUsd, {
         decimals: 2,
       });
       calcUsd = roundHuman(r_calcUsd);
