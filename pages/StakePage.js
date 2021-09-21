@@ -9,6 +9,7 @@ import StakeItem from "../components/StakeItem.js";
 import Header from "../components/Header.js";
 // import Spinner from "../components/Spinner.js";
 import { SkypeIndicator } from 'react-native-indicators';
+import { formatStakeAmount } from "../utils/format-value";
 
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
@@ -55,6 +56,7 @@ export default ({ store, web3t, props }) => {
               </Content>
             );
           }
+
           const renderItemsMyStake = filterStake.map((el) => (
             <StakeItem
               key={el.address}

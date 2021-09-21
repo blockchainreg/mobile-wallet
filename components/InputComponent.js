@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, View, Alert } from "react-native";
+import { StyleSheet, Image, View, Alert, Platform } from "react-native";
 import { Text, Input, Item, Label, Button } from "native-base";
 import Images from "../Images";
 import { Badge } from "react-native-elements";
@@ -18,7 +18,7 @@ export default ({isWithdraw, ...props}) => {
           onChangeText={props.onChange}
           style={style.input}
           returnKeyType="done"
-          selectionColor={"#fff"}
+          selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
           keyboardAppearance="dark"
           keyboardType="numeric"
           maxLength={14}

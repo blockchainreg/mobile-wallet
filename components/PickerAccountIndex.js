@@ -4,7 +4,8 @@ import { Input, Item, Text } from "native-base";
 import styles from "../Styles.js";
 import spin from "../utils/spin.js";
 import getLang from "../wallet/get-lang.js";
-
+import { Platform } from "react-native";
+import initStaking from "../initStaking.js";
 
 const InputComponent = ({ accountIndex, onValueChange }) => {
   const [index, indexChange] = useState(accountIndex);
@@ -19,18 +20,20 @@ const InputComponent = ({ accountIndex, onValueChange }) => {
 
   return (
     <Item style={styles.borderItemAccount}>
-        <Text style={styles.txtSettings}>Account #</Text>
-        <Input
-          onChangeText={indexChange}
-          value={index + ""}
-          onBlur={onBlur}
-          returnKeyType="done"
-          keyboardType="numeric"
-          style={Platform.OS === 'ios' ? styles.inputSizeIos : styles.inputSize}
-          selectionColor={"#fff"}
-          keyboardAppearance="dark"
-        />
-      </Item>
+      <Text style={styles.txtSettings}>Account #</Text>
+      <Input
+        onChangeText={indexChange}
+        value={index + ""}
+        onBlur={onBlur}
+        returnKeyType="done"
+        keyboardType="numeric"
+        style={Platform.OS === "ios" ? styles.inputSizeIos : styles.inputSize}
+        selectionColor={
+          Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"
+        }
+        keyboardAppearance="dark"
+      />
+    </Item>
   );
 };
 
@@ -48,6 +51,8 @@ export default ({ store, web3t }) => {
       web3t.refresh.bind(web3t)
     )((err, data) => {
       console.log("Updating account index finished");
+      initStaking(store);
+      console.log("Updating total balance finished");
     });
   };
   // const createIndex = (i)=> {

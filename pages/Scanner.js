@@ -13,24 +13,17 @@ import {
 } from "native-base";
 import Images from '../Images.js';
 import Header from '../components/Header'
-
-
+import Constants from 'expo-constants';
+import { Camera } from 'expo-camera';
 
 function Scanner({ onScan }) {
-
-
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
   const [onScanCalled, setOnScanCalled] = useState(false);
-
-  useEffect(() => {
+  
+  React.useEffect(() => {
     (async () => {
-      //console.log("BarCodeScanner", BarCodeScanner.requestPermissionsAsync);
-      // This will work on expo 38
-      // const { status } = await BarCodeScanner.requestPermissionsAsync();
-      // And this work on expo 35
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      setHasPermission(status === "granted");
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
       if (status !== "granted") {
         setTimeout(() => {
           if (!onScanCalled) {
@@ -84,25 +77,10 @@ function Scanner({ onScan }) {
       setOnScanCalled(true);
     }
   };
-
-  return (
-    <View style={styles.viewFlex}>
-
-      {/* <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
-        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-        // style={[
-        //   StyleSheet.absoluteFillObject,
-        //   { top: "15%", bottom: "15%", width: "100%" },
-        // ]}
-        style={styles.barCode}
-      /> */}
-      <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
-        style={[StyleSheet.absoluteFill, styles.containerBarCode]}
-      >
-            <Header onBack={onBack} transparent/>
-      
+  const frame = () => {
+    return (
+      <>
+      <Header onBack={onBack} transparent/>
         <View style={styles.layerTop} />
         <View style={styles.layerCenter}>
           <View style={styles.layerLeft} />
@@ -115,7 +93,17 @@ function Scanner({ onScan }) {
           <View style={styles.layerRight} />
         </View>
         <View style={styles.layerBottom} />
-      </BarCodeScanner>
+      </>
+    )
+  }
+  return (
+    <View style={styles.viewFlex}>
+      <Camera
+        onBarCodeScanned={handleBarCodeScanned}
+        style={[StyleSheet.absoluteFill, styles.cameraContainer]}
+      >
+        {frame()}
+      </Camera>
     </View>
   );
 }

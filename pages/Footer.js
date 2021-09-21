@@ -1,15 +1,15 @@
 import React from "react";
-import { Footer, FooterTab, Button, Text } from "native-base";
+import { Footer, FooterTab, Button, Thumbnail } from "native-base";
 import { observer } from "mobx-react";
 import styles from "../Styles.js";
 import applyTransactions from "../wallet/apply-transactions.js";
 import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
-import { StakingStore } from "../staking/staking-store.js";
-import { View } from "react-native";
+import initStaking from "../initStaking.js";
 
 export default ({ store }) => {
+
   const changeTab = (tab) => () => {
     store.current.page = tab;
     if (tab == "history") {
@@ -21,60 +21,38 @@ export default ({ store }) => {
   };
 
   const goToStaking = () => {
-    const wallet = store.current.account.wallets.find((it) => it.coin.token === 'vlx_native');
-    const walletEvm = store.current.account.wallets.find((it) => it.coin.token === 'vlx2');
-    if (wallet == null) {
-      return;
-    }
-    // store.walletBalance = wallet.balance;
-    // store.walletEvmBalance = walletEvm.balance;
-    const stakingStore = new StakingStore(
-      wallet.network.api.web3Provider,
-      wallet.privateKey,
-      wallet.publicKey,
-      walletEvm.address2, //evm address
-      walletEvm.privateKey
-    );
-    store.stakingStore = stakingStore;
+    initStaking(store);
     changeTab("stakePage")();
   };
-  const renderNetwork = () => {
-    if (store.current.network === 'mainnet') {
-      return null;
-    }
-    return (
-      <View style={styles.demoView}>
-        <Text style={styles.demoTxt}>
-        The default network for all transactions is Testnet
-        </Text>
-        <Text/>
-      </View>
-    )
+  const goToWallets = () => {
+    // initStaking(store);
+    changeTab("wallets")();
   }
   //DO NOT generate footer if transaction info is visible
   if (store.infoTransaction != null) return null;
   return (
-    <>
     <Footer style={styles.footerHeight}>
       <FooterTab style={styles.footerTab}>
         <Button
           active={store.current.page == "wallets"}
           style={styles.footerButtonStyle}
-          onPress={changeTab("wallets")}
+          onPress={goToWallets}
         >
           <WalletIcon
             fill={store.current.page == "wallets" && Images.colorGreen}
-            onPress={changeTab("wallets")}
+            onPress={goToWallets}
           />
         </Button>
         <Button
           active={store.current.page == "stakePage"}
           style={styles.footerButtonStyle}
           onPress={goToStaking}
+          // onPress={changeTab("stakePage")}
         >
           <StakeIcon
             fill={store.current.page == "stakePage" && Images.colorGreen}
             onPress={goToStaking}
+            // onPress={changeTab("stakePage")}
           />
         </Button>
         <Button
@@ -101,7 +79,5 @@ export default ({ store }) => {
         </Button>
       </FooterTab>
     </Footer>
-      {renderNetwork()}
-      </>
   );
 };

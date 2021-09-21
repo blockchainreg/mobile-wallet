@@ -27,17 +27,19 @@ import getLang from "../wallet/get-lang.js";
 import Background from "../components/StandardLinearGradient.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from "../Images.js";
-import Modal from 'react-native-modal';
+import Modal from "react-native-modal";
 import navigate from "../wallet/navigate.js";
 import spin from "../utils/spin.js";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import DemoMode from "../components/DemoMode.js"
+import DemoMode from "../components/DemoMode.js";
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
-import Header from "../components/Header.js"
+import Header from "../components/Header.js";
+import { Observer } from "mobx-react";
+import { formatAmount } from "../utils/format-value";
 
 function import$(obj, src){
 	var own = {}.hasOwnProperty;
@@ -72,12 +74,8 @@ const wallets = (store, web3t) => {
 			}
 		};
 
-    const { active, balance, balanceUsd, pending, usdRate, token } = walletFuncs(
-      store,
-      web3t,
-      wallets,
-      wallet
-    );
+    const { active, balance, balanceUsd, pending, usdRate, token } =
+      walletFuncs(store, web3t, wallets, wallet);
 
     const send = () => {
       	console.log("send")
@@ -109,43 +107,50 @@ const wallets = (store, web3t) => {
       });
     };
     const canRemove = !!global.localStorage[`plugin-${wallet.coin.token}`];
-    const buttons = (canRemove
+    const buttons = canRemove
       ? [
-        {text: 'Send', onPress: send},
-        {text: 'Remove', onPress: deleteCoin},
-        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-      ]
+          { text: "Send", onPress: send },
+          { text: "Remove", onPress: deleteCoin },
+          { text: "Cancel", onPress: () => {}, style: "cancel" },
+        ]
       : [
-        {text: 'Send', onPress: send},
-        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-      ]);
-    const actions =()=>{
+          { text: "Send", onPress: send },
+          { text: "Cancel", onPress: () => {}, style: "cancel" }
+        ];
+    const actions = () => {
       Vibration.vibrate(500);
       Alert.alert(
-        'Actions',
-        '',
-        buttons,
+        "Actions",
+        "",
+        buttons
         // { cancelable: false }
       );
     };
     let balanceLayout = null;
-	const balanceRounded = roundNumber(balance, {decimals: 6});
-	const walletBalance = roundHuman(balanceRounded);
-	const balanceUsdRounded = roundNumber(balanceUsd, {decimals: 2});
-	const walletBalanceUsd = roundHuman(balanceUsdRounded);
-    
-	if (wallet.balance !== "..") {
+    const balanceRounded = roundNumber(balance, { decimals: 6 });
+    const walletBalance = roundHuman(balanceRounded);
+    const balanceUsdRounded = roundNumber(balanceUsd, { decimals: 2 });
+    const walletBalanceUsd = roundHuman(balanceUsdRounded);
+    if (wallet.balance !== "..") {
       balanceLayout = (
         <Text>
-          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>{walletBalance} {token}</Text>
-          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}> ({walletBalanceUsd} USD)</Text>
+          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>
+            {walletBalance} {token}
+          </Text>
+          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}>
+            {" "}
+            ({walletBalanceUsd} USD)
+          </Text>
         </Text>
       );
     } else {
       balanceLayout = (
         <Text>
           <Text style={{ color: "#fff" }}>-</Text>
-          <Text note style={{ fontFamily: "Fontfabric-NexaRegular"}}> {lang.pullToReload || "(Pull to reload)"}</Text>
+          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}>
+            {" "}
+            {lang.pullToReload || "(Pull to reload)"}
+          </Text>
         </Text>
       );
     }
@@ -186,21 +191,18 @@ const wallets = (store, web3t) => {
 
 
 export default ({ store, web3t }) => {
+  const { stakingStore } = store;
+
   const lang = getLang(store);
   const changePage = (tab) => () => {
     store.current.page = tab;
   };
-  let calcUsd = parseFloat(store.current.balanceUsd);
-  if (isNaN(calcUsd)) {
-    calcUsd = store.current.balanceUsd;
-  } else {
-	const r_calcUsd = roundNumber(calcUsd, {decimals: 2});
-	calcUsd = roundHuman(r_calcUsd);
-  }
-
-  const refreshBalance = () => {
+ 
+   const refreshBalance = () => {
     store.current.refreshingBalances = true;
     console.log("refresh balance start");
+    //TODO: make reloadWithRetry query non-blocking main thread
+    //stakingStore.reloadWithRetry();
     web3t.refresh((err, data) => {
       store.current.refreshingBalances = false;
       console.log("refresh balance finish");
@@ -213,51 +215,116 @@ export default ({ store, web3t }) => {
     if (!isDemoMode) {
       return null;
     }
+    return <DemoMode store={store} />;
+  };
+
+  const totalBalance = () => {
+    const filterStake = stakingStore.getStakedValidators();
+    if (!filterStake || stakingStore.isRefreshing) {
+      return (
+        <Text style={style.balanceAmount}>
+          ... <Text style={style.balanceAmount}>$</Text>{" "}
+        </Text>
+      );
+    }
+    let myStakeBalance = filterStake.map((el) => formatAmount(el.myStake));
+    // console.log("myStakeBalance", myStakeBalance);
+    function arraySum(arr) {
+      let sum = 0;
+      if (arr.length) {
+        sum = arr.reduce((a, b) => {
+          return (parseFloat(a) || 0) + (parseFloat(b) || 0);
+        });
+      } else {
+        sum = 0;
+      }
+      return sum;
+    }
+    let arraySumStake = arraySum(myStakeBalance);
+    // console.log("arraySumStake", arraySumStake);
+    arraySumStake = Math.floor(arraySumStake * 100) / 100;
+    // console.log('arraySumStake', arraySumStake)
+    const arraySumStakeUsd = arraySumStake * store.rates.vlx2;
+    // console.log("arraySumStake", arraySumStake);
+    // console.log("store.rates.vlx2", store.rates.vlx2);
+    // console.log("arraySumStakeUsd", arraySumStakeUsd);
+
+    let calcUsd = parseFloat(store.current.balanceUsd);
+    // console.log("calcUsd", calcUsd);
+    // console.log("store.current.balanceUsd", store.current.balanceUsd);
+    if (isNaN(calcUsd)) {
+      calcUsd = store.current.balanceUsd;
+    } else {
+      const r_calcUsd = roundNumber(calcUsd + arraySumStakeUsd, {
+        decimals: 2,
+      });
+      calcUsd = roundHuman(r_calcUsd);
+      // console.log("calcUsd", calcUsd);
+    }
     return (
-      <DemoMode store={store}/>
+      <Observer>
+        {() => {
+          return (
+            <Text style={style.balanceAmount}>
+              {!calcUsd ? "..." : calcUsd}{" "}
+              <Text style={style.balanceAmount}>$</Text>
+            </Text>
+          );
+        }}
+      </Observer>
     );
   };
-  
-  // console.log('store.current.network', store.current.network)
-  // const walletListStyle = Object.assign({}, style.viewMonoWallets);
-  // if (isDemoMode) {
-  //   if (typeof walletListStyle.height === "string") {
-  //     walletListStyle.height = (walletListStyle.height.substr(0, walletListStyle.height.length - 1) - 3) + "%";
-  //   } else {
-  //     walletListStyle.height -= 50;
-  //   }
-  // }
+
   return (
-      <View style={styles.viewFlex}>
-        <View style={{backgroundColor: "transparent", height: "18%", marginTop: hp("5%"), alignSelf: 'center', width: "66%", zIndex: 999, position: "absolute"}}>
-        {CustomRefreshControl({swipeRefresh: refreshBalance, store, children: <>
-        </>
-          })}
+    <View style={styles.viewFlex}>
+      <View
+        style={{
+          backgroundColor: "transparent",
+          height: "18%",
+          marginTop: hp("5%"),
+          alignSelf: "center",
+          width: "66%",
+          zIndex: 999,
+          position: "absolute",
+        }}
+      >
+        {CustomRefreshControl({
+          swipeRefresh: refreshBalance,
+          store,
+          children: <></>,
+        })}
+      </View>
+      <View style={style.topView}>
+        <Header
+          title={lang.yourWallets}
+          addWalletIcon
+          onForward={changePage("add")}
+          transparent
+        />
+        <View style={style.viewWallet}>
+          <Text style={style.balance}>{lang.totalBalance}</Text>
+          {totalBalance()}
+          {/* <Text style={style.balanceAmount}>
+            {calcUsd} <Text style={style.balanceAmount}>$</Text>{" "}
+          </Text> */}
         </View>
-        <View style={style.topView}>
-        <Header title={lang.yourWallets} addWalletIcon onForward={changePage("add")} transparent/>
-          <View style={style.viewWallet}>
-            <Text style={style.balance}>{lang.totalBalance}</Text>
-            <Text style={style.balanceAmount}>
-              {calcUsd} <Text style={style.balanceAmount}>$</Text>
-            </Text>
-          </View>
+      </View>
 
-        </View>
+      <View style={style.viewMonoWallets}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={false}
+              onRefresh={refreshBalance}
+              tintColor="#fff"
+            />
+          }
+        >
+          {wallets(store, web3t)}
+        </ScrollView>
+      </View>
 
-        <View style={style.viewMonoWallets}>
-            <ScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={false}
-                  onRefresh={refreshBalance}
-                  tintColor="#fff"
-                />
-              }
-            >{wallets(store, web3t)}</ScrollView>
-        </View>
-
-      <View style={{position: "absolute", bottom: 0, left: 0, right: 0}}>
+      <View style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
         <Footer store={store}></Footer>
         {renderDemoMode()}
       </View>
@@ -270,21 +337,29 @@ const style = StyleSheet.create({
     flex: 0.25,
   },
   viewWallet: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    justifyContent: "center",
+    alignItems: "flex-start",
     marginLeft: 20,
     marginBottom: 15,
-    flex: 1
+    flex: 1,
   },
   viewMonoWallets: {
     flex: 0.75,
     backgroundColor: Images.velasColor4,
   },
   balance: {
-    fontSize: 18, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+    fontSize: 18,
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaRegular",
   },
   balanceAmount: {
-    fontSize: 28, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
-  }
-
+    fontSize: 28,
+    color: "#fff",
+    fontFamily: "Fontfabric-NexaRegular",
+  },
+  balanceStake: {
+    fontSize: 14,
+    color: "#ffffff65",
+    fontFamily: "Fontfabric-NexaRegular",
+  },
 });

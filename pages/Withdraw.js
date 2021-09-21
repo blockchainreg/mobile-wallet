@@ -21,22 +21,17 @@ import sendFuncs from "../wallet/send-funcs.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import Spinner from "../utils/spinner.js";
 import StatusBar from "../components/StatusBar.js";
-import NetworkSlider from "../components/sliders/network-slider"
+import NetworkSlider from "../components/sliders/network-slider";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
 import Background from "../components/Background.js";
 import Images from "../Images.js";
-import {
-	Image, TouchableOpacity
-} from "react-native";
-import { RadioButton } from 'react-native-paper';
-import roundNumber from '../round-number';
-import roundHuman from '../wallet/round-human';
-import Header from '../components/Header'
-import InputAmount from '../components/InputAmount'
-
-
-
+import { Image, Platform, TouchableOpacity } from "react-native";
+import { RadioButton } from "react-native-paper";
+import roundNumber from "../round-number";
+import roundHuman from "../wallet/round-human";
+import Header from "../components/Header";
+import InputAmount from "../components/InputAmount";
 
 /* Render Send/Swap sceen */
 export default ({ store, web3t }) => {
@@ -126,7 +121,7 @@ export default ({ store, web3t }) => {
 				onChangeText={(text) => recipientChange(wrap(text))}
 				onBlur={() => checkRecipientAddress()}
 				returnKeyType="done"
-				selectionColor={"#fff"}
+				selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
 				keyboardAppearance="dark"
 				placeholder={recipientMask}
 				style={[styles.inputStyle, { fontSize: 18 }]}
@@ -188,7 +183,7 @@ export default ({ store, web3t }) => {
 									returnKeyType="done"
 									autoCompleteType="off"
 									style={[styles.inputStyle, { fontSize: 18, width: "100%" }]}
-									selectionColor={"#fff"}
+									selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
 									keyboardAppearance="dark"
 									placeholder="0.00"
 									value={send.amountSend}
@@ -207,7 +202,7 @@ export default ({ store, web3t }) => {
 										returnKeyType="done"
 										autoCompleteType="off"
 										style={[styles.inputStyle, { fontSize: 18, width: "100%"}]}
-										selectionColor={"#fff"}
+										selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
 										keyboardAppearance="dark"
 										placeholder="0.00"
 										value={send.amountSendUsd}
