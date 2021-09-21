@@ -107,7 +107,22 @@ export default ({ store, web3t }) => {
     const renderTransaction = (transaction) => {
 		var r_amount = roundNumber(transaction.amount, {decimals: 2});
 		var amount = roundHuman(r_amount);
-		let currency_display = currency.toUpperCase();
+		const curr = (transaction.token);
+		let currency_display = (function() {
+			switch (curr) {
+				case "vlx_native":
+				case "vlx_evm":
+				case "vlx_evm_legacy":	
+				case "vlx2":
+				case "vlx_erc20":
+				case "vlx": return "VLX";
+				case "usdt_erc20_legacy":
+				case "usdt_erc20": return "USDT";
+				case "eth_legacy": return "ETH";
+				default: return transaction.token
+			}
+		}());
+		currency_display = currency_display.toUpperCase();
 		
 		return (
 			<ListItem
