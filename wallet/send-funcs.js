@@ -324,8 +324,8 @@ import swapNativeToEvm from "./Native-swap";
 					store.current.transaction = {
 						hash: data
 					};
-					store.current.send.amountSend = 0;
-					store.current.send.amountSendUsd = 0;
+					store.current.send.amountSend = "0";
+					store.current.send.amountSendUsd = "0";
 					navigate(store, web3t, 'sent');
 					return web3t.refresh(function(){});
 				});
