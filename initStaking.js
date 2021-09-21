@@ -8,7 +8,7 @@ module.exports = (store) => {
       }
 
       const stakingStore = new StakingStore(
-        wallet.network.api.apiUrl,
+        wallet.network.api.web3Provider,
         wallet.privateKey,
         wallet.publicKey,
         walletEvm.address2, //evm address
