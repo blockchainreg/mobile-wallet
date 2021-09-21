@@ -43,8 +43,6 @@ function in$(x, xs){
 
 export default ({ store, web3t }) => {
     const lang = getLang(store);
-    let wallet = store.current.account.wallets[store.current.walletIndex];
-    const currency = (wallet.coin.nickname != null ? wallet.coin.nickname : wallet.coin.token).toUpperCase();
     const checkType = ({type, to, txType}) => {
 		if (txType) {
 			return <Text style={[styles.txtSizeHistory, {textTransform: "capitalize" }]}>{txType}</Text>;
