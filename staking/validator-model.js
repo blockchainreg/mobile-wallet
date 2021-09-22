@@ -46,7 +46,7 @@ class ValidatorModel {
   }
 
   get apr() {
-  	return "..";
+  	return 0;
     // let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
     // if (!rewards) { //Loading
     //   return null;
