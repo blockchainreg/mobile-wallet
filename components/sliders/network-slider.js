@@ -91,6 +91,7 @@ export default ({store, wallet}) => {
     textAlign: "center",
     width: 30,
   };
+  const mask = wallet.network.mask ? wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..." : "";
 
   return (
     <View style={containerStyles}>
@@ -104,10 +105,7 @@ export default ({store, wallet}) => {
           Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"
         }
         keyboardAppearance="dark"
-        placeholder={
-          wallet.network.mask.substring(25, wallet.network.mask.length - 255) +
-          "..."
-        }
+        placeholder={mask}
         style={inputStyle}
         value={displayValue}
         placeholderTextColor="rgba(255,255,255,0.60)"
