@@ -202,7 +202,7 @@
 	noticeStakingRewards: "Staking rewards will be reinvested and added to the stake.",
 	stakingEnteranceSubTitle: "It is not fully active immediately, it may take multiple epochs to warm it up.",
 	stakingEnteranceTitle: "Stake account has been created successfully",
-	stakingEnterance: "Staking Enterance",
+	stakingEnterance: "Staking Entrance",
 	noticeExitValidator: "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one.",
 	exitValidator: "Exit from Validator",
 	exitValidatorSubTitle: "Please navigate to the withdrawals tab to monitor the progress.",

@@ -219,7 +219,7 @@
     stakingEnteranceSubTitle:
       "Nó không hoạt động hoàn toàn ngay lập tức, có thể mất nhiều epoch để làm ấm nó.",
     stakingEnteranceTitle: "Tài khoản stake đã được tạo thành công",
-    stakingEnterance: "Staking Enterance",
+    stakingEnterance: "Staking Entrance",
     noticeExitValidator:
       "Bạn đã có một yêu cầu rút tiền. Lần rút tiền này sẽ được kết hợp với lần rút tiền trước đó.",
     exitValidator: "Thoát khỏi Validator",

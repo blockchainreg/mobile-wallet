@@ -221,7 +221,7 @@
     stakingEnteranceSubTitle:
       "Hindi ito ganap na aktibo kaagad, maaaring tumagal ng maraming panahon upang painitin ito.",
     stakingEnteranceTitle: "Matagumpay na nalikha ang stake account",
-    stakingEnterance: "Staking Enterance",
+    stakingEnterance: "Staking Entrance",
     noticeExitValidator:
       "Mayroon ka nang kahilingan sa pag-atras. Ang pag-atras na ito ay isasama sa naunang isa.",
     exitValidator: "Lumabas mula sa Tagapatunay",
