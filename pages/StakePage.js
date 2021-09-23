@@ -44,6 +44,7 @@ export default ({ store, web3t, props }) => {
       }
       >
         <Observer>{() => {
+		  const { stakingStore } = store;	
           const filterStake = stakingStore.getStakedValidators();
           const filterTotalStaked = stakingStore.getNotStakedValidators();
 
