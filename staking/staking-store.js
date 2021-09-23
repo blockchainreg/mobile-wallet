@@ -31,8 +31,10 @@ class StakingStore {
   connection = null;
   openedValidatorAddress = null;
   evmAddress = null;
+  network = null;
+  evmAPI = "";
 
-  constructor(API_HOST, secretKey, publicKey, evmAddress, evmPrivateKey) {
+  constructor(API_HOST, evmAPI,  secretKey, publicKey, evmAddress, evmPrivateKey, network) {
     if (typeof secretKey === 'string') {
       secretKey = bs58.decode(secretKey);
     }
@@ -43,9 +45,13 @@ class StakingStore {
     this.connection = new solanaWeb3.Connection(API_HOST, 'singleGossip');
     this.evmAddress = evmAddress;
     this.evmPrivateKey = evmPrivateKey;
+    this.network = network;
+    this.evmAPI = evmAPI;
     this.web3 = new Web3(new Web3.providers.HttpProvider(API_HOST));
-    rewardsStore.setConnection(this.connection);
+    rewardsStore.setConnection(this.connection, network);
+	rewardsStore.loadLatestRewards();
     decorate(this, {
+	  connection: observable,
       validators: observable,
       vlxEvmBalance: observable,
       vlxNativeBalance: observable,
@@ -107,7 +113,7 @@ class StakingStore {
     this.startRefresh()
 
     const balanceRes = await this.connection.getBalance(this.publicKey);
-    const balanceEvmRes = await fetch('https://explorer.velas.com/rpc', {
+    const balanceEvmRes = await fetch(this.evmAPI, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -134,11 +140,11 @@ class StakingStore {
       return authorized && authorized.staker === this.publicKey58;
     });
     const stakingAccounts = filteredAccounts.map(account =>
-      new StakingAccountModel(account, this.connection)
+      new StakingAccountModel(account, this.connection, this.network)
     );
     const validators = (
-      current.map((validator) => new ValidatorModel(validator, false, this.connection))
-      .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection)))
+      current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
+      .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
     );
     const validatorsMap = Object.create(null);
     for (var i = 0; i < validators.length; i++) {

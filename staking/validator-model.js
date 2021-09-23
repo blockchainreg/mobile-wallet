@@ -1,4 +1,4 @@
-import { decorate, observable, action } from "mobx";
+import { decorate, observable, action, when } from "mobx";
 import BN from "bn.js";
 import { StakingAccountModel } from './staking-account-model.js';
 import { cachedCallWithRetries } from './utils';
@@ -10,6 +10,8 @@ class ValidatorModel {
   solanaValidator = null;
   stakingAccounts = [];
   totalStakers = null;
+  network = null;
+  // apr = 0;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -32,38 +34,25 @@ class ValidatorModel {
     return myStake;
   }
   
-  loadApr() {
-      setTimeout(()=>{
-		  let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
-		  if (!rewards) { //Loading
-			  return this.apr = null;
-		  }
-		  if (rewards.length === 0) {
-			  return this.apr = 0;
-		  }
-		  this.apr = rewards[0].apr;	
-	  },1);					      
-  }
 
   get apr() {
-  	return 0;
-    // let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
-    // if (!rewards) { //Loading
-    //   return null;
-    // }
-    // if (rewards.length === 0) {
-    //   return 0;
-    // }
-    // return rewards[0].apr;
-    // if (this.stakingAccounts.length === 0) {
-    //
-    // }
-    // if (this.stakingAccounts.find(acc => acc.latestReward === undefined)) {
-    //   return null;
-    // }
-    // const acc = this.stakingAccounts.find(acc => acc.latestReward !== null);
-    // if (!acc) return 0;
-    // return acc.latestReward.apr;
+    let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
+    if (!rewards) { //Loading
+      return null;
+    }
+    if (rewards.length === 0) {
+      return 0;
+    }
+    return rewards[0].apr;
+    if (this.stakingAccounts.length === 0) {
+
+    }
+    if (this.stakingAccounts.find(acc => acc.latestReward === undefined)) {
+      return null;
+    }
+    const acc = this.stakingAccounts.find(acc => acc.latestReward !== null);
+    if (!acc) return 0;
+    return acc.latestReward.apr;
   }
 
   get commission() {
@@ -239,7 +228,7 @@ class ValidatorModel {
     );
   }
 
-  constructor(solanaValidator, isDelinquent, connection) {
+  constructor(solanaValidator, isDelinquent, connection, network) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');
     }
@@ -251,18 +240,21 @@ class ValidatorModel {
     }
     this.connection = connection;
     this.solanaValidator = solanaValidator;
+    this.network = network;
     decorate(this, {
       solanaValidator: observable,
       status: observable,
       totalStakers: observable,
-	  apr: observable	
+	  // apr: observable	
     });
+    // this.loadApr();
     this.loadAccountStats();
-    this.loadApr();
+    
   }
 
   async loadAccountStats() {
     const nativeAccounts = await cachedCallWithRetries(
+      this.network,
       ['getParsedProgramAccounts', this.connection, solanaWeb3.StakeProgram.programId.toString()],
       () => this.connection.getParsedProgramAccounts(
           solanaWeb3.StakeProgram.programId

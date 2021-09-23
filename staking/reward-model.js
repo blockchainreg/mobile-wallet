@@ -6,6 +6,7 @@ class RewardModel {
   solanaReward = null;
   epoch = null;
   apr = null;
+  network = null;
 
   get amount() {
     return new BN(this.solanaReward.lamports+'', 10);
@@ -13,6 +14,7 @@ class RewardModel {
 
   async getEpochSchedule() {
     return await cachedCallWithRetries(
+		this.network,
       ['getEpochSchedule', this.connection],
       () => this.connection.getEpochSchedule(),
     );
@@ -20,6 +22,7 @@ class RewardModel {
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
     return await cachedCallWithRetries(
+		this.network,
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
     );
@@ -27,15 +30,18 @@ class RewardModel {
 
   async getConfirmedBlock(blockNumber) {
     return await cachedCallWithRetries(
+		this.network,
       ['getConfirmedBlock', this.connection, blockNumber],
       () => this.connection.getConfirmedBlock(blockNumber, 1),
     );
   }
 
-  constructor(solanaReward, epoch, connection) {
+  constructor(solanaReward, epoch, connection, network) {
     this.solanaReward = solanaReward;
     this.connection = connection;
     this.epoch = epoch;
+    console.log('[RewardModel] constructor', network);
+    this.network = network;
     decorate(this, {
       apr: observable
     });
@@ -47,15 +53,18 @@ class RewardModel {
     const firstSlotInEpoch = (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
     const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
     const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
+    if ( !blockResult.blockTime )
+    	throw new Error( "[getConfirmedBlock] blocktime is not defined" );
     return blockResult.blockTime;
   }
 
   async loadApr() {
-    const epochDuration = (
+  	console.log("loadApr");
+    let epochDuration = (
       (await this.getEpochTimeTs(this.epoch + 1)) -
       (await this.getEpochTimeTs(this.epoch))
     );
-    const epochsPerYear = 365.25 * 24 * 3600 / epochDuration
+    const epochsPerYear = epochDuration > 0 ? (365.25 * 24 * 3600 / epochDuration) : 0;
     const amountPerPerEpoch = this.solanaReward ? this.solanaReward.lamports / (this.solanaReward.postBalance - this.solanaReward.lamports): 0;
 
     this.apr = amountPerPerEpoch * epochsPerYear;

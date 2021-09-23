@@ -6,6 +6,7 @@ const solanaWeb3 = require('./index.cjs.js');
 class RewardsStore {
   connection = null;
   latestRewardsPerValidator = null;
+  network = null;
 
   constructor() {
     decorate(this, {
@@ -13,9 +14,10 @@ class RewardsStore {
     });
   }
 
-  setConnection(connection) {
+  setConnection(connection, network) {
+  	this.network = network;
     this.connection = connection;
-    this.loadLatestRewards();
+    //this.loadLatestRewards();
   }
 
   getLatestRewardsOfVaildator(address) {
@@ -29,7 +31,7 @@ class RewardsStore {
     if (this.isLatestRewardsLoading) {
       return;
     }
-    // this.isLatestRewardsLoading = true;
+    this.isLatestRewardsLoading = true;
     const accounts = await this.getAccounts();
     const accountMap = new Map();
     for (let account of accounts) {
@@ -61,13 +63,14 @@ class RewardsStore {
         maxAmount = reward.lamports;
         biggestReward = reward;
       }
-      this.latestRewardsPerValidator.set(key, [new RewardModel(biggestReward, epoch - 1, this.connection)]);
+      this.latestRewardsPerValidator.set(key, [new RewardModel(biggestReward, epoch - 1, this.connection, this.network)]);
     });
     this.isLatestRewardsLoading = false;
   }
 
   async getEpochSchedule() {
     return await cachedCallWithRetries(
+	  this.network,
       ['getEpochSchedule', this.connection],
       () => this.connection.getEpochSchedule(),
     );
@@ -75,6 +78,7 @@ class RewardsStore {
 
   async getEpochInfo() {
     return await cachedCallWithRetries(
+		this.network,
       ['getEpochInfo', this.connection],
       () => this.connection.getEpochInfo(),
     );
@@ -82,6 +86,7 @@ class RewardsStore {
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
     return await cachedCallWithRetries(
+		this.network,
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
     );
@@ -89,6 +94,7 @@ class RewardsStore {
 
   async getConfirmedBlock(blockNumber) {
     return await cachedCallWithRetries(
+		this.network,
       ['getConfirmedBlock', this.connection, blockNumber],
       () => this.connection.getConfirmedBlock(blockNumber, 1),
     );
@@ -96,6 +102,7 @@ class RewardsStore {
 
   async getAccounts() {
     return await cachedCallWithRetries(
+		this.network,
       ['getParsedProgramAccounts', this.connection, solanaWeb3.StakeProgram.programId.toString()],
       () => this.connection.getParsedProgramAccounts(
           solanaWeb3.StakeProgram.programId
