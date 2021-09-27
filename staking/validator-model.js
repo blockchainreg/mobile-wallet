@@ -11,7 +11,7 @@ class ValidatorModel {
   stakingAccounts = [];
   totalStakers = null;
   network = null;
-  // apr = 0;
+  apr$ = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -36,23 +36,20 @@ class ValidatorModel {
   
 
   get apr() {
-    let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
-    if (!rewards) { //Loading
-      return null;
-    }
-    if (rewards.length === 0) {
-      return 0;
-    }
-    return rewards[0].apr;
-    if (this.stakingAccounts.length === 0) {
-
-    }
-    if (this.stakingAccounts.find(acc => acc.latestReward === undefined)) {
-      return null;
-    }
-    const acc = this.stakingAccounts.find(acc => acc.latestReward !== null);
-    if (!acc) return 0;
-    return acc.latestReward.apr;
+  	return this.apr$;
+  }
+	
+  loadApr() {
+	rewardsStore.getLatestRewardsOfVaildator(this.address, (rewards) => {
+	  if (!rewards) {
+		this.apr$ = null;
+	  }
+	  if (rewards.length === 0) {
+		this.apr$ = 0;
+	  } else {
+		this.apr$ = rewards[0].apr;
+	  }
+	});
   }
 
   get commission() {
@@ -245,9 +242,9 @@ class ValidatorModel {
       solanaValidator: observable,
       status: observable,
       totalStakers: observable,
-	  // apr: observable	
+	  apr$: observable	
     });
-    // this.loadApr();
+    this.loadApr();
     this.loadAccountStats();
     
   }

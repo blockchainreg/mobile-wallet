@@ -49,7 +49,6 @@ class StakingStore {
     this.evmAPI = evmAPI;
     this.web3 = new Web3(new Web3.providers.HttpProvider(API_HOST));
     rewardsStore.setConnection(this.connection, network);
-	rewardsStore.loadLatestRewards();
     decorate(this, {
 	  connection: observable,
       validators: observable,
@@ -59,9 +58,12 @@ class StakingStore {
       accounts: observable,
       openedValidatorAddress: observable
     });
-    this.startRefresh = action(this.startRefresh);
-    this.endRefresh = action(this.endRefresh);
-    this.init();
+     rewardsStore.loadLatestRewards(() => {
+	  this.startRefresh = action(this.startRefresh);
+	  this.endRefresh = action(this.endRefresh);
+	  this.init();
+    });
+    
   }
 
   async init() {
@@ -72,11 +74,11 @@ class StakingStore {
   async reloadWithRetry() {
     this.isRefreshing = true;
     invalidateCache();
-    await callWithRetries(
-      () => this.reload()
-    );
-    if (this.validators.length > 0) {
-      await when(() => this.validators && this.validators.length && this.validators[0].apr !== null);
+    // await callWithRetries(
+      this.reload();
+    // );
+    //if (this.validators.length > 0) {
+      await when(() => this.validators && this.validators.length > 0 );
       this.validators.replace(
         this.validators.slice().sort((v1, v2) =>
           v2.apr - v1.apr
@@ -86,7 +88,7 @@ class StakingStore {
           + (v2.status === 'active' ? 2000 : 0)
         )
       );
-    }
+    //}
     this.isRefreshing = false;
   }
 
@@ -112,57 +114,63 @@ class StakingStore {
   async reload() {
     this.startRefresh()
 
-    const balanceRes = await this.connection.getBalance(this.publicKey);
-    const balanceEvmRes = await fetch(this.evmAPI, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
-    });
-    const balanceEvmJson = await balanceEvmRes.json();
-    const { current, delinquent } = await this.connection.getVoteAccounts();
-    const filter = {memcmp: {
-      offset: 0xc,
-      bytes: this.publicKey58,
-    }};
-    const nativeAccounts = await this.connection.getParsedProgramAccounts(
-      solanaWeb3.StakeProgram.programId,
-      { filters: [filter], commitment: 'processed' }
-    );
-    const filteredAccounts = nativeAccounts.filter(({ account }) => {
-      const authorized = (
-        account.data.parsed.info && 
-        account.data.parsed.info.meta && 
-        account.data.parsed.info.meta.authorized
-      );
-      return authorized && authorized.staker === this.publicKey58;
-    });
-    const stakingAccounts = filteredAccounts.map(account =>
-      new StakingAccountModel(account, this.connection, this.network)
-    );
-    const validators = (
-      current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
-      .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
-    );
-    const validatorsMap = Object.create(null);
-    for (var i = 0; i < validators.length; i++) {
-      validatorsMap[validators[i].address] = validators[i];
-    }
-    for (var i = 0; i < stakingAccounts.length; i++) {
-      const account = stakingAccounts[i];
-      const validator = validatorsMap[account.validatorAddress];
-      if (!validator) {
-        if (account.isActivated) {
-          console.warn('Validator for account not found', account.validatorAddress);
-        }
-        continue;
-      }
-      validator.addStakingAccount(account);
-    }
-    const rent = await this.connection.getMinimumBalanceForRentExemption(200);
-    this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
+    //const balanceRes = await this.connection.getBalance(this.publicKey);
+    // const balanceEvmRes = await fetch(this.evmAPI, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
+    // });
+    //const balanceEvmJson = await balanceEvmRes.json();
+    this.connection.getVoteAccounts().then(({ current, delinquent }) => {
+		const filter = {memcmp: {
+		  offset: 0xc,
+		  bytes: this.publicKey58,
+		}};
+		this.connection.getParsedProgramAccounts(
+		  solanaWeb3.StakeProgram.programId,
+		  { filters: [filter], commitment: 'processed' }
+		).then( async nativeAccounts => {
+			const filteredAccounts = nativeAccounts.filter(({ account }) => {
+			  const authorized = (
+				account.data.parsed.info && 
+				account.data.parsed.info.meta && 
+				account.data.parsed.info.meta.authorized
+			  );
+			  return authorized && authorized.staker === this.publicKey58;
+			});
+			const stakingAccounts = filteredAccounts.map(account =>
+			  new StakingAccountModel(account, this.connection, this.network)
+			);
+			//console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
+			//await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
+			//console.log("Now isLatestRewardsLoading is false");
+			const validators = (
+			  current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
+			  .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
+			);
+			const validatorsMap = Object.create(null);
+			for (var i = 0; i < validators.length; i++) {
+			  validatorsMap[validators[i].address] = validators[i];
+			}
+			for (var i = 0; i < stakingAccounts.length; i++) {
+			  const account = stakingAccounts[i];
+			  const validator = validatorsMap[account.validatorAddress];
+			  if (!validator) {
+				if (account.isActivated) {
+				  console.warn('Validator for account not found', account.validatorAddress);
+				}
+				continue;
+			  }
+			  validator.addStakingAccount(account);
+			}
+			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
+				this.endRefresh(0, 0, rent, validators, stakingAccounts);	
+			});
+		});
+	});
   }
 
   startRefresh = () => {
@@ -174,8 +182,8 @@ class StakingStore {
   }
 
   endRefresh = (balanceRes, balanceEvmJson, rent, validators, stakingAccounts) => {
-    this.vlxNativeBalance = new BN(balanceRes + '', 10);
-    this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
+    //this.vlxNativeBalance = new BN(balanceRes + '', 10);
+    //this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
     this.rent = new BN(rent);
     this.validators = validators;
     this.accounts = stakingAccounts;

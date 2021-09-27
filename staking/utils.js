@@ -9,13 +9,15 @@ export async function invalidateCache() {
 export async function cachedCallWithRetries(network, params, call) {
   var params$ = params;
   if (network){
-	params$.unshift(network);
+		params$.unshift(network);
   }
   if (!cacheMap.has(params$)) {
-	await cacheMap.set(params, callWithRetries(call, params));
+  	const res = callWithRetries(call, params);
+		cacheMap.set(params,  callWithRetries(call, params));
+		return res;		
+  } else {
+	  return cacheMap.get(params$);	
   }
-
-  return await cacheMap.get(params$);
 }
 
 export async function callWithRetries(call, params) {
@@ -24,8 +26,8 @@ export async function callWithRetries(call, params) {
   while(true) {
   	if (tries >= 5) {
   		clearTimeout(timeout);
-		return new Promise(resolve => resolve(null));
-	}
+			return new Promise(resolve => resolve(null));
+		}
     try {
       return await call();
     } catch(e) {

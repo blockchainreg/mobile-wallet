@@ -1,16 +1,17 @@
-import { decorate, observable } from 'mobx';
+import {decorate, observable, runInAction} from 'mobx';
 import { cachedCallWithRetries } from './utils';
 import { RewardModel } from "./reward-model";
 const solanaWeb3 = require('./index.cjs.js');
 
 class RewardsStore {
   connection = null;
-  latestRewardsPerValidator = null;
   network = null;
+  isLatestRewardsLoading = null;
 
   constructor() {
     decorate(this, {
-      isLatestRewardsLoading: observable
+      isLatestRewardsLoading: observable, 
+	    latestRewardsPerValidator: observable
     });
   }
 
@@ -19,53 +20,98 @@ class RewardsStore {
     this.connection = connection;
     //this.loadLatestRewards();
   }
-
-  getLatestRewardsOfVaildator(address) {
-    if (this.isLatestRewardsLoading || !this.latestRewardsPerValidator) {
-      return null;
-    }
-    return this.latestRewardsPerValidator.get(address) || [];
+  
+ 
+  setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
+	  runInAction(() => {
+			this.getEpochDuration(epoch - 1,  (epochDuration) => {
+				tmpMap.forEach((value, key) => {
+					let maxAmount = -1;
+					let biggestReward = null;
+					for (let reward of value) if (reward.lamports > maxAmount) {
+						maxAmount = reward.lamports;
+						biggestReward = reward;
+					}
+					 
+					// Here we load calc apr for each RewardModel
+					let rm = new RewardModel(biggestReward, epoch - 1, this.connection, this.network, epochDuration);
+					this.latestRewardsPerValidator.set(key, [rm]);
+				});
+				cb();
+			})
+	  })
   }
 
-  async loadLatestRewards() {
-    if (this.isLatestRewardsLoading) {
-      return;
+  getLatestRewardsOfVaildator(address, cb) {
+    if (!this.latestRewardsPerValidator) {
+      return cb([]);
     }
-    this.isLatestRewardsLoading = true;
-    const accounts = await this.getAccounts();
-    const accountMap = new Map();
-    for (let account of accounts) {
-      accountMap.set(account.pubkey.toBase58(), account);
-    }
-    const { firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset,
-      slotsPerEpoch, warmup } = await this.getEpochSchedule();
-    const { epoch } = await this.getEpochInfo();
-    const firstSlotInEpoch = (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
-    const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
-    const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
-    this.latestRewardsPerValidator = new observable.map();
-    const tmpMap = new Map();
+    return cb(this.latestRewardsPerValidator.get(address) || []);
+  }
 
-    for (let reward of blockResult.rewards) {
-      let account = accountMap.get(reward.pubkey);
-      if (!account || !account.account.data.parsed.info || !account.account.data.parsed.info.stake) continue;
-      const { voter } = account.account.data.parsed.info.stake.delegation;
-      if (!tmpMap.has(voter)) {
-        tmpMap.set(voter, []);
-        continue;
-      }
-      tmpMap.get(voter).push(reward);
-    }
-    tmpMap.forEach((value, key) => {
-      let maxAmount = -1;
-      let biggestReward = null;
-      for (let reward of value) if (reward.lamports > maxAmount) {
-        maxAmount = reward.lamports;
-        biggestReward = reward;
-      }
-      this.latestRewardsPerValidator.set(key, [new RewardModel(biggestReward, epoch - 1, this.connection, this.network)]);
-    });
-    this.isLatestRewardsLoading = false;
+  loadLatestRewards(cb) {
+		runInAction(() => {
+			if (this.isLatestRewardsLoading) {
+				return;
+			}
+			this.isLatestRewardsLoading = true;
+		 
+			this.getAccounts().then( accounts => {
+				const accountMap = new Map();
+				for (let account of accounts) {
+					accountMap.set(account.pubkey.toBase58(), account);
+				}
+				this.getEpochSchedule().then(res => {
+					let firstNormalEpoch = res.firstNormalEpoch;
+					let firstNormalSlot = res.firstNormalSlot
+					let leaderScheduleSlotOffset = res.leaderScheduleSlotOffset
+					let slotsPerEpoch = res.slotsPerEpoch
+					let warmup = res.warmup
+				
+					this.getEpochInfo().then((resp) => {
+						const epoch = resp.epoch;
+					
+						const firstSlotInEpoch = (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot;
+						this.getConfirmedBlocksWithLimit(firstSlotInEpoch).then( blockNumberResult => {
+							
+							this.getConfirmedBlock(blockNumberResult.result[0]).then( blockResult => {
+								this.latestRewardsPerValidator = new observable.map();
+								const tmpMap = new Map();
+								for (let reward of blockResult.rewards) {
+									let account = accountMap.get(reward.pubkey);
+									if (!account || !account.account.data.parsed.info || !account.account.data.parsed.info.stake) continue;
+									const { voter } = account.account.data.parsed.info.stake.delegation;
+									if (!tmpMap.has(voter)) {
+										tmpMap.set(voter, []);
+										continue;
+									}
+									tmpMap.get(voter).push(reward);
+								}
+								this.setlatestRewardsPerValidator(tmpMap, epoch,  () => {
+									this.isLatestRewardsLoading = false;
+									cb();	
+								});
+							})
+							.catch(err => {
+								console.warn("[getConfirmedBlock] error", err);
+							})
+						})
+						.catch(err => {
+							console.warn("[getConfirmedBlocksWithLimit] error", err);
+						})
+					})
+					.catch(err => {
+						console.warn("[getEpochInfo] error", err);
+					})
+				})
+				.catch(err => {
+					console.warn("[getEpochSchedule] error", err);
+				});	
+			})
+			.catch(err => {
+				console.warn("[getAccounts] error", err);
+			});
+		});
   }
 
   async getEpochSchedule() {
@@ -109,6 +155,35 @@ class RewardsStore {
         )
     );
   }
+	
+	getEpochTimeTs(epoch, cb) {
+		this.getEpochSchedule().then( result => {
+			const firstSlotInEpoch = (epoch - result.firstNormalEpoch) * result.slotsPerEpoch + result.firstNormalSlot;
+			this.getConfirmedBlocksWithLimit(firstSlotInEpoch).then( blockNumberResult => {
+				if (!blockNumberResult.result || blockNumberResult.result.length === 0) {
+					return cb(0);
+				}
+				this.getConfirmedBlock(blockNumberResult.result[0]).then( blockResult => {
+					if ( !blockResult ) return cb(0);
+					if ( !blockResult.blockTime ){  
+						console.error( "[getConfirmedBlock] blocktime is not defined" );
+						return cb(0);
+					}
+						
+					return cb(blockResult.blockTime);
+				}).catch(err => console.error("[getConfirmedBlock Error]", err));
+			}).catch(err => console.error("[getConfirmedBlocksWithLimit Error]", err));
+		}).catch(err => console.error("[getEpochSchedule Error]", err))
+	}
+	
+	getEpochDuration(epoch, cb){
+		this.getEpochTimeTs(epoch + 1, (epochEndTime) => {
+			this.getEpochTimeTs(epoch, (epochStartTime) => {
+				const epochDuration = epochEndTime - epochStartTime;
+				cb(epochDuration);
+			})
+		})
+	}
 }
 
 export const rewardsStore = new RewardsStore();
