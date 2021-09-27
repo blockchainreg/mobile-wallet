@@ -114,16 +114,16 @@ class StakingStore {
   async reload() {
     this.startRefresh()
 
-    //const balanceRes = await this.connection.getBalance(this.publicKey);
-    // const balanceEvmRes = await fetch(this.evmAPI, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
-    // });
-    //const balanceEvmJson = await balanceEvmRes.json();
+    const balanceRes = await this.connection.getBalance(this.publicKey);
+    const balanceEvmRes = await fetch(this.evmAPI, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
+    });
+    const balanceEvmJson = await balanceEvmRes.json();
     this.connection.getVoteAccounts().then(({ current, delinquent }) => {
 		const filter = {memcmp: {
 		  offset: 0xc,
@@ -167,7 +167,7 @@ class StakingStore {
 			  validator.addStakingAccount(account);
 			}
 			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
-				this.endRefresh(0, 0, rent, validators, stakingAccounts);	
+				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);	
 			});
 		});
 	});
@@ -182,8 +182,8 @@ class StakingStore {
   }
 
   endRefresh = (balanceRes, balanceEvmJson, rent, validators, stakingAccounts) => {
-    //this.vlxNativeBalance = new BN(balanceRes + '', 10);
-    //this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
+    this.vlxNativeBalance = new BN(balanceRes + '', 10);
+    this.vlxEvmBalance = new BN(balanceEvmJson.result.substr(2), 16).div(new BN(1e9));
     this.rent = new BN(rent);
     this.validators = validators;
     this.accounts = stakingAccounts;
