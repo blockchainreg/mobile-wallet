@@ -28,7 +28,7 @@ export default ({ store, web3t }) => {
   const lang = getLang(store);
 
   const loginQuick = () => {
-    initStaking(store);
+    //initStaking(store);
     store.current.page = "wallets";
     store.current.auth.isLocalAuthEnabled = null;
     store.current.auth.isAuthenticating = false;
@@ -62,7 +62,7 @@ export default ({ store, web3t }) => {
         return Toast.show({ text: err + "" });
       }
 
-      initStaking(store);
+      //initStaking(store);
 
       store.current.page = "wallets";
       store.current.auth.isLocalAuthEnabled = null;
