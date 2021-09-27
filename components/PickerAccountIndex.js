@@ -51,7 +51,7 @@ export default ({ store, web3t }) => {
       web3t.refresh.bind(web3t)
     )((err, data) => {
       console.log("Updating account index finished");
-      initStaking(store);
+      //initStaking(store);
       console.log("Updating total balance finished");
     });
   };

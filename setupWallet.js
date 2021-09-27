@@ -59,7 +59,7 @@ module.exports = (store, web3t) => {
         store.current.error = err + "";
         return;
     }
-    initStaking(store);
+    //initStaking(store);
     store.current.page = "wallets";
   });
   // store.current.termsMarkdown = terms;

@@ -8,7 +8,7 @@ import {Toast} from "native-base";
 export default ({ store, web3t }) => {
   const onValueChangeValue = async (value) => {
   	store.current.network = value;
-	initStaking(store);
+	//initStaking(store);
     spin(
 	  store,
 	  "Changing network...",
