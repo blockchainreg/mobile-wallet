@@ -30,18 +30,18 @@ class App extends React.Component {
       'Fontfabric-NexaRegular': require("./assets/fonts/Fontfabric-NexaRegular.otf"),
     });
   }
-
+	
+  componentWillUnmount() {
+	  this.setState({ AppReady: null });
+  }
+  
   componentDidMount() {
-    // TODO: Comment why this timeout is needed or remove
-    // setTimeout(() => {
+    
       Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
         this.setState({ AppReady: require("./App-ready.js").default });
       });
-    // }, 1500);
-	  
 	  
 	  /* Disable font scaling */
-	  
 	  if (Text.defaultProps == null) {
 		  Text.defaultProps = {};
 	  }
@@ -56,11 +56,6 @@ class App extends React.Component {
 		  Input.defaultProps = {};
 	  }
 	  Input.defaultProps.allowFontScaling = false;
-	  
-	  if (Text.defaultProps == null) {
-		  Text.defaultProps = {}
-	  }
-	  Text.defaultProps.allowFontScaling = false;
 	  
   }
 
