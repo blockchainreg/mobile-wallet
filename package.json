@@ -20,7 +20,7 @@
     "bip32": "^2.0.5",
     "bip39": "^2.6.0",
     "bitcoin-address-validation": "^2.1.0",
-    "bitcoinjs-lib": "^3.3.2",
+    "bitcoinjs-lib": "5.2",
     "bitgo-utxo-lib": "^1.8.0",
     "bn.js": "^5.2.0",
     "buffer": "5",
