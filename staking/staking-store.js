@@ -47,7 +47,7 @@ class StakingStore {
     this.evmPrivateKey = evmPrivateKey;
     this.network = network;
     this.evmAPI = evmAPI;
-    this.web3 = new Web3(new Web3.providers.HttpProvider(API_HOST));
+    this.web3 = new Web3(new Web3.providers.HttpProvider(evmAPI));
     rewardsStore.setConnection(this.connection, network);
     decorate(this, {
 	  connection: observable,
