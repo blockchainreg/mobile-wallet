@@ -4707,7 +4707,7 @@ export default StyleSheet.create({
   },
   mbListItem: {
     // paddingVertical: 10,
-    // height: 'auto'
+    height: 'auto'
   },
   lineMono: {
     borderBottomWidth: 1,
@@ -5473,7 +5473,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    bottom: -30,
+    bottom: 0,
     // bottom: 0,
   },
   topView: {
