@@ -605,6 +605,7 @@
       deadline: 5000
     }).end(function(err, data){
       var json, dec, num, e;
+      console.log(getApiUrl(network) + "/address/" + address + "/balance");
       if (err != null || data.text.length === 0) {
         return cb(err);
       }

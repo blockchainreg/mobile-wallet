@@ -21,7 +21,9 @@ import PickerSetLang from "../components/PickerSetLang.js";
 import PickerAccountIndex from "../components/PickerAccountIndex.js";
 import Background from "../components/Background.js";
 import Images from "../Images.js";
-import Header from '../components/Header'
+import Header from '../components/Header';
+import { NetworkIcon } from '../svg/index';
+import PickerSetNetwork from "../components/PickerSetNetwork.js";
 
 const LocalAuthListView = ({store}) => {
   const lang = getLang(store);
@@ -157,6 +159,20 @@ export default ({ store, web3t }) => {
             <Right style={styles.heightListItem} />
           </ListItem>
           <LocalAuthListView store={store}/>
+          
+          <Separator bordered style={styles.seperatorStyle}>
+            <Text style={styles.styleTxtSeparator}>Networks</Text>
+          </Separator>
+
+          <ListItem icon style={styles.heightListItem} underlayColor={Images.velasColor2}>
+            <Left>
+              <NetworkIcon/>
+            </Left>
+            <Body style={styles.heightListItem}>
+              {PickerSetNetwork({ store, web3t })}
+            </Body>
+            <Right style={styles.heightListItem} />
+          </ListItem>
 
           <Separator bordered style={styles.seperatorStyle}>
             <Text style={styles.styleTxtSeparator}>{lang.security}</Text>

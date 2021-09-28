@@ -103,12 +103,12 @@ export const getCountriesAsync = async (flagType, translation = 'common', region
 };
 const DEFAULT_FUSE_OPTION = {
     shouldSort: true,
-    threshold: 0.6,
+    threshold: 0.3,
     location: 0,
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys: ['name', 'callingCode'],
+    keys: ['name', 'cca2', 'callingCode'],
 };
 let fuse;
 export const search = (filter = '', data = [], options = DEFAULT_FUSE_OPTION) => {

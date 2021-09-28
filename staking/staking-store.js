@@ -127,7 +127,11 @@ class StakingStore {
       { filters: [filter], commitment: 'processed' }
     );
     const filteredAccounts = nativeAccounts.filter(({ account }) => {
-      const { authorized } = account.data.parsed.info.meta;
+      const authorized = (
+        account.data.parsed.info && 
+        account.data.parsed.info.meta && 
+        account.data.parsed.info.meta.authorized
+      );
       return authorized && authorized.staker === this.publicKey58;
     });
     const stakingAccounts = filteredAccounts.map(account =>

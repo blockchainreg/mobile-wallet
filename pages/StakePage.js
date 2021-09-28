@@ -17,28 +17,6 @@ export default ({ store, web3t, props }) => {
     store.current.page = tab;
   };
 
-  // if (!stakingStore.validators) {
-  //   return <Spinner/>;
-  // }
-
-
-  // if (stakingStore.isRefreshing) {
-  //   const lang = getLang(store);
-  //   return (
-  //   <>
-  //     <Container>
-  //       <Header title={lang.titleStake || "Stake"} />
-  //         <View style={style.modalBackground}>
-  //           <View style={[style.activityIndicatorWrapper, {backgroundColor: "#ffffff30"}]}>
-  //             <ActivityIndicator color={"white"} size={'large'}/>
-  //           </View>
-  //         </View>
-  //       <Footer store={store}></Footer>
-  //     </Container>
-  //   </>
-  //   )
-  // }
-
   const lang = getLang(store);
 
   const EmptyList = () => {

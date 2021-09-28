@@ -21,7 +21,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-//
+
 import dash from "../registry/dash.json";
 import etc from "../registry/etc.json";
 import eth from "../registry/eth.json";
@@ -29,6 +29,22 @@ import ltc from "../registry/ltc.json";
 import usdt from "../registry/usdt.json";
 import syx from "../registry/syx.json";
 import usdt_erc20 from "../registry/usdt_erc20.json";
+import bnb from "../registry/bnb-coin.js";
+import bscVlx from "../registry/bsc-vlx-coin.js";
+import busd from "../registry/busd-coin.js";
+import ethLegacy from "../registry/eth-legacy-coin.js";
+import huobi from "../registry/huobi-coin.js";
+import usdc from "../registry/usdc-coin.js";
+import usdtErc20Legacy from "../registry/usdt_erc20_legacy-coin.json";
+import vlxEth from "../registry/vlx-eth-coin.js";
+import vlxEvmLegacy from "../registry/vlx-evm-legacy-coin.js";
+import vlxHuobi from "../registry/vlx-huobi-coin.js";
+import vlxUsdt from "../registry/vlx-usdt-coin.js";
+import vlxBusd from "../registry/vlx_busd-coin.js";
+import vlxUsdc from "../registry/vlx_usdc-coin.js";
+import vlxErc20 from "../registry/vlx_erc20-coin.js";
+
+
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import getLang from '../wallet/get-lang.js';
 import BackButton from "../components/BackButton.js";
@@ -36,16 +52,20 @@ import Background from "../components/Background.js";
 import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
 import Header from '../components/Header'
-//
 
-const coinItems = [/*etc, */eth, ltc, /*dash, */usdt, usdt_erc20, syx];
+
+const coinItems = [
+	ltc, usdt, usdt_erc20, syx,
+	/*bnb, bscVlx, busd, huobi, usdc, vlxHuobi, vlxUsdt, vlxBusd, vlxUsdc, vlxEth, vlxErc20, vlxEvmLegacy,*/
+	ethLegacy, usdtErc20Legacy		
+];
+
 
 const renderCoin = (store, web3t) => item => {
   const tokens = walletsFuncs(store, web3t).wallets.map(x => x.coin.token);
   const isAdded = tokens.indexOf(item.token) > -1;
 
   const name = item.name || item.token.toUpperCase();
-
 
   const addItem = () => {
   const lang = getLang(store);

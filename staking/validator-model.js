@@ -69,12 +69,12 @@ class ValidatorModel {
             epoch: reward.epoch,
             amount: reward.amount,
             apr: reward.apr || 0,
-            postBalance: reward.apr ? reward.solanaReward.postBalance: 0
+            postBalance: reward.solanaReward ? reward.solanaReward.postBalance: 0
           });
           continue;
         }
         const prev = rewards.get(reward.epoch);
-        if (reward.apr) {
+        if (reward.apr && reward.solanaReward) {
           const postBalance = reward.solanaReward.postBalance + prev.postBalance;
           rewards.set(reward.epoch, {
             epoch: reward.epoch,
@@ -84,12 +84,14 @@ class ValidatorModel {
           });
           continue;
         }
-        rewards.set(reward.epoch, {
-          epoch: reward.epoch,
-          amount: prev.amount.add(reward.amount),
-          apr: prev.apr,
-          postBalance: prev.postBalance
-        });
+        if (prev) {
+          rewards.set(reward.epoch, {
+            epoch: reward.epoch,
+            amount: prev.amount.add(reward.amount),
+            apr: prev.apr,
+            postBalance: prev.postBalance
+          });
+        }
       }
     }
     return Array.from(rewards.values()).sort((a, b) => b.epoch - a.epoch);

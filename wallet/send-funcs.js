@@ -143,10 +143,18 @@ import swapNativeToEvm from "./Native-swap";
 			}
 			/**
 			 * Swap into native */
-			if (chosenNetwork.id === 'native') {
+			if (chosenNetwork.id === 'vlx_native') {
 				$recipient = "";
 				try {
-					$recipient = bs58.decode(send.to);
+					var recipient = (function(){
+						switch (false) {
+							case !send.to.startsWith('V'):
+								return toEthAddress(send.to);
+							default:
+								return send.to;
+						}
+					}());
+					$recipient = bs58.decode(recipient);
 					hex = $recipient.toString('hex');
 				} catch (e$) {
 					err = e$;

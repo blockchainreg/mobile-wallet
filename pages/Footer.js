@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, FooterTab, Button, Thumbnail } from "native-base";
+import { Footer, FooterTab, Button, Text } from "native-base";
 import { observer } from "mobx-react";
 import styles from "../Styles.js";
 import applyTransactions from "../wallet/apply-transactions.js";
@@ -7,6 +7,7 @@ import getLang from "../wallet/get-lang.js";
 import Images from "../Images.js";
 import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
 import { StakingStore } from "../staking/staking-store.js";
+import { View } from "react-native";
 
 export default ({ store }) => {
   const changeTab = (tab) => () => {
@@ -27,9 +28,8 @@ export default ({ store }) => {
     }
     // store.walletBalance = wallet.balance;
     // store.walletEvmBalance = walletEvm.balance;
-
     const stakingStore = new StakingStore(
-      wallet.network.api.apiUrl,
+      wallet.network.api.web3Provider,
       wallet.privateKey,
       wallet.publicKey,
       walletEvm.address2, //evm address
@@ -38,9 +38,23 @@ export default ({ store }) => {
     store.stakingStore = stakingStore;
     changeTab("stakePage")();
   };
+  const renderNetwork = () => {
+    if (store.current.network === 'mainnet') {
+      return null;
+    }
+    return (
+      <View style={styles.demoView}>
+        <Text style={styles.demoTxt}>
+        The default network for all transactions is Testnet
+        </Text>
+        <Text/>
+      </View>
+    )
+  }
   //DO NOT generate footer if transaction info is visible
   if (store.infoTransaction != null) return null;
   return (
+    <>
     <Footer style={styles.footerHeight}>
       <FooterTab style={styles.footerTab}>
         <Button
@@ -87,5 +101,7 @@ export default ({ store }) => {
         </Button>
       </FooterTab>
     </Footer>
+      {renderNetwork()}
+      </>
   );
 };

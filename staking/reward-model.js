@@ -55,9 +55,8 @@ class RewardModel {
       (await this.getEpochTimeTs(this.epoch + 1)) -
       (await this.getEpochTimeTs(this.epoch))
     );
-    const balance = this.solanaReward.postBalance;
     const epochsPerYear = 365.25 * 24 * 3600 / epochDuration
-    const amountPerPerEpoch = this.solanaReward.lamports / (this.solanaReward.postBalance - this.solanaReward.lamports);
+    const amountPerPerEpoch = this.solanaReward ? this.solanaReward.lamports / (this.solanaReward.postBalance - this.solanaReward.lamports): 0;
 
     this.apr = amountPerPerEpoch * epochsPerYear;
   }

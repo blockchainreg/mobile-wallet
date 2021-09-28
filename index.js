@@ -1,3 +1,6 @@
+import Bugsnag from "@bugsnag/react-native";
+Bugsnag.start();
+
 import { registerRootComponent } from 'expo';
 import { AppRegistry, Platform } from 'react-native';
 
