@@ -175,7 +175,7 @@ export default ({ store, web3t }) => {
 
 
             <Separator bordered style={[styles.seperatorStyle, {backgroundColor: "transparent", opacity: 0.50}]}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>{lang.version} {Constants.manifest.version}</Text>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>{lang.version} {Constants.nativeAppVersion}</Text>
             </Separator>
 
 

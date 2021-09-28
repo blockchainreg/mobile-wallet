@@ -256,9 +256,9 @@ export default ({ store, web3t }) => {
             source={Images.logo}
             style={styles.styleLogo}
           />
-          
+
           <View style={styles.styleVersion}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.nativeAppVersion}</Text>
             </View>
           <View style={styles.widthCard}>
             <View style={styles.titleInput}>

@@ -124,7 +124,7 @@ export default ({ store }) => {
             style={styles.styleLogo}
           />
           <View style={{ opacity: 0.60, marginTop: 5}}>
-              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.manifest.version}</Text>
+              <Text style={[styles.styleTxtSeparator, {textAlign: "center"} ]}>v.{Constants.nativeAppVersion}</Text>
             </View>
           <View style={styles.widthCard}>
           <View style={styles.titleInput}>

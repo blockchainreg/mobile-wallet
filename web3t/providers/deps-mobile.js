@@ -8,7 +8,7 @@
   BN = require('ethereumjs-util').BN;
   asyncRandomBytes = require('react-native-secure-randombytes').asyncRandomBytes;
   safeCrypto = require('react-native-safe-crypto');
-  hdkey = require('ethereumjs-wallet-react-native/hdkey.js');
+  hdkey = require('../node_modules_embed/ethereumjs-wallet/hdkey.js');
   bip39 = require('react-native-bip39');
   window.randomBytes = asyncRandomBytes;
   window.scryptsy = safeCrypto.scrypt;

@@ -1,5 +1,5 @@
-import Bugsnag from '@bugsnag/expo';
-Bugsnag.start();
+// import Bugsnag from '@bugsnag/expo';
+// Bugsnag.start();
 
 import * as Font from "expo-font";
 import "./global.js";
@@ -9,7 +9,9 @@ import * as React from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React)
+// const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React)
+
+const ErrorBoundary = React.Fragment;
 
 class App extends React.Component {
   state = {
