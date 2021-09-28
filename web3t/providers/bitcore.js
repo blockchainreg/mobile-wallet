@@ -122,8 +122,9 @@
             return vals[0];
           }
         }());
-        feePerByte = div(calcedFeePerKb, 2000);
-        calcFee = times(bytes + infelicity, feePerByte);
+				feePerByte = times(calcedFeePerKb, Math.pow(10, 7))    //100 satoshis/byte
+				var calcFeeSatoshi = times(bytes + infelicity, feePerByte);
+        calcFee = div(calcFeeSatoshi, Math.pow(10, 8));
         calcFee = new bignumber(calcFee).toFixed(network.decimals);
         finalPrice = (function(){
           switch (false) {
@@ -138,6 +139,7 @@
     });
   };
   calcDynamicFee = function(arg$, cb){
+		console.log("[calcDynamicFee]", arg$);
     var network, tx, txType, account, feeType, o, txFee, ref$, ref1$;
     network = arg$.network, tx = arg$.tx, txType = arg$.txType, account = arg$.account, feeType = arg$.feeType;
     o = network != null ? network.txFeeOptions : void 8;
