@@ -374,7 +374,7 @@ class StakingStore {
     });
     let chainId = this.network === 'mainnet' ? 106 : 111;
     const customCommon = Common.forCustomChain(
-      this.network,
+      'mainnet',
       {
         name: 'velas',
         networkId: chainId,
