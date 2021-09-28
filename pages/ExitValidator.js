@@ -95,7 +95,7 @@ export default ({ store, web3t, props }) => {
             />
           }
           {/* On which withdrawal of funds to set a notification!!! */}
-          {details.totalWithdrawRequested.isZero() ? null : (
+          {!details.totalWithdrawRequested || details.totalWithdrawRequested.isZero() ? null : (
             <Notice
               text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
               icon="warning"
