@@ -372,12 +372,13 @@ class StakingStore {
         resolve(value);
       });
     });
+    let chainId = this.network === 'mainnet' ? 106 : 111;
     const customCommon = Common.forCustomChain(
-      'mainnet',
+      this.network,
       {
         name: 'velas',
-        networkId: 106,
-        chainId: 106,
+        networkId: chainId,
+        chainId: chainId,
       },
       'istanbul',
     )
