@@ -16,6 +16,7 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
 import * as ethereum from "ethereumjs-tx";
 import Common from "ethereumjs-common";
+import { minus } from "../wallet/math.js"
 
 // const  = mobx;
 
@@ -42,7 +43,7 @@ class StakingStore {
     this.publicKeyBuffer = Buffer.from(bs58.decode(publicKey));
     this.publicKey58 = publicKey;
     this.publicKey = new solanaWeb3.PublicKey(publicKey);
-    this.connection = new solanaWeb3.Connection(API_HOST, 'singleGossip');
+    this.connection = new solanaWeb3.Connection(evmAPI, 'singleGossip');
     this.evmAddress = evmAddress;
     this.evmPrivateKey = evmPrivateKey;
     this.network = network;
@@ -72,6 +73,7 @@ class StakingStore {
   }
 
   async reloadWithRetry() {
+  	console.log("[reloadWithRetry]");
     this.isRefreshing = true;
     invalidateCache();
     // await callWithRetries(
