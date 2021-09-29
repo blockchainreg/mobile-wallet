@@ -131,7 +131,14 @@ class ValidatorModel {
       if (acc.state !== 'activating' && acc.state !== 'active') {
         continue;
       }
-      total = total.add(acc.activeStake).add(acc.inactiveStake);
+      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+				const now = Date.now() / 1000;
+				if (unixTimestamp > now)
+					continue;
+			}
+	
+			total = total.add(acc.activeStake).add(acc.inactiveStake);
     }
     return total;
   }
@@ -197,6 +204,12 @@ class ValidatorModel {
       if (!acc.activeStake) {
         return null;
       }
+			if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+				const now = Date.now() / 1000;
+				if (unixTimestamp > now)
+					continue;
+			}
       total = total.add(acc.activeStake);
     }
     return total;
@@ -214,8 +227,15 @@ class ValidatorModel {
       if (!acc.inactiveStake) {
         return null;
       }
+			if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+				const now = Date.now() / 1000;
+				if (unixTimestamp > now)
+					continue;					
+			}
       totalInactive = totalInactive.add(acc.inactiveStake);
     }
+    
     return totalInactive;
   }
 

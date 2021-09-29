@@ -526,6 +526,9 @@ class StakingStore {
     const sortedAccounts = (
       validator.stakingAccounts
         .filter(a => a.state === 'active' || a.state === 'activating')
+				.filter(a => {
+					a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp < (Date.now() / 1000);
+				})
         .sort((a, b) => b.myStake.cmp(a.myStake))
     );
     let totalStake = new BN(0);
@@ -569,6 +572,8 @@ class StakingStore {
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
       if (account.validatorAddress !== address) continue;
+			if (account.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp > (Date.now() / 1000))
+				continue;
       try {
         const { inactive, state } = await this.connection.getStakeActivation(account.publicKey);
         if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
