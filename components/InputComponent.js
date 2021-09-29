@@ -4,9 +4,10 @@ import { Text, Input, Item, Label, Button } from "native-base";
 import Images from "../Images";
 import { Badge } from "react-native-elements";
 import InputAmount from "./InputAmount";
+import { formatValue } from "../utils/format-value";
 
 export default ({isWithdraw, ...props}) => {
-  
+  const value = isWithdraw ? formatValue(props.total_stake) : formatValue(props.available_balance);
   return (
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
@@ -32,7 +33,7 @@ export default ({isWithdraw, ...props}) => {
 
       <View style={style.containerBottomInput}>
           <Text style={style.labelTextBottom}>
-            {props.sub_text + ":"} {isWithdraw ? props.total_stake : props.available_balance}{" "}<Text style={style.labelTokenStyle}>{props.token}</Text>
+            {props.sub_text + ":"} {value}{" "}<Text style={style.labelTokenStyle}>{props.token}</Text>
           </Text>
       </View>
     </>
