@@ -24,10 +24,10 @@ export async function callWithRetries(call, params) {
   let tries = 0;
   let timeout = null;
   while(true) {
-  	if (tries >= 5) {
-  		clearTimeout(timeout);
-			return new Promise(resolve => resolve(null));
-		}
+  	// if (tries >= 5) {
+  	// 	clearTimeout(timeout);
+		// 	return new Promise(resolve => resolve(null));
+		// }
     try {
       return await call();
     } catch(e) {
