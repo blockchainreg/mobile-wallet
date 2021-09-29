@@ -9,7 +9,7 @@ import { formatStakeAmount } from "../utils/format-value";
 import getLang from "../wallet/get-lang.js";
 import { observer } from "mobx-react";
 
-export default observer(({ store, isStaked, ...props }) => {
+export default observer(({ store, ...props }) => {
   const lang = getLang(store);
 
   const typeBadge = (type) => {
@@ -35,6 +35,7 @@ export default observer(({ store, isStaked, ...props }) => {
       />
     );
   };
+  const isStaked = props.myStake > 0 ? true : false;
   return (
     <ListItem
       noBorder
@@ -66,7 +67,7 @@ export default observer(({ store, isStaked, ...props }) => {
             { color: isStaked ? Images.colorGreen : "#fff" },
           ]}
         >
-          {formatStakeAmount(props.myStake || props.totalStaked)} VLX
+          {isStaked ? formatStakeAmount(props.myStake) : formatStakeAmount(props.totalStaked)} VLX
         </Text>
       </Body>
       <Right style={style.rightSide}>

@@ -189,6 +189,13 @@ class StakingStore {
     }
     return this.validators.filter(({myStake}) => myStake.isZero());
   }
+  getAllValidators() {
+    if (!this.validators) {
+      return null;
+    }
+    return this.validators.filter((validator) => validator.myStake);
+
+  }
 
   getValidatorDetails() {
     const validatorAddress = this.openedValidatorAddress;
