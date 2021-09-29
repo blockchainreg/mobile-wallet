@@ -7,7 +7,7 @@ import InputAmount from "./InputAmount";
 import { formatValue } from "../utils/format-value";
 
 export default ({isWithdraw, ...props}) => {
-  const value = isWithdraw ? formatValue(props.total_stake) : formatValue(props.available_balance);
+  const value = isWithdraw ? props.total_stake : props.available_balance;
   return (
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
