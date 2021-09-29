@@ -16,7 +16,6 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
 import * as ethereum from "ethereumjs-tx";
 import Common from "ethereumjs-common";
-import { minus } from "../wallet/math.js"
 
 // const  = mobx;
 
@@ -73,7 +72,6 @@ class StakingStore {
   }
 
   async reloadWithRetry() {
-  	console.log("[reloadWithRetry]");
     this.isRefreshing = true;
     invalidateCache();
     // await callWithRetries(
