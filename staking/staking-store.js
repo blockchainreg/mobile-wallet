@@ -527,7 +527,8 @@ class StakingStore {
       validator.stakingAccounts
         .filter(a => a.state === 'active' || a.state === 'activating')
 				.filter(a => {
-					a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp < (Date.now() / 1000);
+					return !a.parsedAccoount.account.data.parsed.info.meta.lockup || 
+					new BN(a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp).lt(new BN(Date.now() / 1000))
 				})
         .sort((a, b) => b.myStake.cmp(a.myStake))
     );
