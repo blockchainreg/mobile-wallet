@@ -1,4 +1,4 @@
-import Bugsnag from '@bugsnag/react-native'
+import Bugsnag from '@bugsnag/expo'
 Bugsnag.start();
 
 
@@ -12,7 +12,7 @@ import { Input } from "native-base";
 import styles from "./Styles.js";
 import Images from "./Images.js";
 
-// const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
+const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
   state = {
@@ -88,9 +88,9 @@ class App extends React.Component {
 }
 
 export default () => (
-  // <ErrorBoundary FallbackComponent={ErrorView}>
+  <ErrorBoundary FallbackComponent={ErrorView}>
     <App />
-  // </ErrorBoundary>
+  </ErrorBoundary>
 );
 
 class ErrorView extends React.Component {
