@@ -35,7 +35,7 @@ export default ({ store }) => {
 	return (
 	  <View style={styles.demoView}>
 		<Text style={styles.demoTxt}>
-			The default network for all transactions is Testnet
+			The network for all transactions is Testnet
 		</Text>
 		<Text/>
 	  </View>
