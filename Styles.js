@@ -5878,11 +5878,11 @@ export default StyleSheet.create({
     // paddingBottom: 5
   },
   demoTxt: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 5,
     // paddingBottom: Platform.OS === 'android' ? null : 20,
     alignSelf: "center",
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: "Fontfabric-NexaBold",
     lineHeight: 20
   },
