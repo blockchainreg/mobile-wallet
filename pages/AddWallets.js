@@ -20,6 +20,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import {filter, map} from "prelude-ls"
 
 
 import dash from "../registry/dash.json";
@@ -54,9 +55,9 @@ import Images from '../Images.js';
 import Header from '../components/Header'
 
 
-const coinItems = [
+let coinItems = [
 	ltc, usdt, usdt_erc20, syx,
-	/*bnb, bscVlx, busd, huobi, usdc, vlxHuobi, vlxUsdt, vlxBusd, vlxUsdc, vlxEth, vlxErc20, vlxEvmLegacy,*/
+	/*bnb, bscVlx, busd, huobi, usdc, vlxHuobi, vlxUsdt, vlxBusd, vlxUsdc, vlxEth, vlxErc20,*/ vlxEvmLegacy,
 	ethLegacy, usdtErc20Legacy		
 ];
 
@@ -120,6 +121,11 @@ export default ({ store, web3t }) => {
   const changePage = tab => () => {
     store.current.page = tab;
   };
+	
+  const currentNetwork = store.current.network;
+	coinItems = coinItems.filter((it)=> {
+		return !it[currentNetwork].disabled
+	})
 
   const calcUsd = 0;
   const refreshToken = async bool => {};
