@@ -1,14 +1,10 @@
 import React from "react";
-import { StyleSheet, Dimensions, Text, ActivityIndicator, Platform } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Left, Body, Right, ListItem, Thumbnail} from "native-base";
 import Images from "../Images";
-import { Avatar } from "../svg";
 import { Badge } from "react-native-elements";
-import IdentIcon from "./Identicon";
-import { formatStakeAmount } from "../utils/format-value";
 import getLang from "../wallet/get-lang.js";
 import { observer } from "mobx-react";
-import styles from "../Styles";
 
 export default observer( ({ store, wallet, ...props }) => {
   const lang = getLang(store);
@@ -24,9 +20,70 @@ export default observer( ({ store, wallet, ...props }) => {
         return null;
     }
   };
+  
+  const legacyBadge = ()=> {
+		if ((props.name).toLowerCase().indexOf('legacy') === -1) return null;
+		const legacyBadgeStyle = {
+			fontFamily: "Fontfabric-NexaRegular",
+			fontSize: 12,
+			backgroundColor: 'gray' ,
+			width: 60,
+			textAlign: "center",
+			color: "white",
+			padding: 5,
+			paddingBottom: 2,
+			paddingTop: 1,
+			position: "absolute",
+			top: 0,
+			right: 0,
+			zIndex:1,
+			marginTop: -0,
+			marginRight: -0,
+			borderColor: Images.colorGreen,
+			paddingHorizontal: 3,
+			borderRadius: 5,
+			borderBottomRightRadius: 0,
+			borderTopLeftRadius: 0,
+		};
+		return (
+			<Text
+				style={legacyBadgeStyle}
+			>
+				Legacy
+			</Text>
+		)
+	}
+  
+  const renderName = () => {
+  	switch (true) {
+			case (props.name).toLowerCase().indexOf('legacy') !== -1:
+				const index = (props.name).toLowerCase().indexOf('legacy');
+				const baseName = props.name.substr(0, index);
+				
+				return (
+				<View style={{ fontFamily: 'Fontfabric-NexaRegular'}}>
+					<Text
+						style={style.styleTitle}
+					>
+						{baseName}
+					</Text>
+				</View>
+				)
+				
+			default:
+				return (
+					<Text
+						style={style.styleTitle}
+						numberOfLines={1}
+					>
+						{props.name}
+					</Text>
+				)
+		}
+	}
 
   const badgeStatus = () => {
-
+		return(<></>)
     return (
       <Badge
         value={
@@ -59,12 +116,7 @@ export default observer( ({ store, wallet, ...props }) => {
       </Left>
 			
       <Body style={style.bodyPadding}>
-        <Text
-          style={style.styleTitle}
-          numberOfLines={1}
-        >
-          {props.name}
-        </Text>
+				{ renderName() }
 				
         <Text style={style.styleSubTitle}>
           ${props.usdRate}
@@ -72,7 +124,8 @@ export default observer( ({ store, wallet, ...props }) => {
         
       </Body>
       <Right style={style.rightSide}>
-				{badgeStatus()}
+				{/*{badgeStatus()}*/}
+				{legacyBadge()}
 				<Text
 					style={[
 						style.styleBalance,
@@ -84,10 +137,7 @@ export default observer( ({ store, wallet, ...props }) => {
         <Text style={[style.styleSubTitle, {marginTop: 10}]}>
           ${props.balanceUsd}
         </Text>
-        <Text style={style.styleTitle}>
-          {/*{null !== props.apr && (props.apr * 100).toFixed(2) + "%"}*/}
-          {/*{null === props.apr && (Platform.OS === 'android' ? '...' : <ActivityIndicator/>)}*/}
-        </Text>
+        
       </Right>
     </ListItem>
   );
@@ -96,16 +146,13 @@ export default observer( ({ store, wallet, ...props }) => {
 const style = StyleSheet.create({
   styleTitle: {
     color: "#fff",
-    fontSize: 15,
-		// fontWeight: "bold",
-		//textTransform:"uppercase",
+    fontSize: 18,
     fontFamily: "Fontfabric-NexaRegular",
 		marginTop: 3
   },
   styleBalance: {
     marginTop: 17,
-    fontSize: 15,
-		// fontWeight: "bold",
+    fontSize: 17,
 		textShadowColor: 'rgba(255, 255, 255, 0.3)',
 		textShadowRadius: 10,
 		textShadowOffset: { width: 0, height: 0 },
@@ -157,13 +204,10 @@ const style = StyleSheet.create({
   },
   listItemStyle: {
     marginHorizontal: 0,
-    // borderBottomWidth: 0.5,
-    // borderBottomColor: "rgba(138,138,138,0.23)",
     height: 100,
 		marginLeft: 10,
 		borderRadius: 5,
 		marginRight: 10,
-		backgroundColor: "linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)"
   },
   rightSide: {
     paddingLeft: 10, paddingRight: 10
