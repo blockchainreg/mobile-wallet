@@ -15,11 +15,11 @@
 		native = require('../web3t/plugins/sol-coin.js');
 		eth = require('../web3t/plugins/eth-coin.js');
 		vlx_evm = require('../web3t/plugins/vlx-coin.js');
-		vlx_evm_legacy = require('../web3t/plugins/vlx-evm-legacy-coin.js');         
-		coins = [native, vlx_evm, vlx2, vlx_evm_legacy, btc, eth];
+		//vlx_evm_legacy = require('../web3t/plugins/vlx-evm-legacy-coin.js');         
+		coins = [native, vlx_evm, vlx2, btc, eth];
 		return coins;
 	};
-	var baseArray = ['vlx_native', 'vlx_evm_legacy', 'vlx_evm', 'vlx2', 'btc', 'eth'];
+	var baseArray = ['vlx_native', 'vlx_evm', 'vlx2', 'btc', 'eth'];
 	out$.getCoins = getCoins = function(store, cb){
 		var network, base;
 		network = store.current.network;
