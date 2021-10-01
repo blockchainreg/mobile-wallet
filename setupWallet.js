@@ -9,8 +9,16 @@ import usdt from "./registry/usdt.json";
 import {installPluginWORefresh} from "./wallet/install-plugin.js";
 import getLang from './wallet/get-lang.js';
 import initStaking from './initStaking.js';
+import ethLegacy from "./registry/eth-legacy-coin";
+import usdtErc20Legacy from "./registry/usdt_erc20_legacy-coin";
+import vlxEvmLegacy from "./registry/vlx-evm-legacy-coin";
+import {filter, map} from "prelude-ls";
+import walletsFuncs from "./wallet/wallets-funcs";
 
 module.exports = (store, web3t) => {
+	const legacyTokens = [ethLegacy, usdtErc20Legacy, vlxEvmLegacy];
+
+
   function preinstallCoins([coin, ...coins], cb) {
     if (!coin) {
       return cb();
@@ -18,19 +26,19 @@ module.exports = (store, web3t) => {
     const name = coin.name || coin.token.toUpperCase();
     console.log(`installing ${name}`);
     if (coins.length > 0) {
-        installPluginWORefresh(coin, function(err, data){
-          if (err) {
-            return cb(err);
-          }
-          preinstallCoins(coins, cb);
-        });
+			installPluginWORefresh(coin, function(err, data){
+				if (err) {
+					return cb(err);
+				}
+				preinstallCoins(coins, cb);
+			});
     } else {
-        web3t.installQuick(coin, function(err, data){
-          if (err) {
-            return cb(err);
-          }
-          preinstallCoins(coins, cb);
-        });
+			web3t.installQuick(coin, function(err, data){
+				if (err) {
+					return cb(err);
+				}
+				preinstallCoins(coins, cb);
+			});
     }
   }
 
@@ -39,7 +47,7 @@ module.exports = (store, web3t) => {
       if (err) {
         return cb(err);
       }
-      preinstallCoins([eth, /*ltc, */usdt], cb)
+				preinstallCoins(legacyTokens, cb)
     })
   }
   const lang = getLang(store);
