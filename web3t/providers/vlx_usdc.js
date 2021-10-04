@@ -811,17 +811,34 @@
       return new web3.eth.Contract(abi, addr);
     }
   };
-  out$.getBalance = getBalance = function(arg$, cb){
-    var network, address, web3, swap, contract, number, dec, balance;
-    network = arg$.network, address = arg$.address;
-    web3 = getWeb3(network);
-    swap = null;
-    contract = getContractInstance(web3, network.address, swap);
-    number = contract.balanceOf(address);
-    dec = getDec(network);
-    balance = div(number, dec);
-    return cb(null, balance);
-  };
+	out$.getBalance = getBalance = function(arg$, cb){
+		var network, address, web3, swap, contract, number, dec, balance;
+		network = arg$.network, address = arg$.address;
+		web3 = getWeb3(network);
+		swap = null;
+		contract = getContractInstance(web3, network.address, swap);
+		var balanceOf = (function(){
+			switch (false) {
+				case contract.methods == null:
+					return function(address, cb){
+						return contract.methods.balanceOf(address).call(cb);
+					};
+				default:
+					return function(address, cb){
+						return contract.balanceOf(address, cb);
+					};
+			}
+		}());
+		return balanceOf(address, function(err, number) {
+			var dec, balance;
+			if (err != null) {
+				return cb(err);
+			}
+			dec = getDec(network);
+			balance = div(number, dec);
+			return cb(null, balance);
+		});
+	};
   out$.getSyncStatus = getSyncStatus = function(arg$, cb){
     var network;
     network = arg$.network;
