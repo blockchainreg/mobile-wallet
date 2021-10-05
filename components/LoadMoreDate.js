@@ -138,6 +138,8 @@ export default ({ store, web3t }) => {
 				}
 			}());
 			
+			const txFee = roundHuman(transaction.fee);
+			
 			return (
 				<ListItem
 					thumbnail
@@ -169,7 +171,7 @@ export default ({ store, web3t }) => {
 					{transaction.fee
 						?(
 							<Text style={styles.constDate}>
-							({lang.fee}: {Math.floor(transaction.fee)}{" "}{fee_currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+							({lang.fee}: {txFee}{" "}{fee_currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
 							</Text>
 						)
 						: null
