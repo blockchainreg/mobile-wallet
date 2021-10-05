@@ -9,6 +9,7 @@ import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
 import roundHuman from "../wallet/round-human";
 import { SkypeIndicator } from 'react-native-indicators';
+import walletsFuncs from "../wallet/wallets-funcs.js";
 
 var ref$ = require('prelude-ls'), sortBy = ref$.sortBy, reverse = ref$.reverse, filter = ref$.filter, find = ref$.find, keys = ref$.keys, map = ref$.map;
 
@@ -104,7 +105,12 @@ export default ({ store, web3t }) => {
         applyTransactions(store);
     }
 
-    const renderTransaction = (transaction) => {
+	
+	// const wallets = walletsFuncs(store, web3t).wallets;
+	// const wallet = wallets.find((x) => x.coin.token === store.infoTransaction.token);
+	// const feeToken = (wallets.network.txFeeIn).toUpperCase();
+
+	const renderTransaction = (transaction) => {
 		var r_amount = roundNumber(transaction.amount, {decimals: 2});
 		var amount = roundHuman(r_amount);
 		const curr = (transaction.token);
@@ -122,8 +128,28 @@ export default ({ store, web3t }) => {
 				default: return transaction.token
 			}
 		}());
+		let currency_fee = (function() {
+			switch (curr) {
+				case "vlx_native":
+				case "vlx_evm":
+				case "vlx_evm_legacy":	
+				case "vlx2":
+				case "vlx_erc20":
+				case "vlx": return "VLX";
+				case "usdt_erc20_legacy":
+				case "eth_legacy": return "ETH";
+				case "usdt_erc20_legacy": return "eth";
+				default: return transaction.token
+			}
+		}());
+		let roundFee = (function() {
+			switch (curr) {
+				case "usdt_erc20_legacy": return (transaction.fee / 1.0e+14).toFixed(4);
+				default: return Math.floor(transaction.fee)
+			}
+		}());
 		currency_display = currency_display.toUpperCase();
-		
+		currency_fee = currency_fee.toUpperCase();
 		return (
 			<ListItem
 				thumbnail
@@ -155,7 +181,8 @@ export default ({ store, web3t }) => {
 				{transaction.fee
 					?(
 						<Text style={styles.constDate}>
-						({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+						{/* ({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null} */}
+						({lang.fee}: {roundFee}{" "}{currency_fee}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
 						</Text>
 					)
 					: null

@@ -80,8 +80,21 @@ export default (store, web3t) => {
   let token = store.infoTransaction.token === 'vlx2' ? "vlx" : store.infoTransaction.token;
   const tokenLabel = (wallet.coin.nickname || token).toUpperCase();
   const feeToken = (wallet.network.txFeeIn || wallet.coin.nickname).toUpperCase();
-  const r_amount = roundNumber(store.infoTransaction.amount, {decimals: 4});
+  let roundDecimals = (function() {
+    switch (token) {
+      case "usdt": return 2;
+      default: return 4
+    }
+  }());
+  const r_amount = roundNumber(store.infoTransaction.amount, {decimals: roundDecimals});
   const amount = roundHuman(r_amount);
+
+  let roundFee = (function() {
+    switch (token) {
+      case "usdt_erc20_legacy": return (store.infoTransaction.fee / 1.0e+14).toFixed(4);
+      default: return store.infoTransaction.fee
+    }
+  }());
   return (
         <View style={styles.container}>
           <View style={styles.detailsHistory}>
@@ -144,7 +157,7 @@ export default (store, web3t) => {
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.fee}:</Text>
             <Text style={styles.viewPt}>
-              {store.infoTransaction.fee}
+              {roundFee}
               {" "}{feeToken}
             </Text>
           </View>
