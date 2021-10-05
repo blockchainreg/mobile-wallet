@@ -43,13 +43,7 @@ export default ({ store, web3t, props }) => {
 
   const lang = getLang(store);
 
-  const EmptyList = () => {
-    return (
-      <View style={style.listItemStyle}>
-        <Text style={style.styleSubTitle}>{lang.nothingToShow}</Text>
-      </View>
-    );
-  };
+  
   const refreshStakeItem = () => {
     stakingStore.reloadWithRetry();
   };
@@ -128,6 +122,11 @@ export default ({ store, web3t, props }) => {
               store={store}
             />
           );
+
+          const sections = [
+            { title: lang.itemStakedTitle || "Staked Validators", data: filterStake },
+            { title: lang.itemValidatorsTitle || "Other Validators", data: filterTotalStaked },
+          ]
           return (
             <SafeAreaView style={style.container}>
               <SectionList
@@ -138,12 +137,10 @@ export default ({ store, web3t, props }) => {
                     tintColor="transparent"
                   />
                 }
-                sections={[
-                  { title: lang.itemStakedTitle || "Staked Validators", data: filterStake },
-                  { title: lang.itemValidatorsTitle || "Other Validators", data: filterTotalStaked },
-                ]}
+                sections={!filterStake.length ? [{ title: lang.itemValidatorsTitle || "Other Validators", data: filterTotalStaked }] : sections}
                 keyExtractor={(item, index) => item + index}
                 renderItem={(item) => renderItems(item)}
+                stickySectionHeadersEnabled={true}
                 renderSectionHeader={({ section: { title } }) => (
                   <ListItem
                     itemHeader

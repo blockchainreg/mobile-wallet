@@ -85,6 +85,15 @@ class StakingStore {
     this.isRefreshing = false;
   }
 
+  async sortActiveStake() {
+    if (this.validators.length > 0) {
+      await when(() => this.validators && this.validators.length && this.validators[0].activeStake !== null);
+      this.validators.replace(
+        this.validators.slice().sort((v1, v2) => v2.activeStake - v1.activeStake)
+      );
+    }
+  }
+
   async tryFixCrypto() {
     try {
       await crypto.ensureSecure();
