@@ -10,13 +10,13 @@ addCommas = function(x){
 };
 module.exports = function(value){
   const MIN_VALUE_LEAVE_TWO_DECIMAL = 1000;
-  const MIN_VALUE_REMOVE_DECIMAL = 1000000;
+  const MIN_VALUE_REMOVE_DECIMAL = 1000;
   var ref$, head, dec, firstHead;
   if (value == null) {
-	return '..';
+		return '..';
   }
   if (value === '..') {
-	return '..';
+		return '..';
   }
   ref$ = value.toString().split('.'), head = ref$[0], dec = ref$[1];
   firstHead = addCommas(head);
@@ -24,7 +24,13 @@ module.exports = function(value){
     return firstHead;
   }
   if ((dec != null ? dec : "").length === 0) {
-	return firstHead + ".00";
+		return firstHead + ".00";
   }
+  if ( (dec != null) && (+dec > 0) && +dec.substr(0, 4) === 0 ) {
+  	return firstHead + ".00..";	
+	}
+  if ((+value > 0) && (+firstHead === 0) && (+dec.substr(0, 4) === 0)) {
+  	return "0.00.."
+	}
   return firstHead + "." + dec.substr(0, 4);
 };
