@@ -105,65 +105,79 @@ export default ({ store, web3t }) => {
     }
 
     const renderTransaction = (transaction) => {
-		var r_amount = roundNumber(transaction.amount, {decimals: 2});
-		var amount = roundHuman(r_amount);
-		const curr = (transaction.token);
-		let currency_display = (function() {
-			switch (curr) {
-				case "vlx_native":
-				case "vlx_evm":
-				case "vlx_evm_legacy":	
-				case "vlx2":
-				case "vlx_erc20":
-				case "vlx": return "VLX";
-				case "usdt_erc20_legacy":
-				case "usdt_erc20": return "USDT";
-				case "eth_legacy": return "ETH";
-				default: return transaction.token
-			}
-		}());
-		currency_display = currency_display.toUpperCase();
-		
-		return (
-			<ListItem
-				thumbnail
-				underlayColor={Images.color1}
-				onPress={() => {
-				showTransaction(transaction);
-				}}
-				key={transaction.token+transaction.tx+transaction.type}
-			>
-			<Left>{thumbnail(transaction.type)}</Left>
-			<Body style={{ paddingRight: 10 }}>
-				<Text style={styles.txtSizeHistory}>
-				{checkType(transaction)}
-				</Text>
-				<Text style={styles.constDate}>
-				{transaction.time
-					? moment(transaction.time * 1000).format(
-						"MMM D YYYY h:mm A"
-					)
-					: null
+			var r_amount = roundNumber(transaction.amount, {decimals: 2});
+			var amount = roundHuman(r_amount);
+			const curr = (transaction.token);
+			let currency_display = (function() {
+				switch (curr) {
+					case "vlx_native":
+					case "vlx_evm":
+					case "vlx_evm_legacy":	
+					case "vlx2":
+					case "vlx_erc20":
+					case "vlx": return "VLX";
+					case "usdt_erc20_legacy":
+					case "usdt_erc20": return "USDT";
+					case "eth_legacy": return "ETH";
+					default: return transaction.token
 				}
-				</Text>
-			</Body>
-			<Right>
-				<Text style={amountStyle(transaction.type)}>
-				{index(transaction.type)}
-				{amount}{"\u00A0"}{currency_display}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-				</Text>
-				{transaction.fee
-					?(
-						<Text style={styles.constDate}>
-						({lang.fee}: {Math.floor(transaction.fee)}{" "}{currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-						</Text>
-					)
-					: null
+			}());
+			currency_display = currency_display.toUpperCase();
+			const fee_currency_display = (function() {
+				switch (curr) {
+					case "usdt":
+						return "BTC";
+					case "usdt_erc20":
+					case "usdt_erc20_legacy":	
+						return "ETH";
+					case "syx":
+					case "syx2":
+						return "VLX";
+					default:
+						return currency_display
 				}
-			</Right>
-			</ListItem>
-		);
-	}
+			}());
+			
+			return (
+				<ListItem
+					thumbnail
+					underlayColor={Images.color1}
+					onPress={() => {
+					showTransaction(transaction);
+					}}
+					key={transaction.token+transaction.tx+transaction.type}
+				>
+				<Left>{thumbnail(transaction.type)}</Left>
+				<Body style={{ paddingRight: 10 }}>
+					<Text style={styles.txtSizeHistory}>
+					{checkType(transaction)}
+					</Text>
+					<Text style={styles.constDate}>
+					{transaction.time
+						? moment(transaction.time * 1000).format(
+							"MMM D YYYY h:mm A"
+						)
+						: null
+					}
+					</Text>
+				</Body>
+				<Right>
+					<Text style={amountStyle(transaction.type)}>
+					{index(transaction.type)}
+					{amount}{"\u00A0"}{currency_display}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
+					</Text>
+					{transaction.fee
+						?(
+							<Text style={styles.constDate}>
+							({lang.fee}: {Math.floor(transaction.fee)}{" "}{fee_currency_display}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
+							</Text>
+						)
+						: null
+					}
+				</Right>
+				</ListItem>
+			);
+		}
 
 
     return (
