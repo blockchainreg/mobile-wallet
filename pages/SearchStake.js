@@ -14,9 +14,9 @@ import StakeItem from "../components/StakeItem.js";
 import StatusBar from "../components/StatusBar.js";
 import { SearchBar } from "react-native-elements";
 
-LogBox.ignoreLogs([
-  "VirtualizedLists should never be nested", // TODO: Remove when fixed
-]);
+// LogBox.ignoreLogs([
+//   "VirtualizedLists should never be nested", // TODO: Remove when fixed
+// ]);
 export default ({ store }) => {
   const lang = getLang(store);
   const EmptyList = () => {
@@ -42,8 +42,9 @@ export default ({ store }) => {
       store.handlechangeText = text;
       if (store.handlechangeText) {
         const newData = filterStake.filter(function (item) {
-          const itemData = item.address; //search by address
-          const textData = store.handlechangeText;
+          const itemData = item.address ? item.address.toUpperCase()
+          : ''.toUpperCase();; //search by address
+          const textData = store.handlechangeText.toUpperCase();
           return itemData.indexOf(textData) > -1;
         });
         setFilteredDataSource(newData);
