@@ -20,6 +20,8 @@ import {
   Platform,
   ScrollView,
   LogBox,
+  SectionList,
+  SafeAreaView,
 } from "react-native";
 import { Observer } from "mobx-react";
 import getLang from "../wallet/get-lang.js";
@@ -29,9 +31,9 @@ import { SkypeIndicator } from "react-native-indicators";
 import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
 
-LogBox.ignoreLogs([
-  "VirtualizedLists should never be nested", // TODO: Remove when fixed
-]);
+// LogBox.ignoreLogs([
+//   "VirtualizedLists should never be nested", // TODO: Remove when fixed
+// ]);
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const changePage = (tab, validatorAddress) => () => {
@@ -114,70 +116,45 @@ export default ({ store, web3t, props }) => {
               </View>
             );
           }
-          const renderItemsMyStake = ({ item }) => (
+          const renderItems = ({ item }) => (
             <StakeItem
               key={item.address}
               typeBadge={item.status}
               address={item.address}
               myStake={item.myStake}
-              apr={item.apr}
-              onPress={changePage("detailsValidator", item.address)}
-              store={store}
-            />
-          );
-          const renderItemsTotalValidators = ({ item }) => (
-            <StakeItem
-              key={item.address}
-              typeBadge={item.status}
-              address={item.address}
               totalStaked={item.activeStake}
               apr={item.apr}
               onPress={changePage("detailsValidator", item.address)}
               store={store}
             />
           );
-
           return (
-            <ScrollView
-              style={{ flex: 1 }}
-              refreshControl={
-                <RefreshControl
-                  refreshing={false}
-                  onRefresh={refreshStakeItem}
-                  tintColor="transparent"
-                />
-              }
-            >
-              <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                ListHeaderComponent={
-                  <ListItem itemHeader noBorder>
-                    <Text style={style.titleText}>
-                      {lang.itemStakedTitle || "Staked Validators"}
-                    </Text>
-                  </ListItem>
+            <SafeAreaView style={style.container}>
+              <SectionList
+                refreshControl={
+                  <RefreshControl
+                    refreshing={false}
+                    onRefresh={refreshStakeItem}
+                    tintColor="transparent"
+                  />
                 }
-                data={filterStake}
-                renderItem={renderItemsMyStake}
-                ListEmptyComponent={<EmptyList />}
-                ListFooterComponent={null}
-              />
-
-              <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                ListHeaderComponent={
-                  <ListItem itemHeader noBorder>
-                    <Text style={style.titleText}>
-                      {lang.itemValidatorsTitle || "Other Validators"}
-                    </Text>
+                sections={[
+                  { title: lang.itemStakedTitle || "Staked Validators", data: filterStake },
+                  { title: lang.itemValidatorsTitle || "Other Validators", data: filterTotalStaked },
+                ]}
+                keyExtractor={(item, index) => item + index}
+                renderItem={(item) => renderItems(item)}
+                renderSectionHeader={({ section: { title } }) => (
+                  <ListItem
+                    itemHeader
+                    noBorder
+                    style={style.listItemHeader}
+                  >
+                    <Text style={style.titleText}>{title}</Text>
                   </ListItem>
-                }
-                data={filterTotalStaked}
-                renderItem={renderItemsTotalValidators}
-                ListEmptyComponent={<EmptyList />}
-                ListFooterComponent={null}
+                )}
               />
-            </ScrollView>
+            </SafeAreaView>
           );
         }}
       </Observer>
@@ -207,4 +184,8 @@ const style = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Fontfabric-NexaRegular",
   },
+  listItemHeader: {
+    backgroundColor: Images.velasColor4,
+    paddingTop: 20,
+  }
 });
