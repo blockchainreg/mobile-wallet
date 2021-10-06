@@ -3,38 +3,44 @@ import {
   Text,
   View,
   Item,
-  Body,
-  Left,
-  Right,
   Button,
   Icon,
   Toast,
-  Alert
 } from "native-base";
-import { Image, ImageBackground, runAfterInteractions } from "react-native";
-import GradientButton from "../components/GradientButton.js";
+import {
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Keyboard, Alert, Platform
+} from "react-native";
 import styles from "../Styles.js";
-import {get} from "../wallet/seed.js";
-import {confirm} from "../wallet/pages/confirmation.js";
 import {check} from "../wallet/pin.js";
-//import navigate from '../wallet/navigate.js';
 import Images from '../Images.js';
 import StatusBar from "../components/StatusBar.js";
 import getLang from '../wallet/get-lang.js';
 import * as SecureStore from 'expo-secure-store';
 import Fingerprint from "../components/Fingerprint.js";
 import * as LocalAuthentication from 'expo-local-authentication';
-import Background from "../components/Background.js";
 import Header from '../components/Header';
 import Input from '../components/InputSecure';
 
-
-
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
+
+  const changePage = tab => () => {
+    store.current.page = tab;
+  };
+  const back = changePage("settings");
+
   switch(status) {
     case "unavailable":
-      return <Text style={{ color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20}}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>;
+      return (
+      <>
+      <Header onBack={back}/>
+      <Text style={styles.textAuth}>Please register at least one Fingerprint or Face ID in the setting of your Smartphone to use this feature.</Text>
+      </> )
     case "waiting":
       Promise.all([
         LocalAuthentication.hasHardwareAsync(),
@@ -46,7 +52,7 @@ function LocalAuthenticationEnable({store, web3t}) {
           return;
         }
         setStatus("unavailable");
-        setTimeout(() => {store.current.page = "settings";}, 3000);
+        setTimeout(() => {store.current.page = "settings";}, 5000);
       });
       return <Text>...</Text>;
     case "localAuth":
@@ -78,7 +84,7 @@ function RequestPin({store, web3t}) {
         store.current.auth.isLocalAuthEnabled = null;
         store.current.page = "settings";
         Alert.alert(
-          "Touch ID / Face ID",
+          Platform.OS === 'ios' ? "Touch ID / Face ID" : "Fingerprint ID",
           "Enabled successfully",
           [
             { text: "OK", onPress: () => console.log("OK Pressed") }
@@ -89,18 +95,6 @@ function RequestPin({store, web3t}) {
     };
     const loginText = lang.login;
     return (
-      // <GradientButton
-      //   style={styles.gradientBtnPh}
-      //   text={capitalize(lang.confirm)}
-      //   textStyle={{ fontSize: 14, color: Images.color1 }}
-      //   gradientBegin="#fff"
-      //   gradientEnd="#fff"
-      //   gradientDirection="diagonal"
-      //   height={45}
-      //   width="100%"
-      //   radius={0}
-      //   onPressAction={login}
-      // />
       <Button block style={styles.btnVelasActive} onPress={login}>
         <Text style={styles.textBtn}>{capitalize(lang.confirm)}</Text>
       </Button>
@@ -158,29 +152,51 @@ function RequestPin({store, web3t}) {
   };
 
   return (
-    <View style={styles.viewFlex}>
-      <Background fullscreen={true}/>
-        <Header transparent/>
-        <View style={styles.containerFlexStart}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={style.container}
+    >
+      <ImageBackground source={Images.bg} style={styles.image}>
+        {/* <Header transparent /> */}
+      <StatusBar />
+        
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={style.inner}>
+            <View style={{ alignSelf: "center" }}>
           <Image
             source={Images.logo}
-            style={styles.styleLogo}
+            style={[styles.styleLogo, { alignSelf: "center" }]}
           />
-          <View style={styles.widthCard}>
-            <View style={styles.titleInput}>
+        
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
+            <View style={style.paddingBlock}>
             {inputSuccessPin(store)}
-            {/* {!validInputPin && (
-              <Text style={styles.error}>{lang.validPin}</Text>
-            )} */}
             {checkpin(store)}
-          </View>
-        </View>
-      </View>
+            </View>
+            </View>
+        </TouchableWithoutFeedback>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
-
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inner: {
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  marginBtn: {
+    alignItems: "center",
+    width: "100%",
+  },
+  paddingBlock: {
+    paddingHorizontal: 20, 
+    paddingTop: 20
+  }
+});
 function capitalize(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

@@ -8,9 +8,9 @@ addCommas = function(x){
   }
   return x;
 };
-module.exports = function(value){
+module.exports = function(value, config){
   const MIN_VALUE_LEAVE_TWO_DECIMAL = 1000;
-  const MIN_VALUE_REMOVE_DECIMAL = 1000;
+  const MIN_VALUE_REMOVE_DECIMAL = 100;
   var ref$, head, dec, firstHead;
   if (value == null) {
 		return '..';
@@ -24,13 +24,11 @@ module.exports = function(value){
     return firstHead;
   }
   if ((dec != null ? dec : "").length === 0) {
-		return firstHead + ".00";
+	return firstHead + ".00";
   }
-  if ( (dec != null) && (+dec > 0) && +dec.substr(0, 4) === 0 ) {
-  	return firstHead + ".00..";	
-	}
-  if ((+value > 0) && (+firstHead === 0) && (+dec.substr(0, 4) === 0)) {
-  	return "0.00.."
-	}
-  return firstHead + "." + dec.substr(0, 4);
+  const decimals = config && config.decimals && +config.decimals > 4 ? +config.decimals : 10;
+  // if ((+value > 0) && (+head === 0) && (+dec.substr(0, decimals) === 0)) {
+  // 	return "0.00000.."
+	// }
+  return firstHead + "." + dec.substr(0, decimals);
 };

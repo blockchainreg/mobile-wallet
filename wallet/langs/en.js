@@ -201,7 +201,7 @@
 	noticeStakingRewards: "Staking rewards will be reinvested and added to the stake.",
 	stakingEnteranceSubTitle: "It is not fully active immediately, it may take multiple epochs to warm it up.",
 	stakingEnteranceTitle: "Stake account has been created successfully",
-	stakingEnterance: "Staking Enterance",
+	stakingEnterance: "Staking Entrance",
 	noticeExitValidator: "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one.",
 	exitValidator: "Exit from Validator",
 	exitValidatorSubTitle: "Please navigate to the withdrawals tab to monitor the progress.",
@@ -241,6 +241,12 @@
 	withdrawal: "Withdrawal",
 	withdrawalSuccessfully: "Withdrawal has been submitted successfully. It may take a few minutes to appear on your balance.",
 	dontStake: "Don’t stake all coins, leave some (~1 VLX) to pay transaction fees in the future and be able to initiate stake withdrawals.",
-	noticeTrying: "You are trying to withdraw more funds than you have."
+	noticeTrying: "You are trying to withdraw more funds than you have.",
+	networks: "Networks",
+	network: "Network",
+	enterCustom: "Enter custom network",
+	currentBlock: "Current block",
+	timeUntilEnd: "Time until end",
+	staking: "Staking"
   };
 }).call(this);

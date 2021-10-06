@@ -9,6 +9,8 @@ import {
   View,
   CardItem,
   Body,
+  Container,
+  Content,
 } from "native-base";
 import styles from "../Styles.js";
 import Images from "../Images.js";
@@ -40,10 +42,11 @@ export default ({ store }) => {
   const back = changePage("generatedseed");
 
   return (
-    <View style={styles.viewFlex}>
+    <Container style={styles.viewFlex}>
       <Background fullscreen={true}/>
       <Header onBack={back}/>
-      <View style={styles.containerFlexStart}>
+      <Content style={{flex: 1 }}>
+        <View style={{alignItems: "center",}}>
         <Image source={Images.generate} style={styles.setupImg} />
         <View style={styles.stylePrint}>
           <CardItem style={styles.cardItemSeed}>
@@ -66,7 +69,8 @@ export default ({ store }) => {
             </Body>
           </CardItem>
         </View>
-      </View>
-    </View>
+        </View>
+      </Content>
+    </Container>
   );
 };

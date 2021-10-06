@@ -18,6 +18,7 @@ import sent from "./pages/sent";
 import error from "./pages/error";
 import LocalAuthenticationSettings from "./pages/LocalAuthenticationSettings";
 import LocalAuthenticationEnable from "./pages/LocalAuthenticationEnable";
+import LocalAuthenticationDisable from "./pages/LocalAuthenticationDisable";
 import printseed from "./pages/PrintSeed";
 import Scanner from "./pages/Scanner";
 import stakePage from "./pages/StakePage";
@@ -51,6 +52,7 @@ export default {
   invoice,
   sent,
   LocalAuthenticationEnable,
+  LocalAuthenticationDisable,
   LocalAuthenticationSettings,
   printseed,
   stakePage,

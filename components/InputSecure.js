@@ -3,6 +3,7 @@ import { Item, Input } from "native-base";
 import styles from "../Styles.js";
 import getLang from "../wallet/get-lang.js";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { Platform } from "react-native";
 
 export default ({placeholder, value, onChangeText, ...props}) => {
   const [hidePass, setHidePass] = useState(true);
@@ -24,8 +25,9 @@ export default ({placeholder, value, onChangeText, ...props}) => {
         keyboardType="default"
         placeholderTextColor="rgba(255,255,255,0.60)"
         style={styles.inputSize}
-        selectionColor={"#fff"}
+        selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
         keyboardAppearance="dark"
+        blurOnSubmit={true}
       />
       <Icon
         name={hidePass ? "eye-slash" : "eye"}

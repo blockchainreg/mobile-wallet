@@ -20,7 +20,7 @@
     networks: {
       legacy: {
         id: "legacy",
-        name: "Velas",
+        name: "Velas Legacy",
         referTo: "vlx2"
       },
       evm: {
@@ -49,7 +49,7 @@
     networks: {
       legacy: {
         id: "legacy",
-        name: "Velas",
+        name: "Velas Legacy",
         referTo: "vlx2"
       },
       evm: {

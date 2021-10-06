@@ -6,6 +6,7 @@ import { cachedCallWithRetries } from './utils';
 class StakingAccountModel {
   parsedAccoount = null;
   myStake = null;
+  network = null;
   isActivated = null;
   connection = null;
   rewards = null;
@@ -70,6 +71,7 @@ class StakingAccountModel {
     this.isActivationRequested = true;
 
     const activationRes = await cachedCallWithRetries(
+	   this.network,
       ['getStakeActivation', this.connection, this.parsedAccoount.pubkey.toString()],
       async () => {
         try {
@@ -123,7 +125,7 @@ class StakingAccountModel {
       const rewards = (
         blockResult.rewards
           .filter(r => r.pubkey === address)
-          .map(reward => new RewardModel(reward, epoch - i - 1, this.connection))
+          .map(reward => new RewardModel(reward, epoch - i - 1, this.connection, this.network))
       );
       if (rewards.length === 0) {
         break;
@@ -136,9 +138,10 @@ class StakingAccountModel {
     this.rewardsStatus = "LoadedAll";
   }
 
-  constructor(parsedAccoount, connection) {
+  constructor(parsedAccoount, connection, network) {
     this.parsedAccoount = parsedAccoount;
     this.connection = connection;
+    this.network = network;
     const { account } = parsedAccoount;
     const { lamports } = account;
     if (account.data.parsed.info && account.data.parsed.info.stake) {
@@ -178,6 +181,7 @@ class StakingAccountModel {
 
   async getEpochSchedule() {
     return await cachedCallWithRetries(
+       this.network,
       ['getEpochSchedule', this.connection],
       () => this.connection.getEpochSchedule(),
     );
@@ -185,6 +189,7 @@ class StakingAccountModel {
 
   async getEpochInfo() {
     return await cachedCallWithRetries(
+	  this.network,
       ['getEpochInfo', this.connection],
       () => this.connection.getEpochInfo(),
     );
@@ -192,6 +197,7 @@ class StakingAccountModel {
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
     return await cachedCallWithRetries(
+	  this.network,
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
     );
@@ -199,6 +205,7 @@ class StakingAccountModel {
 
   async getConfirmedBlock(blockNumber) {
     return await cachedCallWithRetries(
+	  this.network,
       ['getConfirmedBlock', this.connection, blockNumber],
       () => this.connection.getConfirmedBlock(blockNumber, 1),
     );
@@ -227,7 +234,7 @@ class StakingAccountModel {
         blockResult.rewards
           .filter(r => r.pubkey === address)
           .slice(0, 1)
-          .map(reward => new RewardModel(reward, epoch - 1, this.connection))
+          .map(reward => new RewardModel(reward, epoch - 1, this.connection, this.network))
       )[0] || null;
       this.rewardsStatus = '1Loaded';
     } catch(e) {

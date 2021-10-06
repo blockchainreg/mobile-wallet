@@ -1,17 +1,43 @@
-import React from "react";
-  import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail, Text} from "native-base";
+import React from 'react';
+import { Container, Header, Left, Body, Right, Title, Icon, Button, Thumbnail, Text, View, Toast} from "native-base";
 import IdentIcon from "../components/Identicon.js";
 import BackButton from "../components/BackButton.js";
 import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
+import {useNetInfo} from '@react-native-community/netinfo';
+
 
 export default (props) => {
+  const connectivityChange = () => {
+    const netInfo = useNetInfo();
+    // console.log('netInfo', netInfo)
+    if (
+      !netInfo.details ||
+      netInfo.isConnected === true ||
+      netInfo.type === "cellular" ||
+      netInfo.type === "wifi"
+    ) {
+      return null;
+    } else {
+      console.log("No Internet");
+      Toast.show({
+        text: "No Internet Connection",
+        position: "top",
+        duration: 3000,
+        type: "warning",
+        style: { top: 15 },
+      });
+    }
+  };
   return (
     <>
       <Header style={[props.transparent ? {backgroundColor: "transparent", borderBottomColor: "transparent"} : styles.headerBg, styles.marginTopAndroid]} androidStatusBarColor="black" noShadow={false}>
         <Left>
           {props.onBack && (
             <BackButton onBack={props.onBack} style={props.greenBack ? styles.leftBtnColor : {color: "#fff"}} />
+            )}
+            {props.onBackHandlerOnly && (
+            <BackButton onBack={props.onBackHandlerOnly} transparent/>
             )}
         </Left>
         <Body>
@@ -42,6 +68,7 @@ export default (props) => {
         </Right>
       </Header>
       <StatusBar />
+      {connectivityChange()}
     </>
   );
 };

@@ -28,7 +28,8 @@
     },
     pubKeyHash: 0x00,
     scriptHash: 0x05,
-    wif: 0x80
+    wif: 0x80 ,
+		group: 'Bitcoin'
   };
   out$.testnet = testnet = {
     txFee: '0.0001',
@@ -56,7 +57,8 @@
     },
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
-    wif: 0xef
+    wif: 0xef,
+		group: 'Bitcoin'
   };
   out$.type = type = 'coin';
   out$.enabled = enabled = true;

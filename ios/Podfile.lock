@@ -8,6 +8,9 @@ PODS:
     - UMCore
     - ZXingObjC/OneD
     - ZXingObjC/PDF417
+  - EXCamera (11.2.2):
+    - ExpoModulesCore
+    - UMCore
   - EXConstants (11.0.2):
     - ExpoModulesCore
     - UMCore
@@ -318,9 +321,9 @@ PODS:
     - React-jsi (= 0.63.4)
   - ReactNativePermissions (1.2.0):
     - React
-  - RNCAsyncStorage (1.15.8):
+  - RNCAsyncStorage (1.15.9):
     - React-Core
-  - RNDeviceInfo (8.3.3):
+  - RNDeviceInfo (8.4.0):
     - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
@@ -381,6 +384,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXBarCodeScanner (from `../node_modules/expo-barcode-scanner/ios`)
+  - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/react-native-unimodules/node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
@@ -455,6 +459,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-application/ios"
   EXBarCodeScanner:
     :path: "../node_modules/expo-barcode-scanner/ios"
+  EXCamera:
+    :path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: "../node_modules/react-native-unimodules/node_modules/expo-constants/ios"
   EXErrorRecovery:
@@ -579,6 +585,7 @@ SPEC CHECKSUMS:
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
   EXBarCodeScanner: ea326d0d2f0b84d4fa2fb833d17e28eaff7f831b
+  EXCamera: 042b334f6ee9b918855fe4c4f155d4c372300a5f
   EXConstants: 4cb52b6d8f636c767104a44bf7db3873e9c01a6f
   EXErrorRecovery: 404d827bc7d42f306c062d58a60b06afc4d082b3
   EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
@@ -625,8 +632,8 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   ReactNativePermissions: f3beb8871251594a8ea2c6b19a3f8252d5c7379d
-  RNCAsyncStorage: e8b8d6320a0dd90eb610fb0d0b1ef90596697c69
-  RNDeviceInfo: cc7de0772378f85d8f36ae439df20f05c590a651
+  RNCAsyncStorage: 26f25150da507524a7815f2ada06ca0967f65633
+  RNDeviceInfo: 8a06046616c6b5c03787b04f265fa3b52b37c80b
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 6ec2460b9c6c8f3b1403bd0eaa12d359a98650e3
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce

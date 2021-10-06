@@ -6,22 +6,35 @@ export async function invalidateCache() {
   cacheMap.clear();
 }
 
-export async function cachedCallWithRetries(params, call) {
-  if (!cacheMap.has(params)) {
-    cacheMap.set(params, callWithRetries(call, params));
+export async function cachedCallWithRetries(network, params, call) {
+  var params$ = params;
+  if (network){
+		params$.unshift(network);
   }
-  return await cacheMap.get(params);
+  if (!cacheMap.has(params$)) {
+  	const res = callWithRetries(call, params);
+		cacheMap.set(params,  callWithRetries(call, params));
+		return res;		
+  } else {
+	  return cacheMap.get(params$);	
+  }
 }
 
 export async function callWithRetries(call, params) {
   let tries = 0;
+  let timeout = null;
   while(true) {
+  	// if (tries >= 5) {
+  	// 	clearTimeout(timeout);
+		// 	return new Promise(resolve => resolve(null));
+		// }
     try {
       return await call();
     } catch(e) {
       console.error(e, params && params.map(o => o.toString()).join());
       tries++;
-      await new Promise(resolve => setTimeout(resolve, 1000*tries));
+      console.log("[callWithRetries] try # ", tries);
+	  await new Promise(resolve => timeout = setTimeout(resolve, 1000*tries));
     }
   }
 }

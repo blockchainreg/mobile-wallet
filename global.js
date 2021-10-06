@@ -1,10 +1,11 @@
 // Inject node globals into React Native global scope.
 import {getRandomBytesAsync} from 'expo-random';
-import {LogBox} from 'react-native'
+import {LogBox, Alert} from 'react-native'
 
 global.Buffer = require('buffer').Buffer;
 global.process = require('process');
 global.document = global.document || Object.create(null);
+global.Alert = Alert; //There are calls in wallet code without require/import
 
 if (typeof btoa === 'undefined') {
   global.btoa = function (str) {

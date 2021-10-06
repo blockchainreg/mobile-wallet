@@ -18849,7 +18849,8 @@ var solanaWeb3 = (function (exports) {
           account: {
             executable: result.account.executable,
             owner: new PublicKey(result.account.owner),
-            lamports: result.account.lamports,
+			// LamportsStr more precise!
+			lamports: result.account.lamportsStr || result.account.lamports,
             data
           }
         };
@@ -19243,7 +19244,7 @@ var solanaWeb3 = (function (exports) {
 
     async getConfirmedBlocksWithLimit(slot, limit) {
       const unsafeRes = await this._rpcRequest('getConfirmedBlocksWithLimit', [slot, limit]);
-      console.log("unsafeRes", unsafeRes);
+      //console.log("unsafeRes", unsafeRes);
       //const res = GetConfirmedBlockRpcResult(unsafeRes);
       const res = unsafeRes;
 

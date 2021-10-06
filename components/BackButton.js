@@ -4,7 +4,7 @@ import {Button, Icon} from "native-base";
 
 import styles from "../Styles.js";
 
-export default ({onBack, style }) => {
+export default ({onBack, transparent, style }) => {
   const back = () => {
     onBack();
     return true;
@@ -16,15 +16,17 @@ export default ({onBack, style }) => {
     };
   });
   return (
+    !transparent && 
     <Button
       transparent
       style={styles.arrowHeaderLeft}
-      onPress={onBack}
+      onPress={transparent ? ()=> {} : onBack}
     >
       <Icon
         name="ios-arrow-back"
         style={style || [styles.arrowHeaderIconBlack, { color: "#fff" }]}
       />
     </Button>
+    
   );
 };
