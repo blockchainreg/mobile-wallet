@@ -196,7 +196,7 @@ class StakingAccountModel {
       () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
     );
   }
-
+  
   async getConfirmedBlock(blockNumber) {
     return await cachedCallWithRetries(
       ['getConfirmedBlock', this.connection, blockNumber],

@@ -16,12 +16,10 @@ import {
   StyleSheet,
   View,
   RefreshControl,
-  FlatList,
-  Platform,
-  ScrollView,
-  LogBox,
   SectionList,
   SafeAreaView,
+  PlatformColor,
+  Platform,
 } from "react-native";
 import { Observer } from "mobx-react";
 import getLang from "../wallet/get-lang.js";
@@ -30,10 +28,9 @@ import StakeItem from "../components/StakeItem.js";
 import { SkypeIndicator } from "react-native-indicators";
 import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
+import EpochComponent from "../components/EpochComponent.js";
+import SortStake from "../components/SortStake.js";
 
-// LogBox.ignoreLogs([
-//   "VirtualizedLists should never be nested", // TODO: Remove when fixed
-// ]);
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const changePage = (tab, validatorAddress) => () => {
@@ -43,10 +40,20 @@ export default ({ store, web3t, props }) => {
 
   const lang = getLang(store);
 
-  
   const refreshStakeItem = () => {
     stakingStore.reloadWithRetry();
   };
+  
+  const sortActiveStake = () => {
+    stakingStore.sortActiveStake();
+  };
+  const sortApr = () => {
+    stakingStore.sortApr();
+  };
+
+  const currentEpoch = stakingStore.currentEpoch;
+  const epochTime = stakingStore.epochTime;
+
   const SearchHeader = () => {
     const { stakingStore } = store;
     const changePage = (tab, validatorAddress) => () => {
@@ -64,11 +71,27 @@ export default ({ store, web3t, props }) => {
             styles.marginTopAndroid,
           ]}
         >
-          <Left />
+          <Left>
+            <Observer>
+              {() => {
+                return (
+                  <>
+                    {stakingStore.isRefreshing ? null : (
+                      <SortStake
+                        store={store}
+                        onPressTotal={sortActiveStake}
+                        onPressApr={sortApr}
+                        checked1={false}
+                        checked2={false}
+                      />
+                    )}
+                  </>
+                );
+              }}
+            </Observer>
+          </Left>
           <Body>
-            <Title style={styles.headerTitle}>
-              {lang.titleStake || "Stake"}
-            </Title>
+            <EpochComponent store={store} />
           </Body>
           <Right>
             <Observer>
@@ -83,6 +106,7 @@ export default ({ store, web3t, props }) => {
                         />
                       </Button>
                     )}
+                    {/* <EpochComponent/> */}
                   </>
                 );
               }}
@@ -124,9 +148,16 @@ export default ({ store, web3t, props }) => {
           );
 
           const sections = [
-            { title: lang.itemStakedTitle || "Staked Validators", data: filterStake },
-            { title: lang.itemValidatorsTitle || "Other Validators", data: filterTotalStaked },
-          ]
+            {
+              title: lang.itemStakedTitle || "Staked Validators",
+              data: filterStake,
+            },
+            {
+              // title: lang.itemValidatorsTitle || "Other Validators",
+              title: "Not Staked Validators",
+              data: filterTotalStaked,
+            },
+          ];
           return (
             <SafeAreaView style={style.container}>
               <SectionList
@@ -137,16 +168,22 @@ export default ({ store, web3t, props }) => {
                     tintColor="transparent"
                   />
                 }
-                sections={!filterStake.length ? [{ title: lang.itemValidatorsTitle || "Other Validators", data: filterTotalStaked }] : sections}
+                sections={
+                  !filterStake.length
+                    ? [
+                        {
+                          // title: lang.itemValidatorsTitle || "Other Validators",
+                          title: "Not Staked Validators",
+                          data: filterTotalStaked,
+                        },
+                      ]
+                    : sections
+                }
                 keyExtractor={(item, index) => item + index}
                 renderItem={(item) => renderItems(item)}
                 stickySectionHeadersEnabled={true}
                 renderSectionHeader={({ section: { title } }) => (
-                  <ListItem
-                    itemHeader
-                    noBorder
-                    style={style.listItemHeader}
-                  >
+                  <ListItem itemHeader noBorder style={style.listItemHeader}>
                     <Text style={style.titleText}>{title}</Text>
                   </ListItem>
                 )}
@@ -184,5 +221,5 @@ const style = StyleSheet.create({
   listItemHeader: {
     backgroundColor: Images.velasColor4,
     paddingTop: 20,
-  }
+  },
 });

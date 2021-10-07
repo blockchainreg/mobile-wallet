@@ -10,6 +10,7 @@ import { callWithRetries, invalidateCache } from './utils';
 import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
 import { rewardsStore } from './rewards-store';
+import { cachedCallWithRetries } from './utils';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
@@ -31,6 +32,12 @@ class StakingStore {
   connection = null;
   openedValidatorAddress = null;
   evmAddress = null;
+  currentEpoch = null;
+  currentBlock = null;
+  slotIndex = null;
+  slotsInEpoch = null;
+  epochTime = null;
+  // currentTime = null;
 
   constructor(API_HOST, secretKey, publicKey, evmAddress, evmPrivateKey) {
     if (typeof secretKey === 'string') {
@@ -52,7 +59,12 @@ class StakingStore {
       vlxNativeBalance: observable,
       isRefreshing: observable,
       accounts: observable,
-      openedValidatorAddress: observable
+      openedValidatorAddress: observable,
+      currentEpoch: observable,
+      currentBlock: observable,
+      epochTime: observable,
+      slotsInEpoch: observable,
+      slotIndex: observable,
     });
     this.startRefresh = action(this.startRefresh);
     this.endRefresh = action(this.endRefresh);
@@ -94,6 +106,25 @@ class StakingStore {
     }
   }
 
+  async sortmyStake() {
+    if (this.validators.length > 0) {
+      await when(() => this.validators && this.validators.length && this.validators[0].myStake !== null);
+      this.validators.replace(
+        this.validators.slice().sort((v1, v2) => v2.myStake - v1.myStake)
+      );
+    }
+  }
+
+
+  async sortApr() {
+    if (this.validators.length > 0) {
+      await when(() => this.validators && this.validators.length && this.validators[0].apr !== null);
+      this.validators.replace(
+        this.validators.slice().sort((v1, v2) => v2.apr - v1.apr)
+      );
+    }
+  }
+
   async tryFixCrypto() {
     try {
       await crypto.ensureSecure();
@@ -111,6 +142,32 @@ class StakingStore {
     } catch(e) {
       console.warn('Cannot fix crypto', e.message);
     }
+  }
+
+  async getEpochInfo() {
+    return await cachedCallWithRetries(
+      ['getEpochInfo', this.connection],
+      () => this.connection.getEpochInfo(),
+    );
+  }
+ 
+  async getConfirmedBlock(blockNumber) {
+    return await cachedCallWithRetries(
+      ['getConfirmedBlock', this.connection, blockNumber],
+      () => this.connection.getConfirmedBlock(blockNumber, 1),
+    );
+  }
+  
+  async loadEpochInfo() {
+    const info = await this.getEpochInfo();
+    const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
+    debugger;
+    this.currentEpoch = epoch;
+    this.currentBlock = blockHeight;
+    this.slotIndex = slotIndex;
+    this.slotsInEpoch = slotsInEpoch;
+    this.epochTime = (slotsInEpoch - slotIndex) * 0.4 / 3600
+    // this.currentTime = currentTime;
   }
 
   async reload() {
@@ -166,6 +223,7 @@ class StakingStore {
       validator.addStakingAccount(account);
     }
     const rent = await this.connection.getMinimumBalanceForRentExemption(200);
+    await this.loadEpochInfo();
     this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
   }
 
