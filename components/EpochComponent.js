@@ -92,10 +92,10 @@ const style = StyleSheet.create({
     color: "#fff",
   },
   styleIcon: {
-    color: "#fff",
+    color: "#ebab28",
     height: "auto",
     fontSize: 20,
-    marginTop: 2,
+    // marginTop: 2,
   },
   epochText: {
     fontSize: 13,

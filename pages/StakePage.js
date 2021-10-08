@@ -30,6 +30,7 @@ import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
 import EpochComponent from "../components/EpochComponent.js";
 import SortStake from "../components/SortStake.js";
+import ProgressBar from "../components/ProgressBar.js";
 
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
@@ -53,6 +54,8 @@ export default ({ store, web3t, props }) => {
 
   const currentEpoch = stakingStore.currentEpoch;
   const epochTime = stakingStore.epochTime;
+
+
 
   const SearchHeader = () => {
     const { stakingStore } = store;
@@ -113,6 +116,7 @@ export default ({ store, web3t, props }) => {
             </Observer>
           </Right>
         </Headers>
+        {/* <ProgressBar store={store}/> */}
         <StatusBar />
       </>
     );
