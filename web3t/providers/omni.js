@@ -9,7 +9,7 @@
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   ref$ = require('./deps.js'), BitcoinLib = ref$.BitcoinLib, bip39 = ref$.bip39;
-  validate = require('../embed_modules/bitcoin-address-validation');
+	validate = require('../embed_modules/bitcoin-address-validation/src/index').default;
   getBitcoinFullpairByIndex = function(mnemonic, index, network){
     var seed, hdnode, address, privateKey, publicKey;
     seed = bip39.mnemonicToSeed(mnemonic);
