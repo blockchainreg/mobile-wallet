@@ -36,6 +36,7 @@ export default ({ store }) => {
       walletEvm.privateKey
     );
     store.stakingStore = stakingStore;
+    store.sort = null;
     changeTab("stakePage")();
   };
   const renderNetwork = () => {

@@ -39,7 +39,7 @@ class App extends Component {
     return (
       <View style={styles.CheckBox}>
         <CheckBox
-          title={"Total stake"}
+          title={"Total staked"}
           iconRight
           containerStyle={styles.checkBox}
           textStyle={styles.text}

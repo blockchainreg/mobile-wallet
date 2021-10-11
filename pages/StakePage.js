@@ -31,6 +31,9 @@ import styles from "../Styles.js";
 import EpochComponent from "../components/EpochComponent.js";
 import SortStake from "../components/SortStake.js";
 import ProgressBar from "../components/ProgressBar.js";
+import PickerSortStake from "../components/PickerSortStake.js";
+import { EpochCurrrent } from "../svg/epoch-current.js";
+import spin from "../utils/spin.js";
 
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
@@ -43,13 +46,40 @@ export default ({ store, web3t, props }) => {
 
   const refreshStakeItem = () => {
     stakingStore.reloadWithRetry();
+    store.sort = null;
   };
   
   const sortActiveStake = () => {
-    stakingStore.sortActiveStake();
+    spin(
+      store,
+      `Sort by: Total Staked`,
+      async (cb) => {
+        try {
+          stakingStore.sortActiveStake();
+          cb(null);
+        } catch(err) {
+          cb(err);
+        }
+      }
+    )((err, data) => {
+      console.log("Sort by Total Staked");
+    });
   };
   const sortApr = () => {
-    stakingStore.sortApr();
+    spin(
+      store,
+      `Sort by: APR`,
+      async (cb) => {
+        try {
+          stakingStore.sortApr();
+          cb(null);
+        } catch(err) {
+          cb(err);
+        }
+      }
+    )((err, data) => {
+      console.log("Sort by APR");
+    });
   };
 
   const currentEpoch = stakingStore.currentEpoch;
@@ -80,13 +110,7 @@ export default ({ store, web3t, props }) => {
                 return (
                   <>
                     {stakingStore.isRefreshing ? null : (
-                      <SortStake
-                        store={store}
-                        onPressTotal={sortActiveStake}
-                        onPressApr={sortApr}
-                        checked1={false}
-                        checked2={false}
-                      />
+                    PickerSortStake({ store, onDonePress: store.sort === 'total_staked' ? sortActiveStake :  sortApr}) 
                     )}
                   </>
                 );
@@ -94,22 +118,24 @@ export default ({ store, web3t, props }) => {
             </Observer>
           </Left>
           <Body>
-            <EpochComponent store={store} />
+            {/* <EpochComponent store={store} /> */}
+          <Title style={styles.headerTitle}>{lang.titleStake || "Stake"}</Title>
           </Body>
-          <Right>
+          <Right style={{flexDirection: 'row', alignItems: 'center',}}>
             <Observer>
               {() => {
                 return (
-                  <>
-                    {stakingStore.isRefreshing ? null : (
+                  <> 
+                    {stakingStore.isRefreshing ? null : (<>
+                    <EpochCurrrent current_epoch={currentEpoch}/>
                       <Button transparent onPress={changePage("searchStake")}>
                         <Icon
                           name="ios-search"
                           style={styles.refreshHeaderIcon}
-                        />
-                      </Button>
+                          />
+                      </Button></>
+
                     )}
-                    {/* <EpochComponent/> */}
                   </>
                 );
               }}
@@ -225,5 +251,10 @@ const style = StyleSheet.create({
   listItemHeader: {
     backgroundColor: Images.velasColor4,
     paddingTop: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: "Fontfabric-NexaBold",
+    color: "#fff",
   },
 });

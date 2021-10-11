@@ -1,3 +1,5 @@
+import fr from '../wallet/langs/fr';
+
 export * from './stake-icon';
 export * from './avatar-validator';
 export * from './validators-icon';
@@ -16,3 +18,4 @@ export * from './header-epoch';
 export * from './plus-icon';
 export * from './percent-icon';
 export * from './network-icon';
+export * from './epoch-current';

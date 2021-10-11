@@ -54,20 +54,11 @@ export default ({ store }) => {
         popover={<EpochDetail />}
       >
         <View style={style.headerTitle}>
-          {!currentEpoch ? (
-            <Text style={style.title}>{lang.titleStake || "Stake"}</Text>
-          ) : (
-            <>
+
               <Text style={style.title}>
-                {lang.titleStake || "Stake"} #{currentEpoch}{" "}
+                {lang.titleStake || "Stake"}
               </Text>
-              <Icon
-                name="information-circle-outline"
-                type="Ionicons"
-                style={style.styleIcon}
-              />
-            </>
-          )}
+
         </View>
       </Tooltip>
     );
