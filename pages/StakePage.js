@@ -118,7 +118,6 @@ export default ({ store, web3t, props }) => {
             </Observer>
           </Left>
           <Body>
-            {/* <EpochComponent store={store} /> */}
           <Title style={styles.headerTitle}>{lang.titleStake || "Stake"}</Title>
           </Body>
           <Right style={{flexDirection: 'row', alignItems: 'center',}}>
@@ -127,7 +126,7 @@ export default ({ store, web3t, props }) => {
                 return (
                   <> 
                     {stakingStore.isRefreshing ? null : (<>
-                    <EpochCurrrent current_epoch={currentEpoch}/>
+                     <EpochComponent store={store} />
                       <Button transparent onPress={changePage("searchStake")}>
                         <Icon
                           name="ios-search"

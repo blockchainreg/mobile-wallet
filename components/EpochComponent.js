@@ -3,6 +3,8 @@ import { StyleSheet, View, Platform } from "react-native";
 import getLang from "../wallet/get-lang.js";
 import { Tooltip } from "react-native-elements";
 import { Icon, Text } from "native-base";
+import { EpochCurrrent } from "../svg/epoch-current.js";
+import ProgressBar from "../components/ProgressBar.js";
 
 export default ({ store }) => {
   const lang = getLang(store);
@@ -53,13 +55,7 @@ export default ({ store }) => {
         withPointer={false}
         popover={<EpochDetail />}
       >
-        <View style={style.headerTitle}>
-
-              <Text style={style.title}>
-                {lang.titleStake || "Stake"}
-              </Text>
-
-        </View>
+        <EpochCurrrent current_epoch={currentEpoch}/>
       </Tooltip>
     );
   };
