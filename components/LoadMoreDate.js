@@ -83,7 +83,7 @@ export default ({ store, web3t }) => {
       }
     };
 
-    const txs = store.transactions.applied;		
+    const txs = store.transactions.applied;
 
     const showTransaction = (transaction) => {
         store.infoTransaction = transaction;
@@ -112,7 +112,7 @@ export default ({ store, web3t }) => {
 				switch (curr) {
 					case "vlx_native":
 					case "vlx_evm":
-					case "vlx_evm_legacy":	
+					case "vlx_evm_legacy":
 					case "vlx2":
 					case "vlx_erc20":
 					case "vlx": return "VLX";
@@ -128,7 +128,7 @@ export default ({ store, web3t }) => {
 					case "usdt":
 						return "BTC";
 					case "usdt_erc20":
-					case "usdt_erc20_legacy":	
+					case "usdt_erc20_legacy":
 						return "ETH";
 					case "syx":
 					case "syx2":
@@ -137,9 +137,9 @@ export default ({ store, web3t }) => {
 						return currency_display
 				}
 			}());
-			
+
 			const txFee = roundHuman(transaction.fee);
-			
+
 			return (
 				<ListItem
 					thumbnail

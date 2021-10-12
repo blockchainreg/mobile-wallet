@@ -48,7 +48,7 @@ export default ({ store, web3t }) => {
         store.current.error = err + "";
       }
     });
-   
+
   };
 
   const loginSlow = () => {
@@ -195,7 +195,7 @@ export default ({ store, web3t }) => {
         store.current.pin = "";
         return Toast.show({ text: lang.incorrectPass || "Incorrect password" });
       }
-      
+
       login(get());
       store.current.pin = "";
       store.userWallet = 200;
@@ -288,7 +288,7 @@ export default ({ store, web3t }) => {
       <ImageBackground source={Images.bg} style={styles.image}>
         {/* <Header transparent /> */}
       <StatusBar />
-        
+
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
@@ -300,7 +300,7 @@ export default ({ store, web3t }) => {
                 <Text
                   style={[styles.styleTxtSeparator, { textAlign: "center" }]}
                 >
-                  v.{Constants.manifest.version}
+                  v.{Constants.nativeAppVersion}
                 </Text>
               </View>
               <Text style={styles.textH1Seed}>{lang.enterPin}</Text>
@@ -331,7 +331,7 @@ const style = StyleSheet.create({
     width: "100%",
   },
   paddingBlock: {
-    paddingHorizontal: 20, 
+    paddingHorizontal: 20,
     paddingTop: 20
   }
 });

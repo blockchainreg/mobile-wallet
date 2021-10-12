@@ -131,7 +131,7 @@ export default ({ store }) => {
       <ImageBackground source={Images.bg} style={styles.image}>
         {/* <Header transparent /> */}
       <StatusBar />
-        
+
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
@@ -140,7 +140,7 @@ export default ({ store }) => {
                 <Text
                   style={[styles.styleTxtSeparator, { textAlign: "center" }]}
                 >
-                  v.{Constants.manifest.version}
+                  v.{Constants.nativeAppVersion}
                 </Text>
               </View>
               <Text style={styles.textH1Seed}>{lang.setupPin}</Text>

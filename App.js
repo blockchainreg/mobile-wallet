@@ -1,5 +1,6 @@
-import Bugsnag from '@bugsnag/expo';
-Bugsnag.start();
+// import Bugsnag from '@bugsnag/expo'
+// Bugsnag.start();
+
 
 import * as Font from "expo-font";
 import "./global.js";
@@ -10,7 +11,8 @@ import {View, Image, Text, ImageBackground, TextInput} from "react-native";
 import { Input } from "native-base";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
+
+// const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
   state = {
@@ -30,33 +32,29 @@ class App extends React.Component {
       'Fontfabric-NexaRegular': require("./assets/fonts/Fontfabric-NexaRegular.otf"),
     });
   }
-	
+
   componentWillUnmount() {
 	  this.setState({ AppReady: null });
   }
-  
+
   componentDidMount() {
-    
-      Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
-        this.setState({ AppReady: require("./App-ready.js").default });
-      });
-	  
-	  /* Disable font scaling */
+    Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
+      this.setState({ AppReady: require("./App-ready.js").default });
+    });
 	  if (Text.defaultProps == null) {
 		  Text.defaultProps = {};
 	  }
 	  Text.defaultProps.allowFontScaling = false;
-	
+
 	  if (TextInput.defaultProps == null) {
 		  TextInput.defaultProps = {};
 	  }
 	  TextInput.defaultProps.allowFontScaling = false;
-	
+
 	  if (Input.defaultProps == null) {
 		  Input.defaultProps = {};
 	  }
 	  Input.defaultProps.allowFontScaling = false;
-	  
   }
 
   render() {
@@ -81,9 +79,9 @@ class App extends React.Component {
 }
 
 export default () => (
-  <ErrorBoundary FallbackComponent={ErrorView}>
+  // <ErrorBoundary FallbackComponent={ErrorView}>
     <App />
-  </ErrorBoundary>
+  // </ErrorBoundary>
 );
 
 class ErrorView extends React.Component {
