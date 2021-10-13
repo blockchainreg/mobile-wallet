@@ -223,20 +223,26 @@ import { formatValue } from "../utils/format-value";
 							store.current.creatingTransaction = false;
 							return cb("You are not agree");
 						}
-						var txSpinner = new Spinner(store, "Sending funds", {
-							displayDescription: true,
-						});
+						var txSpinner = null;
+						setTimeout(() => {
+							txSpinner = new Spinner(store, "Sending funds", {
+								displayDescription: true,
+							});
+						}, 1);
 						return pushTx((import$({
 							token: transaction.coin.token,
 							txType: transaction.txType,
 							network: transaction.network
 						}, data)), function (err, tx) {
 							store.current.creatingTransaction = false;
-							txSpinner.finish();
-							if (err != null) {
-								return cb(err);
-							}
-							return cb(err, tx);
+							setTimeout(() => {
+								txSpinner.finish();
+								if (err != null) {
+									return cb(err);
+								}
+								return cb(err, tx);	
+							}, 100);
+							// txSpinner.finish();
 							
 							/* Remove creating pending tx in order to avoid unnecessary empty tx if parsing is bad */
 							/* Only actual txs would be rendering to user via tokens providers */
