@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>189</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.finance</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -46,14 +48,30 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Apple music is not accessed in this app</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth is not accessed in this app</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth is not accessed in this app</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calendar is not accessed in this app</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to scan QR codes.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Contacts are not accessed in this app</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>This app will optionally use Face ID or Touch ID to save login</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Location is not accessed in this app</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Motion data is not used in this app</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library is not accessed in this app</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition is not used in this app</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

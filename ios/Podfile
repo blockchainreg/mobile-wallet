@@ -7,6 +7,7 @@ platform :ios, '11.0'
 target 'Velaswallet' do
   use_unimodules!
   config = use_native_modules!
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
 
   use_react_native!(:path => config["reactNativePath"])
 
