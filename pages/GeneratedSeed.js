@@ -29,6 +29,7 @@ import BackButton from "../components/BackButton.js";
 import { confirm } from "../wallet/pages/confirmation.js";
 import Background from "../components/Background.js";
 import {shuffle} from "../utils/array.js";
+import { Generate } from "../svg/generate.js";
 
 
 // const generateMnemonic = () => {
@@ -81,7 +82,8 @@ export default ({ store }) => {
       <Content style={{flex: 1 }}>
       <View style={styles.containerGenerated}>
 
-        <Image source={Images.generate} style={styles.setupImg} />
+        {/* <Image source={Images.generate} style={styles.setupImg} /> */}
+        <Generate height={271 / 4} width={320 / 4} marginBottom={"7%"}/>
         <View style={styles.scrollViewAndroid}>
         {seedPhrase(store)}
         <View style={[styles.marginBtn, {marginBottom: 20}]}>

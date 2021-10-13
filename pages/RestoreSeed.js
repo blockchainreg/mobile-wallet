@@ -34,6 +34,7 @@ import SeedWord from "../components/SeedWord.js";
 import { set } from "../wallet/seed.js";
 import {confirm} from "../wallet/pages/confirmation.js";
 import Header from '../components/Header';
+import { Generate } from "../svg/generate.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -167,7 +168,8 @@ export default ({ store, web3t }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={style.inner}>
           <View style={{alignSelf: "center"}}>
-            <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} /> 
+            {/* <Image source={Images.generate} style={[styles.setupImg, {marginBottom: 0}]} />  */}
+            <Generate height={271 / 4} width={320 / 4} marginBottom={0}/>
             <Text style={styles.textH1Seed}>{lang.restoreSeed}</Text>
           </View>
 

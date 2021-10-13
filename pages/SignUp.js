@@ -28,6 +28,7 @@ import PickerSetLang from "../components/PickerSetLang.js";
 import Header from "../components/Header";
 import Input from "../components/InputSecure";
 import StatusBar from "../components/StatusBar.js";
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 const buttonActive = (store) => {
   const lang = getLang(store);
@@ -135,7 +136,8 @@ export default ({ store }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
-              <Image source={Images.logo} style={[styles.styleLogo, { alignSelf: "center" }]} />
+              {/* <Image source={Images.logo} style={[styles.styleLogo, { alignSelf: "center" }]} /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
               <View style={styles.styleVersion}>
                 <Text
                   style={[styles.styleTxtSeparator, { textAlign: "center" }]}

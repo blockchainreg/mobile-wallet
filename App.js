@@ -11,7 +11,7 @@ import {View, Image, Text, ImageBackground, TextInput} from "react-native";
 import { Input } from "native-base";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-
+import {VelasLogo1} from "./svg/velas-logo1"
 // const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
@@ -65,7 +65,8 @@ class App extends React.Component {
         <ImageBackground source={Images.bg} style={styles.image}>
 
           {/* <Background fullscreen={true}/> */}
-            <Image source={Images.logo} style={styles.styleLogoHead} />
+            {/* <Image source={Images.logo} style={styles.styleLogoHead} /> */}
+            <VelasLogo1 style={styles.styleLogoHead} width="138" height="120" viewBox="0 0 138 120"/>
             </ImageBackground>
         </View>
       );

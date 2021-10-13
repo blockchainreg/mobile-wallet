@@ -9,7 +9,9 @@ import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
 import roundHuman from "../wallet/round-human";
 import { SkypeIndicator } from 'react-native-indicators';
-
+import { DepositImage } from "../svg/depositImage.js";
+import { WithdrawImage2 } from "../svg/withdrawImage2.js";
+import { Trx } from "../svg/trx.js";
 var ref$ = require('prelude-ls'), sortBy = ref$.sortBy, reverse = ref$.reverse, filter = ref$.filter, find = ref$.find, keys = ref$.keys, map = ref$.map;
 
 
@@ -73,10 +75,10 @@ export default ({ store, web3t }) => {
     const thumbnail = type => {
       switch (type) {
         case "IN":
-          return <Thumbnail small square source={Images.depositImage} />;
+          return <DepositImage width={36} height={36}/>;
         case "OUT":
           return (
-            <Thumbnail small square source={Images.withdrawImage2} />
+           <WithdrawImage2 width={36} height={36}/>
           );
         default:
           return null;
@@ -215,10 +217,11 @@ export default ({ store, web3t }) => {
           	<View>
 				{txs.length == 0 && (
 				  	<View style={styles.footer}>
-						<Image
+						{/* <Image
 							source={Images.trx}
 							style={styles.styleLogo}
-						/>
+						/> */}
+						<Trx height={27.3 * 2} width={31.7 * 2}/>
 				  	</View>
 				)}
 				<List>

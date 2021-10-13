@@ -23,7 +23,8 @@ import Header from "../components/Header";
 import Input from "../components/InputSecure";
 import StatusBar from "../components/StatusBar.js";
 import initStaking from '../initStaking.js';
-
+import { VelasLogo1 } from "../svg/velas-logo1.js";
+import { Bg } from "../svg/bg.js";
 export default ({ store, web3t }) => {
   const lang = getLang(store);
 
@@ -292,10 +293,11 @@ export default ({ store, web3t }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
-              <Image
+              {/* <Image
                 source={Images.logo}
                 style={[styles.styleLogo, { alignSelf: "center" }]}
-              />
+              /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
               <View style={styles.styleVersion}>
                 <Text
                   style={[styles.styleTxtSeparator, { textAlign: "center" }]}

@@ -25,6 +25,7 @@ import Fingerprint from "../components/Fingerprint.js";
 import * as LocalAuthentication from 'expo-local-authentication';
 import Header from '../components/Header';
 import Input from '../components/InputSecure';
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
@@ -163,10 +164,12 @@ function RequestPin({store, web3t}) {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
-          <Image
+          {/* <Image
             source={Images.logo}
             style={[styles.styleLogo, { alignSelf: "center" }]}
-          />
+          /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
+
         
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>

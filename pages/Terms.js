@@ -11,6 +11,7 @@ import Background from "../components/Background.js";
 import Spinner from "../utils/spinner.js";
 import setupWallet from "../setupWallet.js";
 import Header from "../components/Header";
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -103,10 +104,11 @@ export default ({ store, web3t }) => {
       <Header transparent />
       <View style={style.inner}>
         <View style={{ alignSelf: "center" }}>
-          <Image
+          {/* <Image
             source={Images.logo}
             style={[styles.styleLogo, { alignSelf: "center" }]}
-          />
+          /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
           <Text style={styles.textH1Seed}>{lang.termsOfUse}</Text>
         </View>
 

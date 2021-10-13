@@ -21,6 +21,7 @@ import getLang from "../wallet/get-lang.js";
 import Background from "../components/Background.js";
 import SeedWord from "../components/SeedWord.js";
 import Header from "../components/Header";
+import { Confirmation } from "../svg/confirmation.js";
 
 const DEV_SKIP = "...";
 
@@ -73,10 +74,11 @@ export default ({ store, web3t }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={style.inner}>
           <View style={{ alignSelf: "center" }}>
-            <Image
+            {/* <Image
               source={Images.confirmation}
               style={[styles.setupConfirmImg, {alignSelf: "center"}]}
-            />
+            /> */}
+            <Confirmation height={292 / 5} width={320 / 5} alignSelf={"center"}/>
             <Text style={styles.textH1Seed}>{lang.confirmation}</Text>
           </View>
 
