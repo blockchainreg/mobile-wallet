@@ -35,6 +35,8 @@ import PickerSortStake from "../components/PickerSortStake.js";
 import { EpochCurrrent } from "../svg/epoch-current.js";
 import spin from "../utils/spin.js";
 
+
+
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
   const changePage = (tab, validatorAddress) => () => {
@@ -110,7 +112,7 @@ export default ({ store, web3t, props }) => {
                 return (
                   <>
                     {stakingStore.isRefreshing ? null : (
-                    PickerSortStake({ store, onDonePress: store.sort === 'total_staked' ? sortActiveStake :  sortApr}) 
+                    PickerSortStake({ store, onDonePress: store.sort === null ? null : store.sort === 'total_staked' ? sortActiveStake :  sortApr}) 
                     )}
                   </>
                 );
@@ -163,18 +165,19 @@ export default ({ store, web3t, props }) => {
               </View>
             );
           }
-          const renderItems = ({ item }) => (
-            <StakeItem
-              key={item.address}
-              typeBadge={item.status}
-              address={item.address}
-              myStake={item.myStake}
-              totalStaked={item.activeStake}
-              apr={item.apr}
-              onPress={changePage("detailsValidator", item.address)}
-              store={store}
-            />
-          );
+          
+            const renderItems = ({ item }) => (
+              <StakeItem
+                key={item.address}
+                typeBadge={item.status}
+                address={item.address}
+                myStake={item.myStake}
+                totalStaked={item.activeStake}
+                apr={item.apr}
+                onPress={changePage("detailsValidator", item.address)}
+                store={store}
+              />
+              )
 
           const sections = [
             {
@@ -182,11 +185,11 @@ export default ({ store, web3t, props }) => {
               data: filterStake,
             },
             {
-              // title: lang.itemValidatorsTitle || "Other Validators",
               title: "Not Staked Validators",
               data: filterTotalStaked,
             },
           ];
+          console.log('filterTotalStaked.length', filterTotalStaked.length)
           return (
             <SafeAreaView style={style.container}>
               <SectionList
@@ -201,16 +204,27 @@ export default ({ store, web3t, props }) => {
                   !filterStake.length
                     ? [
                         {
-                          // title: lang.itemValidatorsTitle || "Other Validators",
                           title: "Not Staked Validators",
                           data: filterTotalStaked,
                         },
                       ]
                     : sections
                 }
+                legacyImplementation={true}
+                horizontal={false}
+                windowSize={150}
+                removeClippedSubviews={false}
+                initialNumToRender={20}
+                updateCellsBatchingPeriod={30}
+                numColumns={1}
+                onEndReachedThreshold={0.07}
+                // maxToRenderPerBatch={30}
+                // getItemLayout={(data, index) => (
+                //   {length: 54, offset: 54 * index, index}
+                // )}
+                maxToRenderPerBatch={50}
                 keyExtractor={(item, index) => item + index}
                 renderItem={(item) => renderItems(item)}
-                stickySectionHeadersEnabled={true}
                 renderSectionHeader={({ section: { title } }) => (
                   <ListItem itemHeader noBorder style={style.listItemHeader}>
                     <Text style={style.titleText}>{title}</Text>
