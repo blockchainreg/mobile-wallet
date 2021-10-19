@@ -22,6 +22,9 @@ export default StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center"
   },
+  bgMain: {
+    position: 'absolute', zIndex:-1, top: -200, left: 0
+  },  
   colorBg: {
     backgroundColor: Images.colorDarkBlue
   },

@@ -29,6 +29,7 @@ import Header from "../components/Header";
 import Input from "../components/InputSecure";
 import StatusBar from "../components/StatusBar.js";
 import { VelasLogo1 } from "../svg/velas-logo1.js";
+import { Bg } from "../svg/bg.js";
 
 const buttonActive = (store) => {
   const lang = getLang(store);
@@ -129,10 +130,8 @@ export default ({ store }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={style.container}
     >
-      <ImageBackground source={Images.bg} style={styles.image}>
-        {/* <Header transparent /> */}
+      <View style={styles.image}>
       <StatusBar />
-
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
@@ -157,7 +156,8 @@ export default ({ store }) => {
             <View style={styles.marginBtn1}>{PickerSetLang({ store, width: '100%', align: 'center' })}</View>
           </View>
         </TouchableWithoutFeedback>
-      </ImageBackground>
+        <Bg style={styles.bgMain}/>
+        </View>
     </KeyboardAvoidingView>
   );
 };

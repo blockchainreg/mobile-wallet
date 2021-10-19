@@ -12,6 +12,7 @@ import { Input } from "native-base";
 import styles from "./Styles.js";
 import Images from "./Images.js";
 import {VelasLogo1} from "./svg/velas-logo1"
+import { Bg } from "./svg/bg.js";
 // const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
@@ -62,12 +63,10 @@ class App extends React.Component {
     if (!AppReady) {
       return (
         <View style={[styles.viewFlex, {backgroundColor: '#05061f'}]}>
-        <ImageBackground source={Images.bg} style={styles.image}>
-
-          {/* <Background fullscreen={true}/> */}
-            {/* <Image source={Images.logo} style={styles.styleLogoHead} /> */}
+        <View style={styles.image}>
             <VelasLogo1 style={styles.styleLogoHead} width="138" height="120" viewBox="0 0 138 120"/>
-            </ImageBackground>
+        <Bg style={styles.bgMain}/>
+        </View>
         </View>
       );
     }

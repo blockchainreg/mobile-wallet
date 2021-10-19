@@ -157,20 +157,13 @@ function RequestPin({store, web3t}) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={style.container}
     >
-      <ImageBackground source={Images.bg} style={styles.image}>
-        {/* <Header transparent /> */}
+      <View style={styles.image}>
       <StatusBar />
         
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
-          {/* <Image
-            source={Images.logo}
-            style={[styles.styleLogo, { alignSelf: "center" }]}
-          /> */}
               <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
-
-        
               <Text style={styles.textH1Seed}>{lang.yourPassword}</Text>
             </View>
             <View style={style.paddingBlock}>
@@ -179,7 +172,8 @@ function RequestPin({store, web3t}) {
             </View>
             </View>
         </TouchableWithoutFeedback>
-      </ImageBackground>
+        <Bg style={styles.bgMain}/>
+        </View>
     </KeyboardAvoidingView>
   );
 };
