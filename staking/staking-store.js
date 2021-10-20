@@ -385,7 +385,7 @@ class StakingStore {
 
     var rawTx = {
       nonce,
-      gasPrice: '0x' + 9600000..toString(16),
+      gasPrice: '0x' + 3000000000..toString(16),
       gasLimit: '0x' + 210000..toString(16),
       to: "0x56454c41532d434841494e000000000053574150",
       value: '0x' + swapAmount.mul(new BN(1e9)).toString(16),
