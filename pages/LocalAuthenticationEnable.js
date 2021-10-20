@@ -26,6 +26,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import Header from '../components/Header';
 import Input from '../components/InputSecure';
 import { VelasLogo1 } from "../svg/velas-logo1.js";
+import { Bg } from "../svg/bg.js";
 
 function LocalAuthenticationEnable({store, web3t}) {
   const [status, setStatus] = useState("waiting");
