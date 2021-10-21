@@ -123,7 +123,7 @@ module.exports = ({ store, web3t }) => {
       return;
     }
     store.current.send["to"] = text;
-    store.current.send.amountSend = '0';
+    store.current.send.amountSend = '';
     store.current.send.amountSendUsd = '0';
     store.current.send.amountSendFee = '0';
     store.current.send.amountSendFeeUsd = '0';

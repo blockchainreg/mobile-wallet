@@ -50,7 +50,7 @@ export default ({ store, web3t }) => {
 		if(wallet.balance == "..") return;
 		store.current.send["to"] = "";
 		store.current.send.data = null;
-		store.current.send.amountSend = '0';
+		store.current.send.amountSend = '';
 		store.current.send.amountSendUsd = '0';
 		store.current.send.amountSendFee = '0';
 		store.current.send.amountSendFeeUsd = '0';
@@ -76,7 +76,7 @@ export default ({ store, web3t }) => {
 			return null;
 		}
 		store.current.send["to"] = "";
-		store.current.send.amountSend = '0';
+		store.current.send.amountSend = '';
 		store.current.send.amountSendUsd = '0';
 		store.current.send.amountSendFee = '0';
 		store.current.send.amountSendFeeUsd = '0';

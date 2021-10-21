@@ -22,7 +22,7 @@ PODS:
   - EXFont (9.2.1):
     - ExpoModulesCore
     - UMCore
-  - EXHaptics (9.0.0):
+  - EXHaptics (6.0.0):
     - UMCore
   - EXImageLoader (2.2.0):
     - ExpoModulesCore
@@ -30,7 +30,7 @@ PODS:
     - UMCore
   - EXKeepAwake (9.2.0):
     - UMCore
-  - EXLinearGradient (9.2.0):
+  - EXLinearGradient (6.0.0):
     - UMCore
   - EXLocalAuthentication (11.1.1):
     - UMCore
@@ -313,10 +313,10 @@ PODS:
     - React-jsi (= 0.63.4)
   - ReactNativePermissions (1.2.0):
     - React
-  - RNCAsyncStorage (1.15.9):
+  - RNCAsyncStorage (1.15.5):
     - React-Core
-  - RNDeviceInfo (8.4.0):
-    - React-Core
+  - RNDeviceInfo (5.5.4):
+    - React
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNReanimated (2.2.2):
@@ -579,10 +579,10 @@ SPEC CHECKSUMS:
   EXErrorRecovery: 404d827bc7d42f306c062d58a60b06afc4d082b3
   EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
   EXFont: 9846ba1bb6f5f5aed44e20eea3ac70693323832d
-  EXHaptics: 685bcf63881af13bbd657ad148292db1f7370268
+  EXHaptics: f84c93d605e0905c47654e4a6e5dfbff78ed6906
   EXImageLoader: d3531a3fe530b22925c19977cb53bb43e3821fe6
   EXKeepAwake: f4105ef469be7b283f66ce2d7234bb71ac80cd26
-  EXLinearGradient: f9ea3259f096b27008860ca50764184225dc71c9
+  EXLinearGradient: 40781b77e58f844c8dc4ad310dc9755b4d3792a7
   EXLocalAuthentication: 88a1a69ea66c4934387d1eb503628170c853caef
   EXPermissions: 916efb5b817cb0a40160c0cd2f369af3c23a78be
   ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
@@ -620,8 +620,8 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   ReactNativePermissions: f3beb8871251594a8ea2c6b19a3f8252d5c7379d
-  RNCAsyncStorage: 26f25150da507524a7815f2ada06ca0967f65633
-  RNDeviceInfo: 8a06046616c6b5c03787b04f265fa3b52b37c80b
+  RNCAsyncStorage: 56a3355a10b5d660c48c6e37325ac85ebfd09885
+  RNDeviceInfo: 6a3d16fce033f6979c4a6a41e62244d183e8c765
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 6ec2460b9c6c8f3b1403bd0eaa12d359a98650e3
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
