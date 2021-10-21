@@ -1,9 +1,10 @@
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from '@expo/vector-icons';
+import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
 
 
-export default ({ store }) => {
+export default ({ store, width, align }) => {
   const onValueChangeValue = async value => {
     store.lang = value;
     localStorage.setItem("lang", value);
@@ -12,37 +13,53 @@ export default ({ store }) => {
   };
   const langItems = [
     {
-      label: "English 🇺🇸",
-      value: "en"
+      label: "🇺🇸 English",
+      value: "en",
     },
     {
-      label: "Русский 🇷🇺",
+      label: "🇷🇺 Русский",
       value: "ru"
     },
     {
-      label: "Українська 🇺🇦",
+      label: "🇺🇦 Українська",
       value: "ua"
     },
-    // {
-    //   label: "Français 🇫🇷",
-    //   value: "fr"
-    // },
     {
-      label: "中文 🇨🇳",
+      label: "🇨🇳 中文",
       value: "zh"
     },
     {
-      label: "Español 🇪🇸",
+      label: "🇪🇸 Español",
       value: "es"
     },
-    // {
-    //   label: "韓語 🇰🇷",
-    //   value: "ko"
-    // },
-    // {
-    //   label: "عرب 🇦🇪",
-    //   value: "ar"
-    // }
+    {
+      label: "🇰🇷 한국어",
+      value: "ko"
+    },
+    {
+      label: "🇦🇪 العربية ",
+      value: "ar"
+    },
+    {
+      label: "🇮🇩 Bahasa Indonesia",
+      value: "id"
+    },
+    {
+      label: "🇵🇭 Filipino",
+      value: "ph"
+    },
+    {
+      label: "🇳🇬 Yorùbá",
+      value: "yr"
+    },
+    {
+      label: "🇻🇳 Tiếng Việt",
+      value: "vn"
+    },
+    {
+      label: "🇮🇳 हिन्दी",
+      value: "hi"
+    }
   ];
 
   return (
@@ -61,12 +78,16 @@ export default ({ store }) => {
         inputIOS: {
           color: "#fff",
           fontSize: 17,
-          fontFamily: "Fontfabric-NexaRegular"
+          fontFamily: "Fontfabric-NexaRegular",
+          minWidth: width,
+          textAlign: align
         },
         inputAndroid: {
           color: "#fff",
           fontSize: 17,
-          fontFamily: "Fontfabric-NexaRegular"
+          fontFamily: "Fontfabric-NexaRegular",
+          minWidth: width,
+          textAlign: align
         }
       }}
     />

@@ -22,6 +22,9 @@ export default StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center"
   },
+  bgMain: {
+    position: 'absolute', zIndex:-1, top: -200, left: 0
+  },  
   colorBg: {
     backgroundColor: Images.colorDarkBlue
   },
@@ -866,7 +869,8 @@ export default StyleSheet.create({
   txtLocked: {
     color: "#fff",
     marginTop: 15,
-    fontFamily: "Nexa-Book"
+    fontFamily: "Nexa-Book",
+    textAlign: "center"
   },
 
   h1TextBuy: {
@@ -1941,7 +1945,7 @@ export default StyleSheet.create({
     alignItems: "center",
     width: "100%",
     // marginBottom: 200,
-    marginTop: 20,
+    // marginTop: 20,
   },
   marginBtnAndroid: {
     alignItems: "center",
@@ -2791,7 +2795,7 @@ export default StyleSheet.create({
     fontWeight: "500",
     color: "#fff",
     fontFamily: "Fontfabric-NexaRegular",
-    // lineHeight: 30
+    lineHeight: 30
   },
   titleHistory: {
     fontSize: 17,
@@ -4706,7 +4710,7 @@ export default StyleSheet.create({
   },
   mbListItem: {
     // paddingVertical: 10,
-    // height: 'auto'
+    height: 'auto'
   },
   lineMono: {
     borderBottomWidth: 1,
@@ -5145,7 +5149,7 @@ export default StyleSheet.create({
     width: "100%",
     borderColor: "#fff",
     marginTop: 20,
-    height: "50%",
+    height: "40%",
   },
   spinnerTextStyle: {
     color: "#FFF",
@@ -5406,15 +5410,16 @@ export default StyleSheet.create({
   },
   modalFp: {
     flex: 1,
-    marginTop: "90%",
-    backgroundColor: "#fff",
+    // marginTop: "90%",
+    // backgroundColor: "#fff",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     position: "absolute",
     left: 0,
     right: 0,
     bottom: 0,
-    height: hp("50%"),
+    // height: hp("50%"),
+    height: 'auto',
     justifyContent: "center",
     alignItems: "center",
   },
@@ -5428,7 +5433,7 @@ export default StyleSheet.create({
   imageFinger: {
     width: 150 / 2,
     height: 173 / 2,
-    marginTop: 40
+    // marginTop: 40
   },
   imageScan: {
     width: 320 / 5,
@@ -5439,7 +5444,8 @@ export default StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
     paddingTop: 20,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: "Fontfabric-NexaRegular",
+    color: "white"
   },
   introBackgroundFp: {
     backgroundColor: "#290C64",
@@ -5470,7 +5476,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    bottom: -30,
+    bottom: 0,
     // bottom: 0,
   },
   topView: {
@@ -5640,8 +5646,8 @@ export default StyleSheet.create({
     minHeight: '10%',
     maxHeight: 150,
     left: Platform.OS === "android" ? -9 : 1,
-    zIndex: 9999,
-    position: 'absolute'
+    // zIndex: 9999,
+    // position: 'absolute'
   },
   autocompleteListItemStyle: {
     fontSize: 15,
@@ -5734,6 +5740,12 @@ export default StyleSheet.create({
     flex: 1,
     // backgroundColor: "rgba(0, 0, 0, .6)"
   },
+  cameraContainer: {
+    marginHorizontal: 0, marginLeft: 0, marginStart: 0,
+    paddingHorizontal: 0, paddingLeft: 0, paddingStart: 0,
+    height: '115%',
+    padding: 0
+},
   focusedBorder1: {
     backgroundColor: "transparent",
     borderColor: "#fff",
@@ -5869,11 +5881,11 @@ export default StyleSheet.create({
     // paddingBottom: 5
   },
   demoTxt: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 5,
     // paddingBottom: Platform.OS === 'android' ? null : 20,
     alignSelf: "center",
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: "Fontfabric-NexaBold",
     lineHeight: 20
   },
@@ -5887,7 +5899,7 @@ export default StyleSheet.create({
     borderRadius: 0,
     backgroundColor: 'white',
     marginVertical: 30,
-	  zIndex: 1
+	  // zIndex: 8888
   },
   btnVelasCreate: {
     borderRadius: 0,
@@ -5950,4 +5962,16 @@ export default StyleSheet.create({
   leftBtnColor: {
     color: Images.colorGreen,
   },
+  viewNetInfo: {
+    backgroundColor: 'orange', zIndex: 9999, position: "absolute", 
+    // width: "100%",
+    paddingHorizontal: 10,
+    borderRadius: 10
+  },
+  textNetInfo: {
+    textAlign: "center", fontSize: 16, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+  },
+  textAuth: {
+    color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20
+  }
 });

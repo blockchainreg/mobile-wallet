@@ -1,4 +1,4 @@
-import { decorate, observable, action } from "mobx";
+import { decorate, observable, action, when } from "mobx";
 import BN from "bn.js";
 import { StakingAccountModel } from './staking-account-model.js';
 import { cachedCallWithRetries } from './utils';
@@ -10,6 +10,8 @@ class ValidatorModel {
   solanaValidator = null;
   stakingAccounts = [];
   totalStakers = null;
+  network = null;
+  apr$ = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -31,25 +33,23 @@ class ValidatorModel {
     }
     return myStake;
   }
+  
 
   get apr() {
-    let rewards = rewardsStore.getLatestRewardsOfVaildator(this.address);
-    if (!rewards) { //Loading
-      return null;
-    }
-    if (rewards.length === 0) {
-      return 0;
-    }
-    return rewards[0].apr;
-    // if (this.stakingAccounts.length === 0) {
-    //
-    // }
-    // if (this.stakingAccounts.find(acc => acc.latestReward === undefined)) {
-    //   return null;
-    // }
-    // const acc = this.stakingAccounts.find(acc => acc.latestReward !== null);
-    // if (!acc) return 0;
-    // return acc.latestReward.apr;
+  	return this.apr$;
+  }
+	
+  loadApr() {
+	rewardsStore.getLatestRewardsOfVaildator(this.address, (rewards) => {
+	  if (!rewards) {
+		this.apr$ = null;
+	  }
+	  if (rewards.length === 0) {
+		this.apr$ = 0;
+	  } else {
+		this.apr$ = rewards[0].apr;
+	  }
+	});
   }
 
   get commission() {
@@ -131,7 +131,14 @@ class ValidatorModel {
       if (acc.state !== 'activating' && acc.state !== 'active') {
         continue;
       }
-      total = total.add(acc.activeStake).add(acc.inactiveStake);
+      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+				const now = Date.now() / 1000;
+				if (unixTimestamp > now)
+					continue;
+			}
+	
+			total = total.add(acc.activeStake).add(acc.inactiveStake);
     }
     return total;
   }
@@ -197,6 +204,12 @@ class ValidatorModel {
       if (!acc.activeStake) {
         return null;
       }
+			if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+				const now = Date.now() / 1000;
+				if (unixTimestamp > now)
+					continue;
+			}
       total = total.add(acc.activeStake);
     }
     return total;
@@ -214,8 +227,15 @@ class ValidatorModel {
       if (!acc.inactiveStake) {
         return null;
       }
+			if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+				const now = Date.now() / 1000;
+				if (unixTimestamp > now)
+					continue;					
+			}
       totalInactive = totalInactive.add(acc.inactiveStake);
     }
+    
     return totalInactive;
   }
 
@@ -225,7 +245,7 @@ class ValidatorModel {
     );
   }
 
-  constructor(solanaValidator, isDelinquent, connection) {
+  constructor(solanaValidator, isDelinquent, connection, network) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');
     }
@@ -237,16 +257,21 @@ class ValidatorModel {
     }
     this.connection = connection;
     this.solanaValidator = solanaValidator;
+    this.network = network;
     decorate(this, {
       solanaValidator: observable,
       status: observable,
-      totalStakers: observable
+      totalStakers: observable,
+	  apr$: observable	
     });
+    this.loadApr();
     this.loadAccountStats();
+    
   }
 
   async loadAccountStats() {
     const nativeAccounts = await cachedCallWithRetries(
+      this.network,
       ['getParsedProgramAccounts', this.connection, solanaWeb3.StakeProgram.programId.toString()],
       () => this.connection.getParsedProgramAccounts(
           solanaWeb3.StakeProgram.programId

@@ -29,6 +29,7 @@ import BackButton from "../components/BackButton.js";
 import { confirm } from "../wallet/pages/confirmation.js";
 import Background from "../components/Background.js";
 import {shuffle} from "../utils/array.js";
+import { Generate } from "../svg/generate.js";
 
 
 // const generateMnemonic = () => {
@@ -75,14 +76,17 @@ export default ({ store }) => {
   const back = changePage("wallets");
 
   return (
-    <View style={styles.viewFlex}>
+    <Container style={styles.viewFlex}>
       <Background fullscreen={true}/>
       <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
+      <Content style={{flex: 1 }}>
       <View style={styles.containerGenerated}>
-        <Image source={Images.generate} style={styles.setupImg} />
-        <ScrollView style={styles.scrollViewAndroid}>
+
+        {/* <Image source={Images.generate} style={styles.setupImg} /> */}
+        <Generate height={271 / 4} width={320 / 4} marginBottom={"7%"}/>
+        <View style={styles.scrollViewAndroid}>
         {seedPhrase(store)}
-        <View style={styles.marginBtn}>
+        <View style={[styles.marginBtn, {marginBottom: 20}]}>
           <View style={styles.containerBtn}>
             <TouchableOpacity onPress={back} style={styles.btnCancel}>
               <Text style={styles.txtBtnBack}>{lang.back}</Text>
@@ -95,8 +99,9 @@ export default ({ store }) => {
             </TouchableOpacity>
           </View>
         </View>
-        </ScrollView>
-      </View>
-    </View>
+        </View>
+        </View>
+      </Content>
+    </Container>
   );
 };

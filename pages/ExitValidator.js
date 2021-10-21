@@ -7,7 +7,7 @@ import ButtonBlock from "../components/ButtonBlock.js";
 import InputComponent from "../components/InputComponent";
 import Notice from "../components/Notice";
 import Header from "../components/Header";
-import { formatStakeAmount, formatAmount } from "../utils/format-value";
+import { formatStakeAmount, formatAmount, formatValue } from "../utils/format-value";
 import spin from "../utils/spin.js";
 
 export default ({ store, web3t, props }) => {
@@ -78,7 +78,7 @@ export default ({ store, web3t, props }) => {
           <InputComponent
             title={lang.enterAmount || "Enter Amount"}
             sub_text={lang.yourTotalStake || "Your Total Stake"}
-            total_stake={TOTAL_STAKE}
+            total_stake={formatValue(TOTAL_STAKE)}
             token="vlx"
             btnTxt={lang.useMax || "Use max"}
             value={store.amountWithdraw || ""}
@@ -95,7 +95,7 @@ export default ({ store, web3t, props }) => {
             />
           }
           {/* On which withdrawal of funds to set a notification!!! */}
-          {details.totalWithdrawRequested.isZero() ? null : (
+          {!details.totalWithdrawRequested || details.totalWithdrawRequested.isZero() ? null : (
             <Notice
               text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
               icon="warning"

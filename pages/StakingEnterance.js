@@ -21,7 +21,7 @@ export default ({ store, web3t, props }) => {
 
   return (
     <Container>
-      <Header title={lang.stakingEnterance || "Staking Enterance"}/>
+      <Header title={lang.stakingEnterance || "Staking Entrance"}/>
       <Content style={style.contentBg}>
         <View style={style.container}>
           <StakingEnteranceIcon />

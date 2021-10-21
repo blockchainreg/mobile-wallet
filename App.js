@@ -1,15 +1,19 @@
-import Bugsnag from '@bugsnag/expo';
-Bugsnag.start();
+// import Bugsnag from '@bugsnag/expo'
+// Bugsnag.start();
+
 
 import * as Font from "expo-font";
 import "./global.js";
 import prngSync from "./prng-sync.js";
 import localStoragePromise from "./localStorage.js";
 import * as React from "react";
-import { View, Image, Text, ImageBackground } from "react-native";
+import {View, Image, Text, ImageBackground, TextInput} from "react-native";
+import { Input } from "native-base";
 import styles from "./Styles.js";
 import Images from "./Images.js";
-const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React)
+import {VelasLogo1} from "./svg/velas-logo1"
+import { Bg } from "./svg/bg.js";
+// const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
   state = {
@@ -30,13 +34,28 @@ class App extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+	  this.setState({ AppReady: null });
+  }
+
   componentDidMount() {
-    // TODO: Comment why this timeout is needed or remove
-    // setTimeout(() => {
-      Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
-        this.setState({ AppReady: require("./App-ready.js").default });
-      });
-    // }, 1500);
+    Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
+      this.setState({ AppReady: require("./App-ready.js").default });
+    });
+	  if (Text.defaultProps == null) {
+		  Text.defaultProps = {};
+	  }
+	  Text.defaultProps.allowFontScaling = false;
+
+	  if (TextInput.defaultProps == null) {
+		  TextInput.defaultProps = {};
+	  }
+	  TextInput.defaultProps.allowFontScaling = false;
+
+	  if (Input.defaultProps == null) {
+		  Input.defaultProps = {};
+	  }
+	  Input.defaultProps.allowFontScaling = false;
   }
 
   render() {
@@ -44,11 +63,10 @@ class App extends React.Component {
     if (!AppReady) {
       return (
         <View style={[styles.viewFlex, {backgroundColor: '#05061f'}]}>
-        <ImageBackground source={Images.bg} style={styles.image}>
-
-          {/* <Background fullscreen={true}/> */}
-            <Image source={Images.logo} style={styles.styleLogoHead} />
-            </ImageBackground>
+        <View style={styles.image}>
+            <VelasLogo1 style={styles.styleLogoHead} width="138" height="120" viewBox="0 0 138 120"/>
+        <Bg style={styles.bgMain}/>
+        </View>
         </View>
       );
     }
@@ -61,9 +79,9 @@ class App extends React.Component {
 }
 
 export default () => (
-  <ErrorBoundary FallbackComponent={ErrorView}>
+  // <ErrorBoundary FallbackComponent={ErrorView}>
     <App />
-  </ErrorBoundary>
+  // </ErrorBoundary>
 );
 
 class ErrorView extends React.Component {

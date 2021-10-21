@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, View, Alert } from "react-native";
+import { StyleSheet, Image, View, Alert, Platform } from "react-native";
 import { Text, Input, Item, Label, Button } from "native-base";
 import Images from "../Images";
 import { Badge } from "react-native-elements";
 import InputAmount from "./InputAmount";
+import { formatValue } from "../utils/format-value";
 
 export default ({isWithdraw, ...props}) => {
-  
+  const value = isWithdraw ? props.total_stake : props.available_balance;
   return (
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
@@ -18,7 +19,7 @@ export default ({isWithdraw, ...props}) => {
           onChangeText={props.onChange}
           style={style.input}
           returnKeyType="done"
-          selectionColor={"#fff"}
+          selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
           keyboardAppearance="dark"
           keyboardType="numeric"
           maxLength={14}
@@ -32,7 +33,7 @@ export default ({isWithdraw, ...props}) => {
 
       <View style={style.containerBottomInput}>
           <Text style={style.labelTextBottom}>
-            {props.sub_text + ":"} {isWithdraw ? props.total_stake : props.available_balance}{" "}<Text style={style.labelTokenStyle}>{props.token}</Text>
+            {props.sub_text + ":"} {value}{" "}<Text style={style.labelTokenStyle}>{props.token}</Text>
           </Text>
       </View>
     </>

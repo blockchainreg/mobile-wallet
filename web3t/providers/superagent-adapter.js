@@ -77,7 +77,7 @@
   resetRequest = function(cb){
     return function(){
       if (cb.timer == null) {
-        return ;
+        return;
       }
       clearTimer(cb);
       return cb("Deadline was reached");

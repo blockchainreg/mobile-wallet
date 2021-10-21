@@ -12,7 +12,7 @@ export default ({ store }) => {
 
   const currentEpoch = stakingStore.currentEpoch;
   const epochTime = stakingStore.epochTime;
-  
+  debugger;
   const EpochValue = () => {
     const tooltipRef = useRef(null);
     const EpochDetail = () => {

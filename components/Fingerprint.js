@@ -1,24 +1,13 @@
 import * as React from "react";
-import {
-  View,
-  Modal,
-  Image,
-  Platform,
-  ImageBackground,
-  Text
-} from "react-native";
-import {
-  Button,
-} from "native-base";
+import { Modal, Image, Platform, Alert } from "react-native";
+import { Text, Button, View, Icon, CardItem, Body } from "native-base";
 import * as LocalAuthentication from "expo-local-authentication";
-import GradientButton from "react-native-gradient-buttons";
-// import GradientButton from "../components/GradientButton.js";
 import Images from "../Images.js";
 import styles from "../Styles.js";
 import Background from "./Background.js";
-import { LinearGradient } from "expo-linear-gradient";
-import getLang from '../wallet/get-lang.js';
-
+import Header from "../components/Header.js";
+import * as SecureStore from "expo-secure-store";
+import { FingerPrint } from "../svg/fingerPrint.js";
 
 export default class Fingerprint extends React.Component {
   constructor(props) {
@@ -29,7 +18,7 @@ export default class Fingerprint extends React.Component {
     authenticated: false,
     modalVisible: Platform.OS === "android",
     failedCount: 0,
-    error: null
+    error: null,
   };
 
   setModalVisible(visible) {
@@ -65,7 +54,7 @@ export default class Fingerprint extends React.Component {
         this.setState(
           {
             failedCount: this.state.failedCount + 1,
-            error: results.error
+            error: results.error,
           },
           this.scanFingerPrint
         );
@@ -74,71 +63,98 @@ export default class Fingerprint extends React.Component {
       console.log(e);
     }
   };
+  onPressDisable = () => {
+    SecureStore.getItemAsync("localAuthToken").then(pin => {
+      if (pin) {
+        SecureStore.deleteItemAsync("localAuthToken").then(() => {
+          this.props.onCancel && this.props.onCancel();
+          Alert.alert(
+            Platform.OS === 'ios' ? "Touch ID / Face ID" : "Fingerprint ID",
+            "Disabled successfully",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
+        });
+      } else return null;
+    })
+  }
   
-
   render() {
     return (
-      <View style={styles.viewFlexFp}>
-        <Background fullscreen={true}/>
-        {this.state.authenticated && (
-          <Text style={styles.textFp}>Authentication Successful! 🎉</Text>
-        )}
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={true}
-          onShow={this.scanFingerPrint}
-        >
-          <View style={styles.modalFp}>
-            <LinearGradient
-              colors={[Images.velasColor4, Images.velasColor4]}
-              style={styles.linearGradientBg}
-            >
-              <View style={styles.containerScreen}>
-                <Text style={[styles.titleBlack , {paddingVertical: 20}]}>
-                  {/* Authenticate with fingerprint */}
-                  Please Authenticate!
-                </Text>
-                <Image
-                  style={styles.imageFinger}
-                  source={Images.fingerPrint}
-                />
-                {this.state.failedCount > 0 && (
-                <Text style={{ color: "white", fontSize: 14 }}>
-                  Try again
-                </Text>
-              )}
+      <View style={styles.viewFlex}>
+        <View style={{ display: "none" }}>
+          <Header
+            onBackHandlerOnly={() => {
+              LocalAuthentication.cancelAuthenticate();
+              this.props.onCancel && this.props.onCancel();
+              this.setModalVisible(!this.state.modalVisible);
+            }}
+          />
+        </View>
+        <View
+          style={{ justifyContent: "center", alignItems: "center", flex: 1  }}>
+          {/* <Image style={styles.imageFinger} source={Images.fingerPrint} /> */}
+          <FingerPrint  width={150 / 2} height={173 / 2}/>
+          <View style={styles.card1}>
+            <View style={styles.titleInput}>
+              <Text style={styles.textH1Seed}>Authenticate!</Text>
+            </View>
+            <CardItem style={styles.cardItemSeed}>
+              <Body>
                 <View style={styles.marginBtn}>
-                  {/* <GradientButton
-                    style={styles.gradientBtnPh}
-                    text={"Cancel"}
-                    textStyle={{ fontSize: 14, color: Images.color1 }}
-                    gradientBegin="#fff"
-                    gradientEnd="#fff"
-                    gradientDirection="diagonal"
-                    height={45}
-                    width="100%"
-                    radius={0}
-                    onPressAction={async () => {
-                      LocalAuthentication.cancelAuthenticate();
-                      this.props.onCancel && this.props.onCancel();
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}
-                  /> */}
-                  <Button block style={styles.btnVelasActive} 
+                  {this.props.onSuccess && (
+                  <>
+                  <Button
+                    block
+                    style={styles.btnVelasCreate}
+                    onPress={this.scanFingerPrint}
+                  >
+                    <Text style={[styles.textBtn, { color: "#fff" }]}>
+                      Enable
+                    </Text>
+                  </Button>
+                  <View style={{ padding: 10 }}></View>
+                  </>
+                  )}
+
+                  {this.props.onDisable && (
+                    <>
+                    <Button
+                      block
+                      style={[styles.btnVelasCreate, {backgroundColor: "orange"}]}
+                      onPress={this.onPressDisable}
+                    >
+                      <Text style={[styles.textBtn, { color: "#fff" }]}>
+                      Disable
+                      </Text>
+                    </Button>
+                    <View style={{ padding: 10 }}></View>
+                    </>
+                  )}
+
+                  <Button
+                    block
+                    style={styles.btnVelasRestore}
                     onPress={() => {
                       LocalAuthentication.cancelAuthenticate();
                       this.props.onCancel && this.props.onCancel();
                       this.setModalVisible(!this.state.modalVisible);
-                    }}>
-                    <Text style={styles.textBtn}>{"Cancel"}</Text>
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Cancel</Text>
                   </Button>
                 </View>
-              </View>
-            </LinearGradient>
+              </Body>
+            </CardItem>
+            {this.state.failedCount > 0 && (
+            <Text style={[styles.textH1Seed, { color: "red", fontSize: 16 , textAlign: "center"}]}>
+              Try again
+            </Text>
+          )}
           </View>
-        </Modal>
+        </View>
       </View>
     );
   }

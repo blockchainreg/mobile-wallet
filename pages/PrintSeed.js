@@ -9,12 +9,15 @@ import {
   View,
   CardItem,
   Body,
+  Container,
+  Content,
 } from "native-base";
 import styles from "../Styles.js";
 import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/Background.js";
 import Header from '../components/Header'
+import { Generate } from "../svg/generate.js";
 
 export default ({ store }) => {
   const changePage = (tab) => () => {
@@ -40,11 +43,13 @@ export default ({ store }) => {
   const back = changePage("generatedseed");
 
   return (
-    <View style={styles.viewFlex}>
+    <Container style={styles.viewFlex}>
       <Background fullscreen={true}/>
       <Header onBack={back}/>
-      <View style={styles.containerFlexStart}>
-        <Image source={Images.generate} style={styles.setupImg} />
+      <Content style={{flex: 1 }}>
+        <View style={{alignItems: "center",}}>
+        {/* <Image source={Images.generate} style={styles.setupImg} /> */}
+        <Generate height={271 / 4} width={320 / 4} marginBottom={"7%"}/>
         <View style={styles.stylePrint}>
           <CardItem style={styles.cardItemSeed}>
             <Body>
@@ -66,7 +71,8 @@ export default ({ store }) => {
             </Body>
           </CardItem>
         </View>
-      </View>
-    </View>
+        </View>
+      </Content>
+    </Container>
   );
 };

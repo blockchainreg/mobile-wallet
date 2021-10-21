@@ -8,11 +8,14 @@
   ru = require('./langs/ru.js');
   ua = require('./langs/ua.js');
   zh = require('./langs/zh.js');
-  ko = require('./langs/ko.js');
-  id = require('./langs/id.js');
-  my = require('./langs/my.js');
-  th = require('./langs/th.js');
   es = require('./langs/es.js');
+  ko = require('./langs/ko.js');
+  ar = require('./langs/ar.js');
+  id = require('./langs/id.js');
+  ph = require('./langs/ph.js');
+  yr = require('./langs/yr.js');
+  vn = require('./langs/vn.js');
+  hi = require('./langs/hi.js');
   getDevice = require('./get-device.js');
   savedSeed = saved();
   createSend = function(){
@@ -24,7 +27,7 @@
       value: '0',
       feeType: 'auto',
       txType: 'regular',
-      amountSend: '0',
+      amountSend: '',
       amountCharged: '0',
       amountChargedUsd: '0',
       amountSendUsd: '0',
@@ -50,11 +53,14 @@
       ru: ru,
       ua: ua,
       zh: zh,
+      es: es,
       ko: ko,
+      ar: ar,
       id: id,
-      my: my,
-      th: th,
-      es: es
+      ph: ph,
+      yr: yr,
+      vn: vn,
+      hi: hi
     },
     registry: [],
     terms: "Loading...",

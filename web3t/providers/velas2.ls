@@ -73,7 +73,6 @@ try-parse = (data, cb)->
     console.log data if typeof! data?text isnt \String
     return cb "expected text" if typeof! data?text isnt \String
     try
-        сonsole.log \try-parse, data.text, JSON.parse
         data.body = JSON.parse data.text
         cb null, data
     catch err
@@ -144,6 +143,10 @@ round = (num)->
     Math.round +num
 to-hex = ->
     new BN(it)
+    
+up = (str)->
+    (str ? "").to-upper-case! 
+    
 transform-tx = (network, description, t)-->
     { url } = network.api
     dec = get-dec network
@@ -160,15 +163,16 @@ transform-tx = (network, description, t)-->
         | t.gas-used + "".length is 0 => "0" 
         | _ => "0"          
     gas-price = 
-        | t.gas-used? => t.gas-used
-        | t.gas-used + "".length is 0 => "0" 
+        | t.gas-price? => t.gas-price
+        | t.gas-price + "".length is 0 => "0"
         | _ => "0"
-    t.gas-price ? "0"
-    fee = gas-used `times` (gas-price + "") `div` dec
+    fee = (gas-used `times` (gas-price + "")) `div` dec
     recipient-type = if (t.input ? "").length > 3 then \contract else \regular
     tx-type =
         | t.to is "V8sA8Q5jR44E4q6S59eUhhSJQiRBBFdZA8" or t.to is "0x56454c41532d434841494e000000000053574150"
             => "Swap EVM to Native"
+        | up(t.from) is up("V8sA8Q5jR44E4q6S59eUhhSJQiRBBFdZA8") or up(t.from) is up("0x56454c41532d434841494e000000000053574150")
+            => "Native to EVM Swap"     
         | _ => null
     res = { network, tx, amount, fee, time, url, t.from, t.to, recipient-type, description, tx-type }
     res    
@@ -315,7 +319,6 @@ export create-transaction = ({ network, account, recipient, amount, amount-fee, 
         data: data || "0x"
         chainId: chainId     
     }
-    console.log "tx before parse" tx-obj    
     tx = new Tx tx-obj, { common }
     tx.sign private-key
     rawtx = \0x + tx.serialize!.to-string \hex
@@ -358,6 +361,17 @@ export get-balance = ({ network, address} , cb)->
     dec = get-dec network
     balance = number `div` dec
     cb null, balance
+    
+export get-market-history-prices = (config, cb)->
+    { network, coin } = config  
+    {market} = coin    
+    err, resp <- get market .timeout { deadline } .end
+    return cb "cannot execute query - err #{err.message ? err }" if err?
+    err, result <- json-parse resp.text
+    return cb err if err?
+    cb null, result   
+        
+    
 #console.log \test
 #to-eth-address "VADyNxJR9PjWrQzJVmoaKxqaS8Mk", console.log
 #console.log to-velas-address Buffer.from("0b6a35fafb76e0786db539633652a8553ac28d67", 'hex')

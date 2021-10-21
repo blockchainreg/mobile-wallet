@@ -19232,7 +19232,7 @@ var solanaWeb3 = (function (exports) {
 
     async getConfirmedBlocksWithLimit(slot, limit) {
       const unsafeRes = await this._rpcRequest('getConfirmedBlocksWithLimit', [slot, limit]);
-      console.log("unsafeRes", unsafeRes);
+      //console.log("unsafeRes", unsafeRes);
       //const res = GetConfirmedBlockRpcResult(unsafeRes);
       const res = unsafeRes;
 

@@ -32,12 +32,16 @@ import {
 } from "react-native-responsive-screen";
 import {filter, map, objToPairs, pairsToObj} from "prelude-ls";
 import tokenNetworks from "../wallet/swapping/networks";
+import { WithdrawImage } from "../svg/withdraw-image.js";
+import normalize from 'react-native-normalize';
+import { SwapImage } from "../svg/swap-image.js";
+import { ScanImage } from "../svg/scanImage.js";
 
 export default ({ store, web3t }) => {
 	const lang = getLang(store);
 	const wallets = walletsFuncs(store, web3t).wallets;
 	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
-	let hasSwap = wallet.network.networks != null && Object.keys(wallet.network.networks).length > 0
+	let hasSwap = wallet.network.networks != null && Object.keys(wallet.network.networks).length > 0 && (["usdt_erc20", "eth_legacy"].indexOf(wallet.coin.token) === -1)
 	/*******  Listeners  ********/
 	const sendLocal = () => {
 		store.current.send.isSwap = false;
@@ -46,7 +50,7 @@ export default ({ store, web3t }) => {
 		if(wallet.balance == "..") return;
 		store.current.send["to"] = "";
 		store.current.send.data = null;
-		store.current.send.amountSend = '0';
+		store.current.send.amountSend = '';
 		store.current.send.amountSendUsd = '0';
 		store.current.send.amountSendFee = '0';
 		store.current.send.amountSendFeeUsd = '0';
@@ -72,7 +76,7 @@ export default ({ store, web3t }) => {
 			return null;
 		}
 		store.current.send["to"] = "";
-		store.current.send.amountSend = '0';
+		store.current.send.amountSend = '';
 		store.current.send.amountSendUsd = '0';
 		store.current.send.amountSendFee = '0';
 		store.current.send.amountSendFeeUsd = '0';
@@ -237,10 +241,11 @@ export default ({ store, web3t }) => {
                       onPress={sendLocal}
                       style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}
                     >
-                      <Image
+                      {/* <Image
                         source={Images.withdrawImage}
                         style={styles.sizeIconBtn}
-                      />
+                      /> */}
+                      <WithdrawImage style={styles.sizeIconBtn}  width={normalize(64 / 2.5)} height={normalize(36 /2.5)} left={normalize(1)}/>
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.send}</Text>
                   </View>
@@ -250,10 +255,11 @@ export default ({ store, web3t }) => {
                       <TouchableOpacity
                         onPress={swapClick}
                         style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}>
-                        <Image
+                        {/* <Image
                           source={Images.swapImage}
                           style={styles.sizeIconBtnSwap}
-                        />
+                        /> */}
+                        <SwapImage width={normalize(64 / 2.5)} height={normalize(25)} left={normalize(1)}/>
                       </TouchableOpacity>
                       <Text style={styles.textTouchable}>{lang.swapBtn || "Swap"}</Text>
                     </View>
@@ -264,10 +270,11 @@ export default ({ store, web3t }) => {
                       onPress={scanQRSend}
                       style={styles.touchables}
                     >
-                      <Image
+                      {/* <Image
                         source={Images.scanImage}
                         style={styles.sizeIconScanBtn}
-                      />
+                      /> */}
+                      <ScanImage  width={normalize(65 / 2.5)} height={normalize(65 / 2.5)} left={0} bottom={normalize(1)}/>
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.scan}</Text>
                   </View>
@@ -277,10 +284,12 @@ export default ({ store, web3t }) => {
                       onPress={changePage("invoice")}
                       style={{ ...styles.touchables, backgroundColor: Images.colorGreen }}
                     >
-                      <Image
+                      {/* <Image
                         source={Images.withdrawImage}
                         style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]}
-                      />
+                      /> */}
+                      <WithdrawImage style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]} width={normalize(64 / 2.5)} height={normalize(36 /2.5)} left={normalize(1)}/>
+
                     </TouchableOpacity>
                     <Text style={styles.textTouchable}>{lang.receive}</Text>
                   </View>

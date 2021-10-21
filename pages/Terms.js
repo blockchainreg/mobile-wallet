@@ -1,12 +1,6 @@
 import React from "react";
-import { Image, ScrollView, Platform } from "react-native";
-import {
-  Text,
-  Button,
-  View,
-  CardItem,
-  Body,
-} from "native-base";
+import { Image, ScrollView, Platform, StyleSheet } from "react-native";
+import { Text, Button, View, CardItem, Body, Container } from "native-base";
 import { ifIphoneX } from "react-native-iphone-x-helper";
 import styles from "../Styles.js";
 import { set } from "../wallet/seed.js";
@@ -15,8 +9,9 @@ import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/Background.js";
 import Spinner from "../utils/spinner.js";
-import setupWallet from '../setupWallet.js';
-import Header from '../components/Header'
+import setupWallet from "../setupWallet.js";
+import Header from "../components/Header";
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -28,9 +23,11 @@ async function loadTerms(store) {
 
 async function loadTermsRecusion(store) {
   try {
-    const response = await fetch('https://raw.githubusercontent.com/velas/mobile-wallet/master/TERMS.md');
+    const response = await fetch(
+      "https://raw.githubusercontent.com/velas/mobile-wallet/master/TERMS.md"
+    );
     store.current.termsMarkdown = await response.text();
-  }catch(e) {
+  } catch (e) {
     console.error(e);
     setTimeout(loadTerms.bind(this, store), 1000);
   }
@@ -55,29 +52,34 @@ const buttonAccept = (store, web3t) => {
 };
 const markdownStyle = {
   ...ifIphoneX(
-    { root: {
-      color: "#FFFFFF",
-      fontFamily: "Fontfabric-NexaRegular",
-      lineHeight: 20,
-    }},
+    {
+      root: {
+        color: "#FFFFFF",
+        fontFamily: "Fontfabric-NexaRegular",
+        lineHeight: 20,
+      },
+    },
     {
       ...Platform.select({
-        ios: { root: {
-          color: "#FFFFFF",
-          fontFamily: "Fontfabric-NexaRegular",
-          lineHeight: 20,
-          fontSize: 10
-        } },
-        android: { root: {
-          color: "#FFFFFF",
-          fontFamily: "Fontfabric-NexaRegular",
-          lineHeight: 20,
-          fontSize: 10
-        } },
+        ios: {
+          root: {
+            color: "#FFFFFF",
+            fontFamily: "Fontfabric-NexaRegular",
+            lineHeight: 20,
+            fontSize: 10,
+          },
+        },
+        android: {
+          root: {
+            color: "#FFFFFF",
+            fontFamily: "Fontfabric-NexaRegular",
+            lineHeight: 20,
+            fontSize: 10,
+          },
+        },
       }),
     }
   ),
-  
 };
 
 export default ({ store, web3t }) => {
@@ -88,7 +90,7 @@ export default ({ store, web3t }) => {
     return null;
   }
   const lang = getLang(store);
-  const terms = store => {
+  const terms = (store) => {
     return (
       <View style={{ alignItems: "flex-start" }}>
         <Markdown style={markdownStyle}>
@@ -99,31 +101,57 @@ export default ({ store, web3t }) => {
   };
   return (
     <View style={styles.viewFlex}>
-      <Background fullscreen={true}/>
-        <Header transparent/>
-        <View style={styles.containerFlexStart}>
-          <Image source={Images.logo} style={styles.styleLogo} />
+      <Header transparent />
+      <View style={style.inner}>
+        <View style={{ alignSelf: "center" }}>
+          {/* <Image
+            source={Images.logo}
+            style={[styles.styleLogo, { alignSelf: "center" }]}
+          /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
           <Text style={styles.textH1Seed}>{lang.termsOfUse}</Text>
-          <View style={styles.card1}>
-            <CardItem style={styles.cardItemSeed}>
-              <Body>
-                <View style={styles.bodyTerms}>
-                  <ScrollView style={{ padding: 10 }}>
-                    {terms(store)}
-                  </ScrollView>
-                </View>
-
-                <Text style={{ fontSize: 14, color: "#fff", marginTop: 15, fontFamily: "Fontfabric-NexaRegular" }}>
-                  {lang.terms}
-                </Text>
-
-                <View style={[styles.marginBtn, { marginBottom: -40 }]}>
-                  {buttonAccept(store, web3t)}
-                </View>
-              </Body>
-            </CardItem>
-          </View>
         </View>
+
+        <View style={style.paddingBlock}>
+          <View style={style.bodyTerms}>
+            <ScrollView style={{ padding: 10 }}>{terms(store)}</ScrollView>
+          </View>
+
+          <Text
+            style={{
+              fontSize: 14,
+              color: "#fff",
+              marginTop: 15,
+              fontFamily: "Fontfabric-NexaRegular",
+            }}
+          >
+            {lang.terms}
+          </Text>
+
+          {buttonAccept(store, web3t)}
+        </View>
+      </View>
     </View>
   );
 };
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inner: {
+    flex: 1,
+    justifyContent: "flex-start",
+  },
+  paddingBlock: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    marginTop: 20,
+  },
+  bodyTerms: {
+    borderWidth: 1,
+    borderRadius: 0,
+    width: "100%",
+    borderColor: "#fff",
+    height: "40%",
+  },
+});

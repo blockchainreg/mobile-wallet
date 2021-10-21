@@ -3,6 +3,7 @@ import Spinner from "../utils/spinner";
 import {Transaction} from "../models/Transaction";
 import bs58 from "bs58";
 import swapNativeToEvm from "./Native-swap";
+import { formatValue } from "../utils/format-value";
 
 (function(){
 	var toJS, Alert, ref$, times, minus, div, createTransaction, pushTx, isValidAddress, changeAmount, calcCryptoFromEur, calcCryptoFromUsd, notifyFormResult, getNameMask, resolveAddress, window, navigate, close, round, round5, round5edit, topup, getPrimaryInfo, createPendingTx, rebuildHistory, map, getAddressLink, getAddressTitle, web3, calcFee, confirm, getLang, applyTransactions;
@@ -143,10 +144,18 @@ import swapNativeToEvm from "./Native-swap";
 			}
 			/**
 			 * Swap into native */
-			if (chosenNetwork.id === 'native') {
+			if (chosenNetwork.id === 'vlx_native') {
 				$recipient = "";
 				try {
-					$recipient = bs58.decode(send.to);
+					var recipient = (function(){
+						switch (false) {
+							case !send.to.startsWith('V'):
+								return toEthAddress(send.to);
+							default:
+								return send.to;
+						}
+					}());
+					$recipient = bs58.decode(recipient);
 					hex = $recipient.toString('hex');
 				} catch (e$) {
 					err = e$;
@@ -204,29 +213,36 @@ import swapNativeToEvm from "./Native-swap";
 				
 				/* Important cover sending tx in setImmediate to avoid "send freezing" screen (for solana derivatives tokens). */
 				setImmediate(() => {
-					let confirmText = "Are you sure to send " + transaction.amount + " " + currency + " to " + transaction.recipient;
+					const formattedAmount = formatValue(transaction.amount);
+					let confirmText = "Are you sure to send " + formattedAmount + " " + currency + " to " + transaction.recipient;
 					if(store.current.send.isSwap === true){
-						confirmText = "Are you sure to swap " + transaction.amount + " " + currency + " to " + store.current.send.to;
+						confirmText = "Are you sure to swap " + formattedAmount + " " + currency + " to " + store.current.send.to;
 					}
 					return confirm(store, confirmText, function (agree) {
 						if (!agree) {
 							store.current.creatingTransaction = false;
 							return cb("You are not agree");
 						}
-						var txSpinner = new Spinner(store, "Sending funds", {
-							displayDescription: true,
-						});
+						var txSpinner = null;
+						setTimeout(() => {
+							txSpinner = new Spinner(store, "Sending funds", {
+								displayDescription: true,
+							});
+						}, 1);
 						return pushTx((import$({
 							token: transaction.coin.token,
 							txType: transaction.txType,
 							network: transaction.network
 						}, data)), function (err, tx) {
 							store.current.creatingTransaction = false;
-							txSpinner.finish();
-							if (err != null) {
-								return cb(err);
-							}
-							return cb(err, tx);
+							setTimeout(() => {
+								txSpinner.finish();
+								if (err != null) {
+									return cb(err);
+								}
+								return cb(err, tx);	
+							}, 100);
+							// txSpinner.finish();
 							
 							/* Remove creating pending tx in order to avoid unnecessary empty tx if parsing is bad */
 							/* Only actual txs would be rendering to user via tokens providers */
@@ -316,8 +332,8 @@ import swapNativeToEvm from "./Native-swap";
 					store.current.transaction = {
 						hash: data
 					};
-					store.current.send.amountSend = 0;
-					store.current.send.amountSendUsd = 0;
+					store.current.send.amountSend = "";
+					store.current.send.amountSendUsd = "0";
 					navigate(store, web3t, 'sent');
 					return web3t.refresh(function(){});
 				});

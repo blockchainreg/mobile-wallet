@@ -64,7 +64,7 @@ export default ({ store, web3t, props }) => {
         <View style={style.container}>
           <Text style={style.title}>{lang.titleItemsStake || "These actions will be made"}</Text>
           {/* {!details.myStake.isZero() ? ( */}
-          {swapAmount.isZero() ? (
+          {!swapAmount || swapAmount.isZero() ? (
             <View style={style.steps}>
             <StepItem
               index="1"
@@ -82,7 +82,7 @@ export default ({ store, web3t, props }) => {
               <StepItem
                 index="1"
                 // text={lang.stepItem1 || "Convert 1,000,000 VLX to VLX Native"}
-                text={`Convert ${formatStakeAmount(swapAmount)} VLX to VLX Native`}
+                text={`Convert ${formatStakeAmount(swapAmount)} VLX Legacy to VLX Native`}
                 address={stakingStore.publicKey58}
               />
               <StepItem

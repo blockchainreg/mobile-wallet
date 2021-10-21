@@ -38,8 +38,10 @@ class StakingStore {
   slotsInEpoch = null;
   epochTime = null;
   // currentTime = null;
+  network = null;
+  evmAPI = "";
 
-  constructor(API_HOST, secretKey, publicKey, evmAddress, evmPrivateKey) {
+  constructor(API_HOST, evmAPI,  secretKey, publicKey, evmAddress, evmPrivateKey, network) {
     if (typeof secretKey === 'string') {
       secretKey = bs58.decode(secretKey);
     }
@@ -47,13 +49,15 @@ class StakingStore {
     this.publicKeyBuffer = Buffer.from(bs58.decode(publicKey));
     this.publicKey58 = publicKey;
     this.publicKey = new solanaWeb3.PublicKey(publicKey);
-    this.connection = new solanaWeb3.Connection(API_HOST, 'singleGossip');
+    this.connection = new solanaWeb3.Connection(evmAPI, 'singleGossip');
     this.evmAddress = evmAddress;
     this.evmPrivateKey = evmPrivateKey;
-
-    this.web3 = new Web3(new Web3.providers.HttpProvider('https://explorer.velas.com/rpc'));
-    rewardsStore.setConnection(this.connection);
+    this.network = network;
+    this.evmAPI = evmAPI;
+    this.web3 = new Web3(new Web3.providers.HttpProvider(evmAPI));
+    rewardsStore.setConnection(this.connection, network);
     decorate(this, {
+	  connection: observable,
       validators: observable,
       vlxEvmBalance: observable,
       vlxNativeBalance: observable,
@@ -66,9 +70,12 @@ class StakingStore {
       slotsInEpoch: observable,
       slotIndex: observable,
     });
-    this.startRefresh = action(this.startRefresh);
-    this.endRefresh = action(this.endRefresh);
-    this.init();
+     rewardsStore.loadLatestRewards(() => {
+	  this.startRefresh = action(this.startRefresh);
+	  this.endRefresh = action(this.endRefresh);
+	  this.init();
+    });
+    
   }
 
   async init() {
@@ -79,11 +86,11 @@ class StakingStore {
   async reloadWithRetry() {
     this.isRefreshing = true;
     invalidateCache();
-    await callWithRetries(
-      () => this.reload()
-    );
-    if (this.validators.length > 0) {
-      await when(() => this.validators && this.validators.length && this.validators[0].apr !== null);
+    // await callWithRetries(
+      this.reload();
+    // );
+    //if (this.validators.length > 0) {
+      await when(() => this.validators && this.validators.length > 0 );
       this.validators.replace(
         this.validators.slice().sort((v1, v2) =>
           v2.apr - v1.apr
@@ -93,7 +100,7 @@ class StakingStore {
           + (v2.status === 'active' ? 2000 : 0)
         )
       );
-    }
+    //}
     this.isRefreshing = false;
   }
 
@@ -172,9 +179,8 @@ class StakingStore {
 
   async reload() {
     this.startRefresh()
-
     const balanceRes = await this.connection.getBalance(this.publicKey);
-    const balanceEvmRes = await fetch('https://explorer.velas.com/rpc', {
+    const balanceEvmRes = await fetch(this.evmAPI, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -183,48 +189,53 @@ class StakingStore {
       body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
     });
     const balanceEvmJson = await balanceEvmRes.json();
-    const { current, delinquent } = await this.connection.getVoteAccounts();
-    const filter = {memcmp: {
-      offset: 0xc,
-      bytes: this.publicKey58,
-    }};
-    const nativeAccounts = await this.connection.getParsedProgramAccounts(
-      solanaWeb3.StakeProgram.programId,
-      { filters: [filter], commitment: 'processed' }
-    );
-    const filteredAccounts = nativeAccounts.filter(({ account }) => {
-      const authorized = (
-        account.data.parsed.info && 
-        account.data.parsed.info.meta && 
-        account.data.parsed.info.meta.authorized
-      );
-      return authorized && authorized.staker === this.publicKey58;
-    });
-    const stakingAccounts = filteredAccounts.map(account =>
-      new StakingAccountModel(account, this.connection)
-    );
-    const validators = (
-      current.map((validator) => new ValidatorModel(validator, false, this.connection))
-      .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection)))
-    );
-    const validatorsMap = Object.create(null);
-    for (var i = 0; i < validators.length; i++) {
-      validatorsMap[validators[i].address] = validators[i];
-    }
-    for (var i = 0; i < stakingAccounts.length; i++) {
-      const account = stakingAccounts[i];
-      const validator = validatorsMap[account.validatorAddress];
-      if (!validator) {
-        if (account.isActivated) {
-          console.warn('Validator for account not found', account.validatorAddress);
-        }
-        continue;
-      }
-      validator.addStakingAccount(account);
-    }
-    const rent = await this.connection.getMinimumBalanceForRentExemption(200);
-    await this.loadEpochInfo();
-    this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
+    this.connection.getVoteAccounts().then(({ current, delinquent }) => {
+		const filter = {memcmp: {
+		  offset: 0xc,
+		  bytes: this.publicKey58,
+		}};
+		this.connection.getParsedProgramAccounts(
+		  solanaWeb3.StakeProgram.programId,
+		  { filters: [filter], commitment: 'processed' }
+		).then( async nativeAccounts => {
+			const filteredAccounts = nativeAccounts.filter(({ account }) => {
+			  const authorized = (
+				account.data.parsed.info && 
+				account.data.parsed.info.meta && 
+				account.data.parsed.info.meta.authorized
+			  );
+			  return authorized && authorized.staker === this.publicKey58;
+			});
+			const stakingAccounts = filteredAccounts.map(account =>
+			  new StakingAccountModel(account, this.connection, this.network)
+			);
+			//console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
+			//await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
+			//console.log("Now isLatestRewardsLoading is false");
+			const validators = (
+			  current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
+			  .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
+			);
+			const validatorsMap = Object.create(null);
+			for (var i = 0; i < validators.length; i++) {
+			  validatorsMap[validators[i].address] = validators[i];
+			}
+			for (var i = 0; i < stakingAccounts.length; i++) {
+			  const account = stakingAccounts[i];
+			  const validator = validatorsMap[account.validatorAddress];
+			  if (!validator) {
+				if (account.isActivated) {
+				  console.warn('Validator for account not found', account.validatorAddress);
+				}
+				continue;
+			  }
+			  validator.addStakingAccount(account);
+			}
+			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
+				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);	
+			});
+		});
+	});
   }
 
   startRefresh = () => {
@@ -433,19 +444,20 @@ class StakingStore {
         resolve(value);
       });
     });
+    let chainId = this.network === 'mainnet' ? 106 : 111;
     const customCommon = Common.forCustomChain(
       'mainnet',
       {
         name: 'velas',
-        networkId: 106,
-        chainId: 106,
+        networkId: chainId,
+        chainId: chainId,
       },
       'istanbul',
     )
 
     var rawTx = {
       nonce,
-      gasPrice: '0x' + 9600000..toString(16),
+      gasPrice: '0x' + 3000000000..toString(16),
       gasLimit: '0x' + 210000..toString(16),
       to: "0x56454c41532d434841494e000000000053574150",
       value: '0x' + swapAmount.mul(new BN(1e9)).toString(16),
@@ -586,6 +598,10 @@ class StakingStore {
     const sortedAccounts = (
       validator.stakingAccounts
         .filter(a => a.state === 'active' || a.state === 'activating')
+				.filter(a => {
+					return !a.parsedAccoount.account.data.parsed.info.meta.lockup || 
+					new BN(a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp).lt(new BN(Date.now() / 1000))
+				})
         .sort((a, b) => b.myStake.cmp(a.myStake))
     );
     let totalStake = new BN(0);
@@ -629,6 +645,8 @@ class StakingStore {
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
       if (account.validatorAddress !== address) continue;
+			if (account.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp > (Date.now() / 1000))
+				continue;
       try {
         const { inactive, state } = await this.connection.getStakeActivation(account.publicKey);
         if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
