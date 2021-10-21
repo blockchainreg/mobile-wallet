@@ -57,8 +57,10 @@ export default ({ store, web3t, props }) => {
       `Sort by: Total Staked`,
       async (cb) => {
         try {
-          stakingStore.sortActiveStake();
-          cb(null);
+          await stakingStore.sortActiveStake();
+          setTimeout(() => {
+            cb(null);
+          }, 100);
         } catch(err) {
           cb(err);
         }
@@ -73,8 +75,10 @@ export default ({ store, web3t, props }) => {
       `Sort by: APR`,
       async (cb) => {
         try {
-          stakingStore.sortApr();
-          cb(null);
+          await stakingStore.sortApr();
+          setTimeout(() => {
+            cb(null);
+          }, 100);
         } catch(err) {
           cb(err);
         }
@@ -189,7 +193,7 @@ export default ({ store, web3t, props }) => {
               data: filterTotalStaked,
             },
           ];
-          console.log('filterTotalStaked.length', filterTotalStaked.length)
+          // console.log('filterTotalStaked.length', filterTotalStaked.length)
           return (
             <SafeAreaView style={style.container}>
               <SectionList

@@ -8,7 +8,7 @@ export async function invalidateCache() {
 
 export async function cachedCallWithRetries(network, params, call) {
   var params$ = params;
-  if (network){
+  if (network && params$ && params$.unshift){
 		params$.unshift(network);
   }
   if (!cacheMap.has(params$)) {

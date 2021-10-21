@@ -113,16 +113,6 @@ class StakingStore {
     }
   }
 
-  async sortmyStake() {
-    if (this.validators.length > 0) {
-      await when(() => this.validators && this.validators.length && this.validators[0].myStake !== null);
-      this.validators.replace(
-        this.validators.slice().sort((v1, v2) => v2.myStake - v1.myStake)
-      );
-    }
-  }
-
-
   async sortApr() {
     if (this.validators.length > 0) {
       await when(() => this.validators && this.validators.length && this.validators[0].apr !== null);
@@ -153,17 +143,19 @@ class StakingStore {
 
   async getEpochInfo() {
     return await cachedCallWithRetries(
+      this.network,
       ['getEpochInfo', this.connection],
       () => this.connection.getEpochInfo(),
     );
   }
  
-  async getConfirmedBlock(blockNumber) {
-    return await cachedCallWithRetries(
-      ['getConfirmedBlock', this.connection, blockNumber],
-      () => this.connection.getConfirmedBlock(blockNumber, 1),
-    );
-  }
+  // async getConfirmedBlock(blockNumber) {
+  //   return await cachedCallWithRetries(
+  //     this.network,
+  //     ['getConfirmedBlock', this.connection, blockNumber],
+  //     () => this.connection.getConfirmedBlock(blockNumber, 1),
+  //   );
+  // }
   
   async loadEpochInfo() {
     const info = await this.getEpochInfo();
@@ -179,6 +171,7 @@ class StakingStore {
 
   async reload() {
     this.startRefresh()
+    await this.loadEpochInfo();
     const balanceRes = await this.connection.getBalance(this.publicKey);
     const balanceEvmRes = await fetch(this.evmAPI, {
       method: 'POST',
