@@ -50,7 +50,7 @@ export default ({ store, web3t, props }) => {
     stakingStore.reloadWithRetry();
     store.sort = null;
   };
-  
+
   const sortActiveStake = () => {
     spin(
       store,
@@ -60,7 +60,7 @@ export default ({ store, web3t, props }) => {
           await stakingStore.sortActiveStake();
           setTimeout(() => {
             cb(null);
-          }, 100);
+          }, 1000);
         } catch(err) {
           cb(err);
         }
@@ -78,7 +78,7 @@ export default ({ store, web3t, props }) => {
           await stakingStore.sortApr();
           setTimeout(() => {
             cb(null);
-          }, 100);
+          }, 1000);
         } catch(err) {
           cb(err);
         }
@@ -116,7 +116,7 @@ export default ({ store, web3t, props }) => {
                 return (
                   <>
                     {stakingStore.isRefreshing ? null : (
-                    PickerSortStake({ store, onDonePress: store.sort === null ? null : store.sort === 'total_staked' ? sortActiveStake :  sortApr}) 
+                    PickerSortStake({ store, onDonePress: store.sort === null ? null : store.sort === 'total_staked' ? sortActiveStake :  sortApr})
                     )}
                   </>
                 );
@@ -130,7 +130,7 @@ export default ({ store, web3t, props }) => {
             <Observer>
               {() => {
                 return (
-                  <> 
+                  <>
                     {stakingStore.isRefreshing ? null : (<>
                      <EpochComponent store={store} />
                       <Button transparent onPress={changePage("searchStake")}>
@@ -169,7 +169,7 @@ export default ({ store, web3t, props }) => {
               </View>
             );
           }
-          
+
             const renderItems = ({ item }) => (
               <StakeItem
                 key={item.address}

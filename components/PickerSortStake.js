@@ -18,7 +18,7 @@ export default ({ store, web3t, ...props }) => {
           await stakingStore.sortActiveStake();
           setTimeout(() => {
             cb(null);
-          }, 100);
+          }, 1000);
         } catch(err) {
           cb(err);
         }
@@ -36,7 +36,7 @@ export default ({ store, web3t, ...props }) => {
           await stakingStore.sortApr();
           setTimeout(() => {
             cb(null);
-          }, 100);
+          }, 1000);
         } catch(err) {
           cb(err);
         }
