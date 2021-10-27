@@ -287,6 +287,7 @@ class StakingStore {
     }
     return {
       address: validatorAddress,
+      identity: validator.identity,
       dominance: this.getDominance(validator),
       quality: this.getQuality(validator),
       annualPercentageRate: this.getAnnualRate(validator),

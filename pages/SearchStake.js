@@ -43,9 +43,11 @@ export default ({ store }) => {
       if (store.handlechangeText) {
         const newData = filterStake.filter(function (item) {
           const itemData = item.address ? item.address.toUpperCase()
-          : ''.toUpperCase();; //search by address
+          : ''.toUpperCase(); //search by address
+          const itemIdentity = item.identity ? item.identity.toUpperCase()
+          : ''.toUpperCase(); //search by identity
           const textData = store.handlechangeText.toUpperCase();
-          return itemData.indexOf(textData) > -1;
+          return itemData.indexOf(textData) > -1 || itemIdentity.indexOf(textData) > -1;
         });
         setFilteredDataSource(newData);
         setSearch(store.handlechangeText);

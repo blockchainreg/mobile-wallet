@@ -17,6 +17,10 @@ class ValidatorModel {
     return this.solanaValidator.votePubkey;
   }
 
+  get identity() {
+    return this.solanaValidator.nodePubkey;
+  }
+
   get lastBlock() {
     return this.solanaValidator.lastVote;
   }
