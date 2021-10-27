@@ -17,6 +17,8 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
 import * as ethereum from "ethereumjs-tx";
 import Common from "ethereumjs-common";
+import Store from "../wallet/data-scheme.js";
+
 
 // const  = mobx;
 
@@ -77,7 +79,7 @@ class StakingStore {
     });
     
   }
-
+  
   async init() {
     await this.tryFixCrypto();
     await this.reloadWithRetry();
@@ -91,18 +93,23 @@ class StakingStore {
     // );
     //if (this.validators.length > 0) {
       await when(() => this.validators && this.validators.length > 0 );
+      Store.sort === 'total_staked' ? 
+        this.validators.replace(
+          this.validators.slice().sort((v1, v2) => v2.activeStake - v1.activeStake)
+        )
+      :
       this.validators.replace(
         this.validators.slice().sort((v1, v2) =>
-          v2.apr - v1.apr
-          - (v1.activeStake && v1.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0)
-          + (v2.activeStake && v2.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0)
-          - (v1.status === 'active' ? 2000 : 0)
-          + (v2.status === 'active' ? 2000 : 0)
+        v2.apr - v1.apr
+        - (v1.activeStake && v1.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0)
+        + (v2.activeStake && v2.activeStake.gte(MIN_VALIDATOR_STAKE) ? 1000 : 0)
+        - (v1.status === 'active' ? 2000 : 0)
+        + (v2.status === 'active' ? 2000 : 0)
         )
-      );
-    //}
-    this.isRefreshing = false;
-  }
+        );
+        //}
+        this.isRefreshing = false;
+      }
 
   async sortActiveStake() {
     if (this.validators.length > 0) {
@@ -148,7 +155,7 @@ class StakingStore {
       () => this.connection.getEpochInfo(),
     );
   }
- 
+
   // async getConfirmedBlock(blockNumber) {
   //   return await cachedCallWithRetries(
   //     this.network,
@@ -160,7 +167,7 @@ class StakingStore {
   async loadEpochInfo() {
     const info = await this.getEpochInfo();
     const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
-    debugger;
+    // debugger;
     this.currentEpoch = epoch;
     this.currentBlock = blockHeight;
     this.slotIndex = slotIndex;
@@ -205,6 +212,7 @@ class StakingStore {
 			//console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
 			//await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
 			//console.log("Now isLatestRewardsLoading is false");
+      debugger;
 			const validators = (
 			  current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
 			  .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
@@ -232,6 +240,7 @@ class StakingStore {
   }
 
   startRefresh = () => {
+    // console.log('this.validators', this.validators)
     this.validators = null;
     this.accounts = null;
     this.rent = null;
@@ -267,7 +276,6 @@ class StakingStore {
     return this.validators.filter((validator) => validator.myStake);
 
   }
-
   getValidatorDetails() {
     const validatorAddress = this.openedValidatorAddress;
     if (typeof validatorAddress !== 'string') {

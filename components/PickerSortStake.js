@@ -47,6 +47,7 @@ export default ({ store, web3t, ...props }) => {
   };
   const onValueChangeValue = async (value) => {
     store.sort = value;
+    localStorage.setItem("sort", value);
     Platform.OS === "android" ? store.sort === "total_staked" ? sortActiveStake() : sortApr() : null;
     await console.log("store.sort", store.sort);
   };
@@ -68,7 +69,8 @@ export default ({ store, web3t, ...props }) => {
 
   return (
     <RNPickerSelect
-      placeholder={placeholder}
+      // placeholder={placeholder}
+      placeholder={{}}
       onValueChange={(value) => {
         onValueChangeValue(value);
       }}
@@ -79,7 +81,7 @@ export default ({ store, web3t, ...props }) => {
         return <Icon
         type="MaterialCommunityIcons"
         name="sort"
-        style={[style.refreshHeaderIcon, { fontSize: 28 }]}
+        style={[style.refreshHeaderIcon, { fontSize: 28, color: "white" }]}
       />;
       }}
       onDonePress={props.onDonePress}
