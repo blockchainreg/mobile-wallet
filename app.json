@@ -39,7 +39,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 200,
+      "versionCode": 201,
       "icon": "./assets/ic_launcher.png",
       "permissions": [
         "CAMERA",
