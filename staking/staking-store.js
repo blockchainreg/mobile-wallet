@@ -103,7 +103,7 @@ class StakingStore {
     // });
 
   }
-  
+
   async init() {
     await tryFixCrypto();
     await this.reloadWithRetry();
@@ -124,7 +124,7 @@ class StakingStore {
     // );
     //if (this.validators.length > 0) {
       await when(() => this.validators && this.validators.length > 0 );
-      Store.sort === 'total_staked' ? 
+      Store.sort === 'total_staked' ?
         this.validators.replace(
           this.validators.slice().sort((v1, v2) => v2.activeStake - v1.activeStake)
         )
@@ -176,7 +176,7 @@ class StakingStore {
   //   );
   // }
 
-  async loadEpochInfo() {
+  loadEpochInfo = async () => {
     const info = await this.getEpochInfo();
     const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
     this.currentEpoch = epoch;
@@ -189,27 +189,30 @@ class StakingStore {
 
   async reloadFromBackend() {
     this.startRefresh()
-    await this.loadEpochInfo();
-    const balanceRes = await this.connection.getBalance(this.publicKey);
-    const balanceEvmRes = await fetch(this.evmAPI, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
-    });
-    const balanceEvmJson = await balanceEvmRes.json();
-    const validatorsFromBackendResult = await fetch(`${this.validatorsBackend}/v1/validators`);
-    const validatorsFromBackend = await validatorsFromBackendResult.json();
-		const filter = {memcmp: {
+    const filter = {memcmp: {
 		  offset: 0xc,
 		  bytes: this.publicKey58,
 		}};
-		nativeAccounts = await this.connection.getParsedProgramAccounts(
-		  solanaWeb3.StakeProgram.programId,
-		  { filters: [filter], commitment: 'processed' }
-		);
+
+    const [epochInfo, balanceRes, balanceEvmRes, validatorsFromBackendResult, nativeAccounts] = await Promise.all([
+      this.loadEpochInfo(),
+      this.connection.getBalance(this.publicKey),
+      fetch(this.evmAPI, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
+      }),
+      fetch(`${this.validatorsBackend}/v1/validators`),
+      this.connection.getParsedProgramAccounts(
+  		  solanaWeb3.StakeProgram.programId,
+  		  { filters: [filter], commitment: 'processed' }
+  		)
+    ]);
+    const balanceEvmJson = await balanceEvmRes.json();
+    const validatorsFromBackend = await validatorsFromBackendResult.json();
 		const filteredAccounts = nativeAccounts.filter(({ account }) => {
 		  const authorized = (
 				account.data.parsed.info &&
