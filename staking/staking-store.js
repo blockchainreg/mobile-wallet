@@ -112,10 +112,10 @@ class StakingStore {
   async reloadWithRetry() {
     this.isRefreshing = true;
     invalidateCache();
-    // await callWithRetries(
-      // this.reload();
     try {
-      this.reloadFromBackend();
+      await callWithRetries(() => {
+        this.reloadFromBackend();
+      }, null, 5);
     } catch(e) {
       console.error(e);
       //Cannot load from backend. Use slower method.
