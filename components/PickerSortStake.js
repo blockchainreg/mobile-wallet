@@ -47,6 +47,7 @@ export default ({ store, web3t, ...props }) => {
   };
   const onValueChangeValue = async (value) => {
     store.sort = value;
+    localStorage.setItem("sort", value);
     Platform.OS === "android" ? store.sort === "total_staked" ? sortActiveStake() : sortApr() : null;
     await console.log("store.sort", store.sort);
   };
@@ -60,15 +61,9 @@ export default ({ store, web3t, ...props }) => {
       value: "apr",
     },
   ];
-  const placeholder = {
-    label: 'Sort by:',
-    value: null,
-    color: '#9EA0A4',
-  };
-
   return (
     <RNPickerSelect
-      placeholder={placeholder}
+      placeholder={{}}
       onValueChange={(value) => {
         onValueChangeValue(value);
       }}
@@ -79,23 +74,27 @@ export default ({ store, web3t, ...props }) => {
         return <Icon
         type="MaterialCommunityIcons"
         name="sort"
-        style={[style.refreshHeaderIcon, { fontSize: 28 }]}
+        style={[style.refreshHeaderIcon, { fontSize: 28, color: "white" }]}
       />;
       }}
       onDonePress={props.onDonePress}
       style={{
         fontFamily: "Fontfabric-NexaRegular",
         iconContainer: {
-        left: 0,
-        top: Platform.OS === 'android' ? 0 : -5,
+        left: 5,
+        // top: Platform.OS === 'android' ? 0 : -5,
         backgroundColor: Images.colorDarkBlue,
-        maxWidth: 70
+        maxWidth: 50
       },
         inputIOS: {
           color: "transparent",
+          height: 28,
+          maxWidth: 50
         },
         inputAndroid: {
           color: "transparent",
+          height: 28,
+          maxWidth: 50
         },
       }}
     />
