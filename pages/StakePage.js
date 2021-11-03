@@ -48,7 +48,7 @@ export default ({ store, web3t, props }) => {
 
   const refreshStakeItem = () => {
     stakingStore.reloadWithRetry();
-    store.sort = null;
+    // store.sort = null;
   };
 
   const sortActiveStake = () => {
