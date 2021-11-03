@@ -3,6 +3,7 @@ import BN from "bn.js";
 // import * as solanaWeb3 from ;
 import bs58 from 'bs58';
 import { ValidatorModel } from './validator-model.js';
+import { ValidatorModelBacked } from './validator-model-backed.js';
 import { StakingAccountModel } from './staking-account-model.js';
 import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
@@ -19,6 +20,28 @@ import * as ethereum from "ethereumjs-tx";
 import Common from "ethereumjs-common";
 
 // const  = mobx;
+async function tryFixCrypto() {
+  try {
+    if (global.globalThis && global.globalThis.crypto === crypto) return;
+    await crypto.ensureSecure();
+    if (global.globalThis && global.globalThis.crypto === crypto) return;
+    const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
+    crypto.subtle.digest = (algorithm, buffer) => {
+      if (typeof algorithm === 'string') {
+        algorithm = { name: algorithm };
+      }
+      return originalDigest(algorithm, buffer);
+    };
+    if (!global.globalThis) {
+      global.globalThis = {};
+    }
+    global.globalThis.crypto = crypto;
+  } catch(e) {
+    console.warn('Cannot fix crypto', e.message);
+  }
+}
+
+tryFixCrypto();
 
 const MIN_VALIDATOR_STAKE = new BN('1000000000000000', 10);
 class StakingStore {
@@ -41,7 +64,7 @@ class StakingStore {
   network = null;
   evmAPI = "";
 
-  constructor(API_HOST, evmAPI,  secretKey, publicKey, evmAddress, evmPrivateKey, network) {
+  constructor(API_HOST, evmAPI, validatorsBackend, secretKey, publicKey, evmAddress, evmPrivateKey, network) {
     if (typeof secretKey === 'string') {
       secretKey = bs58.decode(secretKey);
     }
@@ -54,6 +77,7 @@ class StakingStore {
     this.evmPrivateKey = evmPrivateKey;
     this.network = network;
     this.evmAPI = evmAPI;
+    this.validatorsBackend = validatorsBackend;
     this.web3 = new Web3(new Web3.providers.HttpProvider(evmAPI));
     rewardsStore.setConnection(this.connection, network);
     decorate(this, {
@@ -70,16 +94,16 @@ class StakingStore {
       slotsInEpoch: observable,
       slotIndex: observable,
     });
-     rewardsStore.loadLatestRewards(() => {
+     // rewardsStore.loadLatestRewards(() => {
 	  this.startRefresh = action(this.startRefresh);
 	  this.endRefresh = action(this.endRefresh);
 	  this.init();
-    });
-    
+    // });
+
   }
 
   async init() {
-    await this.tryFixCrypto();
+    await tryFixCrypto();
     await this.reloadWithRetry();
   }
 
@@ -87,7 +111,14 @@ class StakingStore {
     this.isRefreshing = true;
     invalidateCache();
     // await callWithRetries(
+      // this.reload();
+    try {
+      this.reloadFromBackend();
+    } catch(e) {
+      console.error(e);
+      //Cannot load from backend. Use slower method.
       this.reload();
+    }
     // );
     //if (this.validators.length > 0) {
       await when(() => this.validators && this.validators.length > 0 );
@@ -122,25 +153,6 @@ class StakingStore {
     }
   }
 
-  async tryFixCrypto() {
-    try {
-      await crypto.ensureSecure();
-      const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
-      crypto.subtle.digest = (algorithm, buffer) => {
-        if (typeof algorithm === 'string') {
-          algorithm = { name: algorithm };
-        }
-        return originalDigest(algorithm, buffer);
-      };
-      if (!global.globalThis) {
-        global.globalThis = {};
-      }
-      global.globalThis.crypto = crypto;
-    } catch(e) {
-      console.warn('Cannot fix crypto', e.message);
-    }
-  }
-
   async getEpochInfo() {
     return await cachedCallWithRetries(
       this.network,
@@ -148,7 +160,7 @@ class StakingStore {
       () => this.connection.getEpochInfo(),
     );
   }
- 
+
   // async getConfirmedBlock(blockNumber) {
   //   return await cachedCallWithRetries(
   //     this.network,
@@ -156,17 +168,75 @@ class StakingStore {
   //     () => this.connection.getConfirmedBlock(blockNumber, 1),
   //   );
   // }
-  
+
   async loadEpochInfo() {
     const info = await this.getEpochInfo();
     const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
-    debugger;
     this.currentEpoch = epoch;
     this.currentBlock = blockHeight;
     this.slotIndex = slotIndex;
     this.slotsInEpoch = slotsInEpoch;
     this.epochTime = (slotsInEpoch - slotIndex) * 0.4 / 3600
     // this.currentTime = currentTime;
+  }
+
+  async reloadFromBackend() {
+    this.startRefresh()
+    await this.loadEpochInfo();
+    const balanceRes = await this.connection.getBalance(this.publicKey);
+    const balanceEvmRes = await fetch(this.evmAPI, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
+    });
+    const balanceEvmJson = await balanceEvmRes.json();
+    const validatorsFromBackendResult = await fetch(`${this.validatorsBackend}/v1/validators`);
+    const validatorsFromBackend = await validatorsFromBackendResult.json();
+		const filter = {memcmp: {
+		  offset: 0xc,
+		  bytes: this.publicKey58,
+		}};
+		nativeAccounts = await this.connection.getParsedProgramAccounts(
+		  solanaWeb3.StakeProgram.programId,
+		  { filters: [filter], commitment: 'processed' }
+		);
+		const filteredAccounts = nativeAccounts.filter(({ account }) => {
+		  const authorized = (
+				account.data.parsed.info &&
+				account.data.parsed.info.meta &&
+				account.data.parsed.info.meta.authorized
+		  );
+		  return authorized && authorized.staker === this.publicKey58;
+		});
+		const stakingAccounts = filteredAccounts.map(account =>
+		  new StakingAccountModel(account, this.connection, this.network)
+		);
+
+		const validators = validatorsFromBackend.map((validator) =>
+      new ValidatorModelBacked(validator, this.connection, this.network)
+    );
+
+			const validatorsMap = Object.create(null);
+			for (var i = 0; i < validators.length; i++) {
+			  validatorsMap[validators[i].address] = validators[i];
+			}
+			for (var i = 0; i < stakingAccounts.length; i++) {
+			  const account = stakingAccounts[i];
+			  const validator = validatorsMap[account.validatorAddress];
+			  if (!validator) {
+				if (account.isActivated) {
+				  console.warn('Validator for account not found', account.validatorAddress);
+				}
+				continue;
+			  }
+			  validator.addStakingAccount(account);
+			}
+			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
+				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
+			});
   }
 
   async reload() {
@@ -193,8 +263,8 @@ class StakingStore {
 		).then( async nativeAccounts => {
 			const filteredAccounts = nativeAccounts.filter(({ account }) => {
 			  const authorized = (
-				account.data.parsed.info && 
-				account.data.parsed.info.meta && 
+				account.data.parsed.info &&
+				account.data.parsed.info.meta &&
 				account.data.parsed.info.meta.authorized
 			  );
 			  return authorized && authorized.staker === this.publicKey58;
@@ -225,7 +295,7 @@ class StakingStore {
 			  validator.addStakingAccount(account);
 			}
 			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
-				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);	
+				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
 			});
 		});
 	});
@@ -310,11 +380,22 @@ class StakingStore {
     if (!validator) {
       throw new Error('Validator not found');
     }
-    validator.loadMoreRewards();
     return {
       rewards: validator.rewards || [],
       isLoading: validator.isRewardsLoading
     };
+  }
+
+  loadMoreRewards() {
+    const validatorAddress = this.openedValidatorAddress;
+    if (typeof validatorAddress !== 'string' || !this.validators) {
+      return;
+    }
+    const validator = this.validators.find(({address}) => address === validatorAddress);
+    if (!validator) {
+      return;
+    }
+    validator.loadMoreRewards();
   }
 
   getDominance(validator) {
@@ -592,7 +673,7 @@ class StakingStore {
       validator.stakingAccounts
         .filter(a => a.state === 'active' || a.state === 'activating')
 				.filter(a => {
-					return !a.parsedAccoount.account.data.parsed.info.meta.lockup || 
+					return !a.parsedAccoount.account.data.parsed.info.meta.lockup ||
 					new BN(a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp).lt(new BN(Date.now() / 1000))
 				})
         .sort((a, b) => b.myStake.cmp(a.myStake))

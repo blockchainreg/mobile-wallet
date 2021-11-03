@@ -8,13 +8,14 @@ module.exports = (store) => {
       }
 
       const stakingStore = new StakingStore(
-        wallet.network.api.web3Provider, 
-		walletEvm.network.api.web3Provider,
+        wallet.network.api.web3Provider,
+	      walletEvm.network.api.web3Provider,
+        wallet.network.api.validatorsBackend,
         wallet.privateKey,
         wallet.publicKey,
         walletEvm.address2, //evm address
         walletEvm.privateKey,
-		store.current.network
+		    store.current.network
       );
       store.stakingStore = stakingStore;
 };

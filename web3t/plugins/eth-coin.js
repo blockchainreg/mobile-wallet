@@ -12,7 +12,7 @@
     mask: '0x0000000000000000000000000000000000000000',
     api: {
       provider: 'eth',
-      web3Provider: 'https://mainnet.infura.io/v3/843d2e25655c47c7851744f65ce95837',
+      web3Provider: 'https://mainnet.infura.io/v3/247d5e34269f4cf9ad500f05936d4fe5',
       url: 'https://etherscan.io',
       apiUrl: 'https://api.etherscan.io/api'
     },
@@ -47,7 +47,7 @@
     txFeeIn: 'eth',
     api: {
       provider: 'eth',
-      web3Provider: 'https://ropsten.infura.io/v3/843d2e25655c47c7851744f65ce95837',
+      web3Provider: 'https://ropsten.infura.io/v3/247d5e34269f4cf9ad500f05936d4fe5',
       url: 'https://ropsten.etherscan.io',
       apiUrl: 'https://api-ropsten.etherscan.io/api'
     },
