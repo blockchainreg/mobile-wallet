@@ -51,7 +51,7 @@ class StakingStore {
   accounts = null;
   vlxEvmBalance = null;
   vlxNativeBalance = null;
-  isRefreshing = true;
+  isRefreshing = false;
   rent = null;
   seedUsed = Object.create(null);
   connection = null;
@@ -110,11 +110,14 @@ class StakingStore {
   }
 
   async reloadWithRetry() {
+    if (this.isRefreshing) {
+      return await when(() => !this.isRefreshing);
+    }
     this.isRefreshing = true;
     invalidateCache();
     try {
-      await callWithRetries(() => {
-        this.reloadFromBackend();
+      await callWithRetries(async () => {
+        await this.reloadFromBackend();
       }, null, 5);
     } catch(e) {
       console.error(e);
@@ -225,28 +228,31 @@ class StakingStore {
 		  new StakingAccountModel(account, this.connection, this.network)
 		);
 
-		const validators = validatorsFromBackend.map((validator) =>
+    if (!validatorsFromBackend.validators && !validatorsFromBackend.length) {
+      throw new Error('No validators loaded');
+    }
+    const tmp = validatorsFromBackend.validators || validatorsFromBackend;
+		const validators = tmp.map((validator) =>
       new ValidatorModelBacked(validator, this.connection, this.network)
     );
 
-			const validatorsMap = Object.create(null);
-			for (var i = 0; i < validators.length; i++) {
-			  validatorsMap[validators[i].address] = validators[i];
+		const validatorsMap = Object.create(null);
+		for (var i = 0; i < validators.length; i++) {
+		  validatorsMap[validators[i].address] = validators[i];
+		}
+		for (var i = 0; i < stakingAccounts.length; i++) {
+		  const account = stakingAccounts[i];
+		  const validator = validatorsMap[account.validatorAddress];
+		  if (!validator) {
+			if (account.isActivated) {
+			  console.warn('Validator for account not found', account.validatorAddress);
 			}
-			for (var i = 0; i < stakingAccounts.length; i++) {
-			  const account = stakingAccounts[i];
-			  const validator = validatorsMap[account.validatorAddress];
-			  if (!validator) {
-				if (account.isActivated) {
-				  console.warn('Validator for account not found', account.validatorAddress);
-				}
-				continue;
-			  }
-			  validator.addStakingAccount(account);
-			}
-			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
-				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
-			});
+			continue;
+		  }
+		  validator.addStakingAccount(account);
+		}
+		const rent = await this.connection.getMinimumBalanceForRentExemption(200);
+		this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
   }
 
   async reload() {

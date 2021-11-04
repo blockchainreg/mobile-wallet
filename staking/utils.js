@@ -30,7 +30,7 @@ export async function callWithRetries(call, params, maxTries = Infinity) {
       console.error(e, params && params.map(o => o.toString()).join());
       tries++;
       if (tries >= maxTries) throw e;
-      console.log("[callWithRetries] try # ", tries);
+      console.log("[callWithRetries] try # ", tries, ' of ', maxTries);
 	    await new Promise(resolve => timeout = setTimeout(resolve, 1000*tries));
     }
   }
