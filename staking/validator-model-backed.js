@@ -27,6 +27,10 @@ class ValidatorModelBacked {
     return new BN(this.backendData.activeStake, 10);
   }
 
+  get identity() {
+    return this.backendData.nodePubKey;
+  }
+
   get myStake() {
     let myStake = new BN(0);
     for (let i = 0; i < this.stakingAccounts.length; i++) {

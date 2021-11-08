@@ -39,7 +39,7 @@ async function tryFixCrypto() {
     }
     global.globalThis.crypto = crypto;
   } catch(e) {
-    console.warn('Cannot fix crypto', e.message);
+    console.log('Cannot fix crypto', e.message);
   }
 }
 
@@ -291,7 +291,6 @@ class StakingStore {
 			//console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
 			//await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
 			//console.log("Now isLatestRewardsLoading is false");
-      debugger;
 			const validators = (
 			  current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
 			  .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
