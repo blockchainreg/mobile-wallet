@@ -48,7 +48,7 @@ export default ({ store, web3t, ...props }) => {
   const onValueChangeValue = async (value) => {
     store.stakingStore.sort = value;
     if (Platform.OS === "android") {
-      store.sort === "total_staked" ? sortActiveStake() : sortApr();
+      value === "total_staked" ? sortActiveStake() : sortApr();
     }
   };
   const sortItems = [
