@@ -18,7 +18,7 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
 import * as ethereum from "ethereumjs-tx";
 import Common from "ethereumjs-common";
-import Store from "../wallet/data-scheme.js";
+// import Store from "../wallet/data-scheme.js";
 
 
 // const  = mobx;
@@ -65,6 +65,7 @@ class StakingStore {
   // currentTime = null;
   network = null;
   evmAPI = "";
+  _currentSort = null;
 
   constructor(API_HOST, evmAPI, validatorsBackend, secretKey, publicKey, evmAddress, evmPrivateKey, network) {
     if (typeof secretKey === 'string') {
@@ -95,6 +96,7 @@ class StakingStore {
       epochTime: observable,
       slotsInEpoch: observable,
       slotIndex: observable,
+      _currentSort: observable,
     });
      // rewardsStore.loadLatestRewards(() => {
 	  this.startRefresh = action(this.startRefresh);
@@ -127,7 +129,7 @@ class StakingStore {
     // );
     //if (this.validators.length > 0) {
       await when(() => this.validators && this.validators.length > 0 );
-      Store.sort === 'total_staked' ?
+      this.sort === 'total_staked' ?
         this.validators.replace(
           this.validators.slice().sort((v1, v2) => v2.activeStake - v1.activeStake)
         )
@@ -757,6 +759,15 @@ class StakingStore {
     await new Promise(resolve => setTimeout(resolve, 2000));
     await this.reloadWithRetry();
     return res;
+  }
+
+  get sort() {
+    return this._currentSort || localStorage.sort;
+  }
+
+  set sort(value) {
+    localStorage.sort = value;
+    this._currentSort = value;
   }
 }
 
