@@ -116,7 +116,7 @@ export default ({ store, web3t, props }) => {
                 return (
                   <>
                     {stakingStore.isRefreshing ? null : (
-                    PickerSortStake({ store, onDonePress: store.sort === null ? null : store.sort === 'total_staked' ? sortActiveStake :  sortApr})
+                      PickerSortStake({ store, onDonePress: () => stakingStore.sort === 'total_staked' ? sortActiveStake :  sortApr})
                     )}
                   </>
                 );

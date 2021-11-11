@@ -8,7 +8,6 @@ export default ({ store }) => {
   const formatTime = epochTime * 3600;
   const fullTimeEpoch = 172800;
 //   console.log('formatTime', formatTime)
-debugger;
   const progress = (formatTime) => {
     if (!formatTime) return 0;
     if (formatTime <= fullTimeEpoch && formatTime > 0.9 * fullTimeEpoch) return 0.1;

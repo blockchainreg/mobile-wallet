@@ -15,7 +15,8 @@
       provider: 'vlx_native',
       web3Provider: 'https://api.velas.com',
       url: 'https://native.velas.com',
-      apiUrl: 'https://api.velas.com'
+      apiUrl: 'https://api.velas.com',
+      validatorsBackend: 'https://validators.devnet.veladev.net',
     },
     networks: {
       legacy: {
@@ -44,6 +45,7 @@
       web3Provider: 'https://explorer.testnet.velas.com/rpc',
       url: 'https://native.velas.com',
       apiUrl: 'https://explorer.testnet.velas.com/api',
+      validatorsBackend: 'https://validators.testnet.veladev.net',
       cluster: 'testnet'
     },
     networks: {

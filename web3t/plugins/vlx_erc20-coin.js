@@ -17,7 +17,7 @@
 	ERC20BridgeToken: "0x8C543AED163909142695f2d2aCd0D55791a9Edb9",
 	api: {
 	  provider: 'velas_erc20',
-	  web3Provider: 'https://mainnet.infura.io/v3/843d2e25655c47c7851744f65ce95837',
+	  web3Provider: 'https://mainnet.infura.io/v3/247d5e34269f4cf9ad500f05936d4fe5',
 	  url: 'https://etherscan.io',
 	  apiUrl: 'https://api.etherscan.io/api'
 	},

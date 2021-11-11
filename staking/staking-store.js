@@ -3,6 +3,7 @@ import BN from "bn.js";
 // import * as solanaWeb3 from ;
 import bs58 from 'bs58';
 import { ValidatorModel } from './validator-model.js';
+import { ValidatorModelBacked } from './validator-model-backed.js';
 import { StakingAccountModel } from './staking-account-model.js';
 import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
@@ -17,10 +18,32 @@ const PRESERVE_BALANCE = new BN('1000000000', 10);
 import {abi as EvmToNativeBridgeAbi} from "./EvmToNativeBridge.json";
 import * as ethereum from "ethereumjs-tx";
 import Common from "ethereumjs-common";
-import Store from "../wallet/data-scheme.js";
+// import Store from "../wallet/data-scheme.js";
 
 
 // const  = mobx;
+async function tryFixCrypto() {
+  try {
+    if (global.globalThis && global.globalThis.crypto === crypto) return;
+    await crypto.ensureSecure();
+    if (global.globalThis && global.globalThis.crypto === crypto) return;
+    const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
+    crypto.subtle.digest = (algorithm, buffer) => {
+      if (typeof algorithm === 'string') {
+        algorithm = { name: algorithm };
+      }
+      return originalDigest(algorithm, buffer);
+    };
+    if (!global.globalThis) {
+      global.globalThis = {};
+    }
+    global.globalThis.crypto = crypto;
+  } catch(e) {
+    console.log('Cannot fix crypto', e.message);
+  }
+}
+
+tryFixCrypto();
 
 const MIN_VALIDATOR_STAKE = new BN('1000000000000000', 10);
 class StakingStore {
@@ -28,7 +51,7 @@ class StakingStore {
   accounts = null;
   vlxEvmBalance = null;
   vlxNativeBalance = null;
-  isRefreshing = true;
+  isRefreshing = false;
   rent = null;
   seedUsed = Object.create(null);
   connection = null;
@@ -42,8 +65,9 @@ class StakingStore {
   // currentTime = null;
   network = null;
   evmAPI = "";
+  _currentSort = null;
 
-  constructor(API_HOST, evmAPI,  secretKey, publicKey, evmAddress, evmPrivateKey, network) {
+  constructor(API_HOST, evmAPI, validatorsBackend, secretKey, publicKey, evmAddress, evmPrivateKey, network) {
     if (typeof secretKey === 'string') {
       secretKey = bs58.decode(secretKey);
     }
@@ -56,6 +80,7 @@ class StakingStore {
     this.evmPrivateKey = evmPrivateKey;
     this.network = network;
     this.evmAPI = evmAPI;
+    this.validatorsBackend = validatorsBackend;
     this.web3 = new Web3(new Web3.providers.HttpProvider(evmAPI));
     rewardsStore.setConnection(this.connection, network);
     decorate(this, {
@@ -71,29 +96,40 @@ class StakingStore {
       epochTime: observable,
       slotsInEpoch: observable,
       slotIndex: observable,
+      _currentSort: observable,
     });
-     rewardsStore.loadLatestRewards(() => {
+     // rewardsStore.loadLatestRewards(() => {
 	  this.startRefresh = action(this.startRefresh);
 	  this.endRefresh = action(this.endRefresh);
 	  this.init();
-    });
-    
+    // });
+
   }
-  
+
   async init() {
-    await this.tryFixCrypto();
+    await tryFixCrypto();
     await this.reloadWithRetry();
   }
 
   async reloadWithRetry() {
+    if (this.isRefreshing) {
+      return await when(() => !this.isRefreshing);
+    }
     this.isRefreshing = true;
     invalidateCache();
-    // await callWithRetries(
+    try {
+      await callWithRetries(async () => {
+        await this.reloadFromBackend();
+      }, null, 5);
+    } catch(e) {
+      console.error(e);
+      //Cannot load from backend. Use slower method.
       this.reload();
+    }
     // );
     //if (this.validators.length > 0) {
       await when(() => this.validators && this.validators.length > 0 );
-      Store.sort === 'total_staked' ? 
+      this.sort === 'total_staked' ?
         this.validators.replace(
           this.validators.slice().sort((v1, v2) => v2.activeStake - v1.activeStake)
         )
@@ -129,25 +165,6 @@ class StakingStore {
     }
   }
 
-  async tryFixCrypto() {
-    try {
-      await crypto.ensureSecure();
-      const originalDigest = crypto.subtle.digest.bind(crypto.subtle);
-      crypto.subtle.digest = (algorithm, buffer) => {
-        if (typeof algorithm === 'string') {
-          algorithm = { name: algorithm };
-        }
-        return originalDigest(algorithm, buffer);
-      };
-      if (!global.globalThis) {
-        global.globalThis = {};
-      }
-      global.globalThis.crypto = crypto;
-    } catch(e) {
-      console.warn('Cannot fix crypto', e.message);
-    }
-  }
-
   async getEpochInfo() {
     return await cachedCallWithRetries(
       this.network,
@@ -163,17 +180,81 @@ class StakingStore {
   //     () => this.connection.getConfirmedBlock(blockNumber, 1),
   //   );
   // }
-  
-  async loadEpochInfo() {
+
+  loadEpochInfo = async () => {
     const info = await this.getEpochInfo();
     const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
-    // debugger;
     this.currentEpoch = epoch;
     this.currentBlock = blockHeight;
     this.slotIndex = slotIndex;
     this.slotsInEpoch = slotsInEpoch;
     this.epochTime = (slotsInEpoch - slotIndex) * 0.4 / 3600
     // this.currentTime = currentTime;
+  }
+
+  async reloadFromBackend() {
+    this.startRefresh()
+    const filter = {memcmp: {
+		  offset: 0xc,
+		  bytes: this.publicKey58,
+		}};
+
+    const [epochInfo, balanceRes, balanceEvmRes, validatorsFromBackendResult, nativeAccounts] = await Promise.all([
+      this.loadEpochInfo(),
+      this.connection.getBalance(this.publicKey),
+      fetch(this.evmAPI, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${this.evmAddress}","latest"]}`
+      }),
+      fetch(`${this.validatorsBackend}/v1/validators`),
+      this.connection.getParsedProgramAccounts(
+  		  solanaWeb3.StakeProgram.programId,
+  		  { filters: [filter], commitment: 'processed' }
+  		)
+    ]);
+    const balanceEvmJson = await balanceEvmRes.json();
+    const validatorsFromBackend = await validatorsFromBackendResult.json();
+		const filteredAccounts = nativeAccounts.filter(({ account }) => {
+		  const authorized = (
+				account.data.parsed.info &&
+				account.data.parsed.info.meta &&
+				account.data.parsed.info.meta.authorized
+		  );
+		  return authorized && authorized.staker === this.publicKey58;
+		});
+		const stakingAccounts = filteredAccounts.map(account =>
+		  new StakingAccountModel(account, this.connection, this.network)
+		);
+
+    if (!validatorsFromBackend.validators && !validatorsFromBackend.length) {
+      throw new Error('No validators loaded');
+    }
+    const tmp = validatorsFromBackend.validators || validatorsFromBackend;
+		const validators = tmp.map((validator) =>
+      new ValidatorModelBacked(validator, this.connection, this.network)
+    );
+
+		const validatorsMap = Object.create(null);
+		for (var i = 0; i < validators.length; i++) {
+		  validatorsMap[validators[i].address] = validators[i];
+		}
+		for (var i = 0; i < stakingAccounts.length; i++) {
+		  const account = stakingAccounts[i];
+		  const validator = validatorsMap[account.validatorAddress];
+		  if (!validator) {
+			if (account.isActivated) {
+			  console.warn('Validator for account not found', account.validatorAddress);
+			}
+			continue;
+		  }
+		  validator.addStakingAccount(account);
+		}
+		const rent = await this.connection.getMinimumBalanceForRentExemption(200);
+		this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
   }
 
   async reload() {
@@ -200,8 +281,8 @@ class StakingStore {
 		).then( async nativeAccounts => {
 			const filteredAccounts = nativeAccounts.filter(({ account }) => {
 			  const authorized = (
-				account.data.parsed.info && 
-				account.data.parsed.info.meta && 
+				account.data.parsed.info &&
+				account.data.parsed.info.meta &&
 				account.data.parsed.info.meta.authorized
 			  );
 			  return authorized && authorized.staker === this.publicKey58;
@@ -212,7 +293,6 @@ class StakingStore {
 			//console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
 			//await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
 			//console.log("Now isLatestRewardsLoading is false");
-      debugger;
 			const validators = (
 			  current.map((validator) => new ValidatorModel(validator, false, this.connection, this.network))
 			  .concat(delinquent.map((validator) => new ValidatorModel(validator, true, this.connection, this.network)))
@@ -233,7 +313,7 @@ class StakingStore {
 			  validator.addStakingAccount(account);
 			}
 			this.connection.getMinimumBalanceForRentExemption(200).then( rent => {
-				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);	
+				this.endRefresh(balanceRes, balanceEvmJson, rent, validators, stakingAccounts);
 			});
 		});
 	});
@@ -319,11 +399,22 @@ class StakingStore {
     if (!validator) {
       throw new Error('Validator not found');
     }
-    validator.loadMoreRewards();
     return {
       rewards: validator.rewards || [],
       isLoading: validator.isRewardsLoading
     };
+  }
+
+  loadMoreRewards() {
+    const validatorAddress = this.openedValidatorAddress;
+    if (typeof validatorAddress !== 'string' || !this.validators) {
+      return;
+    }
+    const validator = this.validators.find(({address}) => address === validatorAddress);
+    if (!validator) {
+      return;
+    }
+    validator.loadMoreRewards();
   }
 
   getDominance(validator) {
@@ -601,7 +692,7 @@ class StakingStore {
       validator.stakingAccounts
         .filter(a => a.state === 'active' || a.state === 'activating')
 				.filter(a => {
-					return !a.parsedAccoount.account.data.parsed.info.meta.lockup || 
+					return !a.parsedAccoount.account.data.parsed.info.meta.lockup ||
 					new BN(a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp).lt(new BN(Date.now() / 1000))
 				})
         .sort((a, b) => b.myStake.cmp(a.myStake))
@@ -668,6 +759,15 @@ class StakingStore {
     await new Promise(resolve => setTimeout(resolve, 2000));
     await this.reloadWithRetry();
     return res;
+  }
+
+  get sort() {
+    return this._currentSort || localStorage.sort;
+  }
+
+  set sort(value) {
+    localStorage.sort = value;
+    this._currentSort = value;
   }
 }
 

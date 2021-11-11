@@ -17,6 +17,9 @@ import { formatReward, formatStakeAmount } from "../utils/format-value";
 const GRAY_COLOR = "rgba(255, 255, 255, 0.18)";
 const URL = "https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q";
 export default observer(({ store }) => {
+  setTimeout(() => {
+    stakingStore.loadMoreRewards();
+  }, 0);
   const lang = getLang(store);
   const { stakingStore } = store;
 
