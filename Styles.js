@@ -24,7 +24,7 @@ export default StyleSheet.create({
   },
   bgMain: {
     position: 'absolute', zIndex:-1, top: -200, left: 0
-  },  
+  },
   colorBg: {
     backgroundColor: Images.colorDarkBlue
   },
@@ -1974,7 +1974,7 @@ export default StyleSheet.create({
   buttonInactive: {
     backgroundColor: "#F2F2F290",
     marginVertical: 30,
-    borderRadius: 0, 
+    borderRadius: 0,
   },
   buttonTextInactive: {
     color: "#00000050",
@@ -2652,7 +2652,7 @@ export default StyleSheet.create({
         height: normalize(50),
         backgroundColor: Images.colorOrange,
         borderRadius: normalize(30),
-     
+
   },
   headerSearchBar: {
     // paddingBottom: 40,
@@ -5890,9 +5890,9 @@ export default StyleSheet.create({
     lineHeight: 20
   },
   textBtnTransparent: {
-    fontSize: 14, 
-    color: "rgba(255,255,255,0.50)", 
-    fontFamily: "Fontfabric-NexaRegular", 
+    fontSize: 14,
+    color: "rgba(255,255,255,0.50)",
+    fontFamily: "Fontfabric-NexaRegular",
     textTransform: 'capitalize'
   },
   btnVelasActive: {
@@ -5926,9 +5926,9 @@ export default StyleSheet.create({
     backgroundColor: Images.colorGreen
   },
   textBtn: {
-    fontSize: 14, 
-    color: Images.color1, 
-    fontFamily: "Fontfabric-NexaBold", 
+    fontSize: 14,
+    color: Images.color1,
+    fontFamily: "Fontfabric-NexaBold",
     fontWeight: Platform.OS === 'ios' ? "bold" : null,
     textTransform: 'capitalize',
   },
@@ -5958,12 +5958,15 @@ export default StyleSheet.create({
   },
   marginTopAndroid: {
     marginTop: Platform.OS === 'ios' ? null : 30,
+    marginBottom: Platform.OS === 'ios' ? null : 5,
+    marginLeft: Platform.OS === 'ios' ? null : 5,
+    marginRight: Platform.OS === 'ios' ? null : 5,
   },
   leftBtnColor: {
     color: Images.colorGreen,
   },
   viewNetInfo: {
-    backgroundColor: 'orange', zIndex: 9999, position: "absolute", 
+    backgroundColor: 'orange', zIndex: 9999, position: "absolute",
     // width: "100%",
     paddingHorizontal: 10,
     borderRadius: 10
