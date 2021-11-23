@@ -19,6 +19,10 @@ class ValidatorModelBacked {
     return this.backendData.address;
   }
 
+  get name() {
+    return this.backendData.name;
+  }
+
   get lastBlock() {
     return this.backendData.lastVote;
   }

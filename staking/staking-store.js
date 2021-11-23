@@ -365,6 +365,7 @@ class StakingStore {
     if (!validator) {
       throw new Error('Validator not found');
     }
+    debugger;
     return {
       address: validatorAddress,
       identity: validator.identity,
@@ -376,6 +377,7 @@ class StakingStore {
       status: validator.status,
       myStake: validator.myStake,
       activeStake: validator.activeStake,
+      name: validator.name,
       available_balance: this.getBalance(),
       myActiveStake: validator.totalActiveStake &&
         validator.totalInactiveStake &&

@@ -46,8 +46,10 @@ export default ({ store }) => {
           : ''.toUpperCase(); //search by address
           const itemIdentity = item.identity ? item.identity.toUpperCase()
           : ''.toUpperCase(); //search by identity
+          const itemName = item.name ? item.name.toUpperCase()
+          : ''.toUpperCase(); //search by name
           const textData = store.handlechangeText.toUpperCase();
-          return itemData.indexOf(textData) > -1 || itemIdentity.indexOf(textData) > -1;
+          return itemData.indexOf(textData) > -1 || itemIdentity.indexOf(textData) > -1 || itemName.indexOf(textData) > -1;
         });
         setFilteredDataSource(newData);
         setSearch(store.handlechangeText);
@@ -61,6 +63,7 @@ export default ({ store }) => {
         <StakeItem
           key={item.address}
           typeBadge={item.status}
+          name={item.name}
           address={item.address}
           myStake={item.myStake}
           totalStaked={item.activeStake}

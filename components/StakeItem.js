@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { StyleSheet, Dimensions, Text, ActivityIndicator, Platform } from "react-native";
 import { Left, Body, Right, ListItem} from "native-base";
 import Images from "../Images";
@@ -44,7 +44,7 @@ export default observer(({ store, ...props }) => {
       onPress={props.onPress}
       style={[
         style.listItemStyle,
-        { backgroundColor: isStaked ? "#1F2853" : "#161A3F" },
+        { backgroundColor: isStaked ? "#1F2853" : "#161A3F", height: props.name && 100}, 
       ]}
     >
       <Left style={style.leftSide}>
@@ -52,12 +52,22 @@ export default observer(({ store, ...props }) => {
       </Left>
       <Body style={style.bodyPadding}>
         <Text
-          style={style.styleTitle}
+          style={[style.styleTitle, {color: props.name ? "rgba(255, 255, 255, 0.3)" : "#fff"}]}
           numberOfLines={1}
           ellipsizeMode="middle"
-        >
+          >
           {props.address}
         </Text>
+        {props.name ?
+          <Text
+            style={[style.styleTitle, {marginTop: 2}]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {props.name}
+          </Text> 
+          :
+          null}
         <Text style={style.styleSubTitle}>
           {isStaked ? lang.myStake || "My Stake" : lang.totalStaked || "Total Staked"}
         </Text>
@@ -72,7 +82,7 @@ export default observer(({ store, ...props }) => {
       </Body>
       <Right style={style.rightSide}>
         {badgeStatus()}
-        <Text style={[style.styleSubTitle, {marginTop: 15}]}>
+        <Text style={[style.styleSubTitle, {marginTop: props.name ? 25 : 15}]}>
           {lang.apr || "APR"}{","}{"%"}
         </Text>
         <Text style={style.styleTitle}>
@@ -130,7 +140,7 @@ const style = StyleSheet.create({
     height: 90,
   },
   rightSide: {
-    paddingLeft: 10, paddingRight: 10
+    paddingLeft: 10, paddingRight: 10, justifyContent: "space-between"
   },
   leftSide: {
     marginLeft: 10
