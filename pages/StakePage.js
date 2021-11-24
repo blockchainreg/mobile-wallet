@@ -158,6 +158,7 @@ export default ({ store, web3t, props }) => {
       <SearchHeader />
       <Observer>
         {() => {
+          // debugger;
           const filterStake = stakingStore.getStakedValidators();
           const filterTotalStaked = stakingStore.getNotStakedValidators();
           if (!filterStake || !filterTotalStaked || stakingStore.isRefreshing) {
@@ -174,6 +175,7 @@ export default ({ store, web3t, props }) => {
               <StakeItem
                 key={item.address}
                 typeBadge={item.status}
+                name={item.name}
                 address={item.address}
                 myStake={item.myStake}
                 totalStaked={item.activeStake}
