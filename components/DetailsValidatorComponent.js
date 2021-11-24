@@ -27,6 +27,7 @@ import Images from "../Images";
 import { Badge } from "react-native-elements";
 import IdentIcon from "./Identicon";
 import getLang from "../wallet/get-lang.js";
+import { CameraEn } from "../svg/cameraEn";
 
 var width = Dimensions.get("window").width;
 const BORDER_COLOR = "rgba(255, 255, 255, 0.18)";
@@ -67,11 +68,16 @@ export default ({store, ...props}) => {
       <View style={style.content}>
         <IdentIcon
           {...props}
-          size={85}
+          size={props.name ? 65 : 80}
           backgroundColor={"rgba(22, 26, 63, 1)"}
         />
         {badgeStatus()}
-        <Text style={style.addressStyle} onPress={props.copyAddress}>{props.address}</Text>
+        {props.name && 
+        
+        // <Text style={style.addressStyle} onPress={props.copyName}>{props.name}<CameraEn height={10} width={15}/></Text>
+        <Text style={style.addressStyle} onPress={props.copyName}>{props.name}</Text>
+        }
+        <Text style={[style.addressStyle, {color: props.name ? "rgba(255, 255, 255, 0.3)" : "#fff"}]} onPress={props.copyAddress}>{props.address}</Text>
       </View>
       <View style={style.row}>
         <View style={style.column}>
@@ -101,7 +107,7 @@ const style = StyleSheet.create({
     // width: width * 0.85,
     marginHorizontal: 30,
     textAlign: "center",
-    paddingVertical: 10,
+    marginTop: 10,
   },
   row: {
     marginTop: 10,
