@@ -1,27 +1,13 @@
 import React from "react";
 import {
-  Left,
-  Body,
-  Right,
-  Button,
   Icon,
-  Title,
   Text,
-  Item,
-  List,
-  ListItem,
-  Header,
   Thumbnail,
-  Badge
 } from "native-base";
-import { Ionicons } from "@expo/vector-icons";
-import { View, ScrollView, Clipboard, Alert, Vibration, Linking, Platform } from "react-native";
+import { View, ScrollView, Clipboard, Alert, Vibration, Linking } from "react-native";
 import styles from "../Styles.js";
-// import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from "moment";
-//import LoadMoreAllDate from "./LoadMoreAllDate";
 import getLang from '../wallet/get-lang.js';
-import { LinearGradient } from "expo-linear-gradient";
 import Images from '../Images.js';
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import roundNumber from "../round-number";
@@ -74,69 +60,70 @@ export default (store, web3t) => {
         return null;
     }
   };
-  //const txurl = `https://explorer.velas.com/tx/${store.infoTransaction.tx}`;
   const wallets = walletsFuncs(store, web3t).wallets;
   const wallet = wallets.find((x) => x.coin.token === store.infoTransaction.token);
+  if (!wallet) {
+  	return null;
+	} 
   const {linktx, url} = wallet.network.api;
   const {tx} = store.infoTransaction;
   const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
-  let token = store.infoTransaction.token === 'vlx2' ? "vlx" : store.infoTransaction.token;
-  const tokenLabel = (wallet.coin.nickname || token).toUpperCase();
+  const tokenLabel = (wallet.coin.nickname || store.infoTransaction.token).toUpperCase();
   const feeToken = (wallet.network.txFeeIn || wallet.coin.nickname).toUpperCase();
   const r_amount = roundNumber(store.infoTransaction.amount, {decimals: 4});
   const amount = roundHuman(r_amount);
 	//const amount = roundHuman2(r_amount, {decimals: 10});
 	const txFee = roundHuman2(store.infoTransaction.fee, {decimals: 6});
   return (
-        <View style={styles.container}>
-          <View style={styles.detailsHistory}>
-            <View>
-              <View style={styles.badge}>
-              {thumbnail(store.infoTransaction.type)}
-              </View>
-            </View>
+		<View style={styles.container}>
+			<View style={styles.detailsHistory}>
+				<View>
+					<View style={styles.badge}>
+					{thumbnail(store.infoTransaction.type)}
+					</View>
+				</View>
 
-            <View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20, paddingVertical: 5}}>
-            <Text style={amountStyle(store.infoTransaction.type)}>
-              {index(store.infoTransaction.type)}
-              {amount} {tokenLabel}
-            </Text>
-            </View>
-            <Text style={{color: "rgba(255, 255, 255, 0.70)", fontFamily: "Fontfabric-NexaRegular", lineHeight: 20}}>
-              {moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
-            </Text>
+				<View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20, paddingVertical: 5}}>
+				<Text style={amountStyle(store.infoTransaction.type)}>
+					{index(store.infoTransaction.type)}
+					{amount} {tokenLabel}
+				</Text>
+				</View>
+				<Text style={{color: "rgba(255, 255, 255, 0.70)", fontFamily: "Fontfabric-NexaRegular", lineHeight: 20}}>
+					{moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
+				</Text>
 
-          </View>
+			</View>
 
-          <View style={styles.viewPt} />
-          <ScrollView>
-           <View style={styles.lineMonoRow}>
+			<View style={styles.viewPt} />
+			<ScrollView>
+			 <View style={styles.lineMonoRow}>
 
-            <Text style={styles.detail}>{lang.sender}:</Text>
-            <View style={styles.userHistoryRow}>
-            <Icon
-                name="ios-copy"
-                onPress={writeToClipboardSourceAcc}
-                style={[styles.viewPt, {fontSize: 20,} ]}
-            />
-              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardSourceAcc}>
-              {store.infoTransaction.from}
-            </Text>
-            </View>
-          </View>
-          <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>{lang.recipient}:</Text>
-            <View style={styles.userHistoryRow}>
-            <Icon
-                name="ios-copy"
-                onPress={writeToClipboardDestAcc}
-                style={[styles.viewPt, {fontSize: 20} ]}
-            />
-              <Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardDestAcc}>
-              {store.infoTransaction.to}
-            </Text>
-            </View>
-          </View>
+				<Text style={styles.detail}>{lang.sender}:</Text>
+				<View style={styles.userHistoryRow}>
+				<Icon
+						name="ios-copy"
+						onPress={writeToClipboardSourceAcc}
+						style={[styles.viewPt, {fontSize: 20,} ]}
+				/>
+					<Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardSourceAcc}>
+					{store.infoTransaction.from}
+				</Text>
+				</View>
+			</View>
+			<View style={styles.lineMonoRow}>
+				<Text style={styles.detail}>{lang.recipient}:</Text>
+				<View style={styles.userHistoryRow}>
+				<Icon
+						name="ios-copy"
+						onPress={writeToClipboardDestAcc}
+						style={[styles.viewPt, {fontSize: 20} ]}
+				/>
+					<Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardDestAcc}>
+					{store.infoTransaction.to}
+				</Text>
+				</View>
+			</View>
 
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.amount}:</Text>
@@ -154,25 +141,24 @@ export default (store, web3t) => {
             </Text>
           </View>
 
-          <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>{lang.externalId}:</Text>
-            <View style={styles.userHistoryRow1}>
-            <Icon
-                name="md-open"
-                onPress={() => {Linking.openURL(txurl)}}
-                onLongPress={writeToClipboardId}
-                style={[styles.viewPt, {fontSize: 20} ]}
-            />
-              <Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(txurl)}} onLongPress={writeToClipboardId}>
-              {store.infoTransaction.tx}
-            </Text>
-            </View>
+			<View style={styles.lineMonoRow}>
+				<Text style={styles.detail}>{lang.externalId}:</Text>
+				<View style={styles.userHistoryRow1}>
+				<Icon
+						name="md-open"
+						onPress={() => {Linking.openURL(txurl)}}
+						onLongPress={writeToClipboardId}
+						style={[styles.viewPt, {fontSize: 20} ]}
+				/>
+					<Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(txurl)}} onLongPress={writeToClipboardId}>
+					{store.infoTransaction.tx}
+				</Text>
+				</View>
 
-          </View>
-          <View style={styles.mbXScroll}/>
-          </ScrollView>
+			</View>
+			<View style={styles.mbXScroll}/>
+			</ScrollView>
 
-
-        </View>
+		</View>
   )
 };

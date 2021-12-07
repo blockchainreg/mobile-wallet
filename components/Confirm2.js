@@ -4,7 +4,9 @@ import { View, Text } from "native-base";
 import getLang from '../wallet/get-lang.js';
 
 export default ({store, ...props}) => {
-
+	  if (!props.confirmation) {
+	  	return null;
+		}
     const lang = getLang(store);
     return (
       <ConfirmDialog
@@ -23,9 +25,7 @@ export default ({store, ...props}) => {
 					onPress: props.onNo
         }}
 			>
-				<View>
-					<Text>{props.confirmation}</Text>
-				</View>
+			 {props.confirmation()} 				 
 			</ConfirmDialog>
     );
   }

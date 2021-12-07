@@ -91,7 +91,7 @@
         return cb(null, data);
       }
       if (toString$.call(data != null ? data.text : void 8).slice(8, -1) !== 'String') {
-        console.log(data);
+        //console.log(data);
       }
       if (toString$.call(data != null ? data.text : void 8).slice(8, -1) !== 'String') {
         return cb("expected text");
@@ -332,15 +332,18 @@
       deadline: deadline
     }).end(function(err, resp){
       if (err != null) {
-        return cb(err);
+      	console.log("[BUSD - Velas Network | getTransactions] Error, empty array returned");
+        return cb(null, []);
       }
       return jsonParse(resp.text, function(err, result){
         var txs;
         if (err != null) {
-          return cb(err);
+					console.log("[BUSD - Velas Network | getTransactions | jsonParse] Error, empty array returned");
+					return cb(null, []);
         }
         if (toString$.call(result != null ? result.result : void 8).slice(8, -1) !== 'Array') {
-          return cb("Unexpected result");
+					console.log("[BUSD - Velas Network | getTransactions | jsonParse] Error, Unexpected result");
+					return cb(null, []);
         }
         txs = map(transformTx(network, 'external'))(
         filter(function(it){
@@ -803,12 +806,11 @@
     }
   ];
   getContractInstance = function(web3, addr, swap){
-  	console.log("web3.eth.Contract(abi, addr)", web3.eth.contract(abi).at(addr));
     switch (false) {
-    case toString$.call(web3.eth.contract).slice(8, -1) !== 'Function':
-      return web3.eth.contract(abi).at(addr);
-    default:
-      return new web3.eth.Contract(abi, addr);
+			case toString$.call(web3.eth.contract).slice(8, -1) !== 'Function':
+				return web3.eth.contract(abi).at(addr);
+			default:
+				return new web3.eth.Contract(abi, addr);
     }
   };
   out$.getBalance = getBalance = function(arg$, cb){

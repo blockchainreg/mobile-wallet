@@ -57,6 +57,7 @@
     nothingToShow: "Tidak ada yang bisa dilihat di sini!",
     makeTx: "Lakukan transaksi pertama Anda atau ubah filter Anda.",
     fee: "Biaya",
+		bridgeFee: "Bridge fee",
     delete: "Hapus",
     created: "Dibuat",
     manageAccount: "Kelola Akun",
@@ -273,6 +274,7 @@
     enterCustom: "Masukkan jaringan khusus",
     currentBlock: "Blok saat ini",
     timeUntilEnd: "Waktu sampai akhir",
-    staking: "Staking"
+    staking: "Staking",
+		chooseNetwork: "Choose networks",
   };
 }.call(this));

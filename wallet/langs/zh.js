@@ -50,6 +50,7 @@
     nothingToShow: "这里无内容！",
     makeTx: "进行第一次交易或更改选项。",
     fee: "费用",
+		bridgeFee: "Bridge fee",
     delete: "删除",
     created: "创建",
     manageAccount: "管理账户",
@@ -246,6 +247,7 @@
     enterCustom: "输入自定义网络",
     currentBlock: "目前区块",
     timeUntilEnd: "到结束的时间",
-    staking: "质押"
+    staking: "质押",
+		chooseNetwork: "Choose network"
   };
 }.call(this));

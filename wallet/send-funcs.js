@@ -3,7 +3,11 @@ import Spinner from "../utils/spinner";
 import {Transaction} from "../models/Transaction";
 import bs58 from "bs58";
 import swapNativeToEvm from "./Native-swap";
-import { formatValue } from "../utils/format-value";
+import roundHuman from "../wallet/round-human";
+import {Text, View} from "native-base";
+import {Linking, ScrollView} from "react-native";
+import React from "react";
+import Images from "../Images.js";
 
 (function(){
 	var toJS, Alert, ref$, times, minus, div, createTransaction, pushTx, isValidAddress, changeAmount, calcCryptoFromEur, calcCryptoFromUsd, notifyFormResult, getNameMask, resolveAddress, window, navigate, close, round, round5, round5edit, topup, getPrimaryInfo, createPendingTx, rebuildHistory, map, getAddressLink, getAddressTitle, web3, calcFee, confirm, getLang, applyTransactions;
@@ -30,22 +34,25 @@ import { formatValue } from "../utils/format-value";
 	web3 = require('./web3.js');
 	calcFee = require('./api.js').calcFee;
 	confirm = require('./pages/confirmation.js').confirm;
+	const confirm2 = require('./pages/confirmation.js').confirm2;
 	getLang = require('./get-lang.js');
 	applyTransactions = require('./apply-transactions.js');
+	var contracts = require('./contracts.js')
+	
 	const confirmrn = (store, message, yesButtonText, cb) =>
-			Alert.alert(
-					"Confirmation",
-					message,
-					[
-						{
-							text: 'Cancel',
-							onPress: () => cb(false),
-							style: 'cancel',
-						},
-						{text: yesButtonText, onPress: () => cb(true)},
-					],
-					{cancelable: false},
-			);
+		Alert.alert(
+			"Confirmation",
+			message,
+			[
+				{
+					text: 'Cancel',
+					onPress: () => cb(false),
+					style: 'cancel',
+				},
+				{text: yesButtonText, onPress: () => cb(true)},
+			],
+			{cancelable: false},
+		);
 	module.exports = function(store, web3t){
 		var lang, sendTo, send, wallet, color, primaryButtonStyle, defaultButtonStyle, sendTx, performSendSafe, performSendUnsafe, checkEnough, checkRecipientAddress, sendMoney, sendEscrow, sendAnyway, sendTitle, cancel, recipientChange, getValue, amountChange, performAmountEurChange, performAmountUsdChange, amountEurChange, amountUsdChange, encodeDecode, showData, showLabel, whenEmpty, debug, history, network, invoice, token, feeToken, ref$, isData, chooseAuto, chooseCheap, chosenCheap, chosenAuto, sendOptions, pending, calcAmountAndFee, useMax, useMaxTryCatch, useMaxAmount;
 		if (store == null || web3t == null) {
@@ -67,10 +74,10 @@ import { formatValue } from "../utils/format-value";
 		defaultButtonStyle = {
 			color: color
 		};
-
-
+		
+		
 		const executeContractData = function(cb){
-			var chosenNetwork, token, ref$, wallet, contractAddress, data, networkType, value, sendTo, tokenAddress, network, minPerTxRaw, minPerTx, maxPerTxRaw, maxPerTx, homeFeeRaw, homeFee, contractHomeFee, minAmountPerTx, receiver, amountToSend, ONE_PERCENT, $recipient, hex, err, ethAddress;
+			var chosenNetwork, token, ref$, wallet;
 			if (store.current.send.chosenNetwork == null) {
 				return cb(null);
 			}
@@ -81,120 +88,130 @@ import { formatValue } from "../utils/format-value";
 				return cb(null);
 			}
 			wallet = store.current.send.wallet;
-			contractAddress = store.current.send.contractAddress;
-			data = "";
-			networkType = store.current.network;
-			/* Swap from ERC20 to LEGACY (VLX) */
-			if (token === 'vlx_erc20' && chosenNetwork.id === 'legacy') {
-				console.log("Swap from ERC20 to LEGACY (VLX)");
-				send.swap = true;
-				value = store.current.send.amountSend;
-				sendTo = web3t.velas.ForeignBridgeNativeToErc.address;
-				value = toHex(times(value, Math.pow(10, 18)));
-				tokenAddress = web3t.velas.ERC20BridgeToken.address;
-				network = wallet.network;
-				minPerTxRaw = web3t.velas.HomeBridgeNativeToErc.minPerTx();
-				minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
-				console.log("home minPerTxRaw", minPerTxRaw);
-				maxPerTxRaw = web3t.velas.HomeBridgeNativeToErc.maxPerTx();
-				maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-				console.log("Home maxPerTxRaw", maxPerTxRaw);
-				homeFeeRaw = web3t.velas.ForeignBridgeNativeToErc.getHomeFee();
-				homeFee = div(homeFeeRaw, Math.pow(10, network.decimals));
-				contractHomeFee = times(send.amountSend, homeFee);
-				minAmountPerTx = plus(minPerTx, contractHomeFee);
-				console.log("minAmountPerTx", minAmountPerTx);
-				if (+send.amountSend < +minAmountPerTx) {
-					return cb("Min amount per transaction is " + minAmountPerTx + " VLX");
+			var swaps = contracts({store, web3t});
+			
+			var dummy = function(a, b, cb){
+				return cb(null);
+			};
+			var func = (function(){
+				switch (false) {
+					
+					case !(token === 'usdt_erc20' && chosenNetwork.id === 'vlx_usdt'):
+						/* Swap from USDT ETHEREUM to USDT VELAS  */
+						return swaps.eth_usdtUsdt_velasSwap;
+					
+					case !(token === 'vlx_usdt' && chosenNetwork.id === 'usdt_erc20'):
+						/* Swap from USDT VELAS to USDT ETHEREUM */
+						return swaps.usdt_velasEth_usdtSwap;
+					
+					case !(token === 'busd' && chosenNetwork.id === 'vlx_busd'):
+						/* Swap from BUSD to BUSD VELAS */
+						return swaps.busd_to_busd_velas_swap;
+					
+					case !(token === 'vlx_busd' && chosenNetwork.id === 'busd'):
+						/* Swap from BUSD VELAS to BUSD */
+						return swaps.busd_velas_to_busd_swap;
+					
+					case !(token === 'usdc' && chosenNetwork.id === 'vlx_usdc'):
+						/* Swap from USDC to USDC VELAS */
+						return swaps.usdc_to_usdc_velas_swap;
+					
+					case !(token === 'vlx_usdc' && chosenNetwork.id === 'usdc'):
+						/* Swap from USDC VELAS to USDC */
+						return swaps.usdc_velas_to_usdc_swap;
+					
+					case !((token === 'vlx_evm' || token === 'vlx2') && chosenNetwork.id === 'vlx_erc20'):
+						/* Swap from VELAS EVM to VLX ERC20 (ETH) */
+						return swaps.vlx_evm_to_vlx_erc20_swap;
+					
+					case !(token === 'vlx_erc20' && (chosenNetwork.id === 'vlx_evm' || chosenNetwork.id === 'vlx2')):
+						/* Swap from VLX ERC20 (ETH) to VELAS EVM  */
+						return swaps.vlx_erc20_to_velas_swap;
+					
+					case !(token === 'eth' && chosenNetwork.id === 'vlx_eth'):
+						/* Swap from VLX (ETH) to ETHEREUM */
+						return swaps.eth_to_velas_eth_swap;
+					
+					case !(token === 'vlx_eth' && chosenNetwork.id === 'eth'):
+						/* Swap from VLX (ETH) to ETHEREUM */
+						return swaps.velas_eth_to_eth_swap;
+					
+					case !(token === 'bsc_vlx' && chosenNetwork.id === 'vlx_evm'):
+						/* Swap from VLX (BSC) to VLX EVM */
+						return swaps.bsc_velas_to_velas_evm_swap;
+					
+					case !(token === 'vlx_evm' && chosenNetwork.id === 'bsc_vlx'):
+						/* Swap from VLX (EVM) to VLX (BSC */
+						return swaps.velas_evm_to_bsc_swap;
+					
+					case !(token === 'vlx_huobi' && chosenNetwork.id === 'vlx_evm'):
+						/* Swap from VLX (HECO) to VLX (EVM) */
+						return swaps.heco_to_velas_evm_swap;
+					
+					case !(token === 'vlx_evm' && chosenNetwork.id === 'vlx_huobi'):
+						/* Swap from VLX (EVM) to VLX (HECO) */
+						return swaps.velas_evm_to_heco_swap;
+					
+					default:
+						return dummy;
 				}
-				if (+send.amountSend > +maxPerTx) {
-					return cb("Max amount per transaction is " + maxPerTx + " VLX");
-				}
-				data = web3t.velas.ERC20BridgeToken.transferAndCall.getData(sendTo, value, toEthAddress(send.to));
-				send.data = data;
-				send.contractAddress = web3t.velas.ERC20BridgeToken.address;
-				send.amount = 0;
-				send.amountSend = 0;
-			}
-			/* Swap from LEGACY (VLX) to ERC20 */
-			if (token === 'vlx2' && chosenNetwork.id === 'vlx_erc20') {
-				store.current.send.contractAddress = chosenNetwork.HomeBridge;
-				receiver = store.current.send.to;
-				network = wallet.network;
-				minPerTxRaw = web3t.velas.HomeBridgeNativeToErc.minPerTx();
-				minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
-				maxPerTxRaw = web3t.velas.HomeBridgeNativeToErc.maxPerTx();
-				maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-				console.log("maxPerTxRaw", maxPerTxRaw);
-				homeFeeRaw = web3t.velas.HomeBridgeNativeToErc.getHomeFee();
-				homeFee = div(homeFeeRaw, Math.pow(10, network.decimals));
-				console.log("relay tokens to receiver", receiver);
-				data = web3t.velas.HomeBridgeNativeToErc.relayTokens.getData(receiver);
-				amountToSend = plus(send.amountSendFee, send.amountSend);
-				contractHomeFee = times(send.amountSend, homeFee);
-				console.log("contract-home-fee", contractHomeFee);
-				ONE_PERCENT = times(minPerTx, "0.01");
-				minAmountPerTx = plus(plus(plus(minPerTx, contractHomeFee), ONE_PERCENT), "2");
-				if (+send.amountSend < +minAmountPerTx) {
-					return cb("Min amount per transaction is " + minAmountPerTx + " VLX");
-				}
-				if (+send.amountSend > +maxPerTx) {
-					return cb("Max amount per transaction is " + maxPerTx + " VLX");
-				}
-			}
-			/**
-			 * Swap into native */
-			if (chosenNetwork.id === 'vlx_native') {
-				$recipient = "";
-				try {
-					var recipient = (function(){
-						switch (false) {
-							case !send.to.startsWith('V'):
-								return toEthAddress(send.to);
-							default:
-								return send.to;
-						}
-					}());
-					$recipient = bs58.decode(recipient);
-					hex = $recipient.toString('hex');
-				} catch (e$) {
-					err = e$;
-					return cb("Please enter valid address");
-				}
-				ethAddress = '0x' + hex;
-				data = web3t.velas.EvmToNativeBridge.transferToNative.getData(ethAddress);
-				store.current.send.contractAddress = web3t.velas.EvmToNativeBridge.address;
-			}
-
-			if (((ref$ = chosenNetwork.id) === 'evm' || ref$ === 'legacy') && (token === 'vlx_native')) {
-				const ownerPrivateKey = wallet.privateKey;
-				const lamports = times(store.current.send.amountSend,  Math.pow(10, 9));
-				let addr = store.current.send.to;
-				if (ref$ === "legacy") {
-					addr = toEthAddress(addr);
-				}
-				data = swapNativeToEvm(ownerPrivateKey, lamports, addr)	
+			}());
+			
+			if( typeof func !== 'function'){
+				return cb("func type is not a function.");
 			}
 			
-			send.data = data;
-			return cb(null);
+			func(token, chosenNetwork, function(err, data) {
+				var ref$, $recipient, hex, ethAddress;
+				if (err != null) {
+					return cb(err);
+				}
+				
+				
+				/**
+				 * Swap into native */
+				if (chosenNetwork.id === 'vlx_native') {
+					$recipient = "";
+					try {
+						$recipient = bs58.decode(send.to);
+						hex = $recipient.toString('hex');
+					} catch (e$) {
+						return cb("Please enter valid address");
+					}
+					ethAddress = '0x' + hex;
+					data = web3t.velas.EvmToNativeBridge.transferToNative.getData(ethAddress);
+					store.current.send.contractAddress = web3t.velas.EvmToNativeBridge.address;
+				}
+				
+				if (((ref$ = chosenNetwork.id) === 'vlx_evm' || ref$ === 'vlx2') && (token === 'vlx_native')) {
+					const ownerPrivateKey = wallet.privateKey;
+					const lamports = times(store.current.send.amountSend, Math.pow(10, 9));
+					let addr = store.current.send.to;
+					if (ref$ === "vlx2") {
+						addr = toEthAddress(addr);
+					}
+					data = swapNativeToEvm(ownerPrivateKey, lamports, addr)
+				}
+				
+				send.data = data;
+				return cb(null);
+			})
 		};
-
-
+		
+		
 		sendTx = function(transaction, cb){
 			if(+transaction.amountFee === 0){
 				return cb("Fee must be more then 0");
 			}
-			const chosenNetwork = store.current.send.chosenNetwork;
 			const receiver = store.current.send.contractAddress != null ? store.current.send.contractAddress : transaction.recipient;
 			const recipient = (function(){
 				switch (false) {
-					case !((typeof chosenNetwork != 'undefined' && chosenNetwork !== null) && chosenNetwork.id === 'legacy'):
+					case !receiver.startsWith('V'):
 						return toEthAddress(receiver);
 					default:
 						return receiver;
 				}
-			}())
+			}());
 			
 			/* Mark transaction as a swap in case of native to legacy swap! */
 			transaction.swap = store.current.send.isSwap
@@ -210,15 +227,64 @@ import { formatValue } from "../utils/format-value";
 					return cb(err);
 				}
 				var currency = (transaction.coin.nickname || transaction.coin.token).toUpperCase();
-				
+				const amount = roundHuman(transaction.amount);
 				/* Important cover sending tx in setImmediate to avoid "send freezing" screen (for solana derivatives tokens). */
 				setImmediate(() => {
-					const formattedAmount = formatValue(transaction.amount);
-					let confirmText = "Are you sure to send " + formattedAmount + " " + currency + " to " + transaction.recipient;
-					if(store.current.send.isSwap === true){
-						confirmText = "Are you sure to swap " + formattedAmount + " " + currency + " to " + store.current.send.to;
+					let confirmComponent = () => {
+						const {url, addressLink} = wallet.network.api;
+						const txurl = addressLink ? addressLink.replace(":address", transaction.recipient) :`${url}/address/${store.current.send.to}`;
+						const amountStyle = {fontWeight: "bold"};
+						const linkStyle = {textDecorationLine: 'underline', color: "blue"}
+						return (
+							<ScrollView>
+								<Text>
+									<Text >{"Are you sure to send "}</Text><Text style={amountStyle}>{amount} {currency}</Text>
+									<Text >{" to "}</Text>
+									<Text 
+										style={linkStyle}
+										onPress={() => {Linking.openURL(txurl)}}
+									>
+										{store.current.send.to}
+									</Text>?
+								</Text>
+							</ScrollView>
+						)
 					}
-					return confirm(store, confirmText, function (agree) {
+					if(store.current.send.isSwap === true && store.current.send.chosenNetwork){
+						confirmComponent = () => {
+							const network = wallet.network.group;
+							const walletTo = store.current.account.wallets.find((x) => x.coin.token === store.current.send.chosenNetwork.referTo);
+							const networkTo = walletTo.network.group;
+							const {url, addressLink} = walletTo.network.api;
+							const txurl = addressLink ? addressLink.replace(":address", store.current.send.to) :`${url}/address/${store.current.send.to}`;
+							
+							const boldStyle = {fontWeight: "bold"};
+							const networkStyle = {fontWeight: "bold", color: Images.colorBlue};
+							const linkStyle = {textDecorationLine: 'underline', color: "blue"};
+							const borderStyle = {width: "100%", padding: 5, height: 20, display: "flex"}
+							return (
+								<ScrollView>
+									<Text>
+										<Text >{"Are you sure to swap "}</Text><Text style={boldStyle}>{amount} {currency}</Text>
+										<Text >{" from "}</Text>
+										<Text style={networkStyle}>{`${network} network`}</Text>
+										<Text >{" to "}</Text>
+										<Text style={[networkStyle, {marginBottom: 5}]}>{`${networkTo} network`}</Text>?
+									</Text>
+									<View style={borderStyle}></View>
+									<Text style={boldStyle}>{"Receiver: "}</Text>
+									<Text
+										style={linkStyle}
+										onPress={() => {Linking.openURL(txurl)}}
+									>
+										{store.current.send.to}
+									</Text>
+								</ScrollView>
+							)
+							// confirmText = "Are you sure to swap " + amount + " " + currency + " to " + store.current.send.to;
+						}
+					}
+					return confirm2(store, confirmComponent, function (agree) {
 						if (!agree) {
 							store.current.creatingTransaction = false;
 							return cb("You are not agree");
@@ -263,41 +329,50 @@ import { formatValue } from "../utils/format-value";
 			});
 		};
 		performSendSafe = function(cb){
-			console.log("[performSendSafe]")
 			return resolveAddress(
-					{
-						store: store,
-						address: send.to,
-						coin: send.coin,
-						network: send.network
-					}, function(err, to){
-						if(err !== null){
-							var errMessage = err.message ? err.message : err
-							send.error = errMessage;
-							return cb(errMessage);
-						}
-						const Tx = new Transaction(send.wallet, send.network, send.to, send.amountSend, send.coin, send.amountSendFee, send.feeType, send.txType, send.data);
-						console.log("Tx.amountFee", Tx.amountFee)
-						return sendTx(Tx, cb);
-					});
+				{
+					store: store,
+					address: send.to,
+					coin: send.coin,
+					network: send.network
+				}, function(err, to){
+					if(err !== null){
+						var errMessage = err.message ? err.message : err
+						send.error = errMessage;
+						return cb(errMessage);
+					}
+					const Tx = new Transaction(send.wallet, send.network, send.to, send.amountSend, send.coin, send.amountSendFee, send.feeType, send.txType, send.data);
+					console.log("Tx.amountFee", Tx.amountFee)
+					return sendTx(Tx, cb);
+				});
 		};
 		performSendUnsafe = function(cb){
 			return sendTx((import$({
 				wallet: wallet
 			}, send)), cb);
 		};
+		
 		let sendingAmountMoreThanZero = function () {
 			return +send.amountSend > 0;
 		};
+		
 		checkEnough = function(cb){
 			var amount, ref$, err;
-
 			if(!sendingAmountMoreThanZero()){
 				return cb("Amount should be more than 0");
 			}
-
+			const txFeeIn = wallet != null ? (ref$ = wallet.network) != null ? ref$.txFeeIn : void 8 : void 8;
+			const fee = (function(){
+				var ref$;
+				switch (false) {
+					case !(txFeeIn == null || txFeeIn !== (wallet != null ? (ref$ = wallet.coin) != null ? ref$.token : void 8 : void 8)):
+						return 0;
+					default:
+						return send.amountSendFee;
+				}
+			}());
 			try {
-				amount = minus(minus(minus(wallet.balance, send.amountSend), (ref$ = wallet.pendingSent) != null ? ref$ : 0), send.amountSendFee);
+				amount = minus(minus(minus(wallet.balance, send.amountSend), (ref$ = wallet.pendingSent) != null ? ref$ : 0), fee);
 				if (+amount < 0) {
 					return cb("Insufficient funds");
 				}
@@ -307,12 +382,12 @@ import { formatValue } from "../utils/format-value";
 				return cb(err);
 			}
 		};
+		
 		sendMoney = function(){
 			if (wallet.balance === '...') {
 				return;
 			}
 			if (send.sending === true) {
-				console.log("send.sending === true")
 				return;
 			}
 			return checkEnough(function(err){
@@ -325,6 +400,14 @@ import { formatValue } from "../utils/format-value";
 					var ref$;
 					send.sending = false;
 					if (err != null) {
+						// Auto clean-up error only in case user pressed cancel button in confirmation modal. 
+						if ((err || "").indexOf("You are not agree") > -1) {
+							send.error = ((ref$ = err.message) != null ? ref$ : err) + "";
+							setTimeout(()=>{
+								send.error = ""
+							}, 500);
+							return;
+						}
 						return send.error = ((ref$ = err.message) != null ? ref$ : err) + "";
 					}
 					notifyFormResult(send.id, null, data);
@@ -349,7 +432,6 @@ import { formatValue } from "../utils/format-value";
 			}, function(err){});
 		};
 		const beforeSendAnyway = function(){
-			console.log(" - [beforeSendAnyway]")
 			var cb;
 			cb = console.log;
 			return executeContractData(function(err){
@@ -381,20 +463,20 @@ import { formatValue } from "../utils/format-value";
 			console.log("checkRecipientAddress");
 			const recipientAddress = send.to;
 			return resolveAddress(
-					{
-						store: store,
-						address: recipientAddress,
-						coin: send.coin,
-						network: send.network
-					},
-					function(err, to) {
-						if (err !== null) {
-							var errMessage = err.message ? err.message : err;
-							return send.error = errMessage;
-						}
-						send.error = "";
-						send.to = recipientAddress;
-					})
+				{
+					store: store,
+					address: recipientAddress,
+					coin: send.coin,
+					network: send.network
+				},
+				function(err, to) {
+					if (err !== null) {
+						var errMessage = err.message ? err.message : err;
+						return send.error = errMessage;
+					}
+					send.error = "";
+					send.to = recipientAddress;
+				})
 		};
 		recipientChange = function(event){
 			var ref$;
@@ -524,9 +606,23 @@ import { formatValue } from "../utils/format-value";
 			return navigate(store, web3t, 'invoice');
 		};
 		token = (send.coin.nickname + send.coin.token).toUpperCase();
-		feeToken = ((ref$ = wallet.network.txFeeIn) != null
-				? ref$
-				: (send.coin.nickname || send.coin.token)).toUpperCase();
+		const tokenDisplay = ((ref$ = wallet.coin.token) != null ? ref$ : "").toUpperCase();
+		//console.log("tokenDisplay", tokenDisplay);
+		feeToken = (function(){
+			switch (false) {
+				case ['VLX2','VLX_EVM','VLX_BUSD','VLX_ETH','VLX_USDT','VLX_NATIVE','VLX_EVM_LEGACY'].indexOf(tokenDisplay) === -1 :
+					return 'VLX';
+				case ['ETH_LEGACY','USDT_ERC20','VLX_ERC20','USDC','USDT_ERC20_LEGACY'].indexOf(tokenDisplay) === -1:
+					return 'ETH';
+				// case bridgeFeeToken == null:
+				// 	return bridgeFeeToken;
+				case wallet.network.txFeeIn == null:
+					return wallet.network.txFeeIn;
+				default:
+					return tokenDisplay;
+			}
+		}());
+		feeToken = feeToken.toUpperCase();
 		isData = ((ref$ = send.data) != null ? ref$ : "").length > 0;
 		chooseAuto = function(){
 			send.feeType = 'auto';
@@ -539,8 +635,8 @@ import { formatValue } from "../utils/format-value";
 		chosenCheap = send.feeType === 'cheap' ? 'chosen' : "";
 		chosenAuto = send.feeType === 'auto' ? 'chosen' : "";
 		sendOptions = (ref$ = send.coin.txTypes) != null
-				? ref$
-				: [];
+			? ref$
+			: [];
 		pending = wallet.pendingSent + ' ' + token;
 		calcAmountAndFee = function(amountSend, trials, cb){
 			var account;
@@ -576,8 +672,8 @@ import { formatValue } from "../utils/format-value";
 					return cb("Fee cannot be calculated");
 				}
 				next = amountSendFee != null
-						? amountSendFee
-						: div(10, Math.pow(10, send.network.decimals));
+					? amountSendFee
+					: div(10, Math.pow(10, send.network.decimals));
 				nextAmount = minus(amountSend, next);
 				nextTrials = trials - 1;
 				return calcAmountAndFee(nextAmount, nextTrials, cb);

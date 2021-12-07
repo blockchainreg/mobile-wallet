@@ -118,7 +118,7 @@
     "react-native-sliding-up-down-panels": "1.0.0",
     "react-native-svg": "12.1.1",
     "react-native-svg-uri": "^1.2.3",
-    "react-native-swipe-list-view": "1.5.3",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-swiper": "1.5.14",
     "react-native-switch-pro": "1.0.2",
     "react-native-tab-view": "^3.0.1",

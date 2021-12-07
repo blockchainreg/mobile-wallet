@@ -161,7 +161,12 @@
     amount = div(t.value, dec);
     time = t.timeStamp;
     url = url + "/tx/" + tx;
-    ref$ = t.moreInfo.info, gasUsed = ref$.gasUsed, cumulativeGasUsed = ref$.cumulativeGasUsed, effectiveGasPrice = ref$.effectiveGasPrice, status = ref$.status;
+    //console.log("t", t);
+    ref$ = t.moreInfo ? t.moreInfo.info : null;
+    gasUsed = ref$ ? ref$.gasUsed : t.gasUsed;
+    cumulativeGasUsed = ref$ ? ref$.cumulativeGasUsed : gasUsed;
+    effectiveGasPrice = ref$ ? ref$.effectiveGasPrice : 0;
+    status = ref$ ? ref$.status : t.status;
     fee = div(times(cumulativeGasUsed, effectiveGasPrice), dec);
     recipientType = ((ref$ = t.input) != null ? ref$ : "").length > 3 ? 'contract' : 'regular';
     return {
@@ -247,7 +252,8 @@
     }).end(function(err, resp){
       var ref$;
       if (err != null) {
-        return cb("cannot execute query - err " + ((ref$ = err.message) != null ? ref$ : err));
+        console.log("cannot execute query - err " + ((ref$ = err.message) != null ? ref$ : err));
+        return cb(null, []);
       }
       return jsonParse(resp.text, function(err, result){
         var ref$;
@@ -327,7 +333,8 @@
     }).end(function(err, resp){
       var ref$;
       if (err != null) {
-        return cb("cannot execute query - err " + ((ref$ = err.message) != null ? ref$ : err));
+        console.log("cannot execute query - err " + ((ref$ = err.message) != null ? ref$ : err));
+        return cb(null, [])
       }
       return jsonParse(resp.text, function(err, result){
         var ref$, txs;
@@ -561,6 +568,7 @@
     return makeQuery(network, 'eth_getBalance', [address, 'latest'], function(err, number){
       var dec, balance;
       if (err != null) {
+        console.log("eth getBalance finish with error");
         return cb(err);
       }
       dec = getDec(network);
@@ -577,7 +585,8 @@
     }).end(function(err, resp){
       var ref$;
       if (err != null) {
-        return cb("cannot execute query - err " + ((ref$ = err.message) != null ? ref$ : err));
+        console.log("cannot execute query - err " + ((ref$ = err.message) != null ? ref$ : err));
+        return cb(null, []);
       }
       return jsonParse(resp.text, function(err, result){
         if (err != null) {

@@ -114,7 +114,8 @@
     amount = div(t.value, dec);
     time = t.timeStamp;
     url = url + "/tx/" + tx;
-    fee = div(times(t.cumulativeGasUsed, t.gasPrice), dec);
+    const gasUsed = t.cumulativeGasUsed || t.gasUsed;
+    fee = div(times(gasUsed, t.gasPrice), dec);
     return {
       network: network,
       tx: tx,

@@ -50,6 +50,7 @@
     nothingToShow: "لا شيء لتراه هنا!",
     makeTx: "قم بإجراء معاملتك الأولى أو قم بتغيير عوامل التصفية الخاصة بك.",
     fee: "رسوم",
+		bridgeFee: "Bridge fee",
     delete: "حذف",
     created: "إنشاء",
     manageAccount: "إدارة الحساب",
@@ -246,6 +247,7 @@
     enterCustom: "أدخل شبكة مخصصة",
     currentBlock: "الكتلة الحالية",
     timeUntilEnd: "الوقت حتى النهاية",
-    staking: "تحصيص"
+    staking: "تحصيص",
+		chooseNetwork: "Choose networks",
   };
 }.call(this));

@@ -76,6 +76,7 @@
     nothingToShow: "Здесь ничего нет!",
     makeTx: "Сделайте свою первую транзакцию или измените фильтры.",
     fee: "Комиссия",
+		bridgeFee: "Комиссия бриджа",
     delete: "удалить",
     created: "Создано",
     manageAccount: "Управлять аккаунтом",
@@ -248,6 +249,7 @@
     enterCustom: "Ввести сеть сручную",
     currentBlock: "Текущий блок",
     timeUntilEnd: "Времени до конца",
-    staking: "Стейкинг"
+    staking: "Стейкинг",
+		chooseNetwork: "Выберите сеть",
   };
 }).call(this);

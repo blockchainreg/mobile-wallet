@@ -9,6 +9,8 @@ import Store from './wallet/data-scheme.js';
 import web3 from './wallet/web3.js';
 import { saved } from './wallet/seed.js';
 import Confirm from './components/Confirm.js';
+import Confirm2 from './components/Confirm2.js';
+import BridgeDetailsModal from './components/BridgeDetailsModal.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HistoryDetail from './pages/HistoryDetail.js';
 
@@ -35,6 +37,8 @@ Store.current.isAutocompleteHidden = false;
 Store.current.refreshingBalances = false;
 Store.current.loadingDescriptions = [];
 Store.current.loadingSpinners = [];
+Store.current.networkDetails = {};
+Store.current.currentNetworkDetails = null
 
 //module specific defaults (end)
 //------------------------------
@@ -86,6 +90,24 @@ const Main = observer(({ store, current }) => {
         />
         :null
       }
+			{current.confirmationComponent
+				?<Confirm2
+					title={current.title}
+					confirmation={current.confirmationComponent}
+					onYes={() => {current.confirmationCallback(true)}}
+					onNo={() => {current.confirmationCallback(false)}}
+					store={store}
+				/>
+				:null
+			}
+			{current.currentNetworkDetails
+				?<BridgeDetailsModal
+					store={store}
+					data={current.currentNetworkDetails}
+					onNo={() => {current.bridgeInfoCallback(false)}}
+				/>
+				:null
+			}
       {page( {store, web3t })}
       {HistoryDetail({ store })}
     </Root>

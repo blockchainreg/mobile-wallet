@@ -50,6 +50,7 @@
     nothingToShow: "여긴 볼게 없어!",
     makeTx: "첫 거래를 하거나 필터를 변경합니다.",
     fee: "수수료",
+		bridgeFee: "Bridge fee",
     delete: "삭제하다",
     created: "만들다",
     manageAccount: "계정 관리",
@@ -246,6 +247,7 @@
     enterCustom: "사용자 지정 네트워크",
     currentBlock: "현재 블록",
     timeUntilEnd: "종료까지 시간",
-    staking: "스테이킹"
+    staking: "스테이킹",
+		chooseNetwork: "Choose networks",
   };
 }.call(this));

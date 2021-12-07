@@ -34,7 +34,7 @@ export default (props) => {
       <Header style={[props.transparent ? {backgroundColor: "transparent", borderBottomColor: "transparent"} : styles.headerBg, styles.marginTopAndroid]} androidStatusBarColor="black" noShadow={false}>
         <Left>
           {props.onBack && (
-            <BackButton onBack={props.onBack} style={props.greenBack ? styles.leftBtnColor : {color: "#fff"}} />
+            <BackButton onBack={props.onBack} style={props.greenBack ? styles.leftBtnColor : {color: "#fff", paddingHorizontal: 10}} />
             )}
             {props.onBackHandlerOnly && (
             <BackButton onBack={props.onBackHandlerOnly} transparent/>

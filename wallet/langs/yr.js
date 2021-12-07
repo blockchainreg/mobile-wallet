@@ -57,6 +57,7 @@
     nothingToShow: "Ko si nkankan lati rii nibi!",
     makeTx: "Ṣe iṣowo akọkọ rẹ tabi yi awọn asẹ rẹ pada.",
     fee: "Ọya",
+		bridgeFee: "Bridge fee",
     delete: "paarẹ",
     created: "Ti ṣẹda",
     manageAccount: "Ṣakoso akọọlẹ",
@@ -268,6 +269,7 @@
     enterCustom: "Tẹ nẹtiwọki aṣa sii",
     currentBlock: "Àkọsílẹ lọwọlọwọ",
     timeUntilEnd: "Akoko titi di opin",
-    staking: "okowo"
+    staking: "okowo",
+		chooseNetwork: "Choose network"
   };
 }.call(this));

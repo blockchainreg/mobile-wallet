@@ -326,6 +326,8 @@
       action: action,
       apikey: apikey,
       address: address,
+			page: 1,
+			offset: 20,
       sort: sort,
       startblock: startblock,
       endblock: endblock
@@ -334,15 +336,18 @@
       deadline: deadline
     }).end(function(err, resp){
       if (err != null) {
-        return cb(err);
+      	console.log("[BUSD] get txs error, returning empty array");
+        return cb(null, []);
       }
       return jsonParse(resp.text, function(err, result){
         var txs;
         if (err != null) {
-          return cb(err);
+					console.log("[BUSD] jsonParse error, returning empty array");
+					return cb(null, []);
         }
         if (toString$.call(result != null ? result.result : void 8).slice(8, -1) !== 'Array') {
-          return cb("Unexpected result");
+					console.log("[BUSD] response, unexpected result, returning empty array");
+					return cb(null, []);
         }
         txs = map(transformTx(network, 'external'))(
         filter(function(it){
@@ -480,6 +485,7 @@
               balanceEth = toEth(balance);
               toSend = amount;
               if (+balanceEth < +toSend) {
+              	console.log("toSend ", toSend, balanceEth )
                 return cb("Balance " + balanceEth + " is not enough to send tx " + toSend);
               }
               dataParsed = (function(){

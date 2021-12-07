@@ -14,10 +14,11 @@ import {
 	Content,
 	// Header,
 	Toast, Container,
+	Item
 } from "native-base";
 import StatusBar from "../components/StatusBar.js";
 import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, StyleSheet} from "react-native";
+import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, StyleSheet, FlatList, TouchableHighlight} from "react-native";
 import CustomRefreshControl from "../components/RefreshControl.js";
 import Footer from "./Footer.js";
 import walletsFuncs from "../wallet/wallets-funcs.js";
@@ -42,146 +43,140 @@ import { Observer } from "mobx-react";
 import { formatAmount } from "../utils/format-value";
 import { keys, groupBy, filter, objToPairs, map } from "prelude-ls";
 import WalletItem from "../components/WalletItem.js";
+// import { SwipeListView } from 'react-native-swipe-list-view';
+import SectionList from "../components/SectionList";
+import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 
 
-function import$(obj, src){
-	var own = {}.hasOwnProperty;
-	for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-	return obj;
+
+function getWalletsGroups({wallets}){
+	return groupBy(function(it){
+			return it.network.group
+		})(
+			filter(function(arg$){
+				var network = arg$.network;
+				return  network.disabled !== true
+			})(wallets));
 }
-//
-// function walletGroup(store, web3t, wallets, groups){
-//	
-// }
-//
-// function getWalletsGroups(wallets){
-// 	const walletsGroups = keys(
-// 		groupBy(function(it){
-// 			return it.network.group;
-// 		})(
-// 			filter(function(arg$){
-// 				var coin, network;
-// 				coin = arg$.coin, network = arg$.network;
-// 				return (coin.name + coin.token).toLowerCase().indexOf(store.current.search.toLowerCase()) !== -1 && network.disabled !== true;
-// 			})(wallets != null ? wallets : [])));
-// 	return walletsGroups;
-// }
 
-const wallets = (store, web3t) => {
-  const changePage = (tab) => () => {
-    store.current.page = tab;
-  };
 
-  const lang = getLang(store);
-  const wallets = walletsFuncs(store, web3t).wallets;
-	// const walletsGroups = this.getWalletsGroups(wallets);
+/* Render Wallet Item */
+const listItem = (store, web3t, wallets, wallet) => {
+	const lang = getLang(store);
 	
+	const { active, balance, balanceUsd, pending, usdRate, token } =
+		walletFuncs(store, web3t, wallets, wallet);
 	
-	
-	const listItem = (wallet) => {
-    const { active, balance, balanceUsd, pending, usdRate, token } =
-      walletFuncs(store, web3t, wallets, wallet);
-		
-		const chooseWallet = () => {
-			if (isNaN(wallet.balance)) return;
-			store.current.wallet = wallet.coin.token;
-			store.current.walletIndex = wallets.indexOf(wallet);
-			store.current.filter.length = 0;
-			store.current.filter.filterTxsTypes = ['IN', 'OUT'];
-			store.current.filter = {
-				token: wallet.coin.token
-			};
-			store.current.filterVal.temp = "";
-			store.current.filterVal.apply = "";
-			store.current.page = "wallet";
-			try {
-				applyTransactions(store);
-			} catch (err) {
-				return Toast.show({text: err + ""});
-			}
+	const chooseWallet = () => {
+		if (isNaN(wallet.balance)) return;
+		store.current.wallet = wallet.coin.token;
+		store.current.walletIndex = wallets.indexOf(wallet);
+		store.current.filter.length = 0;
+		store.current.filter.filterTxsTypes = ['IN', 'OUT'];
+		store.current.filter = {
+			token: wallet.coin.token
 		};
-
-    const send = () => {
-			if(wallet.balance == "..") return;
-			store.current.wallet = wallet.coin.token;
-			store.current.walletIndex = wallets.indexOf(wallet);
-			store.current.filter.length = 0;
-			if (store.current.filter.push) {
-				store.current.filter.push("IN");
-				store.current.filter.push("OUT");
-				store.current.filter.push(wallet.coin.token);
-			}
-			store.current.filterVal.temp = "";
-			store.current.filterVal.apply = "";
+		store.current.filterVal.temp = "";
+		store.current.filterVal.apply = "";
+		store.current.page = "wallet";
+		try {
 			applyTransactions(store);
-			store.current.send["to"] = "";
-			store.current.send.amountSend = '';
-			store.current.send.amountSendUsd = '0';
-			store.current.send.amountSendFee = '0';
-			store.current.send.amountSendFeeUsd = '0';
-			store.current.send.error = "";
-			store.current.send.wallet = wallet;
-			store.current.send.coin = wallet.coin;
-			store.current.send.network = wallet.network;
-			navigate(store, web3t, "send", () => {});
-    }
-    const deleteCoin = () => {
-      spin(store, `Uninstalling ${wallet.coin.name}`, web3t.uninstall.bind(web3t))(wallet.coin.token, (err, data) => {
-      });
-    };
-    const canRemove = !!global.localStorage[`plugin-${wallet.coin.token}`];
-    const buttons = canRemove
-      ? [
-          { text: "Send", onPress: send },
-          { text: "Remove", onPress: deleteCoin },
-          { text: "Cancel", onPress: () => {}, style: "cancel" },
-        ]
-      : [
-          { text: "Send", onPress: send },
-          { text: "Cancel", onPress: () => {}, style: "cancel" }
-        ];
-    const actions = () => {
-      Vibration.vibrate(500);
-      Alert.alert(
-        "Actions",
-        "",
-        buttons
-        // { cancelable: false }
-      );
-    };
-    let balanceLayout = null;
-    const balanceRounded = roundNumber(balance, { decimals: 6 });
-    const walletBalance = !isNaN(wallet.balance) ? roundHuman(balanceRounded) : lang.pullToReload || "(Pull to reload)";
-    const balanceUsdRounded = roundNumber(balanceUsd, { decimals: 2 });
-    const walletBalanceUsd = roundHuman(balanceUsdRounded);
-    if (wallet.balance !== "..") {
-      balanceLayout = (
-        <Text>
-          <Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>
-            {walletBalance} {token}
-          </Text>
-          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}>
-            {" "}
-            ({walletBalanceUsd} USD)
-          </Text>
-        </Text>
-      );
-    } else {
-      balanceLayout = (
-        <Text>
-          <Text style={{ color: "#fff" }}>-</Text>
-          <Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}>
-            {" "}
-            {lang.pullToReload || "(Pull to reload)"}
-          </Text>
-        </Text>
-      );
-    }
-  // It opens dialog on scroll - should be fixed
-  //    onLongPress={actions}
-		var typeBadge = !isNaN(wallet.balance) ? "active" : "inactive";
-
-    return (
+		} catch (err) {
+			return Toast.show({text: err + ""});
+		}
+	};
+	
+	const send = () => {
+		if(wallet.balance == "..") return;
+		store.current.wallet = wallet.coin.token;
+		store.current.walletIndex = wallets.indexOf(wallet);
+		store.current.filter.length = 0;
+		if (store.current.filter.push) {
+			store.current.filter.push("IN");
+			store.current.filter.push("OUT");
+			store.current.filter.push(wallet.coin.token);
+		}
+		store.current.filterVal.temp = "";
+		store.current.filterVal.apply = "";
+		applyTransactions(store);
+		store.current.send["to"] = "";
+		store.current.send.amountSend = '0';
+		store.current.send.amountSendUsd = '0';
+		store.current.send.amountSendFee = '0';
+		store.current.send.amountSendFeeUsd = '0';
+		store.current.send.error = "";
+		store.current.send.wallet = wallet;
+		store.current.send.coin = wallet.coin;
+		store.current.send.network = wallet.network;
+		navigate(store, web3t, "send", () => {});
+	}
+	const deleteCoin = () => {
+		spin(store, `Uninstalling ${wallet.coin.name}`, web3t.uninstall.bind(web3t))(wallet.coin.token, (err, data) => {
+		});
+	};
+	const canRemove = !!global.localStorage[`plugin-${wallet.coin.token}`];
+	const buttons = canRemove
+		? [
+			{ text: "Send", onPress: send },
+			{ text: "Remove", onPress: deleteCoin },
+			{ text: "Cancel", onPress: () => {}, style: "cancel" },
+		]
+		: [
+			{ text: "Send", onPress: send },
+			{ text: "Cancel", onPress: () => {}, style: "cancel" }
+		];
+	const actions = () => {
+		Vibration.vibrate(500);
+		Alert.alert(
+			"Actions",
+			"",
+			buttons
+			// { cancelable: false }
+		);
+	};
+	let balanceLayout = null;
+	const balanceRounded = roundNumber(balance, { decimals: 6 });
+	const walletBalance = !isNaN(wallet.balance) ? roundHuman(balanceRounded) : lang.pullToReload || "(Pull to reload)";
+	const balanceUsdRounded = roundNumber(balanceUsd, { decimals: 2 });
+	const walletBalanceUsd = roundHuman(balanceUsdRounded);
+	if (wallet.balance !== "..") {
+		balanceLayout = (
+			<Text>
+				<Text style={{ color: "#fff", fontFamily: "Fontfabric-NexaRegular" }}>
+					{walletBalance} {token}
+				</Text>
+				<Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}>
+					{" "}
+					({walletBalanceUsd} USD)
+				</Text>
+			</Text>
+		);
+	} else {
+		balanceLayout = (
+			<Text>
+				<Text style={{ color: "#fff" }}>-</Text>
+				<Text note style={{ fontFamily: "Fontfabric-NexaRegular" }}>
+					{" "}
+					{lang.pullToReload || "(Pull to reload)"}
+				</Text>
+			</Text>
+		);
+	}
+	// It opens dialog on scroll - should be fixed
+	//    onLongPress={actions}
+	var typeBadge = !isNaN(wallet.balance) ? "active" : "inactive";
+	
+	return (
+		<SwipeRow
+			stopLeftSwipe={-0.0000001}
+			stopRightSwipe={-0.0000001}
+			// disableRightSwipe={true}
+			// rightOpenValue={-75}
+			// stopLeftSwipe={-0.00001}
+		>
+			<TouchableHighlight>
+				<Text></Text>
+			</TouchableHighlight>
 			<WalletItem
 				key={wallet.coin.token}
 				wallet={wallet}
@@ -198,23 +193,18 @@ const wallets = (store, web3t) => {
 				address={wallet.address}
 				store={store}
 			/>
-    );
-  };
-	
-	return (
-		<Content>
-			<List>{wallets.map(listItem)}</List>
-			<View style={styles.touchableCenter} />
-		</Content>
+			
+		</SwipeRow>
 	);
 };
 
 
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
-
-  const lang = getLang(store);
-  const changePage = (tab) => () => {
+	const wallets = walletsFuncs(store, web3t).wallets;
+	
+	
+	const changePage = (tab) => () => {
     store.current.page = tab;
   };
  
@@ -278,7 +268,7 @@ export default ({ store, web3t }) => {
         {() => {
           return (
             <Text style={style.balanceAmount}>
-							<Text style={style.balanceAmount}>$</Text>{" "}
+							<Text style={style.balanceAmount}>$</Text>
               {!calcUsd ? "..." : calcUsd}
               
             </Text>
@@ -287,6 +277,22 @@ export default ({ store, web3t }) => {
       </Observer>
     );
   };
+	
+  const containerMarginBottom = store.current.network === "mainnet" ? 90 : 130;
+	const lang = getLang(store);
+	
+	const walletsGroups = getWalletsGroups({wallets});
+	const groups = keys(walletsGroups);
+	
+	const listData =
+		groups.map(function (groupName, i) {
+			const title = groupName + " Network";
+			const data = walletsGroups[groupName];
+			const arr = data.map((it) => {
+				return {key: it.coin.token, ...it}
+			});
+			return { title, data: arr };
+		});
 
   return (
     <View style={styles.viewFlex}>
@@ -315,7 +321,7 @@ export default ({ store, web3t }) => {
           transparent
         />
         <View style={style.viewWallet}>
-          <Text style={style.balance}>{lang.totalBalance}</Text>
+          <Text style={style.balance}>{"Total Balance"}</Text>
           {totalBalance()}
           {/* <Text style={style.balanceAmount}>
             {calcUsd} <Text style={style.balanceAmount}>$</Text>{" "}
@@ -323,19 +329,14 @@ export default ({ store, web3t }) => {
         </View>
       </View>
 
-      <View style={style.viewMonoWallets}>
-        <ScrollView
-					style={[{marginBottom: 30}]}
-          refreshControl={
-            <RefreshControl
-              refreshing={false}
-              onRefresh={refreshBalance}
-              tintColor="#fff"
-            />
-          }
-        >
-          {wallets(store, web3t)}
-        </ScrollView>
+      <View style={[style.viewMonoWallets, {marginBottom: containerMarginBottom}]}>
+				<SectionList 
+					store={store}
+					web3t={web3t}
+					listData={listData}
+					renderItem={({ item }) => listItem(store, web3t, wallets, item)}
+				/>  
+				
       </View>
 
       <View style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
@@ -347,6 +348,14 @@ export default ({ store, web3t }) => {
 };
 
 const style = StyleSheet.create({
+	header:{
+		backgroundColor: Images.velasColor4,
+		paddingHorizontal: 10,
+		color: "white",
+		fontFamily: "Fontfabric-NexaBold",
+		paddingBottom: 10,
+		paddingTop: 20
+	},
   topView: {
     flex: 0.25,
   },
@@ -359,7 +368,7 @@ const style = StyleSheet.create({
   },
   viewMonoWallets: {
     flex: 0.75,
-    backgroundColor: Images.velasColor4,
+    // backgroundColor: Images.velasColor4,
   },
   balance: {
     fontSize: 15,
@@ -369,9 +378,9 @@ const style = StyleSheet.create({
 		opacity: 0.7
   },
   balanceAmount: {
-    fontSize: 28,
+    fontSize: 32,
     color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: "Fontfabric-NexaBold",
   },
   balanceStake: {
     fontSize: 14,

@@ -44,6 +44,7 @@ var colorGreen = '#0bffb7';
 var colorBlue = '#0037c1';
 var colorGray = '#f0f1f5';
 var colorDarkBlue = '#05061f';
+var colorDarkBlueLight = '#171a36'
 var colorOrange = '#ebab28';
 var colorPink= "#db1571";
 var coral = "#FB5252";
@@ -89,6 +90,7 @@ export default {
   colorBlue,
   colorGray,
   colorDarkBlue,
+	colorDarkBlueLight,
   colorOrange,
   colorPink,
   coral,

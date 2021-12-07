@@ -50,6 +50,7 @@
 	nothingToShow: "Nothing to see here!",
 	makeTx: "Make your first transaction or change your filters.",
 	fee: "Fee",
+	bridgeFee: "Bridge fee",
 	delete: "delete",
 	created: "Created",
 	manageAccount: "Manage Account",
@@ -247,6 +248,7 @@
 	enterCustom: "Enter custom network",
 	currentBlock: "Current block",
 	timeUntilEnd: "Time until end",
-	staking: "Staking"
+	staking: "Staking",
+	chooseNetwork: "Choose networks",
   };
 }).call(this);

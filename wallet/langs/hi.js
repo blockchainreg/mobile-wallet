@@ -57,6 +57,7 @@
     nothingToShow: "यहाँ देखने के लिए कुछ नहीं है!",
     makeTx: "अपना पहला लेन-देन करें या अपने फ़िल्टर बदलें।",
     fee: "शुल्क",
+		bridgeFee: "Bridge fee",
     delete: "हटाना",
     created: "बनाया था",
     manageAccount: "खाते का प्रबंधन",
@@ -271,6 +272,7 @@
     enterCustom: "कस्टम नेटवर्क दर्ज करें",
     currentBlock: "वर्तमान ब्लॉक",
     timeUntilEnd: "अंत तक का समय",
-    staking: "जताया"
+    staking: "जताया",
+		chooseNetwork: "Choose networks",
   };
 }.call(this));

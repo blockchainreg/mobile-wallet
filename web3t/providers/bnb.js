@@ -398,7 +398,8 @@
       offset: offset
     }, function(err, external){
       if (err != null) {
-        return cb(err);
+				console.log("[BNB] getExternalTransactions error, returned empty array");
+      	external = [];
       }
       return getInternalTransactions({
         network: network,
@@ -408,7 +409,8 @@
       }, function(err, internal){
         var all, ordered;
         if (err != null) {
-          return cb(err);
+					console.log("[BNB] getInternalTransactions error, returned empty array");
+					internal = [];
         }
         all = external.concat(internal);
         ordered = reverse(
