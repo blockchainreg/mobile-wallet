@@ -64,12 +64,6 @@ export default ({store, ...props}) => {
 }
 
 const style = StyleSheet.create({
-	container: {
-		// display: "flex",
-		// flexDirection: 'row',
-		// flexWrap: 'wrap',
-		// alignItems: 'flex-start'
-	},
 	item: {
 		width: '100%',
 		flex: 1,
@@ -84,7 +78,6 @@ const style = StyleSheet.create({
 		color: "black"
 	},
  	value: {
-		width: '50%',
-		// textAlign: "right"
+		width: '50%'
 	}
 });
