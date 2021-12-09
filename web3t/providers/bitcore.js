@@ -11,7 +11,7 @@
   deadline = require('../deadline.js');
   decode = require('bs58').decode;
   bignumber = require('bignumber.js');
-	validate = require('../embed_modules/bitcoin-address-validation/src/index').default;
+  validate = require('../embed_modules/bitcoin-address-validation');
   segwitAddress = function(publicKey){
     var witnessScript, scriptPubKey;
     witnessScript = BitcoinLib.script.witnessPubKeyHash.output.encode(BitcoinLib.crypto.hash160(publicKey));
@@ -123,9 +123,8 @@
             return vals[0];
           }
         }());
-				feePerByte = times(calcedFeePerKb, Math.pow(10, 7))    //100 satoshis/byte
-				var calcFeeSatoshi = times(bytes + infelicity, feePerByte);
-        calcFee = div(calcFeeSatoshi, Math.pow(10, 8));
+        feePerByte = div(calcedFeePerKb, 2000);
+        calcFee = times(bytes + infelicity, feePerByte);
         calcFee = new bignumber(calcFee).toFixed(network.decimals);
         finalPrice = (function(){
           switch (false) {
@@ -140,7 +139,6 @@
     });
   };
   calcDynamicFee = function(arg$, cb){
-		console.log("[calcDynamicFee]", arg$);
     var network, tx, txType, account, feeType, o, txFee, ref$, ref1$;
     network = arg$.network, tx = arg$.tx, txType = arg$.txType, account = arg$.account, feeType = arg$.feeType;
     o = network != null ? network.txFeeOptions : void 8;
@@ -255,7 +253,14 @@
       return calcFeeInstantx(config, cb);
     }
     calcFee = getCalcFeeFunc(network);
-    return calcFee(config, cb);
+    return calcFee(config, function(err, calcedFee){
+      if (err != null) {
+        return cb(err);
+      }
+      return cb(null, {
+        calcedFee: calcedFee
+      });
+    });
   };
   out$.getKeys = getKeys = function(arg$, cb){
     var network, mnemonic, index, result;
@@ -607,7 +612,6 @@
       deadline: 5000
     }).end(function(err, data){
       var json, dec, num, e;
-      console.log(getApiUrl(network) + "/address/" + address + "/balance");
       if (err != null || data.text.length === 0) {
         return cb(err);
       }
