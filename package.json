@@ -8,7 +8,8 @@
     "postinstall-commented": "rn-nodeify --install buffer,stream,assert,events,crypto,vm --hack && cd node_modules/bs58 && yarn add base-x@3.0.4 && cd ../../",
     "install": "pwd && cp scripts/pre-commit .git/hooks/ && chmod u+x .git/hooks/pre-commit && chmod u+x scripts/bump-version.sh",
     "clean:android": "rm -rf node_modules/ && yarn && cd android && ./gradlew clean",
-    "reset": "watchman watch-del-all && rm -f yarn.lock && rm -rf node_modules && yarn && yarn start --reset-cache"
+    "reset": "watchman watch-del-all && rm -rf node_modules && yarn && yarn start --reset-cache",
+    "pod": "cd ./ios && pod install && cd .."
   },
   "dependencies": {
     "@babel/core": "~7.9.0",
