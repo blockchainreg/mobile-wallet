@@ -40,8 +40,12 @@
       showDataMode: 'encoded',
       error: '',
       sending: false,
-	  chekingBalance: null,
-	  chosenNetwork: null
+      chekingBalance: null,
+      chosenNetwork: null,
+      gasPrice: null,
+      gasPriceAuto: null,
+      gasPriceCustomAmount: "0",
+      gasPriceType: "auto"
     };
   };
   store = {

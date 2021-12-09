@@ -480,7 +480,13 @@ import Images from "../Images.js";
 		};
 		recipientChange = function(event){
 			var ref$;
-			return send.to = (ref$ = event.target.value) != null ? ref$ : "";
+			var _to = ((ref$ = event.target.value) != null ? ref$ : "").trim();
+			send.to = _to;
+			amountChange({
+			  target: {
+			    value: store.current.send.amountSend
+			  }
+			}, function(err){})
 		};
 		getValue = function(event){
 			var value, ref$, value2;
@@ -498,17 +504,17 @@ import Images from "../Images.js";
 		amountChange = function(event){
 			var value;
 			value = getValue(event);
-			return changeAmount(store, value);
+			return changeAmount(store, value, false, () => {});
 		};
 		performAmountEurChange = function(value){
 			var toSend;
 			toSend = calcCryptoFromEur(store, value);
-			return changeAmount(store, toSend, "skipUpdateFiat");
+			return changeAmount(store, toSend, "skipUpdateFiat", () => {});
 		};
 		performAmountUsdChange = function(value){
 			var toSend;
 			toSend = calcCryptoFromUsd(store, value);
-			return changeAmount(store, toSend, "skipUpdateFiat");
+			return changeAmount(store, toSend, "skipUpdateFiat", () => {});
 		};
 		amountEurChange = function(event){
 			var value;
@@ -626,11 +632,11 @@ import Images from "../Images.js";
 		isData = ((ref$ = send.data) != null ? ref$ : "").length > 0;
 		chooseAuto = function(){
 			send.feeType = 'auto';
-			return changeAmount(store, send.amountSend);
+			return changeAmount(store, send.amountSend, false, () => {});
 		};
 		chooseCheap = function(){
 			send.feeType = 'cheap';
-			return changeAmount(store, send.amountSend);
+			return changeAmount(store, send.amountSend, false, () => {});
 		};
 		chosenCheap = send.feeType === 'cheap' ? 'chosen' : "";
 		chosenAuto = send.feeType === 'auto' ? 'chosen' : "";
@@ -697,8 +703,10 @@ import Images from "../Images.js";
 				}
 				send.amountSend = info.amountSend;
 				send.amountSendFee = info.amountSendFee;
-				changeAmount(store, send.amountSend);
-				return cb(null);
+				changeAmount(store, send.amountSend, false, () => {
+				  return cb(null);
+				});
+
 			});
 		};
 		useMaxTryCatch = function(cb){

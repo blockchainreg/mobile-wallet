@@ -72,13 +72,13 @@
     amountChange = function(event){
       var value;
       value = getValue(event);
-      return changeAmountInvoice(store, value);
+      return changeAmountInvoice(store, value, false, ()=>{console.log("callback of invoice");});
     };
     amountUsdChange = function(event){
       var value, toSend;
       value = getValue(event);
       toSend = calcCrypto(store, value);
-      return changeAmountInvoice(store, toSend);
+      return changeAmountInvoice(store, toSend, false, ()=>{console.log("callback of invoice"););
     };
     network = (function(){
       switch (false) {

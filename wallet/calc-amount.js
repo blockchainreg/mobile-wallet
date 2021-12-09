@@ -7,6 +7,7 @@
   find = require('prelude-ls').find;
   round5 = require('./round5.js');
   getLang = require('./get-lang.js');
+  var contractData = require('./contract-data.js')
   calcCryptoGeneric = function(name){
     return function(store, val){
       var send, wallet, token, rate, ref$;
@@ -37,17 +38,67 @@
   };
   out$.calcUsd = calcUsd = calcFiat('usdRate');
   out$.calcEur = calcEur = calcFiat('eurRate');
-  calcFeeProxy = function(input, cb){
+
+  calcFeeProxy = function(arg$, cb){
     var fun;
-    fun = function(){
-      return calcFee(input, cb);
-    };
-    calcFeeProxy.timer = clearTimeout(calcFeeProxy.timer);
-    return calcFeeProxy.timer = setTimeout(fun, 1000);
+    var store, query, fast, token, to, data, network, amount, feeType, txType, account, swap, send, calcFeeFun;
+    store = arg$.store, query = arg$.query, fast = arg$.fast;
+    store = arg$.store, token = arg$.token, network = arg$.network, amount = arg$.amount, feeType = arg$.feeType, txType = arg$.txType, account = arg$.account;
+    to = arg$.to;
+    if (store == null) {
+      return cb("store isn`t defined");
+    }
+    if (network == null) {
+      return cb("network isn`t defined");
+    }
+    if (amount == null) {
+      return cb("amount isn`t defined");
+    }
+    if (account == null) {
+      return cb("account isn`t defined");
+    }
+    var send = store.current.send;
+    var gasPrice = null;
+    console.log("to", to);
+
+    switch (send.gasPriceType) {
+      case "custom":
+        gasPrice = times(send.gasPriceCustomAmount, Math.pow(10, 9));
+        break;
+      default:
+        gasPrice = send.gasPriceAuto;
+        break;
+    }
+
+    return calcFee(
+      {
+        store: store,
+        token: token,
+        to: to,
+        data: send.data,
+        network: network,
+        amount: amount,
+        feeType: feeType,
+        txType: txType,
+        account: account,
+        gasPrice: gasPrice
+      },
+      (err, result) => {
+        console.log({err, result})
+        send.feeCalculating = false;
+        if (err !== null){
+          send.error = (err.message || err).toString();
+          return cb(err);
+        }
+        return cb(null, result);
+      }
+    );
+
   };
+
   changeAmountGeneric = function(field){
-    return function(store, amountSend, skipUpdateFiat){
-      var send, wallet, token, wallets, feeToken, ref$, feeWallet, resultAmountSend, feeType, txType, usdRate, feeUsdRate, account;
+    return function(store, amountSend, skipUpdateFiat, cb){
+      var send, wallet, token, wallets, feeToken, ref$, feeWallet, resultAmountSend, feeType, txType, usdRate, feeUsdRate, account, gasPrice, gasEstimate, calcedFee;
       send = store.current[field];
       wallet = send.wallet;
       token = send.coin.token;
@@ -91,66 +142,110 @@
       send.value = times(resultAmountSend, Math.pow(10, send.network.decimals));
       send.amountObtain = resultAmountSend;
       send.amountObtainUsd = times(send.amountObtain, usdRate);
-      if (!skipUpdateFiat) {
-        send.amountSendUsd = calcUsd(store, amountSend);
-        send.amountSendEur = calcEur(store, amountSend);
-      }
-      return calcFeeProxy({
-        token: token,
-        network: send.network,
-        amount: resultAmountSend,
-        feeType: feeType,
-        txType: txType,
-        account: account,
-        store: store
-      }, function(err, calcedFee){
-        var ref$, txFee;
-        if (err != null) {
-          return send.error = "Calc Fee Error: " + ((ref$ = err.message) != null ? ref$ : err);
+
+
+      var dataBuilder = contractData({store});
+      dataBuilder.formContractData((err, res) => {
+        var sendTo = send.to;
+        if (send.isSwap) {
+          sendTo = send.contractAddress;
+        } else if (send.to.trim().length === 0) {
+          sendTo = send.wallet.address;
         }
-        txFee = (function(){
-          var ref$, ref1$;
-          switch (false) {
-          case calcedFee == null:
-            return calcedFee;
-          case ((ref$ = send.network) != null ? ref$.txFeeOptions : void 8) == null:
-            return (ref1$ = send.network.txFeeOptions[feeType]) != null
-              ? ref1$
-              : send.network.txFee;
-          default:
-            return send.network.txFee;
+        console.log({sendTo, isSwap:send.isSwap, to: send.to, contractAddress: send.contractAddress})
+        if (!sendTo) {
+//          send.error = "sendTo cannot be null"
+//          return;
+        }
+
+        if (!skipUpdateFiat) {
+          send.amountSendUsd = calcUsd(store, amountSend);
+          send.amountSendEur = calcEur(store, amountSend);
+        }
+        return calcFeeProxy({
+          token: token,
+          network: send.network,
+          amount: resultAmountSend,
+          to: sendTo,
+          feeType: feeType,
+          txType: txType,
+          account: account,
+          store: store,
+          data: send.data,
+          gasPrice: send.gasPrice
+        }, function(err, result){
+          var ref$, txFee;
+          if (err != null) {
+            send.error = "Calc Fee Error: " + ((ref$ = err.message) != null ? ref$ : err);
+            return send.amountSendFee = 0;
           }
-        }());
-        send.amountSendFee = txFee;
-				send.amountCharged = (function(){
-					switch (false) {
-						case wallet.network.txFeeIn == null:
-							return send.amountSend;
-						case (resultAmountSend != null ? resultAmountSend : "").length !== 0:
-							return txFee;
-						case resultAmountSend !== '0':
-							return txFee;
-						case resultAmountSend !== 0:
-							return txFee;
-						default:
-							return plus(resultAmountSend, txFee);
-					}
-				}());
-        send.amountChargedUsd = times(send.amountCharged, usdRate);
-        send.amountSendFeeUsd = times(txFee, feeUsdRate);
-				send.amountChanging = false;
-				
-				return send.error = (function(){
-					switch (false) {
-					case wallet.balance !== '...':
-						return "Balance is not yet loaded";
-					case !(parseFloat(minus(wallet.balance, resultAmountSend)) < 0):
-						return lang.insufficientFunds;
-					default:
-						return "";
-					}
-				}());
-      });
+          if (result != null){
+            calcedFee   = result.calcedFee;
+            gasPrice    = result.gasPrice;
+            gasEstimate = result.gasEstimate;
+            if (send.gasPriceType !== "custom") {
+              send.gasPriceAuto = gasPrice;
+            }
+          }
+          send.gasEstimate = gasEstimate;
+          txFee = (function(){
+            var ref$, ref1$;
+            switch (false) {
+            case feeType !== 'custom':
+              return send.amountSendFee;
+            case (result != null ? result.calcedFee : void 8) == null:
+              return result.calcedFee;
+            case ((ref$ = send.network) != null ? ref$.txFeeOptions : void 8) == null:
+              return (ref1$ = send.network.txFeeOptions[feeType]) != null
+                ? ref1$
+                : send.network.txFee;
+            default:
+              return send.network.txFee;
+            }
+          }());
+          send.amountSendFee = txFee;
+          send.amountCharged = (function(){
+            switch (false) {
+              case wallet.network.txFeeIn == null:
+                return send.amountSend;
+              case (resultAmountSend != null ? resultAmountSend : "").length !== 0:
+                return txFee;
+              case resultAmountSend !== '0':
+                return txFee;
+              case resultAmountSend !== 0:
+                return txFee;
+              case feeToken === token:
+                return resultAmountSend
+              default:
+                return plus(resultAmountSend, txFee);
+            }
+          }());
+          send.amountChargedUsd = times(send.amountCharged, usdRate);
+          send.amountSendFeeUsd = times(txFee, feeUsdRate);
+          send.amountChanging = false;
+
+          var amountToCharge = (function(){
+            switch (false) {
+            case feeToken !== token:
+              return minus(minus(wallet.balance, resultAmountSend), send.amountSendFee);
+            default:
+              return minus(wallet.balance, resultAmountSend);
+            }
+          }());
+
+          send.error = (function(){
+            switch (false) {
+            case wallet.balance !== '...':
+              return "Balance is not yet loaded";
+            case !(parseFloat(amountToCharge) < 0):
+              return lang.insufficientFunds;
+            default:
+              return "";
+            }
+          }());
+          return cb(null);
+        });
+      })
     };
   };
   out$.changeAmount = changeAmount = changeAmountGeneric('send');
