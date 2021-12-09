@@ -44,7 +44,6 @@ Store.current.currentNetworkDetails = null
 //------------------------------
 //Extend the store here !!!
 
-console.log('store.sort', Store.sort)
 const store = observable(Store);
 const web3t = web3(store);
 
