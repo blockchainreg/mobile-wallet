@@ -104,6 +104,9 @@ const listItem = (store, web3t, wallets, wallet) => {
 		store.current.send.amountSendUsd = '0';
 		store.current.send.amountSendFee = '0';
 		store.current.send.amountSendFeeUsd = '0';
+		store.current.send.data = null;
+    store.current.send.gasPrice = null;
+    store.current.send.gasPriceAuto = null;
 		store.current.send.error = "";
 		store.current.send.wallet = wallet;
 		store.current.send.coin = wallet.coin;
