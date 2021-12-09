@@ -401,7 +401,7 @@ import Images from "../Images.js";
 					send.sending = false;
 					if (err != null) {
 						// Auto clean-up error only in case user pressed cancel button in confirmation modal. 
-						if ((err || "").indexOf("You are not agree") > -1) {
+						if ((err || "").toString().indexOf("You are not agree") > -1) {
 							send.error = ((ref$ = err.message) != null ? ref$ : err) + "";
 							setTimeout(()=>{
 								send.error = ""
