@@ -297,7 +297,9 @@
     }
     network = config.network, account = config.account, recipient = config.recipient, amount = config.amount, amountFee = config.amountFee, data = config.data, feeType = config.feeType, txType = config.txType, gasPrice = config.gasPrice, gas = config.gas, swap = config.swap;
     dec = getDec(network);
-    payAccount = new solanaWeb3.Account(config.account.secretKey);
+    console.log("secretKey", config.account)
+    var secretKey = bs58.decode(config.account.privateKey)
+    payAccount = new solanaWeb3.Account(secretKey);
     return getRecentBlockhash(network, function(err, recentBlockhash){
       var transactionData, amount, transaction, toHex, encoded;
       if (err != null) {
