@@ -7,12 +7,13 @@ import {Platform, ScrollView, StyleSheet} from "react-native";
 const times = math.times;
 
 export default ({store, ...props}) => {
+  const MAX_LIMIT = ">100,000,000"
 	const { homeFeePercent, minPerTx, maxPerTx, remainingDailyLimit, wallet } = props.data;
 	const bridgeFeePercent = times(homeFeePercent, 100);
 
 	const $minPerTx = roundHuman(minPerTx, {decimals: 8});
-	const $maxPerTx = maxPerTx < 100000000 ? roundHuman(maxPerTx, {decimals: 2}) : ">100,000,000";
-	const $remaining = remainingDailyLimit < 100000000 ? roundHuman(remainingDailyLimit, {decimals: 2}) : ">100,000,000";
+	const $maxPerTx = maxPerTx < 100000000 ? roundHuman(maxPerTx, {decimals: 2}) : MAX_LIMIT;
+	const $remaining = remainingDailyLimit < 100000000 ? roundHuman(remainingDailyLimit, {decimals: 2}) : MAX_LIMIT;
 
 	const { referTo } = store.current.send.chosenNetwork;
 	const walletTo = (store.current.account.wallets || []).find((it) => {
@@ -27,7 +28,7 @@ export default ({store, ...props}) => {
 	const currency = (nickname || "").toUpperCase();
 	const fromNetwork = (name != null ? name : "").toUpperCase();
 	const toNetwork = (walletTo ? walletTo.coin.name : "").toUpperCase();
-	const title = "Swap from " + fromNetwork + " to " + toNetwork;
+	const title = `Swap from ${fromNetwork} to ${toNetwork}`;
 
 	return (
 		<Dialog
