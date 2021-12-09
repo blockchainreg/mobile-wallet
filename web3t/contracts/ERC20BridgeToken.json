@@ -692,20 +692,14 @@
   "ast": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/ERC677BridgeToken.sol",
     "exportedSymbols": {
-      "ERC677BridgeToken": [
-        348
-      ]
+      "ERC677BridgeToken": [348]
     },
     "id": 349,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:0"
       },
@@ -869,16 +863,7 @@
           }
         ],
         "contractDependencies": [
-          1469,
-          1677,
-          14052,
-          30069,
-          30165,
-          30236,
-          30270,
-          30313,
-          30345,
-          30451,
+          1469, 1677, 14052, 30069, 30165, 30236, 30270, 30313, 30345, 30451,
           30698
         ],
         "contractKind": "contract",
@@ -886,18 +871,8 @@
         "fullyImplemented": true,
         "id": 348,
         "linearizedBaseContracts": [
-          348,
-          14052,
-          30451,
-          30069,
-          30698,
-          30236,
-          30165,
-          30270,
-          1677,
-          1469,
-          30313,
-          30345
+          348, 14052, 30451, 30069, 30698, 30236, 30165, 30270, 1677, 1469,
+          30313, 30345
         ],
         "name": "ERC677BridgeToken",
         "nodeType": "ContractDefinition",
@@ -1311,10 +1286,7 @@
                       "id": 52,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "1142:7:0",
                       "typeDescriptions": {
@@ -1673,10 +1645,7 @@
                       "id": 68,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "1304:7:0",
                       "typeDescriptions": {
@@ -1836,10 +1805,7 @@
                       "id": 98,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "1546:7:0",
                       "typeDescriptions": {
@@ -1960,10 +1926,7 @@
                       "id": 105,
                       "name": "Transfer",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        1439,
-                        30344
-                      ],
+                      "overloadedDeclarations": [1439, 30344],
                       "referencedDeclaration": 1439,
                       "src": "1596:8:0",
                       "typeDescriptions": {
@@ -2195,10 +2158,7 @@
                             "id": 117,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [
-                              30716,
-                              30717
-                            ],
+                            "overloadedDeclarations": [30716, 30717],
                             "referencedDeclaration": 30716,
                             "src": "1695:7:0",
                             "typeDescriptions": {
@@ -2901,10 +2861,7 @@
                       "id": 172,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "2149:7:0",
                       "typeDescriptions": {
@@ -3287,10 +3244,7 @@
                       "id": 200,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "2368:7:0",
                       "typeDescriptions": {
@@ -3795,10 +3749,7 @@
                             "id": 230,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [
-                              30716,
-                              30717
-                            ],
+                            "overloadedDeclarations": [30716, 30717],
                             "referencedDeclaration": 30716,
                             "src": "3094:7:0",
                             "typeDescriptions": {
@@ -4431,10 +4382,7 @@
                       "id": 287,
                       "name": "revert",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30718,
-                        30719
-                      ],
+                      "overloadedDeclarations": [30718, 30719],
                       "referencedDeclaration": 30718,
                       "src": "3851:6:0",
                       "typeDescriptions": {
@@ -4531,10 +4479,7 @@
                       "id": 296,
                       "name": "revert",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30718,
-                        30719
-                      ],
+                      "overloadedDeclarations": [30718, 30719],
                       "referencedDeclaration": 30718,
                       "src": "3928:6:0",
                       "typeDescriptions": {
@@ -5204,20 +5149,14 @@
   "legacyAST": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/ERC677BridgeToken.sol",
     "exportedSymbols": {
-      "ERC677BridgeToken": [
-        348
-      ]
+      "ERC677BridgeToken": [348]
     },
     "id": 349,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:0"
       },
@@ -5381,16 +5320,7 @@
           }
         ],
         "contractDependencies": [
-          1469,
-          1677,
-          14052,
-          30069,
-          30165,
-          30236,
-          30270,
-          30313,
-          30345,
-          30451,
+          1469, 1677, 14052, 30069, 30165, 30236, 30270, 30313, 30345, 30451,
           30698
         ],
         "contractKind": "contract",
@@ -5398,18 +5328,8 @@
         "fullyImplemented": true,
         "id": 348,
         "linearizedBaseContracts": [
-          348,
-          14052,
-          30451,
-          30069,
-          30698,
-          30236,
-          30165,
-          30270,
-          1677,
-          1469,
-          30313,
-          30345
+          348, 14052, 30451, 30069, 30698, 30236, 30165, 30270, 1677, 1469,
+          30313, 30345
         ],
         "name": "ERC677BridgeToken",
         "nodeType": "ContractDefinition",
@@ -5823,10 +5743,7 @@
                       "id": 52,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "1142:7:0",
                       "typeDescriptions": {
@@ -6185,10 +6102,7 @@
                       "id": 68,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "1304:7:0",
                       "typeDescriptions": {
@@ -6348,10 +6262,7 @@
                       "id": 98,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "1546:7:0",
                       "typeDescriptions": {
@@ -6472,10 +6383,7 @@
                       "id": 105,
                       "name": "Transfer",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        1439,
-                        30344
-                      ],
+                      "overloadedDeclarations": [1439, 30344],
                       "referencedDeclaration": 1439,
                       "src": "1596:8:0",
                       "typeDescriptions": {
@@ -6707,10 +6615,7 @@
                             "id": 117,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [
-                              30716,
-                              30717
-                            ],
+                            "overloadedDeclarations": [30716, 30717],
                             "referencedDeclaration": 30716,
                             "src": "1695:7:0",
                             "typeDescriptions": {
@@ -7413,10 +7318,7 @@
                       "id": 172,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "2149:7:0",
                       "typeDescriptions": {
@@ -7799,10 +7701,7 @@
                       "id": 200,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "2368:7:0",
                       "typeDescriptions": {
@@ -8307,10 +8206,7 @@
                             "id": 230,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [
-                              30716,
-                              30717
-                            ],
+                            "overloadedDeclarations": [30716, 30717],
                             "referencedDeclaration": 30716,
                             "src": "3094:7:0",
                             "typeDescriptions": {
@@ -8943,10 +8839,7 @@
                       "id": 287,
                       "name": "revert",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30718,
-                        30719
-                      ],
+                      "overloadedDeclarations": [30718, 30719],
                       "referencedDeclaration": 30718,
                       "src": "3851:6:0",
                       "typeDescriptions": {
@@ -9043,10 +8936,7 @@
                       "id": 296,
                       "name": "revert",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30718,
-                        30719
-                      ],
+                      "overloadedDeclarations": [30718, 30719],
                       "referencedDeclaration": 30718,
                       "src": "3928:6:0",
                       "typeDescriptions": {

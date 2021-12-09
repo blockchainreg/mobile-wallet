@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   Image,
   TouchableOpacity,
   ImageBackground,
   ScrollView,
   Linking,
-} from "react-native";
+} from 'react-native';
 import {
   Text,
   View,
@@ -18,32 +18,31 @@ import {
   Content,
   Button,
   Container,
-} from "native-base";
-import styles from "../Styles.js";
+} from 'native-base';
+import styles from '../Styles.js';
 // import { generateMnemonic } from "bip39";
-import Images from "../Images.js";
-import StatusBar from "../components/StatusBar.js";
-import getLang from "../wallet/get-lang.js";
-import style from "../Styles";
-import BackButton from "../components/BackButton.js";
-import { confirm } from "../wallet/pages/confirmation.js";
-import Background from "../components/Background.js";
-import {shuffle} from "../utils/array.js";
-import { Generate } from "../svg/generate.js";
-
+import Images from '../Images.js';
+import StatusBar from '../components/StatusBar.js';
+import getLang from '../wallet/get-lang.js';
+import style from '../Styles';
+import BackButton from '../components/BackButton.js';
+import { confirm } from '../wallet/pages/confirmation.js';
+import Background from '../components/Background.js';
+import { shuffle } from '../utils/array.js';
+import { Generate } from '../svg/generate.js';
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
 // }
 
 const badSeed = (seed) => {
-  blocks = (seed || "").split(" ");
+  blocks = (seed || '').split(' ');
   return blocks.length < 10;
 };
 
 const createWordBlock = (store) => (word, index) => {
   return (
-    <View key={"word" + word + index} style={styles.createWordBlock}>
+    <View key={'word' + word + index} style={styles.createWordBlock}>
       <Text style={styles.inputSize1}>{word}</Text>
       <View style={styles.numberBlock}>
         <Text style={styles.styleIndex}>{index + 1}</Text>
@@ -61,7 +60,7 @@ export default ({ store }) => {
     store.current.seedIndexes = shuffle([...Array(24).keys()]);
   };
 
-  const words = store.current.seed.split(" ");
+  const words = store.current.seed.split(' ');
   // console.log("words:", words);
 
   const seedPhrase = (store) => {
@@ -73,33 +72,36 @@ export default ({ store }) => {
   };
   const lang = getLang(store);
 
-  const back = changePage("wallets");
+  const back = changePage('wallets');
 
   return (
     <Container style={styles.viewFlex}>
-      <Background fullscreen={true}/>
-      <StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-      <Content style={{flex: 1 }}>
-      <View style={styles.containerGenerated}>
-
-        {/* <Image source={Images.generate} style={styles.setupImg} /> */}
-        <Generate height={271 / 4} width={320 / 4} marginBottom={"7%"}/>
-        <View style={styles.scrollViewAndroid}>
-        {seedPhrase(store)}
-        <View style={[styles.marginBtn, {marginBottom: 20}]}>
-          <View style={styles.containerBtn}>
-            <TouchableOpacity onPress={back} style={styles.btnCancel}>
-              <Text style={styles.txtBtnBack}>{lang.back}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={changePage("printseed")}
-              style={styles.btnNext}
-            >
-              <Text style={styles.txtBtn}>{lang.continue}</Text>
-            </TouchableOpacity>
+      <Background fullscreen={true} />
+      <StatusBar
+        barStyle="light-content"
+        translucent={true}
+        backgroundColor={'transparent'}
+      />
+      <Content style={{ flex: 1 }}>
+        <View style={styles.containerGenerated}>
+          {/* <Image source={Images.generate} style={styles.setupImg} /> */}
+          <Generate height={271 / 4} width={320 / 4} marginBottom={'7%'} />
+          <View style={styles.scrollViewAndroid}>
+            {seedPhrase(store)}
+            <View style={[styles.marginBtn, { marginBottom: 20 }]}>
+              <View style={styles.containerBtn}>
+                <TouchableOpacity onPress={back} style={styles.btnCancel}>
+                  <Text style={styles.txtBtnBack}>{lang.back}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={changePage('printseed')}
+                  style={styles.btnNext}
+                >
+                  <Text style={styles.txtBtn}>{lang.continue}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
-        </View>
         </View>
       </Content>
     </Container>

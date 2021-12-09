@@ -30,20 +30,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/ICertifier.sol",
     "exportedSymbols": {
-      "ICertifier": [
-        12007
-      ]
+      "ICertifier": [12007]
     },
     "id": 12008,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 11998,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:18"
       },
@@ -54,9 +48,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12007,
-        "linearizedBaseContracts": [
-          12007
-        ],
+        "linearizedBaseContracts": [12007],
         "name": "ICertifier",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -162,20 +154,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/ICertifier.sol",
     "exportedSymbols": {
-      "ICertifier": [
-        12007
-      ]
+      "ICertifier": [12007]
     },
     "id": 12008,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 11998,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:18"
       },
@@ -186,9 +172,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12007,
-        "linearizedBaseContracts": [
-          12007
-        ],
+        "linearizedBaseContracts": [12007],
         "name": "ICertifier",
         "nodeType": "ContractDefinition",
         "nodes": [

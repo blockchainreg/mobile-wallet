@@ -129,20 +129,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/Certifier.sol",
     "exportedSymbols": {
-      "Certifier": [
-        189
-      ]
+      "Certifier": [189]
     },
     "id": 190,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 7,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:1"
       },
@@ -218,21 +212,12 @@
             "src": "357:10:1"
           }
         ],
-        "contractDependencies": [
-          12007,
-          12930,
-          12997
-        ],
+        "contractDependencies": [12007, 12930, 12997],
         "contractKind": "contract",
         "documentation": "@dev Allows validators to use a zero gas price for their service transactions\n (see https://wiki.parity.io/Permissioning.html#gas-price for more info).",
         "fullyImplemented": true,
         "id": 189,
-        "linearizedBaseContracts": [
-          189,
-          12007,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [189, 12007, 12997, 12930],
         "name": "Certifier",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -446,10 +431,7 @@
                       "id": 30,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1698:7:1",
                       "typeDescriptions": {
@@ -679,10 +661,7 @@
                       "id": 45,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2309:7:1",
                       "typeDescriptions": {
@@ -769,10 +748,7 @@
                       "id": 58,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2371:7:1",
                       "typeDescriptions": {
@@ -901,10 +877,7 @@
                       "id": 64,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2406:7:1",
                       "typeDescriptions": {
@@ -1082,9 +1055,7 @@
                   },
                   "id": 90,
                   "initializationExpression": {
-                    "assignments": [
-                      73
-                    ],
+                    "assignments": [73],
                     "declarations": [
                       {
                         "constant": false,
@@ -2283,10 +2254,7 @@
                       "id": 173,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "4642:7:1",
                       "typeDescriptions": {
@@ -2455,20 +2423,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/Certifier.sol",
     "exportedSymbols": {
-      "Certifier": [
-        189
-      ]
+      "Certifier": [189]
     },
     "id": 190,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 7,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:1"
       },
@@ -2544,21 +2506,12 @@
             "src": "357:10:1"
           }
         ],
-        "contractDependencies": [
-          12007,
-          12930,
-          12997
-        ],
+        "contractDependencies": [12007, 12930, 12997],
         "contractKind": "contract",
         "documentation": "@dev Allows validators to use a zero gas price for their service transactions\n (see https://wiki.parity.io/Permissioning.html#gas-price for more info).",
         "fullyImplemented": true,
         "id": 189,
-        "linearizedBaseContracts": [
-          189,
-          12007,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [189, 12007, 12997, 12930],
         "name": "Certifier",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -2772,10 +2725,7 @@
                       "id": 30,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1698:7:1",
                       "typeDescriptions": {
@@ -3005,10 +2955,7 @@
                       "id": 45,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2309:7:1",
                       "typeDescriptions": {
@@ -3095,10 +3042,7 @@
                       "id": 58,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2371:7:1",
                       "typeDescriptions": {
@@ -3227,10 +3171,7 @@
                       "id": 64,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2406:7:1",
                       "typeDescriptions": {
@@ -3408,9 +3349,7 @@
                   },
                   "id": 90,
                   "initializationExpression": {
-                    "assignments": [
-                      73
-                    ],
+                    "assignments": [73],
                     "declarations": [
                       {
                         "constant": false,
@@ -4609,10 +4548,7 @@
                       "id": 173,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "4642:7:1",
                       "typeDescriptions": {

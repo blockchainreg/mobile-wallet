@@ -3,30 +3,32 @@ import bech32 from 'bech32';
 import sha from 'sha.js';
 import { Buffer } from 'buffer';
 
-const base58 = baseX('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+const base58 = baseX(
+  '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+);
 
-const sha256 = payload => Buffer.from(sha('sha256').update(payload).digest());
+const sha256 = (payload) => Buffer.from(sha('sha256').update(payload).digest());
 
 const addressTypes = {
   0x00: {
     type: 'p2pkh',
-    network: 'mainnet'
+    network: 'mainnet',
   },
 
   0x6f: {
     type: 'p2pkh',
-    network: 'testnet'
+    network: 'testnet',
   },
 
   0x05: {
     type: 'p2sh',
-    network: 'mainnet'
+    network: 'mainnet',
   },
 
   0xc4: {
     type: 'p2sh',
-    network: 'testnet'
-  }
+    network: 'testnet',
+  },
 };
 
 const validateBech32 = (address) => {
@@ -41,8 +43,8 @@ const validateBech32 = (address) => {
   const prefixesNetwork = {
     bc: 'mainnet',
     tb: 'testnet',
-    bcrt: 'regtest'
-  }
+    bcrt: 'regtest',
+  };
 
   const network = prefixesNetwork[decoded.prefix];
 
@@ -70,7 +72,7 @@ const validateBech32 = (address) => {
     bech32: true,
     network,
     address,
-    type
+    type,
   };
 };
 

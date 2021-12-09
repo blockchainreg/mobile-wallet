@@ -1,6 +1,6 @@
 // Inject node globals into React Native global scope.
-import {getRandomBytesAsync} from 'expo-random';
-import {LogBox, Alert} from 'react-native'
+import { getRandomBytesAsync } from 'expo-random';
+import { LogBox, Alert } from 'react-native';
 
 global.Buffer = require('buffer').Buffer;
 global.process = require('process');
@@ -28,7 +28,7 @@ if (typeof Buffer.prototype.reverse === 'undefined') {
 }
 
 if (!global.crypto) {
-   global.mycrypto = global.crypto = {};
+  global.mycrypto = global.crypto = {};
 }
 global.crypto.randomBytes = window.randomBytes = getRandomBytesAsync;
 //global.self = global;
@@ -36,5 +36,5 @@ global.crypto.randomBytes = window.randomBytes = getRandomBytesAsync;
 const prevConsoleWarn = console.warn;
 LogBox.ignoreLogs([
   "The provided value 'ms-stream' is not a valid 'responseType'",
-  "The provided value 'moz-chunked-arraybuffer' is not a valid 'responseType'."
+  "The provided value 'moz-chunked-arraybuffer' is not a valid 'responseType'.",
 ]);

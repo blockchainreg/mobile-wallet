@@ -80,20 +80,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IBlockRewardAuRaCoins.sol",
     "exportedSymbols": {
-      "IBlockRewardAuRaCoins": [
-        11960
-      ]
+      "IBlockRewardAuRaCoins": [11960]
     },
     "id": 11961,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 11932,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:16"
       },
@@ -104,9 +98,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 11960,
-        "linearizedBaseContracts": [
-          11960
-        ],
+        "linearizedBaseContracts": [11960],
         "name": "IBlockRewardAuRaCoins",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -443,20 +435,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IBlockRewardAuRaCoins.sol",
     "exportedSymbols": {
-      "IBlockRewardAuRaCoins": [
-        11960
-      ]
+      "IBlockRewardAuRaCoins": [11960]
     },
     "id": 11961,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 11932,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:16"
       },
@@ -467,9 +453,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 11960,
-        "linearizedBaseContracts": [
-          11960
-        ],
+        "linearizedBaseContracts": [11960],
         "name": "IBlockRewardAuRaCoins",
         "nodeType": "ContractDefinition",
         "nodes": [

@@ -11,20 +11,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/UpgradeableOwned.sol",
     "exportedSymbols": {
-      "UpgradeableOwned": [
-        12997
-      ]
+      "UpgradeableOwned": [12997]
     },
     "id": 12998,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12981,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:36"
       },
@@ -60,17 +54,12 @@
             "src": "92:19:36"
           }
         ],
-        "contractDependencies": [
-          12930
-        ],
+        "contractDependencies": [12930],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 12997,
-        "linearizedBaseContracts": [
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [12997, 12930],
         "name": "UpgradeableOwned",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -173,10 +162,7 @@
                       "id": 12986,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "233:7:36",
                       "typeDescriptions": {
@@ -232,20 +218,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/UpgradeableOwned.sol",
     "exportedSymbols": {
-      "UpgradeableOwned": [
-        12997
-      ]
+      "UpgradeableOwned": [12997]
     },
     "id": 12998,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12981,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:36"
       },
@@ -281,17 +261,12 @@
             "src": "92:19:36"
           }
         ],
-        "contractDependencies": [
-          12930
-        ],
+        "contractDependencies": [12930],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 12997,
-        "linearizedBaseContracts": [
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [12997, 12930],
         "name": "UpgradeableOwned",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -394,10 +369,7 @@
                       "id": 12986,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "233:7:36",
                       "typeDescriptions": {

@@ -1,14 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 async function makeProxy() {
   const keys = await AsyncStorage.getAllKeys();
-  const pairs = await Promise.all(keys.map(
-    key => AsyncStorage.getItem(key).then(value => [key, value])
-  ));
+  const pairs = await Promise.all(
+    keys.map((key) => AsyncStorage.getItem(key).then((value) => [key, value]))
+  );
   // const inMemoryStorage = Object.fromEntries(pairs); - not implemented in rn
   const inMemoryStorage = {};
-  for(let pair of pairs) {
+  for (let pair of pairs) {
     const [key, value] = pair;
     inMemoryStorage[key] = value;
   }
@@ -40,12 +39,12 @@ async function makeProxy() {
     getItem: (key) => inMemoryStorage[key],
     setItem,
     clear,
-    removeItem
+    removeItem,
   };
 
   const proxy = new Proxy(inMemoryStorage, {
     get: (target, key) => getItem(key),
-    set: (target, key, value) => setItem(key, value)
+    set: (target, key, value) => setItem(key, value),
   });
   global.localStorage = proxy;
   return proxy;

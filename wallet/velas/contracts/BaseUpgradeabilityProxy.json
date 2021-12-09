@@ -29,20 +29,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/BaseUpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "BaseUpgradeabilityProxy": [
-        12875
-      ]
+      "BaseUpgradeabilityProxy": [12875]
     },
     "id": 12876,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12819,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:32"
       },
@@ -89,17 +83,12 @@
             "src": "331:5:32"
           }
         ],
-        "contractDependencies": [
-          12913
-        ],
+        "contractDependencies": [12913],
         "contractKind": "contract",
         "documentation": "@title BaseUpgradeabilityProxy\n@dev This contract implements a proxy that allows to change the\nimplementation address to which it will delegate.\nSuch a change is called an implementation upgrade.",
         "fullyImplemented": true,
         "id": 12875,
-        "linearizedBaseContracts": [
-          12875,
-          12913
-        ],
+        "linearizedBaseContracts": [12875, 12913],
         "name": "BaseUpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -196,9 +185,7 @@
               "src": "1054:112:32",
               "statements": [
                 {
-                  "assignments": [
-                    12836
-                  ],
+                  "assignments": [12836],
                   "declarations": [
                     {
                       "constant": false,
@@ -602,10 +589,7 @@
                       "id": 12860,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13016,
                       "src": "1684:7:32",
                       "typeDescriptions": {
@@ -632,9 +616,7 @@
                   "src": "1684:163:32"
                 },
                 {
-                  "assignments": [
-                    12869
-                  ],
+                  "assignments": [12869],
                   "declarations": [
                     {
                       "constant": false,
@@ -771,20 +753,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/BaseUpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "BaseUpgradeabilityProxy": [
-        12875
-      ]
+      "BaseUpgradeabilityProxy": [12875]
     },
     "id": 12876,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12819,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:32"
       },
@@ -831,17 +807,12 @@
             "src": "331:5:32"
           }
         ],
-        "contractDependencies": [
-          12913
-        ],
+        "contractDependencies": [12913],
         "contractKind": "contract",
         "documentation": "@title BaseUpgradeabilityProxy\n@dev This contract implements a proxy that allows to change the\nimplementation address to which it will delegate.\nSuch a change is called an implementation upgrade.",
         "fullyImplemented": true,
         "id": 12875,
-        "linearizedBaseContracts": [
-          12875,
-          12913
-        ],
+        "linearizedBaseContracts": [12875, 12913],
         "name": "BaseUpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -938,9 +909,7 @@
               "src": "1054:112:32",
               "statements": [
                 {
-                  "assignments": [
-                    12836
-                  ],
+                  "assignments": [12836],
                   "declarations": [
                     {
                       "constant": false,
@@ -1344,10 +1313,7 @@
                       "id": 12860,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13016,
                       "src": "1684:7:32",
                       "typeDescriptions": {
@@ -1374,9 +1340,7 @@
                   "src": "1684:163:32"
                 },
                 {
-                  "assignments": [
-                    12869
-                  ],
+                  "assignments": [12869],
                   "declarations": [
                     {
                       "constant": false,

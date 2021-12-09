@@ -361,20 +361,14 @@
   "ast": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/upgradeable_contracts/erc20_to_erc20/ForeignBridgeErcToErc.sol",
     "exportedSymbols": {
-      "ForeignBridgeErcToErc": [
-        23336
-      ]
+      "ForeignBridgeErcToErc": [23336]
     },
     "id": 23337,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 23287,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:136"
       },
@@ -440,45 +434,16 @@
           }
         ],
         "contractDependencies": [
-          9266,
-          11589,
-          11749,
-          12904,
-          14040,
-          14160,
-          14260,
-          14786,
-          14805,
-          15155,
-          15306,
-          16397,
-          16443,
-          16449,
-          16700,
-          23152
+          9266, 11589, 11749, 12904, 14040, 14160, 14260, 14786, 14805, 15155,
+          15306, 16397, 16443, 16449, 16700, 23152
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 23336,
         "linearizedBaseContracts": [
-          23336,
-          14260,
-          23152,
-          11749,
-          15155,
-          12904,
-          11589,
-          14160,
-          16700,
-          14040,
-          16397,
-          15306,
-          16443,
-          16449,
-          14805,
-          14786,
-          9266
+          23336, 14260, 23152, 11749, 15155, 12904, 11589, 14160, 16700, 14040,
+          16397, 15306, 16443, 16449, 14805, 14786, 9266
         ],
         "name": "ForeignBridgeErcToErc",
         "nodeType": "ContractDefinition",
@@ -1047,20 +1012,14 @@
   "legacyAST": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/upgradeable_contracts/erc20_to_erc20/ForeignBridgeErcToErc.sol",
     "exportedSymbols": {
-      "ForeignBridgeErcToErc": [
-        23336
-      ]
+      "ForeignBridgeErcToErc": [23336]
     },
     "id": 23337,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 23287,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:136"
       },
@@ -1126,45 +1085,16 @@
           }
         ],
         "contractDependencies": [
-          9266,
-          11589,
-          11749,
-          12904,
-          14040,
-          14160,
-          14260,
-          14786,
-          14805,
-          15155,
-          15306,
-          16397,
-          16443,
-          16449,
-          16700,
-          23152
+          9266, 11589, 11749, 12904, 14040, 14160, 14260, 14786, 14805, 15155,
+          15306, 16397, 16443, 16449, 16700, 23152
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 23336,
         "linearizedBaseContracts": [
-          23336,
-          14260,
-          23152,
-          11749,
-          15155,
-          12904,
-          11589,
-          14160,
-          16700,
-          14040,
-          16397,
-          15306,
-          16443,
-          16449,
-          14805,
-          14786,
-          9266
+          23336, 14260, 23152, 11749, 15155, 12904, 11589, 14160, 16700, 14040,
+          16397, 15306, 16443, 16449, 14805, 14786, 9266
         ],
         "name": "ForeignBridgeErcToErc",
         "nodeType": "ContractDefinition",

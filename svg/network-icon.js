@@ -1,8 +1,7 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
 
 export const NetworkIcon = (props) => {
-
   return (
     <Svg
       width={21}
@@ -17,5 +16,5 @@ export const NetworkIcon = (props) => {
         fill="#fff"
       />
     </Svg>
-  )
-}
+  );
+};

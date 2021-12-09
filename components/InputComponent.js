@@ -1,29 +1,31 @@
-import React, { useState } from "react";
-import { StyleSheet, Image, View, Alert, Platform } from "react-native";
-import { Text, Input, Item, Label, Button } from "native-base";
-import Images from "../Images";
-import { Badge } from "react-native-elements";
-import InputAmount from "./InputAmount";
-import { formatValue } from "../utils/format-value";
+import React, { useState } from 'react';
+import { StyleSheet, Image, View, Alert, Platform } from 'react-native';
+import { Text, Input, Item, Label, Button } from 'native-base';
+import Images from '../Images';
+import { Badge } from 'react-native-elements';
+import InputAmount from './InputAmount';
+import { formatValue } from '../utils/format-value';
 
-export default ({isWithdraw, ...props}) => {
+export default ({ isWithdraw, ...props }) => {
   const value = isWithdraw ? props.total_stake : props.available_balance;
   return (
     <>
       <Label style={style.labelTextTop}>{props.title}</Label>
       <Item style={style.styleItem}>
-        <InputAmount 
+        <InputAmount
           placeholder="0.00"
           placeholderTextColor="rgba(255,255,255,0.60)"
           value={props.value}
           onChangeText={props.onChange}
           style={style.input}
           returnKeyType="done"
-          selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
+          selectionColor={
+            Platform.OS === 'ios' ? '#fff' : 'rgba(255,255,255,0.60)'
+          }
           keyboardAppearance="dark"
           keyboardType="numeric"
           maxLength={14}
-      />
+        />
         <Badge
           onPress={props.onPressMax}
           value={<Text style={style.txtBtnSendMax}>{props.btnTxt}</Text>}
@@ -32,9 +34,10 @@ export default ({isWithdraw, ...props}) => {
       </Item>
 
       <View style={style.containerBottomInput}>
-          <Text style={style.labelTextBottom}>
-            {props.sub_text + ":"} {value}{" "}<Text style={style.labelTokenStyle}>{props.token}</Text>
-          </Text>
+        <Text style={style.labelTextBottom}>
+          {props.sub_text + ':'} {value}{' '}
+          <Text style={style.labelTokenStyle}>{props.token}</Text>
+        </Text>
       </View>
     </>
   );
@@ -45,11 +48,11 @@ const style = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   subContainerInput: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   btnSendMax: {
     backgroundColor: Images.color4,
@@ -57,37 +60,37 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     height: 25,
     marginHorizontal: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   txtBtnSendMax: {
     // color: "#9d41eb",
-    textDecorationLine: "underline",
-    color: "white",
+    textDecorationLine: 'underline',
+    color: 'white',
     fontSize: 12,
-    alignItems: "center",
-    fontFamily: "Fontfabric-NexaRegular",
+    alignItems: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   labelTextBottom: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 16,
   },
   labelTokenStyle: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 16,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   tokenStyle: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 12,
     marginRight: 10,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   labelTextTop: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 16,
     margin: 20,
   },
@@ -99,18 +102,18 @@ const style = StyleSheet.create({
   styleItem: {
     marginLeft: 20,
     marginRight: 20,
-    backgroundColor: "#12173E",
-    borderBottomColor: "transparent",
+    backgroundColor: '#12173E',
+    borderBottomColor: 'transparent',
     paddingLeft: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   input: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     height: 50,
     // width: '70%'
-    flex: 1
+    flex: 1,
   },
 });

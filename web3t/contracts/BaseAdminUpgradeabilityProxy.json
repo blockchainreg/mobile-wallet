@@ -120,20 +120,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/BaseAdminUpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "BaseAdminUpgradeabilityProxy": [
-        12817
-      ]
+      "BaseAdminUpgradeabilityProxy": [12817]
     },
     "id": 12818,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12699,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:31"
       },
@@ -198,21 +192,12 @@
             "src": "324:23:31"
           }
         ],
-        "contractDependencies": [
-          12875,
-          12913,
-          12930
-        ],
+        "contractDependencies": [12875, 12913, 12930],
         "contractKind": "contract",
         "documentation": "@title BaseAdminUpgradeabilityProxy\n@dev This contract combines an upgradeability proxy with an authorization\nmechanism for administrative tasks.",
         "fullyImplemented": true,
         "id": 12817,
-        "linearizedBaseContracts": [
-          12817,
-          12875,
-          12913,
-          12930
-        ],
+        "linearizedBaseContracts": [12817, 12875, 12913, 12930],
         "name": "BaseAdminUpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -386,10 +371,7 @@
                       "id": 12713,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "724:7:31",
                       "typeDescriptions": {
@@ -547,9 +529,7 @@
                       "id": 12737,
                       "name": "_implementation",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        12841
-                      ],
+                      "overloadedDeclarations": [12841],
                       "referencedDeclaration": 12841,
                       "src": "1070:15:31",
                       "typeDescriptions": {
@@ -762,10 +742,7 @@
                       "id": 12748,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13016,
                       "src": "1348:7:31",
                       "typeDescriptions": {
@@ -1204,10 +1181,7 @@
                   "src": "2471:29:31"
                 },
                 {
-                  "assignments": [
-                    12794,
-                    null
-                  ],
+                  "assignments": [12794, null],
                   "declarations": [
                     {
                       "constant": false,
@@ -1334,10 +1308,7 @@
                       "id": 12800,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2574:7:31",
                       "typeDescriptions": {
@@ -1471,9 +1442,7 @@
               "src": "2769:107:31",
               "statements": [
                 {
-                  "assignments": [
-                    12811
-                  ],
+                  "assignments": [12811],
                   "declarations": [
                     {
                       "constant": false,
@@ -1610,20 +1579,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/BaseAdminUpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "BaseAdminUpgradeabilityProxy": [
-        12817
-      ]
+      "BaseAdminUpgradeabilityProxy": [12817]
     },
     "id": 12818,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12699,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:31"
       },
@@ -1688,21 +1651,12 @@
             "src": "324:23:31"
           }
         ],
-        "contractDependencies": [
-          12875,
-          12913,
-          12930
-        ],
+        "contractDependencies": [12875, 12913, 12930],
         "contractKind": "contract",
         "documentation": "@title BaseAdminUpgradeabilityProxy\n@dev This contract combines an upgradeability proxy with an authorization\nmechanism for administrative tasks.",
         "fullyImplemented": true,
         "id": 12817,
-        "linearizedBaseContracts": [
-          12817,
-          12875,
-          12913,
-          12930
-        ],
+        "linearizedBaseContracts": [12817, 12875, 12913, 12930],
         "name": "BaseAdminUpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1876,10 +1830,7 @@
                       "id": 12713,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "724:7:31",
                       "typeDescriptions": {
@@ -2037,9 +1988,7 @@
                       "id": 12737,
                       "name": "_implementation",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        12841
-                      ],
+                      "overloadedDeclarations": [12841],
                       "referencedDeclaration": 12841,
                       "src": "1070:15:31",
                       "typeDescriptions": {
@@ -2252,10 +2201,7 @@
                       "id": 12748,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13016,
                       "src": "1348:7:31",
                       "typeDescriptions": {
@@ -2694,10 +2640,7 @@
                   "src": "2471:29:31"
                 },
                 {
-                  "assignments": [
-                    12794,
-                    null
-                  ],
+                  "assignments": [12794, null],
                   "declarations": [
                     {
                       "constant": false,
@@ -2824,10 +2767,7 @@
                       "id": 12800,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2574:7:31",
                       "typeDescriptions": {
@@ -2961,9 +2901,7 @@
               "src": "2769:107:31",
               "statements": [
                 {
-                  "assignments": [
-                    12811
-                  ],
+                  "assignments": [12811],
                   "declarations": [
                     {
                       "constant": false,

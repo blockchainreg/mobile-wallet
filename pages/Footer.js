@@ -1,35 +1,35 @@
-import React from "react";
-import { View, Text, Footer, FooterTab, Button, Thumbnail } from "native-base";
-import { observer } from "mobx-react";
-import styles from "../Styles.js";
-import applyTransactions from "../wallet/apply-transactions.js";
-import getLang from "../wallet/get-lang.js";
-import Images from "../Images.js";
-import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
-import initStaking from "../initStaking.js";
-import spin from "../utils/spin.js";
+import React from 'react';
+import { View, Text, Footer, FooterTab, Button, Thumbnail } from 'native-base';
+import { observer } from 'mobx-react';
+import styles from '../Styles.js';
+import applyTransactions from '../wallet/apply-transactions.js';
+import getLang from '../wallet/get-lang.js';
+import Images from '../Images.js';
+import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from '../svg/index';
+import initStaking from '../initStaking.js';
+import spin from '../utils/spin.js';
 
 export default ({ store }) => {
   const changeTab = (tab) => () => {
     store.current.page = tab;
-    if (tab == "history") {
-      store.current.filter = ["*"];
-      store.current.filterVal.temp = "";
-      store.current.filterVal.apply = "";
+    if (tab == 'history') {
+      store.current.filter = ['*'];
+      store.current.filterVal.temp = '';
+      store.current.filterVal.apply = '';
       applyTransactions(store);
     }
   };
 
   const goToStaking = () => {
     initStaking(store);
-    changeTab("stakePage")();
+    changeTab('stakePage')();
   };
   const goToWallets = () => {
     // initStaking(store);
-    changeTab("wallets")();
+    changeTab('wallets')();
   };
   const renderNetwork = () => {
-    if (store.current.network === "mainnet") {
+    if (store.current.network === 'mainnet') {
       return null;
     }
     return (
@@ -42,18 +42,14 @@ export default ({ store }) => {
     );
   };
   const goToHistory = () => {
-    spin(
-      store,
-      'History is loading',
-      async (cb) => {
+    spin(store, 'History is loading', async (cb) => {
       try {
-        const result = await changeTab("history")();
+        const result = await changeTab('history')();
         cb(null, result);
-      } catch(err) {
+      } catch (err) {
         cb(err);
       }
-    }
-    )((err, result) => {});
+    })((err, result) => {});
   };
   //DO NOT generate footer if transaction info is visible
   if (store.infoTransaction != null) return null;
@@ -62,45 +58,45 @@ export default ({ store }) => {
       <Footer style={styles.footerHeight}>
         <FooterTab style={styles.footerTab}>
           <Button
-            active={store.current.page == "wallets"}
+            active={store.current.page == 'wallets'}
             style={styles.footerButtonStyle}
             onPress={goToWallets}
           >
             <WalletIcon
-              fill={store.current.page == "wallets" && Images.colorGreen}
+              fill={store.current.page == 'wallets' && Images.colorGreen}
               onPress={goToWallets}
             />
           </Button>
           <Button
-            active={store.current.page == "stakePage"}
+            active={store.current.page == 'stakePage'}
             style={styles.footerButtonStyle}
             onPress={goToStaking}
           >
             <StakeIcon
-              fill={store.current.page == "stakePage" && Images.colorGreen}
+              fill={store.current.page == 'stakePage' && Images.colorGreen}
               onPress={goToStaking}
             />
           </Button>
           <Button
             vertical
-            active={store.current.page == "history"}
+            active={store.current.page == 'history'}
             style={styles.footerButtonStyle}
             onPress={goToHistory}
           >
             <HistoryIcon
-              fill={store.current.page == "history" && Images.colorGreen}
+              fill={store.current.page == 'history' && Images.colorGreen}
               onPress={goToHistory}
             />
           </Button>
           <Button
             vertical
-            active={store.current.page == "settings"}
+            active={store.current.page == 'settings'}
             style={styles.footerButtonStyle}
-            onPress={changeTab("settings")}
+            onPress={changeTab('settings')}
           >
             <SettingsIcon
-              fill={store.current.page == "settings" && Images.colorGreen}
-              onPress={changeTab("settings")}
+              fill={store.current.page == 'settings' && Images.colorGreen}
+              onPress={changeTab('settings')}
             />
           </Button>
         </FooterTab>

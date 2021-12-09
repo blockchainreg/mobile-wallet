@@ -11,9 +11,6 @@
         "allowAfterThis": true
       }
     ],
-    "comma-dangle": [
-      "error",
-      "only-multiline"
-    ]
+    "comma-dangle": ["error", "only-multiline"]
   }
 }

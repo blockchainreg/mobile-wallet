@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { Mask, Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Mask, Path } from 'react-native-svg';
 
 export const StakingHeader = (props) => {
   return (
@@ -10,7 +10,7 @@ export const StakingHeader = (props) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
-      style={{transform: [{ scale: 1.2 }]}}
+      style={{ transform: [{ scale: 1.2 }] }}
     >
       <Mask id="a" fill="#fff">
         <Path d="M7.234 9.332L4.519 4.666h5.422L7.234 9.332zm5.418-6.225H1.808l5.426 9.335 5.418-9.331v-.004zM0 0l.904 1.559h12.652L14.46 0H0z" />
@@ -25,5 +25,5 @@ export const StakingHeader = (props) => {
         mask="url(#a)"
       />
     </Svg>
-  )
-}
+  );
+};
