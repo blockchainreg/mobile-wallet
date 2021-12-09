@@ -74,6 +74,9 @@ export default (store, web3t) => {
   const amount = roundHuman(r_amount);
 	//const amount = roundHuman2(r_amount, {decimals: 10});
 	const txFee = roundHuman2(store.infoTransaction.fee, {decimals: 6});
+
+  const openTxUrl = () => Linking.openURL(txurl)
+
   return (
 		<View style={styles.container}>
 			<View style={styles.detailsHistory}>
@@ -146,11 +149,11 @@ export default (store, web3t) => {
 				<View style={styles.userHistoryRow1}>
 				<Icon
 						name="md-open"
-						onPress={() => {Linking.openURL(txurl)}}
+						onPress={openTxUrl}
 						onLongPress={writeToClipboardId}
 						style={[styles.viewPt, {fontSize: 20} ]}
 				/>
-					<Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={() => {Linking.openURL(txurl)}} onLongPress={writeToClipboardId}>
+					<Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={openTxUrl} onLongPress={writeToClipboardId}>
 					{store.infoTransaction.tx}
 				</Text>
 				</View>
