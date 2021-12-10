@@ -105,7 +105,7 @@ export default observer( ({ store, web3t, ...props }) => {
 	const renderSectionHeader = ({ section }) => <Text style={styles.networkStyle}>{section.title}</Text>;
 	
 	return (
-		<View style={styles.container}>
+		<View>
 			<SwipeListView
 				useSectionList
 				sections={listData}
@@ -127,13 +127,8 @@ export default observer( ({ store, web3t, ...props }) => {
 
 
 const styles = StyleSheet.create({
-	container: {
-		// backgroundColor: 'white',
-		// flex: 1,
-	},
 	networkStyle:{
 		backgroundColor: Images.colorDarkBlue,
-		
 		color: "#fff",
 		marginLeft: 10,
 		fontSize: 15,
@@ -150,8 +145,6 @@ const styles = StyleSheet.create({
 	rowFront: {
 		alignItems: 'center',
 		backgroundColor: '#CCC',
-		// borderBottomColor: 'black',
-		// borderBottomWidth: 1,
 		justifyContent: 'center',
 		height: 50,
 		borderRadius: 10,
@@ -159,9 +152,6 @@ const styles = StyleSheet.create({
 	rowBack: {
 		alignItems: 'center',
 		backgroundColor: Images.velasColor1,
-		//flex: 1,
-		//flexDirection: 'row',
-		//justifyContent: 'space-between',
 		paddingLeft: 15,
 		marginHorizontal: 0,
 		height: 100,
@@ -186,14 +176,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Images.coral,
 		right: 0.5,
 		borderTopRightRadius: 10,
-		borderBottomRightRadius: 10,
-		//shadowColor: Images.coral,
-		// shadowOffset: {
-		// 	width: 2,
-		// 	height: 2,
-		// },
-		// shadowOpacity: 0.7,
-		// shadowRadius: 5.46,
-		// elevation: 9,
+		borderBottomRightRadius: 10
 	},
 });
