@@ -6,12 +6,12 @@
     "ios": "react-native run-ios",
     "eject": "expo eject",
     "postinstall-commented": "rn-nodeify --install buffer,stream,assert,events,crypto,vm --hack && cd node_modules/bs58 && yarn add base-x@3.0.4 && cd ../../",
-    "postinstall": "husky install",
     "pretty": "prettier --write .",
     "install": "pwd && cp scripts/pre-commit .git/hooks/ && chmod u+x .git/hooks/pre-commit && chmod u+x scripts/bump-version.sh",
     "clean:android": "rm -rf node_modules/ && yarn && cd android && ./gradlew clean",
     "reset": "watchman watch-del-all && rm -rf node_modules && yarn && yarn start --reset-cache",
-    "pod": "cd ./ios && pod install && cd .."
+    "pod": "cd ./ios && pod install && cd ..",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@babel/core": "~7.9.0",
@@ -152,9 +152,10 @@
     "@types/react-native": "~0.63.2",
     "babel-jest": "~25.2.6",
     "babel-preset-expo": "8.3.0",
-    "husky": "^7.0.4",
+    "husky": "^7.0.0",
     "jest": "~25.2.6",
     "prettier": "2.5.1",
+    "pretty-quick": "^3.1.2",
     "react-test-renderer": "~16.13.1",
     "rn-nodeify": "^10.2.0",
     "typescript": "~4.0.0"
