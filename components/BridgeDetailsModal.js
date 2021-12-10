@@ -5,9 +5,10 @@ import roundHuman from "../wallet/round-human";
 import math from '../wallet/math.js';
 import {Platform, ScrollView, StyleSheet} from "react-native";
 const times = math.times;
+const MAX_LIMIT = ">100,000,000";
 
 export default ({store, ...props}) => {
-  const MAX_LIMIT = ">100,000,000"
+
 	const { homeFeePercent, minPerTx, maxPerTx, remainingDailyLimit, wallet } = props.data;
 	const bridgeFeePercent = times(homeFeePercent, 100);
 
