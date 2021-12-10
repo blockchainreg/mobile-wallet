@@ -4,7 +4,7 @@ import { Button, Icon } from 'native-base';
 
 import styles from '../Styles.js';
 
-export default   ({ onBack, transparent, style }) => {
+export default ({ onBack, transparent, style }) => {
   const back = () => {
     onBack();
     return true;
