@@ -848,7 +848,7 @@
     network = arg$.network, address = arg$.address;
     web3 = getWeb3(network);
     try {
-	  contract = getContractInstance(web3, network.address, swap);
+	  contract = getContractInstance(web3, network.address);
 	  var balanceOf = (function(){
       switch (false) {
         case contract.methods == null:
