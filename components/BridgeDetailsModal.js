@@ -29,12 +29,13 @@ export default ({store, ...props}) => {
 	const fromNetwork = (name != null ? name : "").toUpperCase();
 	const toNetwork = (walletTo ? walletTo.coin.name : "").toUpperCase();
 	const title = `Swap from ${fromNetwork} to ${toNetwork}`;
+	const resetCurrentNetworkDetails = () => { store.current.currentNetworkDetails = null }
 
 	return (
 		<Dialog
 			title={title}
 			visible
-			onTouchOutside= {()=>{store.current.currentNetworkDetails = null}}
+			onTouchOutside= {resetCurrentNetworkDetails}
 			titleStyle={{ color: '#000', fontWeight: "bold"}}
 			messageStyle={{fontFamily: "Fontfabric-NexaRegular", color: '#000'}}
 		>
