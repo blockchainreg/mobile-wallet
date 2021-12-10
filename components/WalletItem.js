@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 export default observer( ({ store, wallet, ...props }) => {
   const lang = getLang(store);
 
+  const isNotLegacy = (props.name).toLowerCase().indexOf('legacy') === -1;
 	
   const typeBadge = (type) => {
     switch (type) {
@@ -23,7 +24,7 @@ export default observer( ({ store, wallet, ...props }) => {
   };
   
   const legacyBadge = ()=> {
-		if ((props.name).toLowerCase().indexOf('legacy') === -1) return null;
+		if (isNotLegacy) return null;
 		const legacyBadgeStyle = {
 			fontFamily: "Fontfabric-NexaRegular",
 			fontSize: 12,
@@ -146,7 +147,7 @@ export default observer( ({ store, wallet, ...props }) => {
 				<Text
 					style={[
 						style.styleBalance,
-						{ color: props.active ?  "#fff" : "#fff" },
+						{ color: "#fff" },
 					]}
 				>
 					{props.balance}
