@@ -33,7 +33,7 @@ export default ({store, ...props}) => {
 	return (
 		<Dialog
 			title={title}
-			visible={true}
+			visible
 			onTouchOutside= {()=>{store.current.currentNetworkDetails = null}}
 			titleStyle={{ color: '#000', fontWeight: "bold"}}
 			messageStyle={{fontFamily: "Fontfabric-NexaRegular", color: '#000'}}
