@@ -15,6 +15,8 @@ import Images from '../Images.js';
 import Header from '../components/Header'
 import Constants from 'expo-constants';
 import { Camera } from 'expo-camera';
+import { CameraEn } from "../svg/cameraEn.js";
+import { CameraDis } from "../svg/cameraDis.js";
 
 function Scanner({ onScan }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -48,10 +50,11 @@ function Scanner({ onScan }) {
     return (
       <View style={styles.viewFlex}>
       <View style={styles.imgScanCamera}>
-        <Image
+        {/* <Image
         source={Images.cameraEn}
         style={styles.styleLogoCamera}
-        />
+        /> */}
+        <CameraEn height={86/1.5} width={115/1.5}/>
         <Text style={{ color: "#fff", textAlign: "center", paddingTop: 20}}>Requesting for camera permission</Text>
       </View>
       </View>
@@ -61,10 +64,11 @@ function Scanner({ onScan }) {
     return (
       <View style={styles.viewFlex}>
       <View style={styles.imgScanCamera}>
-        <Image
+        {/* <Image
         source={Images.cameraDis}
         style={styles.styleLogoCamera}
-        />
+        /> */}
+        <CameraDis height={86/1.5} width={115/1.5}/>
         <Text style={{ color: "#fff", textAlign: "center", paddingTop: 20}}>No access to camera</Text>
       </View>
       </View>
@@ -119,7 +123,7 @@ module.exports = ({ store, web3t }) => {
       return;
     }
     store.current.send["to"] = text;
-    store.current.send.amountSend = '0';
+    store.current.send.amountSend = '';
     store.current.send.amountSendUsd = '0';
     store.current.send.amountSendFee = '0';
     store.current.send.amountSendFeeUsd = '0';

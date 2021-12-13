@@ -29,6 +29,7 @@ import stakingEnterance from "./pages/StakingEnterance";
 import exitValidator from './pages/ExitValidator'
 import confirmExit from './pages/ConfirmExitValidator'
 import confirmWithdrawal from './pages/ConfirmWithdrawal'
+import searchStake from './pages/SearchStake'
 
 
 export default {
@@ -62,5 +63,6 @@ export default {
   stakingEnterance,
   exitValidator,
   confirmExit,
-  confirmWithdrawal
+  confirmWithdrawal,
+  searchStake
 };

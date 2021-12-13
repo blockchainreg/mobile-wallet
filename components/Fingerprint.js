@@ -7,6 +7,7 @@ import styles from "../Styles.js";
 import Background from "./Background.js";
 import Header from "../components/Header.js";
 import * as SecureStore from "expo-secure-store";
+import { FingerPrint } from "../svg/fingerPrint.js";
 
 export default class Fingerprint extends React.Component {
   constructor(props) {
@@ -94,7 +95,8 @@ export default class Fingerprint extends React.Component {
         </View>
         <View
           style={{ justifyContent: "center", alignItems: "center", flex: 1  }}>
-          <Image style={styles.imageFinger} source={Images.fingerPrint} />
+          {/* <Image style={styles.imageFinger} source={Images.fingerPrint} /> */}
+          <FingerPrint  width={150 / 2} height={173 / 2}/>
           <View style={styles.card1}>
             <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>Authenticate!</Text>

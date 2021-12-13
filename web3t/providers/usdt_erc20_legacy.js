@@ -276,7 +276,14 @@
     amount = div(t.value, dec);
     time = t.timeStamp;
     url = url + "/tx/" + tx;
-    fee = div(times(t.cumulativeGasUsed, t.gasPrice), dec);
+		fee = (function(){
+			switch (false) {
+				case t.gasUsed == null:
+					return div(times(t.gasUsed, t.gasPrice), Math.pow(10, 18));
+				default:
+					return div(times(t.cumulativeGasUsed, t.gasPrice), Math.pow(10, 18));
+			}
+		}());
     from = (function(){
       switch (false) {
       default:

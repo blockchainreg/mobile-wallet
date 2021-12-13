@@ -15,6 +15,7 @@ import Images from '../Images.js';
 import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 import Header from '../components/Header'
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 // const generateMnemonic = () => {
 //   return "one two three four five six";
@@ -61,10 +62,11 @@ export default ({ store }) => {
       <Background fullscreen={true}/>
 <Header onBack={changePage("register")}/>
         <View style={styles.containerFlexStart}>
-          <Image
+          {/* <Image
             source={Images.logo}
             style={styles.styleLogo}
-          />
+          /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
           <View style={styles.card1}>
             <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>{lang.welcomeWallet}</Text>

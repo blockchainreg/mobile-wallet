@@ -12,9 +12,14 @@ class ValidatorModel {
   totalStakers = null;
   network = null;
   apr$ = null;
+  name = '';
 
   get address() {
     return this.solanaValidator.votePubkey;
+  }
+
+  get identity() {
+    return this.solanaValidator.nodePubkey;
   }
 
   get lastBlock() {

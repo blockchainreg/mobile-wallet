@@ -18,6 +18,7 @@ import styles from "../Styles.js";
 import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
 import BackButton from "../components/BackButton.js";
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 const buttonActive = (store) => {
   const changePage = (tab, visible) => () => {
@@ -136,7 +137,8 @@ export default ({ store }) => {
           <Right style={styles.viewFlexHeader} />
         </Header>
         <View style={styles.containerFlexStart}>
-          <Image source={Images.logo} style={styles.styleLogo} />
+          {/* <Image source={Images.logo} style={styles.styleLogo} /> */}
+          <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
           <View style={styles.widthCard}>
             {inputResetPasMail(store)}
             {!validInputMailSignUp && (

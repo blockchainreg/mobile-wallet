@@ -27,7 +27,7 @@
       value: '0',
       feeType: 'auto',
       txType: 'regular',
-      amountSend: '0',
+      amountSend: '',
       amountCharged: '0',
       amountChargedUsd: '0',
       amountSendUsd: '0',

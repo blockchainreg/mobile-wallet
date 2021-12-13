@@ -23,7 +23,8 @@ import Header from "../components/Header";
 import Input from "../components/InputSecure";
 import StatusBar from "../components/StatusBar.js";
 import initStaking from '../initStaking.js';
-
+import { VelasLogo1 } from "../svg/velas-logo1.js";
+import { Bg } from "../svg/bg.js";
 export default ({ store, web3t }) => {
   const lang = getLang(store);
 
@@ -48,7 +49,7 @@ export default ({ store, web3t }) => {
         store.current.error = err + "";
       }
     });
-   
+
   };
 
   const loginSlow = () => {
@@ -195,7 +196,7 @@ export default ({ store, web3t }) => {
         store.current.pin = "";
         return Toast.show({ text: lang.incorrectPass || "Incorrect password" });
       }
-      
+
       login(get());
       store.current.pin = "";
       store.userWallet = 200;
@@ -285,22 +286,18 @@ export default ({ store, web3t }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={style.container}
     >
-      <ImageBackground source={Images.bg} style={styles.image}>
-        {/* <Header transparent /> */}
+      <View style={styles.image}>
       <StatusBar />
-        
+
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
             <View style={{ alignSelf: "center" }}>
-              <Image
-                source={Images.logo}
-                style={[styles.styleLogo, { alignSelf: "center" }]}
-              />
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
               <View style={styles.styleVersion}>
                 <Text
                   style={[styles.styleTxtSeparator, { textAlign: "center" }]}
                 >
-                  v.{Constants.manifest.version}
+                  v.{Constants.nativeAppVersion}
                 </Text>
               </View>
               <Text style={styles.textH1Seed}>{lang.enterPin}</Text>
@@ -314,7 +311,8 @@ export default ({ store, web3t }) => {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </ImageBackground>
+        <Bg style={styles.bgMain}/>
+        </View>
     </KeyboardAvoidingView>
   );
 };
@@ -331,7 +329,7 @@ const style = StyleSheet.create({
     width: "100%",
   },
   paddingBlock: {
-    paddingHorizontal: 20, 
+    paddingHorizontal: 20,
     paddingTop: 20
   }
 });

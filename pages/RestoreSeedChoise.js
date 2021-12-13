@@ -16,6 +16,7 @@ import getLang from '../wallet/get-lang.js';
 import Background from "../components/Background.js";
 import {shuffle} from "../utils/array.js";
 import Header from '../components/Header'
+import { VelasLogo1 } from "../svg/velas-logo1.js";
 
 export default ({ store, web3t }) => {
   const changePage = (tab) => () => {
@@ -53,10 +54,11 @@ export default ({ store, web3t }) => {
       <Background fullscreen={true}/>
         <Header onBack={changePage("newseed")}/>
         <View style={styles.containerFlexStart}>
-          <Image
+          {/* <Image
             source={Images.logo}
             style={styles.styleLogo}
-          />
+          /> */}
+              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
           <View style={styles.card1}>
           <View style={styles.titleInput}>
               <Text style={styles.textH1Seed}>{lang.from}</Text>

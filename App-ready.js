@@ -23,6 +23,7 @@ Store.current.seedIndex = 0
 Store.current.seedIndexes = [];
 Store.current.seedWords = [];
 Store.lang = localStorage.getItem("lang") || "en";
+Store.sort = localStorage.getItem("sort") || "";
 Store.current.auth = {
     isLocalAuthEnabled: null,
     isAuthenticating: false,
@@ -39,6 +40,7 @@ Store.current.loadingSpinners = [];
 //------------------------------
 //Extend the store here !!!
 
+console.log('store.sort', Store.sort)
 const store = observable(Store);
 const web3t = web3(store);
 

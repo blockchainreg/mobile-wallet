@@ -6,7 +6,7 @@ import styles from "../Styles.js";
 import Images from '../Images.js';
 import StandardLinearGradient from "../components/StandardLinearGradient.js";
 import getLang from '../wallet/get-lang.js';
-
+import { Tick } from "../svg/tick.js";
 
   const handleCloseModalPress = (store, web3t) => {
     const lang = getLang(store);
@@ -36,10 +36,12 @@ export default ({ store, web3t }) => {
       <StandardLinearGradient>
         <Modal isVisible={true} hasBackdrop={false}>
           <View style={styles.modalContent2}>
-            <Image
+            {/* <Image
               source={Images.tick}
               style={styles.imgSizeModal2}
-            />
+            /> */}
+            <Tick width={76}
+    height={73}/>
             <Text style={styles.textModalRender}>{lang.txSend}</Text>
             <Text style={styles.textModalStyle}>
               {lang.txId}:{" "}

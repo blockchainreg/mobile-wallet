@@ -32,6 +32,7 @@ import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human";
 import Header from "../components/Header";
 import InputAmount from "../components/InputAmount";
+import { ScanImage } from "../svg/scanImage.js";
 
 /* Render Send/Swap sceen */
 export default ({ store, web3t }) => {
@@ -133,10 +134,13 @@ export default ({ store, web3t }) => {
 				onPress={scanQRSend}
 				style={{ backgroundColor: 'transparent',  width: 50}}
 			>
-				<Image
+				{/* <Image
 					source={Images.scanImage}
 					style={styles.sizeIconBtn1}
-				/>
+				/> */} 
+				<ScanImage  width={64 / 4}
+				height={64 /4}
+				left={30}/>
 			</TouchableOpacity>
 		</Item>
 	);

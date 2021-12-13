@@ -17,6 +17,7 @@ import Images from "../Images.js";
 import getLang from "../wallet/get-lang.js";
 import Background from "../components/Background.js";
 import Header from '../components/Header'
+import { Generate } from "../svg/generate.js";
 
 export default ({ store }) => {
   const changePage = (tab) => () => {
@@ -47,7 +48,8 @@ export default ({ store }) => {
       <Header onBack={back}/>
       <Content style={{flex: 1 }}>
         <View style={{alignItems: "center",}}>
-        <Image source={Images.generate} style={styles.setupImg} />
+        {/* <Image source={Images.generate} style={styles.setupImg} /> */}
+        <Generate height={271 / 4} width={320 / 4} marginBottom={"7%"}/>
         <View style={styles.stylePrint}>
           <CardItem style={styles.cardItemSeed}>
             <Body>

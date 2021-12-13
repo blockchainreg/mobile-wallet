@@ -26,6 +26,9 @@ import Images from '../Images.js';
 import walletsFuncs from "../wallet/wallets-funcs.js";
 import roundNumber from "../round-number";
 import roundHuman from "../wallet/round-human"
+import roundHuman2 from "../wallet/round-human2"
+import { DepositImage } from "../svg/depositImage.js";
+import { WithdrawImage2 } from "../svg/withdrawImage2.js";
 
 
 export default (store, web3t) => {
@@ -62,10 +65,10 @@ export default (store, web3t) => {
   const thumbnail = type => {
     switch (type) {
       case "IN":
-        return <Thumbnail small square source={Images.depositImage} />;
+        return <DepositImage width={36} height={36}/>;
       case "OUT":
         return (
-          <Thumbnail small square source={Images.withdrawImage2} />
+          <WithdrawImage2 width={36} height={36}/>
         );
       default:
         return null;
@@ -149,7 +152,7 @@ export default (store, web3t) => {
           <View style={styles.lineMonoRow}>
             <Text style={styles.detail}>{lang.amount}:</Text>
             <Text style={styles.viewPt}>
-              {store.infoTransaction.amount}
+              {amount}
               {" "}{tokenLabel}
             </Text>
           </View>
