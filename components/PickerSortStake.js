@@ -46,10 +46,10 @@ export default ({ store, web3t, ...props }) => {
     });
   };
   const onValueChangeValue = async (value) => {
-    store.sort = value;
-    localStorage.setItem("sort", value);
-    Platform.OS === "android" ? store.sort === "total_staked" ? sortActiveStake() : sortApr() : null;
-    await console.log("store.sort", store.sort);
+    store.stakingStore.sort = value;
+    if (Platform.OS === "android") {
+      value === "total_staked" ? sortActiveStake() : sortApr();
+    }
   };
   const sortItems = [
     {
@@ -68,7 +68,7 @@ export default ({ store, web3t, ...props }) => {
         onValueChangeValue(value);
       }}
       useNativeAndroidPickerStyle={false}
-      value={store.sort}
+      value={store.stakingStore.sort}
       items={sortItems}
       Icon={() => {
         return <Icon

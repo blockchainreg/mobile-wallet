@@ -116,6 +116,13 @@ export default ({ store, web3t }) => {
           Vibration.vibrate(DURATION);
           Alert.alert(lang.copied, "", [{ text: lang.ok }]);
         };
+        const copyName = async () => {		
+          const DURATION = 1000/10;		
+          await Clipboard.setString(details.name);		
+          Vibration.vibrate(DURATION);
+          Alert.alert(lang.copied, "", [{ text: lang.ok }]);
+        };
+      
         const Stake = observer(() => {
           return (
             <ScrollView>
@@ -287,7 +294,9 @@ export default ({ store, web3t }) => {
           <>
             <DetailsValidatorComponent
               address={details.address}
+              name={details.name}
               copyAddress={copyAddress}
+              copyName={copyName}
               isActive={details.status === "active" ? true : false}
               value1={details.commission}
               value2={

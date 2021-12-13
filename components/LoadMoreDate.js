@@ -1,5 +1,5 @@
 import React, { Component } from "react"; //import react in our code.
-import { View, Text, TouchableOpacity, ActivityIndicator, Image, Platform } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { List, ListItem, Left, Body, Right, Thumbnail, Header, Item, Icon, Button, Input, Content } from "native-base";
 import styles from "../Styles.js";
 import moment from "moment";
@@ -9,6 +9,8 @@ import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
 import roundHuman from "../wallet/round-human";
 import { SkypeIndicator } from 'react-native-indicators';
+import walletsFuncs from "../wallet/wallets-funcs.js";
+
 import { DepositImage } from "../svg/depositImage.js";
 import { WithdrawImage2 } from "../svg/withdrawImage2.js";
 import { Trx } from "../svg/trx.js";
@@ -207,7 +209,6 @@ export default ({ store, web3t }) => {
 			) : null}
 
         {store.current.refreshing || store.current.transactionsAreLoading ? (
-        //   <ActivityIndicator color="#fff" />
 			<Content contentContainerStyle={{flex: 1, alignItems: 'center',}}  >
 				<View style={{marginTop: 10}}>
 				  	<SkypeIndicator color={"white"}/>
@@ -217,10 +218,6 @@ export default ({ store, web3t }) => {
           	<View>
 				{txs.length == 0 && (
 				  	<View style={styles.footer}>
-						{/* <Image
-							source={Images.trx}
-							style={styles.styleLogo}
-						/> */}
 						<Trx height={27.3 * 2} width={31.7 * 2}/>
 				  	</View>
 				)}

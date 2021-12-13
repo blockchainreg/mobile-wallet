@@ -116,7 +116,7 @@ export default ({ store, web3t, props }) => {
                 return (
                   <>
                     {stakingStore.isRefreshing ? null : (
-                    PickerSortStake({ store, onDonePress: store.sort === null ? null : store.sort === 'total_staked' ? sortActiveStake :  sortApr})
+                      PickerSortStake({ store, onDonePress: () => stakingStore.sort === 'total_staked' ? sortActiveStake() :  sortApr()})
                     )}
                   </>
                 );
@@ -158,6 +158,7 @@ export default ({ store, web3t, props }) => {
       <SearchHeader />
       <Observer>
         {() => {
+          // debugger;
           const filterStake = stakingStore.getStakedValidators();
           const filterTotalStaked = stakingStore.getNotStakedValidators();
           if (!filterStake || !filterTotalStaked || stakingStore.isRefreshing) {
@@ -174,6 +175,7 @@ export default ({ store, web3t, props }) => {
               <StakeItem
                 key={item.address}
                 typeBadge={item.status}
+                name={item.name}
                 address={item.address}
                 myStake={item.myStake}
                 totalStaked={item.activeStake}
