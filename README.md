@@ -1,4 +1,4 @@
-# Expo (React Native) and Web3.js
+# React Native and Web3.js
 
 Version node v16.X.X
 
@@ -23,4 +23,14 @@ yarn ios
 ```
 ```
 yarn android 
+```
+
+# Problem solving
+
+## Android
+If have error
+> Task :app:installDebug FAILED
+try use for resolve
+```
+rm -rf node_modules/ && yarn && cd android && ./gradlew clean && ./gradlew :app:bundleRelease
 ```

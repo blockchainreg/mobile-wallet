@@ -340,7 +340,6 @@
 				CURRENT_PROJECT_VERSION = 199;
 				DEVELOPMENT_TEAM = PW8T92583L;
 				ENABLE_BITCODE = NO;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
@@ -436,7 +435,6 @@
 				CODE_SIGN_ENTITLEMENTS = Velaswallet/walletmobile.entitlements;
 				CURRENT_PROJECT_VERSION = 199;
 				DEVELOPMENT_TEAM = PW8T92583L;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Velaswallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
