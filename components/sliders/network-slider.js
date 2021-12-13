@@ -16,6 +16,8 @@ import { modal } from "../../wallet/pages/confirmation";
 import contracts from "../../wallet/contracts";
 import spin from "../../utils/spin";
 import roundHuman from "../../wallet/round-human";
+import contractData from "../../wallet/contract-data";
+import {changeAmount} from "../../wallet/calc-amount.js"
 
 const NetworkChooser = (props) => {
 	
@@ -25,6 +27,7 @@ const NetworkChooser = (props) => {
 	const { wallets } = store.current.account;
 	const lang = getLang(store);
 	var swaps = contracts({store, web3t});
+	var dataBuilder = contractData({store});
 	
 	function importAll$(obj, src){
 		for (var key in src) obj[key] = src[key];
@@ -133,8 +136,21 @@ const NetworkChooser = (props) => {
 			if (err) {
 				console.error(err);
 			}
-			store.current.refreshing = false;
-			store.current.switchNetwork = false;
+
+      store.current.send.data = null;
+      store.current.send.gasPrice = null;
+      store.current.send.gasPriceAuto = null;
+
+      dataBuilder.formContractData((err, res) => {
+        if (err) {
+          store.current.send.error = err;
+        }
+        var amount = store.current.send.amountSend;
+        changeAmount(store, amount, false, () => {
+          store.current.refreshing = false;
+          store.current.switchNetwork = false;
+        });
+			});
 		});
 	};
 	
