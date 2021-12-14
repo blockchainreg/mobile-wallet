@@ -1,10 +1,23 @@
-import React, {useEffect} from "react";
-import {BackHandler} from "react-native";
-import {Button, Icon} from "native-base";
+import React, { useEffect } from 'react';
+import { BackHandler } from 'react-native';
+import { Button, Icon } from 'native-base';
 
-import styles from "../Styles.js";
+import styles from '../Styles.js';
 
-export default ({ store, classes, text, loading, onClick, icon, type, mstyle, id, error, makeDisabled, noIcon }) => {
+export default ({
+  store,
+  classes,
+  text,
+  loading,
+  onClick,
+  icon,
+  type,
+  mstyle,
+  id,
+  error,
+  makeDisabled,
+  noIcon,
+}) => {
   const back = () => {
     onBack();
     return true;
@@ -16,14 +29,10 @@ export default ({ store, classes, text, loading, onClick, icon, type, mstyle, id
     };
   });
   return (
-    <Button
-      transparent
-      style={styles.arrowHeaderLeft}
-      onPress={onBack}
-    >
+    <Button transparent style={styles.arrowHeaderLeft} onPress={onBack}>
       <Icon
         name="ios-arrow-back"
-        style={style || [styles.arrowHeaderIconBlack, { color: "#fff" }]}
+        style={style || [styles.arrowHeaderIconBlack, { color: '#fff' }]}
       />
     </Button>
   );

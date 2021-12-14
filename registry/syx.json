@@ -14,8 +14,8 @@
     "txFee": "0.000020",
     "txFeeIn": "vlx2",
     "txFeeOptions": {
-      "auto": '0.0020',
-      "cheap": '0.00014'
+      "auto": "0.0020",
+      "cheap": "0.00014"
     },
     "messagePrefix": "Ethereum",
     "address": "0x2de7063fe77aAFB5b401d65E5A108649Ec577170",

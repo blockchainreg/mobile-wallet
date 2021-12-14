@@ -17,20 +17,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/Proxy.sol",
     "exportedSymbols": {
-      "Proxy": [
-        12913
-      ]
+      "Proxy": [12913]
     },
     "id": 12914,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12877,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:33"
       },
@@ -41,9 +35,7 @@
         "documentation": "@title Proxy\n@dev Implements delegation of calls to other contracts, with proper\nforwarding of return values and bubbling of failures.\nIt defines a fallback function that delegates all calls to the address\nreturned by the abstract _implementation() internal function.",
         "fullyImplemented": false,
         "id": 12913,
-        "linearizedBaseContracts": [
-          12913
-        ],
+        "linearizedBaseContracts": [12913],
         "name": "Proxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -429,20 +421,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/Proxy.sol",
     "exportedSymbols": {
-      "Proxy": [
-        12913
-      ]
+      "Proxy": [12913]
     },
     "id": 12914,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12877,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:33"
       },
@@ -453,9 +439,7 @@
         "documentation": "@title Proxy\n@dev Implements delegation of calls to other contracts, with proper\nforwarding of return values and bubbling of failures.\nIt defines a fallback function that delegates all calls to the address\nreturned by the abstract _implementation() internal function.",
         "fullyImplemented": false,
         "id": 12913,
-        "linearizedBaseContracts": [
-          12913
-        ],
+        "linearizedBaseContracts": [12913],
         "name": "Proxy",
         "nodeType": "ContractDefinition",
         "nodes": [

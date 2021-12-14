@@ -731,20 +731,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/base/BlockRewardAuRaCoins.sol",
     "exportedSymbols": {
-      "BlockRewardAuRaCoins": [
-        7218
-      ]
+      "BlockRewardAuRaCoins": [7218]
     },
     "id": 7219,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 7075,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:10"
       },
@@ -809,25 +803,12 @@
             "src": "167:21:10"
           }
         ],
-        "contractDependencies": [
-          7073,
-          11930,
-          11960,
-          12930,
-          12997
-        ],
+        "contractDependencies": [7073, 11930, 11960, 12930, 12997],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 7218,
-        "linearizedBaseContracts": [
-          7218,
-          11960,
-          7073,
-          11930,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [7218, 11960, 7073, 11930, 12997, 12930],
         "name": "BlockRewardAuRaCoins",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1059,9 +1040,7 @@
               "src": "2301:431:10",
               "statements": [
                 {
-                  "assignments": [
-                    7111
-                  ],
+                  "assignments": [7111],
                   "declarations": [
                     {
                       "constant": false,
@@ -1162,9 +1141,7 @@
                   "src": "2311:92:10"
                 },
                 {
-                  "assignments": [
-                    7119
-                  ],
+                  "assignments": [7119],
                   "declarations": [
                     {
                       "constant": false,
@@ -1609,9 +1586,7 @@
               "src": "3267:402:10",
               "statements": [
                 {
-                  "assignments": [
-                    7151
-                  ],
+                  "assignments": [7151],
                   "declarations": [
                     {
                       "constant": false,
@@ -1712,9 +1687,7 @@
                   "src": "3277:92:10"
                 },
                 {
-                  "assignments": [
-                    7159
-                  ],
+                  "assignments": [7159],
                   "declarations": [
                     {
                       "constant": false,
@@ -2569,20 +2542,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/base/BlockRewardAuRaCoins.sol",
     "exportedSymbols": {
-      "BlockRewardAuRaCoins": [
-        7218
-      ]
+      "BlockRewardAuRaCoins": [7218]
     },
     "id": 7219,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 7075,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:10"
       },
@@ -2647,25 +2614,12 @@
             "src": "167:21:10"
           }
         ],
-        "contractDependencies": [
-          7073,
-          11930,
-          11960,
-          12930,
-          12997
-        ],
+        "contractDependencies": [7073, 11930, 11960, 12930, 12997],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 7218,
-        "linearizedBaseContracts": [
-          7218,
-          11960,
-          7073,
-          11930,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [7218, 11960, 7073, 11930, 12997, 12930],
         "name": "BlockRewardAuRaCoins",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -2897,9 +2851,7 @@
               "src": "2301:431:10",
               "statements": [
                 {
-                  "assignments": [
-                    7111
-                  ],
+                  "assignments": [7111],
                   "declarations": [
                     {
                       "constant": false,
@@ -3000,9 +2952,7 @@
                   "src": "2311:92:10"
                 },
                 {
-                  "assignments": [
-                    7119
-                  ],
+                  "assignments": [7119],
                   "declarations": [
                     {
                       "constant": false,
@@ -3447,9 +3397,7 @@
               "src": "3267:402:10",
               "statements": [
                 {
-                  "assignments": [
-                    7151
-                  ],
+                  "assignments": [7151],
                   "declarations": [
                     {
                       "constant": false,
@@ -3550,9 +3498,7 @@
                   "src": "3277:92:10"
                 },
                 {
-                  "assignments": [
-                    7159
-                  ],
+                  "assignments": [7159],
                   "declarations": [
                     {
                       "constant": false,

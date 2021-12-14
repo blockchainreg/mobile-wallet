@@ -4,7 +4,7 @@ module.exports = {
   resolver: {
     extraNodeModules: nodeLibs,
     blacklistRE: blacklist([
-            /node_modules\/.*\/node_modules\/react-native\/.*/,
-        ])
-  }
+      /node_modules\/.*\/node_modules\/react-native\/.*/,
+    ]),
+  },
 };

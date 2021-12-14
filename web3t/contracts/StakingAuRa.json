@@ -1348,20 +1348,14 @@
   "ast": {
     "absolutePath": "/Users/base/go/src/github.com/velas/velas-smarts/posdao-contracts/contracts/StakingAuRa.sol",
     "exportedSymbols": {
-      "StakingAuRa": [
-        2292
-      ]
+      "StakingAuRa": [2292]
     },
     "id": 2293,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 2288,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:6"
       },
@@ -1397,25 +1391,12 @@
             "src": "302:16:6"
           }
         ],
-        "contractDependencies": [
-          11059,
-          11647,
-          12732,
-          13311,
-          13378
-        ],
+        "contractDependencies": [11059, 11647, 12732, 13311, 13378],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 2292,
-        "linearizedBaseContracts": [
-          2292,
-          11647,
-          11059,
-          12732,
-          13378,
-          13311
-        ],
+        "linearizedBaseContracts": [2292, 11647, 11059, 12732, 13378, 13311],
         "name": "StakingAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [],
@@ -1428,20 +1409,14 @@
   "legacyAST": {
     "absolutePath": "/Users/base/go/src/github.com/velas/velas-smarts/posdao-contracts/contracts/StakingAuRa.sol",
     "exportedSymbols": {
-      "StakingAuRa": [
-        2292
-      ]
+      "StakingAuRa": [2292]
     },
     "id": 2293,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 2288,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:6"
       },
@@ -1477,25 +1452,12 @@
             "src": "302:16:6"
           }
         ],
-        "contractDependencies": [
-          11059,
-          11647,
-          12732,
-          13311,
-          13378
-        ],
+        "contractDependencies": [11059, 11647, 12732, 13311, 13378],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 2292,
-        "linearizedBaseContracts": [
-          2292,
-          11647,
-          11059,
-          12732,
-          13378,
-          13311
-        ],
+        "linearizedBaseContracts": [2292, 11647, 11059, 12732, 13378, 13311],
         "name": "StakingAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [],

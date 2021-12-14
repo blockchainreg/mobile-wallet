@@ -22,11 +22,15 @@ validate('bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4');
 ```
 
 ## Installation
+
 Add `bitcoin-address-validation` to your Javascript project dependencies using Yarn:
+
 ```bash
 yarn add bitcoin-address-validation
 ```
+
 Or NPM:
+
 ```bash
 npm install bitcoin-address-validation --save
 ```
@@ -34,6 +38,7 @@ npm install bitcoin-address-validation --save
 ## Usage
 
 ### Importing
+
 Import using ES6:
 
 ```js
@@ -49,6 +54,7 @@ var validate = require('bitcoin-address-validation');
 ### Validating addresses
 
 Validation is done using the `validate(address)` function.
+
 ```js
 validate('17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem')
 
@@ -78,9 +84,9 @@ validate('bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4');
 `validate(address)` will return `false` for any invalid address, regardless of the address type:
 
 ```js
-validate('bc1qw508d6qejxtdg4y5r3zrrvary0c5xw7kv8f3t4')
+validate('bc1qw508d6qejxtdg4y5r3zrrvary0c5xw7kv8f3t4');
 
-false
+false;
 ```
 
 ### Networks
@@ -92,7 +98,7 @@ This library supports 3 different types of networks: `mainnet`, `testnet` and `r
 ## Author
 
 Rui Gomes  
-https://ruigomes.me  
+https://ruigomes.me
 
 ## License
 

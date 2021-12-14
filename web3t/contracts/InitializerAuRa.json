@@ -63,20 +63,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/InitializerAuRa.sol",
     "exportedSymbols": {
-      "InitializerAuRa": [
-        332
-      ]
+      "InitializerAuRa": [332]
     },
     "id": 333,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 191,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:2"
       },
@@ -153,9 +147,7 @@
         "documentation": "@dev Used once on network startup and then destroyed.\n Needed for initializing upgradeable contracts since\n upgradeable contracts can't have constructors.",
         "fullyImplemented": true,
         "id": 332,
-        "linearizedBaseContracts": [
-          332
-        ],
+        "linearizedBaseContracts": [332],
         "name": "InitializerAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1114,9 +1106,7 @@
                   "src": "3213:73:2"
                 },
                 {
-                  "assignments": [
-                    288
-                  ],
+                  "assignments": [288],
                   "declarations": [
                     {
                       "constant": false,
@@ -2115,20 +2105,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/InitializerAuRa.sol",
     "exportedSymbols": {
-      "InitializerAuRa": [
-        332
-      ]
+      "InitializerAuRa": [332]
     },
     "id": 333,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 191,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:2"
       },
@@ -2205,9 +2189,7 @@
         "documentation": "@dev Used once on network startup and then destroyed.\n Needed for initializing upgradeable contracts since\n upgradeable contracts can't have constructors.",
         "fullyImplemented": true,
         "id": 332,
-        "linearizedBaseContracts": [
-          332
-        ],
+        "linearizedBaseContracts": [332],
         "name": "InitializerAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -3166,9 +3148,7 @@
                   "src": "3213:73:2"
                 },
                 {
-                  "assignments": [
-                    288
-                  ],
+                  "assignments": [288],
                   "declarations": [
                     {
                       "constant": false,

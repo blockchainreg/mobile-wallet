@@ -671,23 +671,15 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/Registry.sol",
     "exportedSymbols": {
-      "Owned": [
-        1403
-      ],
-      "Registry": [
-        2257
-      ]
+      "Owned": [1403],
+      "Registry": [2257]
     },
     "id": 2258,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 1353,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:5"
       },
@@ -731,9 +723,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 1403,
-        "linearizedBaseContracts": [
-          1403
-        ],
+        "linearizedBaseContracts": [1403],
         "name": "Owned",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -945,10 +935,7 @@
                       "id": 1368,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "315:7:5",
                       "typeDescriptions": {
@@ -1103,10 +1090,7 @@
                       "id": 1384,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "428:7:5",
                       "typeDescriptions": {
@@ -1403,23 +1387,12 @@
             "src": "883:16:5"
           }
         ],
-        "contractDependencies": [
-          1403,
-          12081,
-          12111,
-          12190
-        ],
+        "contractDependencies": [1403, 12081, 12111, 12190],
         "contractKind": "contract",
         "documentation": "@dev Stores human-readable keys associated with addresses, like DNS information\n (see https://wiki.parity.io/Parity-name-registry.html). Needed primarily to store the address\n of the `TxPermission` contract (see https://wiki.parity.io/Permissioning.html#transaction-type for details).",
         "fullyImplemented": true,
         "id": 2257,
-        "linearizedBaseContracts": [
-          2257,
-          12190,
-          12111,
-          12081,
-          1403
-        ],
+        "linearizedBaseContracts": [2257, 12190, 12111, 12081, 1403],
         "name": "Registry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -2091,10 +2064,7 @@
                       "id": 1451,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1359:7:5",
                       "typeDescriptions": {
@@ -2292,10 +2262,7 @@
                       "id": 1474,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1499:7:5",
                       "typeDescriptions": {
@@ -2567,10 +2534,7 @@
                       "id": 1490,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1619:7:5",
                       "typeDescriptions": {
@@ -3034,10 +2998,7 @@
                       "id": 1510,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1756:7:5",
                       "typeDescriptions": {
@@ -3353,10 +3314,7 @@
                       "id": 1541,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1967:7:5",
                       "typeDescriptions": {
@@ -3511,10 +3469,7 @@
                       "id": 1562,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2126:7:5",
                       "typeDescriptions": {
@@ -3669,10 +3624,7 @@
                       "id": 1578,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2248:7:5",
                       "typeDescriptions": {
@@ -3699,9 +3651,7 @@
                   "src": "2248:41:5"
                 },
                 {
-                  "assignments": [
-                    1587
-                  ],
+                  "assignments": [1587],
                   "declarations": [
                     {
                       "constant": false,
@@ -7365,9 +7315,7 @@
               "src": "4910:456:5",
               "statements": [
                 {
-                  "assignments": [
-                    1885
-                  ],
+                  "assignments": [1885],
                   "declarations": [
                     {
                       "constant": false,
@@ -12349,23 +12297,15 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/Registry.sol",
     "exportedSymbols": {
-      "Owned": [
-        1403
-      ],
-      "Registry": [
-        2257
-      ]
+      "Owned": [1403],
+      "Registry": [2257]
     },
     "id": 2258,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 1353,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:5"
       },
@@ -12409,9 +12349,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 1403,
-        "linearizedBaseContracts": [
-          1403
-        ],
+        "linearizedBaseContracts": [1403],
         "name": "Owned",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -12623,10 +12561,7 @@
                       "id": 1368,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "315:7:5",
                       "typeDescriptions": {
@@ -12781,10 +12716,7 @@
                       "id": 1384,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "428:7:5",
                       "typeDescriptions": {
@@ -13081,23 +13013,12 @@
             "src": "883:16:5"
           }
         ],
-        "contractDependencies": [
-          1403,
-          12081,
-          12111,
-          12190
-        ],
+        "contractDependencies": [1403, 12081, 12111, 12190],
         "contractKind": "contract",
         "documentation": "@dev Stores human-readable keys associated with addresses, like DNS information\n (see https://wiki.parity.io/Parity-name-registry.html). Needed primarily to store the address\n of the `TxPermission` contract (see https://wiki.parity.io/Permissioning.html#transaction-type for details).",
         "fullyImplemented": true,
         "id": 2257,
-        "linearizedBaseContracts": [
-          2257,
-          12190,
-          12111,
-          12081,
-          1403
-        ],
+        "linearizedBaseContracts": [2257, 12190, 12111, 12081, 1403],
         "name": "Registry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -13769,10 +13690,7 @@
                       "id": 1451,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1359:7:5",
                       "typeDescriptions": {
@@ -13970,10 +13888,7 @@
                       "id": 1474,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1499:7:5",
                       "typeDescriptions": {
@@ -14245,10 +14160,7 @@
                       "id": 1490,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1619:7:5",
                       "typeDescriptions": {
@@ -14712,10 +14624,7 @@
                       "id": 1510,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1756:7:5",
                       "typeDescriptions": {
@@ -15031,10 +14940,7 @@
                       "id": 1541,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "1967:7:5",
                       "typeDescriptions": {
@@ -15189,10 +15095,7 @@
                       "id": 1562,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2126:7:5",
                       "typeDescriptions": {
@@ -15347,10 +15250,7 @@
                       "id": 1578,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2248:7:5",
                       "typeDescriptions": {
@@ -15377,9 +15277,7 @@
                   "src": "2248:41:5"
                 },
                 {
-                  "assignments": [
-                    1587
-                  ],
+                  "assignments": [1587],
                   "declarations": [
                     {
                       "constant": false,
@@ -19043,9 +18941,7 @@
               "src": "4910:456:5",
               "statements": [
                 {
-                  "assignments": [
-                    1885
-                  ],
+                  "assignments": [1885],
                   "declarations": [
                     {
                       "constant": false,

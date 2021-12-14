@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Path, Defs, Pattern, Use, Image } from 'react-native-svg';
 
 export const FingerPrint = (props) => {
   return (
@@ -30,6 +30,5 @@ export const FingerPrint = (props) => {
         />
       </Defs>
     </Svg>
-  )
-}
-
+  );
+};

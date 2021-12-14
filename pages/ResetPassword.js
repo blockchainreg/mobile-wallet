@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Text,
   Button,
@@ -11,14 +11,14 @@ import {
   Left,
   Right,
   BackHandler,
-} from "native-base";
-import { Image, ImageBackground, Platform } from "react-native";
-import GradientButton from "../components/GradientButton.js";
-import styles from "../Styles.js";
-import Images from "../Images.js";
-import getLang from "../wallet/get-lang.js";
-import BackButton from "../components/BackButton.js";
-import { VelasLogo1 } from "../svg/velas-logo1.js";
+} from 'native-base';
+import { Image, ImageBackground, Platform } from 'react-native';
+import GradientButton from '../components/GradientButton.js';
+import styles from '../Styles.js';
+import Images from '../Images.js';
+import getLang from '../wallet/get-lang.js';
+import BackButton from '../components/BackButton.js';
+import { VelasLogo1 } from '../svg/velas-logo1.js';
 
 const buttonActive = (store) => {
   const changePage = (tab, visible) => () => {
@@ -31,7 +31,7 @@ const buttonActive = (store) => {
       email: store.resetPasswordInputMailField,
     };
 
-    store.tab = "LoginIn";
+    store.tab = 'LoginIn';
     store.footerVisible = false;
   };
 
@@ -44,7 +44,7 @@ const buttonActive = (store) => {
       gradientEnd="#9d41eb"
       gradientDirection="diagonal"
       height={50}
-      width={"100%"}
+      width={'100%'}
       radius={0}
       onPressAction={resetPassword}
     />
@@ -56,12 +56,12 @@ const buttonInactive = (store) => {
     <GradientButton
       style={styles.gradientBtnPh}
       text={lang.reset}
-      textStyle={{ fontSize: 14, color: "rgba(255,255,255,0.50)" }}
+      textStyle={{ fontSize: 14, color: 'rgba(255,255,255,0.50)' }}
       gradientBegin="rgba(221,181,255,0.30)"
       gradientEnd="rgba(221,181,255,0.30)"
       gradientDirection="diagonal"
       height={50}
-      width={"100%"}
+      width={'100%'}
       radius={0}
     />
   );
@@ -69,10 +69,10 @@ const buttonInactive = (store) => {
 
 const logIn = (store) => {
   const logInBtn = async () => {
-    store.tab = "LoginIn";
+    store.tab = 'LoginIn';
     store.footerVisible = false;
-    store.settingsInputMailField = "";
-    store.settingsInputPasswordField = "";
+    store.settingsInputMailField = '';
+    store.settingsInputPasswordField = '';
   };
   // <Button transparent style={styles.arrowHeaderLeft} onPress={logInBtn}>
   //   <Icon name="ios-arrow-back"  />
@@ -113,11 +113,11 @@ export default ({ store }) => {
           onChangeText={(text) => handleChangeEmailResetPas(text)}
           returnKeyType="done"
           placeholder="Enter your email"
-          keyboardType={"email-address"}
+          keyboardType={'email-address'}
           placeholderTextColor="rgba(255,255,255,0.60)"
           style={styles.inputSize}
           selectionColor={
-            Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"
+            Platform.OS === 'ios' ? '#fff' : 'rgba(255,255,255,0.60)'
           }
           keyboardAppearance="dark"
         />
@@ -138,7 +138,12 @@ export default ({ store }) => {
         </Header>
         <View style={styles.containerFlexStart}>
           {/* <Image source={Images.logo} style={styles.styleLogo} /> */}
-          <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
+          <VelasLogo1
+            style={[styles.styleLogo, { alignSelf: 'center' }]}
+            width="72"
+            height="63"
+            viewBox="0 0 72 63"
+          />
           <View style={styles.widthCard}>
             {inputResetPasMail(store)}
             {!validInputMailSignUp && (

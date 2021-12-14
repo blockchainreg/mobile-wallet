@@ -47,27 +47,27 @@
       "type": "function"
     },
     {
-      "constant":false,
-      "inputs":[
+      "constant": false,
+      "inputs": [
         {
-          "name":"_to",
-          "type":"address"
+          "name": "_to",
+          "type": "address"
         },
         {
-          "name":"_value",
-          "type":"uint256"
+          "name": "_value",
+          "type": "uint256"
         }
       ],
-      "name":"transfer",
-      "outputs":[
+      "name": "transfer",
+      "outputs": [
         {
-          "name":"",
-          "type":"bool"
+          "name": "",
+          "type": "bool"
         }
       ],
-      "payable":false,
-      "stateMutability":"nonpayable",
-      "type":"function"
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "constant": true,
@@ -946,20 +946,14 @@
   "ast": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/upgradeable_contracts/native_to_erc20/ForeignBridgeNativeToErc.sol",
     "exportedSymbols": {
-      "ForeignBridgeNativeToErc": [
-        29285
-      ]
+      "ForeignBridgeNativeToErc": [29285]
     },
     "id": 29286,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 28930,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:155"
       },
@@ -1076,61 +1070,18 @@
           }
         ],
         "contractDependencies": [
-          1500,
-          9266,
-          10090,
-          11589,
-          11749,
-          12916,
-          13954,
-          14052,
-          14172,
-          14317,
-          14351,
-          14357,
-          14382,
-          14798,
-          14817,
-          15167,
-          15206,
-          15318,
-          15607,
-          16409,
-          16455,
-          16461,
-          16712,
-          29814
+          1500, 9266, 10090, 11589, 11749, 12916, 13954, 14052, 14172, 14317,
+          14351, 14357, 14382, 14798, 14817, 15167, 15206, 15318, 15607, 16409,
+          16455, 16461, 16712, 29814
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 29285,
         "linearizedBaseContracts": [
-          29285,
-          29814,
-          15607,
-          14382,
-          14351,
-          14317,
-          15206,
-          10090,
-          13954,
-          14357,
-          1500,
-          11749,
-          15167,
-          12916,
-          11589,
-          14172,
-          16712,
-          14052,
-          16409,
-          15318,
-          16455,
-          16461,
-          14817,
-          14798,
-          9266
+          29285, 29814, 15607, 14382, 14351, 14317, 15206, 10090, 13954, 14357,
+          1500, 11749, 15167, 12916, 11589, 14172, 16712, 14052, 16409, 15318,
+          16455, 16461, 14817, 14798, 9266
         ],
         "name": "ForeignBridgeNativeToErc",
         "nodeType": "ContractDefinition",
@@ -2043,10 +1994,7 @@
                       "id": 29034,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "2264:7:155",
                       "typeDescriptions": {
@@ -3301,10 +3249,7 @@
                       "id": 29127,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "4204:7:155",
                       "typeDescriptions": {
@@ -3410,10 +3355,7 @@
                       "id": 29133,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "4239:7:155",
                       "typeDescriptions": {
@@ -3737,9 +3679,7 @@
                       "id": 29161,
                       "name": "_setGasPrice",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        11728
-                      ],
+                      "overloadedDeclarations": [11728],
                       "referencedDeclaration": 11728,
                       "src": "4514:12:155",
                       "typeDescriptions": {
@@ -4448,9 +4388,7 @@
                   "src": "4930:48:155"
                 },
                 {
-                  "assignments": [
-                    29204
-                  ],
+                  "assignments": [29204],
                   "declarations": [
                     {
                       "constant": false,
@@ -4533,9 +4471,7 @@
                   "src": "4988:44:155"
                 },
                 {
-                  "assignments": [
-                    29210
-                  ],
+                  "assignments": [29210],
                   "declarations": [
                     {
                       "constant": false,
@@ -4697,9 +4633,7 @@
                     "src": "5123:257:155",
                     "statements": [
                       {
-                        "assignments": [
-                          29220
-                        ],
+                        "assignments": [29220],
                         "declarations": [
                           {
                             "constant": false,
@@ -4959,9 +4893,7 @@
                                   "id": 29231,
                                   "name": "distributeFeeFromSignatures",
                                   "nodeType": "Identifier",
-                                  "overloadedDeclarations": [
-                                    29813
-                                  ],
+                                  "overloadedDeclarations": [29813],
                                   "referencedDeclaration": 29813,
                                   "src": "5250:27:155",
                                   "typeDescriptions": {
@@ -5541,10 +5473,7 @@
                       "id": 29280,
                       "name": "revert",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30718,
-                        30719
-                      ],
+                      "overloadedDeclarations": [30718, 30719],
                       "referencedDeclaration": 30718,
                       "src": "5695:6:155",
                       "typeDescriptions": {
@@ -5688,20 +5617,14 @@
   "legacyAST": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/upgradeable_contracts/native_to_erc20/ForeignBridgeNativeToErc.sol",
     "exportedSymbols": {
-      "ForeignBridgeNativeToErc": [
-        29285
-      ]
+      "ForeignBridgeNativeToErc": [29285]
     },
     "id": 29286,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 28930,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:155"
       },
@@ -5818,61 +5741,18 @@
           }
         ],
         "contractDependencies": [
-          1500,
-          9266,
-          10090,
-          11589,
-          11749,
-          12916,
-          13954,
-          14052,
-          14172,
-          14317,
-          14351,
-          14357,
-          14382,
-          14798,
-          14817,
-          15167,
-          15206,
-          15318,
-          15607,
-          16409,
-          16455,
-          16461,
-          16712,
-          29814
+          1500, 9266, 10090, 11589, 11749, 12916, 13954, 14052, 14172, 14317,
+          14351, 14357, 14382, 14798, 14817, 15167, 15206, 15318, 15607, 16409,
+          16455, 16461, 16712, 29814
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 29285,
         "linearizedBaseContracts": [
-          29285,
-          29814,
-          15607,
-          14382,
-          14351,
-          14317,
-          15206,
-          10090,
-          13954,
-          14357,
-          1500,
-          11749,
-          15167,
-          12916,
-          11589,
-          14172,
-          16712,
-          14052,
-          16409,
-          15318,
-          16455,
-          16461,
-          14817,
-          14798,
-          9266
+          29285, 29814, 15607, 14382, 14351, 14317, 15206, 10090, 13954, 14357,
+          1500, 11749, 15167, 12916, 11589, 14172, 16712, 14052, 16409, 15318,
+          16455, 16461, 14817, 14798, 9266
         ],
         "name": "ForeignBridgeNativeToErc",
         "nodeType": "ContractDefinition",
@@ -6785,10 +6665,7 @@
                       "id": 29034,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "2264:7:155",
                       "typeDescriptions": {
@@ -8043,10 +7920,7 @@
                       "id": 29127,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "4204:7:155",
                       "typeDescriptions": {
@@ -8152,10 +8026,7 @@
                       "id": 29133,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30716,
-                        30717
-                      ],
+                      "overloadedDeclarations": [30716, 30717],
                       "referencedDeclaration": 30716,
                       "src": "4239:7:155",
                       "typeDescriptions": {
@@ -8479,9 +8350,7 @@
                       "id": 29161,
                       "name": "_setGasPrice",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        11728
-                      ],
+                      "overloadedDeclarations": [11728],
                       "referencedDeclaration": 11728,
                       "src": "4514:12:155",
                       "typeDescriptions": {
@@ -9190,9 +9059,7 @@
                   "src": "4930:48:155"
                 },
                 {
-                  "assignments": [
-                    29204
-                  ],
+                  "assignments": [29204],
                   "declarations": [
                     {
                       "constant": false,
@@ -9275,9 +9142,7 @@
                   "src": "4988:44:155"
                 },
                 {
-                  "assignments": [
-                    29210
-                  ],
+                  "assignments": [29210],
                   "declarations": [
                     {
                       "constant": false,
@@ -9439,9 +9304,7 @@
                     "src": "5123:257:155",
                     "statements": [
                       {
-                        "assignments": [
-                          29220
-                        ],
+                        "assignments": [29220],
                         "declarations": [
                           {
                             "constant": false,
@@ -9701,9 +9564,7 @@
                                   "id": 29231,
                                   "name": "distributeFeeFromSignatures",
                                   "nodeType": "Identifier",
-                                  "overloadedDeclarations": [
-                                    29813
-                                  ],
+                                  "overloadedDeclarations": [29813],
                                   "referencedDeclaration": 29813,
                                   "src": "5250:27:155",
                                   "typeDescriptions": {
@@ -10283,10 +10144,7 @@
                       "id": 29280,
                       "name": "revert",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30718,
-                        30719
-                      ],
+                      "overloadedDeclarations": [30718, 30719],
                       "referencedDeclaration": 30718,
                       "src": "5695:6:155",
                       "typeDescriptions": {

@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import { StyleSheet, View, Platform } from "react-native";
-import getLang from "../wallet/get-lang.js";
-import { Tooltip } from "react-native-elements";
-import { Icon, Text } from "native-base";
-import { EpochCurrrent } from "../svg/epoch-current.js";
-import ProgressBar from "../components/ProgressBar.js";
+import React, { useRef } from 'react';
+import { StyleSheet, View, Platform } from 'react-native';
+import getLang from '../wallet/get-lang.js';
+import { Tooltip } from 'react-native-elements';
+import { Icon, Text } from 'native-base';
+import { EpochCurrrent } from '../svg/epoch-current.js';
+import ProgressBar from '../components/ProgressBar.js';
 
 export default ({ store }) => {
   const lang = getLang(store);
@@ -16,16 +16,16 @@ export default ({ store }) => {
     const tooltipRef = useRef(null);
     const EpochDetail = () => {
       return (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <View style={style.tooltipRowStyle}>
             <Text style={style.tooltipRowText}>Epoch:</Text>
             <Text
               style={[
                 style.tooltipRowText,
-                { fontFamily: "Fontfabric-NexaBold", color: "#fff" },
+                { fontFamily: 'Fontfabric-NexaBold', color: '#fff' },
               ]}
             >
-              {" "}
+              {' '}
               #{currentEpoch}
             </Text>
           </View>
@@ -34,11 +34,11 @@ export default ({ store }) => {
             <Text
               style={[
                 style.tooltipRowText,
-                { fontFamily: "Fontfabric-NexaBold", color: "#fff" },
+                { fontFamily: 'Fontfabric-NexaBold', color: '#fff' },
               ]}
             >
-              {" "}
-              {Math.round(epochTime)}{" "}hours
+              {' '}
+              {Math.round(epochTime)} hours
             </Text>
           </View>
         </View>
@@ -54,7 +54,7 @@ export default ({ store }) => {
         withPointer={false}
         popover={<EpochDetail />}
       >
-        <EpochCurrrent current_epoch={currentEpoch}/>
+        <EpochCurrrent current_epoch={currentEpoch} />
       </Tooltip>
     );
   };
@@ -64,48 +64,48 @@ export default ({ store }) => {
 const style = StyleSheet.create({
   headerTitle: {
     fontFamily:
-      Platform.OS === "ios" ? "Fontfabric-NexaBold" : "Fontfabric-NexaRegular",
+      Platform.OS === 'ios' ? 'Fontfabric-NexaBold' : 'Fontfabric-NexaRegular',
     fontSize: 20,
-    width: Platform.OS === "ios" ? null : "auto",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
+    width: Platform.OS === 'ios' ? null : 'auto',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   title: {
     fontSize: 20,
-    fontFamily: "Fontfabric-NexaBold",
-    color: "#fff",
+    fontFamily: 'Fontfabric-NexaBold',
+    color: '#fff',
   },
   styleIcon: {
-    color: "#ebab28",
-    height: "auto",
+    color: '#ebab28',
+    height: 'auto',
     fontSize: 20,
     // marginTop: 2,
   },
   epochText: {
     fontSize: 13,
-    color: "#ffffff90",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#ffffff90',
+    fontFamily: 'Fontfabric-NexaRegular',
     marginLeft: 10,
     marginTop: 3,
   },
   tooltipContainerStyle: {
-    height: "auto",
-    width: "100%",
+    height: 'auto',
+    width: '100%',
     marginTop: 20,
-    backgroundColor: "#ebab28",
+    backgroundColor: '#ebab28',
     borderRadius: 0,
     left: 0,
     right: 0,
   },
   tooltipRowStyle: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginHorizontal: 10,
   },
   tooltipRowText: {
-    color: "#ffffff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#ffffff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 14,
   },
 });

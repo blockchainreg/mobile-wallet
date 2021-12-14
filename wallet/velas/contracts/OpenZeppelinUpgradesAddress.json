@@ -11,20 +11,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/libs/Address.sol",
     "exportedSymbols": {
-      "OpenZeppelinUpgradesAddress": [
-        12553
-      ]
+      "OpenZeppelinUpgradesAddress": [12553]
     },
     "id": 12554,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12536,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:28"
       },
@@ -35,9 +29,7 @@
         "documentation": "Utility library of inline functions on addresses\n * Source https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-solidity/v2.1.3/contracts/utils/Address.sol\nThis contract is copied here and renamed from the original to avoid clashes in the compiled artifacts\nwhen the user imports a zos-lib contract (that transitively causes this contract to be compiled and added to the\nbuild/artifacts folder) as well as the vanilla Address implementation from an openzeppelin version.",
         "fullyImplemented": true,
         "id": 12553,
-        "linearizedBaseContracts": [
-          12553
-        ],
+        "linearizedBaseContracts": [12553],
         "name": "OpenZeppelinUpgradesAddress",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -48,9 +40,7 @@
               "src": "991:550:28",
               "statements": [
                 {
-                  "assignments": [
-                    12544
-                  ],
+                  "assignments": [12544],
                   "declarations": [
                     {
                       "constant": false,
@@ -258,20 +248,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/libs/Address.sol",
     "exportedSymbols": {
-      "OpenZeppelinUpgradesAddress": [
-        12553
-      ]
+      "OpenZeppelinUpgradesAddress": [12553]
     },
     "id": 12554,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12536,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:28"
       },
@@ -282,9 +266,7 @@
         "documentation": "Utility library of inline functions on addresses\n * Source https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-solidity/v2.1.3/contracts/utils/Address.sol\nThis contract is copied here and renamed from the original to avoid clashes in the compiled artifacts\nwhen the user imports a zos-lib contract (that transitively causes this contract to be compiled and added to the\nbuild/artifacts folder) as well as the vanilla Address implementation from an openzeppelin version.",
         "fullyImplemented": true,
         "id": 12553,
-        "linearizedBaseContracts": [
-          12553
-        ],
+        "linearizedBaseContracts": [12553],
         "name": "OpenZeppelinUpgradesAddress",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -295,9 +277,7 @@
               "src": "991:550:28",
               "statements": [
                 {
-                  "assignments": [
-                    12544
-                  ],
+                  "assignments": [12544],
                   "declarations": [
                     {
                       "constant": false,
