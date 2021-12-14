@@ -45,52 +45,45 @@ export default ({ store, web3t }) => {
 	
 	const availableNetworks = store.current.account.wallets.filter((it)=>{ return swapDirectionsArr.indexOf(it.coin.token) > -1});
 	let hasSwap = swapDirections != null && Object.keys(swapDirections).length > 0 && availableNetworks.length > 0;
-	
+
+	const setDefaultSendData = () => {
+	  store.current.send.data = null;
+    store.current.send.gasPrice = null;
+    store.current.send.gasPriceAuto = null;
+	  store.current.send.data = null;
+	  store.current.send.contractAddress = null;
+	  store.current.send.chosenNetwork = null;
+    store.current.send.amountSend = '0';
+    store.current.send.amountSendUsd = '0';
+    store.current.send.amountSendFee = '0';
+    store.current.send.amountSendFeeUsd = '0';
+    store.current.send.to = "";
+    store.current.send.error = "";
+    store.current.send.wallet = wallet;
+    store.current.send.coin = wallet.coin;
+    store.current.send.network = wallet.network;
+	}
 	
 	/*******  Listeners  ********/
 	const sendLocal = () => {
 		store.current.send.homeFeePercent = 0;
 		store.current.send.isSwap = false;
-		store.current.send.chosenNetwork = null;
-		store.current.send.contractAddress = null;
 		if(wallet.balance == "..") return;
-		store.current.send["to"] = "";
-		store.current.send.data = null;
-		store.current.send.amountSend = '0';
-		store.current.send.amountSendUsd = '0';
-		store.current.send.amountSendFee = '0';
-		store.current.send.amountSendFeeUsd = '0';
-		store.current.send.error = "";
-		store.current.send.wallet = wallet;
-		store.current.send.coin = wallet.coin;
-		store.current.send.network = wallet.network;
+		setDefaultSendData();
 		navigate(store, web3t, "send");
 	};
 
 	const swapClick = () => {
-		store.current.send.contractAddress = null;
-		store.current.send.data = null;
 		store.current.send.isSwap = true;
 		if (wallet == null) {
-			// return alert("Not yet loaded");
 			console.log("Not yet loaded");
 			return null;
 		}
 		if (web3t[wallet.coin.token] == null) {
-			// return alert("Not yet loaded");
 			console.log("Not yet loaded");
 			return null;
 		}
-		store.current.send["to"] = "";
-		store.current.send.amountSend = '0';
-		store.current.send.amountSendUsd = '0';
-		store.current.send.amountSendFee = '0';
-		store.current.send.amountSendFeeUsd = '0';
-		store.current.send.error = "";
-		store.current.send.wallet = wallet;
-		store.current.send.coin = wallet.coin;
-		store.current.send.network = wallet.network;
-
+		setDefaultSendData();
 		setDefaultSwapNetwork();
 		var swaps = contracts({store, web3t});
 		if (swaps){

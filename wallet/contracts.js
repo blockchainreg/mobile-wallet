@@ -852,7 +852,7 @@ module.exports = function({ store, web3t}) {
 	const getBridgeInfo = function (cb) {
 		//try {
 			console.log("[getBridgeInfo]");
-			var chosenNetwork, ref$, ref1$, token, ref2$, wallet, network, abi, web3, ref3$, ref4$, HOME_BRIDGE,
+			var chosenNetwork, ref$, ref1$, token, ref2$, wallet, network, abi, web3, ref3$, ref4$, ref5$, HOME_BRIDGE,
 				HECO_SWAP__HOME_BRIDGE, BSC_SWAP__HOME_BRIDGE, FOREIGN_BRIDGE, addr, contract, homeFeePercent, err,
 				dailyLimit, remainingDailyLimit, minPerTx, maxPerTx;
 			chosenNetwork = store != null ? (ref$ = store.current) != null ? (ref1$ = ref$.send) != null ? ref1$.chosenNetwork : void 8 : void 8 : void 8;
@@ -1005,29 +1005,24 @@ module.exports = function({ store, web3t}) {
 					if (err) {
 						homeFee = 0;
 					}
-					console.log("getHomeFee", homeFee)
 					homeFeePercent = div(homeFee, Math.pow(10, wallet != null ? wallet.network.decimals : void 8));
 					store.current.send.homeFeePercent = homeFeePercent;
-					
 					contract.dailyLimit((err, dailyLimit) => {
 						dailyLimit = div(dailyLimit, Math.pow(10, wallet.network.decimals));
 						store.current.send.homeDailyLimit = dailyLimit;
 						
 						contract.getCurrentDay((err, currentDay) => {
-							console.log("getCurrentDay", currentDay)
 							if (err) {
 								currentDay = "0x"
 							}
 							contract.totalSpentPerDay(currentDay, (err, totalSpentPerDay) => {
-								console.log("totalSpentPerDay", totalSpentPerDay)
 								totalSpentPerDay = div(totalSpentPerDay, Math.pow(10, wallet.network.decimals));
 								remainingDailyLimit = minus(dailyLimit, totalSpentPerDay);
 								
 								contract.minPerTx((err, minPerTxRaw) => {
-									console.log("minPerTx", minPerTxRaw)
-									minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
+									minPerTx = div(minPerTxRaw, Math.pow(10, wallet.network.decimals));
 									contract.maxPerTx((err, maxPerTxRaw) => {
-										maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
+										maxPerTx = div(maxPerTxRaw, Math.pow(10, wallet.network.decimals));
 										
 										importAll$(store.current.networkDetails, {
 											dailyLimit: dailyLimit,
@@ -1036,8 +1031,30 @@ module.exports = function({ store, web3t}) {
 											maxPerTx: maxPerTx,
 											remainingDailyLimit: remainingDailyLimit
 										});
-										//console.log("exit getBridgeInfo method", {cb});
-										return cb(null);
+										if (token !== 'busd') {
+                      return cb(null);
+                    }
+                    var wallets = store.current.account.wallets;
+                    var walletTo = find(function(it){
+                      return it.coin.token === chosenNetwork.referTo;
+                    })(wallets);
+                    var ref4$ = walletTo.network, HOME_BRIDGE = ref4$.HOME_BRIDGE, FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE, BSC_SWAP__HOME_BRIDGE = ref4$.BSC_SWAP__HOME_BRIDGE, HECO_SWAP__HOME_BRIDGE = ref4$.HECO_SWAP__HOME_BRIDGE;
+                    var web3 = new Web3(new Web3.providers.HttpProvider(walletTo != null ? (ref4$ = walletTo.network) != null ? (ref5$ = ref4$.api) != null ? ref5$.web3Provider : void 8 : void 8 : void 8));
+                    web3.eth.providerUrl = walletTo.network.api.web3Provider;
+                    var addr = HOME_BRIDGE;
+                    var contract = web3.eth.contract(abi).at(addr);
+                    var network = walletTo.network;
+                    contract.getForeignFee((err, homeFee) => {
+                      if (err) {
+                        homeFee = 0;
+                      }
+                      homeFeePercent = div(homeFee, Math.pow(10, network.decimals));
+                      store.current.send.homeFeePercent = homeFeePercent;
+                      importAll$(store.current.networkDetails, {
+                        homeFeePercent: homeFeePercent
+                      });
+                      return cb(null);
+                    })
 									});
 								});
 							});
