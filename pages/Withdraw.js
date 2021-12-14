@@ -131,7 +131,7 @@ export default ({ store, web3t }) => {
 				onChangeText={(text) => recipientChange(wrap(text))}
 				onBlur={() => checkRecipientAddress()}
 				returnKeyType="done"
-				selectionColor={Platform.OS === "ios" ? "#fff" : "#fff"}
+				selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
 				keyboardAppearance="dark"
 				placeholder={"Wallet address"}
 				style={style.inputAddress}
