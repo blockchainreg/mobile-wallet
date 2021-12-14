@@ -109,15 +109,14 @@ export default ({ store, web3t }) => {
             changePage("confirmWithdrawal")();
           });
         };
+        const DURATION = 1000/10;		
 
         const copyAddress = async () => {
-          const DURATION = 1000 / 10;
           await Clipboard.setString(details.address);
           Vibration.vibrate(DURATION);
           Alert.alert(lang.copied, "", [{ text: lang.ok }]);
         };
         const copyName = async () => {		
-          const DURATION = 1000/10;		
           await Clipboard.setString(details.name);		
           Vibration.vibrate(DURATION);
           Alert.alert(lang.copied, "", [{ text: lang.ok }]);

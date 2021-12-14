@@ -6,9 +6,10 @@ import { useNetInfo } from "@react-native-community/netinfo";
 
 export default (props) => {
   const netInfo = useNetInfo();
+  console.info('netInfo', netInfo)
   const validatorNet =
     !netInfo.details ||
-    netInfo.isConnected === true ||
+    netInfo.isConnected ||
     netInfo.type === "cellular" ||
     netInfo.type === "wifi";
 
