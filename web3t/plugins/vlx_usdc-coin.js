@@ -13,7 +13,8 @@
 			provider: 'vlx_usdc',
 			web3Provider: 'https://evmexplorer.velas.com/rpc',
 			url: 'https://evmexplorer.velas.com',
-			apiUrl: 'https://evmexplorer.velas.com/api'
+			apiUrl: 'https://evmexplorer.velas.com/api',
+			apikey: 'KXYT4M24AWGIV585T7T38GUNMB4IRSY7H9'
 		},
 		address: "0xC5acB9684c8492fFF285B518bbe048C10C99411d",
 		HOME_BRIDGE: "0xe60728c7669107aeDfA20b7C9486A4Be169EBcA1",
@@ -41,7 +42,8 @@
 			provider: 'vlx_usdc',
 			web3Provider: 'https://evmexplorer.testnet.velas.com/rpc',
 			url: 'https://evmexplorer.testnet.velas.com',
-			apiUrl: 'https://evmexplorer.testnet.velas.com/api'
+			apiUrl: 'https://evmexplorer.testnet.velas.com/api',
+			apikey: 'KXYT4M24AWGIV585T7T38GUNMB4IRSY7H9'
 		},
 		address: "0x6b82bDB5a1AdFfa3816D1F942D60f0269647C646",
 		HOME_BRIDGE: "0xd8Aa969E1B6435FaBF100C9243B8243fFac28Cfd",
