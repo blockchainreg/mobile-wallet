@@ -805,10 +805,27 @@
     network = arg$.network, address = arg$.address, swap = arg$.swap;
     web3 = getWeb3(network);
     contract = getContractInstance(web3, network, swap);
-    number = contract.balanceOf(address);
-    dec = getDec(network);
-    balance = div(number, dec);
-    return cb(null, balance);
+    var balanceOf = (function(){
+      switch (false) {
+      case contract.methods == null:
+        return function(address, cb){
+        return contract.methods.balanceOf(address).call(cb);
+        };
+      default:
+        return function(address, cb){
+        return contract.balanceOf(address, cb);
+        };
+      }
+    }());
+    return balanceOf(address, function(err, number){
+      var dec, balance;
+      if (err != null) {
+        return cb(err);
+      }
+      dec = getDec(network);
+      balance = div(number, dec);
+      return cb(null, balance);
+    });
   };
   out$.getEthBalance = getEthBalance = function(arg$, cb){
     var network, address;
