@@ -54,7 +54,7 @@
 	HOME_BRIDGE: "0x57C7f6CD50a432943F40F987a1448181D5B11307",
 	api: {
 	  provider: 'velas_erc20',
-	  web3Provider: 'https://geth.ropsten.velas.com',
+	  web3Provider: 'https://ropsten.infura.io/v3/6a6c66740e9e4cea9cc8425869e9d106',
 	  url: 'https://ropsten.etherscan.io',
 	  apiUrl: 'https://api-ropsten.etherscan.io/api'
 	},
