@@ -118,6 +118,7 @@ const NetworkChooser = (props) => {
 
 	const changeNetwork = walletToken => {
 		const { referTo } = chosenNetwork;
+		store.current.switchNetwork = true;
 		if (store.current.refreshing) {
 			return;
 		}
@@ -217,7 +218,7 @@ const NetworkChooser = (props) => {
 				<View style={[styles.titleInputSend, style.itemWidth70]}>
 					<Text style={style.headerBg}>{lang.chosenNetwork || "Choose network"}:</Text>
 				</View>
-				{!isNotBridge() &&
+				{!isNotBridge() && !store.current.switchNetwork &&
 					<Text
 						onPress={openBridgeDetailsModal}
 						style={[style.itemWidth30, style.limitsStyle, {textAlign: "right"}]}>
