@@ -9,7 +9,7 @@ import Store from './wallet/data-scheme.js';
 import web3 from './wallet/web3.js';
 import { saved } from './wallet/seed.js';
 import Confirm from './components/Confirm.js';
-import ConfirmDetailed from './components/Confirm2.js';
+import ConfirmDetailed from './components/ConfirmDetailed.js';
 import BridgeDetailsModal from './components/BridgeDetailsModal.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HistoryDetail from './pages/HistoryDetail.js';
