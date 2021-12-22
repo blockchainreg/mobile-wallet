@@ -1,17 +1,17 @@
-import React from "react";
-import { Image, ScrollView, Platform, StyleSheet } from "react-native";
-import { Text, Button, View, CardItem, Body, Container } from "native-base";
-import { ifIphoneX } from "react-native-iphone-x-helper";
-import styles from "../Styles.js";
-import { set } from "../wallet/seed.js";
-import Markdown from "react-native-markdown-display";
-import Images from "../Images.js";
-import getLang from "../wallet/get-lang.js";
-import Background from "../components/Background.js";
-import Spinner from "../utils/spinner.js";
-import setupWallet from "../setupWallet.js";
-import Header from "../components/Header";
-import { VelasLogo1 } from "../svg/velas-logo1.js";
+import React from 'react';
+import { Image, ScrollView, Platform, StyleSheet } from 'react-native';
+import { Text, Button, View, CardItem, Body, Container } from 'native-base';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
+import styles from '../Styles.js';
+import { set } from '../wallet/seed.js';
+import Markdown from 'react-native-markdown-display';
+import Images from '../Images.js';
+import getLang from '../wallet/get-lang.js';
+import Background from '../components/Background.js';
+import Spinner from '../utils/spinner.js';
+import setupWallet from '../setupWallet.js';
+import Header from '../components/Header';
+import { VelasLogo1 } from '../svg/velas-logo1.js';
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -24,7 +24,7 @@ async function loadTerms(store) {
 async function loadTermsRecusion(store) {
   try {
     const response = await fetch(
-      "https://raw.githubusercontent.com/velas/mobile-wallet/master/TERMS.md"
+      'https://raw.githubusercontent.com/velas/mobile-wallet/master/TERMS.md'
     );
     store.current.termsMarkdown = await response.text();
   } catch (e) {
@@ -54,8 +54,8 @@ const markdownStyle = {
   ...ifIphoneX(
     {
       root: {
-        color: "#FFFFFF",
-        fontFamily: "Fontfabric-NexaRegular",
+        color: '#FFFFFF',
+        fontFamily: 'Fontfabric-NexaRegular',
         lineHeight: 20,
       },
     },
@@ -63,16 +63,16 @@ const markdownStyle = {
       ...Platform.select({
         ios: {
           root: {
-            color: "#FFFFFF",
-            fontFamily: "Fontfabric-NexaRegular",
+            color: '#FFFFFF',
+            fontFamily: 'Fontfabric-NexaRegular',
             lineHeight: 20,
             fontSize: 10,
           },
         },
         android: {
           root: {
-            color: "#FFFFFF",
-            fontFamily: "Fontfabric-NexaRegular",
+            color: '#FFFFFF',
+            fontFamily: 'Fontfabric-NexaRegular',
             lineHeight: 20,
             fontSize: 10,
           },
@@ -92,9 +92,9 @@ export default ({ store, web3t }) => {
   const lang = getLang(store);
   const terms = (store) => {
     return (
-      <View style={{ alignItems: "flex-start" }}>
+      <View style={{ alignItems: 'flex-start' }}>
         <Markdown style={markdownStyle}>
-          {store.current.termsMarkdown || ""}
+          {store.current.termsMarkdown || ''}
         </Markdown>
       </View>
     );
@@ -103,12 +103,17 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       <Header transparent />
       <View style={style.inner}>
-        <View style={{ alignSelf: "center" }}>
+        <View style={{ alignSelf: 'center' }}>
           {/* <Image
             source={Images.logo}
             style={[styles.styleLogo, { alignSelf: "center" }]}
           /> */}
-              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
+          <VelasLogo1
+            style={[styles.styleLogo, { alignSelf: 'center' }]}
+            width="72"
+            height="63"
+            viewBox="0 0 72 63"
+          />
           <Text style={styles.textH1Seed}>{lang.termsOfUse}</Text>
         </View>
 
@@ -120,9 +125,9 @@ export default ({ store, web3t }) => {
           <Text
             style={{
               fontSize: 14,
-              color: "#fff",
+              color: '#fff',
               marginTop: 15,
-              fontFamily: "Fontfabric-NexaRegular",
+              fontFamily: 'Fontfabric-NexaRegular',
             }}
           >
             {lang.terms}
@@ -140,7 +145,7 @@ const style = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   paddingBlock: {
     paddingHorizontal: 20,
@@ -150,8 +155,8 @@ const style = StyleSheet.create({
   bodyTerms: {
     borderWidth: 1,
     borderRadius: 0,
-    width: "100%",
-    borderColor: "#fff",
-    height: "40%",
+    width: '100%',
+    borderColor: '#fff',
+    height: '40%',
   },
 });

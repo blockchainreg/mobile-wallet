@@ -1,15 +1,14 @@
-import * as React from "react"
+import * as React from 'react';
 import Svg, {
   Path,
   G,
   Defs,
   LinearGradient,
   Stop,
-  ClipPath
-} from "react-native-svg"
+  ClipPath,
+} from 'react-native-svg';
 
 export const StakingEnteranceIcon = (props) => {
-
   return (
     <Svg width={148} height={158} viewBox="0 0 148 158" fill="none" {...props}>
       <Path
@@ -112,6 +111,5 @@ export const StakingEnteranceIcon = (props) => {
         </ClipPath>
       </Defs>
     </Svg>
-  )
-}
-
+  );
+};

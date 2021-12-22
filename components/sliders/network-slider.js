@@ -20,7 +20,7 @@ import contractData from "../../wallet/contract-data";
 import {changeAmount} from "../../wallet/calc-amount.js"
 
 const NetworkChooser = (props) => {
-	
+
 	const { store, web3t, wallet, onChange } = props;
 	let   { chosenNetwork, isSwap } = store.current.send;
 	const { networks } = wallet.network;
@@ -28,12 +28,12 @@ const NetworkChooser = (props) => {
 	const lang = getLang(store);
 	var swaps = contracts({store, web3t});
 	var dataBuilder = contractData({store});
-	
+
 	function importAll$(obj, src){
 		for (var key in src) obj[key] = src[key];
 		return obj;
 	}
-	
+
 	if (chosenNetwork == null) return null;
 
 	if (!(isSwap != null && isSwap)) {
@@ -56,16 +56,16 @@ const NetworkChooser = (props) => {
       );
     })(objToPairs(networks))
   );
-  
+
   function getNetworkById(id) {
     return availableNetworks[id + ""];
   };
-  
+
 	const items = objToPairs(availableNetworks).map((pair) => {
 		const [ id, data ] = pair;
 		return { label: data.name, value: id };
 	});
-	
+
   function getDefaultRecipientAddress(){
 		if (!store.current.send.chosenNetwork) {
 			return "";
@@ -79,13 +79,13 @@ const NetworkChooser = (props) => {
 		}
 		return wallet.address;
 	};
-	
+
 	const onValueChangeValue = (walletToken) => {
 		Platform.OS === "android"
 			? changeNetwork(walletToken)
 			: changeNetwork(walletToken);
 	};
-	
+
 	const onValueChangeIos = (walletToken) => {
 		const { referTo } = chosenNetwork;
 		if (store.current.refreshing) {
@@ -95,12 +95,12 @@ const NetworkChooser = (props) => {
 			store.current.switchNetwork = false;
 			return;
 		}
-		
+
 		store.current.send.chosenNetwork = getNetworkById(walletToken);
-		
+
 		store.current.send.to = getDefaultRecipientAddress();
 		store.current.send.error = '';
-		store.current.send.data = null;	
+		store.current.send.data = null;
 		return true;
 	}
 	// for IOS
@@ -115,7 +115,7 @@ const NetworkChooser = (props) => {
 			return true;
 		});
 	};
-	
+
 	const changeNetwork = walletToken => {
 		const { referTo } = chosenNetwork;
 		if (store.current.refreshing) {
@@ -125,13 +125,13 @@ const NetworkChooser = (props) => {
 			store.current.switchNetwork = false;
 			return;
 		}
-		
+
 		store.current.send.chosenNetwork = getNetworkById(walletToken);
-	
+
 		store.current.send.to = getDefaultRecipientAddress();
 		store.current.send.error = '';
 		store.current.send.data = null;
-		
+
 		swaps.getBridgeInfo((err) => {
 			if (err) {
 				console.error(err);
@@ -153,14 +153,14 @@ const NetworkChooser = (props) => {
 			});
 		});
 	};
-	
+
 	const isNotBridge = function(){
 		var token, chosenNetwork, ref$;
 		token = store.current.send.wallet.coin.token;
 		chosenNetwork = store.current.send.chosenNetwork;
 		return ((ref$ = chosenNetwork.referTo) === 'vlx_evm' || ref$ === 'vlx2' || ref$ === 'vlx_native') && (token === 'vlx_evm' || token === 'vlx2' || token === 'vlx_native');
 	};
-	
+
 	const openBridgeDetailsModal = () => {
 		if (isNotBridge()) {
 			return;
@@ -175,13 +175,13 @@ const NetworkChooser = (props) => {
 		store.current.currentNetworkDetails.minPerTx = minPerTx;
 		store.current.currentNetworkDetails.maxPerTx = maxPerTx;
 		store.current.currentNetworkDetails.wallet = store.current.send.wallet;
-	
+
 		// store.current.currentNetworkDetails = importAll$(store.current.networkDetails, {
 		// 	wallet: wallet
 		// });
 		modal(store, function () {});
 	}
-	
+
 	const pickerSelectStyles = {
 		paddingTop: 10,
 		inputIOS: {
@@ -225,8 +225,8 @@ const NetworkChooser = (props) => {
 					</Text>
 				}
 			</View>
-			
-			
+
+
 			<RNPickerSelect
 				placeholder={{}}
 				onValueChange={(value) => {
@@ -246,7 +246,7 @@ const NetworkChooser = (props) => {
 
 const style = StyleSheet.create({
 	pauseButton: {
-		
+
 	},
 	headerBg: {
 		color: "white",

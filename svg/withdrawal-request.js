@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import Svg, {
   Path,
   G,
@@ -6,7 +6,7 @@ import Svg, {
   LinearGradient,
   Stop,
   ClipPath,
-} from "react-native-svg";
+} from 'react-native-svg';
 
 export const WithdrawalRequest = (props) => {
   return (

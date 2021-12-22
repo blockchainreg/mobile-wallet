@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
 	Left,
 	Right,
@@ -34,6 +34,8 @@ import Header from "../components/Header";
 import InputAmount from "../components/InputAmount";
 import {ifIphoneX} from "react-native-iphone-x-helper";
 import math from "../wallet/math.js";
+import { ScanImage } from '../svg/scanImage.js';
+
 
 /* Render Send/Swap sceen */
 export default ({ store, web3t }) => {
@@ -46,7 +48,7 @@ export default ({ store, web3t }) => {
 		checkRecipientAddress,
 		beforeSendAnyway
 	} = sendFuncs(store, web3t);
-	
+
 	const wallets = walletsFuncs(store, web3t).wallets;
 	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
 	if (!wallet) {
@@ -69,11 +71,11 @@ export default ({ store, web3t }) => {
 	const wrapNumber = (text) => {
 		return {
 			target: {
-				value: text.replace(",", ".").replace(/[^0-9\.]/g, ""),
+				value: text.replace(',', '.').replace(/[^0-9\.]/g, ''),
 			},
 		};
 	};
-	
+
 	const wrap = (text) => {
 		return {
 			target: {
@@ -81,17 +83,17 @@ export default ({ store, web3t }) => {
 			},
 		};
 	};
-	
+
 	const changePage = (tab) => () => {
 		store.current.page = tab;
 	};
-	
+
 	const scanQRSend = () => {
 		if (isNaN(wallet.balance)) return;
 		store.current.returnPage = 'send';
 		return store.current.page = 'Scanner';
 	}
-	
+
 	const sendTx = async () => {
 		try {
 			store.current.send.error = "";
@@ -101,19 +103,19 @@ export default ({ store, web3t }) => {
 			Toast.show({text: e.message});
 		}
 	};
-	
+
 	const refreshToken = async (bool) => {
 		store.current.refreshingBalances = true;
 		web3t.refresh((err, data) => {
 			store.current.refreshingBalances = false;
 		});
 	};
-	
+
 	const back = changePage("wallet", true);
-	
+
 	/* Styles */
 	const padStyle = { paddingTop: 20 };
-	
+
 	/* Components */
 	const btnWithdraw = ({ store, web3t }) => {
 		const sendText = send.isSwap ? lang.swap || "Swap" : lang.send;
@@ -124,7 +126,7 @@ export default ({ store, web3t }) => {
 			</Button>
 		);
 	};
-	
+
 	const InputAddressWithdraw = ({ send }) => (
 		<Item style={[style.inputAddressHolder]}>
 			<Input
@@ -143,10 +145,11 @@ export default ({ store, web3t }) => {
 				onPress={scanQRSend}
 				style={{ backgroundColor: 'transparent',  width: 50, right: 0}}
 			>
-				<Image
+				{ /* <Image
 					source={Images.scanImage}
 					style={styles.sizeIconBtn1}
-				/>
+				/> */}
+				<ScanImage width={64 / 4} height={64 / 4} left={30} />
 			</TouchableOpacity>
 		</Item>
 	);
@@ -156,119 +159,134 @@ export default ({ store, web3t }) => {
 		<View style={[styles.viewFlex]}>
 			<Background fullscreen={true}/>
 			<Header title={ScreenTitle} onBack={back} coin={wallet.coin.image}/>
-			
-			<StatusBar barStyle="light-content" translucent={true} backgroundColor={'transparent'}/>
-			{ RefreshControl({swipeRefresh:refreshToken, store, children:<>
-					<View style={[style.bodyBlockWallet]}>
-						<View
-							style={style.balanceCOntainerStyle}
-						>
-							<View style={styles.bodyBlock3}>
-								<Text style={[styles.nameTokenSwiper1, style.headerBg]}>{lang.totalBalance}</Text>
-							</View>
-							
-							<View style={styles.bodyBlock3}>
-								<Text style={[styles.totalBalance]}>
-									{ walletBalance }
-									<Text style={[styles.nameToken]}>
-										{" "+(wallet.coin.nickname || wallet.coin.token).toUpperCase()}
-									</Text>
-								</Text>
-							</View>
-						</View>
-						
-						 
-						<View style={[styles.widthCard, { marginHorizontal: 20, width: '90%' }]}>
-							{ NetworkSlider({store, web3t, wallet}) }
-							
-							{InputAddressWithdraw({send: store.current.send})}
-							
-							<View >
-								<View
-									style={[style.alignHorizontal, style.borderItem, {paddingRight: 0}]}
 
-								>
-									<Item style={style.itemStyle}>
-										<InputAmount
-											onChangeText={(text) => amountChange(wrapNumber(text))}
-											returnKeyType="done"
-											autoCompleteType="off"
-											style={[style.inputStyle, { width:"100%", fontSize: 18 }]}
-											selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
-											keyboardAppearance="dark"
-											placeholder="0.00"
-											value={send.amountSend}
-											keyboardType="numeric"
-											placeholderTextColor="rgba(255,255,255,0.60)"
-											maxLength={20}
-											maxFractionLength={9}
-										/>
-									</Item>
-									<Text style={[style.tokenStyle]}>
-										{token}
-									</Text>
-								</View>
-								
-								{!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
-								<View
-									style={[style.alignHorizontal, style.borderItem]} >
-									<Item style={style.itemStyle}>
-										<InputAmount
-											onChangeText={(text) => amountUsdChange(wrapNumber(text))}
-											returnKeyType="done"
-											autoCompleteType="off"
-											style={[style.inputStyle, { fontSize: 18, width: "100%"}]}
-											selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
-											keyboardAppearance="dark"
-											placeholder="0.00"
-											value={send.amountSendUsd}
-											keyboardType="numeric"
-											placeholderTextColor="rgba(255,255,255,0.60)"
-											maxLength={20}
-										/>
-									</Item>
-									<Text style={[style.tokenStyle]}>
-										{"USD"}
-									</Text>
-								</View>
-								}
-							</View>
-							
-							<View style={padStyle}></View>
-							<View style={padStyle}></View>
-							
-							<View
-								style={[style.alignHorizontal, style.feeItem, {alignItems: "flex-start", alignContent: "flex-start"}]} >
-								<View style={style.feeLabel}>
-									<Text style={style.feeTitle}>{lang.fee}:</Text>
-								</View>
-								
-								<Text style={[style.tokenStyle, {width: "80%"}]}>
-									{send.amountSendFee}{" "} {feeToken} (${send.amountSendFeeUsd})
-								</Text>
-							</View>
-							{ bridgeFee > 0 &&
-								<View
-									style={[style.alignHorizontal, style.feeItem, {alignItems: "flex-start", alignContent: "flex-start"}]} >
-									<View style={[style.bridgeFeeLabel]}>
-										<Text style={style.feeTitle}>{lang.bridgeFee}:</Text>
-									</View>
-									
-									<Text style={[style.tokenStyle, {width: "20%"}]}>
-										{bridgeFee}{"%"}
-									</Text>
-								</View>	
-							}
-							<View style={padStyle}></View>
-							<Text style={styles.error}>{send.error}</Text>
-						
-						</View>
-						<View style={styles.containerScreen}>
-							{btnWithdraw({ store, web3t})}
-						</View>
-					</View>
-					<View style={styles.paddingWithdraw}/>
-				</>})}
+			<StatusBar
+			  barStyle="light-content"
+			  translucent={true}
+			  backgroundColor={'transparent'}
+      />
+			{RefreshControl({
+			  swipeRefresh:refreshToken,
+			  store,
+			  children: (
+			    <>
+            <View style={[style.bodyBlockWallet]}>
+              <View
+                style={style.balanceCOntainerStyle}
+              >
+                <View style={styles.bodyBlock3}>
+                  <Text style={[styles.nameTokenSwiper1, style.headerBg]}>{lang.totalBalance}</Text>
+                </View>
+
+                <View style={styles.bodyBlock3}>
+                  <Text style={[styles.totalBalance]}>
+                    { walletBalance }
+                    <Text style={[styles.nameToken]}>
+                      {' ' + (wallet.coin.nickname || wallet.coin.token).toUpperCase()}
+                    </Text>
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={[
+                  styles.widthCard,
+                  { marginHorizontal: 20, width: '90%' }
+                ]}
+              >
+                {NetworkSlider({ store, web3t, wallet })}
+                {InputAddressWithdraw({ send: store.current.send })}
+                <View >
+                  <View
+                    style={[
+                      style.alignHorizontal,
+                      style.borderItem,
+                      { paddingRight: 0 }]
+                    }
+                  >
+                    <Item style={style.itemStyle}>
+                      <InputAmount
+                        onChangeText={(text) => amountChange(wrapNumber(text))}
+                        returnKeyType="done"
+                        autoCompleteType="off"
+                        style={[style.inputStyle, { width:"100%", fontSize: 18 }]}
+                        selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
+                        keyboardAppearance="dark"
+                        placeholder="0.00"
+                        value={send.amountSend}
+                        keyboardType="numeric"
+                        placeholderTextColor="rgba(255,255,255,0.60)"
+                        maxLength={20}
+                        maxFractionLength={9}
+                      />
+                    </Item>
+                    <Text style={[style.tokenStyle]}>
+                      {token}
+                    </Text>
+                  </View>
+
+                  {!(wallet.coin.token === 'syx' || wallet.coin.token === 'syx2') &&
+                  <View
+                    style={[style.alignHorizontal, style.borderItem]} >
+                    <Item style={style.itemStyle}>
+                      <InputAmount
+                        onChangeText={(text) => amountUsdChange(wrapNumber(text))}
+                        returnKeyType="done"
+                        autoCompleteType="off"
+                        style={[style.inputStyle, { fontSize: 18, width: "100%"}]}
+                        selectionColor={Platform.OS === "ios" ? "#fff" : "rgba(255,255,255,0.60)"}
+                        keyboardAppearance="dark"
+                        placeholder="0.00"
+                        value={send.amountSendUsd}
+                        keyboardType="numeric"
+                        placeholderTextColor="rgba(255,255,255,0.60)"
+                        maxLength={20}
+                      />
+                    </Item>
+                    <Text style={[style.tokenStyle]}>
+                      {"USD"}
+                    </Text>
+                  </View>
+                  }
+                </View>
+
+                <View style={padStyle}></View>
+                <View style={padStyle}></View>
+
+                <View
+                  style={[style.alignHorizontal, style.feeItem, {alignItems: "flex-start", alignContent: "flex-start"}]} >
+                  <View style={style.feeLabel}>
+                    <Text style={style.feeTitle}>{lang.fee}:</Text>
+                  </View>
+
+                  <Text style={[style.tokenStyle, {width: "80%"}]}>
+                    {send.amountSendFee}{" "} {feeToken} (${send.amountSendFeeUsd})
+                  </Text>
+                </View>
+                { bridgeFee > 0 &&
+                  <View
+                    style={[style.alignHorizontal, style.feeItem, {alignItems: "flex-start", alignContent: "flex-start"}]} >
+                    <View style={[style.bridgeFeeLabel]}>
+                      <Text style={style.feeTitle}>{lang.bridgeFee}:</Text>
+                    </View>
+
+                    <Text style={[style.tokenStyle, {width: "20%"}]}>
+                      {bridgeFee}{"%"}
+                    </Text>
+                  </View>
+                }
+                <View style={padStyle}></View>
+                <Text style={styles.error}>{send.error}</Text>
+
+              </View>
+              <View style={styles.containerScreen}>
+                {btnWithdraw({ store, web3t})}
+              </View>
+            </View>
+            <View style={styles.paddingWithdraw}/>
+				  </>
+				),
+      })}
 		</View>
 	);
 }
@@ -286,15 +304,15 @@ const style = StyleSheet.create({
 		fontFamily: "Fontfabric-NexaBold",
 		width:"80%",
 		borderBottomWidth: 0,
-		fontSize: 18, 
-		paddingBottom: 5, 
-		paddingTop: 5, 
-		height: 30, 
+		fontSize: 18,
+		paddingBottom: 5,
+		paddingTop: 5,
+		height: 30,
 		marginTop: 8
 	},
 	itemStyle: {
 		paddingTop: 20,
-		width:"80%", 
+		width:"80%",
 		borderBottomWidth: 0
 	},
 	borderItem: {

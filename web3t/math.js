@@ -16,16 +16,16 @@
         return new bignumber(x + '')[$](y + '').toFixed();
       } catch (e$) {
         err = e$;
-        throw x + " " + $ + " " + y + " = " + err;
+        throw x + ' ' + $ + ' ' + y + ' = ' + err;
       }
     };
   };
   module.exports = pairsToObj(
-  map(function(it){
-    return [it, math(it)];
-  })(
-  ['plus', 'minus', 'times', 'div']));
-  module.exports.fromHex = function(hex){
+    map(function (it) {
+      return [it, math(it)];
+    })(['plus', 'minus', 'times', 'div'])
+  );
+  module.exports.fromHex = function (hex) {
     return new bignumber(hex + '', 16).toFixed();
   };
 

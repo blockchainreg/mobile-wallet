@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   ListItem,
   Left,
@@ -9,16 +9,15 @@ import {
   Button,
   View,
   Icon,
-} from "native-base";
-import styles from "../Styles.js";
-import {SectionList, StyleSheet} from "react-native";
-import RefreshControl from "../components/RefreshControl.js";
-import spin from "../utils/spin.js";
+} from 'native-base';
+import styles from '../Styles.js';
+import {SectionList, StyleSheet} from 'react-native';
+import RefreshControl from '../components/RefreshControl.js';
+import spin from '../utils/spin.js';
 import {
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import {filter, groupBy, keys} from "prelude-ls"
-
+} from 'react-native-responsive-screen';
+import { filter, groupBy, keys } from 'prelude-ls';
 
 import dash from "../registry/dash.json";
 import etc from "../registry/etc.json";
@@ -42,18 +41,18 @@ import vlxBusd from "../web3t/plugins/vlx_busd-coin.js";
 import vlxUsdc from "../web3t/plugins/vlx_usdc-coin.js";
 import vlxErc20 from "../web3t/plugins/vlx_erc20-coin.js";
 
-
-import walletsFuncs from "../wallet/wallets-funcs.js";
+import walletsFuncs from '../wallet/wallets-funcs.js';
 import getLang from '../wallet/get-lang.js';
-import Background from "../components/Background.js";
-import { LinearGradient } from "expo-linear-gradient";
+import Background from '../components/Background.js';
+import { LinearGradient } from 'expo-linear-gradient';
 import Images from '../Images.js';
-import Header from '../components/Header'
-
+import Header from '../components/Header';
 
 let coinItems = [
-	ltc, usdt, usdt_erc20, syx,
-	bnb, bscVlx, busd, huobi, usdc, vlxHuobi, vlxUsdt, vlxBusd, vlxUsdc, vlxEth, vlxErc20, vlxEvmLegacy,
+	ltc, usdt, usdt_erc20, syx, bnb,
+	bscVlx, busd, huobi, usdc, vlxHuobi,
+	vlxUsdt, vlxBusd, vlxUsdc,
+	vlxEth, vlxErc20, vlxEvmLegacy,
 	ethLegacy, usdtErc20Legacy		
 ];
 
@@ -66,20 +65,26 @@ const renderCoin = (store, web3t, item) => {
 
   const addItem = () => {
   const lang = getLang(store);
-    spin(store, `${lang.installing || "Installing"} ${tokenName}`, web3t.installQuick.bind(web3t))
-      (item, (err, data) => {
+    spin(
+      store,
+      `${lang.installing || "Installing"} ${tokenName}`,
+      web3t.installQuick.bind(web3t)
+    )(item, (err, data) => {
     });
   };
 
   const deleteItem = () => {
   const lang = getLang(store);
     //BUG: This works unstable
-    spin(store, `${lang.uninstalling || "Uninstalling"} ${tokenName}`, web3t.uninstall.bind(web3t))(token, (err, data) => {
-    });
+    spin(
+      store,
+      `${lang.uninstalling || 'Uninstalling'} ${name}`,
+      web3t.uninstall.bind(web3t)
+    )(item.token, (err, data) => {});
   };
   const currentAction = isAdded ? deleteItem : addItem;
-  const currentIcon = isAdded ? "ios-remove" : "ios-add";
-	const signColor = isAdded ?  "#ff675d" :  Images.colorGreen;
+  const currentIcon = isAdded ? 'ios-remove' : 'ios-add';
+	const signColor = isAdded ?  '#ff675d' :  Images.colorGreen;
 
   return (
     <ListItem
@@ -105,18 +110,19 @@ const renderCoin = (store, web3t, item) => {
 };
 
 export default ({ store, web3t }) => {
-
   const lang = getLang(store);
-  const changePage = tab => () => {
+
+  const changePage = (tab) => () => {
     store.current.page = tab;
   };
+
   const currentNetwork = store.current.network;
 	coinItems = coinItems.filter((it)=> {
 		return !it[currentNetwork].disabled
 	});
   const refreshToken = async bool => {};
   const back = changePage("wallets");
-	
+
 	function getWalletsGroups({wallets}){
 		return groupBy(function(it){
 			return it[currentNetwork].group
@@ -128,9 +134,9 @@ export default ({ store, web3t }) => {
 	}
 	const walletsGroups = getWalletsGroups({wallets: coinItems});
 	const groups = keys(walletsGroups);
-	groups.splice(groups.indexOf("Velas"),1);
-	groups.unshift("Velas");
-	
+	groups.splice(groups.indexOf('Velas'),1);
+	groups.unshift('Velas');
+
 	const listData =
 		groups.map(function (groupName) {
 			const title = groupName;
@@ -141,24 +147,25 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.viewFlex}>
       <Background fullscreen={true}/>
-        {RefreshControl({swipeRefresh: refreshToken, store, children: <>
-          <Header title={lang.manageWallet} onBack={back}/>
-        </>})}
-      <View style={[styles.viewMono1, {height: hp("85%")}]}>
-				<LinearGradient
-						colors={[Images.velasColor4, Images.velasColor4]}
-						style={styles.linearGradientBg}
-				>
-					<SectionList
-						style={[{marginBottom: 50}]}
-						sections={listData}
-						keyExtractor={(item, index) => item.token + index}
-						renderItem={({ item }) => renderCoin(store, web3t, item)}
-						renderSectionHeader={({ section: { title } }) => (
-							<Text style={style.header}>{title}{" "}Network</Text>
-						)}
-					/>
-        </LinearGradient>
+      {RefreshControl({
+        swipeRefresh: refreshToken,
+        store,
+        children: (
+          <>
+            <Header title={lang.manageWallet} onBack={back}/>
+          </>
+        ),
+      })}
+      <View style={[styles.viewMono1, { height: hp('85%') }]}>
+        <SectionList
+          style={[{marginBottom: 50}]}
+          sections={listData}
+          keyExtractor={(item, index) => item.token + index}
+          renderItem={({ item }) => renderCoin(store, web3t, item)}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={style.header}>{title}{" "}Network</Text>
+          )}
+        />
       </View>
     </View>
   );
@@ -179,7 +186,7 @@ const style = StyleSheet.create({
 		borderBottomColor: "rgba(255,255,255,0.1)",
 		paddingVertical: 5,
 		backgroundColor: Images.velasColor5,
-		marginLeft: 0, 
+		marginLeft: 0,
 		paddingLeft: 10
 	},
 	iconBtn: {

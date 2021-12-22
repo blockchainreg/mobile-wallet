@@ -1,4 +1,4 @@
-import Spinner from "./spinner.js";
+import Spinner from './spinner.js';
 
 export default function (store, description, func, options) {
   return (...funcArgs) => {
@@ -7,11 +7,9 @@ export default function (store, description, func, options) {
       funcArgs.splice(funcArgs.length - 1, 1);
     }
 
-    const spinner = (
-      options
+    const spinner = options
       ? new Spinner(store, description, options)
-      : new Spinner(store, description)
-    );
+      : new Spinner(store, description);
     setTimeout(() => {
       if (!cb) {
         func();

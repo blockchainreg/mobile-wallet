@@ -1,6 +1,5 @@
 ### Ethnamed Registry API
 
-
 [Website](https://ethnamed.io) | [Discuss](https://t.me/ethnamed) | [Demo](https://ethnamed.io/wallet)
 
 #### Use API
@@ -30,8 +29,9 @@ ethnamed.verifyRecord("some@email.com", showResult);  // yourname == yourname.et
 
 ```
 
-####  REGISTER NAME
-You can set of update record by yourself once you get the 
+#### REGISTER NAME
+
+You can set of update record by yourself once you get the
 
 ```Javascript
 
@@ -50,7 +50,8 @@ ethnamed.setupRecord(request, showResult);
 
 ```
 
-####  TRANSFER OWNERSHIP
+#### TRANSFER OWNERSHIP
+
 Assign another owner when you sell the domain name
 
 ```Javascript
@@ -59,8 +60,8 @@ ethnamed.transferOwnership("some@email.com", '0x123...', showResult);
 
 ```
 
-
 #### SEND TO (PAYPAL like functionality in crypto)
+
 You can send funds to NON-existent address and let withdraw it when user registers it
 
 ```Javascript
@@ -74,6 +75,6 @@ ethnamed.sendTo(request, showResult);
 
 ```
 
------------------
+---
 
 ethnamed.io

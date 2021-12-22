@@ -1,52 +1,59 @@
-import React from "react";
+import React from 'react';
 import {
-	List,
-	ListItem,
-	Left,
-	Body,
-	Right,
-	Thumbnail,
-	Text,
-	Button,
-	View,
-	Title,
-	Icon,
-	Content,
-	// Header,
-	Toast, Container,
-	Item
-} from "native-base";
-import StatusBar from "../components/StatusBar.js";
-import styles from "../Styles.js";
-import { ScrollView, TouchableOpacity, Image,  RefreshControl, Alert, Vibration, StyleSheet, FlatList, TouchableHighlight} from "react-native";
-import CustomRefreshControl from "../components/RefreshControl.js";
-import Footer from "./Footer.js";
-import walletsFuncs from "../wallet/wallets-funcs.js";
-import walletFuncs from "../wallet/wallet-funcs.js";
-import applyTransactions from "../wallet/apply-transactions.js";
-import getLang from "../wallet/get-lang.js";
-import Background from "../components/StandardLinearGradient.js";
-import { LinearGradient } from "expo-linear-gradient";
-import Images from "../Images.js";
-import Modal from "react-native-modal";
-import navigate from "../wallet/navigate.js";
-import spin from "../utils/spin.js";
+  List,
+  ListItem,
+  Left,
+  Body,
+  Right,
+  Thumbnail,
+  Text,
+  Button,
+  View,
+  Title,
+  Icon,
+  Content,
+  // Header,
+  Toast,
+  Container,
+} from 'native-base';
+import StatusBar from '../components/StatusBar.js';
+import styles from '../Styles.js';
+import {
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+  Alert,
+  Vibration,
+  StyleSheet,
+  TouchableHighlight,
+} from 'react-native';
+import CustomRefreshControl from '../components/RefreshControl.js';
+import Footer from './Footer.js';
+import walletsFuncs from '../wallet/wallets-funcs.js';
+import walletFuncs from '../wallet/wallet-funcs.js';
+import applyTransactions from '../wallet/apply-transactions.js';
+import getLang from '../wallet/get-lang.js';
+import Background from '../components/StandardLinearGradient.js';
+import { LinearGradient } from 'expo-linear-gradient';
+import Images from '../Images.js';
+import Modal from 'react-native-modal';
+import navigate from '../wallet/navigate.js';
+import spin from '../utils/spin.js';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import DemoMode from "../components/DemoMode.js";
-import roundNumber from "../round-number";
-import roundHuman from "../wallet/round-human";
-import Header from "../components/Header.js";
-import { Observer } from "mobx-react";
-import { formatAmount } from "../utils/format-value";
-import { keys, groupBy, filter, objToPairs, map } from "prelude-ls";
-import WalletItem from "../components/WalletItem.js";
-// import { SwipeListView } from 'react-native-swipe-list-view';
+} from 'react-native-responsive-screen';
+import DemoMode from '../components/DemoMode.js';
+import roundNumber from '../round-number';
+import roundHuman from '../wallet/round-human';
+import Header from '../components/Header.js';
+import { Observer } from 'mobx-react';
+import { formatAmount } from '../utils/format-value';
+import { keys, groupBy, filter, objToPairs, map } from 'prelude-ls';
+import WalletItem from '../components/WalletItem.js';
 import SectionList from "../components/SectionList";
-import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
-
+import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
 
 function getWalletsGroups({wallets}){
@@ -63,10 +70,10 @@ function getWalletsGroups({wallets}){
 /* Render Wallet Item */
 const listItem = (store, web3t, wallets, wallet) => {
 	const lang = getLang(store);
-	
+
 	const { active, balance, balanceUsd, pending, usdRate, token } =
 		walletFuncs(store, web3t, wallets, wallet);
-	
+
 	const chooseWallet = () => {
 		if (isNaN(wallet.balance)) return;
 		store.current.wallet = wallet.coin.token;
@@ -76,16 +83,16 @@ const listItem = (store, web3t, wallets, wallet) => {
 		store.current.filter = {
 			token: wallet.coin.token
 		};
-		store.current.filterVal.temp = "";
-		store.current.filterVal.apply = "";
-		store.current.page = "wallet";
+		store.current.filterVal.temp = '';
+		store.current.filterVal.apply = '';
+		store.current.page = 'wallet';
 		try {
 			applyTransactions(store);
 		} catch (err) {
-			return Toast.show({text: err + ""});
+			return Toast.show({text: err + ''});
 		}
 	};
-	
+
 	const send = () => {
 		if(wallet.balance == "..") return;
 		store.current.wallet = wallet.coin.token;
@@ -168,7 +175,7 @@ const listItem = (store, web3t, wallets, wallet) => {
 	// It opens dialog on scroll - should be fixed
 	//    onLongPress={actions}
 	var typeBadge = !isNaN(wallet.balance) ? "active" : "inactive";
-	
+
 	return (
 		<SwipeRow
 			stopLeftSwipe={-0.0000001}
@@ -196,11 +203,10 @@ const listItem = (store, web3t, wallets, wallet) => {
 				address={wallet.address}
 				store={store}
 			/>
-			
+
 		</SwipeRow>
 	);
 };
-
 
 export default ({ store, web3t }) => {
   const { stakingStore } = store;
@@ -210,7 +216,7 @@ export default ({ store, web3t }) => {
 	const changePage = (tab) => () => {
     store.current.page = tab;
   };
- 
+
   const refreshBalance = () => {
     store.current.refreshingBalances = true;
     //TODO: make reloadWithRetry query non-blocking main thread
@@ -221,7 +227,7 @@ export default ({ store, web3t }) => {
     return true;
   };
 
-  const isDemoMode = !!localStorage.getItem("is-demo-mode");
+  const isDemoMode = !!localStorage.getItem('is-demo-mode');
   const renderDemoMode = () => {
     if (!isDemoMode) {
       return null;
@@ -260,7 +266,7 @@ export default ({ store, web3t }) => {
       calcUsd = store.current.balanceUsd;
     } else {
       // const r_calcUsd = roundNumber(calcUsd + arraySumStakeUsd, {
-	  const r_calcUsd = roundNumber(calcUsd, {
+      const r_calcUsd = roundNumber(calcUsd, {
         decimals: 2,
       });
       calcUsd = roundHuman(r_calcUsd);
@@ -271,25 +277,24 @@ export default ({ store, web3t }) => {
         {() => {
           return (
             <Text style={style.balanceAmount}>
-							<Text style={style.balanceAmount}>$</Text>
-              {!calcUsd ? "..." : calcUsd}
-              
+              <Text style={style.balanceAmount}>$</Text>{' '}
+              {!calcUsd ? '...' : calcUsd}
             </Text>
           );
         }}
       </Observer>
     );
   };
-	
-  const containerMarginBottom = store.current.network === "mainnet" ? 90 : 130;
+
+  const containerMarginBottom = store.current.network === 'mainnet' ? 90 : 130;
 	const lang = getLang(store);
-	
+
 	const walletsGroups = getWalletsGroups({wallets});
 	const groups = keys(walletsGroups);
-	
+
 	const listData =
 		groups.map(function (groupName, i) {
-			const title = groupName + " Network";
+			const title = `${groupName} Network`;
 			const data = walletsGroups[groupName];
 			const arr = data.map((it) => {
 				return {key: it.coin.token, ...it}
@@ -301,13 +306,13 @@ export default ({ store, web3t }) => {
     <View style={styles.viewFlex}>
       <View
         style={{
-          backgroundColor: "transparent",
-          height: "18%",
-          marginTop: hp("5%"),
-          alignSelf: "center",
-          width: "66%",
+          backgroundColor: 'transparent',
+          height: '18%',
+          marginTop: hp('5%'),
+          alignSelf: 'center',
+          width: '66%',
           zIndex: 999,
-          position: "absolute",
+          position: 'absolute',
         }}
       >
         {CustomRefreshControl({
@@ -320,11 +325,11 @@ export default ({ store, web3t }) => {
         <Header
           title={lang.yourWallets}
           addWalletIcon
-          onForward={changePage("add")}
+          onForward={changePage('add')}
           transparent
         />
         <View style={style.viewWallet}>
-          <Text style={style.balance}>{"Total Balance"}</Text>
+          <Text style={style.balance}>{lang.totalBalance}</Text>
           {totalBalance()}
           {/* <Text style={style.balanceAmount}>
             {calcUsd} <Text style={style.balanceAmount}>$</Text>{" "}
@@ -333,16 +338,15 @@ export default ({ store, web3t }) => {
       </View>
 
       <View style={[style.viewMonoWallets, {marginBottom: containerMarginBottom}]}>
-				<SectionList 
+				<SectionList
 					store={store}
 					web3t={web3t}
 					listData={listData}
 					renderItem={({ item }) => listItem(store, web3t, wallets, item)}
-				/>  
-				
+				/>
       </View>
 
-      <View style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
+      <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
         <Footer store={store}></Footer>
         {renderDemoMode()}
       </View>
@@ -382,12 +386,12 @@ const style = StyleSheet.create({
   },
   balanceAmount: {
     fontSize: 32,
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaBold",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   balanceStake: {
     fontSize: 14,
-    color: "#ffffff65",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#ffffff65',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
 });

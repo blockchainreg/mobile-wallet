@@ -122,20 +122,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IReverseRegistry.sol",
     "exportedSymbols": {
-      "IReverseRegistry": [
-        12190
-      ]
+      "IReverseRegistry": [12190]
     },
     "id": 12191,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12149,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:23"
       },
@@ -146,9 +140,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12190,
-        "linearizedBaseContracts": [
-          12190
-        ],
+        "linearizedBaseContracts": [12190],
         "name": "IReverseRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -629,20 +621,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IReverseRegistry.sol",
     "exportedSymbols": {
-      "IReverseRegistry": [
-        12190
-      ]
+      "IReverseRegistry": [12190]
     },
     "id": 12191,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12149,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:23"
       },
@@ -653,9 +639,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12190,
-        "linearizedBaseContracts": [
-          12190
-        ],
+        "linearizedBaseContracts": [12190],
         "name": "IReverseRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [

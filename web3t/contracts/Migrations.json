@@ -74,20 +74,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/Migrations.sol",
     "exportedSymbols": {
-      "Migrations": [
-        389
-      ]
+      "Migrations": [389]
     },
     "id": 390,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 334,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:3"
       },
@@ -98,9 +92,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 389,
-        "linearizedBaseContracts": [
-          389
-        ],
+        "linearizedBaseContracts": [389],
         "name": "Migrations",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -478,9 +470,7 @@
               "src": "449:143:3",
               "statements": [
                 {
-                  "assignments": [
-                    376
-                  ],
+                  "assignments": [376],
                   "declarations": [
                     {
                       "constant": false,
@@ -719,20 +709,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/Migrations.sol",
     "exportedSymbols": {
-      "Migrations": [
-        389
-      ]
+      "Migrations": [389]
     },
     "id": 390,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 334,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:3"
       },
@@ -743,9 +727,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 389,
-        "linearizedBaseContracts": [
-          389
-        ],
+        "linearizedBaseContracts": [389],
         "name": "Migrations",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1123,9 +1105,7 @@
               "src": "449:143:3",
               "statements": [
                 {
-                  "assignments": [
-                    376
-                  ],
+                  "assignments": [376],
                   "declarations": [
                     {
                       "constant": false,

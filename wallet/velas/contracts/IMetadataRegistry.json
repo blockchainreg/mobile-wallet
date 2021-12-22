@@ -103,20 +103,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IMetadataRegistry.sol",
     "exportedSymbols": {
-      "IMetadataRegistry": [
-        12081
-      ]
+      "IMetadataRegistry": [12081]
     },
     "id": 12082,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12045,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:20"
       },
@@ -127,9 +121,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12081,
-        "linearizedBaseContracts": [
-          12081
-        ],
+        "linearizedBaseContracts": [12081],
         "name": "IMetadataRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -561,20 +553,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IMetadataRegistry.sol",
     "exportedSymbols": {
-      "IMetadataRegistry": [
-        12081
-      ]
+      "IMetadataRegistry": [12081]
     },
     "id": 12082,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12045,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:20"
       },
@@ -585,9 +571,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12081,
-        "linearizedBaseContracts": [
-          12081
-        ],
+        "linearizedBaseContracts": [12081],
         "name": "IMetadataRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [

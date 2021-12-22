@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Container,
   Text,
@@ -9,9 +9,9 @@ import {
   Body,
   Title,
   Right,
-} from "native-base";
-import { Header as Headers } from "native-base";
-import Footer from "./Footer.js";
+} from 'native-base';
+import { Header as Headers } from 'native-base';
+import Footer from './Footer.js';
 import {
   StyleSheet,
   View,
@@ -20,22 +20,20 @@ import {
   SafeAreaView,
   PlatformColor,
   Platform,
-} from "react-native";
-import { Observer } from "mobx-react";
-import getLang from "../wallet/get-lang.js";
-import Images from "../Images.js";
-import StakeItem from "../components/StakeItem.js";
-import { SkypeIndicator } from "react-native-indicators";
-import StatusBar from "../components/StatusBar.js";
-import styles from "../Styles.js";
-import EpochComponent from "../components/EpochComponent.js";
-import SortStake from "../components/SortStake.js";
-import ProgressBar from "../components/ProgressBar.js";
-import PickerSortStake from "../components/PickerSortStake.js";
-import { EpochCurrrent } from "../svg/epoch-current.js";
-import spin from "../utils/spin.js";
-
-
+} from 'react-native';
+import { Observer } from 'mobx-react';
+import getLang from '../wallet/get-lang.js';
+import Images from '../Images.js';
+import StakeItem from '../components/StakeItem.js';
+import { SkypeIndicator } from 'react-native-indicators';
+import StatusBar from '../components/StatusBar.js';
+import styles from '../Styles.js';
+import EpochComponent from '../components/EpochComponent.js';
+import SortStake from '../components/SortStake.js';
+import ProgressBar from '../components/ProgressBar.js';
+import PickerSortStake from '../components/PickerSortStake.js';
+import { EpochCurrrent } from '../svg/epoch-current.js';
+import spin from '../utils/spin.js';
 
 export default ({ store, web3t, props }) => {
   const { stakingStore } = store;
@@ -52,46 +50,36 @@ export default ({ store, web3t, props }) => {
   };
 
   const sortActiveStake = () => {
-    spin(
-      store,
-      `Sort by: Total Staked`,
-      async (cb) => {
-        try {
-          await stakingStore.sortActiveStake();
-          setTimeout(() => {
-            cb(null);
-          }, 1000);
-        } catch(err) {
-          cb(err);
-        }
+    spin(store, `Sort by: Total Staked`, async (cb) => {
+      try {
+        await stakingStore.sortActiveStake();
+        setTimeout(() => {
+          cb(null);
+        }, 1000);
+      } catch (err) {
+        cb(err);
       }
-    )((err, data) => {
-      console.log("Sort by Total Staked");
+    })((err, data) => {
+      console.log('Sort by Total Staked');
     });
   };
   const sortApr = () => {
-    spin(
-      store,
-      `Sort by: APR`,
-      async (cb) => {
-        try {
-          await stakingStore.sortApr();
-          setTimeout(() => {
-            cb(null);
-          }, 1000);
-        } catch(err) {
-          cb(err);
-        }
+    spin(store, `Sort by: APR`, async (cb) => {
+      try {
+        await stakingStore.sortApr();
+        setTimeout(() => {
+          cb(null);
+        }, 1000);
+      } catch (err) {
+        cb(err);
       }
-    )((err, data) => {
-      console.log("Sort by APR");
+    })((err, data) => {
+      console.log('Sort by APR');
     });
   };
 
   const currentEpoch = stakingStore.currentEpoch;
   const epochTime = stakingStore.epochTime;
-
-
 
   const SearchHeader = () => {
     const { stakingStore } = store;
@@ -105,7 +93,7 @@ export default ({ store, web3t, props }) => {
           style={[
             {
               backgroundColor: Images.colorDarkBlue,
-              borderBottomColor: "transparent",
+              borderBottomColor: 'transparent',
             },
             styles.marginTopAndroid,
           ]}
@@ -115,31 +103,40 @@ export default ({ store, web3t, props }) => {
               {() => {
                 return (
                   <>
-                    {stakingStore.isRefreshing ? null : (
-                      PickerSortStake({ store, onDonePress: () => stakingStore.sort === 'total_staked' ? sortActiveStake() :  sortApr()})
-                    )}
+                    {stakingStore.isRefreshing
+                      ? null
+                      : PickerSortStake({
+                          store,
+                          onDonePress: () =>
+                            stakingStore.sort === 'total_staked'
+                              ? sortActiveStake()
+                              : sortApr(),
+                        })}
                   </>
                 );
               }}
             </Observer>
           </Left>
           <Body>
-          <Title style={styles.headerTitle}>{lang.titleStake || "Stake"}</Title>
+            <Title style={styles.headerTitle}>
+              {lang.titleStake || 'Stake'}
+            </Title>
           </Body>
-          <Right style={{flexDirection: 'row', alignItems: 'center',}}>
+          <Right style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Observer>
               {() => {
                 return (
                   <>
-                    {stakingStore.isRefreshing ? null : (<>
-                     <EpochComponent store={store} />
-                      <Button transparent onPress={changePage("searchStake")}>
-                        <Icon
-                          name="ios-search"
-                          style={styles.refreshHeaderIcon}
+                    {stakingStore.isRefreshing ? null : (
+                      <>
+                        <EpochComponent store={store} />
+                        <Button transparent onPress={changePage('searchStake')}>
+                          <Icon
+                            name="ios-search"
+                            style={styles.refreshHeaderIcon}
                           />
-                      </Button></>
-
+                        </Button>
+                      </>
                     )}
                   </>
                 );
@@ -163,35 +160,35 @@ export default ({ store, web3t, props }) => {
           const filterTotalStaked = stakingStore.getNotStakedValidators();
           if (!filterStake || !filterTotalStaked || stakingStore.isRefreshing) {
             return (
-              <View style={{ flex: 1, alignItems: "center" }}>
+              <View style={{ flex: 1, alignItems: 'center' }}>
                 <View>
-                  <SkypeIndicator color={"white"} />
+                  <SkypeIndicator color={'white'} />
                 </View>
               </View>
             );
           }
 
-            const renderItems = ({ item }) => (
-              <StakeItem
-                key={item.address}
-                typeBadge={item.status}
-                name={item.name}
-                address={item.address}
-                myStake={item.myStake}
-                totalStaked={item.activeStake}
-                apr={item.apr}
-                onPress={changePage("detailsValidator", item.address)}
-                store={store}
-              />
-              )
+          const renderItems = ({ item }) => (
+            <StakeItem
+              key={item.address}
+              typeBadge={item.status}
+              name={item.name}
+              address={item.address}
+              myStake={item.myStake}
+              totalStaked={item.activeStake}
+              apr={item.apr}
+              onPress={changePage('detailsValidator', item.address)}
+              store={store}
+            />
+          );
 
           const sections = [
             {
-              title: lang.itemStakedTitle || "Staked Validators",
+              title: lang.itemStakedTitle || 'Staked Validators',
               data: filterStake,
             },
             {
-              title: "Not Staked Validators",
+              title: 'Not Staked Validators',
               data: filterTotalStaked,
             },
           ];
@@ -210,7 +207,7 @@ export default ({ store, web3t, props }) => {
                   !filterStake.length
                     ? [
                         {
-                          title: "Not Staked Validators",
+                          title: 'Not Staked Validators',
                           data: filterTotalStaked,
                         },
                       ]
@@ -251,21 +248,21 @@ const style = StyleSheet.create({
     flex: 1,
   },
   titleText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontFamily: "Fontfabric-NexaBold",
+    fontFamily: 'Fontfabric-NexaBold',
   },
   listItemStyle: {
     marginHorizontal: 20,
 
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   styleSubTitle: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   listItemHeader: {
     backgroundColor: Images.velasColor4,
@@ -273,7 +270,7 @@ const style = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: "Fontfabric-NexaBold",
-    color: "#fff",
+    fontFamily: 'Fontfabric-NexaBold',
+    color: '#fff',
   },
 });

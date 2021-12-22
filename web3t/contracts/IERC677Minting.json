@@ -100,20 +100,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IERC677Minting.sol",
     "exportedSymbols": {
-      "IERC677Minting": [
-        12043
-      ]
+      "IERC677Minting": [12043]
     },
     "id": 12044,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12009,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:19"
       },
@@ -124,9 +118,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12043,
-        "linearizedBaseContracts": [
-          12043
-        ],
+        "linearizedBaseContracts": [12043],
         "name": "IERC677Minting",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -520,20 +512,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IERC677Minting.sol",
     "exportedSymbols": {
-      "IERC677Minting": [
-        12043
-      ]
+      "IERC677Minting": [12043]
     },
     "id": 12044,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12009,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:19"
       },
@@ -544,9 +530,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12043,
-        "linearizedBaseContracts": [
-          12043
-        ],
+        "linearizedBaseContracts": [12043],
         "name": "IERC677Minting",
         "nodeType": "ContractDefinition",
         "nodes": [

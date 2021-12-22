@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Icon,
   Text,
@@ -9,25 +9,20 @@ import styles from "../Styles.js";
 import moment from "moment";
 import getLang from '../wallet/get-lang.js';
 import Images from '../Images.js';
-import walletsFuncs from "../wallet/wallets-funcs.js";
-import roundNumber from "../round-number";
-import roundHuman from "../wallet/round-human"
-import roundHuman2 from "../wallet/round-human2"
-import { DepositImage } from "../svg/depositImage.js";
-import { WithdrawImage2 } from "../svg/withdrawImage2.js";
-
+import walletsFuncs from '../wallet/wallets-funcs.js';
+import roundNumber from '../round-number';
+import roundHuman from '../wallet/round-human';
+import roundHuman2 from '../wallet/round-human2';
+import { DepositImage } from '../svg/depositImage.js';
+import { WithdrawImage2 } from '../svg/withdrawImage2.js';
 
 export default (store, web3t) => {
-
   const lang = getLang(store);
   const writeToClipboard = async (info) => {
-    await Clipboard.setString(
-      info
-    );
+    await Clipboard.setString(info);
     Vibration.vibrate(100);
-    Alert.alert(lang.copied, "", [{ text: lang.ok }]);
+    Alert.alert(lang.copied, '', [{ text: lang.ok }]);
   };
-
 
   const writeToClipboardId = async () => {
     writeToClipboard(store.infoTransaction.tx);
@@ -40,22 +35,20 @@ export default (store, web3t) => {
   const writeToClipboardSourceAcc = async () => {
     writeToClipboard(store.infoTransaction.from);
   };
-  const index = type => {
-    if (type === "IN") return <Text style={styles.detailInfoIn}>+</Text>;
-    else if (type === "OUT") return <Text style={styles.detailInfoOut}>-</Text>;
+  const index = (type) => {
+    if (type === 'IN') return <Text style={styles.detailInfoIn}>+</Text>;
+    else if (type === 'OUT') return <Text style={styles.detailInfoOut}>-</Text>;
   };
-  const amountStyle = type => {
-    if (type === "IN") return styles.detailInfoIn;
-    else if (type === "OUT") return styles.detailInfoOut;
+  const amountStyle = (type) => {
+    if (type === 'IN') return styles.detailInfoIn;
+    else if (type === 'OUT') return styles.detailInfoOut;
   };
-  const thumbnail = type => {
+  const thumbnail = (type) => {
     switch (type) {
-      case "IN":
-        return <DepositImage width={36} height={36}/>;
-      case "OUT":
-        return (
-          <WithdrawImage2 width={36} height={36}/>
-        );
+      case 'IN':
+        return <DepositImage width={36} height={36} />;
+      case 'OUT':
+        return <WithdrawImage2 width={36} height={36} />;
       default:
         return null;
     }
@@ -64,7 +57,7 @@ export default (store, web3t) => {
   const wallet = wallets.find((x) => x.coin.token === store.infoTransaction.token);
   if (!wallet) {
   	return null;
-	} 
+	}
   const {linktx, url} = wallet.network.api;
   const {tx} = store.infoTransaction;
   const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
@@ -78,90 +71,112 @@ export default (store, web3t) => {
   const openTxUrl = () => Linking.openURL(txurl)
 
   return (
-		<View style={styles.container}>
-			<View style={styles.detailsHistory}>
-				<View>
-					<View style={styles.badge}>
-					{thumbnail(store.infoTransaction.type)}
-					</View>
-				</View>
+    <View style={styles.container}>
+      <View style={styles.detailsHistory}>
+        <View>
+          <View style={styles.badge}>
+            {thumbnail(store.infoTransaction.type)}
+          </View>
+        </View>
 
-				<View style={{ width: "auto", textAlign: "center", paddingHorizontal: 20, paddingVertical: 5}}>
-				<Text style={amountStyle(store.infoTransaction.type)}>
-					{index(store.infoTransaction.type)}
-					{amount} {tokenLabel}
-				</Text>
-				</View>
-				<Text style={{color: "rgba(255, 255, 255, 0.70)", fontFamily: "Fontfabric-NexaRegular", lineHeight: 20}}>
-					{moment(store.infoTransaction.time * 1000).format( "MMM D YYYY h:mm A")}
-				</Text>
+        <View
+          style={{
+            width: 'auto',
+            textAlign: 'center',
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+          }}
+        >
+          <Text style={amountStyle(store.infoTransaction.type)}>
+            {index(store.infoTransaction.type)}
+            {amount} {tokenLabel}
+          </Text>
+        </View>
+        <Text
+          style={{
+            color: 'rgba(255, 255, 255, 0.70)',
+            fontFamily: 'Fontfabric-NexaRegular',
+            lineHeight: 20,
+          }}
+        >
+          {moment(store.infoTransaction.time * 1000).format(
+            'MMM D YYYY h:mm A'
+          )}
+        </Text>
+      </View>
 
-			</View>
-
-			<View style={styles.viewPt} />
-			<ScrollView>
-			 <View style={styles.lineMonoRow}>
-
-				<Text style={styles.detail}>{lang.sender}:</Text>
-				<View style={styles.userHistoryRow}>
-				<Icon
-						name="ios-copy"
-						onPress={writeToClipboardSourceAcc}
-						style={[styles.viewPt, {fontSize: 20,} ]}
-				/>
-					<Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardSourceAcc}>
-					{store.infoTransaction.from}
-				</Text>
-				</View>
-			</View>
-			<View style={styles.lineMonoRow}>
-				<Text style={styles.detail}>{lang.recipient}:</Text>
-				<View style={styles.userHistoryRow}>
-				<Icon
-						name="ios-copy"
-						onPress={writeToClipboardDestAcc}
-						style={[styles.viewPt, {fontSize: 20} ]}
-				/>
-					<Text style={[styles.viewPt, {marginLeft: 10}]} onPress={writeToClipboardDestAcc}>
-					{store.infoTransaction.to}
-				</Text>
-				</View>
-			</View>
-
-          <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>{lang.amount}:</Text>
-            <Text style={styles.viewPt}>
-              {amount}
-              {" "}{tokenLabel}
+      <View style={styles.viewPt} />
+      <ScrollView>
+        <View style={styles.lineMonoRow}>
+          <Text style={styles.detail}>{lang.sender}:</Text>
+          <View style={styles.userHistoryRow}>
+            <Icon
+              name="ios-copy"
+              onPress={writeToClipboardSourceAcc}
+              style={[styles.viewPt, { fontSize: 20 }]}
+            />
+            <Text
+              style={[styles.viewPt, { marginLeft: 10 }]}
+              onPress={writeToClipboardSourceAcc}
+            >
+              {store.infoTransaction.from}
             </Text>
           </View>
-
-          <View style={styles.lineMonoRow}>
-            <Text style={styles.detail}>{lang.fee}:</Text>
-            <Text style={styles.viewPt}>
-              {txFee}
-              {" "}{feeToken}
+        </View>
+        <View style={styles.lineMonoRow}>
+          <Text style={styles.detail}>{lang.recipient}:</Text>
+          <View style={styles.userHistoryRow}>
+            <Icon
+              name="ios-copy"
+              onPress={writeToClipboardDestAcc}
+              style={[styles.viewPt, { fontSize: 20 }]}
+            />
+            <Text
+              style={[styles.viewPt, { marginLeft: 10 }]}
+              onPress={writeToClipboardDestAcc}
+            >
+              {store.infoTransaction.to}
             </Text>
           </View>
+        </View>
 
-			<View style={styles.lineMonoRow}>
-				<Text style={styles.detail}>{lang.externalId}:</Text>
-				<View style={styles.userHistoryRow1}>
-				<Icon
-						name="md-open"
-						onPress={openTxUrl}
-						onLongPress={writeToClipboardId}
-						style={[styles.viewPt, {fontSize: 20} ]}
-				/>
-					<Text style={[styles.viewPt, {marginLeft: 10, textDecorationLine: 'underline' }]} onPress={openTxUrl} onLongPress={writeToClipboardId}>
-					{store.infoTransaction.tx}
-				</Text>
-				</View>
+        <View style={styles.lineMonoRow}>
+          <Text style={styles.detail}>{lang.amount}:</Text>
+          <Text style={styles.viewPt}>
+            {amount} {tokenLabel}
+          </Text>
+        </View>
 
-			</View>
-			<View style={styles.mbXScroll}/>
-			</ScrollView>
+        <View style={styles.lineMonoRow}>
+          <Text style={styles.detail}>{lang.fee}:</Text>
+          <Text style={styles.viewPt}>
+            {txFee} {feeToken}
+          </Text>
+        </View>
 
+        <View style={styles.lineMonoRow}>
+          <Text style={styles.detail}>{lang.externalId}:</Text>
+          <View style={styles.userHistoryRow1}>
+          <Icon
+              name="md-open"
+              onPress={openTxUrl}
+              onLongPress={writeToClipboardId}
+              style={[styles.viewPt, {fontSize: 20} ]}
+          />
+            <Text
+              style={[
+                styles.viewPt,
+                { marginLeft: 10, textDecorationLine: 'underline' },
+              ]}
+              onPress={openTxUrl}
+              onLongPress={writeToClipboardId}
+            >
+					    {store.infoTransaction.tx}
+				    </Text>
+          </View>
+		    </View>
+		    <View style={styles.mbXScroll}/>
+	    </ScrollView>
 		</View>
-  )
+  );
 };

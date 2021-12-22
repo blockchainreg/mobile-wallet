@@ -1,7 +1,7 @@
-import { LinearGradient } from "expo-linear-gradient";
-import styles from "../Styles.js";
-import React from "react";
-import { ImageBackground,View } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import styles from '../Styles.js';
+import React from 'react';
+import { ImageBackground, View } from 'react-native';
 import getLang from '../wallet/get-lang.js';
 
 export default ({ children }) => {
@@ -12,9 +12,15 @@ export default ({ children }) => {
     // >
     //   {children}
     // </ImageBackground>
-    <View style={[styles.colorBg, styles.fixedBg, styles.containterBg1, {zIndex: -1}]}>
+    <View
+      style={[
+        styles.colorBg,
+        styles.fixedBg,
+        styles.containterBg1,
+        { zIndex: -1 },
+      ]}
+    >
       {children}
     </View>
-   
   );
 };

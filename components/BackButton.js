@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useEffect} from 'react';
 import {BackHandler, Animated, TouchableOpacity} from "react-native";
-import {Button, Icon} from "native-base";
+import {Button, Icon} from 'native-base';
 
-import styles from "../Styles.js";
+import styles from '../Styles.js';
 
 export default ({onBack, transparent, style }) => {
   const back = () => {
@@ -15,9 +15,9 @@ export default ({onBack, transparent, style }) => {
       BackHandler.removeEventListener('hardwareBackPress', back);
     };
   });
-	
+
 	const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-	
+
   return (
 		<Animated.View>
 			<AnimatedTouchable onPress={onBack} >

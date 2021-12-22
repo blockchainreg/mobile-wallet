@@ -44,20 +44,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/UpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "UpgradeabilityProxy": [
-        12979
-      ]
+      "UpgradeabilityProxy": [12979]
     },
     "id": 12980,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12932,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:35"
       },
@@ -93,19 +87,12 @@
             "src": "246:23:35"
           }
         ],
-        "contractDependencies": [
-          12875,
-          12913
-        ],
+        "contractDependencies": [12875, 12913],
         "contractKind": "contract",
         "documentation": "@title UpgradeabilityProxy\n@dev Extends BaseUpgradeabilityProxy with a constructor for initializing\nimplementation and init data.",
         "fullyImplemented": true,
         "id": 12979,
-        "linearizedBaseContracts": [
-          12979,
-          12875,
-          12913
-        ],
+        "linearizedBaseContracts": [12979, 12875, 12913],
         "name": "UpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -486,10 +473,7 @@
                     "src": "1049:99:35",
                     "statements": [
                       {
-                        "assignments": [
-                          12965,
-                          null
-                        ],
+                        "assignments": [12965, null],
                         "declarations": [
                           {
                             "constant": false,
@@ -616,10 +600,7 @@
                             "id": 12971,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [
-                              13015,
-                              13016
-                            ],
+                            "overloadedDeclarations": [13015, 13016],
                             "referencedDeclaration": 13015,
                             "src": "1121:7:35",
                             "typeDescriptions": {
@@ -739,20 +720,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/UpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "UpgradeabilityProxy": [
-        12979
-      ]
+      "UpgradeabilityProxy": [12979]
     },
     "id": 12980,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12932,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:35"
       },
@@ -788,19 +763,12 @@
             "src": "246:23:35"
           }
         ],
-        "contractDependencies": [
-          12875,
-          12913
-        ],
+        "contractDependencies": [12875, 12913],
         "contractKind": "contract",
         "documentation": "@title UpgradeabilityProxy\n@dev Extends BaseUpgradeabilityProxy with a constructor for initializing\nimplementation and init data.",
         "fullyImplemented": true,
         "id": 12979,
-        "linearizedBaseContracts": [
-          12979,
-          12875,
-          12913
-        ],
+        "linearizedBaseContracts": [12979, 12875, 12913],
         "name": "UpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1181,10 +1149,7 @@
                     "src": "1049:99:35",
                     "statements": [
                       {
-                        "assignments": [
-                          12965,
-                          null
-                        ],
+                        "assignments": [12965, null],
                         "declarations": [
                           {
                             "constant": false,
@@ -1311,10 +1276,7 @@
                             "id": 12971,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [
-                              13015,
-                              13016
-                            ],
+                            "overloadedDeclarations": [13015, 13016],
                             "referencedDeclaration": 13015,
                             "src": "1121:7:35",
                             "typeDescriptions": {

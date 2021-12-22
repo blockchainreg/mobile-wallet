@@ -1,32 +1,28 @@
-import React from "react";
-import { Text, View, TouchableOpacity, Linking } from "react-native";
-import Modal from "react-native-modal";
-import { Image } from "react-native";
-import styles from "../Styles.js";
+import React from 'react';
+import { Text, View, TouchableOpacity, Linking } from 'react-native';
+import Modal from 'react-native-modal';
+import { Image } from 'react-native';
+import styles from '../Styles.js';
 import Images from '../Images.js';
-import StandardLinearGradient from "../components/StandardLinearGradient.js";
+import StandardLinearGradient from '../components/StandardLinearGradient.js';
 import getLang from '../wallet/get-lang.js';
-import { Tick } from "../svg/tick.js";
+import { Tick } from '../svg/tick.js';
 
-  const handleCloseModalPress = (store, web3t) => {
-    const lang = getLang(store);
-    const refreshAndBack = () => {
-        store.current.page = "wallets";
-        setTimeout(() => {
-          web3t.refresh((err,data) => {});
-        }, 0);
-    };
-    
-    return (
-      <TouchableOpacity
-        style={styles.btnClose}
-        onPress={refreshAndBack}
-      >
-        <Text style={styles.btnTextClose}>{lang.close}</Text>
-      </TouchableOpacity>
-    );
+const handleCloseModalPress = (store, web3t) => {
+  const lang = getLang(store);
+  const refreshAndBack = () => {
+    store.current.page = 'wallets';
+    setTimeout(() => {
+      web3t.refresh((err, data) => {});
+    }, 0);
   };
 
+  return (
+    <TouchableOpacity style={styles.btnClose} onPress={refreshAndBack}>
+      <Text style={styles.btnTextClose}>{lang.close}</Text>
+    </TouchableOpacity>
+  );
+};
 
 export default ({ store, web3t }) => {
   const url = store.current.lastTxUrl;
@@ -40,11 +36,10 @@ export default ({ store, web3t }) => {
               source={Images.tick}
               style={styles.imgSizeModal2}
             /> */}
-            <Tick width={76}
-    height={73}/>
+            <Tick width={76} height={73} />
             <Text style={styles.textModalRender}>{lang.txSend}</Text>
             <Text style={styles.textModalStyle}>
-              {lang.txId}:{" "}
+              {lang.txId}:{' '}
               <Text
                 style={styles.linkStyle}
                 onPress={() => {
@@ -61,5 +56,3 @@ export default ({ store, web3t }) => {
     </View>
   );
 };
-
-

@@ -4,21 +4,23 @@ import getLang from '../wallet/get-lang.js';
 
 export default class app extends Component {
   render() {
-    if (Platform.OS === 'ios'/* && !this.props.barStyle*/) {
+    if (Platform.OS === 'ios' /* && !this.props.barStyle*/) {
       return (
-         <StatusBar barStyle = 'light-content'
-           hidden={false}
-           translucent = {true}
-           {...this.props}
-         />
-     );
+        <StatusBar
+          barStyle="light-content"
+          hidden={false}
+          translucent={true}
+          {...this.props}
+        />
+      );
     }
-   return (
-      <StatusBar barStyle = "light-content"
+    return (
+      <StatusBar
+        barStyle="light-content"
         backgroundColor="transparent"
-        translucent = {true}
+        translucent={true}
         {...this.props}
       />
-  );
- }
+    );
+  }
 }

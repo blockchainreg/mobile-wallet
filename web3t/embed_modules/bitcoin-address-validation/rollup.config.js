@@ -10,34 +10,27 @@ export default [
     output: {
       name: 'index',
       file: pkg.unpkg,
-      format: 'umd'
+      format: 'umd',
     },
     plugins: [
       nodeResolve({
         browser: true,
-        preferBuiltins: true
+        preferBuiltins: true,
       }),
       commonjs(),
       builtins(),
       copy({
-        targets: [
-          { src: './types.d.ts', dest: './lib' }
-        ]
-      })
-    ]
+        targets: [{ src: './types.d.ts', dest: './lib' }],
+      }),
+    ],
   },
 
   {
     input: 'src/index.js',
-    external: [
-      'base-x',
-      'buffer',
-      'bech32',
-      'sha.js'
-    ],
+    external: ['base-x', 'buffer', 'bech32', 'sha.js'],
     output: [
       { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' }
-    ]
-  }
+      { file: pkg.module, format: 'es' },
+    ],
+  },
 ];
