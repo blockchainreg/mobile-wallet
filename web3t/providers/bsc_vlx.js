@@ -451,9 +451,9 @@
       action: action,
       apikey: apikey,
       address: address,
-      sort: sort,
+      /*sort: sort,
       startblock: startblock,
-      endblock: endblock
+      endblock: endblock*/
     });
     return get(apiUrl + "?" + query).end(function(err, resp){
       if (err != null) {

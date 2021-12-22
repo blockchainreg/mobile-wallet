@@ -346,9 +346,9 @@
       action: action,
       apikey: apikey,
       address: address,
-      sort: sort,
-      startblock: startblock,
-      endblock: endblock
+//      sort: sort,
+//      startblock: startblock,
+//      endblock: endblock
     });
     return get(apiUrl + "?" + query).timeout({
       deadline: deadline
