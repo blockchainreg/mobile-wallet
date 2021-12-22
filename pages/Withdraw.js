@@ -36,6 +36,43 @@ import { ifIphoneX } from 'react-native-iphone-x-helper';
 import math from '../wallet/math.js';
 import { ScanImage } from '../svg/scanImage.js';
 
+const wrapNumber = (text) => {
+  return {
+    target: {
+      value: text.replace(',', '.').replace(/[^0-9\.]/g, ''),
+    },
+  };
+};
+
+const wrap = (text) => {
+  return {
+    target: {
+      value: text,
+    },
+  };
+};
+
+const AmountInput = ({
+  onChangeText,
+  value,
+  maxFractionLength = undefined,
+}) => (
+  <InputAmount
+    onChangeText={onChangeText}
+    returnKeyType="done"
+    autoCompleteType="off"
+    style={style.inputStyle}
+    selectionColor={Platform.OS === 'ios' ? '#fff' : 'rgba(255,255,255,0.60)'}
+    keyboardAppearance="dark"
+    placeholder="0.00"
+    value={value}
+    keyboardType="numeric"
+    placeholderTextColor="rgba(255,255,255,0.60)"
+    maxLength={20}
+    maxFractionLength={maxFractionLength}
+  />
+);
+
 /* Render Send/Swap sceen */
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -66,22 +103,10 @@ export default ({ store, web3t }) => {
   const token = wallet.coin.nickname || wallet.coin.token;
   const bridgeFeeNumber = store.current.send.homeFeePercent || 0;
   const bridgeFee = math.times(bridgeFeeNumber, 100);
-  /* Methods */
-  const wrapNumber = (text) => {
-    return {
-      target: {
-        value: text.replace(',', '.').replace(/[^0-9\.]/g, ''),
-      },
-    };
-  };
 
-  const wrap = (text) => {
-    return {
-      target: {
-        value: text,
-      },
-    };
-  };
+  /* Methods */
+  const handleChangeAmount = (text) => amountChange(wrapNumber(text));
+  const handleChangeUsdAmount = (text) => amountUsdChange(wrapNumber(text));
 
   const changePage = (tab) => () => {
     store.current.page = tab;
@@ -111,9 +136,6 @@ export default ({ store, web3t }) => {
   };
 
   const back = changePage('wallet', true);
-
-  /* Styles */
-  const padStyle = { paddingTop: 20 };
 
   /* Components */
   const btnWithdraw = ({ store, web3t }) => {
@@ -217,66 +239,31 @@ export default ({ store, web3t }) => {
                     ]}
                   >
                     <Item style={style.itemStyle}>
-                      <InputAmount
-                        onChangeText={(text) => amountChange(wrapNumber(text))}
-                        returnKeyType="done"
-                        autoCompleteType="off"
-                        style={[
-                          style.inputStyle,
-                          { width: '100%', fontSize: 18, borderBottomWidth: 1 },
-                        ]}
-                        selectionColor={
-                          Platform.OS === 'ios'
-                            ? '#fff'
-                            : 'rgba(255,255,255,0.60)'
-                        }
-                        keyboardAppearance="dark"
-                        placeholder="0.00"
+                      <AmountInput
                         value={send.amountSend}
-                        keyboardType="numeric"
-                        placeholderTextColor="rgba(255,255,255,0.60)"
-                        maxLength={20}
+                        onChangeText={handleChangeAmount}
                         maxFractionLength={9}
                       />
                     </Item>
-                    <Text style={[style.tokenStyle]}>{token}</Text>
+                    <Text style={style.tokenStyle}>{token}</Text>
                   </View>
-
                   {!(
                     wallet.coin.token === 'syx' || wallet.coin.token === 'syx2'
                   ) && (
                     <View style={[style.alignHorizontal, style.borderItem]}>
                       <Item style={style.itemStyle}>
-                        <InputAmount
-                          onChangeText={(text) =>
-                            amountUsdChange(wrapNumber(text))
-                          }
-                          returnKeyType="done"
-                          autoCompleteType="off"
-                          style={[
-                            style.inputStyle,
-                            { fontSize: 18, width: '100%' },
-                          ]}
-                          selectionColor={
-                            Platform.OS === 'ios'
-                              ? '#fff'
-                              : 'rgba(255,255,255,0.60)'
-                          }
-                          keyboardAppearance="dark"
-                          placeholder="0.00"
+                        <AmountInput
                           value={send.amountSendUsd}
-                          keyboardType="numeric"
-                          placeholderTextColor="rgba(255,255,255,0.60)"
-                          maxLength={20}
+                          onChangeText={handleChangeUsdAmount}
                         />
                       </Item>
-                      <Text style={[style.tokenStyle]}>{'USD'}</Text>
+                      <Text style={style.tokenStyle}>{'USD'}</Text>
                     </View>
                   )}
                 </View>
 
-                <View style={padStyle}></View>
-                <View style={padStyle}></View>
+                <View style={styles.padStyle}></View>
+                <View style={styles.padStyle}></View>
 
                 <View
                   style={[
@@ -311,7 +298,7 @@ export default ({ store, web3t }) => {
                     </Text>
                   </View>
                 )}
-                <View style={padStyle}></View>
+                <View style={styles.padStyle}></View>
                 <Text style={styles.error}>{send.error}</Text>
               </View>
               <View style={styles.containerScreen}>
@@ -404,15 +391,16 @@ const style = StyleSheet.create({
     marginBottom: 10,
   },
   inputStyle: {
-    opacity: 1,
-    color: '#fff',
-    fontSize: 40,
-    fontWeight: 'bold',
-    paddingLeft: 0,
-    fontFamily: 'Fontfabric-NexaBold',
-    borderBottomWidth: 0.4,
+    width: '100%',
     marginBottom: 0,
     paddingBottom: 2,
+    paddingLeft: 0,
+
+    opacity: 1,
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   feeTitle: {
     color: '#fff',
@@ -449,5 +437,8 @@ const style = StyleSheet.create({
         }),
       }
     ),
+  },
+  padStyle: {
+    paddingTop: 20,
   },
 });
