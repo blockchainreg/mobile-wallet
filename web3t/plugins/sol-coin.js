@@ -42,6 +42,7 @@
         referTo: 'vlx_evm',
       },
     },
+    group: 'Velas',
   };
   testnetConfig = {
     decimals: 9,
@@ -72,6 +73,7 @@
         referTo: 'vlx_evm',
       },
     },
+    group: 'Velas',
   };
   out$.mainnet = mainnet = mainnetConfig;
   out$.testnet = testnet = testnetConfig;
