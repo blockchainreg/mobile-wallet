@@ -10,11 +10,11 @@ const MAX_LIMIT = ">100,000,000";
 export default ({store, ...props}) => {
 
 	const { homeFeePercent, minPerTx, maxPerTx, remainingDailyLimit, wallet } = props.data;
-	const bridgeFeePercent = times(homeFeePercent, 100);
+	const bridgeFeePercent = homeFeePercent ? times(homeFeePercent, 100) : '..';
 
-	const $minPerTx = roundHuman(minPerTx, {decimals: 8});
-	const $maxPerTx = maxPerTx < 100000000 ? roundHuman(maxPerTx, {decimals: 2}) : MAX_LIMIT;
-	const $remaining = remainingDailyLimit < 100000000 ? roundHuman(remainingDailyLimit, {decimals: 2}) : MAX_LIMIT;
+	const $minPerTx = minPerTx ? roundHuman(minPerTx, {decimals: 8}) : '..';
+	const $maxPerTx = isNaN(maxPerTx) ? '..' : maxPerTx < 100000000 ? roundHuman(maxPerTx, {decimals: 2}) : MAX_LIMIT;
+	const $remaining = isNaN(remainingDailyLimit) ? '..' : remainingDailyLimit < 100000000 ? roundHuman(remainingDailyLimit, {decimals: 2}) : MAX_LIMIT;
 
 	const { referTo } = store.current.send.chosenNetwork;
 	const walletTo = (store.current.account.wallets || []).find((it) => {
