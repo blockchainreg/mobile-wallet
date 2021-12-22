@@ -76,6 +76,7 @@ function in$(x, xs) {
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
+  const wallets = walletsFuncs(store, web3t).wallets;
   const checkType = ({ type, to, txType }) => {
     if (txType) {
       return (
