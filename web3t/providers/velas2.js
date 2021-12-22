@@ -442,11 +442,11 @@
         action: action,
         apikey: apikey,
         address: address,
-        sort: sort,
-        startblock: startblock,
-        endblock: endblock,
-        page: page,
-        offset: offset
+//        sort: sort,
+//        startblock: startblock,
+//        endblock: endblock,
+//        page: page,
+//        offset: offset
       });
       return get(apiUrl + "?" + query).timeout({
         deadline: deadline
