@@ -56,40 +56,14 @@ export default observer( ({ store, wallet, ...props }) => {
 	}
   
   const renderName = () => {
-  	switch (true) {
-			case wallet.coin.token === 'vlx2':
-				return (
-					<Text
-						style={style.styleTitle}
-						numberOfLines={1}
-					>
-						{props.name}
-					</Text>
-				);
-			// case (props.name).toLowerCase().indexOf('legacy') !== -1 && props.key !== 'vlx2':
-			// 	const index = (props.name).toLowerCase().indexOf('legacy');
-			// 	const baseName = props.name.substr(0, index);
-			//
-			// 	return (
-			// 	<View style={{ fontFamily: 'Fontfabric-NexaRegular'}}>
-			// 		<Text
-			// 			style={style.styleTitle}
-			// 		>
-			// 			{baseName}
-			// 		</Text>
-			// 	</View>
-			// 	)
-
-			default:
-				return (
-					<Text
-						style={style.styleTitle}
-						numberOfLines={1}
-					>
-						{props.name}
-					</Text>
-				)
-		}
+    return (
+      <Text
+        style={style.styleTitle}
+        numberOfLines={1}
+      >
+        {props.name}
+      </Text>
+    );
 	}
 
   const badgeStatus = () => {

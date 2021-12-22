@@ -51,13 +51,10 @@ export default ({ store, web3t }) => {
 
 	const wallets = walletsFuncs(store, web3t).wallets;
 	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
-	if (!wallet) {
+	if (!wallet || !wallet.coin[network]) {
 		return null;
 	}
 	const network = store.current.network;
-	if (!wallet.coin[network]) {
-		return null;
-	}
 	const recipientMask = wallet.network.mask ? wallet.network.mask.substring(25, wallet.network.mask.length - 255 ) + "..." : "";
 	const send = store.current.send;
 	const balance = wallet.balance;
