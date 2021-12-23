@@ -587,14 +587,7 @@ module.exports = function({ store, web3t}) {
 			minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
 			contract.maxAvailablePerTx(function(err, maxPerTxRaw){
 				maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-				data = (function () {
-					switch (false) {
-						case isSelfSend !== true:
-							return contract.transfer.getData(BSC_SWAP__HOME_BRIDGE, value);
-						default:
-							return contract.relayTokens.getData(receiver);
-					}
-				}());
+
 				contractAddress = (function () {
 					switch (false) {
 						case isSelfSend !== true:
@@ -603,8 +596,8 @@ module.exports = function({ store, web3t}) {
 							return BSC_SWAP__HOME_BRIDGE;
 					}
 				}());
-				// Overwrides data above????!!!!
-				//data = contract.relayTokens.getData(receiver);
+
+				data = contract.relayTokens.getData(receiver);
 				const amountToSend = plus(send.amountSendFee, send.amountSend);
 				if (+send.amountSend < +minPerTx) {
 					return cb("Min amount per transaction is " + minPerTx + " VLX");
