@@ -1,6 +1,6 @@
-import * as React from "react";
-import Svg, { Path, Mask, G } from "react-native-svg";
-import { Text } from "native-base";
+import * as React from 'react';
+import Svg, { Path, Mask, G } from 'react-native-svg';
+import { Text } from 'native-base';
 export const EpochCurrrent = (props) => {
   return (
     <Svg
@@ -20,7 +20,7 @@ export const EpochCurrrent = (props) => {
       <Mask
         id="a"
         style={{
-          maskType: "alpha",
+          maskType: 'alpha',
         }}
         maskUnits="userSpaceOnUse"
         x={0}
@@ -38,7 +38,7 @@ export const EpochCurrrent = (props) => {
       <G mask="url(#a)">
         <Path fill="#7CFFB8" d="M10.8696 -6.30435H37.3913V15.21735H10.8696z" />
         <Text
-          style={{ color: "#fff", fontSize: 8, alignSelf: "center", top: 7 }}
+          style={{ color: '#fff', fontSize: 8, alignSelf: 'center', top: 7 }}
         >
           {props.current_epoch}
         </Text>

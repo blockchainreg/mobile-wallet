@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
+import * as React from 'react';
+import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
 export const ChartIcon = (props) => {
   return (
@@ -20,7 +20,5 @@ export const ChartIcon = (props) => {
         </ClipPath>
       </Defs>
     </Svg>
-  )
-}
-
-
+  );
+};

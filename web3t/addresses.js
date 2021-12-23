@@ -1,6 +1,6 @@
-const crypto = require("crypto");
+const crypto = require('crypto');
 
-const ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 const ALPHABET_MAP = {};
 
 for (let i = 0; i < ALPHABET.length; i++) {
@@ -16,26 +16,23 @@ function maxEncodedLen(n) {
 }
 
 function sha256(string) {
-  return crypto
-    .createHash("sha256")
-    .update(string)
-    .digest("hex");
+  return crypto.createHash('sha256').update(string).digest('hex');
 }
 
 function ethToVlx(address_string) {
-  const clean_address = address_string.replace(/^0x/i, "").toLowerCase();
+  const clean_address = address_string.replace(/^0x/i, '').toLowerCase();
 
   if (clean_address.length !== 40) {
-    throw new Error("Invalid address length");
+    throw new Error('Invalid address length');
   }
 
   const checksum = sha256(sha256(clean_address)).substring(0, 8);
 
   const long_address = clean_address + checksum;
-  buffer = Buffer.from(long_address, "hex");
+  buffer = Buffer.from(long_address, 'hex');
 
   if (buffer.length === 0) {
-    throw new Error("Invalid address");
+    throw new Error('Invalid address');
   }
 
   let digits = [0];
@@ -64,23 +61,23 @@ function ethToVlx(address_string) {
   for (let i = 0; i < zeros; i++) digits.push(0);
 
   return (
-    "V" +
+    'V' +
     digits
       .reverse()
-      .map(function(digit) {
+      .map(function (digit) {
         return ALPHABET[digit];
       })
-      .join("")
+      .join('')
   );
 }
 
 function vlxToEth(address_string) {
   if (address_string.length === 0) return null;
-  string = address_string.replace("V", "");
+  string = address_string.replace('V', '');
   let bytes = [0];
   for (let i = 0; i < string.length; i++) {
     const c = string[i];
-    if (!(c in ALPHABET_MAP)) throw new Error("Non-base58 character");
+    if (!(c in ALPHABET_MAP)) throw new Error('Non-base58 character');
 
     for (let j = 0; j < bytes.length; j++) bytes[j] *= BASE;
     bytes[0] += ALPHABET_MAP[c];
@@ -106,27 +103,26 @@ function vlxToEth(address_string) {
     bytes.push(0);
   }
   const buff = Buffer.from(bytes.reverse());
-  const long_address = buff.toString("hex");
+  const long_address = buff.toString('hex');
 
   if (long_address.length !== 48) {
-    throw new Error("Invalid address");
+    throw new Error('Invalid address');
   }
   const address = long_address.slice(0, 40);
   const address_checksum = long_address.slice(40, 48);
 
   if (!address || !address_checksum) {
-    throw new Error("Invalid address");
+    throw new Error('Invalid address');
   }
 
   const checksum = sha256(sha256(address)).substring(0, 8);
 
   if (address_checksum !== checksum) {
-    throw new Error("Invalid checksum");
+    throw new Error('Invalid checksum');
   }
 
-  return "0x" + address;
+  return '0x' + address;
 }
-
 
 module.exports.vlxToEth = vlxToEth;
 module.exports.ethToVlx = ethToVlx;

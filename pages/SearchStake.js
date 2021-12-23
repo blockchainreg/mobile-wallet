@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Text, Header } from "native-base";
+import React, { useState } from 'react';
+import { Container, Text, Header } from 'native-base';
 import {
   StyleSheet,
   View,
@@ -7,12 +7,12 @@ import {
   Platform,
   TouchableOpacity,
   LogBox,
-} from "react-native";
-import getLang from "../wallet/get-lang.js";
-import Images from "../Images.js";
-import StakeItem from "../components/StakeItem.js";
-import StatusBar from "../components/StatusBar.js";
-import { SearchBar } from "react-native-elements";
+} from 'react-native';
+import getLang from '../wallet/get-lang.js';
+import Images from '../Images.js';
+import StakeItem from '../components/StakeItem.js';
+import StatusBar from '../components/StatusBar.js';
+import { SearchBar } from 'react-native-elements';
 
 // LogBox.ignoreLogs([
 //   "VirtualizedLists should never be nested", // TODO: Remove when fixed
@@ -32,7 +32,7 @@ export default ({ store }) => {
       stakingStore.openedValidatorAddress = validatorAddress;
       store.current.page = tab;
     };
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
     const filterStake = stakingStore.getAllValidators();
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
@@ -42,14 +42,21 @@ export default ({ store }) => {
       store.handlechangeText = text;
       if (store.handlechangeText) {
         const newData = filterStake.filter(function (item) {
-          const itemData = item.address ? item.address.toUpperCase()
-          : ''.toUpperCase(); //search by address
-          const itemIdentity = item.identity ? item.identity.toUpperCase()
-          : ''.toUpperCase(); //search by identity
-          const itemName = item.name ? item.name.toUpperCase()
-          : ''.toUpperCase(); //search by name
+          const itemData = item.address
+            ? item.address.toUpperCase()
+            : ''.toUpperCase(); //search by address
+          const itemIdentity = item.identity
+            ? item.identity.toUpperCase()
+            : ''.toUpperCase(); //search by identity
+          const itemName = item.name
+            ? item.name.toUpperCase()
+            : ''.toUpperCase(); //search by name
           const textData = store.handlechangeText.toUpperCase();
-          return itemData.indexOf(textData) > -1 || itemIdentity.indexOf(textData) > -1 || itemName.indexOf(textData) > -1;
+          return (
+            itemData.indexOf(textData) > -1 ||
+            itemIdentity.indexOf(textData) > -1 ||
+            itemName.indexOf(textData) > -1
+          );
         });
         setFilteredDataSource(newData);
         setSearch(store.handlechangeText);
@@ -68,7 +75,7 @@ export default ({ store }) => {
           myStake={item.myStake}
           totalStaked={item.activeStake}
           apr={item.apr}
-          onPress={changePage("detailsValidator", item.address)}
+          onPress={changePage('detailsValidator', item.address)}
           store={store}
         />
       );
@@ -92,17 +99,17 @@ export default ({ store }) => {
             placeholder="Search"
             autoFocus={true}
             keyboardType="default"
-            placeholderTextColor={"#ffffff80"}
+            placeholderTextColor={'#ffffff80'}
             inputStyle={style.inputStyle}
-            selectionColor={"#fff"}
-            keyboardAppearance={"dark"}
+            selectionColor={'#fff'}
+            keyboardAppearance={'dark'}
             containerStyle={style.containerStyle}
             inputContainerStyle={style.inputContainerStyle}
             cancelIcon
             showCancels
             underlineColorAndroid="transparent"
           />
-          <TouchableOpacity onPress={changePage("stakePage")} style={style.btn}>
+          <TouchableOpacity onPress={changePage('stakePage')} style={style.btn}>
             <Text style={style.txtBtn}>Close</Text>
           </TouchableOpacity>
         </Header>
@@ -132,17 +139,17 @@ const style = StyleSheet.create({
     backgroundColor: Images.velasColor4,
   },
   inputStyle: {
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 16,
   },
   containerStyle: {
-    backgroundColor: "#05061f",
-    width: "80%",
+    backgroundColor: '#05061f',
+    width: '80%',
   },
   inputContainerStyle: {
-    backgroundColor: "#0b0c27",
+    backgroundColor: '#0b0c27',
     borderRadius: 50,
-    borderTopColor: "transparent",
+    borderTopColor: 'transparent',
     borderTopWidth: 1,
   },
   flatlistMargin: {
@@ -152,34 +159,34 @@ const style = StyleSheet.create({
     marginHorizontal: 20,
 
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   styleSubTitle: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: Platform.OS === "ios" ? null : 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: Platform.OS === 'ios' ? null : 5,
 
     backgroundColor: Images.colorDarkBlue,
-    borderBottomColor: "transparent",
+    borderBottomColor: 'transparent',
     borderBottomWidth: 1,
   },
   input: {
     fontSize: 16,
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   btn: {
-    justifyContent: "center",
+    justifyContent: 'center',
     marginRight: 10,
   },
   txtBtn: {
-    color: "white",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: 'white',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
 });

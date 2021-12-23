@@ -3,34 +3,42 @@
 Version node v16.X.X
 
 1. Clone project
+
 ```
 git clone https://github.com/velas/mobile-wallet.git
 ```
 
 2. Install yarn
+
 ```
 npm install -g yarn
 ```
 
-3. Enter the Mobile Wallet, install packages and pods 
+3. Enter the Mobile Wallet, install packages and pods
+
 ```
 cd mobile-wallet/ && yarn && cd ios/ && pod install
 ```
 
 4. Run Ios or Android
+
 ```
-yarn ios 
+yarn ios
 ```
+
 ```
-yarn android 
+yarn android
 ```
 
 # Problem solving
 
 ## Android
+
 If have error
+
 > Task :app:installDebug FAILED
-try use for resolve
+> try use for resolve
+
 ```
 rm -rf node_modules/ && yarn && cd android && ./gradlew clean && ./gradlew :app:bundleRelease
 ```

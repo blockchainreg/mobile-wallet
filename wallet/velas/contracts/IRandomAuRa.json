@@ -99,20 +99,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IRandomAuRa.sol",
     "exportedSymbols": {
-      "IRandomAuRa": [
-        12147
-      ]
+      "IRandomAuRa": [12147]
     },
     "id": 12148,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12113,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:22"
       },
@@ -123,9 +117,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12147,
-        "linearizedBaseContracts": [
-          12147
-        ],
+        "linearizedBaseContracts": [12147],
         "name": "IRandomAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -517,20 +509,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IRandomAuRa.sol",
     "exportedSymbols": {
-      "IRandomAuRa": [
-        12147
-      ]
+      "IRandomAuRa": [12147]
     },
     "id": 12148,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12113,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:22"
       },
@@ -541,9 +527,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12147,
-        "linearizedBaseContracts": [
-          12147
-        ],
+        "linearizedBaseContracts": [12147],
         "name": "IRandomAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [

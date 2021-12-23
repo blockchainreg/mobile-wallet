@@ -1,71 +1,70 @@
-import React from "react";
-import RNPickerSelect from "react-native-picker-select";
+import React from 'react';
+import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons } from '@expo/vector-icons';
-import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from "../svg/index";
-
+import { StakeIcon, WalletIcon, HistoryIcon, SettingsIcon } from '../svg/index';
 
 export default ({ store, width, align }) => {
-  const onValueChangeValue = async value => {
+  const onValueChangeValue = async (value) => {
     store.lang = value;
-    localStorage.setItem("lang", value);
+    localStorage.setItem('lang', value);
 
-    await console.log("store.lang", store.lang);
+    await console.log('store.lang', store.lang);
   };
   const langItems = [
     {
-      label: "🇺🇸 English",
-      value: "en",
+      label: '🇺🇸 English',
+      value: 'en',
     },
     {
-      label: "🇷🇺 Русский",
-      value: "ru"
+      label: '🇷🇺 Русский',
+      value: 'ru',
     },
     {
-      label: "🇺🇦 Українська",
-      value: "ua"
+      label: '🇺🇦 Українська',
+      value: 'ua',
     },
     {
-      label: "🇨🇳 中文",
-      value: "zh"
+      label: '🇨🇳 中文',
+      value: 'zh',
     },
     {
-      label: "🇪🇸 Español",
-      value: "es"
+      label: '🇪🇸 Español',
+      value: 'es',
     },
     {
-      label: "🇰🇷 한국어",
-      value: "ko"
+      label: '🇰🇷 한국어',
+      value: 'ko',
     },
     {
-      label: "🇦🇪 العربية ",
-      value: "ar"
+      label: '🇦🇪 العربية ',
+      value: 'ar',
     },
     {
-      label: "🇮🇩 Bahasa Indonesia",
-      value: "id"
+      label: '🇮🇩 Bahasa Indonesia',
+      value: 'id',
     },
     {
-      label: "🇵🇭 Filipino",
-      value: "ph"
+      label: '🇵🇭 Filipino',
+      value: 'ph',
     },
     {
-      label: "🇳🇬 Yorùbá",
-      value: "yr"
+      label: '🇳🇬 Yorùbá',
+      value: 'yr',
     },
     {
-      label: "🇻🇳 Tiếng Việt",
-      value: "vn"
+      label: '🇻🇳 Tiếng Việt',
+      value: 'vn',
     },
     {
-      label: "🇮🇳 हिन्दी",
-      value: "hi"
-    }
+      label: '🇮🇳 हिन्दी',
+      value: 'hi',
+    },
   ];
 
   return (
     <RNPickerSelect
       placeholder={{}}
-      onValueChange={value => {
+      onValueChange={(value) => {
         onValueChangeValue(value);
       }}
       useNativeAndroidPickerStyle={false}
@@ -76,19 +75,19 @@ export default ({ store, width, align }) => {
       }}
       style={{
         inputIOS: {
-          color: "#fff",
+          color: '#fff',
           fontSize: 17,
-          fontFamily: "Fontfabric-NexaRegular",
+          fontFamily: 'Fontfabric-NexaRegular',
           minWidth: width,
-          textAlign: align
+          textAlign: align,
         },
         inputAndroid: {
-          color: "#fff",
+          color: '#fff',
           fontSize: 17,
-          fontFamily: "Fontfabric-NexaRegular",
+          fontFamily: 'Fontfabric-NexaRegular',
           minWidth: width,
-          textAlign: align
-        }
+          textAlign: align,
+        },
       }}
     />
   );

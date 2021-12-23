@@ -1,14 +1,18 @@
-import React from "react";
-import { Container, Content } from "native-base";
-import { View, StyleSheet, Alert } from "react-native";
-import getLang from "../wallet/get-lang.js";
-import Images from "../Images.js";
-import ButtonBlock from "../components/ButtonBlock.js";
-import InputComponent from "../components/InputComponent";
-import Notice from "../components/Notice";
-import Header from "../components/Header";
-import { formatStakeAmount, formatAmount, formatValue } from "../utils/format-value";
-import spin from "../utils/spin.js";
+import React from 'react';
+import { Container, Content } from 'native-base';
+import { View, StyleSheet, Alert } from 'react-native';
+import getLang from '../wallet/get-lang.js';
+import Images from '../Images.js';
+import ButtonBlock from '../components/ButtonBlock.js';
+import InputComponent from '../components/InputComponent';
+import Notice from '../components/Notice';
+import Header from '../components/Header';
+import {
+  formatStakeAmount,
+  formatAmount,
+  formatValue,
+} from '../utils/format-value';
+import spin from '../utils/spin.js';
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
@@ -18,7 +22,9 @@ export default ({ store, web3t, props }) => {
   if (stakingStore.isRefreshing) return null;
   const details = stakingStore.getValidatorDetails();
   const lang = getLang(store);
-  const TOTAL_STAKE = details.totalAvailableForWithdrawRequestStake && formatAmount(details.totalAvailableForWithdrawRequestStake);
+  const TOTAL_STAKE =
+    details.totalAvailableForWithdrawRequestStake &&
+    formatAmount(details.totalAvailableForWithdrawRequestStake);
   if (!TOTAL_STAKE) return null;
   const ADDRESS = details.address;
 
@@ -28,7 +34,7 @@ export default ({ store, web3t, props }) => {
 
   const onPressMax = () => {
     store.amountWithdraw = TOTAL_STAKE;
-  }
+  };
   // console.log('store.amountWithdraw', store.amountWithdraw)
   const onPressButton = async () => {
     if (!store.amountWithdraw) return null;
@@ -39,36 +45,41 @@ export default ({ store, web3t, props }) => {
       lang.progressWithdraw || 'Withdrawal in progress',
       async (cb) => {
         try {
-          const result = await stakingStore.requestWithdraw(ADDRESS, amountWithdraw);
+          const result = await stakingStore.requestWithdraw(
+            ADDRESS,
+            amountWithdraw
+          );
           cb(null, result);
-        } catch(err) {
+        } catch (err) {
           cb(err);
         }
       }
     )((err, result) => {
       if (err) {
         setTimeout(() => {
-          Alert.alert(lang.wrong || 'Something went wrong. Please contact support. You can still use web interface for full staking support.');
+          Alert.alert(
+            lang.wrong ||
+              'Something went wrong. Please contact support. You can still use web interface for full staking support.'
+          );
         }, 1000);
         console.error(err);
         return;
       }
-      changePage("confirmExit")();
+      changePage('confirmExit')();
       store.amountWithdraw = null;
     });
-
-  }
+  };
 
   const back = () => {
-    changePage("detailsValidator")();
+    changePage('detailsValidator')();
     store.amountWithdraw = null;
-  }
+  };
 
   return (
-    <Container> 
+    <Container>
       <Header
         onBack={back}
-        title={lang.exitValidator || "Exit from Validator"}
+        title={lang.exitValidator || 'Exit from Validator'}
         smallTitle={lang.exitValidator.length > 15 ? true : false}
         identIcon={ADDRESS}
         greenBack
@@ -76,32 +87,48 @@ export default ({ store, web3t, props }) => {
       <Content style={style.contentBg}>
         <View>
           <InputComponent
-            title={lang.enterAmount || "Enter Amount"}
-            sub_text={lang.yourTotalStake || "Your Total Stake"}
+            title={lang.enterAmount || 'Enter Amount'}
+            sub_text={lang.yourTotalStake || 'Your Total Stake'}
             total_stake={formatValue(TOTAL_STAKE)}
             token="vlx"
-            btnTxt={lang.useMax || "Use max"}
-            value={store.amountWithdraw || ""}
-            onChange={text => handleChange(text)}
+            btnTxt={lang.useMax || 'Use max'}
+            value={store.amountWithdraw || ''}
+            onChange={(text) => handleChange(text)}
             onPressMax={onPressMax}
             isWithdraw
           />
         </View>
         <View style={style.buttonTop}>
-          {parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) &&
+          {parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) && (
             <Notice
-              text={lang.noticeTrying || "You are trying to withdraw more funds than you have."}
-              icon="warning"
-            />
-          }
-          {/* On which withdrawal of funds to set a notification!!! */}
-          {!details.totalWithdrawRequested || details.totalWithdrawRequested.isZero() ? null : (
-            <Notice
-              text={lang.noticeExitValidator || "You already have a withdrawal request. This withdrawal  is going to be combined with the previous one."}
+              text={
+                lang.noticeTrying ||
+                'You are trying to withdraw more funds than you have.'
+              }
               icon="warning"
             />
           )}
-          <ButtonBlock type={!store.amountWithdraw || parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE) ? "DISABLED" : "WITHDRAW"} text={lang.withdraw || "Withdraw"} onPress={onPressButton} />
+          {/* On which withdrawal of funds to set a notification!!! */}
+          {!details.totalWithdrawRequested ||
+          details.totalWithdrawRequested.isZero() ? null : (
+            <Notice
+              text={
+                lang.noticeExitValidator ||
+                'You already have a withdrawal request. This withdrawal  is going to be combined with the previous one.'
+              }
+              icon="warning"
+            />
+          )}
+          <ButtonBlock
+            type={
+              !store.amountWithdraw ||
+              parseFloat(store.amountWithdraw) > parseFloat(TOTAL_STAKE)
+                ? 'DISABLED'
+                : 'WITHDRAW'
+            }
+            text={lang.withdraw || 'Withdraw'}
+            onPress={onPressButton}
+          />
         </View>
       </Content>
     </Container>

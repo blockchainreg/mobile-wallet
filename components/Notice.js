@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Container,
   Header,
@@ -11,17 +11,16 @@ import {
   Body,
   Right,
   Button,
-} from "native-base";
-import { View, StyleSheet } from "react-native";
-import Images from "../Images";
-import { ChartIcon, StakeConfirm } from "../svg/index";
-
+} from 'native-base';
+import { View, StyleSheet } from 'react-native';
+import Images from '../Images';
+import { ChartIcon, StakeConfirm } from '../svg/index';
 
 export default (props) => {
   const checkIcon = (icon) => {
     switch (icon) {
-      case "warning":
-        return <StakeConfirm/>;
+      case 'warning':
+        return <StakeConfirm />;
       default:
         return null;
     }
@@ -29,13 +28,9 @@ export default (props) => {
   return (
     <List style={{ marginVertical: 20 }}>
       <ListItem noBorder underlayColor={Images.velasColor4} avatar>
-        <Left style={{ marginLeft: 10 }}>
-          {checkIcon(props.icon)}
-        </Left>
-        <Body style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={style.styleTxtStep}>
-            {props.text}
-          </Text>
+        <Left style={{ marginLeft: 10 }}>{checkIcon(props.icon)}</Left>
+        <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={style.styleTxtStep}>{props.text}</Text>
         </Body>
         <Right />
       </ListItem>
@@ -45,24 +40,24 @@ export default (props) => {
 
 const style = StyleSheet.create({
   styleTxtStep: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 17,
   },
   badge: {
-    backgroundColor: "rgba(255, 255, 255, 0.20)",
-    borderColor: "rgba(255, 255, 255, 0.40)",
+    backgroundColor: 'rgba(255, 255, 255, 0.20)',
+    borderColor: 'rgba(255, 255, 255, 0.40)',
     borderWidth: 1,
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 35,
     marginLeft: 20,
   },
   title: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });

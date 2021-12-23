@@ -139,20 +139,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/AdminUpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "AdminUpgradeabilityProxy": [
-        12697
-      ]
+      "AdminUpgradeabilityProxy": [12697]
     },
     "id": 12698,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12659,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:30"
       },
@@ -206,25 +200,12 @@
             "src": "314:19:30"
           }
         ],
-        "contractDependencies": [
-          12817,
-          12875,
-          12913,
-          12930,
-          12979
-        ],
+        "contractDependencies": [12817, 12875, 12913, 12930, 12979],
         "contractKind": "contract",
         "documentation": "@title AdminUpgradeabilityProxy\n@dev Extends from BaseAdminUpgradeabilityProxy with a constructor for \ninitializing the implementation, admin, and init data.",
         "fullyImplemented": true,
         "id": 12697,
-        "linearizedBaseContracts": [
-          12697,
-          12979,
-          12817,
-          12875,
-          12913,
-          12930
-        ],
+        "linearizedBaseContracts": [12697, 12979, 12817, 12875, 12913, 12930],
         "name": "AdminUpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -693,20 +674,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/AdminUpgradeabilityProxy.sol",
     "exportedSymbols": {
-      "AdminUpgradeabilityProxy": [
-        12697
-      ]
+      "AdminUpgradeabilityProxy": [12697]
     },
     "id": 12698,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12659,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:30"
       },
@@ -760,25 +735,12 @@
             "src": "314:19:30"
           }
         ],
-        "contractDependencies": [
-          12817,
-          12875,
-          12913,
-          12930,
-          12979
-        ],
+        "contractDependencies": [12817, 12875, 12913, 12930, 12979],
         "contractKind": "contract",
         "documentation": "@title AdminUpgradeabilityProxy\n@dev Extends from BaseAdminUpgradeabilityProxy with a constructor for \ninitializing the implementation, admin, and init data.",
         "fullyImplemented": true,
         "id": 12697,
-        "linearizedBaseContracts": [
-          12697,
-          12979,
-          12817,
-          12875,
-          12913,
-          12930
-        ],
+        "linearizedBaseContracts": [12697, 12979, 12817, 12875, 12913, 12930],
         "name": "AdminUpgradeabilityProxy",
         "nodeType": "ContractDefinition",
         "nodes": [

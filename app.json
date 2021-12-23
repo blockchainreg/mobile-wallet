@@ -5,13 +5,10 @@
     "privacy": "public",
     "extra": {
       "bugsnag": {
-      "apiKey": "fac385356062c1dc97010de5d9a2cca3"
+        "apiKey": "fac385356062c1dc97010de5d9a2cca3"
       }
     },
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "2.0.9",
     "orientation": "portrait",
     "icon": "./assets/velas-icon.png",
@@ -23,9 +20,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.velas.walletmobile",
@@ -41,12 +36,7 @@
       "package": "com.velas.mobile_wallet",
       "versionCode": 203,
       "icon": "./assets/ic_launcher.png",
-      "permissions": [
-        "CAMERA",
-        "USE_FINGERPRINT",
-        "USE_BIOMETRIC",
-        "VIBRATE"
-      ]
+      "permissions": ["CAMERA", "USE_FINGERPRINT", "USE_BIOMETRIC", "VIBRATE"]
     },
     "description": "Premium quality cryptocurrency wallet!",
     "detach": {

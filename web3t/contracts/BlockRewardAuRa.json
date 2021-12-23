@@ -731,20 +731,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/BlockRewardAuRa.sol",
     "exportedSymbols": {
-      "BlockRewardAuRa": [
-        5
-      ]
+      "BlockRewardAuRa": [5]
     },
     "id": 6,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:0"
       },
@@ -780,27 +774,12 @@
             "src": "322:20:0"
           }
         ],
-        "contractDependencies": [
-          7073,
-          7218,
-          11930,
-          11960,
-          12930,
-          12997
-        ],
+        "contractDependencies": [7073, 7218, 11930, 11960, 12930, 12997],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 5,
-        "linearizedBaseContracts": [
-          5,
-          7218,
-          11960,
-          7073,
-          11930,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [5, 7218, 11960, 7073, 11930, 12997, 12930],
         "name": "BlockRewardAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [],
@@ -813,20 +792,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/BlockRewardAuRa.sol",
     "exportedSymbols": {
-      "BlockRewardAuRa": [
-        5
-      ]
+      "BlockRewardAuRa": [5]
     },
     "id": 6,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:0"
       },
@@ -862,27 +835,12 @@
             "src": "322:20:0"
           }
         ],
-        "contractDependencies": [
-          7073,
-          7218,
-          11930,
-          11960,
-          12930,
-          12997
-        ],
+        "contractDependencies": [7073, 7218, 11930, 11960, 12930, 12997],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 5,
-        "linearizedBaseContracts": [
-          5,
-          7218,
-          11960,
-          7073,
-          11930,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [5, 7218, 11960, 7073, 11930, 12997, 12930],
         "name": "BlockRewardAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [],

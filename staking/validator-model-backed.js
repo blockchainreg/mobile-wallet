@@ -1,5 +1,5 @@
-import { decorate, observable, action, when } from "mobx";
-import BN from "bn.js";
+import { decorate, observable, action, when } from 'mobx';
+import BN from 'bn.js';
 import { StakingAccountModel } from './staking-account-model.js';
 import { cachedCallWithRetries } from './utils';
 import { rewardsStore } from './rewards-store';
@@ -44,9 +44,8 @@ class ValidatorModelBacked {
     return myStake;
   }
 
-
   get apr() {
-  	return this.backendData.apr;
+    return this.backendData.apr;
   }
 
   get commission() {
@@ -66,18 +65,24 @@ class ValidatorModelBacked {
             epoch: reward.epoch,
             amount: reward.amount,
             apr: reward.apr || 0,
-            postBalance: reward.solanaReward ? reward.solanaReward.postBalance: 0
+            postBalance: reward.solanaReward
+              ? reward.solanaReward.postBalance
+              : 0,
           });
           continue;
         }
         const prev = rewards.get(reward.epoch);
         if (reward.apr && reward.solanaReward) {
-          const postBalance = reward.solanaReward.postBalance + prev.postBalance;
+          const postBalance =
+            reward.solanaReward.postBalance + prev.postBalance;
           rewards.set(reward.epoch, {
             epoch: reward.epoch,
             amount: prev.amount.add(reward.amount),
-            apr: (prev.apr * prev.postBalance + reward.apr * reward.solanaReward.postBalance) / postBalance,
-            postBalance
+            apr:
+              (prev.apr * prev.postBalance +
+                reward.apr * reward.solanaReward.postBalance) /
+              postBalance,
+            postBalance,
           });
           continue;
         }
@@ -86,7 +91,7 @@ class ValidatorModelBacked {
             epoch: reward.epoch,
             amount: prev.amount.add(reward.amount),
             apr: prev.apr,
-            postBalance: prev.postBalance
+            postBalance: prev.postBalance,
           });
         }
       }
@@ -129,13 +134,13 @@ class ValidatorModelBacked {
         continue;
       }
       if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
-				const now = Date.now() / 1000;
-				if (unixTimestamp > now)
-					continue;
-			}
+        const unixTimestamp =
+          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+        const now = Date.now() / 1000;
+        if (unixTimestamp > now) continue;
+      }
 
-			total = total.add(acc.activeStake).add(acc.inactiveStake);
+      total = total.add(acc.activeStake).add(acc.inactiveStake);
     }
     return total;
   }
@@ -201,12 +206,12 @@ class ValidatorModelBacked {
       if (!acc.activeStake) {
         return null;
       }
-			if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
-				const now = Date.now() / 1000;
-				if (unixTimestamp > now)
-					continue;
-			}
+      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+        const unixTimestamp =
+          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+        const now = Date.now() / 1000;
+        if (unixTimestamp > now) continue;
+      }
       total = total.add(acc.activeStake);
     }
     return total;
@@ -224,12 +229,12 @@ class ValidatorModelBacked {
       if (!acc.inactiveStake) {
         return null;
       }
-			if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-				const unixTimestamp = acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
-				const now = Date.now() / 1000;
-				if (unixTimestamp > now)
-					continue;
-			}
+      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
+        const unixTimestamp =
+          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+        const now = Date.now() / 1000;
+        if (unixTimestamp > now) continue;
+      }
       totalInactive = totalInactive.add(acc.inactiveStake);
     }
 
@@ -238,7 +243,7 @@ class ValidatorModelBacked {
 
   loadMoreRewards() {
     return Promise.all(
-      this.stakingAccounts.map(acc => acc.loadMoreRewards())
+      this.stakingAccounts.map((acc) => acc.loadMoreRewards())
     );
   }
 

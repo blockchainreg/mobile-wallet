@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
+import * as React from 'react';
+import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
 export const NetworkHeader = (props) => {
   return (
@@ -10,7 +10,7 @@ export const NetworkHeader = (props) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
-      style={{transform: [{ scale: 1.2 }]}}
+      style={{ transform: [{ scale: 1.2 }] }}
     >
       <G clipPath="url(#clip0-501492)" fill="#fff">
         <Path d="M12.497 6.558c-1.596 2.09-3.797 4.303-5.94 5.94a5.507 5.507 0 005.94-5.94z" />
@@ -22,5 +22,5 @@ export const NetworkHeader = (props) => {
         </ClipPath>
       </Defs>
     </Svg>
-  )
-}
+  );
+};

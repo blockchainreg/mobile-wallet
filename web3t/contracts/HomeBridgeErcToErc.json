@@ -1215,20 +1215,14 @@
   "ast": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/upgradeable_contracts/erc20_to_erc20/HomeBridgeErcToErc.sol",
     "exportedSymbols": {
-      "HomeBridgeErcToErc": [
-        23862
-      ]
+      "HomeBridgeErcToErc": [23862]
     },
     "id": 23863,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 23338,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:137"
       },
@@ -1403,63 +1397,18 @@
           }
         ],
         "contractDependencies": [
-          1500,
-          9266,
-          10090,
-          10871,
-          11589,
-          12375,
-          12904,
-          13942,
-          14040,
-          14160,
-          14305,
-          14339,
-          14345,
-          14370,
-          14757,
-          14786,
-          14805,
-          15194,
-          15306,
-          15595,
-          16397,
-          16443,
-          16449,
-          16700,
-          24046
+          1500, 9266, 10090, 10871, 11589, 12375, 12904, 13942, 14040, 14160,
+          14305, 14339, 14345, 14370, 14757, 14786, 14805, 15194, 15306, 15595,
+          16397, 16443, 16449, 16700, 24046
         ],
         "contractKind": "contract",
         "documentation": "@title HomeBridgeErcToErc\n@dev This contract Home side logic for the erc-to-erc vanilla bridge mode.\nIt is designed to be used as an implementation contract of EternalStorageProxy contract.",
         "fullyImplemented": true,
         "id": 23862,
         "linearizedBaseContracts": [
-          23862,
-          24046,
-          14757,
-          14339,
-          12375,
-          14305,
-          15194,
-          10090,
-          13942,
-          14345,
-          1500,
-          12904,
-          11589,
-          14160,
-          16700,
-          14040,
-          16397,
-          15595,
-          14370,
-          15306,
-          16443,
-          16449,
-          14805,
-          14786,
-          10871,
-          9266
+          23862, 24046, 14757, 14339, 12375, 14305, 15194, 10090, 13942, 14345,
+          1500, 12904, 11589, 14160, 16700, 14040, 16397, 15595, 14370, 15306,
+          16443, 16449, 14805, 14786, 10871, 9266
         ],
         "name": "HomeBridgeErcToErc",
         "nodeType": "ContractDefinition",
@@ -3014,10 +2963,7 @@
                       "id": 23493,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "3517:7:137",
                       "typeDescriptions": {
@@ -3794,10 +3740,7 @@
                       "id": 23546,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "4233:7:137",
                       "typeDescriptions": {
@@ -3903,10 +3846,7 @@
                       "id": 23552,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "4268:7:137",
                       "typeDescriptions": {
@@ -5264,9 +5204,7 @@
                   "src": "6220:47:137"
                 },
                 {
-                  "assignments": [
-                    23653
-                  ],
+                  "assignments": [23653],
                   "declarations": [
                     {
                       "constant": false,
@@ -5349,9 +5287,7 @@
                   "src": "6277:41:137"
                 },
                 {
-                  "assignments": [
-                    23659
-                  ],
+                  "assignments": [23659],
                   "declarations": [
                     {
                       "constant": false,
@@ -5513,9 +5449,7 @@
                     "src": "6409:212:137",
                     "statements": [
                       {
-                        "assignments": [
-                          23669
-                        ],
+                        "assignments": [23669],
                         "declarations": [
                           {
                             "constant": false,
@@ -6151,9 +6085,7 @@
               "src": "6797:354:137",
               "statements": [
                 {
-                  "assignments": [
-                    23710
-                  ],
+                  "assignments": [23710],
                   "declarations": [
                     {
                       "constant": false,
@@ -6200,9 +6132,7 @@
                   "src": "6807:32:137"
                 },
                 {
-                  "assignments": [
-                    23714
-                  ],
+                  "assignments": [23714],
                   "declarations": [
                     {
                       "constant": false,
@@ -6364,9 +6294,7 @@
                     "src": "6930:153:137",
                     "statements": [
                       {
-                        "assignments": [
-                          23724
-                        ],
+                        "assignments": [23724],
                         "declarations": [
                           {
                             "constant": false,
@@ -6765,9 +6693,7 @@
               "src": "7429:333:137",
               "statements": [
                 {
-                  "assignments": [
-                    23753
-                  ],
+                  "assignments": [23753],
                   "declarations": [
                     {
                       "constant": false,
@@ -6929,12 +6855,7 @@
                     "src": "7520:236:137",
                     "statements": [
                       {
-                        "assignments": [
-                          null,
-                          23763,
-                          23765,
-                          null
-                        ],
+                        "assignments": [null, 23763, 23765, null],
                         "declarations": [
                           null,
                           {
@@ -7061,9 +6982,7 @@
                         "src": "7534:69:137"
                       },
                       {
-                        "assignments": [
-                          23772
-                        ],
+                        "assignments": [23772],
                         "declarations": [
                           {
                             "constant": false,
@@ -7355,10 +7274,7 @@
               "src": "8403:323:137",
               "statements": [
                 {
-                  "assignments": [
-                    23801,
-                    23803
-                  ],
+                  "assignments": [23801, 23803],
                   "declarations": [
                     {
                       "constant": false,
@@ -7638,10 +7554,7 @@
                       "id": 23808,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "8483:7:137",
                       "typeDescriptions": {
@@ -8375,20 +8288,14 @@
   "legacyAST": {
     "absolutePath": "/Users/tetyanalevochko/go/src/github.com/poanetwork/tokenbridge-contracts/contracts/upgradeable_contracts/erc20_to_erc20/HomeBridgeErcToErc.sol",
     "exportedSymbols": {
-      "HomeBridgeErcToErc": [
-        23862
-      ]
+      "HomeBridgeErcToErc": [23862]
     },
     "id": 23863,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 23338,
-        "literals": [
-          "solidity",
-          "0.4",
-          ".24"
-        ],
+        "literals": ["solidity", "0.4", ".24"],
         "nodeType": "PragmaDirective",
         "src": "0:23:137"
       },
@@ -8563,63 +8470,18 @@
           }
         ],
         "contractDependencies": [
-          1500,
-          9266,
-          10090,
-          10871,
-          11589,
-          12375,
-          12904,
-          13942,
-          14040,
-          14160,
-          14305,
-          14339,
-          14345,
-          14370,
-          14757,
-          14786,
-          14805,
-          15194,
-          15306,
-          15595,
-          16397,
-          16443,
-          16449,
-          16700,
-          24046
+          1500, 9266, 10090, 10871, 11589, 12375, 12904, 13942, 14040, 14160,
+          14305, 14339, 14345, 14370, 14757, 14786, 14805, 15194, 15306, 15595,
+          16397, 16443, 16449, 16700, 24046
         ],
         "contractKind": "contract",
         "documentation": "@title HomeBridgeErcToErc\n@dev This contract Home side logic for the erc-to-erc vanilla bridge mode.\nIt is designed to be used as an implementation contract of EternalStorageProxy contract.",
         "fullyImplemented": true,
         "id": 23862,
         "linearizedBaseContracts": [
-          23862,
-          24046,
-          14757,
-          14339,
-          12375,
-          14305,
-          15194,
-          10090,
-          13942,
-          14345,
-          1500,
-          12904,
-          11589,
-          14160,
-          16700,
-          14040,
-          16397,
-          15595,
-          14370,
-          15306,
-          16443,
-          16449,
-          14805,
-          14786,
-          10871,
-          9266
+          23862, 24046, 14757, 14339, 12375, 14305, 15194, 10090, 13942, 14345,
+          1500, 12904, 11589, 14160, 16700, 14040, 16397, 15595, 14370, 15306,
+          16443, 16449, 14805, 14786, 10871, 9266
         ],
         "name": "HomeBridgeErcToErc",
         "nodeType": "ContractDefinition",
@@ -10174,10 +10036,7 @@
                       "id": 23493,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "3517:7:137",
                       "typeDescriptions": {
@@ -10954,10 +10813,7 @@
                       "id": 23546,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "4233:7:137",
                       "typeDescriptions": {
@@ -11063,10 +10919,7 @@
                       "id": 23552,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "4268:7:137",
                       "typeDescriptions": {
@@ -12424,9 +12277,7 @@
                   "src": "6220:47:137"
                 },
                 {
-                  "assignments": [
-                    23653
-                  ],
+                  "assignments": [23653],
                   "declarations": [
                     {
                       "constant": false,
@@ -12509,9 +12360,7 @@
                   "src": "6277:41:137"
                 },
                 {
-                  "assignments": [
-                    23659
-                  ],
+                  "assignments": [23659],
                   "declarations": [
                     {
                       "constant": false,
@@ -12673,9 +12522,7 @@
                     "src": "6409:212:137",
                     "statements": [
                       {
-                        "assignments": [
-                          23669
-                        ],
+                        "assignments": [23669],
                         "declarations": [
                           {
                             "constant": false,
@@ -13311,9 +13158,7 @@
               "src": "6797:354:137",
               "statements": [
                 {
-                  "assignments": [
-                    23710
-                  ],
+                  "assignments": [23710],
                   "declarations": [
                     {
                       "constant": false,
@@ -13360,9 +13205,7 @@
                   "src": "6807:32:137"
                 },
                 {
-                  "assignments": [
-                    23714
-                  ],
+                  "assignments": [23714],
                   "declarations": [
                     {
                       "constant": false,
@@ -13524,9 +13367,7 @@
                     "src": "6930:153:137",
                     "statements": [
                       {
-                        "assignments": [
-                          23724
-                        ],
+                        "assignments": [23724],
                         "declarations": [
                           {
                             "constant": false,
@@ -13925,9 +13766,7 @@
               "src": "7429:333:137",
               "statements": [
                 {
-                  "assignments": [
-                    23753
-                  ],
+                  "assignments": [23753],
                   "declarations": [
                     {
                       "constant": false,
@@ -14089,12 +13928,7 @@
                     "src": "7520:236:137",
                     "statements": [
                       {
-                        "assignments": [
-                          null,
-                          23763,
-                          23765,
-                          null
-                        ],
+                        "assignments": [null, 23763, 23765, null],
                         "declarations": [
                           null,
                           {
@@ -14221,9 +14055,7 @@
                         "src": "7534:69:137"
                       },
                       {
-                        "assignments": [
-                          23772
-                        ],
+                        "assignments": [23772],
                         "declarations": [
                           {
                             "constant": false,
@@ -14515,10 +14347,7 @@
               "src": "8403:323:137",
               "statements": [
                 {
-                  "assignments": [
-                    23801,
-                    23803
-                  ],
+                  "assignments": [23801, 23803],
                   "declarations": [
                     {
                       "constant": false,
@@ -14798,10 +14627,7 @@
                       "id": 23808,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        30723,
-                        30724
-                      ],
+                      "overloadedDeclarations": [30723, 30724],
                       "referencedDeclaration": 30723,
                       "src": "8483:7:137",
                       "typeDescriptions": {

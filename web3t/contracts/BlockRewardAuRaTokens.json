@@ -886,20 +886,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/base/BlockRewardAuRaTokens.sol",
     "exportedSymbols": {
-      "BlockRewardAuRaTokens": [
-        7781
-      ]
+      "BlockRewardAuRaTokens": [7781]
     },
     "id": 7782,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 7220,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:11"
       },
@@ -975,25 +969,12 @@
             "src": "216:22:11"
           }
         ],
-        "contractDependencies": [
-          7073,
-          11930,
-          11996,
-          12930,
-          12997
-        ],
+        "contractDependencies": [7073, 11930, 11996, 12930, 12997],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 7781,
-        "linearizedBaseContracts": [
-          7781,
-          11996,
-          7073,
-          11930,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [7781, 11996, 7073, 11930, 12997, 12930],
         "name": "BlockRewardAuRaTokens",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1569,10 +1550,7 @@
                       "id": 7264,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2774:7:11",
                       "typeDescriptions": {
@@ -1689,10 +1667,7 @@
                       "id": 7285,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "3421:7:11",
                       "typeDescriptions": {
@@ -2001,9 +1976,7 @@
               "src": "3962:353:11",
               "statements": [
                 {
-                  "assignments": [
-                    7317
-                  ],
+                  "assignments": [7317],
                   "declarations": [
                     {
                       "constant": false,
@@ -2720,9 +2693,7 @@
               "src": "4697:368:11",
               "statements": [
                 {
-                  "assignments": [
-                    7377
-                  ],
+                  "assignments": [7377],
                   "declarations": [
                     {
                       "constant": false,
@@ -3499,9 +3470,7 @@
                     "src": "5622:252:11",
                     "statements": [
                       {
-                        "assignments": [
-                          7441
-                        ],
+                        "assignments": [7441],
                         "declarations": [
                           {
                             "constant": false,
@@ -3602,9 +3571,7 @@
                         "src": "5636:67:11"
                       },
                       {
-                        "assignments": [
-                          7448
-                        ],
+                        "assignments": [7448],
                         "declarations": [
                           {
                             "constant": false,
@@ -4106,9 +4073,7 @@
               "src": "7112:657:11",
               "statements": [
                 {
-                  "assignments": [
-                    7493
-                  ],
+                  "assignments": [7493],
                   "declarations": [
                     {
                       "constant": false,
@@ -4209,9 +4174,7 @@
                   "src": "7122:92:11"
                 },
                 {
-                  "assignments": [
-                    7501
-                  ],
+                  "assignments": [7501],
                   "declarations": [
                     {
                       "constant": false,
@@ -4886,9 +4849,7 @@
               "src": "8398:599:11",
               "statements": [
                 {
-                  "assignments": [
-                    7549
-                  ],
+                  "assignments": [7549],
                   "declarations": [
                     {
                       "constant": false,
@@ -4989,9 +4950,7 @@
                   "src": "8408:92:11"
                 },
                 {
-                  "assignments": [
-                    7557
-                  ],
+                  "assignments": [7557],
                   "declarations": [
                     {
                       "constant": false,
@@ -5844,9 +5803,7 @@
               "src": "10750:1583:11",
               "statements": [
                 {
-                  "assignments": [
-                    7633
-                  ],
+                  "assignments": [7633],
                   "declarations": [
                     {
                       "constant": false,
@@ -6162,9 +6119,7 @@
                   "src": "10998:21:11"
                 },
                 {
-                  "assignments": [
-                    7657
-                  ],
+                  "assignments": [7657],
                   "declarations": [
                     {
                       "constant": false,
@@ -6318,9 +6273,7 @@
                   "src": "11030:133:11"
                 },
                 {
-                  "assignments": [
-                    7667
-                  ],
+                  "assignments": [7667],
                   "declarations": [
                     {
                       "constant": false,
@@ -6741,9 +6694,7 @@
                     "src": "11444:814:11",
                     "statements": [
                       {
-                        "assignments": [
-                          7692
-                        ],
+                        "assignments": [7692],
                         "declarations": [
                           {
                             "constant": false,
@@ -6920,9 +6871,7 @@
                                 "src": "11657:509:11",
                                 "statements": [
                                   {
-                                    "assignments": [
-                                      7714
-                                    ],
+                                    "assignments": [7714],
                                     "declarations": [
                                       {
                                         "constant": false,
@@ -7634,9 +7583,7 @@
                               },
                               "id": 7762,
                               "initializationExpression": {
-                                "assignments": [
-                                  7703
-                                ],
+                                "assignments": [7703],
                                 "declarations": [
                                   {
                                     "constant": false,
@@ -8120,20 +8067,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/base/BlockRewardAuRaTokens.sol",
     "exportedSymbols": {
-      "BlockRewardAuRaTokens": [
-        7781
-      ]
+      "BlockRewardAuRaTokens": [7781]
     },
     "id": 7782,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 7220,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:11"
       },
@@ -8209,25 +8150,12 @@
             "src": "216:22:11"
           }
         ],
-        "contractDependencies": [
-          7073,
-          11930,
-          11996,
-          12930,
-          12997
-        ],
+        "contractDependencies": [7073, 11930, 11996, 12930, 12997],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
         "id": 7781,
-        "linearizedBaseContracts": [
-          7781,
-          11996,
-          7073,
-          11930,
-          12997,
-          12930
-        ],
+        "linearizedBaseContracts": [7781, 11996, 7073, 11930, 12997, 12930],
         "name": "BlockRewardAuRaTokens",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -8803,10 +8731,7 @@
                       "id": 7264,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "2774:7:11",
                       "typeDescriptions": {
@@ -8923,10 +8848,7 @@
                       "id": 7285,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "3421:7:11",
                       "typeDescriptions": {
@@ -9235,9 +9157,7 @@
               "src": "3962:353:11",
               "statements": [
                 {
-                  "assignments": [
-                    7317
-                  ],
+                  "assignments": [7317],
                   "declarations": [
                     {
                       "constant": false,
@@ -9954,9 +9874,7 @@
               "src": "4697:368:11",
               "statements": [
                 {
-                  "assignments": [
-                    7377
-                  ],
+                  "assignments": [7377],
                   "declarations": [
                     {
                       "constant": false,
@@ -10733,9 +10651,7 @@
                     "src": "5622:252:11",
                     "statements": [
                       {
-                        "assignments": [
-                          7441
-                        ],
+                        "assignments": [7441],
                         "declarations": [
                           {
                             "constant": false,
@@ -10836,9 +10752,7 @@
                         "src": "5636:67:11"
                       },
                       {
-                        "assignments": [
-                          7448
-                        ],
+                        "assignments": [7448],
                         "declarations": [
                           {
                             "constant": false,
@@ -11340,9 +11254,7 @@
               "src": "7112:657:11",
               "statements": [
                 {
-                  "assignments": [
-                    7493
-                  ],
+                  "assignments": [7493],
                   "declarations": [
                     {
                       "constant": false,
@@ -11443,9 +11355,7 @@
                   "src": "7122:92:11"
                 },
                 {
-                  "assignments": [
-                    7501
-                  ],
+                  "assignments": [7501],
                   "declarations": [
                     {
                       "constant": false,
@@ -12120,9 +12030,7 @@
               "src": "8398:599:11",
               "statements": [
                 {
-                  "assignments": [
-                    7549
-                  ],
+                  "assignments": [7549],
                   "declarations": [
                     {
                       "constant": false,
@@ -12223,9 +12131,7 @@
                   "src": "8408:92:11"
                 },
                 {
-                  "assignments": [
-                    7557
-                  ],
+                  "assignments": [7557],
                   "declarations": [
                     {
                       "constant": false,
@@ -13078,9 +12984,7 @@
               "src": "10750:1583:11",
               "statements": [
                 {
-                  "assignments": [
-                    7633
-                  ],
+                  "assignments": [7633],
                   "declarations": [
                     {
                       "constant": false,
@@ -13396,9 +13300,7 @@
                   "src": "10998:21:11"
                 },
                 {
-                  "assignments": [
-                    7657
-                  ],
+                  "assignments": [7657],
                   "declarations": [
                     {
                       "constant": false,
@@ -13552,9 +13454,7 @@
                   "src": "11030:133:11"
                 },
                 {
-                  "assignments": [
-                    7667
-                  ],
+                  "assignments": [7667],
                   "declarations": [
                     {
                       "constant": false,
@@ -13975,9 +13875,7 @@
                     "src": "11444:814:11",
                     "statements": [
                       {
-                        "assignments": [
-                          7692
-                        ],
+                        "assignments": [7692],
                         "declarations": [
                           {
                             "constant": false,
@@ -14154,9 +14052,7 @@
                                 "src": "11657:509:11",
                                 "statements": [
                                   {
-                                    "assignments": [
-                                      7714
-                                    ],
+                                    "assignments": [7714],
                                     "declarations": [
                                       {
                                         "constant": false,
@@ -14868,9 +14764,7 @@
                               },
                               "id": 7762,
                               "initializationExpression": {
-                                "assignments": [
-                                  7703
-                                ],
+                                "assignments": [7703],
                                 "declarations": [
                                   {
                                     "constant": false,

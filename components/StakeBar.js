@@ -1,16 +1,16 @@
-import React, { useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import getLang from "../wallet/get-lang.js";
-import { observer } from "mobx-react";
-import { StakingHeader, NetworkHeader, EpochHeader } from "../svg/index";
-import DropDown from "./DropDown";
-import { Tooltip } from "react-native-elements";
+import React, { useRef } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import getLang from '../wallet/get-lang.js';
+import { observer } from 'mobx-react';
+import { StakingHeader, NetworkHeader, EpochHeader } from '../svg/index';
+import DropDown from './DropDown';
+import { Tooltip } from 'react-native-elements';
 
 export default observer(({ store, isStaked, selectedItem, ...props }) => {
-  const stakingData = ["Velas", "Solana"];
-  const networkData = ["TestNet", "MainNet"];
+  const stakingData = ['Velas', 'Solana'];
+  const networkData = ['TestNet', 'MainNet'];
   const currentBlock = 442424;
-  const time = "00:40:22";
+  const time = '00:40:22';
   const epoch = 444;
 
   const EpochValue = () => {
@@ -20,14 +20,30 @@ export default observer(({ store, isStaked, selectedItem, ...props }) => {
         <View>
           <View style={style.tooltipRowStyle}>
             <Text style={style.tooltipRowText}>Current block</Text>
-            <Text style={[style.tooltipRowText, {fontFamily: "Fontfabric-NexaBold"}]}> #{currentBlock}</Text>
+            <Text
+              style={[
+                style.tooltipRowText,
+                { fontFamily: 'Fontfabric-NexaBold' },
+              ]}
+            >
+              {' '}
+              #{currentBlock}
+            </Text>
           </View>
           <View style={style.tooltipRowStyle}>
             <Text style={style.tooltipRowText}>Time until end</Text>
-            <Text style={[style.tooltipRowText, {fontFamily: "Fontfabric-NexaBold"}]}> {time}</Text>
+            <Text
+              style={[
+                style.tooltipRowText,
+                { fontFamily: 'Fontfabric-NexaBold' },
+              ]}
+            >
+              {' '}
+              {time}
+            </Text>
           </View>
         </View>
-      )
+      );
     };
     return (
       <Tooltip
@@ -69,7 +85,7 @@ export default observer(({ store, isStaked, selectedItem, ...props }) => {
           <EpochHeader />
         </View>
         <View style={style.columnView}>
-          <Text style={[style.subtitleText, {top: 0}]}>Epoch</Text>
+          <Text style={[style.subtitleText, { top: 0 }]}>Epoch</Text>
           <EpochValue />
         </View>
       </View>
@@ -79,41 +95,41 @@ export default observer(({ store, isStaked, selectedItem, ...props }) => {
 
 const style = StyleSheet.create({
   mainRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     height: 45,
-    backgroundColor: "#1F2853",
-    alignItems: "center",
+    backgroundColor: '#1F2853',
+    alignItems: 'center',
     // borderBottomWidth: 2,
     // borderBottomColor: Images.velasColor4
   },
   partRow: {
-    width: "30%",
-    flexDirection: "row",
+    width: '30%',
+    flexDirection: 'row',
   },
   iconView: {
-    width: "30%",
-    justifyContent: "center",
-    alignItems: "flex-end",
+    width: '30%',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
   columnView: {
-    width: "70%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
+    width: '70%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   subtitleText: {
-    color: "rgba(255, 255, 255, 0.3)",
+    color: 'rgba(255, 255, 255, 0.3)',
     marginLeft: 10,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     fontSize: 10,
     top: 15,
     // zIndex: 9999
   },
   epochText: {
     fontSize: 13,
-    color: "white",
-    fontFamily: "Fontfabric-NexaRegular",
+    color: 'white',
+    fontFamily: 'Fontfabric-NexaRegular',
     marginLeft: 10,
     marginTop: 3,
   },
@@ -121,13 +137,16 @@ const style = StyleSheet.create({
     height: 50,
     width: 'auto',
     marginTop: 15,
-    backgroundColor: "#27282C",
+    backgroundColor: '#27282C',
     borderRadius: 0,
   },
   tooltipRowStyle: {
-    flexDirection: "row", marginHorizontal: 10
+    flexDirection: 'row',
+    marginHorizontal: 10,
   },
   tooltipRowText: {
-    color: "white",  fontFamily: "Fontfabric-NexaRegular", fontSize: 14 
-  }
+    color: 'white',
+    fontFamily: 'Fontfabric-NexaRegular',
+    fontSize: 14,
+  },
 });

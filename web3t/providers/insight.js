@@ -36,7 +36,6 @@
     getCalcFeeFunc,
     calcFeePrivate,
     calcFeeInstantx,
-    isValidAddress,
     calcFee,
     getKeys,
     extend,
@@ -69,10 +68,10 @@
     getMarketHistoryPrices,
     toString$ = {}.toString,
     slice$ = [].slice,
-    out$ = (typeof exports != "undefined" && exports) || this;
-  moment = require("moment");
-  bip32 = require("bip32");
-  (ref$ = require("prelude-ls")),
+    out$ = (typeof exports != 'undefined' && exports) || this;
+  moment = require('moment');
+  bip32 = require('bip32');
+  (ref$ = require('prelude-ls')),
     (map = ref$.map),
     (foldl = ref$.foldl),
     (any = ref$.any),
@@ -83,19 +82,18 @@
     (head = ref$.head),
     (values = ref$.values),
     (join = ref$.join);
-  (ref$ = require("./superagent.js")), (get = ref$.get), (post = ref$.post);
-  (ref$ = require("../math.js")),
+  (ref$ = require('./superagent.js')), (get = ref$.get), (post = ref$.post);
+  (ref$ = require('../math.js')),
     (plus = ref$.plus),
     (minus = ref$.minus),
     (div = ref$.div),
     (times = ref$.times);
-  (ref$ = require("./deps.js")),
+  (ref$ = require('./deps.js')),
     (BitcoinLib = ref$.BitcoinLib),
     (bip39 = ref$.bip39);
-  jsonParse = require("../json-parse.js");
-  deadline = require("../deadline.js");
-  decode = require("bs58").decode;
-  WAValidator = require("multicoin-address-validator");
+  jsonParse = require('../json-parse.js');
+  deadline = require('../deadline.js');
+  decode = require('bs58').decode;
   segwitAddress = function (publicKey) {
     var witnessScript, scriptPubKey;
     witnessScript = BitcoinLib.script.witnessPubKeyHash.output.encode(
@@ -132,7 +130,7 @@
   getMasternodeList = function (arg$, cb) {
     var network;
     network = arg$.network;
-    return get(getApiUrl(network) + "/masternodes/list")
+    return get(getApiUrl(network) + '/masternodes/list')
       .timeout({
         deadline: deadline,
       })
@@ -140,15 +138,15 @@
         var ref$, list;
         if (err != null) {
           return cb(
-            "cannot obtain list - err: " +
+            'cannot obtain list - err: ' +
               ((ref$ = err.message) != null ? ref$ : err)
           );
         }
-        if (toString$.call(res.body).slice(8, -1) !== "Array") {
-          return cb("expected array");
+        if (toString$.call(res.body).slice(8, -1) !== 'Array') {
+          return cb('expected array');
         }
         list = filter(function (it) {
-          return it.status === "ENABLED";
+          return it.status === 'ENABLED';
         })(res.body);
         return cb(null, list);
       });
@@ -174,7 +172,7 @@
         }
         item = foldl(findMax, list[0])(list);
         if (item == null) {
-          return cb("Not Found");
+          return cb('Not Found');
         }
         return cb(null, item);
       }
@@ -184,10 +182,10 @@
     var output, outputs, outputAmount, ref$, nextAmount, youHaveNext;
     (output = arg$[0]), (outputs = slice$.call(arg$, 1));
     if (output == null) {
-      return cb("Not Enough Funds (Unspent Outputs). You have " + youHave);
+      return cb('Not Enough Funds (Unspent Outputs). You have ' + youHave);
     }
     if (output.amount == null) {
-      return cb("Expected output amount, got " + output.amount);
+      return cb('Expected output amount, got ' + output.amount);
     }
     outputAmount = (ref$ = output.amount) != null ? ref$ : 0;
     nextAmount = minus(amount, outputAmount);
@@ -224,7 +222,7 @@
         : (ref$ = network.txFee) != null
         ? ref$
         : 0;
-    if (feeType !== "auto") {
+    if (feeType !== 'auto') {
       return cb(null, txFee);
     }
     feeType = "cheap";
@@ -241,14 +239,14 @@
       ),
       function (err, data) {
         var bytes, infelicity, calcFee, finalPrice;
-        if ((err + "").indexOf("Not Enough Funds (Unspent Outputs)") > -1) {
+        if ((err + '').indexOf('Not Enough Funds (Unspent Outputs)') > -1) {
           return cb(null, o.cheap);
         }
         if (err != null) {
           return cb(err, o.cheap);
         }
-        if (toString$.call(data.rawtx).slice(8, -1) !== "String") {
-          return cb("rawtx is expected");
+        if (toString$.call(data.rawtx).slice(8, -1) !== 'String') {
+          return cb('rawtx is expected');
         }
         bytes = data.rawtx.length / 2;
         infelicity = 1;
@@ -279,10 +277,10 @@
         : (ref$ = network.txFee) != null
         ? ref$
         : 0;
-    if (feeType !== "auto") {
+    if (feeType !== 'auto') {
       return cb(null, txFee);
     }
-    return get(getApiUrl(network) + "/utils/estimatefee?nbBlocks=6")
+    return get(getApiUrl(network) + '/utils/estimatefee?nbBlocks=6')
       .timeout({
         deadline: deadline,
       })
@@ -306,7 +304,7 @@
   };
   getCalcFeeFunc = function (network) {
     switch (false) {
-      case (network != null ? network.txFeeAutoMode : void 8) !== "per-byte":
+      case (network != null ? network.txFeeAutoMode : void 8) !== 'per-byte':
         return calcFeePerByte;
       default:
         return calcDynamicFee;
@@ -322,9 +320,9 @@
     if (
       ((ref$ = account != null ? account.address : void 8) != null
         ? ref$
-        : "") === ""
+        : '') === ''
     ) {
-      return cb("address cannot be empty");
+      return cb('address cannot be empty');
     }
     o = network != null ? network.txFeeOptions : void 8;
     calcFee = getCalcFeeFunc(network);
@@ -344,7 +342,7 @@
           }
           numberOfInputs = outputs.length > 0 ? outputs.length : 1;
           if (o.privatePerInput == null) {
-            return cb("private-per-input is missing");
+            return cb('private-per-input is missing');
           }
           fee = plus(times(txFee, 2), times(numberOfInputs, o.privatePerInput));
           return cb(null, fee);
@@ -362,9 +360,9 @@
     if (
       ((ref$ = account != null ? account.address : void 8) != null
         ? ref$
-        : "") === ""
+        : '') === ''
     ) {
-      return cb("address cannot be empty");
+      return cb('address cannot be empty');
     }
     o = network != null ? network.txFeeOptions : void 8;
     calcFee = getCalcFeeFunc(network);
@@ -392,7 +390,7 @@
             }
             numberOfInputs = outputs.length > 0 ? outputs.length : 1;
             if (o.instantPerInput == null) {
-              return cb("instant-per-input is missing");
+              return cb('instant-per-input is missing');
             }
             fee = times(numberOfInputs, o.instantPerInput);
             return cb(null, fee);
@@ -407,7 +405,7 @@
       (tx = config.tx),
       (txType = config.txType),
       (account = config.account);
-    if (txType === "private") {
+    if (txType === 'private') {
       return calcFeePrivate(config, cb);
     }
     if (txType === "instant") {
@@ -448,7 +446,7 @@
     var network, address, url;
     (network = arg$.network), (address = arg$.address);
     url = network.api.url;
-    return get(getApiUrl(network) + "/addr/" + address + "/utxo")
+    return get(getApiUrl(network) + '/addr/' + address + '/utxo')
       .timeout({
         deadline: deadline,
       })
@@ -456,7 +454,7 @@
         var ref$;
         if (err != null) {
           return cb(
-            "cannot get outputs - err " +
+            'cannot get outputs - err ' +
               ((ref$ = err.message) != null ? ref$ : err)
           );
         }
@@ -496,7 +494,7 @@
     return extractVal(data[head], tail);
   };
   parseResult = function (text, extract, cb) {
-    if ((extract != null ? extract : "") === "") {
+    if ((extract != null ? extract : '') === '') {
       return cb(null, text);
     }
     return jsonParse(text, function (err, model) {
@@ -516,8 +514,8 @@
     mixingInfo = (
       (ref$ = network != null ? network.api : void 8) != null ? ref$ : {}
     ).mixingInfo;
-    if (toString$.call(mixingInfo).slice(8, -1) !== "String") {
-      return cb("Mixing Pool is not connected");
+    if (toString$.call(mixingInfo).slice(8, -1) !== 'String') {
+      return cb('Mixing Pool is not connected');
     }
     (ref$ = parseRateString(mixingInfo)),
       (url = ref$.url),
@@ -526,7 +524,7 @@
       var ref$;
       if (err != null) {
         return cb(
-          "cannot get deposit info - err: " +
+          'cannot get deposit info - err: ' +
             ((ref$ = err.message) != null ? ref$ : err)
         );
       }
@@ -546,7 +544,7 @@
         if (err != null) {
           return cb(err);
         }
-        return cb("Not Implemented");
+        return cb('Not Implemented');
       }
     );
   };
@@ -558,7 +556,7 @@
     mixingInfo = (
       (ref$ = network != null ? network.api : void 8) != null ? ref$ : {}
     ).mixingInfo;
-    if (toString$.call(mixingInfo).slice(8, -1) === "String") {
+    if (toString$.call(mixingInfo).slice(8, -1) === 'String') {
       return getDepositAddressInfo(
         {
           amount: amount,
@@ -600,7 +598,7 @@
       (network = config.network),
       (account = config.account);
     if (fee == null || value == null || total == null) {
-      return cb("fee, value, total are required");
+      return cb('fee, value, total are required');
     }
     o = network != null ? network.txFeeOptions : void 8;
     rest = minus(minus(total, value), fee);
@@ -639,7 +637,7 @@
       (recipient = config.recipient),
       (account = config.account);
     if (fee == null || value == null || total == null) {
-      return cb("fee, value, total are required");
+      return cb('fee, value, total are required');
     }
     if (txType === "private") {
       return addOutputsPrivate(config, cb);
@@ -653,16 +651,16 @@
   };
   getError = function (config, fields) {
     var result;
-    result = join(", ")(
+    result = join(', ')(
       map(function (it) {
-        return it + " is required field";
+        return it + ' is required field';
       })(
         filter(function (it) {
           return config[it] == null;
         })(fields)
       )
     );
-    if (result === "") {
+    if (result === '') {
       return null;
     }
     return result;
@@ -670,11 +668,11 @@
   out$.createTransaction = createTransaction = function (config, cb) {
     var err, network, account, recipient, amount, amountFee, feeType, txType;
     err = getError(config, [
-      "network",
-      "account",
-      "amount",
-      "amountFee",
-      "recipient",
+      'network',
+      'account',
+      'amount',
+      'amountFee',
+      'recipient',
     ]);
     if (err != null) {
       return cb(err);
@@ -706,7 +704,7 @@
             return it.value == null;
           })(outputs);
           if (isNoValue) {
-            return cb("Each output should have a value");
+            return cb('Each output should have a value');
           }
           dec = getDec(network);
           value = times(amount, dec);
@@ -717,10 +715,10 @@
             })(outputs)
           );
           if (+minus(minus(total, fee), value) < 0) {
-            return cb("Balance is not enough to send tx");
+            return cb('Balance is not enough to send tx');
           }
           if (isNaN(total)) {
-            return cb("Total is NaN");
+            return cb('Total is NaN');
           }
           tx = new BitcoinLib.TransactionBuilder(network);
           return addOutputs(
@@ -764,11 +762,11 @@
     if (error == null) {
       return;
     }
-    error = error + "";
+    error = error + '';
     message = (function () {
       switch (false) {
-        case !error.indexOf("insufficient priority. Code:-26"):
-          return "Insufficient priority. Code:-26. Please try to increase fee.";
+        case !error.indexOf('insufficient priority. Code:-26'):
+          return 'Insufficient priority. Code:-26. Please try to increase fee.';
         default:
           return error;
       }
@@ -780,13 +778,13 @@
     (network = arg$.network), (rawtx = arg$.rawtx), (txType = arg$.txType);
     sendType = (function () {
       switch (false) {
-        case txType !== "instant":
-          return "sendix";
+        case txType !== 'instant':
+          return 'sendix';
         default:
-          return "send";
+          return 'send';
       }
     })();
-    return post(getApiUrl(network) + "/tx/" + sendType, {
+    return post(getApiUrl(network) + '/tx/' + sendType, {
       rawtx: rawtx,
     }).end(function (err, res) {
       var ref$, ref1$, ref2$;
@@ -802,10 +800,10 @@
         err = prepareErrorMsg(res != null ? res.text : void 8);
       }
       if (err != null) {
-        return cb("Error: " + err);
+        return cb('Error: ' + err);
       }
       if (res != null && res.error) {
-        return cb("Error: " + (res != null ? res.error : void 8));
+        return cb('Error: ' + (res != null ? res.error : void 8));
       }
       if (
         (res != null
@@ -814,7 +812,7 @@
             : void 8
           : void 8) == null
       ) {
-        return cb("Error: " + (res != null ? res.text : void 8));
+        return cb('Error: ' + (res != null ? res.text : void 8));
       }
       return cb(null, (ref2$ = res.body) != null ? ref2$.txid : void 8);
     });
@@ -829,9 +827,9 @@
           : void 8
         : void 8) == null
     ) {
-      return cb("Url is not defined");
+      return cb('Url is not defined');
     }
-    return get(getApiUrl(network) + "/addr/" + address + "/totalReceived")
+    return get(getApiUrl(network) + '/addr/' + address + '/totalReceived')
       .timeout({
         deadline: deadline,
       })
@@ -855,9 +853,9 @@
           : void 8
         : void 8) == null
     ) {
-      return cb("Url is not defined");
+      return cb('Url is not defined');
     }
-    return get(getApiUrl(network) + "/addr/" + address + "/unconfirmedBalance")
+    return get(getApiUrl(network) + '/addr/' + address + '/unconfirmedBalance')
       .timeout({
         deadline: deadline,
       })
@@ -881,9 +879,9 @@
           : void 8
         : void 8) == null
     ) {
-      return cb("Url is not defined");
+      return cb('Url is not defined');
     }
-    return get(getApiUrl(network) + "/addr/" + address + "/balance")
+    return get(getApiUrl(network) + '/addr/' + address + '/balance')
       .timeout({
         deadline: deadline,
       })
@@ -914,7 +912,7 @@
     if (addresses.indexOf(address) > -1) {
       return {
         value: vout.value,
-        address: addresses.join(","),
+        address: addresses.join(','),
       };
     }
     return null;
@@ -936,7 +934,7 @@
     if (addresses.indexOf(address) === -1) {
       return {
         value: vout.value,
-        address: addresses.join(","),
+        address: addresses.join(','),
       };
     }
     return null;
@@ -970,10 +968,10 @@
     vin = (ref$ = t.vin) != null ? ref$ : [];
     pending = t.confirmations === 0;
     amount = 0;
-    to = "";
+    to = '';
     from = (function () {
       switch (false) {
-        case toString$.call(vin).slice(8, -1) !== "Array":
+        case toString$.call(vin).slice(8, -1) !== 'Array':
           return vin.map(function (it) {
             return it.addr;
           })[0];
@@ -988,22 +986,22 @@
     type = (function () {
       switch (false) {
         case senders.indexOf(address) !== -1:
-          return "in";
+          return 'in';
         case !(
           senders.indexOf(address) !== -1 &&
           sender_receiver.length === vout.length
         ):
-          return "self";
+          return 'self';
         default:
-          return "out";
+          return 'out';
       }
     })();
-    if (type === "in") {
+    if (type === 'in') {
       unspend = head(filter(incomingVout(address))(vout));
       amount = unspend != null ? unspend.value : void 8;
       to = address;
     }
-    if (type === "self") {
+    if (type === 'self') {
       outcoming = filter(hasSelfVout(address))(vout);
       amount = foldl(
         plus,
@@ -1015,7 +1013,7 @@
       );
       to = address;
     }
-    if (type === "out") {
+    if (type === 'out') {
       outcoming = filter(function (it) {
         return it != null;
       })(map(outcomingVouts(address))(vout));
@@ -1031,9 +1029,9 @@
         .map(function (it) {
           return it.address;
         })
-        .join(",");
+        .join(',');
     }
-    url = net.api.url + "/tx/" + tx;
+    url = net.api.url + '/tx/' + tx;
     return {
       network: network,
       tx: tx,
@@ -1048,23 +1046,13 @@
   });
   getApiUrl = function (network) {
     var apiName, ref$;
-    apiName = (ref$ = network.api.apiName) != null ? ref$ : "api";
-    return network.api.url + "/" + apiName;
+    apiName = (ref$ = network.api.apiName) != null ? ref$ : 'api';
+    return network.api.url + '/' + apiName;
   };
   out$.checkTxStatus = checkTxStatus = function (arg$, cb) {
     var network, tx;
     (network = arg$.network), (tx = arg$.tx);
-    return cb("Not Implemented");
-  };
-  out$.isValidAddress = isValidAddress = function (arg$, cb) {
-    var address, network, token;
-    (address = arg$.address), (network = arg$.network), (token = arg$.token);
-    var valid = WAValidator.validate(address, token, network);
-    // console.log('token', token);
-    if (!valid) {
-      return cb("Address is not valid");
-    }
-    return cb(null, address);
+    return cb('Not Implemented');
   };
   out$.getTransactions = getTransactions = function (arg$, cb) {
     var network, address, ref$;
@@ -1076,9 +1064,9 @@
           : void 8
         : void 8) == null
     ) {
-      return cb("Url is not defined");
+      return cb('Url is not defined');
     }
-    return get(getApiUrl(network) + "/txs/?address=" + address)
+    return get(getApiUrl(network) + '/txs/?address=' + address)
       .timeout({
         deadline: 15000,
       })
@@ -1094,9 +1082,9 @@
           if (
             toString$
               .call(result != null ? result.txs : void 8)
-              .slice(8, -1) !== "Array"
+              .slice(8, -1) !== 'Array'
           ) {
-            return cb("Unexpected result");
+            return cb('Unexpected result');
           }
           try {
             txs = filter(function (it) {
@@ -1130,7 +1118,7 @@
         var ref$;
         if (err != null) {
           return cb(
-            "cannot execute query - err " +
+            'cannot execute query - err ' +
               ((ref$ = err.message) != null ? ref$ : err)
           );
         }
