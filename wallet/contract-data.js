@@ -322,14 +322,14 @@
           web3.eth.providerUrl = wallet != null ? (ref10$ = wallet.network) != null ? (ref11$ = ref10$.api) != null ? ref11$.web3Provider : void 8 : void 8 : void 8;
           contract = web3.eth.contract(abis.HomeBridgeNativeToErc).at(BSC_SWAP__HOME_BRIDGE);
           receiver = store.current.send.to;
-          data = (function(){
-            switch (false) {
-            case isSelfSend !== true:
-              return contract.transfer.getData(BSC_SWAP__HOME_BRIDGE, value);
-            default:
-              return contract.relayTokens.getData(receiver);
-            }
-          }());
+//          data = (function(){
+//            switch (false) {
+//            case isSelfSend !== true:
+//              return contract.transfer.getData(BSC_SWAP__HOME_BRIDGE, value);
+//            default:
+//              return contract.relayTokens.getData(receiver);
+//            }
+//          }());
           contractAddress = (function(){
             switch (false) {
             case isSelfSend !== true:
@@ -440,8 +440,10 @@
         }
         /* Swap from Legacy or EVM into native */
         if ((token === 'vlx_evm' || token === 'vlx2') && chosenNetwork.id === 'vlx_native') {
+          console.log("SWQAP TO NATIVE");
           EVM_TO_NATIVE_BRIDGE = wallet.network.EVM_TO_NATIVE_BRIDGE;
           if (EVM_TO_NATIVE_BRIDGE == null) {
+            console.error("EVM_TO_NATIVE_BRIDGE address is not defined");
             return cb("EVM_TO_NATIVE_BRIDGE address is not defined");
           }
           $recipient = "";
@@ -456,6 +458,7 @@
             }());
             $recipient = bs58.decode(recipient);
             hex = $recipient.toString('hex');
+            console.log("hex", hex);
           } catch (e$) {
             err = e$;
             return cb("Please enter valid address");
