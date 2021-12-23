@@ -1031,7 +1031,7 @@ module.exports = function({ store, web3t}) {
 											maxPerTx: maxPerTx,
 											remainingDailyLimit: remainingDailyLimit
 										});
-										if (token !== 'busd') {
+										if (token !== 'busd' && token !== 'usdc' && token !== 'usdt_erc20') {
                       return cb(null);
                     }
                     var wallets = store.current.account.wallets;
