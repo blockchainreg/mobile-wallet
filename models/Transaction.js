@@ -9,6 +9,8 @@ export class Transaction {
   feeType;
   txType;
   data;
+  gasPrice;
+  gasEstimate;
 
   constructor(
     wallet,
