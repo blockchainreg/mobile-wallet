@@ -215,8 +215,13 @@ import Images from "../Images.js";
 			
 			/* Mark transaction as a swap in case of native to legacy swap! */
 			transaction.swap = store.current.send.isSwap
-			
 			transaction.recipient = recipient;
+			const gasPrice =
+          send.gasPriceType === 'custom'
+            ? times(store.current.send.gasPriceCustomAmount, Math.pow(10, 9))
+            : store.current.send.gasPriceAuto;
+      transaction.gasPrice = gasPrice;
+
 			store.current.creatingTransaction = true;
 			return createTransaction(transaction, function(err, data){
 				if (err != null) {
@@ -342,7 +347,6 @@ import Images from "../Images.js";
 						return cb(errMessage);
 					}
 					const Tx = new Transaction(send.wallet, send.network, send.to, send.amountSend, send.coin, send.amountSendFee, send.feeType, send.txType, send.data);
-					console.log("Tx.amountFee", Tx.amountFee)
 					return sendTx(Tx, cb);
 				});
 		};
@@ -613,21 +617,9 @@ import Images from "../Images.js";
 		};
 		token = (send.coin.nickname + send.coin.token).toUpperCase();
 		const tokenDisplay = ((ref$ = wallet.coin.token) != null ? ref$ : "").toUpperCase();
-		//console.log("tokenDisplay", tokenDisplay);
-		feeToken = (function(){
-			switch (false) {
-				case ['VLX2','VLX_EVM','VLX_BUSD','VLX_ETH','VLX_USDT','VLX_NATIVE','VLX_EVM_LEGACY'].indexOf(tokenDisplay) === -1 :
-					return 'VLX';
-				case ['ETH_LEGACY','USDT_ERC20','VLX_ERC20','USDC','USDT_ERC20_LEGACY'].indexOf(tokenDisplay) === -1:
-					return 'ETH';
-				// case bridgeFeeToken == null:
-				// 	return bridgeFeeToken;
-				case wallet.network.txFeeIn == null:
-					return wallet.network.txFeeIn;
-				default:
-					return tokenDisplay;
-			}
-		}());
+		feeToken = ((ref$ = wallet.network.txFeeIn) != null
+				? ref$
+				: (send.coin.nickname || send.coin.token)).toUpperCase();
 		feeToken = feeToken.toUpperCase();
 		isData = ((ref$ = send.data) != null ? ref$ : "").length > 0;
 		chooseAuto = function(){
