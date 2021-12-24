@@ -148,11 +148,11 @@
       dataBuilder.formContractData((err, res) => {
         var sendTo = send.to;
         if (send.isSwap) {
-          sendTo = send.contractAddress;
+          /* Add extra check in case it`s legacy-->evm swap where contractAddress == null */
+          sendTo = send.contractAddress ? send.contractAddress : send.to;
         } else if (send.to.trim().length === 0) {
           sendTo = send.wallet.address;
         }
-        console.log({sendTo, isSwap:send.isSwap, to: send.to, contractAddress: send.contractAddress})
         if (!sendTo) {
 //          send.error = "sendTo cannot be null"
 //          return;
