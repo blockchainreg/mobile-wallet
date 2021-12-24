@@ -82,6 +82,7 @@
       transaction(function () {
         var wallet, err;
         try {
+          store.current.walletIndex = (store.current.walletIndex > -1) ? store.current.walletIndex : 0
           wallet = bgStore.current.account.wallets[store.current.walletIndex];
           store.rates = bgStore.rates;
           store.current.account = bgStore.current.account;
@@ -95,6 +96,7 @@
             return applyTransactions(store);
           });
         } catch (e) {
+          console.error("[refreshAccount] Error: ", e);
           state.err = e;
         }
       });
