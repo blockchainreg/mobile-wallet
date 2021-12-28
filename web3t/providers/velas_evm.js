@@ -223,32 +223,37 @@
         }
       }());
       from = account.address;
-      query = {
-        from: from,
-        to: to,
-        data: dataParsed
-      };
-      return getGasEstimate({
-        network: network,
-        feeType: feeType,
-        account: account,
-        amount: amount,
-        to: to,
-        data: data
-      }, function(err, estimate){
-        var res, val;
+      toEthAddress(to, function(err, $to){
         if (err != null) {
-          return cb(null, {
-            calcedFee: network.txFee,
-            gasPrice: gasPrice
-          });
+          return cb(err);
         }
-        res = times(gasPrice, estimate);
-        val = div(res, dec);
-        return cb(null, {
-          calcedFee: val,
-          gasPrice: gasPrice,
-          gasEstimate: estimate
+        query = {
+          from: from,
+          to: $to,
+          data: dataParsed
+        };
+        return getGasEstimate({
+          network: network,
+          feeType: feeType,
+          account: account,
+          amount: amount,
+          to: $to,
+          data: data
+        }, function(err, estimate){
+          var res, val;
+          if (err != null) {
+            return cb(null, {
+              calcedFee: network.txFee,
+              gasPrice: gasPrice
+            });
+          }
+          res = times(gasPrice, estimate);
+          val = div(res, dec);
+          return cb(null, {
+            calcedFee: val,
+            gasPrice: gasPrice,
+            gasEstimate: estimate
+          });
         });
       });
     });
