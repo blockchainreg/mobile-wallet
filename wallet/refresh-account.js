@@ -82,8 +82,13 @@
       transaction(function () {
         var wallet, err;
         try {
-          store.current.walletIndex = (store.current.walletIndex > -1) ? store.current.walletIndex : 0
-          wallet = bgStore.current.account.wallets[store.current.walletIndex];
+          const walletToken = store.current.wallet;
+          if (walletToken) {
+            wallet = bgStore.current.account.wallets.find((it) => it.coin.token === walletToken)
+          } else {
+            if (store.current.walletIndex < 0) return;
+            wallet = bgStore.current.account.wallets[store.current.walletIndex];
+          }
           store.rates = bgStore.rates;
           store.current.account = bgStore.current.account;
           store.current.filter.filterTxsTypes = ['IN', 'OUT'];
