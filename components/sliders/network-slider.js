@@ -104,10 +104,11 @@ const NetworkChooser = (props) => {
     }
 
     store.current.send.chosenNetwork = getNetworkById(walletToken);
-
-    store.current.send.to = getDefaultRecipientAddress();
+    const receiver = getDefaultRecipientAddress();
+    store.current.send.to = receiver;
     store.current.send.error = '';
     store.current.send.data = null;
+    store.current.send.contractAddress = null;
 
     swaps.getBridgeInfo((err) => {
       if (err) {
