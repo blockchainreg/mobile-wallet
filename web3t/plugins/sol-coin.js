@@ -62,7 +62,7 @@
       cluster: 'testnet',
     },
     networks: {
-      legacy: {
+      vlx2: {
         id: 'vlx2',
         name: 'Velas Legacy',
         referTo: 'vlx2',
