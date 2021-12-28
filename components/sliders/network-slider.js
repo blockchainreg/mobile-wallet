@@ -80,10 +80,6 @@ const NetworkChooser = (props) => {
     return wallet.address;
   }
 
-  const handleValueChange = (walletToken) => {
-    return changeNetwork(walletToken);
-  };
-
   // for IOS
   const onDone = () => {
     swaps.getBridgeInfo((err) => {
@@ -96,7 +92,7 @@ const NetworkChooser = (props) => {
     });
   };
 
-  const changeNetwork = (walletToken) => {
+  const handleChangeNetwork = (walletToken) => {
     const { referTo } = chosenNetwork;
     store.current.switchNetwork = true;
     if (store.current.refreshing) {
@@ -231,7 +227,7 @@ const NetworkChooser = (props) => {
 
       <RNPickerSelect
         placeholder={{}}
-        onValueChange={handleValueChange}
+        onValueChange={handleChangeNetwork}
         onDonePress={onDone}
         useNativeAndroidPickerStyle={false}
         value={store.current.send.chosenNetwork.referTo}
