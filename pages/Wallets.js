@@ -371,7 +371,7 @@ const style = StyleSheet.create({
     paddingTop: 20,
   },
   topView: {
-    flex: 0.3,
+    flex: 0.29,
   },
   totalBalanceContainer: {
     justifyContent: 'center',
