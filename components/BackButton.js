@@ -1,10 +1,22 @@
-import React, {useEffect} from 'react';
-import {BackHandler, Animated, TouchableOpacity} from "react-native";
-import {Button, Icon} from 'native-base';
+import React, { useEffect } from 'react';
+import {
+  BackHandler,
+  Animated,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import { Icon } from 'native-base';
 
 import styles from '../Styles.js';
 
-export default ({onBack, transparent, style }) => {
+const HIT_SLOP = {
+  bottom: 20,
+  left: 20,
+  right: 20,
+  top: 20,
+};
+
+export default ({ onBack, style }) => {
   const back = () => {
     onBack();
     return true;
@@ -16,16 +28,22 @@ export default ({onBack, transparent, style }) => {
     };
   });
 
-	const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
   return (
-		<Animated.View>
-			<AnimatedTouchable onPress={onBack} >
-				<Icon
-					name="ios-arrow-back"
-					style={style || [styles.arrowHeaderIconBlack, { color: "#fff" }]}
-				/>
-			</AnimatedTouchable>
-		</Animated.View>
+    <Animated.View>
+      <AnimatedTouchable onPress={onBack} hitSlop={HIT_SLOP}>
+        <Icon
+          name="ios-arrow-back"
+          style={style || [styles.arrowHeaderIconBlack, styleOwn.arrowIcon]}
+        />
+      </AnimatedTouchable>
+    </Animated.View>
   );
 };
+
+const styleOwn = StyleSheet.create({
+  arrowIcon: {
+    color: '#fff',
+  },
+});
