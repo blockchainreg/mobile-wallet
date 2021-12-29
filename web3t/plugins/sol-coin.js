@@ -31,13 +31,13 @@
       validatorsBackend: 'https://validators.devnet.veladev.net',
     },
     networks: {
-      legacy: {
-        id: 'legacy',
+      vlx2: {
+        id: 'vlx2',
         name: 'Velas Legacy',
         referTo: 'vlx2',
       },
-      evm: {
-        id: 'evm',
+      vlx_evm: {
+        id: 'vlx_evm',
         name: 'Velas EVM',
         referTo: 'vlx_evm',
       },
@@ -62,13 +62,13 @@
       cluster: 'testnet',
     },
     networks: {
-      legacy: {
-        id: 'legacy',
+      vlx2: {
+        id: 'vlx2',
         name: 'Velas Legacy',
         referTo: 'vlx2',
       },
-      evm: {
-        id: 'evm',
+      vlx_evm: {
+        id: 'vlx_evm',
         name: 'Velas EVM',
         referTo: 'vlx_evm',
       },

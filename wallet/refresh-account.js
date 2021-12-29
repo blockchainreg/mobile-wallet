@@ -84,7 +84,9 @@
         try {
           const walletToken = store.current.wallet;
           if (walletToken) {
-            wallet = bgStore.current.account.wallets.find((it) => it.coin.token === walletToken)
+            wallet = bgStore.current.account.wallets.find(
+              (it) => it.coin.token === walletToken
+            );
           } else {
             if (store.current.walletIndex < 0) return;
             wallet = bgStore.current.account.wallets[store.current.walletIndex];
@@ -101,7 +103,7 @@
             return applyTransactions(store);
           });
         } catch (e) {
-          console.error("[refreshAccount] Error: ", e);
+          console.error('[refreshAccount] Error: ', e);
           state.err = e;
         }
       });
