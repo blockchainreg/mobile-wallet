@@ -1,9 +1,18 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, Platform } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, Platform, Vibration, Alert } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 import { Button } from 'native-base';
 import Images from '../Images';
 
 export default (props) => {
+  const netInfo = useNetInfo();
+  console.info('netInfo', netInfo)
+  const validatorNet =
+    !netInfo.details ||
+    netInfo.isConnected ||
+    netInfo.type === "cellular" ||
+    netInfo.type === "wifi";
+
   const checkStyle = (type) => {
     switch (type) {
       case 'STAKE_MORE':
@@ -42,10 +51,18 @@ export default (props) => {
   return (
     <Button
       block
-      style={[style.btnStyle, checkStyle(props.type)]}
-      onPress={props.onPress}
+      style={[style.btnStyle, checkStyle(props.type), !validatorNet && {backgroundColor: "#F2F2F290"}]}
+      onPress={
+        validatorNet
+          ? props.onPress
+          : () => {
+              const DURATION = 1000 / 10;
+              Vibration.vibrate(DURATION);
+              Alert.alert("No Internet Connection", "", [{ text: "Ok" }]);
+            }
+      }
     >
-      <Text style={[style.textBtn, checkTextStyle(props.type)]}>
+      <Text style={[style.textBtn, checkTextStyle(props.type), !validatorNet && {color: "#00000050"}]}>
         {props.text}
       </Text>
     </Button>
