@@ -30,7 +30,7 @@
       network: network
     }).address;
     privateKey = hdnode.toWIF();
-    publicKey = hdnode.publicKey.toString('hex');
+    publicKey = hdnode.publicKey.toString("hex");
     return {
       address: address,
       privateKey: privateKey,
@@ -124,7 +124,7 @@
     if (feeType !== 'auto') {
       return cb(null, txFee);
     }
-    feeType = 'cheap';
+    feeType = "cheap";
     amountFee = o.cheap;
     recipient = config.account.address;
     return createTransaction((import$({
@@ -268,7 +268,7 @@
     if (txType === 'private') {
       return calcFeePrivate(config, cb);
     }
-    if (txType === 'instant') {
+    if (txType === "instant") {
       return calcFeeInstantx(config, cb);
     }
     calcFee = getCalcFeeFunc(network);
@@ -438,7 +438,7 @@
     if (fee == null || value == null || total == null) {
       return cb("fee, value, total are required");
     }
-    if (txType === 'private') {
+    if (txType === "private") {
       return addOutputsPrivate(config, cb);
     }
     rest = minus(minus(total, value), fee);
@@ -641,7 +641,7 @@
   incomingVout = curry$(function(address, vout){
     var addrs, ref$;
     addrs = (ref$ = vout.scriptPubKey) != null ? ref$.addresses : void 8;
-    if (toString$.call(addrs).slice(8, -1) !== 'Array') {
+    if (toString$.call(addrs).slice(8, -1) !== "Array") {
       return false;
     }
     return addrs.indexOf(address) > -1;
@@ -649,7 +649,7 @@
   outcomingSelfVout = curry$(function(address, vout){
     var addrs, ref$;
     addrs = (ref$ = vout.scriptPubKey) != null ? ref$.addresses : void 8;
-    if (toString$.call(addrs).slice(8, -1) !== 'Array') {
+    if (toString$.call(addrs).slice(8, -1) !== "Array") {
       return false;
     }
     if (addresses.indexOf(address) > -1) {
@@ -663,7 +663,7 @@
   hasSelfVout = curry$(function(address, vout){
     var addrs, ref$;
     addrs = (ref$ = vout.scriptPubKey) != null ? ref$.addresses : void 8;
-    if (toString$.call(addrs).slice(8, -1) !== 'Array') {
+    if (toString$.call(addrs).slice(8, -1) !== "Array") {
       return false;
     }
     return addrs.indexOf(address) > -1;
@@ -671,7 +671,7 @@
   outcomingVouts = curry$(function(address, vout){
     var addresses, ref$;
     addresses = (ref$ = vout.scriptPubKey) != null ? ref$.addresses : void 8;
-    if (toString$.call(addresses).slice(8, -1) !== 'Array') {
+    if (toString$.call(addresses).slice(8, -1) !== "Array") {
       return null;
     }
     if (addresses.indexOf(address) === -1) {

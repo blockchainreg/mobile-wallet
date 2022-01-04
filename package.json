@@ -60,6 +60,7 @@
     "mobx": "5.9.0",
     "mobx-react": "5.4.3",
     "moment": "2.24.0",
+    "multicoin-address-validator": "^0.5.2",
     "native-base": "^2.13.14",
     "node-libs-browser": "^2.2.0",
     "pincode": "1.0.0",
