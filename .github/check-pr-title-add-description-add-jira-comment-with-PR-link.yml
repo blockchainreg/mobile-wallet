@@ -4,7 +4,6 @@ on:
     types: [opened, reopened, edited]
     branches:
       - '**'
-      - '!master'
 jobs:
   check-pr-title-add-description-add-jira-comment-with-PR-link:
     runs-on: ubuntu-latest
