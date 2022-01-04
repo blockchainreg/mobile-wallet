@@ -94,8 +94,9 @@
           store.rates = bgStore.rates;
           store.current.account = bgStore.current.account;
           store.current.filter.filterTxsTypes = ['IN', 'OUT'];
+          const filterToken = wallet.coin != null ? wallet.coin.token : '';
           store.current.filter = {
-            token: wallet.coin.token,
+            token: filterToken,
           };
           store.current.balanceUsd = bgStore.current.balanceUsd;
           return refreshTxs(web3, store, function () {
