@@ -15,6 +15,7 @@ import spin from "../utils/spin";
 
 export default observer( ({ store, web3t, ...props }) => {
 	const {renderItem, listData} = props;
+	const isLoading = store.current.loadingSpinners.length > 0;
 	// const [listData, setListData] = useState(
 	// 	Array(5)
 	// 		.fill('')
@@ -38,6 +39,7 @@ export default observer( ({ store, web3t, ...props }) => {
 	};
 	
 	const deleteItem = (rowMap, data) => {
+	  if (isLoading) return;
 		const { coin, name }  = data.item;
 		const tokenName = (name || "").toUpperCase();
 		const lang = getLang(store);
@@ -54,12 +56,9 @@ export default observer( ({ store, web3t, ...props }) => {
 			item => item.key === rowKey
 		);
 		newData[section].data.splice(prevIndex, 1);
-		// setListData(newData);
 	};
 	
-	const onRowDidOpen = rowKey => {
-		console.log('This row opened', rowKey);
-	};
+	const onRowDidOpen = rowKey => {};
 	
 	// const renderItem = data => (
 	// 	<TouchableHighlight
@@ -80,12 +79,11 @@ export default observer( ({ store, web3t, ...props }) => {
 		if (isNaN(data.item.balance)) {
 			return null;
 		}
-		
-		if (store.current.loadingSpinners.length > 0) {
-			return null;
-		}
+
+		const rowStyle = isLoading ? styles.rowBackDisabled : styles.rowBack;
+
 		return (
-		<View style={styles.rowBack}>
+		<View style={rowStyle}>
 			<Text></Text>
 			<TouchableOpacity
 				style={[styles.backRightBtn, styles.backRightBtnLeft]}
@@ -158,6 +156,17 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		borderRadius: 10,
 		marginRight: 10
+	},
+	rowBackDisabled: {
+	  alignItems: 'center',
+    backgroundColor: Images.velasColor1,
+    paddingLeft: 15,
+    marginHorizontal: 0,
+    height: 100,
+    marginLeft: 10,
+    borderRadius: 10,
+    marginRight: 10,
+    opacity: 0.4,
 	},
 	backRightBtn: {
 		alignItems: 'center',
