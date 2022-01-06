@@ -110,8 +110,8 @@ const listItem = (store, web3t, wallets, wallet) => {
     store.current.filterVal.apply = '';
     applyTransactions(store);
     store.current.send['to'] = '';
-    store.current.send.amountSend = '0';
-    store.current.send.amountSendUsd = '0';
+    store.current.send.amountSend = '';
+    store.current.send.amountSendUsd = '';
     store.current.send.amountSendFee = '0';
     store.current.send.amountSendFeeUsd = '0';
     store.current.send.data = null;
