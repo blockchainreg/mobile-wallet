@@ -53,8 +53,11 @@
   calcFiat = function (name) {
     return function (store, amountSend) {
       var send, wallet, token, rate, ref$;
+      if (amountSend === '') {
+        return '';
+      }
       if (amountSend == null) {
-        return '0';
+        return '';
       }
       send = store.current.send;
       wallet = send.wallet;
@@ -105,7 +108,6 @@
     }
     var send = store.current.send;
     var gasPrice = null;
-    console.log('to', to);
 
     switch (send.gasPriceType) {
       case 'custom':
@@ -130,7 +132,6 @@
         gasPrice: gasPrice,
       },
       (err, result) => {
-        console.log({ err, result });
         send.feeCalculating = false;
         if (err !== null) {
           send.error = (err.message || err).toString();
@@ -191,7 +192,8 @@
         }
       }
       send.amountChanging = true;
-      resultAmountSend = amountSend != null ? amountSend : 0;
+      resultAmountSend =
+        amountSend != null && amountSend !== '' ? amountSend : 0;
       (ref$ = store.current.send),
         (feeType = ref$.feeType),
         (txType = ref$.txType);
@@ -294,7 +296,9 @@
                   return plus(resultAmountSend, txFee);
               }
             })();
-            send.amountChargedUsd = times(send.amountCharged, usdRate);
+            const amountCharged =
+              send.amountCharged !== '' ? send.amountCharged : '0';
+            send.amountChargedUsd = times(amountCharged, usdRate);
             send.amountSendFeeUsd = times(txFee, feeUsdRate);
             send.amountChanging = false;
 

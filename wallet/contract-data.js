@@ -36,7 +36,6 @@
       require('../web3t/contracts/ForeignBridgeErcToErc.json').abi,
   };
   module.exports = function (arg$) {
-    console.log('contract-data');
     var store,
       send,
       wallet,
@@ -64,6 +63,8 @@
       return (str != null ? str : '').trim().toUpperCase();
     };
     isSelfSend = up(wallet.address) === up(store.current.send.to);
+    var value =
+      store.current.send.amountSend !== '' ? store.current.send.amountSend : 0;
     /*
      * Swap from USDC to USDC VELAS
      */
@@ -72,7 +73,6 @@
         ref$,
         FOREIGN_BRIDGE,
         FOREIGN_BRIDGE_TOKEN,
-        value,
         receiver,
         coin,
         gas,
@@ -95,7 +95,6 @@
       (ref$ = wallet.network),
         (FOREIGN_BRIDGE = ref$.FOREIGN_BRIDGE),
         (FOREIGN_BRIDGE_TOKEN = ref$.FOREIGN_BRIDGE_TOKEN);
-      value = store.current.send.amountSend;
       value = times(value, Math.pow(10, 6));
       receiver = send.to;
       (coin = send.coin),
@@ -156,7 +155,6 @@
         ref$,
         HOME_BRIDGE,
         HOME_BRIDGE_TOKEN,
-        value,
         ref1$,
         ref2$,
         ref3$,
@@ -175,7 +173,6 @@
       if (HOME_BRIDGE_TOKEN == null) {
         return cb('HOME_BRIDGE_TOKEN is not defined');
       }
-      value = store.current.send.amountSend;
       value = times(value, Math.pow(10, 6));
       web3 = new Web3(
         new Web3.providers.HttpProvider(
@@ -207,7 +204,6 @@
         ref$,
         HOME_BRIDGE,
         HOME_BRIDGE_TOKEN,
-        value,
         receiver,
         ref1$,
         ref2$,
@@ -221,7 +217,6 @@
       (ref$ = wallet.network),
         (HOME_BRIDGE = ref$.HOME_BRIDGE),
         (HOME_BRIDGE_TOKEN = ref$.HOME_BRIDGE_TOKEN);
-      value = store.current.send.amountSend;
       value = times(value, Math.pow(10, 18));
       receiver = send.to;
       web3 = new Web3(
@@ -256,7 +251,6 @@
         FOREIGN_BRIDGE,
         FOREIGN_BRIDGE_TOKEN,
         web3,
-        value,
         receiver,
         contract,
         data,
@@ -280,7 +274,6 @@
         new Web3.providers.HttpProvider(wallet.network.api.web3Provider)
       );
       web3.eth.providerUrl = wallet.network.api.web3Provider;
-      value = store.current.send.amountSend;
       value = times(value, Math.pow(10, 18));
       receiver = send.to;
       contract = web3.eth
@@ -314,7 +307,6 @@
         ref$,
         FOREIGN_BRIDGE,
         FOREIGN_BRIDGE_TOKEN,
-        value,
         receiver,
         ref1$,
         ref2$,
@@ -335,7 +327,6 @@
       if (FOREIGN_BRIDGE_TOKEN == null) {
         return cb('FOREIGN_BRIDGE_TOKEN is not defined');
       }
-      value = store.current.send.amountSend;
       value = times(value, Math.pow(10, 6));
       receiver = send.to;
       web3 = new Web3(
@@ -388,7 +379,6 @@
         ref$,
         HOME_BRIDGE,
         HOME_BRIDGE_TOKEN,
-        value,
         ref1$,
         ref2$,
         ref3$,
@@ -401,7 +391,6 @@
       (ref$ = wallet.network),
         (HOME_BRIDGE = ref$.HOME_BRIDGE),
         (HOME_BRIDGE_TOKEN = ref$.HOME_BRIDGE_TOKEN);
-      value = store.current.send.amountSend;
       value = times(value, Math.pow(10, 6));
       web3 = new Web3(
         new Web3.providers.HttpProvider(
@@ -429,7 +418,6 @@
       return cb(null, data);
     };
     formContractData = function (cb) {
-      console.log('[formContractData]');
       var chosenNetwork,
         token,
         ref$,
@@ -493,7 +481,6 @@
           ref3$,
           contract,
           receiver,
-          value,
           ref4$,
           FOREIGN_BRIDGE,
           FOREIGN_BRIDGE_TOKEN,
@@ -565,7 +552,6 @@
         }
         /* Swap from HECO to VELAS EVM */
         if (token === 'vlx_huobi' && chosenNetwork.id === 'vlx_evm') {
-          value = store.current.send.amountSend;
           value = times(value, Math.pow(10, 18));
           (ref4$ = wallet.network),
             (FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE),
@@ -676,7 +662,6 @@
         }
         /* Swap from BSC VELAS to VELAS EVM */
         if (token === 'bsc_vlx' && chosenNetwork.id === 'vlx_evm') {
-          value = store.current.send.amountSend;
           value = times(value, Math.pow(10, 18));
           (ref12$ = wallet.network),
             (FOREIGN_BRIDGE = ref12$.FOREIGN_BRIDGE),
@@ -733,7 +718,6 @@
               '[Swap error]: wallet ' + chosenNetwork.id + ' is not found!'
             );
           }
-          value = store.current.send.amountSend;
           value = toHex(times(value, Math.pow(10, 18)));
           HOME_BRIDGE = wallet.network.HOME_BRIDGE;
           web3 = new Web3(
@@ -750,7 +734,7 @@
         }
         /* Swap from ETHEREUM (VELAS) to ETH  */
         if (token === 'vlx_eth' && chosenNetwork.id === 'eth') {
-          value = store.current.send.amountSend;
+          console.log('Swap from ETHEREUM (VELAS) to ETH', value);
           value = times(value, Math.pow(10, 18));
           network = wallet.network;
           (ref16$ = wallet.network),
@@ -776,7 +760,6 @@
           token === 'vlx_erc20' &&
           ((ref16$ = chosenNetwork.id) === 'vlx_evm' || ref16$ === 'vlx2')
         ) {
-          value = store.current.send.amountSend;
           value2 = toHex(times(value, Math.pow(10, 18))).toString(16);
           value = times(value, Math.pow(10, 18));
           network = wallet.network;
@@ -811,7 +794,6 @@
           (token === 'vlx_evm' || token === 'vlx2') &&
           chosenNetwork.id === 'vlx_erc20'
         ) {
-          console.log('swap!');
           wallets = store.current.account.wallets;
           chosenNetworkWallet = find(function (it) {
             return it.coin.token === chosenNetwork.id;
@@ -840,7 +822,6 @@
           (token === 'vlx_evm' || token === 'vlx2') &&
           chosenNetwork.id === 'vlx_native'
         ) {
-          console.log('SWQAP TO NATIVE');
           EVM_TO_NATIVE_BRIDGE = wallet.network.EVM_TO_NATIVE_BRIDGE;
           if (EVM_TO_NATIVE_BRIDGE == null) {
             console.error('EVM_TO_NATIVE_BRIDGE address is not defined');
@@ -858,7 +839,6 @@
             })();
             $recipient = bs58.decode(recipient);
             hex = $recipient.toString('hex');
-            console.log('hex', hex);
           } catch (e$) {
             err = e$;
             return cb('Please enter valid address');
