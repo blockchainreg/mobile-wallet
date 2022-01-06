@@ -22,83 +22,87 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {filter, map, objToPairs, pairsToObj} from 'prelude-ls';
+import { filter, map, objToPairs, pairsToObj } from 'prelude-ls';
 import tokenNetworks from '../wallet/swapping/networks';
 import contracts from '../wallet/contracts';
 
 export default ({ store, web3t }) => {
-	const lang = getLang(store);
-	const wallets = walletsFuncs(store, web3t).wallets;
-	const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
-	const swapDirections = wallet.network.networks || [];
-	const swapDirectionsArr = Object.keys(swapDirections).map(it => {
-		return swapDirections[it].referTo;
-	});
+  const lang = getLang(store);
+  const wallets = walletsFuncs(store, web3t).wallets;
+  const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
+  const swapDirections = wallet.network.networks || [];
+  const swapDirectionsArr = Object.keys(swapDirections).map((it) => {
+    return swapDirections[it].referTo;
+  });
 
-	const availableNetworks = store.current.account.wallets.filter((it)=>{ return swapDirectionsArr.indexOf(it.coin.token) > -1});
-	let hasSwap = swapDirections != null && Object.keys(swapDirections).length > 0 && availableNetworks.length > 0;
+  const availableNetworks = store.current.account.wallets.filter((it) => {
+    return swapDirectionsArr.indexOf(it.coin.token) > -1;
+  });
+  let hasSwap =
+    swapDirections != null &&
+    Object.keys(swapDirections).length > 0 &&
+    availableNetworks.length > 0;
 
-	const setDefaultSendData = () => {
-	  store.current.send.data = null;
+  const setDefaultSendData = () => {
+    store.current.send.data = null;
     store.current.send.gasPrice = null;
     store.current.send.gasPriceAuto = null;
-	  store.current.send.data = null;
-	  store.current.send.contractAddress = null;
-	  store.current.send.chosenNetwork = null;
-    store.current.send.amountSend = '0';
-    store.current.send.amountSendUsd = '0';
+    store.current.send.data = null;
+    store.current.send.contractAddress = null;
+    store.current.send.chosenNetwork = null;
+    store.current.send.amountSend = '';
+    store.current.send.amountSendUsd = '';
     store.current.send.amountSendFee = '0';
     store.current.send.amountSendFeeUsd = '0';
-    store.current.send.to = "";
-    store.current.send.error = "";
+    store.current.send.to = '';
+    store.current.send.error = '';
     store.current.send.wallet = wallet;
     store.current.send.coin = wallet.coin;
     store.current.send.network = wallet.network;
-	}
+  };
 
-	/*******  Listeners  ********/
-	const sendLocal = () => {
-		store.current.send.homeFeePercent = 0;
-		store.current.send.isSwap = false;
-		if(wallet.balance == "..") return;
-		setDefaultSendData();
-		navigate(store, web3t, "send");
-	};
+  /*******  Listeners  ********/
+  const sendLocal = () => {
+    store.current.send.homeFeePercent = 0;
+    store.current.send.isSwap = false;
+    if (wallet.balance == '..') return;
+    setDefaultSendData();
+    navigate(store, web3t, 'send');
+  };
 
-	const swapClick = () => {
-		store.current.send.isSwap = true;
-		if (wallet == null) {
-			console.log("Not yet loaded");
-			return null;
-		}
-		if (web3t[wallet.coin.token] == null) {
-			console.log("Not yet loaded");
-			return null;
-		}
-		setDefaultSendData();
-		setDefaultSwapNetwork();
-		var swaps = contracts({store, web3t});
-		if (swaps){
-			swaps.getBridgeInfo((err) => {
-				if (err) {
-					console.error(err);
-				}
-				navigate(store, web3t, "send");
-			});
-		} else {
-			navigate(store, web3t, "send");
-		}
-	}
-	/**
-	 * Set default network for swap in Send screen.
-	 * */
-	const setDefaultSwapNetwork = () => {
-		let availableNetworks = pairsToObj(
-				filter(function(it){
-					return it[1].disabled == null || it[1].disabled === false;
-				})(
-						objToPairs(
-								wallet.network.networks)));
+  const swapClick = () => {
+    store.current.send.isSwap = true;
+    if (wallet == null) {
+      console.log('Not yet loaded');
+      return null;
+    }
+    if (web3t[wallet.coin.token] == null) {
+      console.log('Not yet loaded');
+      return null;
+    }
+    setDefaultSendData();
+    setDefaultSwapNetwork();
+    var swaps = contracts({ store, web3t });
+    if (swaps) {
+      swaps.getBridgeInfo((err) => {
+        if (err) {
+          console.error(err);
+        }
+        navigate(store, web3t, 'send');
+      });
+    } else {
+      navigate(store, web3t, 'send');
+    }
+  };
+  /**
+   * Set default network for swap in Send screen.
+   * */
+  const setDefaultSwapNetwork = () => {
+    let availableNetworks = pairsToObj(
+      filter(function (it) {
+        return it[1].disabled == null || it[1].disabled === false;
+      })(objToPairs(wallet.network.networks))
+    );
 
     let walletSwapNetworksIds = Object.keys(availableNetworks);
     if (walletSwapNetworksIds.length > 0) {
@@ -251,41 +255,29 @@ export default ({ store, web3t }) => {
             onPress={sendLocal}
             style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}
           >
-            <Image
-              source={Images.withdrawImage}
-              style={styles.sizeIconBtn}
-            />
+            <Image source={Images.withdrawImage} style={styles.sizeIconBtn} />
           </TouchableOpacity>
           <Text style={styles.textTouchable}>{lang.send}</Text>
         </View>
 
-        { hasSwap && (
-          <View style={{ alignItems: "center" }}>
+        {hasSwap && (
+          <View style={{ alignItems: 'center' }}>
             <TouchableOpacity
               onPress={swapClick}
               style={{
                 ...styles.touchables,
-                backgroundColor: Images.colorBlue
+                backgroundColor: Images.colorBlue,
               }}
             >
-              <Image
-                source={Images.swapImage}
-                style={styles.sizeIconBtnSwap}
-              />
+              <Image source={Images.swapImage} style={styles.sizeIconBtnSwap} />
             </TouchableOpacity>
-            <Text style={styles.textTouchable}>{lang.swapBtn || "Swap"}</Text>
+            <Text style={styles.textTouchable}>{lang.swapBtn || 'Swap'}</Text>
           </View>
         )}
 
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity
-            onPress={scanQRSend}
-            style={styles.touchables}
-          >
-            <Image
-              source={Images.scanImage}
-              style={styles.sizeIconScanBtn}
-            />
+        <View style={{ alignItems: 'center' }}>
+          <TouchableOpacity onPress={scanQRSend} style={styles.touchables}>
+            <Image source={Images.scanImage} style={styles.sizeIconScanBtn} />
           </TouchableOpacity>
           <Text style={styles.textTouchable}>{lang.scan}</Text>
         </View>
@@ -297,14 +289,17 @@ export default ({ store, web3t }) => {
           >
             <Image
               source={Images.withdrawImage}
-              style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]}
+              style={[
+                styles.sizeIconBtn,
+                { transform: [{ rotate: '180deg' }], left: 0, top: 2 },
+              ]}
             />
           </TouchableOpacity>
           <Text style={styles.textTouchable}>{lang.receive}</Text>
         </View>
       </View>
 
-      <View style={style.emptyBlock}/>
+      <View style={style.emptyBlock} />
       {getTxContainer()}
     </View>
   );
