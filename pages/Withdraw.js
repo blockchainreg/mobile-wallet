@@ -239,9 +239,25 @@ export default ({ store, web3t }) => {
                     ]}
                   >
                     <Item style={style.itemStyle}>
-                      <AmountInput
+                      <InputAmount
+                        onChangeText={(text) => amountChange(wrapNumber(text))}
+                        returnKeyType="done"
+                        autoCompleteType="off"
+                        style={[
+                          styles.inputStyle,
+                          { fontSize: 18, width: '100%' },
+                        ]}
+                        selectionColor={
+                          Platform.OS === 'ios'
+                            ? '#fff'
+                            : 'rgba(255,255,255,0.60)'
+                        }
+                        keyboardAppearance="dark"
+                        placeholder="0.00"
                         value={send.amountSend}
-                        onChangeText={handleChangeAmount}
+                        keyboardType="numeric"
+                        placeholderTextColor="rgba(255,255,255,0.60)"
+                        maxLength={20}
                         maxFractionLength={9}
                       />
                     </Item>
@@ -252,9 +268,27 @@ export default ({ store, web3t }) => {
                   ) && (
                     <View style={[style.alignHorizontal, style.borderItem]}>
                       <Item style={style.itemStyle}>
-                        <AmountInput
+                        <InputAmount
+                          onChangeText={(text) =>
+                            amountUsdChange(wrapNumber(text))
+                          }
+                          returnKeyType="done"
+                          autoCompleteType="off"
+                          style={[
+                            styles.inputStyle,
+                            { fontSize: 18, width: '100%' },
+                          ]}
+                          selectionColor={
+                            Platform.OS === 'ios'
+                              ? '#fff'
+                              : 'rgba(255,255,255,0.60)'
+                          }
+                          keyboardAppearance="dark"
+                          placeholder="0.00"
                           value={send.amountSendUsd}
-                          onChangeText={handleChangeUsdAmount}
+                          keyboardType="numeric"
+                          placeholderTextColor="rgba(255,255,255,0.60)"
+                          maxLength={20}
                         />
                       </Item>
                       <Text style={style.tokenStyle}>{'USD'}</Text>
