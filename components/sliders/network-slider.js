@@ -200,10 +200,7 @@ const NetworkChooser = (props) => {
       borderTopWidth: 0,
     },
   };
-  console.log(
-    'store.current.currentNetworkDetails',
-    store.current.currentNetworkDetails != null
-  );
+
   return (
     <View style={{ marginBottom: 10 }}>
       <View style={[style.alignHorizontal, { marginBottom: 5 }]}>
