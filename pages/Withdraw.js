@@ -26,7 +26,7 @@ import getLang from '../wallet/get-lang.js';
 import BackButton from '../components/BackButton.js';
 import Background from '../components/Background.js';
 import Images from '../Images.js';
-import { Image, Platform, TouchableOpacity } from 'react-native';
+import { Image, Platform, TouchableOpacity, Linking } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
@@ -269,7 +269,23 @@ export default ({ store, web3t }) => {
                   {lang.fee} {send.amountSendFee} {feeToken} ($
                   {send.amountSendFeeUsd})
                 </Text>
-                <Text style={styles.error}>{send.error}</Text>
+                <Text style={styles.error}>
+                  {send.errorParse && typeof send.errorParse === 'object'
+                    ? [
+                        <Text style={styles.error}>
+                          {send.errorParse.text}
+                        </Text>,
+                        <Text
+                          style={[styles.error, styles.errorLink]}
+                          onPress={() =>
+                            Linking.openURL(send.errorParse.hyperLink)
+                          }
+                        >
+                          {send.errorParse.hyperLink}
+                        </Text>,
+                      ]
+                    : send.error}
+                </Text>
               </View>
               <View style={styles.containerScreen}>
                 {btnWithdraw({ store, web3t })}
