@@ -2,6 +2,7 @@
 (function () {
   var providers,
     toJS,
+    toString$,
     ref$,
     pairsToObj,
     objToPairs,
@@ -14,7 +15,7 @@
     createTransaction,
     pushTx,
     out$ = (typeof exports != 'undefined' && exports) || this;
-  providers = require('./providers.js');
+  (toString$ = {}.toString), (providers = require('./providers.js'));
   toJS = require('mobx').toJS;
   (ref$ = require('prelude-ls')),
     (pairsToObj = ref$.pairsToObj),
@@ -66,7 +67,14 @@
   //   }
   //   return caches[key](cb);
   // };
-
+  out$.getTransactionInfo = action(function (provider, config, cb) {
+    if (
+      toString$.call(provider.getTransactionInfo).slice(8, -1) !== 'Function'
+    ) {
+      return cb('method is not supported');
+    }
+    return provider.getTransactionInfo(config, cb);
+  });
   out$.getKeys = getKeys = action(function (provider, config, cb) {
     return provider.getKeys(config, cb);
   });

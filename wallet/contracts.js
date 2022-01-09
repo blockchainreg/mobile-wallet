@@ -1,9 +1,21 @@
-var ref$, abis, Web3, createTransaction, times, minus, div, plus, pushTx;
+var ref$,
+  abis,
+  Web3,
+  createTransaction,
+  getTransactionInfo,
+  times,
+  minus,
+  div,
+  plus,
+  pushTx,
+  calcFee;
 
 Web3 = require('web3');
 (ref$ = require('./api.js')),
   (createTransaction = ref$.createTransaction),
+  (getTransactionInfo = ref$.getTransactionInfo),
   (pushTx = ref$.pushTx);
+calcFee = ref$.calcFee;
 (ref$ = require('./math.js')),
   (times = ref$.times),
   (minus = ref$.minus),
@@ -17,6 +29,7 @@ var ref$ = require('prelude-ls'),
   keys = ref$.keys,
   map = ref$.map;
 var confirm = require('./pages/confirmation.js').confirm;
+import spin from '../utils/spin.js';
 const BN = require('ethereumjs-util').BN;
 
 abis = {
@@ -474,6 +487,9 @@ module.exports = function ({ store, web3t }) {
       (allowed = arg$.allowed),
       (bridge = arg$.bridge),
       (bridgeToken = arg$.bridgeToken);
+    const feeType = send.feeType;
+    const network = send.network;
+    const txType = send.txType;
     if (checkingAllowed) {
       return;
     }
@@ -487,6 +503,7 @@ module.exports = function ({ store, web3t }) {
       return cb('bridgeToken is not defined');
     }
     if (allowed >= amount) {
+      //      console.log('Allowed amount is more ', { allowed, amount });
       return cb(null);
     }
 
@@ -500,83 +517,191 @@ module.exports = function ({ store, web3t }) {
         ? ref$
         : ''
     ).toUpperCase();
-    var confirmText =
-      'To execute this swap please approve that bridge contract can withdraw your ' +
-      token +
-      ' and automate payments for you.';
-    confirm(store, confirmText, function (agree) {
-      var UINT_MAX_NUMBER,
-        coin,
-        gas,
-        gasPrice,
-        amountSend,
-        amountSendFee,
-        feeType,
-        network,
-        txType,
-        data,
-        txObj;
-      if (!agree) {
-        return cb('Canceled by user');
-      }
-      UINT_MAX_NUMBER = times(
-        4294967295,
-        Math.pow(10, wallet.network.decimals)
-      );
-      (coin = send.coin),
-        (gas = send.gas),
-        (gasPrice = send.gasPrice),
-        (amountSend = send.amountSend),
-        (amountSendFee = send.amountSendFee),
-        (feeType = send.feeType),
-        (network = send.network),
-        (txType = send.txType);
-      data = contract.approve.getData(bridge, UINT_MAX_NUMBER);
-      txObj = {
-        account: {
-          address: wallet.address,
-          privateKey: wallet.privateKey,
-        },
-        recipient: bridgeToken,
-        network: network,
-        token: token,
-        coin: coin,
-        amount: '0',
-        amountFee: '0.002',
-        data: data,
-        gas: 50000,
-        gasPrice: gasPrice,
-        feeType: feeType,
-      };
-      return createTransaction(txObj, function (err, txData) {
-        var checkingAllowed;
-        if (err != null) {
-          return cb(err);
+
+    const UINT_MAX_NUMBER = times(
+      4294967295,
+      Math.pow(10, wallet.network.decimals)
+    );
+
+    const config = {
+      to: bridgeToken,
+      data: contract.approve.getData(bridge, UINT_MAX_NUMBER),
+      network: network,
+      amount: '0.0000000000000001',
+      feeType: feeType,
+      txType: txType,
+      token: token,
+      account: {
+        address: wallet.address,
+        privateKey: wallet.privateKey,
+      },
+      gasPrice: null,
+    };
+
+    getTxFee(config, function (err, result) {
+      const { calcedFee, gasEstimate, gasPrice } = result;
+      const fee = calcedFee.substr(0, 7);
+
+      const feeToken = (
+        (ref$ = wallet.network.txFeeIn) != null
+          ? ref$
+          : store.current.send.coin.nickname || store.current.send.coin.token
+      ).toUpperCase();
+
+      var confirmText =
+        'To execute this swap please approve that bridge contract can withdraw your ' +
+        token +
+        ' and automate payments for you. Approving fee ≈ ' +
+        fee +
+        ' ' +
+        feeToken;
+
+      confirm(store, confirmText, function (agree) {
+        var coin, gas, gasPrice, amountSend, amountSendFee, data, txObj;
+        if (!agree) {
+          return cb('Canceled by user');
         }
-        checkingAllowed = true;
-        return pushTx(
-          import$(
-            {
-              token: token,
-              txType: txType,
-              network: network,
-            },
-            txData
-          ),
-          function (err, tx) {
-            var checkingAllowed;
-            if (err != null) {
-              return cb(err);
-            }
-            checkingAllowed = false;
-            return cb(null);
+
+        (coin = send.coin),
+          (gas = send.gas),
+          (gasPrice = send.gasPrice),
+          (amountSend = send.amountSend),
+          (amountSendFee = send.amountSendFee);
+
+        data = contract.approve.getData(bridge, UINT_MAX_NUMBER);
+
+        txObj = {
+          account: {
+            address: wallet.address,
+            privateKey: wallet.privateKey,
+          },
+          recipient: bridgeToken,
+          network: network,
+          token: token,
+          coin: coin,
+          amount: '0',
+          data: data,
+          gas: 150000,
+          gasPrice: null,
+          feeType: feeType,
+        };
+
+        return createTransaction(txObj, function (err, txData) {
+          if (err != null) {
+            return cb(err);
           }
-        );
+          store.current.send.checkingAllowed = true;
+          return pushTx(
+            import$(
+              {
+                token: token,
+                txType: txType,
+                network: network,
+              },
+              txData
+            ),
+            function (err, tx) {
+              if (err != null) {
+                store.current.send.checkingAllowed = false;
+                return cb(err);
+              }
+
+              spin(store, 'Approving in process...', (cb2) => {
+                checkApprove(
+                  {
+                    start: Date.now(),
+                    token: wallet != null ? wallet.coin.token : void 8,
+                    network: wallet.network,
+                    tx: tx,
+                  },
+                  function (err, res) {
+                    store.current.send.checkingAllowed = false;
+                    cb2();
+                    if (err != null) {
+                      return cb(err);
+                    }
+                    return cb(null);
+                  }
+                );
+              })(function (err, data) {
+                console.log('approve fin');
+              });
+            }
+          );
+        });
       });
     });
   };
 
-  /* CHECKED!
+  const getTxFee = function (config, cb) {
+    var send = store.current.send;
+    send.feeCalculating = true;
+    calcFee(config, (err, result) => {
+      send.feeCalculating = false;
+      if (err !== null) {
+        send.error = (err.message || err).toString();
+        return cb(err);
+      }
+      return cb(null, result);
+    });
+  };
+
+  const checkTxConfirmation = function (config, cb) {
+    const { start, token, network, tx } = config;
+    return function () {
+      if (Date.now() > start + 60000) {
+        store.current.send.checkingApproveTx = false;
+        return cb(
+          'Approve Transaction is still under confirmation. Try to repeat later.'
+        );
+      }
+      return getTransactionInfo(
+        {
+          token: token,
+          network: network,
+          tx: tx,
+        },
+        function (err, moreInfo) {
+          console.log('[getTransactisonInfo]', { err, moreInfo });
+          var ref$;
+          store.current.send.checkingApproveTx = false;
+          if (
+            (moreInfo != null ? moreInfo.status : void 8) === 'confirmed' ||
+            (moreInfo != null
+              ? (ref$ = moreInfo.info) != null
+                ? ref$.status
+                : void 8
+              : void 8) === '0x1'
+          ) {
+            cb(null);
+          }
+        }
+      );
+    };
+  };
+
+  const checkApprove = function (config, cb) {
+    const { start, token, network, tx } = config;
+    store.current.send.checkingApproveTx = true;
+    const timerCb = function (err, res) {
+      clearInterval(checkApprove.timer);
+      return cb(err, res);
+    };
+    return (checkApprove.timer = setInterval(
+      checkTxConfirmation(
+        {
+          start: start,
+          token: token,
+          network: network,
+          tx: tx,
+        },
+        timerCb
+      ),
+      1000
+    ));
+  };
+
+  /*
    * Swap from USDT ETHEREUM to USDT VELAS
    */
   eth_usdtUsdt_velasSwap = function (token, chosenNetwork, cb) {
