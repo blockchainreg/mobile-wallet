@@ -91,8 +91,6 @@
   });
   out$.pushTx = pushTx = action(function (provider, config, cb) {
     return provider.pushTx(config, (err, result) => {
-      console.log(provider, config, result);
-      err = '1 Unexpected token < in JSON at position 0';
       if (err) {
         return cb(apiErrorHandler.handleError(err));
       }
