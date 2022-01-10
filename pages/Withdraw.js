@@ -267,7 +267,7 @@ export default ({ store, web3t }) => {
                             Linking.openURL(send.errorParse.hyperLink)
                           }
                         >
-                          {send.errorParse.hyperLink}
+                          {send.errorParse.textLink}
                         </Text>,
                       ]
                     : send.error}
