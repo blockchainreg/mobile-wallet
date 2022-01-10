@@ -557,20 +557,17 @@ module.exports = function ({ store, web3t }) {
         feeToken;
 
       confirm(store, confirmText, function (agree) {
-        var coin, gas, gasPrice, amountSend, amountSendFee, data, txObj;
         if (!agree) {
           return cb('Canceled by user');
         }
+        const coin = send.coin;
+        const gas = send.gas;
+        const gasPrice = send.gasPrice;
+        const amountSend = send.amountSend;
+        const amountSendFee = send.amountSendFee;
+        const data = contract.approve.getData(bridge, UINT_MAX_NUMBER);
 
-        (coin = send.coin),
-          (gas = send.gas),
-          (gasPrice = send.gasPrice),
-          (amountSend = send.amountSend),
-          (amountSendFee = send.amountSendFee);
-
-        data = contract.approve.getData(bridge, UINT_MAX_NUMBER);
-
-        txObj = {
+        const txObj = {
           account: {
             address: wallet.address,
             privateKey: wallet.privateKey,
@@ -585,28 +582,28 @@ module.exports = function ({ store, web3t }) {
           gasPrice: null,
           feeType: feeType,
         };
-
-        return createTransaction(txObj, function (err, txData) {
-          if (err != null) {
-            return cb(err);
-          }
-          store.current.send.checkingAllowed = true;
-          return pushTx(
-            import$(
-              {
-                token: token,
-                txType: txType,
-                network: network,
-              },
-              txData
-            ),
-            function (err, tx) {
-              if (err != null) {
-                store.current.send.checkingAllowed = false;
-                return cb(err);
-              }
-
-              spin(store, 'Approving in process...', (cb2) => {
+        spin(store, 'Approving in process...', (exitLoaderCb) => {
+          createTransaction(txObj, function (err, txData) {
+            if (err != null) {
+              exitLoaderCb();
+              return cb(err);
+            }
+            store.current.send.checkingAllowed = true;
+            return pushTx(
+              import$(
+                {
+                  token: token,
+                  txType: txType,
+                  network: network,
+                },
+                txData
+              ),
+              function (err, tx) {
+                if (err != null) {
+                  exitLoaderCb();
+                  store.current.send.checkingAllowed = false;
+                  return cb(err);
+                }
                 checkApprove(
                   {
                     start: Date.now(),
@@ -616,18 +613,18 @@ module.exports = function ({ store, web3t }) {
                   },
                   function (err, res) {
                     store.current.send.checkingAllowed = false;
-                    cb2();
+                    exitLoaderCb();
                     if (err != null) {
                       return cb(err);
                     }
                     return cb(null);
                   }
                 );
-              })(function (err, data) {
-                console.log('approve fin');
-              });
-            }
-          );
+              }
+            );
+          });
+        })(function (err, result) {
+          console.log('approve fin');
         });
       });
     });
