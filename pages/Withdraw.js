@@ -1,33 +1,14 @@
-import React, { useState } from 'react';
-import {
-  Left,
-  Right,
-  Text,
-  Button,
-  View,
-  Icon,
-  Item,
-  Input,
-  Title,
-  Body,
-  Thumbnail,
-  Label,
-  Toast,
-} from 'native-base';
-import { observe } from 'mobx';
+import React from 'react';
+import { Text, Button, View, Item, Input, Toast } from 'native-base';
 import styles from '../Styles.js';
 import RefreshControl from '../components/RefreshControl.js';
 import sendFuncs from '../wallet/send-funcs.js';
 import walletsFuncs from '../wallet/wallets-funcs.js';
-import Spinner from '../utils/spinner.js';
 import StatusBar from '../components/StatusBar.js';
 import NetworkSlider from '../components/sliders/network-slider';
 import getLang from '../wallet/get-lang.js';
-import BackButton from '../components/BackButton.js';
 import Background from '../components/Background.js';
-import Images from '../Images.js';
-import { Image, Platform, TouchableOpacity, Linking } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { Platform, TouchableOpacity, Linking } from 'react-native';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 import Header from '../components/Header';
@@ -76,6 +57,10 @@ export default ({ store, web3t }) => {
   };
 
   const changePage = (tab) => () => {
+    if (send.errorParse) {
+      send.errorParse = null;
+    }
+
     store.current.page = tab;
   };
 
@@ -272,10 +257,11 @@ export default ({ store, web3t }) => {
                 <Text style={styles.error}>
                   {send.errorParse && typeof send.errorParse === 'object'
                     ? [
-                        <Text style={styles.error}>
+                        <Text style={styles.error} key="errMsg">
                           {send.errorParse.text}
                         </Text>,
                         <Text
+                          key="errLink"
                           style={[styles.error, styles.errorLink]}
                           onPress={() =>
                             Linking.openURL(send.errorParse.hyperLink)
