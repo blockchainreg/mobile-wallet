@@ -31,6 +31,7 @@ var ref$ = require('prelude-ls'),
 var confirm = require('./pages/confirmation.js').confirm;
 import spin from '../utils/spin.js';
 const BN = require('ethereumjs-util').BN;
+const calcAmount = require('./calc-amount.js');
 
 abis = {
   Staking: require('../web3t/contracts/StakingAuRa.json').abi,
@@ -617,7 +618,14 @@ module.exports = function ({ store, web3t }) {
                     if (err != null) {
                       return cb(err);
                     }
-                    return cb(null);
+                    calcAmount.changeAmount(
+                      store,
+                      store.current.send.amountSend,
+                      false,
+                      () => {
+                        return cb(null);
+                      }
+                    );
                   }
                 );
               }
