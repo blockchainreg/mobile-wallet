@@ -3,6 +3,7 @@ function handleError(err) {
     return {
       text: 'Error 360. Please retry later or write to our support and we will figure it out. ',
       hyperLink: 'https://support.velas.com/',
+      textLink: 'support',
     };
   }
   return err;
