@@ -3,24 +3,24 @@ import { Text, View } from 'native-base';
 
 import { Linking, StyleSheet } from 'react-native';
 
-export default ({ error }) => (
-  <View transparent style={styles.container}>
-    <Text style={styles.error} key="errMsg">
-      {error.text1}
-    </Text>
-    <View style={styles.row}>
-      <Text
-        style={[styles.error, styles.errorLink]}
-        onPress={() => Linking.openURL(error.hyperLink)}
-      >
-        {error.textLink}
-      </Text>
+export default ({ error: { text1, text2, textLink, hyperLink } }) => {
+  const openHyperlink = () => Linking.openURL(hyperLink);
+  return (
+    <View transparent style={styles.container}>
       <Text style={styles.error} key="errMsg">
-        {error.text2}
+        {text1}
       </Text>
+      <View style={styles.row}>
+        <Text style={[styles.error, styles.errorLink]} onPress={openHyperlink}>
+          {textLink}
+        </Text>
+        <Text style={styles.error} key="errMsg">
+          {text2}
+        </Text>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
