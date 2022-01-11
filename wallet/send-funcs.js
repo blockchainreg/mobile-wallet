@@ -8,6 +8,7 @@ import { Text, View } from 'native-base';
 import { Linking, ScrollView } from 'react-native';
 import React from 'react';
 import Images from '../Images.js';
+import roundNumber from '../round-number';
 
 (function () {
   var toJS,
@@ -155,6 +156,29 @@ import Images from '../Images.js';
       console.log('no wallet');
       return null;
     }
+    const txFeeIn =
+      wallet != null
+        ? (ref$ = wallet.network) != null
+          ? ref$.txFeeIn
+          : void 8
+        : void 8;
+    const fee = (function () {
+      var ref$;
+      switch (false) {
+        case !(
+          txFeeIn == null ||
+          txFeeIn !==
+            (wallet != null
+              ? (ref$ = wallet.coin) != null
+                ? ref$.token
+                : void 8
+              : void 8)
+        ):
+          return 0;
+        default:
+          return send.amountSendFee;
+      }
+    })();
     color = getPrimaryInfo(store).color;
     primaryButtonStyle = {
       background: color,
@@ -381,6 +405,7 @@ import Images from '../Images.js';
               const walletTo = store.current.account.wallets.find(
                 (x) => x.coin.token === store.current.send.chosenNetwork.referTo
               );
+              const tokenFee = roundNumber(send.amountSendFee, { decimals: 9 });
               const networkTo = walletTo.network.group;
               const { url, addressLink } = walletTo.network.api;
               const txurl = addressLink
@@ -427,6 +452,9 @@ import Images from '../Images.js';
                   >
                     {store.current.send.to}
                   </Text>
+                  <View style={borderStyle}></View>
+                  <Text style={boldStyle}>{'Tx fee:'}</Text>
+                  <Text>{` ${tokenFee} ${feeToken}`}</Text>
                 </ScrollView>
               );
               // confirmText = "Are you sure to swap " + amount + " " + currency + " to " + store.current.send.to;
@@ -532,29 +560,7 @@ import Images from '../Images.js';
       if (!sendingAmountMoreThanZero()) {
         return cb('Amount should be more than 0');
       }
-      const txFeeIn =
-        wallet != null
-          ? (ref$ = wallet.network) != null
-            ? ref$.txFeeIn
-            : void 8
-          : void 8;
-      const fee = (function () {
-        var ref$;
-        switch (false) {
-          case !(
-            txFeeIn == null ||
-            txFeeIn !==
-              (wallet != null
-                ? (ref$ = wallet.coin) != null
-                  ? ref$.token
-                  : void 8
-                : void 8)
-          ):
-            return 0;
-          default:
-            return send.amountSendFee;
-        }
-      })();
+
       try {
         amount = minus(
           minus(
