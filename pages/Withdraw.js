@@ -12,6 +12,7 @@ import { Platform, TouchableOpacity, Linking } from 'react-native';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 import Header from '../components/Header';
+import ErrorParse from '../components/errorParse';
 import InputAmount from '../components/InputAmount';
 import { ScanImage } from '../svg/scanImage.js';
 
@@ -255,22 +256,11 @@ export default ({ store, web3t }) => {
                   {send.amountSendFeeUsd})
                 </Text>
                 <Text style={styles.error}>
-                  {send.errorParse && typeof send.errorParse === 'object'
-                    ? [
-                        <Text style={styles.error} key="errMsg">
-                          {send.errorParse.text}
-                        </Text>,
-                        <Text
-                          key="errLink"
-                          style={[styles.error, styles.errorLink]}
-                          onPress={() =>
-                            Linking.openURL(send.errorParse.hyperLink)
-                          }
-                        >
-                          {send.errorParse.textLink}
-                        </Text>,
-                      ]
-                    : send.error}
+                  {send.errorParse && typeof send.errorParse === 'object' ? (
+                    <ErrorParse error={send.errorParse} />
+                  ) : (
+                    send.error
+                  )}
                 </Text>
               </View>
               <View style={styles.containerScreen}>
