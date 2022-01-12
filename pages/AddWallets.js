@@ -129,7 +129,7 @@ export default ({ store, web3t }) => {
   };
 
   const currentNetwork = store.current.network;
-  coinItems = coinItems.filter((it) => {
+  const $coinItems = coinItems.filter((it) => {
     return !it[currentNetwork].disabled;
   });
   const refreshToken = async (bool) => {};
@@ -141,11 +141,11 @@ export default ({ store, web3t }) => {
     })(
       filter(function (arg$) {
         var network = arg$[currentNetwork];
-        return network.disabled !== true;
+        return !network.disabled;
       })(wallets)
     );
   }
-  const walletsGroups = getWalletsGroups({ wallets: coinItems });
+  const walletsGroups = getWalletsGroups({ wallets: $coinItems });
   const groups = keys(walletsGroups);
   groups.splice(groups.indexOf('Velas'), 1);
   groups.unshift('Velas');

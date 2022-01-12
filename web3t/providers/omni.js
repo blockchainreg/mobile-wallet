@@ -598,7 +598,6 @@ import commonProvider from './common/provider';
         return cb(null, txs);
       });
   };
-  getDec = commonProvider.getDec;
   out$.checkDecodedData = checkDecodedData = function (decodedData, data) {
     return cb(null, '');
   };

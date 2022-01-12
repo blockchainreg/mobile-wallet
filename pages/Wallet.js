@@ -50,8 +50,13 @@ export default ({ store, web3t }) => {
     store.current.send.data = null;
     store.current.send.contractAddress = null;
     store.current.send.chosenNetwork = null;
+<<<<<<< HEAD
     store.current.send.amountSend = '0';
     store.current.send.amountSendUsd = '0';
+=======
+    store.current.send.amountSend = '';
+    store.current.send.amountSendUsd = '';
+>>>>>>> 4c99d89ce785c836672896f2600f574d6820eebf
     store.current.send.amountSendFee = '0';
     store.current.send.amountSendFeeUsd = '0';
     store.current.send.to = '';

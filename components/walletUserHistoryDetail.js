@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Text, Thumbnail } from 'native-base';
+import { Icon, Text, Thumbnail, Badge } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
 import {
   View,
   ScrollView,
@@ -7,9 +8,12 @@ import {
   Alert,
   Vibration,
   Linking,
+  Platform,
 } from 'react-native';
 import styles from '../Styles.js';
+// import StandardLinearGradient from "./StandardLinearGradient.js";
 import moment from 'moment';
+//import LoadMoreAllDate from "./LoadMoreAllDate";
 import getLang from '../wallet/get-lang.js';
 import Images from '../Images.js';
 import walletsFuncs from '../wallet/wallets-funcs.js';

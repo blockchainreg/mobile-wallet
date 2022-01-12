@@ -8,6 +8,9 @@ const times = math.times;
 const MAX_LIMIT = '>100,000,000';
 
 export default ({ store, ...props }) => {
+  if (store.current.currentNetworkDetails == null) {
+    return null;
+  }
   const { homeFeePercent, minPerTx, maxPerTx, remainingDailyLimit, wallet } =
     props.data;
   const bridgeFeePercent = homeFeePercent ? times(homeFeePercent, 100) : '..';

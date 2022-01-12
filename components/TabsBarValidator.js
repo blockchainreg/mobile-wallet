@@ -10,14 +10,6 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {
-  Icon,
-  Tab,
-  Tabs,
-  TabHeading,
-  ScrollableTab,
-  Container,
-} from 'native-base';
 import { Observer, observer } from 'mobx-react';
 import Images from '../Images';
 import {
@@ -33,9 +25,8 @@ import DetailsValidatorComponent from '../components/DetailsValidatorComponent.j
 import TableRewards from '../components/TableRewards';
 import getLang from '../wallet/get-lang.js';
 import { formatStakeAmount } from '../utils/format-value';
-import BN from 'bn.js';
 import spin from '../utils/spin.js';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { TabView, TabBar } from 'react-native-tab-view';
 
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.18)';
 

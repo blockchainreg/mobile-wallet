@@ -74,6 +74,11 @@ module.exports = function ({ store, web3t }) {
 
   send = store.current.send;
   wallet = send.wallet;
+
+  var value =
+    store.current.send.amountSend !== '' ? store.current.send.amountSend : 0;
+  let sendValue = value === '' ? '0' : value;
+
   if (wallet == null) {
     console.log('! wallet == null');
     return null;
@@ -103,7 +108,6 @@ module.exports = function ({ store, web3t }) {
       ref$,
       FOREIGN_BRIDGE,
       FOREIGN_BRIDGE_TOKEN,
-      value,
       receiver,
       contract,
       allowed,
@@ -128,7 +132,6 @@ module.exports = function ({ store, web3t }) {
     (ref$ = wallet.network),
       (FOREIGN_BRIDGE = ref$.FOREIGN_BRIDGE),
       (FOREIGN_BRIDGE_TOKEN = ref$.FOREIGN_BRIDGE_TOKEN);
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 6));
     receiver = send.to;
     web3 = new Web3(
@@ -139,8 +142,6 @@ module.exports = function ({ store, web3t }) {
       .contract(abis.ForeignBridgeErcToErc)
       .at(FOREIGN_BRIDGE_TOKEN);
     /*---*/
-    value = store.current.send.amountSend;
-    value = times(value, Math.pow(10, 6));
     receiver = send.to;
     /* Check for allowed amount for contract */
     contract.allowance(
@@ -180,14 +181,15 @@ module.exports = function ({ store, web3t }) {
           .at(FOREIGN_BRIDGE);
         contract.minPerTx(function (err, minPerTxRaw) {
           minPerTx = div(minPerTxRaw, Math.pow(10, 6));
-          if (+send.amountSend < +minPerTx) {
+          if (+sendValue < +minPerTx) {
             return cb('Min amount per transaction is ' + minPerTx + ' USDC');
           }
           contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
             maxPerTx = div(maxPerTxRaw, Math.pow(10, 6));
-            if (+send.amountSend > +maxPerTx) {
+            if (+sendValue > +maxPerTx) {
               return cb('Max amount per transaction is ' + maxPerTx + ' USDC');
             }
+
             return checkAllowedAmount(
               {
                 contract: contract,
@@ -237,7 +239,6 @@ module.exports = function ({ store, web3t }) {
       ref$,
       HOME_BRIDGE,
       HOME_BRIDGE_TOKEN,
-      value,
       receiver,
       ref1$,
       ref2$,
@@ -262,7 +263,6 @@ module.exports = function ({ store, web3t }) {
     if (HOME_BRIDGE_TOKEN == null) {
       return cb('HOME_BRIDGE_TOKEN is not defined');
     }
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 6));
     web3 = new Web3(
       new Web3.providers.HttpProvider(
@@ -287,12 +287,12 @@ module.exports = function ({ store, web3t }) {
 
     contract.minPerTx(function (err, minPerTxRaw) {
       minPerTx = div(minPerTxRaw, Math.pow(10, 6));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' USDC');
       }
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, 6));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' USDC');
         }
 
@@ -310,7 +310,6 @@ module.exports = function ({ store, web3t }) {
       ref$,
       HOME_BRIDGE,
       HOME_BRIDGE_TOKEN,
-      value,
       ref1$,
       ref2$,
       ref3$,
@@ -324,7 +323,6 @@ module.exports = function ({ store, web3t }) {
     (ref$ = wallet.network),
       (HOME_BRIDGE = ref$.HOME_BRIDGE),
       (HOME_BRIDGE_TOKEN = ref$.HOME_BRIDGE_TOKEN);
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     web3 = new Web3(
       new Web3.providers.HttpProvider(
@@ -348,12 +346,12 @@ module.exports = function ({ store, web3t }) {
     contract = web3.eth.contract(abis.ERC20BridgeToken).at(HOME_BRIDGE);
     contract.minPerTx(function (err, minPerTxRaw) {
       minPerTx = div(minPerTxRaw, Math.pow(10, 18));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' BUSD');
       }
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, 18));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' BUSD');
         }
         data = contract.transferAndCall.getData(HOME_BRIDGE, value, send.to);
@@ -372,7 +370,6 @@ module.exports = function ({ store, web3t }) {
       FOREIGN_BRIDGE_TOKEN,
       web3,
       contract,
-      value,
       receiver,
       allowed,
       minPerTx,
@@ -397,7 +394,6 @@ module.exports = function ({ store, web3t }) {
     contract = web3.eth
       .contract(abis.ForeignBridgeErcToErc)
       .at(FOREIGN_BRIDGE_TOKEN);
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     receiver = send.to;
 
@@ -412,12 +408,12 @@ module.exports = function ({ store, web3t }) {
           .at(FOREIGN_BRIDGE);
         contract.minPerTx(function (err, minPerTxRaw) {
           minPerTx = div(minPerTxRaw, Math.pow(10, 18));
-          if (+send.amountSend < +minPerTx) {
+          if (+sendValue < +minPerTx) {
             return cb('Min amount per transaction is ' + minPerTx + ' BUSD');
           }
           contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
             maxPerTx = div(maxPerTxRaw, Math.pow(10, 18));
-            if (+send.amountSend > +maxPerTx) {
+            if (+sendValue > +maxPerTx) {
               return cb('Max amount per transaction is ' + maxPerTx + ' BUSD');
             }
             return checkAllowedAmount(
@@ -588,7 +584,6 @@ module.exports = function ({ store, web3t }) {
       ref$,
       FOREIGN_BRIDGE,
       FOREIGN_BRIDGE_TOKEN,
-      value,
       receiver,
       ref1$,
       ref2$,
@@ -613,7 +608,6 @@ module.exports = function ({ store, web3t }) {
     if (FOREIGN_BRIDGE_TOKEN == null) {
       return cb('FOREIGN_BRIDGE_TOKEN is not defined');
     }
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 6));
     receiver = send.to;
     web3 = new Web3(
@@ -655,14 +649,14 @@ module.exports = function ({ store, web3t }) {
         contract.minPerTx(function (err, minPerTxRaw) {
           minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
 
-          if (+send.amountSend < +minPerTx) {
+          if (+sendValue < +minPerTx) {
             return cb('Min amount per transaction is ' + minPerTx + ' USDT');
           }
 
           contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
             maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
 
-            if (+send.amountSend > +maxPerTx) {
+            if (+sendValue > +maxPerTx) {
               return cb('Max amount per transaction is ' + maxPerTx + ' USDT');
             }
 
@@ -715,7 +709,6 @@ module.exports = function ({ store, web3t }) {
       ref$,
       HOME_BRIDGE,
       HOME_BRIDGE_TOKEN,
-      value,
       ref1$,
       ref2$,
       ref3$,
@@ -731,7 +724,6 @@ module.exports = function ({ store, web3t }) {
     (ref$ = wallet.network),
       (HOME_BRIDGE = ref$.HOME_BRIDGE),
       (HOME_BRIDGE_TOKEN = ref$.HOME_BRIDGE_TOKEN);
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 6));
     web3 = new Web3(
       new Web3.providers.HttpProvider(
@@ -759,7 +751,7 @@ module.exports = function ({ store, web3t }) {
         return cb('[minPerTx] Error: ' + err);
       }
       minPerTx = div(minPerTxRaw, Math.pow(10, 6));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' USDT');
       }
 
@@ -768,7 +760,7 @@ module.exports = function ({ store, web3t }) {
           return cb('[maxPerTx] Error: ' + err);
         }
         maxPerTx = div(maxPerTxRaw, Math.pow(10, 6));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' USDT');
         }
         data = contract.transferAndCall.getData(HOME_BRIDGE, value, send.to);
@@ -834,10 +826,10 @@ module.exports = function ({ store, web3t }) {
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
         data = contract.relayTokens.getData(receiver);
-        if (+send.amountSend < +minPerTx) {
+        if (+sendValue < +minPerTx) {
           return cb('Min amount per transaction is ' + minPerTx + ' VLX');
         }
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' VLX');
         }
         send.data = data;
@@ -862,7 +854,6 @@ module.exports = function ({ store, web3t }) {
     if (!(token === 'vlx_huobi' && chosenNetwork.id === 'vlx_evm')) {
       return cb(null);
     }
-    let value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     (ref4$ = wallet.network),
       (FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE),
@@ -902,10 +893,10 @@ module.exports = function ({ store, web3t }) {
       /* Get maxPerTx from HomeBridge */
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-        if (+send.amountSend < +minPerTx) {
+        if (+sendValue < +minPerTx) {
           return cb('Min amount per transaction is ' + minPerTx + ' VLX');
         }
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' VLX');
         }
         contract = web3.eth
@@ -939,10 +930,15 @@ module.exports = function ({ store, web3t }) {
     var web3,
       contract,
       network,
-      value,
       contractAddress,
       minPerTx,
       maxPerTx,
+      BSC_SWAP__HOME_BRIDGE,
+      ERC20BridgeToken,
+      ref8$,
+      ref9$,
+      ref10$,
+      ref11$,
       data;
     if (!(token === 'vlx_evm' && chosenNetwork.id === 'bsc_vlx')) {
       return cb(null);
@@ -955,7 +951,6 @@ module.exports = function ({ store, web3t }) {
     if (chosenNetworkWallet == null) {
       return cb('[Swap error]: wallet ' + chosenNetwork.id + ' is not found!');
     }
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     (ref8$ = wallet.network),
       (BSC_SWAP__HOME_BRIDGE = ref8$.BSC_SWAP__HOME_BRIDGE),
@@ -999,11 +994,10 @@ module.exports = function ({ store, web3t }) {
         })();
 
         data = contract.relayTokens.getData(receiver);
-        const amountToSend = plus(send.amountSendFee, send.amountSend);
-        if (+send.amountSend < +minPerTx) {
+        if (+sendValue < +minPerTx) {
           return cb('Min amount per transaction is ' + minPerTx + ' VLX');
         }
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' VLX');
         }
         send.data = data;
@@ -1022,14 +1016,12 @@ module.exports = function ({ store, web3t }) {
       ref13$,
       ref14$,
       ref15$,
-      value,
       minPerTx,
       maxPerTx,
       data;
     if (!(token === 'bsc_vlx' && chosenNetwork.id === 'vlx_evm')) {
       return cb(null);
     }
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     (ref12$ = wallet.network),
       (FOREIGN_BRIDGE = ref12$.FOREIGN_BRIDGE),
@@ -1063,10 +1055,10 @@ module.exports = function ({ store, web3t }) {
       /* Get maxPerTx from HomeBridge */
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-        if (+send.amountSend < +minPerTx) {
+        if (+sendValue < +minPerTx) {
           return cb('Min amount per transaction is ' + minPerTx + ' VLX');
         }
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' VLX');
         }
         contract = web3.eth
@@ -1108,7 +1100,6 @@ module.exports = function ({ store, web3t }) {
     if (chosenNetworkWallet == null) {
       return cb('[Swap error]: wallet ' + chosenNetwork.id + ' is not found!');
     }
-    let value = store.current.send.amountSend;
     value = toHex(times(value, Math.pow(10, 18)));
     HOME_BRIDGE = wallet.network.HOME_BRIDGE;
     web3 = new Web3(
@@ -1121,12 +1112,12 @@ module.exports = function ({ store, web3t }) {
     contract.minPerTx(function (err, minPerTxRaw) {
       network = wallet.network;
       minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' ETH');
       }
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' ETH');
         }
         data = contract.relayTokens.getData(receiver);
@@ -1149,7 +1140,6 @@ module.exports = function ({ store, web3t }) {
     if (!(token === 'vlx_eth' && chosenNetwork.id === 'eth')) {
       return cb(null);
     }
-    value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     network = wallet.network;
     var ref16$ = wallet.network,
@@ -1163,12 +1153,12 @@ module.exports = function ({ store, web3t }) {
 
     contract.minPerTx(function (err, minPerTxRaw) {
       minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' ETH');
       }
       contract.maxAvailablePerTx(function (err, maxPerTxRaw) {
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' ETH');
         }
 
@@ -1195,7 +1185,6 @@ module.exports = function ({ store, web3t }) {
     ) {
       return cb(null);
     }
-    var value = store.current.send.amountSend;
     value = times(value, Math.pow(10, 18));
     network = wallet.network;
     var ref16$ = wallet.network,
@@ -1215,7 +1204,7 @@ module.exports = function ({ store, web3t }) {
         return cb(err);
       }
       minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' VLX');
       }
 
@@ -1225,7 +1214,7 @@ module.exports = function ({ store, web3t }) {
           return cb(err);
         }
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' VLX');
         }
 
@@ -1287,7 +1276,7 @@ module.exports = function ({ store, web3t }) {
         return cb(err);
       }
       minPerTx = div(minPerTxRaw, Math.pow(10, network.decimals));
-      if (+send.amountSend < +minPerTx) {
+      if (+sendValue < +minPerTx) {
         return cb('Min amount per transaction is ' + minPerTx + ' VLX');
       }
 
@@ -1296,7 +1285,7 @@ module.exports = function ({ store, web3t }) {
           return cb(err);
         }
         maxPerTx = div(maxPerTxRaw, Math.pow(10, network.decimals));
-        if (+send.amountSend > +maxPerTx) {
+        if (+sendValue > +maxPerTx) {
           return cb('Max amount per transaction is ' + maxPerTx + ' VLX');
         }
 
@@ -1309,7 +1298,6 @@ module.exports = function ({ store, web3t }) {
 
   const getBridgeInfo = function (cb) {
     //try {
-    console.log('[getBridgeInfo]');
     var chosenNetwork,
       ref$,
       ref1$,
