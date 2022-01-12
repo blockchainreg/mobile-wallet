@@ -1,7 +1,7 @@
 const binanceBscRpc = Object.freeze({
   mainnet: {
     api: {
-      web3Provider: 'https://bsc-dataseed213312.binance.org',
+      web3Provider: 'https://bsc-dataseed.binance.org',
       // From https://docs.binance.org/smart-chain/developer/rpc.html
       extraWeb3Providers: [
         // Recommend
@@ -23,7 +23,7 @@ const binanceBscRpc = Object.freeze({
   },
   testnet: {
     api: {
-      web3Provider: 'https://data-seed-prebsc-1-s132323.binance.org:8545',
+      web3Provider: 'https://data-seed-prebsc-1-s1.binance.org:8545',
       extraWeb3Providers: [
         'https://data-seed-prebsc-2-s1.binance.org:8545',
         'https://data-seed-prebsc-1-s2.binance.org:8545',
