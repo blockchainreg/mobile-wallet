@@ -52,6 +52,7 @@
       decodedData: '',
       showDataMode: 'encoded',
       error: '',
+      errorParse: null,
       sending: false,
       chekingBalance: null,
       chosenNetwork: null,

@@ -503,6 +503,10 @@ import { formatValue } from '../utils/format-value';
           var ref$;
           send.sending = false;
           if (err != null) {
+            if (typeof err === 'object') {
+              send.errorParse = err;
+            }
+
             return (send.error =
               ((ref$ = err.message) != null ? ref$ : err) + '');
           }
@@ -531,7 +535,6 @@ import { formatValue } from '../utils/format-value';
       );
     };
     const beforeSendAnyway = function () {
-      console.log(' - [beforeSendAnyway]');
       var cb;
       cb = console.log;
       return executeContractData(function (err) {

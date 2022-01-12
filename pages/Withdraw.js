@@ -1,36 +1,18 @@
-import React, { useState } from 'react';
-import {
-  Left,
-  Right,
-  Text,
-  Button,
-  View,
-  Icon,
-  Item,
-  Input,
-  Title,
-  Body,
-  Thumbnail,
-  Label,
-  Toast,
-} from 'native-base';
-import { observe } from 'mobx';
+import React from 'react';
+import { Text, Button, View, Item, Input, Toast } from 'native-base';
 import styles from '../Styles.js';
 import RefreshControl from '../components/RefreshControl.js';
 import sendFuncs from '../wallet/send-funcs.js';
 import walletsFuncs from '../wallet/wallets-funcs.js';
-import Spinner from '../utils/spinner.js';
 import StatusBar from '../components/StatusBar.js';
 import NetworkSlider from '../components/sliders/network-slider';
 import getLang from '../wallet/get-lang.js';
-import BackButton from '../components/BackButton.js';
 import Background from '../components/Background.js';
-import Images from '../Images.js';
-import { Image, Platform, TouchableOpacity } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { Platform, TouchableOpacity, Linking } from 'react-native';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 import Header from '../components/Header';
+import ErrorParse from '../components/errorParse';
 import InputAmount from '../components/InputAmount';
 import { ScanImage } from '../svg/scanImage.js';
 
@@ -76,6 +58,10 @@ export default ({ store, web3t }) => {
   };
 
   const changePage = (tab) => () => {
+    if (send.errorParse) {
+      send.errorParse = null;
+    }
+
     store.current.page = tab;
   };
 
@@ -269,7 +255,13 @@ export default ({ store, web3t }) => {
                   {lang.fee} {send.amountSendFee} {feeToken} ($
                   {send.amountSendFeeUsd})
                 </Text>
-                <Text style={styles.error}>{send.error}</Text>
+                <Text style={styles.error}>
+                  {send.errorParse && typeof send.errorParse === 'object' ? (
+                    <ErrorParse error={send.errorParse} />
+                  ) : (
+                    send.error
+                  )}
+                </Text>
               </View>
               <View style={styles.containerScreen}>
                 {btnWithdraw({ store, web3t })}
