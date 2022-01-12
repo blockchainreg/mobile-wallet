@@ -66,7 +66,6 @@ module.exports = function ({ store, web3t }) {
     usdc_velas_to_usdc_swap,
     busd_velas_to_busd_swap,
     busd_to_busd_velas_swap,
-    checkingAllowed,
     checkAllowedAmount,
     eth_usdtUsdt_velasSwap,
     usdt_velasEth_usdtSwap,
@@ -76,6 +75,8 @@ module.exports = function ({ store, web3t }) {
     receiver,
     web3,
     contract;
+
+  let checkingAllowed = store.current.send.checkingAllowed;
 
   if (store == null || web3t == null) {
     console.log('! store == null || web3t == null');
@@ -470,7 +471,6 @@ module.exports = function ({ store, web3t }) {
       }
     );
   };
-  checkingAllowed = false;
   /* Check for allowed amount for contract */
   checkAllowedAmount = function (arg$, cb) {
     var contract,
@@ -494,6 +494,7 @@ module.exports = function ({ store, web3t }) {
     if (checkingAllowed) {
       return;
     }
+    store.current.send.checkingAllowed = true;
     if (isSelfSend === true) {
       return cb(null);
     }
@@ -559,6 +560,7 @@ module.exports = function ({ store, web3t }) {
 
       confirm(store, confirmText, function (agree) {
         if (!agree) {
+          store.current.send.checkingAllowed = false;
           return cb('Canceled by user');
         }
         const coin = send.coin;
@@ -589,7 +591,7 @@ module.exports = function ({ store, web3t }) {
               exitLoaderCb();
               return cb(err);
             }
-            store.current.send.checkingAllowed = true;
+
             return pushTx(
               import$(
                 {
