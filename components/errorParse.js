@@ -25,6 +25,7 @@ export default ({ error: { text1, text2, textLink, hyperLink } }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    maxWidth: 340,
     justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',
