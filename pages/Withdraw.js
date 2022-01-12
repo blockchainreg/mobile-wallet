@@ -103,8 +103,8 @@ export default ({ store, web3t }) => {
   const token = wallet.coin.nickname || wallet.coin.token;
   const bridgeFeeNumber = store.current.send.homeFeePercent || 0;
   const bridgeFee = math.times(bridgeFeeNumber, 100);
-  const tokenFee = roundNumber(send.amountSendFee, { decimals: 9 })
-  const amountSendFeeUsd = roundNumber(send.amountSendFeeUsd, { decimals: 2 })
+  const tokenFee = roundNumber(send.amountSendFee, { decimals: 9 });
+  const amountSendFeeUsd = roundNumber(send.amountSendFeeUsd, { decimals: 2 });
 
   /* Methods */
   const handleChangeAmount = (text) => amountChange(wrapNumber(text));
