@@ -1,12 +1,12 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
-import { ifIphoneX } from "react-native-iphone-x-helper";
-const { width, height } = Dimensions.get("window");
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
+const { width, height } = Dimensions.get('window');
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import Constants from "expo-constants";
-import Images from "./Images.js";
+} from 'react-native-responsive-screen';
+import Constants from 'expo-constants';
+import Images from './Images.js';
 import normalize from 'react-native-normalize';
 
 export default StyleSheet.create({
@@ -14,88 +14,87 @@ export default StyleSheet.create({
   container: {
     fontFamily: 'Fontfabric-NexaRegular',
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 0,
   },
   image: {
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center"
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   bgMain: {
-    position: 'absolute', zIndex:-1, top: -200, left: 0
+    position: 'absolute',
+    zIndex: -1,
+    top: -200,
+    left: 0,
   },
   colorBg: {
-    backgroundColor: Images.colorDarkBlue
+    backgroundColor: Images.colorDarkBlue,
   },
   containerAndroid: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 0,
-    paddingTop: Platform.OS === "android" ? 25 : 0,
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
   panelHeader: {
     height,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingTop: 16,
   },
   footerIcon: {
-    color: "#9d41eb",
+    color: '#9d41eb',
   },
   footerHeight: {
-  	borderWidth:0,
+    borderWidth: 0,
     ...ifIphoneX(
       {
         // backgroundColor: Images.velasColor5,
-				backgroundColor: "transparent",
-        borderTopColor: "transparent",
-
+        backgroundColor: 'transparent',
+        borderTopColor: 'transparent',
       },
       {
         ...Platform.select({
           ios: {
-            borderTopColor: "transparent",
-						backgroundColor: "transparent",
+            borderTopColor: 'transparent',
+            backgroundColor: 'transparent',
             // backgroundColor: Images.velasColor5,
-
           },
           android: {
             // backgroundColor: Images.velasColor5,
-            borderTopColor: "transparent",
-						backgroundColor: "transparent",
+            borderTopColor: 'transparent',
+            backgroundColor: 'transparent',
             // zIndex: 2
-
           },
         }),
       }
     ),
   },
   footerTab: {
-    backgroundColor: "transparent" ,
-
+    backgroundColor: 'transparent',
   },
   footerButtonStyle: {
     ...ifIphoneX(
       {
         borderRadius: 0,
-        height: "100%",
-        backgroundColor: "transparent",
+        height: '100%',
+        backgroundColor: 'transparent',
       },
       {
         ...Platform.select({
           ios: {
             borderRadius: 0,
-            height: "auto",
-            backgroundColor: "transparent",
+            height: 'auto',
+            backgroundColor: 'transparent',
           },
           android: {
             borderRadius: 0,
             height: 50,
-            backgroundColor: "transparent",
+            backgroundColor: 'transparent',
           },
         }),
       }
@@ -106,20 +105,20 @@ export default StyleSheet.create({
       {
         fontSize: 10,
         marginBottom: 20,
-        color: "#343239",
+        color: '#343239',
       },
       {
         ...Platform.select({
-          ios: { fontSize: 10, color: "#343239" },
-          android: { fontSize: 10, color: "darkgrey" },
+          ios: { fontSize: 10, color: '#343239' },
+          android: { fontSize: 10, color: 'darkgrey' },
         }),
       }
     ),
   },
   iconFooter: {
     ...Platform.select({
-      ios: { color: "#563688" },
-      android: { color: "#563688" },
+      ios: { color: '#563688' },
+      android: { color: '#563688' },
     }),
   },
   iconFooter1: {
@@ -163,13 +162,13 @@ export default StyleSheet.create({
     ),
   },
   styleTxtSettings: {
-    color: "#fff",
+    color: '#fff',
   },
   styleTxtSeparator: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular",
-    marginTop: 10
+    fontFamily: 'Fontfabric-NexaRegular',
+    marginTop: 10,
   },
   iconTouchableBuy: {
     top: 2,
@@ -190,19 +189,19 @@ export default StyleSheet.create({
   iconInputContact: {
     marginRight: 10,
     marginBottom: 3,
-    color: "#B4B3B3",
+    color: '#B4B3B3',
   },
   linearGradientNew: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
-    height: "100%",
+    height: '100%',
   },
   introBackground: {
-    backgroundColor: "#290C64",
-    width: "100%",
-    height: "100%",
+    backgroundColor: '#290C64',
+    width: '100%',
+    height: '100%',
   },
   viewFlex: {
     ...Platform.select({
@@ -229,9 +228,9 @@ export default StyleSheet.create({
   },
   headerBlock: {
     marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   // viewWalletBalance: {
   //   ...ifIphoneX(
@@ -253,15 +252,21 @@ export default StyleSheet.create({
   viewWalletAbsolute: {
     ...ifIphoneX(
       {
-        top: hp("15%"), position: "absolute", width: '80%'
+        top: hp('15%'),
+        position: 'absolute',
+        width: '80%',
       },
       {
         ...Platform.select({
           ios: {
-            top: hp("13%"), position: "absolute", width: '80%'
+            top: hp('13%'),
+            position: 'absolute',
+            width: '80%',
           },
           android: {
-            top: hp("13%"), position: "absolute", width: '80%'
+            top: hp('13%'),
+            position: 'absolute',
+            width: '80%',
           },
         }),
       }
@@ -269,13 +274,13 @@ export default StyleSheet.create({
   },
   monoTop: {
     flex: 1,
-    backgroundColor: "#1B1B74",
+    backgroundColor: '#1B1B74',
     borderTopLeftRadius: 25,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "63%",
+    height: '63%',
     zIndex: 1,
   },
   viewMono: {
@@ -284,11 +289,11 @@ export default StyleSheet.create({
         flex: 1,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "53%",
+        height: '53%',
       },
       {
         ...Platform.select({
@@ -296,21 +301,21 @@ export default StyleSheet.create({
             flex: 1,
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("45%"),
+            height: hp('45%'),
           },
           android: {
             flex: 1,
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: hp("47%"),
+            height: hp('47%'),
           },
         }),
       }
@@ -320,38 +325,38 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "35%",
+        height: '35%',
       },
       {
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "#fff",
+            backgroundColor: '#fff',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "25%",
+            height: '25%',
           },
           android: {
             flex: 1,
-            backgroundColor: "#fff",
+            backgroundColor: '#fff',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "20%",
+            height: '20%',
           },
         }),
       }
@@ -363,25 +368,25 @@ export default StyleSheet.create({
     // backgroundColor: "#fff",
     // borderTopLeftRadius: 16,
     // borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "100%",
+    height: '100%',
   },
   viewModalVerify: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "100%",
+    height: '100%',
   },
   viewMonoGray: {
-    backgroundColor: "rgba( 232, 239, 243, 100)",
+    backgroundColor: 'rgba( 232, 239, 243, 100)',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
@@ -392,46 +397,46 @@ export default StyleSheet.create({
   containerScreen: {
     flex: 1,
     // width: "90%",
-    alignItems: "center",
+    alignItems: 'center',
     marginHorizontal: 20,
     // justifyContent: 'center',
   },
   viewBuyFront: {
     flex: 1,
-    backgroundColor: "#FDFDFD",
+    backgroundColor: '#FDFDFD',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "30%",
+    height: '30%',
     zIndex: 1,
   },
   viewBuy: {
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "15%",
+        height: '15%',
         zIndex: 0,
       },
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "20%",
+        height: '20%',
         zIndex: 0,
       }
     ),
@@ -440,40 +445,40 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "45%",
+        height: '45%',
         zIndex: 0,
       },
       {
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "rgba(253,253,253,0.25)",
+            backgroundColor: 'rgba(253,253,253,0.25)',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "35%",
+            height: '35%',
             zIndex: 0,
           },
           android: {
             flex: 1,
-            backgroundColor: "rgba(253,253,253,0.25)",
+            backgroundColor: 'rgba(253,253,253,0.25)',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "35%",
+            height: '35%',
             zIndex: 0,
           },
         }),
@@ -484,40 +489,40 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "45%",
+        height: '45%',
         zIndex: 0,
       },
       {
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "rgba(253,253,253,0.25)",
+            backgroundColor: 'rgba(253,253,253,0.25)',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "45%",
+            height: '45%',
             zIndex: 0,
           },
           android: {
             flex: 1,
-            backgroundColor: "rgba(253,253,253,0.25)",
+            backgroundColor: 'rgba(253,253,253,0.25)',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "50%",
+            height: '50%',
             zIndex: 0,
           },
         }),
@@ -529,15 +534,15 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 20,
-        color: "rgba(49,49,49,100)",
-        marginTop: "10%",
-        fontFamily: "Fontfabric-NexaRegular"
+        color: 'rgba(49,49,49,100)',
+        marginTop: '10%',
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       {
         fontSize: 18,
-        color: "rgba(49,49,49,100)",
-        marginVertical: "4%",
-        fontFamily: "Fontfabric-NexaRegular"
+        color: 'rgba(49,49,49,100)',
+        marginVertical: '4%',
+        fontFamily: 'Fontfabric-NexaRegular',
       }
     ),
   },
@@ -545,33 +550,33 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 20,
-        color: "rgba(49,49,49,100)",
-        marginTop: "10%",
-        fontFamily: "Fontfabric-NexaRegular"
+        color: 'rgba(49,49,49,100)',
+        marginTop: '10%',
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       {
         fontSize: 18,
-        color: "rgba(49,49,49,100)",
-        marginTop: "10%",
-        fontFamily: "Fontfabric-NexaRegular"
+        color: 'rgba(49,49,49,100)',
+        marginTop: '10%',
+        fontFamily: 'Fontfabric-NexaRegular',
       }
     ),
   },
   containerHeight: {
-    height: "100%",
+    height: '100%',
   },
   bodyBlock: {
     ...ifIphoneX(
       {
         // marginTop: 20,
-        marginTop: "5%",
+        marginTop: '5%',
         flex: 1,
         paddingLeft: 20,
         paddingRight: 20,
       },
       {
         ...Platform.select({
-          ios: { marginTop: "5%", flex: 1, paddingLeft: 20, paddingRight: 20 },
+          ios: { marginTop: '5%', flex: 1, paddingLeft: 20, paddingRight: 20 },
           android: { marginTop: 5, flex: 1, paddingLeft: 20, paddingRight: 20 },
         }),
       }
@@ -580,7 +585,7 @@ export default StyleSheet.create({
   bodyBlockSettings: {
     ...ifIphoneX(
       {
-        position: "absolute",
+        position: 'absolute',
         // bottom: hp('65%'),
         flex: 1,
         paddingLeft: 20,
@@ -588,7 +593,7 @@ export default StyleSheet.create({
         top: -120,
       },
       {
-        position: "absolute",
+        position: 'absolute',
         // bottom: hp('68%'),
         flex: 1,
         paddingLeft: 20,
@@ -598,49 +603,49 @@ export default StyleSheet.create({
     ),
   },
   viewTextInputDown: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   viewTextInput: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   textInputDownRight: {
     fontSize: 14,
     marginVertical: 10,
-    color: "rgba(255,255,255,0.80)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(255,255,255,0.80)',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textInputDownLeft: {
     fontSize: 14,
     marginTop: 10,
-    color: "rgba(255,255,255,0.80)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(255,255,255,0.80)',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textInputDown: {
     fontSize: 16,
     marginTop: 20,
     marginHorizontal: 20,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
     // color: '#fff',
   },
   btnCloseModal: {
-    bottom: hp("5%"),
-    alignItems: "center",
+    bottom: hp('5%'),
+    alignItems: 'center',
   },
   textInputDownMl: {
     fontSize: 16,
     marginTop: 10,
-    color: "#fff",
+    color: '#fff',
     marginLeft: 20,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   containerBuy: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
-    height: "80%",
+    height: '80%',
     zIndex: 1,
   },
   arrowHeaderLeft: {
@@ -651,78 +656,76 @@ export default StyleSheet.create({
   },
   arrowHeaderIcon: {
     fontSize: 30,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   refreshHeaderIcon: {
     fontSize: 30,
-    color: "rgba(255, 255, 255, 0.35)",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: 'rgba(255, 255, 255, 0.35)',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   addHeaderIcon: {
     fontSize: 20,
-    color: "rgba(255, 255, 255, 0.35)",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: 'rgba(255, 255, 255, 0.35)',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   arrowHeaderIconBlack: {
     fontSize: 30,
     // color: "#9d41eb",
     color: '#fff',
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   headerIcon: {
     // fontSize: 40,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   headerText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   arrowHeaderIconTransparent: {
     fontSize: 30,
-    color: "transparent",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: 'transparent',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   arrowHeaderIconNoTransparent: {
     fontSize: 36,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   titleHeader: {
     ...ifIphoneX(
       {
         marginTop: 10,
-        color: "#fff",
+        color: '#fff',
         fontSize: 22,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             marginTop: 5,
-            color: "#fff",
+            color: '#fff',
             fontSize: 18,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
-
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             marginTop: 5,
-            color: "#fff",
+            color: '#fff',
             fontSize: 18,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
-
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -732,149 +735,149 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         marginTop: 10,
-        color: "#fff",
+        color: '#fff',
         fontSize: 18,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
         // fontWeight: "bold",
       },
       {
         ...Platform.select({
           ios: {
             marginTop: 5,
-            color: "#fff",
+            color: '#fff',
             fontSize: 18,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             marginTop: 5,
-            color: "#fff",
+            color: '#fff',
             fontSize: 18,
-            fontWeight: Platform.OS === 'ios' ? "bold" : null,
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
     ),
   },
   labelInput: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 22,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   title: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
-        fontWeight: "bold",
-        alignSelf: "center",
+        fontWeight: 'bold',
+        alignSelf: 'center',
         height: 30,
         marginTop: 10,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
         height: 30,
-        fontWeight: "bold",
-        alignSelf: "center",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   title1: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
-        fontWeight: "bold",
-        alignSelf: "center",
+        fontWeight: 'bold',
+        alignSelf: 'center',
         height: 30,
         marginTop: 10,
-        textAlign: "center",
-        width: "150%",
-        fontFamily: "Fontfabric-NexaBold"
+        textAlign: 'center',
+        width: '150%',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
         height: 30,
-        fontWeight: Platform.OS === 'ios' ? "bold" : null,
-        fontFamily: "Fontfabric-NexaBold",
-        alignSelf: "center",
-        textAlign: "center",
-        width: "170%",
+        fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+        fontFamily: 'Fontfabric-NexaBold',
+        alignSelf: 'center',
+        textAlign: 'center',
+        width: '170%',
       }
     ),
   },
   titleWallets: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
-        fontWeight: "bold",
-        alignSelf: "center",
+        fontWeight: 'bold',
+        alignSelf: 'center',
         height: 30,
         marginTop: 10,
-        textAlign: "center",
-        width: "150%",
-        fontFamily: "Fontfabric-NexaBold"
+        textAlign: 'center',
+        width: '150%',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
         height: 30,
-        fontWeight: Platform.OS === 'ios' ? "bold" : null,
-        alignSelf: "center",
-        textAlign: "center",
-        width: "170%",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+        alignSelf: 'center',
+        textAlign: 'center',
+        width: '170%',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   title2: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
     // fontWeight: "bold",
     marginLeft: 20,
     marginBottom: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   titleAbsolute: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
     left: 20,
     bottom: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   titleBlack: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
-        fontWeight: "bold",
-        alignSelf: "center",
+        fontWeight: 'bold',
+        alignSelf: 'center',
         height: 30,
         marginTop: 10,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
         height: 30,
-        fontWeight: Platform.OS === 'ios' ? "bold" : null,
-        alignSelf: "center",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+        alignSelf: 'center',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   txtLocked: {
-    color: "#fff",
+    color: '#fff',
     marginTop: 15,
-    fontFamily: "Nexa-Book",
-    textAlign: "center"
+    fontFamily: 'Nexa-Book',
+    textAlign: 'center',
   },
 
   h1TextBuy: {
@@ -882,28 +885,28 @@ export default StyleSheet.create({
       {
         marginTop: 15,
         // paddingRight: '10%',
-        color: "#fff",
+        color: '#fff',
         fontSize: 36,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             marginTop: 10,
             // paddingRight: '10%',
-            color: "#fff",
+            color: '#fff',
             fontSize: 28,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             marginTop: 10,
             // paddingRight: '10%',
-            color: "#fff",
+            color: '#fff',
             fontSize: 24,
-            fontWeight: Platform.OS === 'ios' ? "bold" : null,
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -947,119 +950,119 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         // marginVertical: 15,
-        alignSelf: "flex-start",
-    marginHorizontal: 20,
-    width: "80%"
+        alignSelf: 'flex-start',
+        marginHorizontal: 20,
+        width: '80%',
       },
       {
         ...Platform.select({
           ios: {
             // marginVertical: 10,
-            alignSelf: "flex-start",
-    marginHorizontal: 20,
+            alignSelf: 'flex-start',
+            marginHorizontal: 20,
 
-    marginLeft: 20
+            marginLeft: 20,
           },
           android: {
             // marginVertical: 10,
-            alignSelf: "flex-start",
-    marginHorizontal: 20,
+            alignSelf: 'flex-start',
+            marginHorizontal: 20,
 
-    marginLeft: 20
+            marginLeft: 20,
           },
         }),
       }
     ),
   },
   itemBorderColor: {
-    borderBottomColor: "rgba(255,255,255,0.60)",
+    borderBottomColor: 'rgba(255,255,255,0.60)',
   },
   itemBorderColorAndroidNone: {
     ...Platform.select({
       ios: {
-        borderBottomColor: "#fff",
+        borderBottomColor: '#fff',
       },
-      android: { display: "none" },
+      android: { display: 'none' },
     }),
   },
   inputStyle: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 40,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   inputStyleNumberCard: {
     ...ifIphoneX(
       {
-        color: "#fff",
-        fontWeight: "bold",
+        color: '#fff',
+        fontWeight: 'bold',
         paddingLeft: 0,
         fontSize: 28,
         marginTop: 10,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
-            color: "#fff",
-            fontWeight: "bold",
+            color: '#fff',
+            fontWeight: 'bold',
             paddingLeft: 0,
             fontSize: 22,
             marginTop: 10,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
-            color: "#fff",
-            fontWeight: "bold",
+            color: '#fff',
+            fontWeight: 'bold',
             paddingLeft: 0,
-            width: "100%",
+            width: '100%',
             fontSize: 20,
             marginTop: 10,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
     ),
   },
   inputStyleDefault: {
-    color: "rgba(255,255,255,0.90)",
+    color: 'rgba(255,255,255,0.90)',
     fontSize: 20,
     // fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   buttonInput: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   buttonMargin: {
     marginHorizontal: -15,
   },
   textButton: {
     fontSize: 18,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textButtonTransparent: {
     fontSize: 18,
-    color: "rgba(255,255,255,0.50)",
-    fontWeight: "bold",
+    color: 'rgba(255,255,255,0.50)',
+    fontWeight: 'bold',
     paddingRight: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   viewSuccessModal: {
     ...ifIphoneX(
       {
         flex: 1,
-        width: "100%",
-        marginTop: "-10%",
+        width: '100%',
+        marginTop: '-10%',
       },
       {
         flex: 1,
-        width: "100%",
-        marginTop: "-5%",
+        width: '100%',
+        marginTop: '-5%',
       }
     ),
   },
@@ -1067,12 +1070,12 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        width: "100%",
-        marginTop: "-10%",
+        width: '100%',
+        marginTop: '-10%',
       },
       {
         flex: 1,
-        width: "100%",
+        width: '100%',
         // marginTop: 0,
       }
     ),
@@ -1081,46 +1084,46 @@ export default StyleSheet.create({
     marginLeft: 20,
   },
   textCurrentH2: {
-    marginTop: "5%",
-    color: "rgba(255,255,255,0.80)",
+    marginTop: '5%',
+    color: 'rgba(255,255,255,0.80)',
     fontSize: 14,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textCurrentQr: {
-    marginBottom: "5%",
-    color: "rgba(255,255,255,0.80)",
+    marginBottom: '5%',
+    color: 'rgba(255,255,255,0.80)',
     fontSize: 14,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textCurrentH1: {
-    marginTop: "2%",
-    color: "rgba(255,255,255,100)",
+    marginTop: '2%',
+    color: 'rgba(255,255,255,100)',
     fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textCurrentH3: {
-    marginTop: "2%",
-    color: "rgba(255,255,255,0.80)",
+    marginTop: '2%',
+    color: 'rgba(255,255,255,0.80)',
     fontSize: 13,
-    fontWeight: "200",
-    fontFamily: "Nexa-Book"
+    fontWeight: '200',
+    fontFamily: 'Nexa-Book',
   },
   // Dashboard
   headerLayoutStyle: {
     width,
     height,
     top: 80,
-    alignItems: "center",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    backgroundColor: '#fff',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
   viewHeight: {
-    position: "absolute",
-    height: "100%",
+    position: 'absolute',
+    height: '100%',
     top: 0,
     left: 0,
     right: 0,
@@ -1130,12 +1133,12 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         top: height - 40,
-        bottom: hp("40%"),
+        bottom: hp('40%'),
       },
       {
         ...Platform.select({
-          ios: { top: height - 80, bottom: hp("26%") },
-          android: { top: height - 80, bottom: hp("20%") },
+          ios: { top: height - 80, bottom: hp('26%') },
+          android: { top: height - 80, bottom: hp('20%') },
         }),
       }
     ),
@@ -1144,12 +1147,12 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         top: height - 40,
-        bottom: hp("40%"),
+        bottom: hp('40%'),
       },
       {
         ...Platform.select({
           ios: { top: height - 30, bottom: height / 3.5 },
-          android: { top: height - 35, bottom: hp("20%") },
+          android: { top: height - 35, bottom: hp('20%') },
         }),
       }
     ),
@@ -1160,8 +1163,8 @@ export default StyleSheet.create({
         width,
         height,
         // justifyContent: 'center',
-        alignItems: "center",
-        backgroundColor: "#fff",
+        alignItems: 'center',
+        backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
         // top: 130,
@@ -1172,8 +1175,8 @@ export default StyleSheet.create({
             width,
             height,
             // justifyContent: 'center',
-            alignItems: "center",
-            backgroundColor: "#fff",
+            alignItems: 'center',
+            backgroundColor: '#fff',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
             top: 20,
@@ -1181,9 +1184,9 @@ export default StyleSheet.create({
           android: {
             width,
             height,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#fff',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
             top: 20,
@@ -1197,20 +1200,20 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         // paddingTop: hp("5%"),
-        paddingBottom: hp("3%"),
-        backgroundColor: "pink"
+        paddingBottom: hp('3%'),
+        backgroundColor: 'pink',
       },
       {
         ...Platform.select({
           ios: {
             // paddingTop: hp("5%"),
-            paddingBottom: hp("3%"),
+            paddingBottom: hp('3%'),
           },
           android: {
             // paddingTop: 70,
             // paddingBottom: 30,
-            paddingTop: hp("6%"),
-            paddingBottom: hp("3%"),
+            paddingTop: hp('6%'),
+            paddingBottom: hp('3%'),
           },
         }),
       }
@@ -1220,9 +1223,8 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         // paddingTop: hp("5%"),
-        paddingBottom: hp("3%"),
-        backgroundColor: "green"
-
+        paddingBottom: hp('3%'),
+        backgroundColor: 'green',
       },
       {
         ...Platform.select({
@@ -1233,8 +1235,8 @@ export default StyleSheet.create({
           android: {
             // paddingTop: 70,
             // paddingBottom: 30,
-            paddingTop: hp("6%"),
-            paddingBottom: hp("3%"),
+            paddingTop: hp('6%'),
+            paddingBottom: hp('3%'),
             // backgroundColor: "#fafafa",
           },
         }),
@@ -1251,28 +1253,28 @@ export default StyleSheet.create({
   viewMbSliding3: {
     marginBottom: 24,
     paddingHorizontal: 20,
-    alignContent: "center",
+    alignContent: 'center',
   },
   viewMbSliding4: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 64,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
   },
   viewMbSliding5: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     height: 64,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
     top: -10,
   },
   containerSub: {
-    alignItems: "center",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    backgroundColor: '#fff',
     // backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    height: "100%",
+    height: '100%',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     // paddingTop: 16,
@@ -1284,21 +1286,21 @@ export default StyleSheet.create({
         flex: 1,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: hp("75%"),
+        height: hp('75%'),
       },
       {
         flex: 1,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: hp("75%"),
+        height: hp('75%'),
       }
     ),
   },
@@ -1306,21 +1308,21 @@ export default StyleSheet.create({
   numbersFaq: {
     ...Platform.select({
       ios: {
-        color: "#313131",
+        color: '#313131',
         fontSize: 17,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginTop: 10,
         marginBottom: 5,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       android: {
-        color: "#313131",
+        color: '#313131',
         fontSize: 17,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginTop: 5,
         marginBottom: 5,
-        textTransform: "capitalize",
-        fontFamily: "Fontfabric-NexaBold"
+        textTransform: 'capitalize',
+        fontFamily: 'Fontfabric-NexaBold',
       },
     }),
   },
@@ -1328,26 +1330,26 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         marginTop: 15,
-        color: "#fff",
+        color: '#fff',
         fontSize: 36,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             marginTop: 10,
-            color: "#fff",
+            color: '#fff',
             fontSize: 28,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             // marginTop: 10,
-            color: "#fff",
+            color: '#fff',
             fontSize: 24,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -1355,10 +1357,10 @@ export default StyleSheet.create({
   },
   viewPt: {
     paddingTop: 10,
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular",
-    lineHeight: 20
+    fontFamily: 'Fontfabric-NexaRegular',
+    lineHeight: 20,
   },
   viewPt1: {
     paddingTop: 20,
@@ -1366,13 +1368,12 @@ export default StyleSheet.create({
   userHistoryRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    width: "100%",
-
+    width: '100%',
   },
   userHistoryRow1: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    width: "90%"
+    width: '90%',
   },
   listitemHeight: {
     height: 60,
@@ -1382,26 +1383,26 @@ export default StyleSheet.create({
   },
   heightListItem: {
     height: 60,
-    borderBottomColor: "transparent"
+    borderBottomColor: 'transparent',
   },
   seperatorStyle: {
     backgroundColor: Images.velasColor3,
-    opacity: 0.60,
-    borderColor: "transparent",
-    height: Platform.OS === "android" ? 40 : null,
+    opacity: 0.6,
+    borderColor: 'transparent',
+    height: Platform.OS === 'android' ? 40 : null,
   },
   // InviteFriend
   line: {
     borderBottomWidth: 0.5,
     left: 62,
     top: 10,
-    borderBottomColor: "#E7E8F1",
+    borderBottomColor: '#E7E8F1',
     marginBottom: 10,
   },
   linePicker: {
     borderBottomWidth: 0.5,
     left: 62,
-    borderBottomColor: "#E7E8F1",
+    borderBottomColor: '#E7E8F1',
   },
   headerPicker: {
     ...ifIphoneX(
@@ -1412,58 +1413,58 @@ export default StyleSheet.create({
     ),
   },
   listItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     paddingLeft: 22,
     paddingTop: 10,
   },
   iconStyle: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     fontSize: 20,
     top: 8,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   iconStyleArrow: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     fontSize: 20,
     top: 3,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   containerAlignLeft: {
     flex: 1,
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 20,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   containerAlignLeft1: {
     flex: 1,
     paddingLeft: 20,
     paddingRight: 20,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   h2AlignLeft: {
     ...ifIphoneX(
       {
         fontSize: 26,
-        color: "#313131",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#313131',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         fontSize: 20,
-        color: "#313131",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#313131',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   h3AlignLeft: {
     fontSize: 15,
-    color: "#313131",
+    color: '#313131',
     marginTop: 16,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   gradientBtnMargin: {
     marginTop: 20,
@@ -1474,14 +1475,14 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        alignItems: "center",
-        width: "100%",
-        marginTop: "15%",
+        alignItems: 'center',
+        width: '100%',
+        marginTop: '15%',
       },
       {
         flex: 1,
-        alignItems: "center",
-        width: "100%",
+        alignItems: 'center',
+        width: '100%',
       }
     ),
   },
@@ -1489,14 +1490,14 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        alignItems: "center",
-        width: "100%",
+        alignItems: 'center',
+        width: '100%',
         // marginTop: '-30%',
       },
       {
         flex: 1,
-        alignItems: "center",
-        width: "100%",
+        alignItems: 'center',
+        width: '100%',
       }
     ),
   },
@@ -1525,24 +1526,24 @@ export default StyleSheet.create({
   constName: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 36,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
-            color: "#fff",
+            color: '#fff',
             fontSize: 28,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
-            color: "#fff",
+            color: '#fff',
             fontSize: 24,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -1554,53 +1555,53 @@ export default StyleSheet.create({
   },
   viewBuyFront1: {
     flex: 1,
-    backgroundColor: "#FDFDFD",
+    backgroundColor: '#FDFDFD',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "40%",
+    height: '40%',
     zIndex: 1,
   },
   viewBuyBack1: {
     ...Platform.select({
       ios: {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "55%",
+        height: '55%',
         zIndex: 0,
       },
       android: {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "60%",
+        height: '60%',
         zIndex: 0,
       },
     }),
   },
   container1: {
-    height: "100%",
+    height: '100%',
   },
   textButtonPr: {
     fontSize: 18,
-    color: "#fff",
-    fontWeight: "bold",
+    color: '#fff',
+    fontWeight: 'bold',
     paddingRight: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   gradientBtn: {
     paddingLeft: 20,
@@ -1626,36 +1627,36 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "45%",
+        height: '45%',
         zIndex: 0,
       },
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "40%",
+        height: '40%',
         zIndex: 0,
       }
     ),
   },
   inputStyle2: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   viewTextCrypto: {
     flex: 1,
@@ -1671,7 +1672,7 @@ export default StyleSheet.create({
     marginTop: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    borderColor: "#fff",
+    borderColor: '#fff',
 
     borderWidth: 1.5,
     borderRadius: 28,
@@ -1680,10 +1681,10 @@ export default StyleSheet.create({
     marginTop: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderWidth: 1.5,
     borderRadius: 28,
-    backgroundColor: "rgba(225,225,225,0.4)",
+    backgroundColor: 'rgba(225,225,225,0.4)',
   },
   btnClose: {
     // marginVertical: 30,
@@ -1696,42 +1697,42 @@ export default StyleSheet.create({
     paddingRight: 20,
   },
   btnTextClose: {
-    color: "#009EFD",
+    color: '#009EFD',
     fontSize: 18,
     marginBottom: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textBtnModal: {
-    marginTop: "4%",
-    color: "rgba(255,255,255,0.80)",
+    marginTop: '4%',
+    color: 'rgba(255,255,255,0.80)',
     fontSize: 14,
-    fontWeight: "200",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: '200',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   viewBuyFront4: {
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#FDFDFD",
+        backgroundColor: '#FDFDFD',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "30%",
+        height: '30%',
         zIndex: 1,
       },
       {
         flex: 1,
-        backgroundColor: "#FDFDFD",
+        backgroundColor: '#FDFDFD',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "18%",
+        height: '18%',
         zIndex: 1,
       }
     ),
@@ -1743,20 +1744,20 @@ export default StyleSheet.create({
   // LoginInPassword
   containerCenter: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   containerFlexStart: {
     ...ifIphoneX(
       {
         flex: 1,
-        alignItems: "center",
-        paddingTop: hp("10%"),
+        alignItems: 'center',
+        paddingTop: hp('10%'),
       },
       {
         ...Platform.select({
-          ios: { flex: 1, alignItems: "center", paddingTop: "10%" },
+          ios: { flex: 1, alignItems: 'center', paddingTop: '10%' },
           // android: { flex: 1, alignItems: "center", paddingTop: 30 },
-          android: { flex: 1, alignItems: "center",  },
+          android: { flex: 1, alignItems: 'center' },
         }),
       }
     ),
@@ -1765,57 +1766,57 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        alignItems: "center",
-        paddingTop: hp("10%"),
+        alignItems: 'center',
+        paddingTop: hp('10%'),
       },
       {
         ...Platform.select({
-          ios: { flex: 1, alignItems: "center", paddingTop: "10%" },
-          android: { flex: 1, alignItems: "center", paddingTop: "15%" },
+          ios: { flex: 1, alignItems: 'center', paddingTop: '10%' },
+          android: { flex: 1, alignItems: 'center', paddingTop: '15%' },
         }),
       }
     ),
   },
   headerBlockArrow: {
     marginTop: 20,
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   viewLogin: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
-    height: "100%",
+    height: '100%',
     // backgroundColor: 'rgba(253,253,253,100)',
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   textH1Mt: {
     fontSize: 14,
-    color: "rgba(42,42,42,100)",
+    color: 'rgba(42,42,42,100)',
     marginTop: 57,
     width: 245,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   card: {
     ...Platform.select({
       ios: {
-        width: "100%",
+        width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 5,
         marginTop: 37,
-        backgroundColor: "transparent",
-        borderColor: "transparent",
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
       },
       android: {
-        width: "90%",
+        width: '90%',
         paddingHorizontal: 20,
         paddingVertical: 5,
         marginTop: 37,
-        backgroundColor: "#fff",
-        borderColor: "#fff",
+        backgroundColor: '#fff',
+        borderColor: '#fff',
         borderRadius: 7,
-        shadowColor: "rgba(207,207,207,0.5)",
+        shadowColor: 'rgba(207,207,207,0.5)',
         shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
@@ -1825,9 +1826,9 @@ export default StyleSheet.create({
   cardItem: {
     ...Platform.select({
       ios: {
-        backgroundColor: "rgba(253,253,253,100)",
+        backgroundColor: 'rgba(253,253,253,100)',
         borderRadius: 5,
-        shadowColor: "rgba(207,207,207,0.5)",
+        shadowColor: 'rgba(207,207,207,0.5)',
         shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
@@ -1836,12 +1837,12 @@ export default StyleSheet.create({
     }),
   },
   iconTop: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     // top: 2,
     width: 25,
   },
   iconTopLeft: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     // top: 2,
     left: 3,
     width: 25,
@@ -1853,24 +1854,24 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "#fff",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold",
-        top: -1
+        color: '#fff',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
+        top: -1,
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "#fff",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            color: "#fff",
-            fontWeight: Platform.OS === 'ios' ? "bold" : null,
-            fontFamily: "Fontfabric-NexaBold",
+            color: '#fff',
+            fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -1880,23 +1881,23 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "#fff",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#fff',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "#fff",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            color: "#fff",
-            fontWeight: Platform.OS === 'ios' ? "bold" : null,
-            fontFamily: "Fontfabric-NexaBold",
+            color: '#fff',
+            fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -1906,23 +1907,23 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "#fff",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#fff',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 12,
-            color: "#fff",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 12,
-            color: "#fff",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -1930,36 +1931,36 @@ export default StyleSheet.create({
   },
   errorSend: {
     fontSize: 12,
-    color: "#ff9999",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#ff9999',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   error: {
     fontSize: 14,
-    color: "red",
+    color: 'red',
     top: 2,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   mgTopInput: {
     ...Platform.select({
-      ios: { marginTop: "none" },
+      ios: { marginTop: 'none' },
       android: { top: 20 },
     }),
   },
   marginBtn: {
-    alignItems: "center",
-    width: "100%",
+    alignItems: 'center',
+    width: '100%',
     // marginBottom: 200,
     // marginTop: 20,
   },
   marginBtnAndroid: {
-    alignItems: "center",
-    width: "100%",
+    alignItems: 'center',
+    width: '100%',
     marginBottom: 200,
     marginTop: 20,
-    zIndex: 8888
+    zIndex: 8888,
   },
   marginBtn1: {
-    width: "100%",
+    width: '100%',
     marginBottom: 15,
     marginTop: 20,
     flexDirection: 'row',
@@ -1969,29 +1970,29 @@ export default StyleSheet.create({
   textErrorField: {
     marginTop: 3,
     fontSize: 14,
-    color: "red",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'red',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   gradientBtnPh: {
     marginVertical: 30,
   },
   buttonInactive: {
-    backgroundColor: "#F2F2F290",
+    backgroundColor: '#F2F2F290',
     marginVertical: 30,
     borderRadius: 0,
   },
   buttonTextInactive: {
-    color: "#00000050",
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    color: '#00000050',
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
     fontSize: 14,
-    textTransform: "capitalize",
-    fontFamily: "Fontfabric-NexaBold"
+    textTransform: 'capitalize',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   gradientBtnBorder: {
     paddingHorizontal: 0,
     borderWidth: 1,
-    borderColor: "#9d41eb",
-    maxWidth: "80%",
+    borderColor: '#9d41eb',
+    maxWidth: '80%',
     borderRadius: 10,
   },
   gradientBtnPhMargin: {
@@ -2000,11 +2001,11 @@ export default StyleSheet.create({
   },
   textLoginStyle: {
     fontSize: 16,
-    color: "#fff",
+    color: '#fff',
     marginTop: 40,
     width: 245,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // MailEdit
   arrowHeaderLeft1: {
@@ -2015,13 +2016,13 @@ export default StyleSheet.create({
     paddingRight: 5,
     marginTop: 3,
     width: 100,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   textBtnHeader: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   phItem: {
     paddingHorizontal: 20,
@@ -2029,39 +2030,39 @@ export default StyleSheet.create({
   textInputMail: {
     fontSize: 14,
     paddingLeft: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textInputPhone: {
     ...Platform.select({
       ios: {
         fontSize: 14,
-        position: "absolute",
+        position: 'absolute',
         left: 100,
         top: -3,
-        width: "100%",
-        fontFamily: "Fontfabric-NexaRegular"
+        width: '100%',
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       android: {
         fontSize: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 80,
         // top: -3,
-        width: "100%",
-        fontFamily: "Fontfabric-NexaRegular"
+        width: '100%',
+        fontFamily: 'Fontfabric-NexaRegular',
       },
     }),
   },
   pickerWidthPhone: {
     ...Platform.select({
       ios: { width: 70 },
-      android: { width: "110%", color: "rgba(42,42,42,0.70)" },
+      android: { width: '110%', color: 'rgba(42,42,42,0.70)' },
     }),
   },
   // PasswordRecover
   containerCenter1: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   imgSize: {
     width: 80,
@@ -2069,22 +2070,22 @@ export default StyleSheet.create({
   },
   textStyleImg: {
     fontSize: 27,
-    color: "rgba(34,34,34,100)",
-    fontWeight: "bold",
+    color: 'rgba(34,34,34,100)',
+    fontWeight: 'bold',
     marginTop: 40,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textSmallStyleImg: {
     fontSize: 16,
-    color: "rgba(34,34,34,100)",
-    textAlign: "center",
+    color: 'rgba(34,34,34,100)',
+    textAlign: 'center',
     width: 229,
     marginTop: 40,
     lineHeight: 22,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textBold: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   gradientBtnMt: {
     marginTop: 60,
@@ -2093,37 +2094,37 @@ export default StyleSheet.create({
   },
   // Settings
   constMail: {
-    color: "#313131",
+    color: '#313131',
     fontSize: 17,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   constMail1: {
-    color: "rgba(49,49,49,100)",
+    color: 'rgba(49,49,49,100)',
     fontSize: 17,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   numbersFaq1: {
-    color: "rgba(49,49,49,100)",
+    color: 'rgba(49,49,49,100)',
     fontSize: 17,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   txtSettings: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 17,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   colorIcon: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
   },
   supportIcon: {
     ...Platform.select({
-      ios: { color: "rgba(34,34,34,0.30)", marginTop: 5 },
-      android: { color: "rgba(34,34,34,0.30)" },
+      ios: { color: 'rgba(34,34,34,0.30)', marginTop: 5 },
+      android: { color: 'rgba(34,34,34,0.30)' },
     }),
   },
   transparentIcon: {
-    color: "transparent",
+    color: 'transparent',
   },
   pickerLeft: {
     left: -15,
@@ -2137,38 +2138,38 @@ export default StyleSheet.create({
   pickerEnglish: {
     ...Platform.select({
       ios: {},
-      android: { color: "black", fontWeight: "bold", width: "110%" },
+      android: { color: 'black', fontWeight: 'bold', width: '110%' },
     }),
   },
   // SignUp
   textH1Sign: {
     fontSize: 27,
-    color: "#32383E",
-    fontWeight: "bold",
+    color: '#32383E',
+    fontWeight: 'bold',
     marginTop: 25,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textH1Seed2: {
     ...ifIphoneX(
       {
         fontSize: 25,
-        color: "#fff",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#fff',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 20,
-            color: "#fff",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 20,
-            color: "#fff",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -2178,27 +2179,27 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 24,
-        color: "#fff",
-        fontWeight: "bold",
+        color: '#fff',
+        fontWeight: 'bold',
         marginTop: 20,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 20,
-            color: "#fff",
-            fontWeight: "bold",
+            color: '#fff',
+            fontWeight: 'bold',
             marginTop: 15,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 20,
-            color: "#fff",
+            color: '#fff',
             // fontWeight: "bold",
             marginTop: 15,
             // fontFamily: ("Fontfabric-NexaBold") && ("Fontfabric-NexaBold"),
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -2207,49 +2208,49 @@ export default StyleSheet.create({
   card1: {
     ...Platform.select({
       ios: {
-        width: "100%",
+        width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 5,
         marginTop: 25,
-        backgroundColor: "transparent",
-        borderColor: "transparent",
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
       },
       android: {
-        width: "90%",
+        width: '90%',
         paddingHorizontal: 20,
         paddingVertical: 5,
         marginTop: 25,
-        backgroundColor: "transparent",
-        borderColor: "transparent",
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
       },
     }),
   },
   stylePrint: {
     ...Platform.select({
       ios: {
-        width: "100%",
+        width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 5,
         marginVertical: 20,
-        backgroundColor: "transparent",
-        borderColor: "transparent",
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
       },
       android: {
-        width: "90%",
+        width: '90%',
         paddingHorizontal: 20,
         paddingVertical: 5,
         marginTop: 25,
-        backgroundColor: "transparent",
-        borderColor: "transparent",
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
       },
     }),
   },
   cardItem1: {
     ...Platform.select({
       ios: {
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 5,
-        shadowColor: "rgba(207,207,207,0.5)",
+        shadowColor: 'rgba(207,207,207,0.5)',
         shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
@@ -2261,28 +2262,28 @@ export default StyleSheet.create({
   // SignUpPassword
   arrowIconBlack: {
     fontSize: 30,
-    color: "#32383E",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#32383E',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   arrowIcon: {
     fontSize: 30,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textSmallSign: {
     fontSize: 14,
-    color: "rgba(34,34,34,100)",
+    color: 'rgba(34,34,34,100)',
     marginTop: 10,
     width: 245,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   cardItem2: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 5,
-    shadowColor: "rgba(207,207,207,0.5)",
+    shadowColor: 'rgba(207,207,207,0.5)',
     shadowOffset: { width: 0, height: -1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -2290,101 +2291,101 @@ export default StyleSheet.create({
   },
   textCard: {
     fontSize: 16,
-    color: "#fff",
+    color: '#fff',
     marginTop: 5,
     marginBottom: 20,
     // width: 250,
     // width: "90%",
     // height: '100%',
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textCardLine: {
     fontSize: 14,
-    color: "#fff",
-    textDecorationLine: "underline",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#fff',
+    textDecorationLine: 'underline',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textTerms: {
     fontSize: 12,
-    color: "#009EFD",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#009EFD',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   viewBlockCheckmark: {
     marginTop: 21,
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     marginVertical: 30,
   },
   styleIconCheckmark: {
-    color: "#74EBEE",
+    color: '#74EBEE',
     fontSize: 36,
     marginTop: -10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
     // position: 'absolute',
   },
   textCheckmark: {
     fontSize: 12,
-    color: "rgba(42,42,42,0.50)",
-    textAlign: "left",
+    color: 'rgba(42,42,42,0.50)',
+    textAlign: 'left',
     marginLeft: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // Support
   iconLeftBottom: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     bottom: 5,
   },
   viewRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   viewRow1: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 20,
   },
   textSocialBtn: {
-    color: "#313131",
+    color: '#313131',
     fontSize: 17,
     paddingLeft: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   viewBlockSocialIconLeft: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 15,
-    width: "auto",
+    width: 'auto',
   },
   viewBlockSocialIconRight: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 20,
-    width: "auto",
+    width: 'auto',
   },
   // WithdrawLevel
   viewWithdrawFront: {
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#FDFDFD",
+        backgroundColor: '#FDFDFD',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "30%",
+        height: '30%',
         zIndex: 1,
       },
       {
         flex: 1,
-        backgroundColor: "#FDFDFD",
+        backgroundColor: '#FDFDFD',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "15%",
+        height: '15%',
         zIndex: 1,
       }
     ),
@@ -2394,40 +2395,40 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "rgba(253,253,253,0.25)",
+        backgroundColor: 'rgba(253,253,253,0.25)',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "45%",
+        height: '45%',
         zIndex: 0,
       },
       {
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "rgba(253,253,253,0.25)",
+            backgroundColor: 'rgba(253,253,253,0.25)',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "35%",
+            height: '35%',
             zIndex: 0,
           },
           android: {
             flex: 1,
-            backgroundColor: "rgba(253,253,253,0.25)",
+            backgroundColor: 'rgba(253,253,253,0.25)',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "35%",
+            height: '35%',
             zIndex: 0,
           },
         }),
@@ -2442,7 +2443,7 @@ export default StyleSheet.create({
     paddingRight: 20,
   },
   iconPadding: {
-    color: "#fff",
+    color: '#fff',
     // paddingRight: 0,
     marginRight: 0,
   },
@@ -2451,10 +2452,10 @@ export default StyleSheet.create({
     fontSize: 18,
     // fontWeight: 'bold',
     // color: 'rgba(57,57,57,0.80)',
-    color: "#fff",
+    color: '#fff',
     marginBottom: 5,
-    fontFamily: "Fontfabric-NexaRegular",
-    lineHeight: 20
+    fontFamily: 'Fontfabric-NexaRegular',
+    lineHeight: 20,
   },
   heightListItem1: {
     height: 90,
@@ -2462,26 +2463,26 @@ export default StyleSheet.create({
   // VerificationCode
   textH1Mt2: {
     fontSize: 14,
-    color: "rgba(42,42,42,100)",
+    color: 'rgba(42,42,42,100)',
     marginTop: 45,
     width: 245,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textCard2: {
     fontSize: 14,
-    color: "rgba(34,34,34,0.50)",
+    color: 'rgba(34,34,34,0.50)',
     marginTop: 40,
     width: 245,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // VerificationPhone
   inputSize2: {
     fontSize: 14,
     left: -50,
     top: 0,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // VerificationSettings
   gradientBtnMt2: {
@@ -2494,26 +2495,26 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         marginTop: 10,
-        color: "#fff",
+        color: '#fff',
         fontSize: 36,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             marginTop: 5,
-            color: "#fff",
+            color: '#fff',
             fontSize: 30,
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             marginTop: 5,
-            color: "#fff",
+            color: '#fff',
             fontSize: 30,
-            fontWeight: Platform.OS === 'ios' ? "bold" : null,
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -2521,76 +2522,76 @@ export default StyleSheet.create({
   },
 
   nameToken: {
-    color: "#fff",
-    fontWeight: "200",
-    fontFamily: "Fontfabric-NexaBold",
-		// fontSize: 18, 
-		opacity: 0.8
+    color: '#fff',
+    fontWeight: '200',
+    fontFamily: 'Fontfabric-NexaBold',
+    // fontSize: 18,
+    opacity: 0.8,
   },
   conversionToken: {
     marginLeft: 20,
     marginTop: 5,
-    color: "rgba(255,255,255,0.80)",
+    color: 'rgba(255,255,255,0.80)',
     fontSize: 16,
-    fontWeight: "300",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: '300',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   iconTouchable: {
-    color: "#fff",
+    color: '#fff',
     // top: 3,
   },
   iconTouchableWhite: {
     // color: "#9d41eb",
-    color: "#353030",
+    color: '#353030',
     // fontSize: 46,
     fontSize: 40,
     padding: 2,
     top: 2,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
   blockReactangle: {
     marginBottom: 10,
     marginTop: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   bodyBlockWallet: {
     ...Platform.select({
       ios: {
-        marginTop: "5%",
+        marginTop: '5%',
       },
-      android: {marginTop: 10,},
+      android: { marginTop: 10 },
     }),
 
     // bottom: height / 12
   },
   bodyBlockTitle: {
-    paddingVertical: "2%",
+    paddingVertical: '2%',
     // marginVertical: "2%"
     // bottom: height / 12
   },
   bodyBlock3: {
     // alignItems: 'flex-start',
-    alignSelf: "flex-start",
-    marginLeft: 20
+    alignSelf: 'flex-start',
+    marginLeft: 20,
   },
   bodyBalance: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   viewTouchablesWallet: {
     ...ifIphoneX(
       {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        marginTop: "15%",
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: '15%',
         // bottom: height / 3,
         paddingHorizontal: 5,
       },
       {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        marginTop: hp("5%"),
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: hp('5%'),
         // bottom: height / 2,
 
         paddingHorizontal: 5,
@@ -2600,10 +2601,10 @@ export default StyleSheet.create({
   viewTouchables: {
     ...ifIphoneX(
       {
-        flexDirection: "row",
-        justifyContent: "space-around",
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         // marginBottom: '0%',
-        position: "absolute",
+        position: 'absolute',
         // bottom: hp('45%'),
         bottom: height / 2,
         width: width,
@@ -2614,15 +2615,15 @@ export default StyleSheet.create({
       {
         ...Platform.select({
           ios: {
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginTop: "5%",
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: '5%',
             paddingHorizontal: 5,
           },
           android: {
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginTop: "5%",
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: '5%',
             paddingHorizontal: 5,
           },
         }),
@@ -2633,101 +2634,100 @@ export default StyleSheet.create({
   touchablesWhite: {
     ...ifIphoneX(
       {
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
         width: 56,
         height: 56,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 30,
       },
       {
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
         width: 50,
         height: 50,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 50,
       }
     ),
   },
   touchables: {
-        alignItems: "center",
-        justifyContent: "center",
-        width: normalize(50),
-        height: normalize(50),
-        backgroundColor: Images.colorOrange,
-        borderRadius: normalize(30),
-
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: normalize(50),
+    height: normalize(50),
+    backgroundColor: Images.colorOrange,
+    borderRadius: normalize(30),
   },
   headerSearchBar: {
     // paddingBottom: 40,
     height: 60,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   textTouchable: {
     marginTop: 10,
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   headerLayoutStyle1: {
     width,
     height,
-    top: "20%",
-    backgroundColor: "#fff",
+    top: '20%',
+    backgroundColor: '#fff',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
   containerSub1: {
-    backgroundColor: "#fff",
-    height: "100%",
+    backgroundColor: '#fff',
+    height: '100%',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     // paddingTop: 16,
   },
   buttonContainer: {
     width: 115,
-    alignItems: "center",
+    alignItems: 'center',
     borderWidth: 1.5,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderRadius: 28,
-    backgroundColor: "rgba(255,255,255,0.15)",
+    backgroundColor: 'rgba(255,255,255,0.15)',
   },
   buttonText: {
-    textAlign: "center",
-    color: "#fff",
-    fontWeight: "bold",
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
     padding: 15,
     width: 115,
   },
   nameTokenSwiper1: {
     ...ifIphoneX(
       {
-        color: "#fff",
-				fontSize: 13,
-				textTransform: "uppercase",
+        color: '#fff',
+        fontSize: 13,
+        textTransform: 'uppercase',
         // fontSize: hp('2%'),
-        fontWeight: "300",
+        fontWeight: '300',
         // marginLeft: 20,
         marginTop: 20,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
-            color: "#fff",
-						fontSize: 13,
-						textTransform: "uppercase",
-            fontWeight: "300",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#fff',
+            fontSize: 13,
+            textTransform: 'uppercase',
+            fontWeight: '300',
+            fontFamily: 'Fontfabric-NexaBold',
             // marginLeft: 20,
           },
           android: {
-            color: "#fff",
-						fontSize: 13,
-						textTransform: "uppercase",
-            fontWeight: "300",
+            color: '#fff',
+            fontSize: 13,
+            textTransform: 'uppercase',
+            fontWeight: '300',
             marginTop: 20,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
             // marginLeft: 20,
           },
         }),
@@ -2737,179 +2737,179 @@ export default StyleSheet.create({
   titleQr: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
-        fontWeight: "300",
+        fontWeight: '300',
         marginVertical: 20,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 17,
-        fontWeight: "300",
+        fontWeight: '300',
         marginVertical: 10,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   nameTokenWallet: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
+    fontWeight: 'bold',
+    color: '#fff',
     marginTop: 20,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   // WalletHistory
   constName1: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "rgba(57,57,57,100)",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    color: 'rgba(57,57,57,100)',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   constDate: {
     fontSize: 13,
     // fontWeight: 'bold',
     color: 'rgba(255,255,255,0.70)',
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   constCoins: {
     fontSize: 17,
     // fontWeight: 'bold',
-    color: "rgba(82, 220, 144,100)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(82, 220, 144,100)',
+    fontFamily: 'Fontfabric-NexaRegular',
     // paddingRight: 20,
   },
   constCoinsOrange: {
     fontSize: 17,
     // fontWeight: 'bold',
-    color: "#F76B1C",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#F76B1C',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   historyCoins: {
     fontSize: 17,
-    fontWeight: "bold",
-    color: "black",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    color: 'black',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   constCoinsExclude: {
     fontSize: 17,
     // fontWeight: 'bold',
-    color: "rgba(255, 93, 113,100)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(255, 93, 113,100)',
+    fontFamily: 'Fontfabric-NexaRegular',
     // paddingRight: 20,
   },
   txtSizeHistory: {
     fontSize: 17,
-    fontWeight: "500",
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular",
-    lineHeight: 30
+    fontWeight: '500',
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
+    lineHeight: 30,
   },
   titleHistory: {
     fontSize: 17,
-    fontWeight: "500",
-    alignSelf: "center",
-    color: "rgba(255, 255, 255, 0.70)",
+    fontWeight: '500',
+    alignSelf: 'center',
+    color: 'rgba(255, 255, 255, 0.70)',
     height: 20,
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 20
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 20,
   },
 
   modalAmountStyle: {
     marginTop: 10,
     marginLeft: 20,
     fontSize: 22,
-    fontWeight: "bold",
-    color: "rgba(82, 220, 144,100)",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    color: 'rgba(82, 220, 144,100)',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   modalAmountStyleExclude: {
     marginTop: 10,
     marginLeft: 20,
     fontSize: 22,
-    fontWeight: "bold",
-    color: "rgba(255, 93, 113,100)",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    color: 'rgba(255, 93, 113,100)',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   viewList: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     marginTop: 10,
   },
   viewBtnTransaction: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     top: -10,
     // marginTop: -10,
   },
   viewBtnMoreTransaction: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     // marginTop: -10,
   },
   btnAccept: {
-    color: "rgba(5, 157, 247, 100)",
+    color: 'rgba(5, 157, 247, 100)',
     fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   btnRefuse: {
-    color: "rgba(57,57,57,0.60)",
+    color: 'rgba(57,57,57,0.60)',
     fontSize: 16,
     paddingLeft: 5,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   leftBtn: {
     marginLeft: -18,
   },
   arrowDropup: {
-    color: "rgba(82, 220, 144,100)",
+    color: 'rgba(82, 220, 144,100)',
   },
   arrowDropupTxn: {
     top: -17,
-    color: "rgba(82, 220, 144,100)",
+    color: 'rgba(82, 220, 144,100)',
   },
   arrowDropdown: {
-    color: "rgba(255, 93, 113,100)",
+    color: 'rgba(255, 93, 113,100)',
   },
   // WalletHistoryClean
   viewContainer: {
     flex: 1,
     paddingLeft: 20,
     paddingRight: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textContainer: {
     fontSize: 18,
-    color: "#313131",
+    color: '#313131',
     paddingLeft: 20,
     paddingRight: 20,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textSmContainer: {
     fontSize: 17,
-    color: "rgba(49,49,49,0.60)",
+    color: 'rgba(49,49,49,0.60)',
     paddingLeft: 40,
     paddingRight: 40,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   btnTextContainer: {
-    color: "#059DF7",
-    fontWeight: "bold",
+    color: '#059DF7',
+    fontWeight: 'bold',
   },
   // CheckBoxDate
   listWidth: {
-    width: "100%",
+    width: '100%',
   },
   listitemText: {
-    color: "#313131",
+    color: '#313131',
     fontSize: 16,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   iconPicker: {
     marginLeft: 10,
@@ -2921,20 +2921,20 @@ export default StyleSheet.create({
   // CryptoAddress
   itemInputAddress: {
     height: 40,
-    borderBottomColor: "rgba(255,255,255,0.60)",
+    borderBottomColor: 'rgba(255,255,255,0.60)',
   },
   inputAddress: {
-    marginTop: "2%",
-    color: "rgba(255,255,255,100)",
+    marginTop: '2%',
+    color: 'rgba(255,255,255,100)',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   iconAddress: {
     marginRight: 10,
     marginBottom: 0,
-    color: "rgba(255,255,255,0.80)",
+    color: 'rgba(255,255,255,0.80)',
   },
   // FeedbackModal
   gradientBtnModal: {
@@ -2943,53 +2943,53 @@ export default StyleSheet.create({
     paddingRight: 20,
   },
   iconModal: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     bottom: 5,
   },
   textModalRender: {
-    color: "rgba(34,34,34,100)",
+    color: 'rgba(34,34,34,100)',
     fontSize: 27,
-    textAlign: "center",
+    textAlign: 'center',
     paddingHorizontal: 40,
     paddingVertical: 10,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textSnackBar: {
-    color: "rgba(34,34,34,100)",
+    color: 'rgba(34,34,34,100)',
     fontSize: 22,
-    textAlign: "center",
+    textAlign: 'center',
     paddingHorizontal: 40,
     paddingVertical: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
     // fontWeight: 'bold',
   },
   textModalRender2: {
-    color: "#222222",
+    color: '#222222',
     fontSize: 17,
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: 20,
     paddingHorizontal: 80,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   modalContent: {
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
     // opacity: .80,
     borderRadius: 5,
-    height: "auto",
-    justifyContent: "center",
-    alignItems: "center",
+    height: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: 40,
   },
   containerModal: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerModalTransactions: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   // InvoiceSuccessModal
   gradientBtnPadding: {
@@ -3001,70 +3001,70 @@ export default StyleSheet.create({
     height: 73,
   },
   textSended: {
-    color: "#009EFD",
+    color: '#009EFD',
     fontSize: 26,
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: 10,
     paddingBottom: 5,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textSendedCoin: {
-    color: "#009EFD",
+    color: '#009EFD',
     fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textToName: {
-    color: "#515151",
+    color: '#515151',
     fontSize: 13,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textModalRender3: {
-    color: "#222222",
+    color: '#222222',
     fontSize: 17,
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: 30,
     paddingHorizontal: 80,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   modalContent2: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 0,
     // height: '70%',
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: 40,
   },
   modalTransactions: {
     ...ifIphoneX(
       {
-        backgroundColor: "#fff",
-        height: hp("35%"),
-        position: "absolute",
+        backgroundColor: '#fff',
+        height: hp('35%'),
+        position: 'absolute',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        width: "100%",
+        width: '100%',
       },
       {
         ...Platform.select({
           ios: {
-            backgroundColor: "#fff",
-            height: hp("40%"),
-            position: "absolute",
+            backgroundColor: '#fff',
+            height: hp('40%'),
+            position: 'absolute',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            width: "100%",
+            width: '100%',
           },
           android: {
-            backgroundColor: "#fff",
-            height: hp("40%"),
-            position: "absolute",
+            backgroundColor: '#fff',
+            height: hp('40%'),
+            position: 'absolute',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            width: "100%",
+            width: '100%',
           },
         }),
       }
@@ -3076,37 +3076,37 @@ export default StyleSheet.create({
     height: 73,
   },
   textValueModal: {
-    color: "#20D64D",
+    color: '#20D64D',
     fontSize: 26,
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: 10,
     paddingBottom: 5,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textCoinModal: {
-    color: "#20D64D",
+    color: '#20D64D',
     fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   // TransferSuccessModal
   textValueModalMinus: {
-    color: "#FF5D71",
+    color: '#FF5D71',
     fontSize: 26,
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: 10,
     paddingBottom: 5,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textCoinModal2: {
-    color: "#FF5D71",
+    color: '#FF5D71',
     fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   // Filters
   gradientBtn3: {
@@ -3116,60 +3116,66 @@ export default StyleSheet.create({
   },
   iconFilter: {
     ...ifIphoneX(
-      { color: "#fff", fontSize: 20, right: 0, top: 5, fontFamily: "Fontfabric-NexaRegular" },
+      {
+        color: '#fff',
+        fontSize: 20,
+        right: 0,
+        top: 5,
+        fontFamily: 'Fontfabric-NexaRegular',
+      },
       {
         ...Platform.select({
           ios: {
-            color: "#fff",
+            color: '#fff',
             fontSize: 20,
             top: 5,
             left: 0,
-            fontFamily: "Fontfabric-NexaRegular"
+            fontFamily: 'Fontfabric-NexaRegular',
           },
           android: {
-            color: "#fff",
+            color: '#fff',
             fontSize: 20,
             top: 5,
             left: 0,
-            fontFamily: "Fontfabric-NexaRegular"
+            fontFamily: 'Fontfabric-NexaRegular',
           },
         }),
       }
     ),
   },
   iconRefresh: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 20,
     top: 5,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textFilter: {
     paddingLeft: 15,
     paddingRight: 15,
     marginTop: 10,
-    color: "#071019",
+    color: '#071019',
     fontSize: 36,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textCheckFilters: {
     paddingLeft: 15,
     paddingRight: 15,
     marginTop: 10,
-    color: "#071019",
+    color: '#071019',
     fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   modalContent3: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 16,
-    height: "80%",
+    height: '80%',
     paddingVertical: 30,
   },
   modalContentBtn: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   // Header
   viewBalance: {
@@ -3177,23 +3183,23 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
-    flexDirection: "row",
-    alignItems: "flex-end",
-    alignContent: "flex-end",
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    alignContent: 'flex-end',
     marginTop: 20,
   },
   textCurrency: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 24,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    fontFamily: 'Fontfabric-NexaBold',
   },
   containerHeader: {
     zIndex: 1,
-    backgroundColor: "rgba(253, 253, 253, 0.25)",
+    backgroundColor: 'rgba(253, 253, 253, 0.25)',
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
@@ -3201,73 +3207,73 @@ export default StyleSheet.create({
   },
   header1: {
     paddingTop: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   textBalanceHeader: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 36,
-    fontWeight: "bold",
-    textAlign: "left",
+    fontWeight: 'bold',
+    textAlign: 'left',
     marginLeft: 20,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textBalanceAbsolute: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 30,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
     left: 20,
     top: 20,
-    position: "absolute",
+    position: 'absolute',
     width: '100%',
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   // LogOutModal
   textCancel: {
-    color: "rgba(5, 157, 247,100)",
+    color: 'rgba(5, 157, 247,100)',
     fontSize: 17,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   iconLogout: {
     marginVertical: 25,
     paddingLeft: 6,
   },
   colorBtnLogout: {
-    color: "#FF5D71",
+    color: '#FF5D71',
   },
   textColorBtn: {
-    color: "#FF5D71",
+    color: '#FF5D71',
     fontSize: 17,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 15,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   // PasswordInput
   colorIconLock: {
-    color: "#019FFD",
+    color: '#019FFD',
     top: 10,
     fontSize: 25,
-    position: "absolute",
-    fontFamily: "Fontfabric-NexaRegular"
+    position: 'absolute',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   passwordInput: {
     fontSize: 14,
     marginLeft: 25,
-    borderBottomColor: "transparent",
-    fontFamily: "Fontfabric-NexaRegular"
+    borderBottomColor: 'transparent',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // PickerChooseDate
   containerPicker: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   placeholderText: {
-    color: "#313131",
+    color: '#313131',
   },
   textPicker: {
     fontSize: 16,
-    color: "#313131",
+    color: '#313131',
     paddingTop: 13,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // PickerEnglishSignUp
   paddingPicker: {
@@ -3275,116 +3281,122 @@ export default StyleSheet.create({
   },
   leftPickerSignUp: {
     // color: 'rgba(42,42,42,0.70)',
-    color: "#000",
+    color: '#000',
     fontSize: 14,
     left: -1,
-    width: "85%",
-    fontFamily: "Fontfabric-NexaRegular"
+    width: '85%',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   placeholderPicker: {
-    color: "rgba(42,42,42,0.70)",
+    color: 'rgba(42,42,42,0.70)',
     fontSize: 14,
     left: -1,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   placeHolderSeed: {
-    color: "rgba(42,42,42,0.70)",
+    color: 'rgba(42,42,42,0.70)',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   iconPickerSignUp: {
-    color: "rgba(42,42,42,0.70)",
+    color: 'rgba(42,42,42,0.70)',
     fontSize: 17,
     top: 2,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // PickerInvoice
   textPickerInvoice: {
-    color: "#fff",
-    fontWeight: "bold",
+    color: '#fff',
+    fontWeight: 'bold',
     top: 4,
   },
   pickerMargin: {
     ...Platform.select({
       ios: {},
-      android: { color: "#fff", fontWeight: "bold", marginLeft: -5 },
+      android: { color: '#fff', fontWeight: 'bold', marginLeft: -5 },
     }),
   },
   pickerToGet: {
-    color: "#fff",
-    fontWeight: "bold",
+    color: '#fff',
+    fontWeight: 'bold',
     marginLeft: -5,
   },
   pickerAndroid: {
     ...Platform.select({
       ios: {},
-      android: { fontWeight: "bold", marginLeft: -5 },
+      android: { fontWeight: 'bold', marginLeft: -5 },
     }),
   },
   // PickerPhone
   leftPickerSignUp2: {
-    color: "#000",
+    color: '#000',
     fontSize: 14,
     left: -1,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
     // width: 70,
   },
   placeholderTextPicker: {
-    color: "rgba(42,42,42,0.50)",
+    color: 'rgba(42,42,42,0.50)',
     fontSize: 14,
     left: -1,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   iconPickerPhone: {
     ...Platform.select({
-      ios: { color: "rgba(42,42,42,0.50)", fontSize: 17, top: 1, left: -25, fontFamily: "Fontfabric-NexaRegular" },
-      android: {
-        color: "rgba(42,42,42,0.50)",
+      ios: {
+        color: 'rgba(42,42,42,0.50)',
         fontSize: 17,
         top: 1,
         left: -25,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
+      },
+      android: {
+        color: 'rgba(42,42,42,0.50)',
+        fontSize: 17,
+        top: 1,
+        left: -25,
+        fontFamily: 'Fontfabric-NexaRegular',
       },
     }),
   },
   // QuestionAnswer1
   h3AlignLeft1: {
     fontSize: 15,
-    color: "#313131",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#313131',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // ReferralLink
   itemRef: {
     height: 40,
-    borderBottomColor: "rgba(49,49,49,0.60)",
+    borderBottomColor: 'rgba(49,49,49,0.60)',
   },
   inputRef: {
-    color: "#313131",
+    color: '#313131',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   iconRef: {
     marginRight: 10,
     marginBottom: 0,
-    color: "rgba(49,49,49,0.60)",
+    color: 'rgba(49,49,49,0.60)',
   },
   // Spinner
   modalBackground: {
     flex: 1,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
   },
   activityIndicatorWrapper: {
-    backgroundColor: "#00000030",
+    backgroundColor: '#00000030',
     height: 100,
     width: 100,
     borderRadius: 10,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   // Swiper
   activeDot: {
@@ -3392,14 +3404,14 @@ export default StyleSheet.create({
       {
         // backgroundColor: '#fff',
         // bottom: hp('32%'),
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         // bottom: hp('40%'),
         bottom: height / 2.4,
       },
       {
         ...Platform.select({
-          ios: { backgroundColor: "#fff", bottom: hp("28%") },
-          android: { backgroundColor: "#fff", bottom: hp("22%") },
+          ios: { backgroundColor: '#fff', bottom: hp('28%') },
+          android: { backgroundColor: '#fff', bottom: hp('22%') },
         }),
       }
     ),
@@ -3410,19 +3422,19 @@ export default StyleSheet.create({
       {
         // backgroundColor: 'rgba(253, 253, 253, 0.50)',
         // bottom: hp('32%'),
-        backgroundColor: "rgba(253, 253, 253, 0.50)",
+        backgroundColor: 'rgba(253, 253, 253, 0.50)',
         // bottom: hp('40%'),
         bottom: height / 2.4,
       },
       {
         ...Platform.select({
           ios: {
-            backgroundColor: "rgba(253, 253, 253, 0.50)",
-            bottom: hp("28%"),
+            backgroundColor: 'rgba(253, 253, 253, 0.50)',
+            bottom: hp('28%'),
           },
           android: {
-            backgroundColor: "rgba(253, 253, 253, 0.50)",
-            bottom: hp("22%"),
+            backgroundColor: 'rgba(253, 253, 253, 0.50)',
+            bottom: hp('22%'),
           },
         }),
       }
@@ -3430,31 +3442,31 @@ export default StyleSheet.create({
   },
 
   imgFrontBg: {
-    position: "absolute",
+    position: 'absolute',
     right: 0,
-    top: "40%",
-    right: "-10%",
+    top: '40%',
+    right: '-10%',
   },
   nameTokenSwiper: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 20,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 17,
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   textTokenSwiper: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 26,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   btnTopSwiper: {
     ...ifIphoneX(
@@ -3469,30 +3481,30 @@ export default StyleSheet.create({
   textIconSwiper: {
     ...ifIphoneX(
       {
-        color: "white",
+        color: 'white',
         fontSize: 22,
         left: -15,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       {
-        color: "white",
+        color: 'white',
         fontSize: 18,
         left: -15,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       }
     ),
   },
   historyBtn: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 18,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 14,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       }
     ),
   },
@@ -3500,23 +3512,23 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         paddingTop: 10,
-        alignItems: "flex-start",
+        alignItems: 'flex-start',
       },
       {
         paddingTop: 0,
-        alignItems: "flex-start",
+        alignItems: 'flex-start',
       }
     ),
   },
   styleBtnSwiper1: {
     ...ifIphoneX(
       {
-        alignItems: "flex-start",
+        alignItems: 'flex-start',
         marginLeft: 20,
         marginTop: 25,
       },
       {
-        alignItems: "flex-start",
+        alignItems: 'flex-start',
         marginLeft: 20,
         marginTop: 15,
       }
@@ -3526,16 +3538,16 @@ export default StyleSheet.create({
   textBtnSwiper: {
     ...ifIphoneX(
       {
-        fontWeight: "bold",
+        fontWeight: 'bold',
         fontSize: 20,
-        color: "#fff",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#fff',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        fontWeight: "bold",
+        fontWeight: 'bold',
         fontSize: 17,
-        color: "#fff",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#fff',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
@@ -3546,13 +3558,13 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         // marginTop: height / 4.5,
-        marginTop: hp("20%"),
+        marginTop: hp('20%'),
         paddingLeft: 20,
         paddingTop: 20,
       },
       {
         // marginTop: height / 5,
-        marginTop: hp("20%"),
+        marginTop: hp('20%'),
         paddingLeft: 20,
         paddingTop: 20,
       }
@@ -3561,103 +3573,103 @@ export default StyleSheet.create({
   textBalanceSwiper: {
     ...ifIphoneX(
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 36,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         paddingTop: 20,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#fff",
+        color: '#fff',
         fontSize: 36,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         paddingTop: 10,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
   textCryptoTo: {
     ...ifIphoneX(
       {
-        color: "rgba(255,255,255,0.80)",
+        color: 'rgba(255,255,255,0.80)',
         fontSize: 16,
         paddingTop: 20,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       {
-        color: "rgba(255,255,255,0.80)",
+        color: 'rgba(255,255,255,0.80)',
         fontSize: 13,
         paddingTop: 10,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       }
     ),
   },
   textCrypto: {
-    color: "rgba(255,255,255,0.80)",
+    color: 'rgba(255,255,255,0.80)',
     fontSize: 16,
     paddingTop: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   iconArrowForward: {
-    color: "#fff",
+    color: '#fff',
     top: 2,
     left: 10,
   },
   iconArrowForward1: {
-    color: "#fff",
+    color: '#fff',
   },
   // Transfer
   iconSearch: {
-    position: "absolute",
+    position: 'absolute',
     top: 30,
     right: 40,
     fontSize: 24,
-    color: "#000",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#000',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   containerTransfer: {
     flex: 1,
-    top: "10%",
+    top: '10%',
   },
   searchInput: {
     margin: 20,
     paddingLeft: 20,
     paddingTop: 13,
     paddingBottom: 13,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderWidth: 1,
     borderRadius: 50,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     fontSize: 16,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   viewMono2: {
     flex: 1,
-    backgroundColor: "rgba(253, 253, 253, 100)",
+    backgroundColor: 'rgba(253, 253, 253, 100)',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "85%",
+    height: '85%',
   },
   nameContact: {
     fontSize: 16,
-    color: "rgba(49,49,49,0.75)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(49,49,49,0.75)',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   infoContact: {
     fontSize: 17,
-    color: "rgba(49,49,49,100)",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: 'rgba(49,49,49,100)',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   seperatorContact: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
-    color: "#313131",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#313131',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   scrollContact: {
     paddingTop: 15,
@@ -3665,12 +3677,12 @@ export default StyleSheet.create({
   mbXScroll: {
     ...ifIphoneX(
       {
-        marginBottom: hp("10%"),
+        marginBottom: hp('10%'),
       },
       {
         ...Platform.select({
-          ios: { marginBottom: hp("10%") },
-          android: { marginBottom: hp("20%") },
+          ios: { marginBottom: hp('10%') },
+          android: { marginBottom: hp('20%') },
         }),
       }
     ),
@@ -3680,7 +3692,7 @@ export default StyleSheet.create({
     paddingRight: 5,
     marginTop: 3,
     width: 120,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   arrowHeaderLeftLong: {
     paddingLeft: 5,
@@ -3695,54 +3707,54 @@ export default StyleSheet.create({
   // Exchange
   viewBuyBack3: {
     flex: 1,
-    backgroundColor: "rgba(253,253,253,0.25)",
+    backgroundColor: 'rgba(253,253,253,0.25)',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "40%",
+    height: '40%',
     zIndex: 0,
   },
   viewBuyFront3: {
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#FDFDFD",
+        backgroundColor: '#FDFDFD',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: "30%",
+        height: '30%',
         zIndex: 1,
       },
       {
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "#FDFDFD",
+            backgroundColor: '#FDFDFD',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "20%",
+            height: '20%',
             zIndex: 1,
           },
           android: {
             flex: 1,
-            backgroundColor: "#FDFDFD",
+            backgroundColor: '#FDFDFD',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "25%",
+            height: '25%',
             zIndex: 1,
           },
         }),
@@ -3752,82 +3764,82 @@ export default StyleSheet.create({
 
   textFrontBuy1: {
     fontSize: 20,
-    color: "rgba(49,49,49,100)",
-    marginTop: "3%",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(49,49,49,100)',
+    marginTop: '3%',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   // Deposit
   nameTokenSwiper3: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 17,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 10,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   viewMt1: {
     marginTop: 25,
   },
   leftPickerMethod: {
-    marginTop: "2%",
-    color: "rgba(255,255,255,100)",
+    marginTop: '2%',
+    color: 'rgba(255,255,255,100)',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   iconPickerMethod: {
-    color: "rgba(255,255,255,100)",
+    color: 'rgba(255,255,255,100)',
     fontSize: 17,
     top: 6,
     left: -15,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   inputAddress1: {
-    marginTop: "2%",
-    color: "rgba(255,255,255,100)",
+    marginTop: '2%',
+    color: 'rgba(255,255,255,100)',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textFront: {
     marginTop: 0,
-    color: "rgba(255,255,255,100)",
+    color: 'rgba(255,255,255,100)',
     fontSize: 14,
-    fontWeight: "200",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: '200',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   rightBtnMore: {
     ...Platform.select({
       ios: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
       },
       android: {
         flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         paddingLeft: 20,
       },
     }),
   },
   iconBtnMore: {
     ...Platform.select({
-      ios: { color: "rgba(57,57,57,100)", paddingRight: 10 },
-      android: { color: "rgba(57,57,57,100)" },
+      ios: { color: 'rgba(57,57,57,100)', paddingRight: 10 },
+      android: { color: 'rgba(57,57,57,100)' },
     }),
   },
   btnMore: {
     ...Platform.select({
       ios: {},
-      android: { position: "absolute", right: 5 },
+      android: { position: 'absolute', right: 5 },
     }),
   },
   modalHistory: {
     ...Platform.select({
-      ios: { justifyContent: "flex-end", margin: 0 },
-      android: { justifyContent: "flex-end", margin: 0 },
+      ios: { justifyContent: 'flex-end', margin: 0 },
+      android: { justifyContent: 'flex-end', margin: 0 },
     }),
   },
 
@@ -3835,39 +3847,39 @@ export default StyleSheet.create({
     fontSize: 14,
     marginTop: 20,
     marginHorizontal: 20,
-    color: "rgba(0,0,0,0.50)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(0,0,0,0.50)',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   nameWallet: {
     fontSize: 14,
     marginTop: 20,
     marginHorizontal: 20,
-    color: "rgba(0,0,0,0.70)",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: 'rgba(0,0,0,0.70)',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textFrom: {
     fontSize: 16,
     marginTop: 20,
     marginHorizontal: 20,
-    color: "rgba(0,0,0,0.70)",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'rgba(0,0,0,0.70)',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   iosViewNone: {
     ...Platform.select({
-      ios: { display: "none" },
+      ios: { display: 'none' },
       android: {},
     }),
   },
   androidViewNone: {
     ...Platform.select({
       ios: {},
-      android: { display: "none" },
+      android: { display: 'none' },
     }),
   },
   containerCards: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     // alignItems: 'center',
   },
   cardWidth: {
@@ -3875,8 +3887,8 @@ export default StyleSheet.create({
       { width: width / 1.3 },
       {
         ...Platform.select({
-          ios: { width: hp("50%") },
-          android: { width: hp("50%") },
+          ios: { width: hp('50%') },
+          android: { width: hp('50%') },
         }),
       }
     ),
@@ -3900,14 +3912,14 @@ export default StyleSheet.create({
   activeDotCards: {
     ...ifIphoneX(
       {
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         // bottom: hp('40%'),
         bottom: height / 2.1,
       },
       {
         ...Platform.select({
-          ios: { backgroundColor: "#fff", bottom: hp("25%") },
-          android: { backgroundColor: "#fff", bottom: hp("25%") },
+          ios: { backgroundColor: '#fff', bottom: hp('25%') },
+          android: { backgroundColor: '#fff', bottom: hp('25%') },
         }),
       }
     ),
@@ -3916,19 +3928,19 @@ export default StyleSheet.create({
   dotCards: {
     ...ifIphoneX(
       {
-        backgroundColor: "rgba(253, 253, 253, 0.50)",
+        backgroundColor: 'rgba(253, 253, 253, 0.50)',
         // bottom: hp('40%'),
         bottom: height / 2.1,
       },
       {
         ...Platform.select({
           ios: {
-            backgroundColor: "rgba(253, 253, 253, 0.50)",
-            bottom: hp("25%"),
+            backgroundColor: 'rgba(253, 253, 253, 0.50)',
+            bottom: hp('25%'),
           },
           android: {
-            backgroundColor: "rgba(253, 253, 253, 0.50)",
-            bottom: hp("25%"),
+            backgroundColor: 'rgba(253, 253, 253, 0.50)',
+            bottom: hp('25%'),
           },
         }),
       }
@@ -3946,10 +3958,10 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
@@ -3958,23 +3970,23 @@ export default StyleSheet.create({
       },
       {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: hp("27%"),
+        height: hp('27%'),
       }
     ),
   },
   linearGradientNew1: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
-    height: "100%",
+    height: '100%',
     borderRadius: 10,
   },
   cardStyleCards: {
@@ -3984,10 +3996,10 @@ export default StyleSheet.create({
 
         // height: hp('20%'),
         height: height / 4.8,
-        backgroundColor: "transparent",
-        alignItems: "center",
-        justifyContent: "center",
-        shadowColor: "black",
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: 'black',
         shadowOpacity: 0.2,
         shadowRadius: 10,
         shadowOffset: {
@@ -3999,11 +4011,11 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             // height: 170,
-            height: hp("27%"),
-            backgroundColor: "transparent",
-            alignItems: "center",
-            justifyContent: "center",
-            shadowColor: "black",
+            height: hp('27%'),
+            backgroundColor: 'transparent',
+            alignItems: 'center',
+            justifyContent: 'center',
+            shadowColor: 'black',
             shadowOpacity: 0.2,
             shadowRadius: 10,
             shadowOffset: {
@@ -4013,11 +4025,11 @@ export default StyleSheet.create({
           },
           android: {
             // height: 170,
-            height: hp("27%"),
-            backgroundColor: "transparent",
-            alignItems: "center",
-            justifyContent: "center",
-            shadowColor: "black",
+            height: hp('27%'),
+            backgroundColor: 'transparent',
+            alignItems: 'center',
+            justifyContent: 'center',
+            shadowColor: 'black',
             shadowOpacity: 0.2,
             shadowRadius: 10,
             shadowOffset: {
@@ -4030,37 +4042,37 @@ export default StyleSheet.create({
     ),
   },
   alignItemsBtn: {
-    alignItems: "center",
-    width: "33%",
+    alignItems: 'center',
+    width: '33%',
   },
   touchablesCards: {
     ...ifIphoneX(
       {
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
         // width: 50,
         // height: 50,
-        width: hp("6%"),
-        height: hp("6%"),
-        backgroundColor: "#292929",
+        width: hp('6%'),
+        height: hp('6%'),
+        backgroundColor: '#292929',
         borderRadius: 50,
       },
       {
         ...Platform.select({
           ios: {
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: 'center',
+            justifyContent: 'center',
             width: 50,
             height: 50,
-            backgroundColor: "#292929",
+            backgroundColor: '#292929',
             borderRadius: 50,
           },
           android: {
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: 'center',
+            justifyContent: 'center',
             width: 50,
             height: 50,
-            backgroundColor: "#292929",
+            backgroundColor: '#292929',
             borderRadius: 50,
           },
         }),
@@ -4068,69 +4080,69 @@ export default StyleSheet.create({
     ),
   },
   touchablesCardsUsd: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 50,
     height: 50,
-    backgroundColor: "#1F1C2C",
+    backgroundColor: '#1F1C2C',
     borderRadius: 50,
   },
   styleStrip: {
     marginTop: 20,
-    backgroundColor: "#4e4e4e",
-    width: "100%",
+    backgroundColor: '#4e4e4e',
+    width: '100%',
     height: 46,
   },
   txtCard: {
-    color: "rgba(255, 255,255, 0.5)",
+    color: 'rgba(255, 255,255, 0.5)',
     fontSize: 15,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   secureNumber: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   rowAmountCard: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 15,
     paddingLeft: 20,
     paddingRight: 15,
   },
   amountCard: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 23,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   currencyCard: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   rowValueNumber: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     paddingTop: 40,
     paddingLeft: 20,
   },
   valueNumber: {
-    color: "rgba(255, 255,255, 0.5)",
-    fontWeight: "bold",
+    color: 'rgba(255, 255,255, 0.5)',
+    fontWeight: 'bold',
     fontSize: 18,
     letterSpacing: 1.88,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   rowDate: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     paddingLeft: 45,
     paddingTop: 5,
   },
   rowImgCard: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     paddingRight: 15,
     top: -10,
   },
@@ -4139,59 +4151,59 @@ export default StyleSheet.create({
     height: 26,
   },
   rowSecureTxt: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     paddingTop: 30,
     paddingRight: 50,
   },
   secureTxt: {
-    color: "rgba(255, 255,255, 0.5)",
-    fontWeight: "bold",
+    color: 'rgba(255, 255,255, 0.5)',
+    fontWeight: 'bold',
     fontSize: 15,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   rowSecureNumber: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     paddingRight: 55,
   },
   flexColumn: {
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   slideCards: {
     ...ifIphoneX(
       {
         flex: 1,
         // paddingTop: height / 7.8,
-        paddingTop: "10%",
+        paddingTop: '10%',
         top: -30,
       },
       {
         ...Platform.select({
-          ios: { flex: 1, paddingTop: "5%" },
-          android: { flex: 1, paddingTop: "3%" },
+          ios: { flex: 1, paddingTop: '5%' },
+          android: { flex: 1, paddingTop: '3%' },
         }),
       }
     ),
   },
   iconCardSettings: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   viewCardSettings: {
     ...ifIphoneX(
       {
         flex: 1,
-        paddingTop: "10%",
-        flexDirection: "row",
-        justifyContent: "center",
+        paddingTop: '10%',
+        flexDirection: 'row',
+        justifyContent: 'center',
       },
       {
         flex: 1,
-        paddingTop: "5%",
-        flexDirection: "row",
-        justifyContent: "center",
+        paddingTop: '5%',
+        flexDirection: 'row',
+        justifyContent: 'center',
       }
     ),
   },
@@ -4199,10 +4211,10 @@ export default StyleSheet.create({
     // flex: 1,
     borderRadius: 10,
     height: 170,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     // alignItems: 'center',
     // justifyContent: 'center',
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOpacity: 0.2,
     shadowRadius: 10,
     shadowOffset: {
@@ -4214,21 +4226,21 @@ export default StyleSheet.create({
   viewMonoCardsParallax: {
     ...ifIphoneX(
       {
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        height: "50%",
-        position: "absolute",
+        height: '50%',
+        position: 'absolute',
         width,
         // top: -20,
         bottom: 0,
       },
       {
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        height: "40%",
-        position: "absolute",
+        height: '40%',
+        position: 'absolute',
         width,
         // top: -20,
         bottom: 0,
@@ -4241,112 +4253,123 @@ export default StyleSheet.create({
         // bottom: hp('65%'),
         paddingLeft: 20,
         paddingRight: 20,
-        bottom: "55%",
+        bottom: '55%',
         // top: 400
       },
       {
         // bottom: hp('68%'),
         paddingLeft: 20,
         paddingRight: 20,
-        bottom: "45%",
+        bottom: '45%',
       }
     ),
   },
   colorIconCards: {
-    color: "rgba(34,34,34,0.30)",
+    color: 'rgba(34,34,34,0.30)',
     paddingTop: 5,
   },
   titleHeaderCards: {
     ...Platform.select({
-      ios: { marginTop: 20, color: "#313131", fontSize: 17, fontFamily: "Fontfabric-NexaRegular" },
+      ios: {
+        marginTop: 20,
+        color: '#313131',
+        fontSize: 17,
+        fontFamily: 'Fontfabric-NexaRegular',
+      },
       android: {
         marginTop: 20,
-        color: "#313131",
+        color: '#313131',
         fontSize: 15,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       },
     }),
   },
   leftPickerCurrency: {
-    marginTop: "2%",
-    color: "#313131",
+    marginTop: '2%',
+    color: '#313131',
     fontSize: 17,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   iconPickerCurrency: {
-    color: "#313131",
+    color: '#313131',
     fontSize: 17,
     top: 6,
     left: -15,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   viewChooseCrypto: {
     paddingHorizontal: 20,
     marginTop: 10,
   },
   rowSwitch: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    alignContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   viewFrontCard: {
     flex: 1,
-    backgroundColor: "#FDFDFD",
+    backgroundColor: '#FDFDFD',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "20%",
+    height: '20%',
     zIndex: 1,
   },
   containerScreenAddCard: {
     ...ifIphoneX(
-      { flex: 1, alignItems: "center", marginTop: "20%" },
+      { flex: 1, alignItems: 'center', marginTop: '20%' },
       {
         ...Platform.select({
-          ios: { flex: 1, alignItems: "center" },
-          android: { flex: 1, alignItems: "center" },
+          ios: { flex: 1, alignItems: 'center' },
+          android: { flex: 1, alignItems: 'center' },
         }),
       }
     ),
   },
   inputStyleCardNumber: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 26,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingLeft: 0,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textComing: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 36,
-    fontWeight: "bold",
-    paddingBottom: "20%",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    paddingBottom: '20%',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textTitleAddNewCard: {
     ...ifIphoneX(
-      { color: "#fff", fontSize: 36, fontWeight: "bold", paddingBottom: "20%", fontFamily: "Fontfabric-NexaBold" },
+      {
+        color: '#fff',
+        fontSize: 36,
+        fontWeight: 'bold',
+        paddingBottom: '20%',
+        fontFamily: 'Fontfabric-NexaBold',
+      },
       {
         ...Platform.select({
           ios: {
-            color: "#fff",
+            color: '#fff',
             fontSize: 30,
-            fontWeight: "bold",
-            paddingBottom: "10%",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            paddingBottom: '10%',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
-            color: "#fff",
+            color: '#fff',
             fontSize: 30,
-            fontWeight: "bold",
-            paddingBottom: "10%",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            paddingBottom: '10%',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -4354,8 +4377,8 @@ export default StyleSheet.create({
   },
   iconTitleAddNewCard: {
     fontSize: 150,
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   gradientBtnAddNewCard: {
     ...ifIphoneX(
@@ -4369,109 +4392,133 @@ export default StyleSheet.create({
     ),
   },
   textStylePickerCards: {
-    fontWeight: "bold",
-    color: "#fff",
+    fontWeight: 'bold',
+    color: '#fff',
   },
   colorWhite: {
-    color: "#fff",
+    color: '#fff',
   },
   textStyleBtnSend: {
     fontSize: 18,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   viewBtnStyle: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
     marginVertical: 20,
   },
   btnPayWallet: {
     ...Platform.select({
       ios: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        alignContent: "flex-end",
-        width: "80%",
-        backgroundColor: "#292929",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'flex-end',
+        width: '80%',
+        backgroundColor: '#292929',
       },
       android: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        alignContent: "flex-end",
-        width: "80%",
-        backgroundColor: "#A6A6A6",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'flex-end',
+        width: '80%',
+        backgroundColor: '#A6A6A6',
       },
     }),
   },
   btnTxtPayWalletIosNone: {
     ...Platform.select({
-      ios: { display: "none" },
-      android: { fontWeight: "bold", color: "#fff", fontSize: 20, fontFamily: "Fontfabric-NexaBold" },
+      ios: { display: 'none' },
+      android: {
+        fontWeight: 'bold',
+        color: '#fff',
+        fontSize: 20,
+        fontFamily: 'Fontfabric-NexaBold',
+      },
     }),
   },
   btnImgPayWalletIos: {
     ...Platform.select({
       ios: { width: 46, height: 32 },
-      android: { display: "none" },
+      android: { display: 'none' },
     }),
   },
   btnImgPayWalletAndroid: {
     ...Platform.select({
-      ios: { display: "none" },
+      ios: { display: 'none' },
       android: { width: 88, height: 34 },
     }),
   },
   btnTxtPayWalletAndroidNone: {
     ...ifIphoneX(
-      { fontWeight: "bold", color: "#fff", fontSize: 20, fontFamily: "Fontfabric-NexaBold" },
+      {
+        fontWeight: 'bold',
+        color: '#fff',
+        fontSize: 20,
+        fontFamily: 'Fontfabric-NexaBold',
+      },
       {
         ...Platform.select({
-          ios: { fontWeight: "bold", color: "#fff", fontSize: 16, fontFamily: "Fontfabric-NexaBold" },
-          android: { display: "none" },
+          ios: {
+            fontWeight: 'bold',
+            color: '#fff',
+            fontSize: 16,
+            fontFamily: 'Fontfabric-NexaBold',
+          },
+          android: { display: 'none' },
         }),
       }
     ),
   },
   txtPaywalletAndroidNone: {
     ...ifIphoneX(
-      { color: "#fff", fontSize: 20, fontFamily: "Fontfabric-NexaRegular" },
+      { color: '#fff', fontSize: 20, fontFamily: 'Fontfabric-NexaRegular' },
       {
         ...Platform.select({
-          ios: { color: "#fff", fontSize: 16, fontFamily: "Fontfabric-NexaRegular" },
-          android: { display: "none" },
+          ios: {
+            color: '#fff',
+            fontSize: 16,
+            fontFamily: 'Fontfabric-NexaRegular',
+          },
+          android: { display: 'none' },
         }),
       }
     ),
   },
   pickerCurrencyTop: {
-    fontWeight: "bold",
-    color: "#fff",
+    fontWeight: 'bold',
+    color: '#fff',
     marginLeft: -15,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   pickerItemStyle: {
-    textAlign: "center",
-    color: "#ff0000",
+    textAlign: 'center',
+    color: '#ff0000',
   },
   constNameCards: {
     ...ifIphoneX(
-      { fontSize: 16, fontWeight: "bold", color: "rgba(57,57,57,100)", fontFamily: "Fontfabric-NexaBold" },
+      {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'rgba(57,57,57,100)',
+        fontFamily: 'Fontfabric-NexaBold',
+      },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            fontWeight: "bold",
-            color: "rgba(57,57,57,100)",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            color: 'rgba(57,57,57,100)',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            fontWeight: "bold",
-            color: "rgba(57,57,57,100)",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            color: 'rgba(57,57,57,100)',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -4479,15 +4526,25 @@ export default StyleSheet.create({
   },
   constDateCards: {
     ...ifIphoneX(
-      { fontSize: 13, fontWeight: "bold", color: "rgba(0,0,0,0.50)", fontFamily: "Fontfabric-NexaBold" },
+      {
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: 'rgba(0,0,0,0.50)',
+        fontFamily: 'Fontfabric-NexaBold',
+      },
       {
         ...Platform.select({
-          ios: { fontSize: 12, fontWeight: "bold", color: "rgba(0,0,0,0.50)", fontFamily: "Fontfabric-NexaBold" },
+          ios: {
+            fontSize: 12,
+            fontWeight: 'bold',
+            color: 'rgba(0,0,0,0.50)',
+            fontFamily: 'Fontfabric-NexaBold',
+          },
           android: {
             fontSize: 12,
-            fontWeight: "bold",
-            color: "rgba(0,0,0,0.50)",
-            fontFamily: "Fontfabric-NexaBold"
+            fontWeight: 'bold',
+            color: 'rgba(0,0,0,0.50)',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -4497,26 +4554,26 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 17,
-        fontWeight: "bold",
-        color: "rgba(82, 220, 144,100)",
+        fontWeight: 'bold',
+        color: 'rgba(82, 220, 144,100)',
         paddingRight: 20,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            fontWeight: "bold",
-            color: "rgba(82, 220, 144,100)",
+            fontWeight: 'bold',
+            color: 'rgba(82, 220, 144,100)',
             paddingRight: 20,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            fontWeight: "bold",
-            color: "rgba(82, 220, 144,100)",
+            fontWeight: 'bold',
+            color: 'rgba(82, 220, 144,100)',
             paddingRight: 20,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -4526,26 +4583,26 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 17,
-        fontWeight: "bold",
-        color: "rgba(255, 93, 113,100)",
+        fontWeight: 'bold',
+        color: 'rgba(255, 93, 113,100)',
         paddingRight: 20,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            fontWeight: "bold",
-            color: "rgba(255, 93, 113,100)",
+            fontWeight: 'bold',
+            color: 'rgba(255, 93, 113,100)',
             paddingRight: 20,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            fontWeight: "bold",
-            color: "rgba(255, 93, 113,100)",
+            fontWeight: 'bold',
+            color: 'rgba(255, 93, 113,100)',
             paddingRight: 20,
-            fontFamily: "Fontfabric-NexaBold"
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -4555,47 +4612,47 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        backgroundColor: "#FDFDFD",
+        backgroundColor: '#FDFDFD',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: hp("30%"),
+        height: hp('30%'),
         zIndex: 1,
-        alignItems: "center",
-        justifyContent: "flex-start",
+        alignItems: 'center',
+        justifyContent: 'flex-start',
       },
       {
         ...Platform.select({
           ios: {
             flex: 1,
-            backgroundColor: "#FDFDFD",
+            backgroundColor: '#FDFDFD',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "25%",
+            height: '25%',
             zIndex: 1,
-            alignItems: "center",
-            justifyContent: "flex-start",
+            alignItems: 'center',
+            justifyContent: 'flex-start',
           },
           android: {
             flex: 1,
-            backgroundColor: "#FDFDFD",
+            backgroundColor: '#FDFDFD',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            height: "20%",
+            height: '20%',
             zIndex: 1,
-            alignItems: "center",
-            justifyContent: "flex-start",
+            alignItems: 'center',
+            justifyContent: 'flex-start',
           },
         }),
       }
@@ -4603,49 +4660,49 @@ export default StyleSheet.create({
   },
   containerHeaderCard: {
     zIndex: 1,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
   },
   containerSubCard: {
     // alignItems: 'center',
-    backgroundColor: "#fff",
-    height: "100%",
+    backgroundColor: '#fff',
+    height: '100%',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     // paddingTop: 16,
   },
   pickerAddCardIos: {
     ...ifIphoneX(
-      { flex: 1, alignItems: "center", marginTop: "20%" },
+      { flex: 1, alignItems: 'center', marginTop: '20%' },
       {
         ...Platform.select({
-          ios: { flex: 1, alignItems: "center" },
-          android: { display: "none" },
+          ios: { flex: 1, alignItems: 'center' },
+          android: { display: 'none' },
         }),
       }
     ),
   },
   pickerAddCardAndroid: {
     ...Platform.select({
-      ios: { display: "none" },
-      android: { flex: 1, alignItems: "center" },
+      ios: { display: 'none' },
+      android: { flex: 1, alignItems: 'center' },
     }),
   },
   detail: {
     fontSize: 16,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 20
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 20,
   },
   detailInfoAmount: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: "#fff",
+    fontWeight: 'bold',
+    color: '#fff',
     paddingTop: 20,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
     // paddingBottom: 10,
   },
   icon: {
@@ -4653,51 +4710,51 @@ export default StyleSheet.create({
     height: 50,
   },
   detailsHistory: {
-    alignItems: "center",
+    alignItems: 'center',
     paddingTop: 20,
     paddingBottom: 50,
   },
   alignItems: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   alignItemsQr: {
-    alignItems: "center",
+    alignItems: 'center',
     paddingHorizontal: 20,
   },
   footer: {
     padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   imgScanCamera: {
     paddingTop: 100,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadMoreBtn: {
     padding: 10,
     borderRadius: 4,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnText: {
-    color: "#707070",
+    color: '#707070',
     fontSize: 15,
-    textAlign: "center",
-    fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   borderItem: {
     // borderRadius: 10,
     // marginVertical: 5,
     // borderColor: "#fff",
-    borderBottomColor: "rgba(255,255,255,0.60)",
+    borderBottomColor: 'rgba(255,255,255,0.60)',
     borderBottomWidth: 0.4,
     marginTop: 10,
   },
   borderItemAccount: {
-    borderBottomColor: "rgba(255,255,255,0.60)",
+    borderBottomColor: 'rgba(255,255,255,0.60)',
     borderBottomWidth: 0.4,
   },
   borderItemInput: {
@@ -4705,34 +4762,34 @@ export default StyleSheet.create({
     marginVertical: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderColor: "#fff",
+    borderColor: '#fff',
   },
   widthCard: {
-    width: "80%",
+    width: '80%',
     marginTop: 20,
   },
   iconBtn: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 28,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   mbListItem: {
     // paddingVertical: 10,
-    height: 'auto'
+    height: 'auto',
   },
   lineMono: {
     borderBottomWidth: 1,
     // borderBottomColor: "#9d41eb",
-    borderBottomColor: "rgba(255, 255, 255, 0.70)",
-    width: "100%",
-    alignItems: "center",
+    borderBottomColor: 'rgba(255, 255, 255, 0.70)',
+    width: '100%',
+    alignItems: 'center',
     top: -15,
     zIndex: -1,
   },
   lineMonoRow: {
     borderBottomWidth: 1,
     borderBottomColor: Images.color4,
-    width: "100%",
+    width: '100%',
     // alignItems: "left",
     paddingVertical: 15,
   },
@@ -4741,20 +4798,20 @@ export default StyleSheet.create({
     paddingVertical: 15,
   },
   badge: {
-    justifyContent: "center",
+    justifyContent: 'center',
     zIndex: 111,
   },
   iconCopy: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 20,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textAddrQr: {
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    color: "#fff",
-    textAlign: "center",
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    color: '#fff',
+    textAlign: 'center',
     fontSize: 18,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   styleQr: {
     width: 220,
@@ -4762,62 +4819,62 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
   colorTxtBadge: {
-    color: "#fff",
+    color: '#fff',
   },
   sizeIconBtn: {
     width: normalize(64 / 2.5),
-    height: normalize(36 /2.5),
+    height: normalize(36 / 2.5),
     left: normalize(1),
   },
-	sizeIconBtnSwap: {
-		width: normalize(64 / 2.5),
-		height: normalize(25),
-		left: normalize(1),
-	},
+  sizeIconBtnSwap: {
+    width: normalize(64 / 2.5),
+    height: normalize(25),
+    left: normalize(1),
+  },
   sizeIconBtn1: {
     width: 64 / 4,
-    height: 64 /4,
+    height: 64 / 4,
     left: 30,
   },
   sizeIconScanBtn: {
     width: normalize(65 / 2.5),
     height: normalize(65 / 2.5),
     left: 0,
-    bottom: normalize(1)
+    bottom: normalize(1),
   },
   sizeIconSendBtn: {
     width: 65 / 2.5,
     height: 65 / 2.5,
-    transform: [{ rotate: "-35deg" }],
+    transform: [{ rotate: '-35deg' }],
     left: 2,
-    bottom: 1
+    bottom: 1,
   },
   sizeIconRefresh: {
     width: 30,
     height: 30,
   },
   touchableCenter: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 100,
   },
   touchableAdd: {
     // position: 'absolute',
     width: 56,
     height: 56,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10,
     // backgroundColor: "#563688",
     borderRadius: 30,
     elevation: 8,
     borderWidth: 2,
-    borderColor: "transparent",
+    borderColor: 'transparent',
   },
   columnBtnSeed: {
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     padding: 5,
-    width: "auto",
+    width: 'auto',
     paddingHorizontal: 20,
     paddingVertical: 5,
     marginTop: 25,
@@ -4826,20 +4883,20 @@ export default StyleSheet.create({
   rowBlockBtnSeed: {
     ...ifIphoneX(
       {
-        flexDirection: "row",
-        justifyContent: "center",
+        flexDirection: 'row',
+        justifyContent: 'center',
         padding: 5,
       },
       {
         ...Platform.select({
           ios: {
-            flexDirection: "column",
-            justifyContent: "center",
+            flexDirection: 'column',
+            justifyContent: 'center',
             // padding: 5
           },
           android: {
-            flexDirection: "column",
-            justifyContent: "center",
+            flexDirection: 'column',
+            justifyContent: 'center',
             // padding: 5
           },
         }),
@@ -4850,53 +4907,53 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         padding: 10,
-        backgroundColor: "rgba(157, 65, 235, 0.2)",
-        width: "auto",
+        backgroundColor: 'rgba(157, 65, 235, 0.2)',
+        width: 'auto',
       },
       {
         ...Platform.select({
           ios: {
             // padding: 10,
             marginBottom: 5,
-            backgroundColor: "rgba(157, 65, 235, 0.2)",
-            width: "100%",
-            alignSelf: "center",
+            backgroundColor: 'rgba(157, 65, 235, 0.2)',
+            width: '100%',
+            alignSelf: 'center',
           },
           android: {
             // padding: 10,
             marginBottom: 5,
-            backgroundColor: "rgba(157, 65, 235, 0.2)",
-            width: "auto",
-            alignSelf: "center",
+            backgroundColor: 'rgba(157, 65, 235, 0.2)',
+            width: 'auto',
+            alignSelf: 'center',
           },
         }),
       }
     ),
   },
   txtBtnSeed: {
-    color: "#fff",
+    color: '#fff',
   },
   itemSeed: {
     borderWidth: 1,
     borderRadius: 5,
-    width: "100%",
-    borderColor: "#fff",
+    width: '100%',
+    borderColor: '#fff',
     marginTop: 20,
   },
   toastStyle: {
-    backgroundColor: "black",
-    width: "90%",
+    backgroundColor: 'black',
+    width: '90%',
   },
   toastStyle1: {
-    backgroundColor: "black",
-    width: "90%",
+    backgroundColor: 'black',
+    width: '90%',
     top: -100,
   },
   styleLogo: {
     ...Platform.select({
       ios: {
-        height: "10%",
-        width: "20%",
+        height: '10%',
+        width: '20%',
       },
       android: {
         height: 27.3 * 2,
@@ -4905,10 +4962,8 @@ export default StyleSheet.create({
     }),
   },
   styleLogoCamera: {
-
-        height: 86/1.5,
-        width: 115/1.5,
-
+    height: 86 / 1.5,
+    width: 115 / 1.5,
   },
   setupConfirmImg: {
     height: 292 / 5,
@@ -4919,19 +4974,19 @@ export default StyleSheet.create({
       {
         height: 271 / 4,
         width: 320 / 4,
-        marginBottom: "10%",
+        marginBottom: '10%',
       },
       {
         ...Platform.select({
           ios: {
             height: 271 / 4.5,
             width: 320 / 4.5,
-            marginBottom: "5%",
+            marginBottom: '5%',
           },
           android: {
             height: 271 / 5,
             width: 320 / 5,
-            marginBottom: "5%",
+            marginBottom: '5%',
           },
         }),
       }
@@ -4940,15 +4995,15 @@ export default StyleSheet.create({
   iconAdd: {
     ...Platform.select({
       ios: {
-        color: "#fff",
+        color: '#fff',
         top: 2,
         fontSize: 25,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       },
       android: {
-        color: "#fff",
+        color: '#fff',
         fontSize: 25,
-        fontFamily: "Fontfabric-NexaRegular"
+        fontFamily: 'Fontfabric-NexaRegular',
       },
     }),
   },
@@ -4958,21 +5013,21 @@ export default StyleSheet.create({
     paddingRight: 20,
   },
   btnTextClose: {
-    color: "#009EFD",
+    color: '#009EFD',
     fontSize: 18,
     marginBottom: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   containerModal: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalContent2: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 0,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: 40,
   },
   imgSizeModal2: {
@@ -4980,57 +5035,57 @@ export default StyleSheet.create({
     height: 51,
   },
   textModalRender: {
-    color: "rgba(34,34,34,100)",
+    color: 'rgba(34,34,34,100)',
     fontSize: 27,
-    textAlign: "center",
+    textAlign: 'center',
     paddingHorizontal: 40,
     paddingVertical: 10,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    fontFamily: 'Fontfabric-NexaBold',
   },
   textModalStyle: {
     fontSize: 17,
-    color: "#000",
+    color: '#000',
     paddingHorizontal: 20,
-    textAlign: "center",
+    textAlign: 'center',
     marginVertical: 10,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   valueModalStyle: {
-    color: "rgba(49,49,49,0.60)",
+    color: 'rgba(49,49,49,0.60)',
   },
   linkStyle: {
-    color: "#2C1FBD",
-    textDecorationLine: "underline",
+    color: '#2C1FBD',
+    textDecorationLine: 'underline',
   },
   arrowHeaderLeft: {
     paddingLeft: 15,
   },
   arrowIcon: {
     fontSize: 30,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   bodyConfirm: {
-    width: "100%",
+    width: '100%',
     marginTop: 20,
   },
   borderItemSeed: {
     borderWidth: 1,
     borderRadius: 5,
-    width: "100%",
-    borderColor: "#fff",
+    width: '100%',
+    borderColor: '#fff',
   },
   marginBtnSeed: {
-    alignItems: "center",
-    width: "100%",
+    alignItems: 'center',
+    width: '100%',
     marginBottom: 15,
     // marginTop: 10,
   },
   btnNext: {
-    backgroundColor: "#fff",
-    width: "45%",
+    backgroundColor: '#fff',
+    width: '45%',
     height: 45,
     marginHorizontal: 10,
 
@@ -5041,8 +5096,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   btnPrint: {
-    backgroundColor: "#3CD5AF",
-    width: "45%",
+    backgroundColor: '#3CD5AF',
+    width: '45%',
     height: 45,
     marginHorizontal: 10,
     borderRadius: 0,
@@ -5050,74 +5105,72 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   btnCancel: {
-    backgroundColor: "#cecece",
-    width: "45%",
+    backgroundColor: '#cecece',
+    width: '45%',
     height: 45,
     marginHorizontal: 10,
     borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   txtBtn: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     paddingVertical: 15,
     color: Images.color1,
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   txtBtnPrint: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     paddingVertical: 15,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   txtBtnBack: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     paddingVertical: 15,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "Fontfabric-NexaBold"
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Fontfabric-NexaBold',
   },
   containerBtn: {
-    flexDirection: "row",
+    flexDirection: 'row',
     // justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: 'center',
     paddingHorizontal: 25,
   },
   containerBtn1: {
     ...Platform.select({
       ios: {
-        flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 25,
-    marginBottom: 20,
-    width: "95%"
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 25,
+        marginBottom: 20,
+        width: '95%',
       },
       android: {
-        flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 25,
-    marginBottom: 20,
-    width: "90%"
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 25,
+        marginBottom: 20,
+        width: '90%',
       },
     }),
-
   },
   textTermsStyle: {
-    color: "#fff",
+    color: '#fff',
   },
   linkTermsStyle: {
-    color: "#fff",
-    textDecorationLine: "underline",
+    color: '#fff',
+    textDecorationLine: 'underline',
   },
   linkStyle: {
-    color: "#2C1FBD",
-    textDecorationLine: "underline",
+    color: '#2C1FBD',
+    textDecorationLine: 'underline',
   },
   styleLogo: {
     ...Platform.select({
@@ -5138,7 +5191,7 @@ export default StyleSheet.create({
         // backgroundColor: transparent,
         borderRadius: 0,
       },
-      android: { backgroundColor: Images.velasColor4, borderRadius: 0, },
+      android: { backgroundColor: Images.velasColor4, borderRadius: 0 },
     }),
   },
   cardItemSeedAndroid: {
@@ -5148,83 +5201,86 @@ export default StyleSheet.create({
         // backgroundColor: transparent,
         borderRadius: 0,
       },
-      android: { backgroundColor: Images.velasColor4, borderRadius: 0, height: "70%" },
+      android: {
+        backgroundColor: Images.velasColor4,
+        borderRadius: 0,
+        height: '70%',
+      },
     }),
   },
   bodyTerms: {
     borderWidth: 1,
     borderRadius: 0,
-    width: "100%",
-    borderColor: "#fff",
+    width: '100%',
+    borderColor: '#fff',
     marginTop: 20,
-    height: "40%",
+    height: '40%',
   },
   spinnerTextStyle: {
-    color: "#FFF",
-    textShadowColor: "transparent",
+    color: '#FFF',
+    textShadowColor: 'transparent',
     textShadowRadius: 5,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    fontFamily: "Fontfabric-NexaBold",
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    fontFamily: 'Fontfabric-NexaBold',
   },
   titleInput: {
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 25,
   },
   titleInputSend: {
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
     // marginBottom: 15,
   },
   bgMainPage: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   styleLogoHead: {
     width: 277 / 2,
     height: 241 / 2,
-    alignSelf: "center"
+    alignSelf: 'center',
   },
   styleCoinIn: {
     color: Images.colorGreen,
     fontSize: 17,
-    fontWeight: "500",
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 30
+    fontWeight: '500',
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 30,
   },
   styleCoinOut: {
     color: Images.colorBlue,
     fontSize: 17,
-    fontWeight: "500",
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 30
-
+    fontWeight: '500',
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 30,
   },
   detailInfoIn: {
     fontSize: 32,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
     color: Images.colorGreen,
     paddingTop: 20,
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 30
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 30,
   },
   detailInfoOut: {
     fontSize: 32,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
     color: Images.colorBlue,
     paddingTop: 20,
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 30
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 30,
   },
   createWordBlock: {
     ...ifIphoneX(
       {
         borderRadius: 30,
         borderWidth: 1,
-        width: "46%",
+        width: '46%',
         paddingHorizontal: 10,
         borderColor: Images.color4,
-        alignItems: "center",
+        alignItems: 'center',
         paddingVertical: 4,
         marginHorizontal: 7,
         marginVertical: 5,
@@ -5234,10 +5290,10 @@ export default StyleSheet.create({
           ios: {
             borderRadius: 30,
             borderWidth: 1,
-            width: "45%",
+            width: '45%',
             paddingHorizontal: 10,
             borderColor: Images.color4,
-            alignItems: "center",
+            alignItems: 'center',
             paddingVertical: 4,
             marginHorizontal: 7,
             marginVertical: 5,
@@ -5245,10 +5301,10 @@ export default StyleSheet.create({
           android: {
             borderRadius: 30,
             borderWidth: 1,
-            width: "46%",
+            width: '46%',
             paddingHorizontal: 10,
             borderColor: Images.color4,
-            alignItems: "center",
+            alignItems: 'center',
             paddingVertical: 4,
             marginHorizontal: 5,
             marginVertical: 5,
@@ -5267,8 +5323,8 @@ export default StyleSheet.create({
         marginVertical: 5,
         marginRight: 5,
         backgroundColor: Images.color4,
-        borderColor: "transparent",
-        position: "absolute",
+        borderColor: 'transparent',
+        position: 'absolute',
         left: 10,
       },
       android: {
@@ -5279,64 +5335,64 @@ export default StyleSheet.create({
         marginVertical: 5,
         marginRight: 5,
         backgroundColor: Images.color4,
-        borderColor: "transparent",
-        position: "absolute",
+        borderColor: 'transparent',
+        position: 'absolute',
         left: 10,
       },
     }),
   },
   styleIndex: {
-    color: "#fff",
-    alignSelf: "center",
+    color: '#fff',
+    alignSelf: 'center',
     fontSize: 10,
-    fontWeight: "bold",
-    justifyContent: "center",
-    alignItems: "center",
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
     top: 1,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   styleSeedWrap: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingBottom: 10,
-    left: Platform.OS === "ios" ? null : 5,
+    left: Platform.OS === 'ios' ? null : 5,
   },
   heightQW: {
-    borderColor: "red",
+    borderColor: 'red',
   },
   seedContainerStyle: {
     ...ifIphoneX(
       {
         borderWidth: 1,
         borderRadius: 5,
-        width: "100%",
+        width: '100%',
         // height: "40%",
-        borderColor: "#fff",
+        borderColor: '#fff',
         marginTop: 20,
         padding: 10,
-        alignItems: "center",
+        alignItems: 'center',
       },
       {
         ...Platform.select({
           ios: {
             borderWidth: 1,
             borderRadius: 5,
-            width: "100%",
-            height: "40%",
-            borderColor: "#fff",
+            width: '100%',
+            height: '40%',
+            borderColor: '#fff',
             marginTop: 20,
             padding: 10,
-            alignItems: "center",
+            alignItems: 'center',
           },
           android: {
             borderWidth: 1,
             borderRadius: 5,
-            width: "100%",
-            height: "40%",
-            borderColor: "#fff",
+            width: '100%',
+            height: '40%',
+            borderColor: '#fff',
             marginTop: 20,
             padding: 10,
-            alignItems: "center",
+            alignItems: 'center',
           },
         }),
       }
@@ -5344,31 +5400,31 @@ export default StyleSheet.create({
   },
   placeholderSeedInput: {
     fontSize: 14,
-    color: "#fff",
-    fontWeight: "bold",
+    color: '#fff',
+    fontWeight: 'bold',
     left: -10,
     top: -5,
-    fontFamily: "Fontfabric-NexaBold"
+    fontFamily: 'Fontfabric-NexaBold',
   },
   itemPickerLang: {
     borderRadius: 10,
     marginVertical: 5,
-    borderColor: "#fff",
+    borderColor: '#fff',
     height: 50,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnLangPage: {
-    alignItems: "center",
-    width: "100%",
+    alignItems: 'center',
+    width: '100%',
     marginBottom: 15,
     marginTop: 20,
   },
   langPage: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   thumbnailStyle: {
     width: 26,
@@ -5377,8 +5433,8 @@ export default StyleSheet.create({
   },
   containerFp: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
+    justifyContent: 'center',
+    alignContent: 'center',
     paddingTop: Constants.statusBarHeight,
     padding: 8,
   },
@@ -5389,20 +5445,20 @@ export default StyleSheet.create({
   titleBlackFp: {
     ...ifIphoneX(
       {
-        color: "#000",
+        color: '#000',
         fontSize: 20,
-        fontWeight: "bold",
-        alignSelf: "center",
+        fontWeight: 'bold',
+        alignSelf: 'center',
         height: 30,
         marginTop: 10,
-        fontFamily: "Fontfabric-NexaBold"
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
-        color: "#000",
+        color: '#000',
         fontSize: 20,
-        fontWeight: "bold",
-        alignSelf: "center",
-        fontFamily: "Fontfabric-NexaBold"
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        fontFamily: 'Fontfabric-NexaBold',
       }
     ),
   },
@@ -5422,21 +5478,21 @@ export default StyleSheet.create({
     // backgroundColor: "#fff",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
     // height: hp("50%"),
     height: 'auto',
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   innerContainerFp: {
-    marginTop: "30%",
-    width: "100%",
+    marginTop: '30%',
+    width: '100%',
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   imageFinger: {
     width: 150 / 2,
@@ -5446,29 +5502,29 @@ export default StyleSheet.create({
   imageScan: {
     width: 320 / 5,
     height: 480 / 5,
-    marginTop: 40
+    marginTop: 40,
   },
   textFp: {
-    alignSelf: "center",
+    alignSelf: 'center',
     fontSize: 22,
     paddingTop: 20,
-    fontFamily: "Fontfabric-NexaRegular",
-    color: "white"
+    fontFamily: 'Fontfabric-NexaRegular',
+    color: 'white',
   },
   introBackgroundFp: {
-    backgroundColor: "#290C64",
-    width: "100%",
-    height: "100%",
+    backgroundColor: '#290C64',
+    width: '100%',
+    height: '100%',
   },
   squareLight: {
     top: 200,
     left: 140,
-    position: "absolute",
+    position: 'absolute',
     width: 200 * 2,
     height: 200 * 2,
     backgroundColor: Images.color3,
-    transform: [{ rotate: "50deg" }],
-    shadowColor: "#000",
+    transform: [{ rotate: '50deg' }],
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 6,
@@ -5480,7 +5536,7 @@ export default StyleSheet.create({
     opacity: 0.8,
   },
   linearGradientBg: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
@@ -5491,12 +5547,12 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         flex: 1,
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
-        height: hp("25%"),
-        shadowColor: "#000",
+        height: hp('25%'),
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 6,
@@ -5509,12 +5565,12 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             flex: 1,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             top: 0,
-            height: hp("25%"),
-            shadowColor: "#000",
+            height: hp('25%'),
+            shadowColor: '#000',
             shadowOffset: {
               width: 0,
               height: 6,
@@ -5525,12 +5581,12 @@ export default StyleSheet.create({
           },
           android: {
             flex: 1,
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             top: 0,
-            height: hp("30%"),
-            shadowColor: "#000",
+            height: hp('30%'),
+            shadowColor: '#000',
             shadowOffset: {
               width: 0,
               height: 6,
@@ -5542,17 +5598,16 @@ export default StyleSheet.create({
         }),
       }
     ),
-
   },
   square: {
     top: 30,
     left: -400,
-    position: "absolute",
+    position: 'absolute',
     width: 200 * 3,
     height: 200 * 3,
     // backgroundColor: color3,
-    transform: [{ rotate: "60deg" }],
-    shadowColor: "#000",
+    transform: [{ rotate: '60deg' }],
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 6,
@@ -5566,12 +5621,12 @@ export default StyleSheet.create({
   square2: {
     top: -300,
     left: -130,
-    position: "absolute",
+    position: 'absolute',
     width: 200 * 2,
     height: 200 * 2,
     backgroundColor: Images.color3,
-    transform: [{ rotate: "50deg" }],
-    shadowColor: "#000",
+    transform: [{ rotate: '50deg' }],
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 6,
@@ -5585,12 +5640,12 @@ export default StyleSheet.create({
   square3: {
     top: -250,
     left: 130,
-    position: "absolute",
+    position: 'absolute',
     width: 100 * 2,
     height: 200 * 2,
     backgroundColor: Images.color3,
-    transform: [{ rotate: "85deg" }],
-    shadowColor: "#000",
+    transform: [{ rotate: '85deg' }],
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 6,
@@ -5611,79 +5666,77 @@ export default StyleSheet.create({
   },
   containterBg: {
     // width: width < height ? width : height,
-  // height: width < height ? height : width,
-  // resizeMode: 'stretch',
-  width: "100%",
-  height: "100%",
+    // height: width < height ? height : width,
+    // resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
 
-  // backgroundColor: "red"
-  // width: "100%",
-  // height: "100%",
-
+    // backgroundColor: "red"
+    // width: "100%",
+    // height: "100%",
   },
   containterBg1: {
-    width: "100%",
-    height: "100%"
-
+    width: '100%',
+    height: '100%',
   },
   fixedBg: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
 
   autocompleteContainerStyle: {
     borderWidth: 0,
     margin: 0,
-    width: "100%",
+    width: '100%',
     flex: 0,
   },
   autocompleteInputContainerStyle: {
     borderWidth: 0,
     margin: 0,
-    width: "100%",
+    width: '100%',
     flex: 0,
   },
   autocompleteListStyle: {
     backgroundColor: Images.velasColor2,
     borderWidth: 0.4,
-    borderColor: "rgba(255,255,255,0.60)",
-    width: "100%",
+    borderColor: 'rgba(255,255,255,0.60)',
+    width: '100%',
     minHeight: '10%',
     maxHeight: 150,
-    left: Platform.OS === "android" ? -9 : 1,
+    left: Platform.OS === 'android' ? -9 : 1,
     // zIndex: 9999,
     // position: 'absolute'
   },
   autocompleteListItemStyle: {
     fontSize: 15,
     margin: 2,
-    color: "white",
-    fontFamily: "Fontfabric-NexaRegular"
+    color: 'white',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   autocompleteInputIncorrect: {
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "#FB746E",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#FB746E',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "#FB746E",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#FB746E',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            color: "#FB746E",
-            fontWeight: Platform.OS === 'ios' ? "bold" : null,
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#FB746E',
+            fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
@@ -5693,37 +5746,36 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         fontSize: 14,
-        color: "#0bffb7",
-        fontWeight: "bold",
-        fontFamily: "Fontfabric-NexaBold"
+        color: '#0bffb7',
+        fontWeight: 'bold',
+        fontFamily: 'Fontfabric-NexaBold',
       },
       {
         ...Platform.select({
           ios: {
             fontSize: 14,
-            color: "#0bffb7",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#0bffb7',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
           android: {
             fontSize: 14,
-            color: "#0bffb7",
-            fontWeight: "bold",
-            fontFamily: "Fontfabric-NexaBold"
+            color: '#0bffb7',
+            fontWeight: 'bold',
+            fontFamily: 'Fontfabric-NexaBold',
           },
         }),
       }
     ),
   },
   scrollViewAndroid: {
-    width: Platform.OS === "ios" ? null : "100%",
+    width: Platform.OS === 'ios' ? null : '100%',
   },
 
   containerBarCode: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
-
+    justifyContent: 'space-between',
   },
   layerTop: {
     flex: 0.5,
@@ -5749,93 +5801,97 @@ export default StyleSheet.create({
     // backgroundColor: "rgba(0, 0, 0, .6)"
   },
   cameraContainer: {
-    marginHorizontal: 0, marginLeft: 0, marginStart: 0,
-    paddingHorizontal: 0, paddingLeft: 0, paddingStart: 0,
+    marginHorizontal: 0,
+    marginLeft: 0,
+    marginStart: 0,
+    paddingHorizontal: 0,
+    paddingLeft: 0,
+    paddingStart: 0,
     height: '115%',
-    padding: 0
-},
+    padding: 0,
+  },
   focusedBorder1: {
-    backgroundColor: "transparent",
-    borderColor: "#fff",
-    height: "10%",
-    width: "10%",
+    backgroundColor: 'transparent',
+    borderColor: '#fff',
+    height: '10%',
+    width: '10%',
     top: 0,
     left: 0,
-    position: "absolute",
+    position: 'absolute',
     borderLeftWidth: 5,
     borderTopWidth: 5,
   },
   focusedBorder2: {
-    backgroundColor: "transparent",
-    borderColor: "#fff",
-    height: "10%",
-    width: "10%",
-    top:0,
+    backgroundColor: 'transparent',
+    borderColor: '#fff',
+    height: '10%',
+    width: '10%',
+    top: 0,
     right: 0,
-    position: "absolute",
+    position: 'absolute',
     borderRightWidth: 5,
     borderTopWidth: 5,
   },
   focusedBorder3: {
-    backgroundColor: "transparent",
-    borderColor: "#fff",
-    height: "10%",
-    width: "10%",
-    bottom:0,
+    backgroundColor: 'transparent',
+    borderColor: '#fff',
+    height: '10%',
+    width: '10%',
+    bottom: 0,
     left: 0,
-    position: "absolute",
+    position: 'absolute',
     borderLeftWidth: 5,
     borderBottomWidth: 5,
   },
   focusedBorder4: {
-    backgroundColor: "transparent",
-    borderColor: "#fff",
-    height: "10%",
-    width: "10%",
-    bottom:0,
+    backgroundColor: 'transparent',
+    borderColor: '#fff',
+    height: '10%',
+    width: '10%',
+    bottom: 0,
     right: 0,
-    position: "absolute",
+    position: 'absolute',
     borderRightWidth: 5,
     borderBottomWidth: 5,
   },
   paddingSettings: {
-    paddingTop: 100
+    paddingTop: 100,
   },
   paddingWithdraw: {
-    paddingTop: Platform.OS === 'android' ? '30%' : '80%'
+    paddingTop: Platform.OS === 'android' ? '30%' : '80%',
   },
   containerLayer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   topLayer: {
     flex: 1,
-    backgroundColor: "pink"
+    backgroundColor: 'pink',
   },
 
   bottomLayer: {
     flex: 3,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent',
   },
 
   layerSubTop: {
     flex: 0.5,
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   styleVersion: {
-    opacity: 0.50,
-    marginTop: 5
+    opacity: 0.5,
+    marginTop: 5,
   },
   txtRadio: {
     fontSize: 14,
     color: 'rgba(255,255,255,0.50)',
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   txtRadioCheck: {
     fontSize: 14,
     color: 'yellow',
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   inputContainerRadio: {
     flex: 1,
@@ -5851,12 +5907,12 @@ export default StyleSheet.create({
   inputStyleRadio: {
     color: 'rgba(255,255,255,0.50)',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   inputStyleRadioCheck: {
     color: 'yellow',
     fontSize: 14,
-    fontFamily: "Fontfabric-NexaRegular"
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   borderItemRadio: {
     borderBottomColor: 'transparent',
@@ -5865,23 +5921,22 @@ export default StyleSheet.create({
   borderRadio: {
     borderColor: 'rgba(255,255,255,0.60)',
     borderWidth: 0.4,
-    width: wp("28%"),
+    width: wp('28%'),
     borderRadius: 5,
     // paddingHorizontal: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   borderRadioCheck: {
     borderColor: 'yellow',
     borderWidth: 1,
     borderRadius: 5,
-    width: wp("28%"),
+    width: wp('28%'),
     // paddingHorizontal: 10,
-    marginHorizontal: 10
-
+    marginHorizontal: 10,
   },
   contentLoader: {
-    opacity: 0.4
-   },
+    opacity: 0.4,
+  },
   demoView: {
     backgroundColor: '#ebab28',
     // height: 'auto',
@@ -5891,78 +5946,78 @@ export default StyleSheet.create({
   demoTxt: {
     paddingHorizontal: 5,
     // paddingBottom: Platform.OS === 'android' ? null : 20,
-    alignSelf: "center",
+    alignSelf: 'center',
     textAlign: 'center',
     fontSize: 15,
-    fontFamily: "Fontfabric-NexaBold",
-    lineHeight: 20
+    fontFamily: 'Fontfabric-NexaBold',
+    lineHeight: 20,
   },
   textBtnTransparent: {
     fontSize: 14,
-    color: "rgba(255,255,255,0.50)",
-    fontFamily: "Fontfabric-NexaRegular",
-    textTransform: 'capitalize'
+    color: 'rgba(255,255,255,0.50)',
+    fontFamily: 'Fontfabric-NexaRegular',
+    textTransform: 'capitalize',
   },
   btnVelasActive: {
     borderRadius: 0,
     backgroundColor: 'white',
     marginVertical: 30,
-	  // zIndex: 8888
+    // zIndex: 8888
   },
   btnVelasCreate: {
     borderRadius: 0,
     backgroundColor: Images.colorGreen,
-    marginVertical: 10
+    marginVertical: 10,
   },
   btnVelasRestore: {
     borderRadius: 0,
     backgroundColor: 'white',
-    marginVertical: 10
+    marginVertical: 10,
   },
   btnVelasCopy: {
     marginVertical: 15,
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 0,
-    backgroundColor: Images.colorOrange
+    backgroundColor: Images.colorOrange,
   },
   btnVelasShare: {
     marginVertical: 15,
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 0,
-    backgroundColor: Images.colorGreen
+    backgroundColor: Images.colorGreen,
   },
   textBtn: {
     fontSize: 14,
     color: Images.color1,
-    fontFamily: "Fontfabric-NexaBold",
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
+    fontFamily: 'Fontfabric-NexaBold',
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
     textTransform: 'capitalize',
   },
   btnVelasInactive: {
     borderRadius: 0,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   headerBg: {
     backgroundColor: Images.colorDarkBlue,
-    borderBottomColor: "transparent",
+    borderBottomColor: 'transparent',
   },
   headerTitle: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaBold",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaBold',
     fontSize: 20,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    width: "160%",
-    textAlign: 'center'
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    width: '160%',
+    textAlign: 'center',
   },
   headerTitleSmall: {
-    color: "#fff",
-    fontFamily: "Fontfabric-NexaBold",
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaBold',
     fontSize: 18,
-    fontWeight: Platform.OS === 'ios' ? "bold" : null,
-    width: Platform.OS === 'ios' ? "200%" : "170%",
-    textAlign: 'center'
+    fontWeight: Platform.OS === 'ios' ? 'bold' : null,
+    width: Platform.OS === 'ios' ? '200%' : '170%',
+    textAlign: 'center',
   },
   marginTopAndroid: {
     marginTop: Platform.OS === 'ios' ? null : 30,
@@ -5974,15 +6029,23 @@ export default StyleSheet.create({
     color: Images.colorGreen,
   },
   viewNetInfo: {
-    backgroundColor: 'orange', zIndex: 9999, position: "absolute",
+    backgroundColor: 'orange',
+    zIndex: 9999,
+    position: 'absolute',
     // width: "100%",
     paddingHorizontal: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   textNetInfo: {
-    textAlign: "center", fontSize: 16, color: "#fff", fontFamily: "Fontfabric-NexaRegular"
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   textAuth: {
-    color: "#fff", textAlign: "center", paddingTop: 100, paddingHorizontal: 20
-  }
+    color: '#fff',
+    textAlign: 'center',
+    paddingTop: 100,
+    paddingHorizontal: 20,
+  },
 });

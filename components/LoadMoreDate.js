@@ -30,7 +30,7 @@ import roundNumber from '../round-number.js';
 import roundHuman2 from '../wallet/round-human2';
 import roundHuman from '../wallet/round-human';
 import { SkypeIndicator } from 'react-native-indicators';
-import walletsFuncs from "../wallet/wallets-funcs";
+import walletsFuncs from '../wallet/wallets-funcs';
 import { Trx } from '../svg/trx.js';
 
 var ref$ = require('prelude-ls'),
@@ -40,7 +40,6 @@ var ref$ = require('prelude-ls'),
   find = ref$.find,
   keys = ref$.keys,
   map = ref$.map;
-
 
 const filterTxs = curry$(function (store, tx) {
   var type, token, from, to, filterProps, found;
@@ -105,26 +104,24 @@ export default ({ store, web3t }) => {
     }
   };
 
-	const index = type => {
-		if (type === 'IN') return <Text>+ </Text>;
-		return <Text>- </Text>;
-	};
-	const amountStyle = type => {
-		if (type === 'IN') return styles.styleCoinIn;
-		return styles.styleCoinOut;
-	};
-	const thumbnail = type => {
-		switch (type) {
-			case 'IN':
-				return <Thumbnail small square source={Images.depositImage} />;
-			case 'OUT':
-				return (
-					<Thumbnail small square source={Images.withdrawImage2} />
-				);
-			default:
-				return null;
-		}
-	};
+  const index = (type) => {
+    if (type === 'IN') return <Text>+ </Text>;
+    return <Text>- </Text>;
+  };
+  const amountStyle = (type) => {
+    if (type === 'IN') return styles.styleCoinIn;
+    return styles.styleCoinOut;
+  };
+  const thumbnail = (type) => {
+    switch (type) {
+      case 'IN':
+        return <Thumbnail small square source={Images.depositImage} />;
+      case 'OUT':
+        return <Thumbnail small square source={Images.withdrawImage2} />;
+      default:
+        return null;
+    }
+  };
 
   const txs = store.transactions.applied;
 
@@ -147,64 +144,60 @@ export default ({ store, web3t }) => {
     applyTransactions(store);
   };
 
-	const renderTransaction = (transaction) => {
-		const { tx, amount, token, fee, type, time } = transaction;
-		const wallet = wallets.find((x) => x.coin.token === token);
-		if (!wallet) {
-			return null;
-		}
-		const r_amount = roundNumber(amount, {decimals: 2});
-		const txAmount = roundHuman(r_amount);
-		const network = store.current.network;
-		if (!wallet.coin[network]) {
-			return null;
-		}
-		const txCurrency = (wallet.coin.nickname || wallet.coin.token).toUpperCase();
-		const txFeeCurrency = (wallet.coin[network].txFeeIn || wallet.coin.nickname).toUpperCase();
-		const txFee = roundHuman(fee);
+  const renderTransaction = (transaction) => {
+    const { tx, amount, token, fee, type, time } = transaction;
+    const wallet = wallets.find((x) => x.coin.token === token);
+    if (!wallet) {
+      return null;
+    }
+    const r_amount = roundNumber(amount, { decimals: 2 });
+    const txAmount = roundHuman(r_amount);
+    const network = store.current.network;
+    if (!wallet.coin[network]) {
+      return null;
+    }
+    const txCurrency = (
+      wallet.coin.nickname || wallet.coin.token
+    ).toUpperCase();
+    const txFeeCurrency = (
+      wallet.coin[network].txFeeIn || wallet.coin.nickname
+    ).toUpperCase();
+    const txFee = roundHuman(fee);
 
-
-		return (
-			<ListItem
-				thumbnail
-				underlayColor={Images.color1}
-				onPress={() => {
-					showTransaction(transaction);
-				}}
-				key={Date.now() + token + tx + type}
-			>
-				<Left>{thumbnail(type)}</Left>
-				<Body style={{ paddingRight: 10 }}>
-					<Text style={styles.txtSizeHistory}>
-						{checkType(transaction)}
-					</Text>
-					<Text style={styles.constDate}>
-						{time
-							? moment(time * 1000).format(
-								"MMM D YYYY h:mm A"
-							)
-							: null
-						}
-					</Text>
-				</Body>
-				<Right>
-					<Text style={amountStyle(type)}>
-						{index(type)}
-						{txAmount}{"\u00A0"}{txCurrency}{Platform.OS === "android" ? "\u00A0\u00A0" : null}
-					</Text>
-					{fee
-						?(
-							<Text style={styles.constDate}>
-								({lang.fee}: {txFee}{" "}{txFeeCurrency}){Platform.OS === "android" ? "\u00A0\u00A0" : null}
-							</Text>
-						)
-						: null
-					}
-				</Right>
-			</ListItem>
-		);
-	}
-
+    return (
+      <ListItem
+        thumbnail
+        underlayColor={Images.color1}
+        onPress={() => {
+          showTransaction(transaction);
+        }}
+        key={Date.now() + token + tx + type}
+      >
+        <Left>{thumbnail(type)}</Left>
+        <Body style={{ paddingRight: 10 }}>
+          <Text style={styles.txtSizeHistory}>{checkType(transaction)}</Text>
+          <Text style={styles.constDate}>
+            {time ? moment(time * 1000).format('MMM D YYYY h:mm A') : null}
+          </Text>
+        </Body>
+        <Right>
+          <Text style={amountStyle(type)}>
+            {index(type)}
+            {txAmount}
+            {'\u00A0'}
+            {txCurrency}
+            {Platform.OS === 'android' ? '\u00A0\u00A0' : null}
+          </Text>
+          {fee ? (
+            <Text style={styles.constDate}>
+              ({lang.fee}: {txFee} {txFeeCurrency})
+              {Platform.OS === 'android' ? '\u00A0\u00A0' : null}
+            </Text>
+          ) : null}
+        </Right>
+      </ListItem>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -245,12 +238,12 @@ export default ({ store, web3t }) => {
         <View>
           {txs.length == 0 && (
             <View style={styles.footer}>
-            <Trx height={27.3 * 2} width={31.7 * 2} />
-          </View>
-        )}
-        <List>{txs.map(renderTransaction)}</List>
-      </View>
+              <Trx height={27.3 * 2} width={31.7 * 2} />
+            </View>
+          )}
+          <List>{txs.map(renderTransaction)}</List>
+        </View>
       )}
-  </View>
+    </View>
   );
 };
