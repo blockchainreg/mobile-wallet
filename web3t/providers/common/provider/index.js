@@ -259,9 +259,9 @@ const tryParse = function (data, cb) {
 };
 
 /**
- * Recursively makes post request untill find avaliable web3Provider.
+ * Recursively makes post request untill find available web3Provider.
  */
-const postWithAvaliableWeb3provider = function (web3Providers, query, cb) {
+const postWithAvailableWeb3provider = function (web3Providers, query, cb) {
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
 
   if (web3Provider == null) {
@@ -270,14 +270,14 @@ const postWithAvaliableWeb3provider = function (web3Providers, query, cb) {
   return post(web3Provider, query).end(function (err, data) {
     if (err != null) {
       console.error(
-        '[post-postWithAvaliableWeb3provider] err',
+        '[post-postWithAvailableWeb3provider] err',
         web3Provider,
         err,
         query
       );
 
       if (extraWeb3Providers.length === 0) {
-        return cb(`[post-postWithAvaliableWeb3provider] err ${err}`, null);
+        return cb(`[post-postWithAvailableWeb3provider] err ${err}`, null);
       }
     }
 
@@ -285,7 +285,7 @@ const postWithAvaliableWeb3provider = function (web3Providers, query, cb) {
       return cb(null, data);
     }
 
-    return postWithAvaliableWeb3provider(extraWeb3Providers, query, cb);
+    return postWithAvailableWeb3provider(extraWeb3Providers, query, cb);
   });
 };
 
@@ -305,7 +305,7 @@ const makeQuery = function (network, method, params, cb) {
 
   const web3Providers = getWeb3Providers(web3Provider, extraWeb3Providers);
 
-  return postWithAvaliableWeb3provider(
+  return postWithAvailableWeb3provider(
     web3Providers,
     query,
     function (err, data) {
@@ -313,7 +313,7 @@ const makeQuery = function (network, method, params, cb) {
 
       if (err != null) {
         return cb(
-          'postWithAvaliableWeb3provider err: ' +
+          'postWithAvailableWeb3provider err: ' +
             ((ref$ = err.message) != null ? ref$ : err) +
             ` ${apiProvider}`
         );
@@ -359,9 +359,9 @@ const getContractInstanceWithAbi = (abi) => (web3, address) => {
 };
 
 /**
- * Recursively makes balanceOf request untill find avaliable web3Provider.
+ * Recursively makes balanceOf request untill find available web3Provider.
  */
-const balanceOfWithAvaliableWeb3Provider = function (
+const balanceOfWithAvailableWeb3Provider = function (
   address,
   network,
   web3Providers,
@@ -398,7 +398,7 @@ const balanceOfWithAvaliableWeb3Provider = function (
         if (extraWeb3Providers === 0) {
           return cb(err);
         }
-        return balanceOfWithAvaliableWeb3Provider(
+        return balanceOfWithAvailableWeb3Provider(
           address,
           network,
           extraWeb3Providers,
@@ -420,7 +420,7 @@ const getBalance = (arg$, cb) => {
   const { web3Provider, extraWeb3Providers } = network.api;
   const web3Providers = getWeb3Providers(web3Provider, extraWeb3Providers);
 
-  return balanceOfWithAvaliableWeb3Provider(
+  return balanceOfWithAvailableWeb3Provider(
     address,
     network,
     web3Providers,
@@ -429,9 +429,9 @@ const getBalance = (arg$, cb) => {
 };
 
 /**
- * Recursively makes web3.eth.getBalance request untill find avaliable web3Provider.
+ * Recursively makes web3.eth.getBalance request untill find available web3Provider.
  */
-const web3EthGetBalanceWithAvaliableWeb3Provider = (
+const web3EthGetBalanceWithAvailableWeb3Provider = (
   address,
   web3Providers,
   cb
@@ -446,12 +446,12 @@ const web3EthGetBalanceWithAvaliableWeb3Provider = (
 
   return web3.eth.getBalance(address, (err, balance) => {
     if (err != null) {
-      console.error('[web3EthGetBalanceWithAvaliableWeb3Provider] err', err);
+      console.error('[web3EthGetBalanceWithAvailableWeb3Provider] err', err);
       if (extraWeb3Providers === 0) {
         return cb(err);
       }
 
-      return web3EthGetBalanceWithAvaliableWeb3Provider(
+      return web3EthGetBalanceWithAvailableWeb3Provider(
         address,
         extraWeb3Providers,
         cb
@@ -465,7 +465,7 @@ const web3EthGetBalance = (address, network, cb) => {
   const { web3Provider, extraWeb3Providers } = network.api;
   const web3Providers = getWeb3Providers(web3Provider, extraWeb3Providers);
 
-  return web3EthGetBalanceWithAvaliableWeb3Provider(address, web3Providers, cb);
+  return web3EthGetBalanceWithAvailableWeb3Provider(address, web3Providers, cb);
 };
 
 export default {
