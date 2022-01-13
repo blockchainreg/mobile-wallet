@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Icon,
-  Text,
-  Thumbnail,
-  Badge,
-} from 'native-base';
+import { Icon, Text, Thumbnail, Badge } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import {
   View,
@@ -66,21 +61,27 @@ export default (store, web3t) => {
     }
   };
   const wallets = walletsFuncs(store, web3t).wallets;
-  const wallet = wallets.find((x) => x.coin.token === store.infoTransaction.token);
+  const wallet = wallets.find(
+    (x) => x.coin.token === store.infoTransaction.token
+  );
   if (!wallet) {
-  	return null;
-	}
-  const {linktx, url} = wallet.network.api;
-  const {tx} = store.infoTransaction;
-  const txurl = linktx ? linktx.replace(":hash", tx) : `${url}/tx/${tx}`;
-  const tokenLabel = (wallet.coin.nickname || store.infoTransaction.token).toUpperCase();
-  const feeToken = (wallet.network.txFeeIn || wallet.coin.nickname).toUpperCase();
-  const r_amount = roundNumber(store.infoTransaction.amount, {decimals: 4});
+    return null;
+  }
+  const { linktx, url } = wallet.network.api;
+  const { tx } = store.infoTransaction;
+  const txurl = linktx ? linktx.replace(':hash', tx) : `${url}/tx/${tx}`;
+  const tokenLabel = (
+    wallet.coin.nickname || store.infoTransaction.token
+  ).toUpperCase();
+  const feeToken = (
+    wallet.network.txFeeIn || wallet.coin.nickname
+  ).toUpperCase();
+  const r_amount = roundNumber(store.infoTransaction.amount, { decimals: 4 });
   const amount = roundHuman(r_amount);
-	//const amount = roundHuman2(r_amount, {decimals: 10});
-	const txFee = roundHuman2(store.infoTransaction.fee, {decimals: 6});
+  //const amount = roundHuman2(r_amount, {decimals: 10});
+  const txFee = roundHuman2(store.infoTransaction.fee, { decimals: 6 });
 
-  const openTxUrl = () => Linking.openURL(txurl)
+  const openTxUrl = () => Linking.openURL(txurl);
 
   return (
     <View style={styles.container}>
@@ -183,12 +184,12 @@ export default (store, web3t) => {
               onPress={openTxUrl}
               onLongPress={writeToClipboardId}
             >
-					    {store.infoTransaction.tx}
-				    </Text>
+              {store.infoTransaction.tx}
+            </Text>
           </View>
-		    </View>
-		    <View style={styles.mbXScroll}/>
-	    </ScrollView>
-		</View>
+        </View>
+        <View style={styles.mbXScroll} />
+      </ScrollView>
+    </View>
   );
 };

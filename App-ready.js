@@ -36,7 +36,7 @@ Store.current.refreshingBalances = false;
 Store.current.loadingDescriptions = [];
 Store.current.loadingSpinners = [];
 Store.current.networkDetails = {};
-Store.current.currentNetworkDetails = null
+Store.current.currentNetworkDetails = null;
 
 //module specific defaults (end)
 //------------------------------
@@ -92,33 +92,37 @@ const Main = observer(({ store, current }) => {
           title={current.title}
           confirmation={current.confirmation}
           onYes={() => {
-            current.confirmationCallback(true)
+            current.confirmationCallback(true);
           }}
           onNo={() => {
-            current.confirmationCallback(false)
+            current.confirmationCallback(false);
           }}
           store={store}
         />
       ) : null}
-			{current.confirmationComponent
-				?<ConfirmDetailed
-					title={current.title}
-					confirmation={current.confirmationComponent}
-					onYes={() => {current.confirmationCallback(true)}}
-					onNo={() => {current.confirmationCallback(false)}}
-					store={store}
-				/>
-				:null
-			}
-			{current.currentNetworkDetails
-				?<BridgeDetailsModal
-					store={store}
-					data={current.currentNetworkDetails}
-					onNo={() => {current.bridgeInfoCallback(false)}}
-				/>
-				:null
-			}
-      {page( {store, web3t })}
+      {current.confirmationComponent ? (
+        <ConfirmDetailed
+          title={current.title}
+          confirmation={current.confirmationComponent}
+          onYes={() => {
+            current.confirmationCallback(true);
+          }}
+          onNo={() => {
+            current.confirmationCallback(false);
+          }}
+          store={store}
+        />
+      ) : null}
+      {current.currentNetworkDetails ? (
+        <BridgeDetailsModal
+          store={store}
+          data={current.currentNetworkDetails}
+          onNo={() => {
+            current.bridgeInfoCallback(false);
+          }}
+        />
+      ) : null}
+      {page({ store, web3t })}
       {HistoryDetail({ store })}
     </Root>
   );

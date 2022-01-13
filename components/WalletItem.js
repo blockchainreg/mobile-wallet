@@ -6,10 +6,10 @@ import { Badge } from 'react-native-elements';
 import getLang from '../wallet/get-lang.js';
 import { observer } from 'mobx-react';
 
-export default observer( ({ store, wallet, ...props }) => {
+export default observer(({ store, wallet, ...props }) => {
   const lang = getLang(store);
 
-  const isNotLegacy = (props.name).toLowerCase().indexOf('legacy') === -1;
+  const isNotLegacy = props.name.toLowerCase().indexOf('legacy') === -1;
 
   const typeBadge = (type) => {
     switch (type) {
@@ -22,49 +22,40 @@ export default observer( ({ store, wallet, ...props }) => {
     }
   };
 
-  const legacyBadge = ()=> {
-		if (isNotLegacy) return null;
-		const legacyBadgeStyle = {
-			fontFamily: 'Fontfabric-NexaRegular',
-			fontSize: 12,
-			backgroundColor: 'gray' ,
-			width: 60,
-			textAlign: 'center',
-			color: 'white',
-			padding: 5,
-			paddingBottom: 2,
-			paddingTop: 1,
-			position: 'absolute',
-			top: 0,
-			right: 0,
-			zIndex:1,
-			marginTop: -0,
-			marginRight: -0,
-			borderColor: Images.colorGreen,
-			paddingHorizontal: 3,
-			borderRadius: 5,
-			borderBottomRightRadius: 0,
-			borderTopLeftRadius: 0,
-		};
-		return (
-			<Text
-				style={legacyBadgeStyle}
-			>
-				Legacy
-			</Text>
-		)
-	}
-  
+  const legacyBadge = () => {
+    if (isNotLegacy) return null;
+    const legacyBadgeStyle = {
+      fontFamily: 'Fontfabric-NexaRegular',
+      fontSize: 12,
+      backgroundColor: 'gray',
+      width: 60,
+      textAlign: 'center',
+      color: 'white',
+      padding: 5,
+      paddingBottom: 2,
+      paddingTop: 1,
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      zIndex: 1,
+      marginTop: -0,
+      marginRight: -0,
+      borderColor: Images.colorGreen,
+      paddingHorizontal: 3,
+      borderRadius: 5,
+      borderBottomRightRadius: 0,
+      borderTopLeftRadius: 0,
+    };
+    return <Text style={legacyBadgeStyle}>Legacy</Text>;
+  };
+
   const renderName = () => {
     return (
-      <Text
-        style={style.styleTitle}
-        numberOfLines={1}
-      >
+      <Text style={style.styleTitle} numberOfLines={1}>
         {props.name}
       </Text>
     );
-	}
+  };
 
   const badgeStatus = () => {
     return <></>;
@@ -98,25 +89,17 @@ export default observer( ({ store, wallet, ...props }) => {
       </Left>
 
       <Body style={style.bodyPadding}>
-				{ renderName() }
+        {renderName()}
 
-        <Text style={style.styleSubTitle}>
-          ${props.usdRate}
-        </Text>
-
+        <Text style={style.styleSubTitle}>${props.usdRate}</Text>
       </Body>
       <Right style={style.rightSide}>
-				{/*{badgeStatus()}*/}
-				{/*{legacyBadge()}*/}
-				<Text
-					style={[
-						style.styleBalance,
-						{ color: "#fff" },
-					]}
-				>
-					{props.balance}
-				</Text>
-        <Text style={[style.styleSubTitle, {marginTop: 10}]}>
+        {/*{badgeStatus()}*/}
+        {/*{legacyBadge()}*/}
+        <Text style={[style.styleBalance, { color: '#fff' }]}>
+          {props.balance}
+        </Text>
+        <Text style={[style.styleSubTitle, { marginTop: 10 }]}>
           ${props.balanceUsd}
         </Text>
       </Right>
