@@ -1940,6 +1940,9 @@ export default StyleSheet.create({
     top: 2,
     fontFamily: 'Fontfabric-NexaRegular',
   },
+  errorLink: {
+    textDecorationLine: 'underline',
+  },
   mgTopInput: {
     ...Platform.select({
       ios: { marginTop: 'none' },

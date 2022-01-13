@@ -31,6 +31,7 @@ import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 import Header from '../components/Header';
+import ErrorParse from '../components/errorParse';
 import InputAmount from '../components/InputAmount';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 import math from '../wallet/math.js';
@@ -111,6 +112,10 @@ export default ({ store, web3t }) => {
   const handleChangeUsdAmount = (text) => amountUsdChange(wrapNumber(text));
 
   const changePage = (tab) => () => {
+    if (send.errorParse) {
+      send.errorParse = null;
+    }
+
     store.current.page = tab;
   };
 
@@ -193,7 +198,6 @@ export default ({ store, web3t }) => {
     <View style={[styles.viewFlex]}>
       <Background fullscreen={true} />
       <Header title={ScreenTitle} onBack={back} coin={wallet.coin.image} />
-
       <StatusBar
         barStyle="light-content"
         translucent={true}
@@ -224,7 +228,6 @@ export default ({ store, web3t }) => {
                   </Text>
                 </View>
               </View>
-
               <View
                 style={[
                   styles.widthCard,
@@ -336,7 +339,17 @@ export default ({ store, web3t }) => {
                   </View>
                 )}
                 <View style={styles.padStyle}></View>
-                <Text style={styles.error}>{send.error}</Text>
+                <Text style={styles.error}>
+                  {send.errorParse && typeof send.errorParse === 'object' ? (
+                    <ErrorParse error={send.errorParse} />
+                  ) : (
+                    send.error
+                  )}
+                </Text>
+                <Text style={styles.textInputDownRight}>
+                  {lang.fee} {send.amountSendFee} {feeToken} ($
+                  {send.amountSendFeeUsd})
+                </Text>
               </View>
               <View style={styles.containerScreen}>
                 {btnWithdraw({ store, web3t })}
