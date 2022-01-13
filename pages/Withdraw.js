@@ -302,8 +302,9 @@ export default ({ store, web3t }) => {
                   )}
                 </View>
 
-                <View style={styles.padStyle}></View>
-                <View style={styles.padStyle}></View>
+                <View style={styles.padStyle}>
+                  <Text></Text>
+                </View>
 
                 <View
                   style={[
@@ -345,10 +346,6 @@ export default ({ store, web3t }) => {
                   ) : (
                     send.error
                   )}
-                </Text>
-                <Text style={styles.textInputDownRight}>
-                  {lang.fee} {send.amountSendFee} {feeToken} ($
-                  {send.amountSendFeeUsd})
                 </Text>
               </View>
               <View style={styles.containerScreen}>
@@ -425,6 +422,7 @@ const style = StyleSheet.create({
     textTransform: 'uppercase',
     paddingBottom: 3,
     textAlign: 'right',
+    marginBottom: -5,
   },
   bodyBlockWallet: {
     marginHorizontal: 0,
