@@ -214,7 +214,10 @@
       send.amountObtainUsd = times(send.amountObtain, usdRate);
 
       var dataBuilder = contractData({ store });
-      dataBuilder.formContractData((err, res) => {
+      dataBuilder.formContractData((err) => {
+        if (err) {
+          return cb(err);
+        }
         var sendTo = send.to;
         if (send.isSwap) {
           /* Add extra check in case it`s legacy-->evm swap where contractAddress == null */
