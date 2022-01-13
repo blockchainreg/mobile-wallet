@@ -33,7 +33,7 @@ export default ({ store, web3t }) => {
   const lang = getLang(store);
   const wallets = walletsFuncs(store, web3t).wallets;
   const wallet = wallets.find((x) => x.coin.token === store.current.wallet);
-  let allWallets = [];
+  if (!wallet) return null;
   let hasSwap =
     wallet.network.networks != null &&
     Object.keys(wallet.network.networks).length > 0 &&

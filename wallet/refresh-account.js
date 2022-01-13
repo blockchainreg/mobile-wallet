@@ -27,6 +27,9 @@
   applyTransactions = require('./apply-transactions.js');
   refreshWaletTxs = require('./refresh-txs.js');
   out$.setAccount = setAccount = function (web3, store, cb) {
+    if (store.current.wallet) {
+      return cb(null);
+    }
     return newAccount(store, store.current.seed, function (err, account) {
       if (err != null) {
         return cb(err);
