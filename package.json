@@ -2,6 +2,7 @@
   "main": "index.js",
   "scripts": {
     "start": "react-native start",
+    "setup": "/usr/sbin/lsof -ti:8081 | xargs kill && adb reverse tcp:8081 tcp:8081",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "eject": "expo eject",

@@ -15,10 +15,10 @@
   out$.mainnet = mainnet = {
     disabled: false,
     decimals: 6,
-    txFee: '0.002',
+    txFee: '0.01',
     txFeeOptions: {
-      auto: '0.002',
-      cheap: '0.002',
+      auto: '0.01',
+      cheap: '0.01',
     },
     api: {
       provider: 'usdc',
@@ -43,10 +43,10 @@
   out$.testnet = testnet = {
     disabled: false,
     decimals: 6,
-    txFee: '0.002',
+    txFee: '0.0001',
     txFeeOptions: {
-      auto: '0.002',
-      cheap: '0.002',
+      auto: '0.0001',
+      cheap: '0.0001',
     },
     api: {
       provider: 'usdc',

@@ -16,10 +16,10 @@ import binanceBscRpc from './commonTokenConfigs/binanceBscRpc';
   out$.mainnet = mainnet = {
     disabled: false,
     decimals: 18,
-    txFee: '0.002',
+    txFee: '0.0006',
     txFeeOptions: {
-      auto: '0.002',
-      cheap: '0.002',
+      auto: '0.0006',
+      cheap: '0.0006',
     },
     api: {
       provider: 'bsc_vlx',
@@ -47,10 +47,10 @@ import binanceBscRpc from './commonTokenConfigs/binanceBscRpc';
   out$.testnet = testnet = {
     disabled: false,
     decimals: 18,
-    txFee: '0.000001',
+    txFee: '0.0007',
     txFeeOptions: {
-      auto: '0.000020',
-      cheap: '0.000020',
+      auto: '0.0007',
+      cheap: '0.0007',
     },
     api: {
       provider: 'bsc_vlx',

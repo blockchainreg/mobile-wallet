@@ -99,9 +99,14 @@ export default ({ store, web3t }) => {
       </View>
     );
   };
+
+  const goBack = () => {
+    store.current.page = 'newseed';
+  };
+
   return (
     <View style={styles.viewFlex}>
-      <Header transparent />
+      <Header transparent onBack={goBack} />
       <View style={style.inner}>
         <View style={{ alignSelf: 'center' }}>
           {/* <Image

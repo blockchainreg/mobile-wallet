@@ -184,11 +184,10 @@
        * */
       var decimalsConfig = send.network.decimals;
       if (amountSend) {
-        var decimals = amountSend.toString().split('.')[1];
-        if (decimals) {
-          if (decimals.length > decimalsConfig) {
-            return false;
-          }
+        let [integer, decimals] = amountSend.toString().split('.');
+        if (decimals && decimals.length > decimalsConfig) {
+          decimals = decimals.substr(0, decimalsConfig);
+          amountSend = `${integer}.${decimals}`;
         }
       }
       send.amountChanging = true;

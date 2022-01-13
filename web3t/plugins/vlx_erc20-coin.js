@@ -18,12 +18,12 @@
   mainnetConfig = {
     disabled: false,
     decimals: 18,
-    txFee: '0.0014',
+    txFee: '0.006',
     txFeeIn: 'eth',
     txBridgeFeeIn: 'eth',
     txFeeOptions: {
-      auto: '0.0020',
-      cheap: '0.00014',
+      auto: '0.006',
+      cheap: '0.006',
     },
     messagePrefix: 'Ethereum',
     mask: '0x0000000000000000000000000000000000000000',
@@ -52,10 +52,10 @@
   testnetConfig = {
     disabled: false,
     decimals: 18,
-    txFee: '0.0014',
+    txFee: '0.00014',
     txFeeOptions: {
-      auto: '0.0020',
-      cheap: '0.0020',
+      auto: '0.00014',
+      cheap: '0.00014',
     },
     messagePrefix: 'Ethereum',
     mask: '0x0000000000000000000000000000000000000000',
