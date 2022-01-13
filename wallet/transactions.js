@@ -274,6 +274,14 @@
   out$.loadAllTransactions = loadAllTransactions = function (store, web3, cb) {
     var wallets, loaders, tasks;
     wallets = store.current.account.wallets;
+
+    if (store.current.wallet) {
+      const wallet = find(function (it) {
+        return it.coin.token === store.current.wallet;
+      })(store.current.account.wallets);
+      wallets = [wallet];
+    }
+    console.log('load txs', wallets.length);
     loaders = map(buildLoader(store, web3))(wallets);
     tasks = pairsToObj(
       map(function (it) {

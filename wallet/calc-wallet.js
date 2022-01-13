@@ -28,7 +28,14 @@
     if (store == null) {
       return cb('Store is required');
     }
-    wallets = store.current.account.wallets;
+    wallets = [...store.current.account.wallets];
+    if (store.current.wallet) {
+      const wallet = find(function (it) {
+        return it.coin.token === store.current.wallet;
+      })(store.current.account.wallets);
+      wallets = [wallet];
+    }
+    console.log('load balances', wallets.length);
     rates = store.rates;
     state = {
       balanceUsd: 0,

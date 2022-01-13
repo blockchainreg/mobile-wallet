@@ -203,7 +203,10 @@ export default ({ store, web3t }) => {
     );
   };
 
-  const back = changePage('wallets');
+  const back = () => {
+    store.current.wallet = undefined;
+    store.current.page = 'wallets';
+  };
 
   const scanQRSend = () => {
     if (wallet.balance == '..') return;
