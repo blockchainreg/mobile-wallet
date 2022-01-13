@@ -12,10 +12,10 @@
 
   "testnet": {
     "decimals": 6,
-    "txFee": "0.0050",
+    "txFee": "0.0003",
     "txFeeOptions": {
-      "cheap": "0.0005",
-      "auto": "0.001"
+      "cheap": "0.0003",
+      "auto": "0.0003"
     },
     "txFeeIn": "eth",
     "messagePrefix": "Ethereum",
@@ -45,10 +45,10 @@
 
   "mainnet": {
     "decimals": 6,
-    "txFee": "0.0050",
+    "txFee": "0.015",
     "txFeeOptions": {
-      "cheap": "0.0005",
-      "auto": "0.001"
+      "cheap": "0.015",
+      "auto": "0.015"
     },
     "txFeeIn": "eth",
     "messagePrefix": "Ethereum",

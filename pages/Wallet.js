@@ -59,6 +59,7 @@ export default ({ store, web3t }) => {
     store.current.send.wallet = wallet;
     store.current.send.coin = wallet.coin;
     store.current.send.network = wallet.network;
+    store.current.send.checkingAllowed = false;
   };
 
   /*******  Listeners  ********/

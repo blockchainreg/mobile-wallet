@@ -143,6 +143,7 @@ export default ({ store, web3t }) => {
   const btnWithdraw = ({ store, web3t }) => {
     const sendText = send.isSwap ? lang.swap || 'Swap' : lang.send;
     const disabled =
+      store.current.send.checkingAllowed === true ||
       !((!send.error || send.error.length === 0) && +send.amountSend > 0) ||
       send.amountChanging === true ||
       store.current.creatingTransaction === true;

@@ -48,6 +48,8 @@
       amountSendFee: '0',
       amountSendFeeUsd: '0',
       amountObtain: '0',
+      checkingAllowed: false,
+      checkingApproveTx: false,
       data: '',
       decodedData: '',
       showDataMode: 'encoded',

@@ -15,10 +15,10 @@
   out$.mainnet = mainnet = {
     disabled: false,
     decimals: 18,
-    txFee: '0.002',
+    txFee: '0.0003',
     txFeeOptions: {
-      auto: '0.002',
-      cheap: '0.002',
+      auto: '0.0003',
+      cheap: '0.0003',
     },
     txFeeIn: 'bnb',
     txBridgeFeeIn: 'bnb',
@@ -43,10 +43,10 @@
   out$.testnet = testnet = {
     disabled: false,
     decimals: 18,
-    txFee: '0.000001',
+    txFee: '0.0008',
     txFeeOptions: {
-      auto: '0.000020',
-      cheap: '0.000020',
+      auto: '0.0008',
+      cheap: '0.0008',
     },
     txFeeIn: 'bnb',
     txBridgeFeeIn: 'bnb',
