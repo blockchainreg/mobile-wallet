@@ -28,13 +28,19 @@
     if (store == null) {
       return cb('Store is required');
     }
-    wallets = store.current.account.wallets;
+    wallets = [...store.current.account.wallets];
     rates = store.rates;
     state = {
       balanceUsd: 0,
     };
     if (typeof err != 'undefined' && err !== null) {
       return cb(err);
+    }
+    if (store.current.wallet) {
+      const wallet = find(function (it) {
+        return it.coin.token === store.current.wallet;
+      })(store.current.account.wallets);
+      wallets = [wallet];
     }
     buildLoader = function (wallet) {
       return task(function (cb) {
