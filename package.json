@@ -10,7 +10,7 @@
     "pretty": "prettier --write .",
     "install": "pwd && cp scripts/pre-commit .git/hooks/ && chmod u+x .git/hooks/pre-commit && chmod u+x scripts/bump-version.sh",
     "clean:android": "rm -rf node_modules/ && yarn && cd android && ./gradlew clean",
-    "reset": "watchman watch-del-all && rm -rf node_modules && yarn && yarn start --reset-cache",
+    "reset": "watchman watch-del-all && rm -rf node_modules && yarn && yarn start --reset-cache && yarn pod",
     "pod": "cd ./ios && pod install && cd ..",
     "prepare": "husky install"
   },

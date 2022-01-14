@@ -10,6 +10,7 @@ var ref$,
   pushTx,
   calcFee;
 
+import commonProvider from '../web3t/providers/common/provider';
 Web3 = require('web3');
 (ref$ = require('./api.js')),
   (createTransaction = ref$.createTransaction),
@@ -46,6 +47,336 @@ abis = {
     .abi,
   ForeignBridgeErcToErc:
     require('../web3t/contracts/ForeignBridgeErcToErc.json').abi,
+};
+
+const ABI = [
+  {
+    constant: true,
+    inputs: [],
+    name: 'getHomeFee',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'getForeignFee',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'dailyLimit',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'minPerTx',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'maxPerTx',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'executionDailyLimit',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'maxAvailablePerTx',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'getCurrentDay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: '_day',
+        type: 'uint256',
+      },
+    ],
+    name: 'totalSpentPerDay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+];
+
+function importAll$(obj, src) {
+  for (var key in src) obj[key] = src[key];
+  return obj;
+}
+
+/**
+ * Recursively makes getHomeFee request untill find available web3Provider.
+ */
+const getHomeFeeWithAvaliableWeb3Provider = ({
+  web3Providers,
+  wallet,
+  ref2$,
+  ref3$,
+  ref4$,
+  ref5$,
+  chosenNetwork,
+  token,
+  store,
+  cb,
+}) => {
+  const [web3Provider, ...extraWeb3Providers] = web3Providers;
+  if (!web3Provider) {
+    retrun(cb(null));
+  }
+
+  const walletWithChangedWeb3Providers = {
+    ...wallet,
+    network: {
+      ...wallet.network,
+      api: { ...wallet.network.api, web3Provider, extraWeb3Providers },
+    },
+  };
+
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      wallet != null
+        ? (ref2$ = walletWithChangedWeb3Providers.network) != null
+          ? (ref3$ = ref2$.api) != null
+            ? ref3$.web3Provider
+            : void 8
+          : void 8
+        : void 8
+    )
+  );
+  web3.eth.providerUrl =
+    walletWithChangedWeb3Providers.network.api.web3Provider;
+  ref4$ = walletWithChangedWeb3Providers.network;
+
+  const HOME_BRIDGE = ref4$.HOME_BRIDGE;
+  const HECO_SWAP__HOME_BRIDGE = ref4$.HECO_SWAP__HOME_BRIDGE;
+  const BSC_SWAP__HOME_BRIDGE = ref4$.BSC_SWAP__HOME_BRIDGE;
+  const FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE;
+  const addr = (function () {
+    switch (false) {
+      case !(token === 'vlx_evm' && chosenNetwork.referTo === 'vlx_huobi'):
+        return HECO_SWAP__HOME_BRIDGE;
+      case !(token === 'vlx_evm' && chosenNetwork.referTo === 'bsc_vlx'):
+        return BSC_SWAP__HOME_BRIDGE;
+      case !(token === 'usdc' && chosenNetwork.referTo === 'vlx_usdc'):
+        return FOREIGN_BRIDGE;
+      case !(token === 'vlx_eth' && chosenNetwork.referTo === 'eth'):
+        return FOREIGN_BRIDGE;
+      case !(token === 'usdt_erc20' && chosenNetwork.referTo === 'vlx_usdt'):
+        return FOREIGN_BRIDGE;
+      case !(token === 'vlx_erc20' && chosenNetwork.referTo === 'vlx_evm'):
+        return FOREIGN_BRIDGE;
+      case !(token === 'bsc_vlx' && chosenNetwork.referTo === 'vlx_evm'):
+        return FOREIGN_BRIDGE;
+      case !(token === 'vlx_huobi' && chosenNetwork.referTo === 'vlx_evm'):
+        return FOREIGN_BRIDGE;
+      case !(token === 'busd' && chosenNetwork.referTo === 'vlx_busd'):
+        return FOREIGN_BRIDGE;
+      default:
+        return HOME_BRIDGE;
+    }
+  })();
+  const contract = web3.eth.contract(ABI).at(addr);
+
+  contract.getHomeFee((err, homeFee) => {
+    if (err) {
+      const isErrorCausedByUnavailableWeb3Provider =
+        commonProvider.isErrorCausedByUnavailableWeb3Provider(err);
+      if (
+        extraWeb3Providers.length !== 0 &&
+        isErrorCausedByUnavailableWeb3Provider
+      ) {
+        return getHomeFeeWithAvaliableWeb3Provider({
+          web3Providers: extraWeb3Providers,
+          wallet: walletWithChangedWeb3Providers,
+          ref2$,
+          ref3$,
+          ref4$,
+          ref5$,
+          chosenNetwork,
+          token,
+          store,
+          cb,
+        });
+      }
+
+      homeFee = 0;
+    }
+    const homeFeePercent = div(
+      homeFee,
+      Math.pow(10, wallet != null ? wallet.network.decimals : void 8)
+    );
+    store.current.send.homeFeePercent = homeFeePercent;
+    contract.dailyLimit((err, dailyLimit) => {
+      dailyLimit = div(dailyLimit, Math.pow(10, wallet.network.decimals));
+      store.current.send.homeDailyLimit = dailyLimit;
+
+      contract.getCurrentDay((err, currentDay) => {
+        if (err) {
+          currentDay = '0x';
+        }
+        contract.totalSpentPerDay(currentDay, (err, totalSpentPerDay) => {
+          if (err) {
+            console.log('[totalSpentPerDay totalSpentPerDay] err: ', err);
+          }
+          totalSpentPerDay = div(
+            totalSpentPerDay,
+            Math.pow(10, wallet.network.decimals)
+          );
+          const remainingDailyLimit = minus(dailyLimit, totalSpentPerDay);
+
+          contract.minPerTx((err, minPerTxRaw) => {
+            const minPerTx = div(
+              minPerTxRaw,
+              Math.pow(10, wallet.network.decimals)
+            );
+            contract.maxPerTx((err, maxPerTxRaw) => {
+              const maxPerTx = div(
+                maxPerTxRaw,
+                Math.pow(10, wallet.network.decimals)
+              );
+
+              importAll$(store.current.networkDetails, {
+                dailyLimit: dailyLimit,
+                homeFeePercent: homeFeePercent,
+                minPerTx: minPerTx,
+                maxPerTx: maxPerTx,
+                remainingDailyLimit: remainingDailyLimit,
+              });
+              if (
+                token !== 'busd' &&
+                token !== 'usdc' &&
+                token !== 'usdt_erc20'
+              ) {
+                return cb(null);
+              }
+              var wallets = store.current.account.wallets;
+              var walletTo = find(function (it) {
+                return it.coin.token === chosenNetwork.referTo;
+              })(wallets);
+              var ref4$ = walletTo.network,
+                HOME_BRIDGE = ref4$.HOME_BRIDGE,
+                FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE,
+                BSC_SWAP__HOME_BRIDGE = ref4$.BSC_SWAP__HOME_BRIDGE,
+                HECO_SWAP__HOME_BRIDGE = ref4$.HECO_SWAP__HOME_BRIDGE;
+              var web3 = new Web3(
+                new Web3.providers.HttpProvider(
+                  walletTo != null
+                    ? (ref4$ = walletTo.network) != null
+                      ? (ref5$ = ref4$.api) != null
+                        ? ref5$.web3Provider
+                        : void 8
+                      : void 8
+                    : void 8
+                )
+              );
+              web3.eth.providerUrl = walletTo.network.api.web3Provider;
+              var addr = HOME_BRIDGE;
+              var contract = web3.eth.contract(ABI).at(addr);
+              var network = walletTo.network;
+              contract.getForeignFee((err, homeFee) => {
+                if (err) {
+                  homeFee = 0;
+                }
+                const homeFeePercent = div(
+                  homeFee,
+                  Math.pow(10, network.decimals)
+                );
+                store.current.send.homeFeePercent = homeFeePercent;
+                importAll$(store.current.networkDetails, {
+                  homeFeePercent: homeFeePercent,
+                });
+                return cb(null);
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 };
 
 module.exports = function ({ store, web3t }) {
@@ -1437,31 +1768,17 @@ module.exports = function ({ store, web3t }) {
       ref2$,
       wallet,
       network,
-      abi,
-      web3,
       ref3$,
       ref4$,
       ref5$,
-      HOME_BRIDGE,
-      HECO_SWAP__HOME_BRIDGE,
-      BSC_SWAP__HOME_BRIDGE,
-      FOREIGN_BRIDGE,
-      addr,
-      contract,
-      homeFeePercent,
-      err,
-      dailyLimit,
-      remainingDailyLimit,
-      minPerTx,
-      maxPerTx;
-    chosenNetwork =
-      store != null
-        ? (ref$ = store.current) != null
-          ? (ref1$ = ref$.send) != null
-            ? ref1$.chosenNetwork
+      chosenNetwork =
+        store != null
+          ? (ref$ = store.current) != null
+            ? (ref1$ = ref$.send) != null
+              ? ref1$.chosenNetwork
+              : void 8
             : void 8
-          : void 8
-        : void 8;
+          : void 8;
     if (chosenNetwork == null) {
       return cb(null);
     }
@@ -1490,288 +1807,29 @@ module.exports = function ({ store, web3t }) {
     }
     wallet = store.current.send.wallet;
     network = wallet.network;
-    abi = [
-      {
-        constant: true,
-        inputs: [],
-        name: 'getHomeFee',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'getForeignFee',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'dailyLimit',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'minPerTx',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'maxPerTx',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'executionDailyLimit',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'maxAvailablePerTx',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'getCurrentDay',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [
-          {
-            name: '_day',
-            type: 'uint256',
-          },
-        ],
-        name: 'totalSpentPerDay',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ];
-    web3 = new Web3(
-      new Web3.providers.HttpProvider(
-        wallet != null
-          ? (ref2$ = wallet.network) != null
-            ? (ref3$ = ref2$.api) != null
-              ? ref3$.web3Provider
-              : void 8
-            : void 8
-          : void 8
-      )
+
+    const { web3Provider, extraWeb3Providers } = network.api;
+    const web3Providers = commonProvider.getWeb3Providers(
+      web3Provider,
+      extraWeb3Providers
     );
-    web3.eth.providerUrl = wallet.network.api.web3Provider;
-    (ref4$ = wallet.network),
-      (HOME_BRIDGE = ref4$.HOME_BRIDGE),
-      (HECO_SWAP__HOME_BRIDGE = ref4$.HECO_SWAP__HOME_BRIDGE),
-      (BSC_SWAP__HOME_BRIDGE = ref4$.BSC_SWAP__HOME_BRIDGE),
-      (FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE);
-    addr = (function () {
-      switch (false) {
-        case !(token === 'vlx_evm' && chosenNetwork.referTo === 'vlx_huobi'):
-          return HECO_SWAP__HOME_BRIDGE;
-        case !(token === 'vlx_evm' && chosenNetwork.referTo === 'bsc_vlx'):
-          return BSC_SWAP__HOME_BRIDGE;
-        case !(token === 'usdc' && chosenNetwork.referTo === 'vlx_usdc'):
-          return FOREIGN_BRIDGE;
-        case !(token === 'vlx_eth' && chosenNetwork.referTo === 'eth'):
-          return FOREIGN_BRIDGE;
-        case !(token === 'usdt_erc20' && chosenNetwork.referTo === 'vlx_usdt'):
-          return FOREIGN_BRIDGE;
-        case !(token === 'vlx_erc20' && chosenNetwork.referTo === 'vlx_evm'):
-          return FOREIGN_BRIDGE;
-        case !(token === 'bsc_vlx' && chosenNetwork.referTo === 'vlx_evm'):
-          return FOREIGN_BRIDGE;
-        case !(token === 'vlx_huobi' && chosenNetwork.referTo === 'vlx_evm'):
-          return FOREIGN_BRIDGE;
-        case !(token === 'busd' && chosenNetwork.referTo === 'vlx_busd'):
-          return FOREIGN_BRIDGE;
-        default:
-          return HOME_BRIDGE;
-      }
-    })();
-    contract = web3.eth.contract(abi).at(addr);
-    homeFeePercent = 0;
-    //try {
-    contract.getHomeFee((err, homeFee) => {
-      if (err) {
-        homeFee = 0;
-      }
-      homeFeePercent = div(
-        homeFee,
-        Math.pow(10, wallet != null ? wallet.network.decimals : void 8)
-      );
-      store.current.send.homeFeePercent = homeFeePercent;
-      contract.dailyLimit((err, dailyLimit) => {
-        dailyLimit = div(dailyLimit, Math.pow(10, wallet.network.decimals));
-        store.current.send.homeDailyLimit = dailyLimit;
-
-        contract.getCurrentDay((err, currentDay) => {
-          if (err) {
-            currentDay = '0x';
-          }
-          contract.totalSpentPerDay(currentDay, (err, totalSpentPerDay) => {
-            totalSpentPerDay = div(
-              totalSpentPerDay,
-              Math.pow(10, wallet.network.decimals)
-            );
-            remainingDailyLimit = minus(dailyLimit, totalSpentPerDay);
-
-            contract.minPerTx((err, minPerTxRaw) => {
-              minPerTx = div(
-                minPerTxRaw,
-                Math.pow(10, wallet.network.decimals)
-              );
-              contract.maxPerTx((err, maxPerTxRaw) => {
-                maxPerTx = div(
-                  maxPerTxRaw,
-                  Math.pow(10, wallet.network.decimals)
-                );
-
-                importAll$(store.current.networkDetails, {
-                  dailyLimit: dailyLimit,
-                  homeFeePercent: homeFeePercent,
-                  minPerTx: minPerTx,
-                  maxPerTx: maxPerTx,
-                  remainingDailyLimit: remainingDailyLimit,
-                });
-                if (
-                  token !== 'busd' &&
-                  token !== 'usdc' &&
-                  token !== 'usdt_erc20'
-                ) {
-                  return cb(null);
-                }
-                var wallets = store.current.account.wallets;
-                var walletTo = find(function (it) {
-                  return it.coin.token === chosenNetwork.referTo;
-                })(wallets);
-                var ref4$ = walletTo.network,
-                  HOME_BRIDGE = ref4$.HOME_BRIDGE,
-                  FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE,
-                  BSC_SWAP__HOME_BRIDGE = ref4$.BSC_SWAP__HOME_BRIDGE,
-                  HECO_SWAP__HOME_BRIDGE = ref4$.HECO_SWAP__HOME_BRIDGE;
-                var web3 = new Web3(
-                  new Web3.providers.HttpProvider(
-                    walletTo != null
-                      ? (ref4$ = walletTo.network) != null
-                        ? (ref5$ = ref4$.api) != null
-                          ? ref5$.web3Provider
-                          : void 8
-                        : void 8
-                      : void 8
-                  )
-                );
-                web3.eth.providerUrl = walletTo.network.api.web3Provider;
-                var addr = HOME_BRIDGE;
-                var contract = web3.eth.contract(abi).at(addr);
-                var network = walletTo.network;
-                contract.getForeignFee((err, homeFee) => {
-                  if (err) {
-                    homeFee = 0;
-                  }
-                  homeFeePercent = div(homeFee, Math.pow(10, network.decimals));
-                  store.current.send.homeFeePercent = homeFeePercent;
-                  importAll$(store.current.networkDetails, {
-                    homeFeePercent: homeFeePercent,
-                  });
-                  return cb(null);
-                });
-              });
-            });
-          });
-        });
-      });
+    getHomeFeeWithAvaliableWeb3Provider({
+      web3Providers,
+      wallet,
+      ref2$,
+      ref3$,
+      ref4$,
+      ref5$,
+      chosenNetwork,
+      token,
+      store,
+      cb,
     });
-    // } catch (err) {
-    // 	console.error("[getBridgeInfo] Error:", err);
-    // }
-    // } catch (e) {
-    // 	console.error("[getBridgeInfo]1 Error:", e);
-    // }
   };
 
   function import$(obj, src) {
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-    return obj;
-  }
-  function importAll$(obj, src) {
-    for (var key in src) obj[key] = src[key];
     return obj;
   }
 
