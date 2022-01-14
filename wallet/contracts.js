@@ -48,6 +48,7 @@ abis = {
   ForeignBridgeErcToErc:
     require('../web3t/contracts/ForeignBridgeErcToErc.json').abi,
 };
+const MAX_WAITING_RESPONE_TIME = 3000;
 
 const ABI = [
   {
@@ -261,13 +262,21 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
   })();
   const contract = web3.eth.contract(ABI).at(addr);
 
+  const beforeStartGetHomeFeeTime = performance.now();
   contract.getHomeFee((err, homeFee) => {
     if (err) {
       const isErrorCausedByUnavailableWeb3Provider =
         commonProvider.isErrorCausedByUnavailableWeb3Provider(err);
+      const startGetHomeFeeTime = performance.now();
+      // Slow provider 4466-6000 milliseconds on dev simulator
+      // Fast 143-400 milliseconds on dev simulator
+      const isSlowProvider =
+        startGetHomeFeeTime - beforeStartGetHomeFeeTime >
+        MAX_WAITING_RESPONE_TIME;
+      const isExtraWeb3Providers = extraWeb3Providers.length !== 0;
       if (
-        extraWeb3Providers.length !== 0 &&
-        isErrorCausedByUnavailableWeb3Provider
+        (isExtraWeb3Providers && isErrorCausedByUnavailableWeb3Provider) ||
+        (isExtraWeb3Providers && isSlowProvider)
       ) {
         return getHomeFeeWithAvaliableWeb3Provider({
           web3Providers: extraWeb3Providers,
@@ -299,9 +308,6 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
           currentDay = '0x';
         }
         contract.totalSpentPerDay(currentDay, (err, totalSpentPerDay) => {
-          if (err) {
-            console.log('[totalSpentPerDay totalSpentPerDay] err: ', err);
-          }
           totalSpentPerDay = div(
             totalSpentPerDay,
             Math.pow(10, wallet.network.decimals)
@@ -1760,72 +1766,70 @@ module.exports = function ({ store, web3t }) {
   };
 
   const getBridgeInfo = function (cb) {
-    setTimeout(() => {
-      var chosenNetwork,
-        ref$,
-        ref1$,
-        token,
-        ref2$,
-        wallet,
-        network,
-        ref3$,
-        ref4$,
-        ref5$,
-        chosenNetwork =
-          store != null
-            ? (ref$ = store.current) != null
-              ? (ref1$ = ref$.send) != null
-                ? ref1$.chosenNetwork
-                : void 8
+    var chosenNetwork,
+      ref$,
+      ref1$,
+      token,
+      ref2$,
+      wallet,
+      network,
+      ref3$,
+      ref4$,
+      ref5$,
+      chosenNetwork =
+        store != null
+          ? (ref$ = store.current) != null
+            ? (ref1$ = ref$.send) != null
+              ? ref1$.chosenNetwork
               : void 8
-            : void 8;
-      if (chosenNetwork == null) {
-        return cb(null);
-      }
-      token = store.current.send.coin.token;
-      if (
-        chosenNetwork == null ||
-        chosenNetwork.referTo === 'vlx_native' ||
-        (token === 'vlx_native' &&
-          ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
-            ref2$ === 'vlx2' ||
-            ref2$ === 'vlx_evm')) ||
-        ((token === 'vlx' || token === 'vlx_evm') &&
-          ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
-            ref2$ === 'vlx2')) ||
-        ((token === 'vlx2' || token === 'vlx_native' || token === 'vlx_evm') &&
-          ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
-            ref2$ === 'vlx2' ||
-            ref2$ === 'vlx_evm')) ||
-        (token === 'vlx_native' &&
-          ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
-            ref2$ === 'vlx2' ||
-            ref2$ === 'vlx_evm'))
-      ) {
-        store.current.send.homeFeePercent = 0;
-        return cb(null);
-      }
-      wallet = store.current.send.wallet;
-      network = wallet.network;
+            : void 8
+          : void 8;
+    if (chosenNetwork == null) {
+      return cb(null);
+    }
+    token = store.current.send.coin.token;
+    if (
+      chosenNetwork == null ||
+      chosenNetwork.referTo === 'vlx_native' ||
+      (token === 'vlx_native' &&
+        ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
+          ref2$ === 'vlx2' ||
+          ref2$ === 'vlx_evm')) ||
+      ((token === 'vlx' || token === 'vlx_evm') &&
+        ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
+          ref2$ === 'vlx2')) ||
+      ((token === 'vlx2' || token === 'vlx_native' || token === 'vlx_evm') &&
+        ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
+          ref2$ === 'vlx2' ||
+          ref2$ === 'vlx_evm')) ||
+      (token === 'vlx_native' &&
+        ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
+          ref2$ === 'vlx2' ||
+          ref2$ === 'vlx_evm'))
+    ) {
+      store.current.send.homeFeePercent = 0;
+      return cb(null);
+    }
+    wallet = store.current.send.wallet;
+    network = wallet.network;
 
-      const { web3Provider, extraWeb3Providers } = network.api;
-      const web3Providers = commonProvider.getWeb3Providers(
-        web3Provider,
-        extraWeb3Providers
-      );
-      getHomeFeeWithAvaliableWeb3Provider({
-        web3Providers,
-        wallet,
-        ref2$,
-        ref3$,
-        ref4$,
-        ref5$,
-        chosenNetwork,
-        token,
-        store,
-        cb,
-      });
-    }, 1);
+    const { web3Provider, extraWeb3Providers } = network.api;
+    const web3Providers = commonProvider.getWeb3Providers(
+      web3Provider,
+      extraWeb3Providers
+    );
+    getHomeFeeWithAvaliableWeb3Provider({
+      web3Providers,
+      wallet,
+      ref2$,
+      ref3$,
+      ref4$,
+      ref5$,
+      chosenNetwork,
+      token,
+      store,
+      cb,
+    });
   };
 
   function import$(obj, src) {
