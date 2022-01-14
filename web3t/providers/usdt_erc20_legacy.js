@@ -10,6 +10,8 @@
     minus,
     times,
     div,
+    fromHex,
+    $toHex,
     get,
     post,
     Web3,
@@ -25,6 +27,7 @@
     getContractInstance,
     isAddress,
     calcFee,
+    getGasEstimate,
     getKeys,
     toHex,
     transformTx,
@@ -34,6 +37,7 @@
     getDec,
     calcGasPrice,
     round,
+    getNonce,
     createTransaction,
     checkDecodedData,
     pushTx,
@@ -58,7 +62,9 @@
     (plus = ref$.plus),
     (minus = ref$.minus),
     (times = ref$.times),
-    (div = ref$.div);
+    (div = ref$.div),
+    (fromHex = ref$.fromHex),
+    ($toHex = ref$.$toHex);
   (ref$ = require('./superagent.js')), (get = ref$.get), (post = ref$.post);
   (ref$ = require('./deps.js')),
     (Web3 = ref$.Web3),
@@ -321,56 +327,130 @@
     }
   };
   out$.calcFee = calcFee = function (arg$, cb) {
-    var network, tx, feeType, account, amount, to, data, web3;
+    var network, tx, feeType, account, amount, to, data, gas, gasPrice, web3;
     (network = arg$.network),
       (tx = arg$.tx),
       (feeType = arg$.feeType),
       (account = arg$.account),
       (amount = arg$.amount),
       (to = arg$.to),
-      (data = arg$.data);
+      (data = arg$.data),
+      (gas = arg$.gas),
+      (gasPrice = arg$.gasPrice);
     if (feeType !== 'auto') {
       return cb(null);
     }
     web3 = getWeb3(network);
     return calcGasPrice(
       {
-        web3: web3,
+        network: network,
         feeType: feeType,
+        gasPrice: gasPrice,
       },
       function (err, gasPrice) {
         if (err != null) {
           return cb(err);
         }
-        return web3.eth.getTransactionCount(
-          account.address,
-          'pending',
-          function (err, nonce) {
-            var from;
+        return getGasEstimate(
+          {
+            network: network,
+            feeType: feeType,
+            account: account,
+            amount: amount,
+            to: to,
+            data: data,
+            gas: gas,
+          },
+          function (err, gasEstimate) {
+            var dec, res, val;
             if (err != null) {
-              return cb(err);
+              return cb(null, {
+                calcedFee: network.txFee,
+                gasPrice: gasPrice,
+              });
             }
-            from = account.address;
-            return web3.eth.estimateGas(
-              {
-                from: from,
-                nonce: nonce,
-                to: to,
-                data: data,
-              },
-              function (err, estimate) {
-                var dec, res, val;
-                if (err != null) {
-                  return cb(err);
-                }
-                dec = getDec(network);
-                res = times(gasPrice, estimate);
-                val = div(res, Math.pow(10, 18));
-                return cb(null, val);
-              }
-            );
+            dec = getDec(network);
+            res = times(gasPrice, gasEstimate);
+            val = div(res, Math.pow(10, 18));
+            return cb(null, {
+              calcedFee: val,
+              gasPrice: gasPrice,
+              gasEstimate: gasEstimate,
+            });
           }
         );
+      }
+    );
+  };
+  getGasEstimate = function (config, cb) {
+    var network,
+      feeType,
+      account,
+      amount,
+      to,
+      data,
+      gas,
+      dec,
+      from,
+      web3,
+      contract,
+      receiver,
+      val,
+      value,
+      $data,
+      query;
+    (network = config.network),
+      (feeType = config.feeType),
+      (account = config.account),
+      (amount = config.amount),
+      (to = config.to),
+      (data = config.data),
+      (gas = config.gas);
+    if (gas != null) {
+      return cb(null, gas);
+    }
+    dec = getDec(network);
+    from = account.address;
+    web3 = getWeb3(network);
+    contract = getContractInstance(web3, network.address);
+    receiver = (function () {
+      switch (false) {
+        case !(data != null && data !== '0x'):
+          return to;
+        default:
+          return network.address;
+      }
+    })();
+    val = times(amount, dec);
+    value = $toHex(val);
+    $data = (function () {
+      switch (false) {
+        case !(data != null && data !== '0x'):
+          return data;
+        case contract.methods == null:
+          return contract.methods.transfer(to, value).encodeABI();
+        default:
+          return contract.transfer.getData(to, value);
+      }
+    })();
+    query = {
+      from: from,
+      to: receiver,
+      data: $data,
+      value: '0x0',
+    };
+    return makeQuery(
+      network,
+      'eth_estimateGas',
+      [query],
+      function (err, estimate) {
+        if (err != null) {
+          console.error('[getGasEstimate] error:', err);
+        }
+        if (err != null) {
+          return cb(err);
+        }
+        return cb(null, fromHex(estimate));
       }
     );
   };
@@ -444,9 +524,9 @@
       action: action,
       apikey: apikey,
       address: address,
-      sort: sort,
+      /*sort: sort,
       startblock: startblock,
-      endblock: endblock,
+      endblock: endblock*/
     });
     return get(apiUrl + '?' + query)
       .timeout({
@@ -488,15 +568,46 @@
     return Math.pow(10, decimals);
   };
   calcGasPrice = function (arg$, cb) {
-    var web3, feeType;
-    (web3 = arg$.web3), (feeType = arg$.feeType);
-    if (feeType === 'cheap') {
-      return cb(null, '3000000000');
+    var network, feeType, gasPrice;
+    (network = arg$.network),
+      (feeType = arg$.feeType),
+      (gasPrice = arg$.gasPrice);
+    if (gasPrice != null) {
+      return cb(null, gasPrice);
     }
-    return web3.eth.getGasPrice(cb);
+    return makeQuery(network, 'eth_gasPrice', [], function (err, price) {
+      var ref$;
+      if (err != null) {
+        return cb(
+          'calc gas price - err: ' + ((ref$ = err.message) != null ? ref$ : err)
+        );
+      }
+      price = fromHex(price);
+      return cb(null, price);
+    });
   };
   round = function (num) {
     return Math.round(+num);
+  };
+  getNonce = function (arg$, cb) {
+    var network, account, address;
+    (network = arg$.network), (account = arg$.account);
+    address = account.address;
+    return makeQuery(
+      network,
+      'eth_getTransactionCount',
+      [address, 'pending'],
+      function (err, nonce) {
+        var ref$;
+        if (err != null) {
+          return cb(
+            'cannot get nonce (pending) - err: ' +
+              ((ref$ = err.message) != null ? ref$ : err)
+          );
+        }
+        return cb(null, fromHex(nonce));
+      }
+    );
   };
   out$.createTransaction = createTransaction = curry$(function (arg$, cb) {
     var network,
@@ -507,6 +618,8 @@
       feeType,
       txType,
       data,
+      gas,
+      gasPrice,
       web3,
       dec,
       privateKey;
@@ -517,16 +630,27 @@
       (amountFee = arg$.amountFee),
       (feeType = arg$.feeType),
       (txType = arg$.txType),
-      (data = arg$.data);
+      (data = arg$.data),
+      (gas = arg$.gas),
+      (gasPrice = arg$.gasPrice);
+    if (
+      (network != null ? network.txFeeIn : void 8) == null ||
+      (network != null ? network.txFeeIn.toString().trim().length : void 8) ===
+        0
+    ) {
+      return cb('txFeeIn is not defined for current network');
+    }
     if (!isAddress(recipient)) {
       return cb('address in not correct ethereum address');
     }
     web3 = getWeb3(network);
     dec = getDec(network);
     privateKey = new Buffer(account.privateKey.replace(/^0x/, ''), 'hex');
-    return web3.eth.getTransactionCount(
-      account.address,
-      'pending',
+    return getNonce(
+      {
+        account: account,
+        network: network,
+      },
       function (err, nonce) {
         var contract, toWei, toWeiEth, toEth, value;
         if (err != null) {
@@ -548,92 +672,123 @@
         value = toWei(amount);
         return calcGasPrice(
           {
-            web3: web3,
+            network: network,
             feeType: feeType,
+            gasPrice: gasPrice,
           },
-          function (err, gasPriceBn) {
-            var gasPrice, gasMinimal, gasEstimate;
+          function (err, gasPrice) {
             if (err != null) {
               return cb(err);
             }
-            gasPrice = gasPriceBn.toFixed();
-            gasMinimal = div(toWeiEth(amountFee), gasPrice);
-            gasEstimate = round(times(gasMinimal, 5));
-            if (
-              toString$.call(web3.eth.getBalance).slice(8, -1) !== 'Function'
-            ) {
-              return cb('getBalance is not a function');
-            }
-            return web3.eth.getBalance(
-              account.address,
-              function (err, balance) {
-                var balanceEth;
+            return getGasEstimate(
+              {
+                network: network,
+                feeType: feeType,
+                account: account,
+                amount: amount,
+                to: recipient,
+                data: data,
+              },
+              function (err, gasEstimate) {
+                var onePercent, $gasEstimate, res;
                 if (err != null) {
                   return cb(err);
                 }
-                balanceEth = toEth(balance);
-                if (+balanceEth < +amountFee) {
-                  return cb('Balance is not enough to send tx');
+                onePercent = times(gasEstimate, '0.01');
+                $gasEstimate = plus(gasEstimate, onePercent);
+                res = $gasEstimate.split('.');
+                $gasEstimate = (function () {
+                  switch (false) {
+                    case res.length !== 2:
+                      return res[0];
+                    default:
+                      return $gasEstimate;
+                  }
+                })();
+                if (
+                  toString$.call(web3.eth.getBalance).slice(8, -1) !==
+                  'Function'
+                ) {
+                  return cb('getBalance is not a function');
                 }
-                return getBalance(
-                  {
-                    network: network,
-                    address: account.address,
-                  },
-                  function (err, ercBalance) {
+                return web3.eth.getBalance(
+                  account.address,
+                  function (err, balance) {
+                    var balanceEth;
                     if (err != null) {
                       return cb(err);
                     }
-                    if (+ercBalance < +amount) {
-                      return cb('Balance is not enough to send this amount');
+                    balanceEth = toEth(balance);
+                    if (+balanceEth < +amountFee) {
+                      return cb(
+                        'ETH Legacy balance (' +
+                          balanceEth +
+                          ') is not enough to send tx'
+                      );
                     }
-                    return makeQuery(
-                      network,
-                      'eth_chainId',
-                      [],
-                      function (err, chainId) {
-                        var $data, to, tx, rawtx;
+                    return getBalance(
+                      {
+                        network: network,
+                        address: account.address,
+                      },
+                      function (err, ercBalance) {
                         if (err != null) {
                           return cb(err);
                         }
-                        $data = (function () {
-                          switch (false) {
-                            case !(data != null && data !== '0x'):
-                              return data;
-                            case contract.methods == null:
-                              return contract.methods
-                                .transfer(recipient, value)
-                                .encodeABI();
-                            default:
-                              return contract.transfer.getData(
-                                recipient,
-                                value
-                              );
+                        if (+ercBalance < +amount) {
+                          return cb(
+                            'Balance is not enough to send this amount'
+                          );
+                        }
+                        return makeQuery(
+                          network,
+                          'eth_chainId',
+                          [],
+                          function (err, chainId) {
+                            var $data, to, tx, rawtx;
+                            if (err != null) {
+                              return cb(err);
+                            }
+                            $data = (function () {
+                              switch (false) {
+                                case !(data != null && data !== '0x'):
+                                  return data;
+                                case contract.methods == null:
+                                  return contract.methods
+                                    .transfer(recipient, value)
+                                    .encodeABI();
+                                default:
+                                  return contract.transfer.getData(
+                                    recipient,
+                                    value
+                                  );
+                              }
+                            })();
+                            to = (function () {
+                              switch (false) {
+                                case !(data != null && data !== '0x'):
+                                  return recipient;
+                                default:
+                                  return network.address;
+                              }
+                            })();
+                            tx = new Tx({
+                              nonce: toHex(nonce),
+                              gasPrice: toHex(gasPrice),
+                              value: toHex('0'),
+                              gas: toHex($gasEstimate),
+                              to: to,
+                              from: account.address,
+                              data: $data || '0x',
+                              chainId: chainId,
+                            });
+                            tx.sign(privateKey);
+                            rawtx = '0x' + tx.serialize().toString('hex');
+                            return cb(null, {
+                              rawtx: rawtx,
+                            });
                           }
-                        })();
-                        to = (function () {
-                          switch (false) {
-                            case !(data != null && data !== '0x'):
-                              return recipient;
-                            default:
-                              return network.address;
-                          }
-                        })();
-                        tx = new Tx({
-                          nonce: toHex(nonce),
-                          gasPrice: toHex(gasPrice),
-                          value: toHex('0'),
-                          gas: toHex(gasEstimate),
-                          to: to,
-                          from: account.address,
-                          data: $data || '0x',
-                          chainId: chainId,
-                        });
-                        tx.sign(privateKey);
-                        rawtx = '0x' + tx.serialize().toString('hex');
-                        return cb(null, {
-                          rawtx: rawtx,
-                        });
+                        );
                       }
                     );
                   }

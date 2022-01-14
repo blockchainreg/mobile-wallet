@@ -14,10 +14,10 @@
   out$.mainnet = mainnet = {
     disabled: false,
     decimals: 18,
-    txFee: '0.002',
+    txFee: '0.0002',
     txFeeOptions: {
-      auto: '0.002',
-      cheap: '0.002',
+      auto: '0.0002',
+      cheap: '0.0002',
     },
     api: {
       provider: 'velas_huobi',
@@ -44,10 +44,10 @@
   out$.testnet = testnet = {
     disabled: false,
     decimals: 18,
-    txFee: '0.000001',
+    txFee: '0.00009',
     txFeeOptions: {
-      auto: '0.000020',
-      cheap: '0.000020',
+      auto: '0.00009',
+      cheap: '0.00009',
     },
     api: {
       provider: 'velas_huobi',

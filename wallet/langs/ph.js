@@ -57,6 +57,7 @@
     nothingToShow: 'Wala makita dito!',
     makeTx: 'Gawin ang iyong unang transaksyon o baguhin ang iyong mga filter.',
     fee: 'Bayarin',
+    bridgeFee: 'Bridge fee',
     delete: 'tanggalin',
     created: 'Nilikha',
     manageAccount: 'Pamahalaan ang Account',
@@ -277,5 +278,6 @@
     currentBlock: 'Kasalukuyang bloke',
     timeUntilEnd: 'Oras hanggang sa matapos',
     staking: 'Staking',
+    chooseNetwork: 'Choose networks',
   };
 }.call(this));

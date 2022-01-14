@@ -14,6 +14,7 @@
     minus,
     times,
     div,
+    $toHex,
     get,
     post,
     jsonParse,
@@ -67,15 +68,15 @@
     (plus = ref$.plus),
     (minus = ref$.minus),
     (times = ref$.times),
-    (div = ref$.div);
+    (div = ref$.div),
+    ($toHex = ref$.$toHex);
   (ref$ = require('./superagent.js')), (get = ref$.get), (post = ref$.post);
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   (ref$ = require('./deps.js')),
     (BitcoinLib = ref$.BitcoinLib),
     (bip39 = ref$.bip39);
-  validate =
-    require('../embed_modules/bitcoin-address-validation/src/index').default;
+  validate = require('../embed_modules/bitcoin-address-validation');
   getBitcoinFullpairByIndex = function (mnemonic, index, network) {
     var seed, hdnode, address, privateKey, publicKey;
     seed = bip39.mnemonicToSeed(mnemonic);
@@ -309,7 +310,14 @@
       return calcFeeInstantx(config, cb);
     }
     calcFee = getCalcFeeFunc(network);
-    return calcFee(config, cb);
+    return calcFee(config, function (err, fee) {
+      if (err != null) {
+        return cb(err);
+      }
+      return cb(null, {
+        calcedFee: fee,
+      });
+    });
   };
   out$.getKeys = getKeys = function (arg$, cb) {
     var network, mnemonic, index, result;

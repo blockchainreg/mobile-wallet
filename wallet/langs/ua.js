@@ -83,6 +83,7 @@
     nothingToShow: 'Тут нічого немає!',
     makeTx: 'Зробіть свою першу транзакцію або поміняйте свої фільтри.',
     fee: 'Комісія',
+    bridgeFee: 'Комісія бріджа',
     delete: 'видалити',
     created: 'Створенно',
     manageAccount: 'Управління аккаунтом',
@@ -269,5 +270,6 @@
     currentBlock: 'Поточний блок',
     timeUntilEnd: 'Час до кінця',
     staking: 'Стейкінг',
+    chooseNetwork: 'Виберіть мережу',
   };
 }.call(this));

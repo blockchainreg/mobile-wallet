@@ -82,12 +82,21 @@
       transaction(function () {
         var wallet, err;
         try {
-          wallet = bgStore.current.account.wallets[store.current.walletIndex];
+          const walletToken = store.current.wallet;
+          if (walletToken) {
+            wallet = bgStore.current.account.wallets.find(
+              (it) => it.coin.token === walletToken
+            );
+          } else {
+            if (store.current.walletIndex < 0) return;
+            wallet = bgStore.current.account.wallets[store.current.walletIndex];
+          }
           store.rates = bgStore.rates;
           store.current.account = bgStore.current.account;
           store.current.filter.filterTxsTypes = ['IN', 'OUT'];
+          const filterToken = wallet.coin != null ? wallet.coin.token : '';
           store.current.filter = {
-            token: wallet.coin.token,
+            token: filterToken,
           };
           store.current.balanceUsd = bgStore.current.balanceUsd;
           return refreshTxs(web3, store, function () {
@@ -95,6 +104,7 @@
             return applyTransactions(store);
           });
         } catch (e) {
+          console.error('[refreshAccount] Error: ', e);
           state.err = e;
         }
       });

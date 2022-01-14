@@ -99,19 +99,18 @@
         array,
         err,
         results$ = [];
-      try {
-        for (i$ = 0, len$ = (ref$ = this.tasks).length; i$ < len$; ++i$) {
-          pair = ref$[i$];
-          composition = fn$();
+      for (i$ = 0, len$ = (ref$ = this.tasks).length; i$ < len$; ++i$) {
+        pair = ref$[i$];
+        composition = fn$();
+        try {
           array = composition.concat([this.success(pair[0])]);
           results$.push(go(array, val));
+        } catch (e$) {
+          err = e$;
+          results$.push(this.errorsCb(err));
         }
-        return results$;
-      } catch (e$) {
-        err = e$;
-        this.errors = err;
-        return this.errorsCb(err);
       }
+      return results$;
       function fn$() {
         switch (toString$.call(pair[1]).slice(8, -1)) {
           case 'Function':
@@ -133,6 +132,7 @@
     if (tasks.length <= max) {
       parallel = new Parallel(tasks);
       parallel.then(success)['catch'](function (err) {
+        console.error('Caught error: ', err);
         return success({});
       });
       return parallel.run(val);

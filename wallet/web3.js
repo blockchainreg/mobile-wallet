@@ -210,15 +210,16 @@
         amountSendFeeUsd: amountSendFeeUsd,
         proposeEscrow: proposeEscrow,
       });
-      changeAmount(store, amountSend);
-      navigate(store, cweb3, 'send');
-      helps = titles.concat([network.mask]);
-      showCases(store, helps, function () {});
-      return waitFormResult(id, function (err, data) {
-        if (err != null) {
-          return cb(err);
-        }
-        return cb(null, data);
+      changeAmount(store, amountSend, true, (err, res) => {
+        navigate(store, cweb3, 'send');
+        helps = titles.concat([network.mask]);
+        showCases(store, helps, function () {});
+        return waitFormResult(id, function (err, data) {
+          if (err != null) {
+            return cb(err);
+          }
+          return cb(null, data);
+        });
       });
     };
   };

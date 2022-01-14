@@ -9,6 +9,8 @@ export class Transaction {
   feeType;
   txType;
   data;
+  gasPrice;
+  gasEstimate;
 
   constructor(
     wallet,
@@ -19,7 +21,9 @@ export class Transaction {
     amountFee,
     feeType,
     txType,
-    data
+    data,
+    gasPrice,
+    gasEstimate
   ) {
     this.wallet = wallet;
     this.network = network;
@@ -34,5 +38,7 @@ export class Transaction {
       address: wallet.address,
       privateKey: wallet.privateKey,
     };
+    this.gasPrice = gasPrice;
+    this.gasEstimate = gasEstimate;
   }
 }

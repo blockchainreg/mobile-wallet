@@ -82,6 +82,7 @@
     nothingToShow: 'ไม่มีอะไรให้ดูที่นี่!',
     makeTx: 'ทำธุรกรรมครั้งแรกของคุณหรือเปลี่ยนตัวกรองของคุณ',
     fee: 'ค่าธรรมเนียม',
+    bridgeFee: 'Bridge fee',
     delete: 'ลบ',
     created: 'ที่สร้างไว้',
     manageAccount: 'จัดการบัญชี',
@@ -260,5 +261,6 @@
     dontStake:
       'Don’t stake all coins, leave some (~1 VLX) to pay transaction fees in the future and be able to initiate stake withdrawals.',
     noticeTrying: 'You are trying to withdraw more funds than you have.',
+    chooseNetwork: 'Choose networks',
   };
 }.call(this));

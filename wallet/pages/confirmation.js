@@ -9,10 +9,19 @@
     prompt,
     toString$ = {}.toString,
     out$ = (typeof exports != 'undefined' && exports) || this;
+
   out$.confirm = confirm = function (store, text, cb) {
     store.current.confirmation = text;
     return (store.current.confirmationCallback = (result) => {
       store.current.confirmation = false;
+      store.current.confirmationCallback = null;
+      cb(result);
+    });
+  };
+  out$.confirm2 = function (store, component, cb) {
+    store.current.confirmationComponent = component;
+    return (store.current.confirmationCallback = (result) => {
+      store.current.confirmationComponent = false;
       store.current.confirmationCallback = null;
       cb(result);
     });
@@ -23,6 +32,14 @@
       store.current.confirmation = false;
       store.current.confirmationCallback = null;
       cb(result);
+    });
+  };
+  out$.modal = modal = function (store, cb) {
+    store.current.currentNetworkDetails.show = true;
+    return (store.current.bridgeInfoCallback = (res) => {
+      store.current.currentNetworkDetails.show = false;
+      store.current.bridgeInfoCallback = null;
+      cb(null);
     });
   };
 }.call(this));

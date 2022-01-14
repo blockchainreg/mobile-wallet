@@ -58,6 +58,7 @@
     makeTx:
       'Thực hiện giao dịch đầu tiên của bạn hoặc thay đổi bộ lọc của bạn.',
     fee: 'Phí',
+    bridgeFee: 'Bridge fee',
     delete: 'xóa',
     created: 'Đã tạo',
     manageAccount: 'Quản lý tài khoản',
@@ -274,5 +275,6 @@
     currentBlock: 'Block hiện tại',
     timeUntilEnd: 'Thời gian cho đến khi kết thúc',
     staking: 'Staking',
+    chooseNetwork: 'Choose network',
   };
 }.call(this));

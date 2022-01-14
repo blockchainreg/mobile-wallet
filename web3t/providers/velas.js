@@ -29,6 +29,7 @@
     getUnconfirmedBalance,
     tryParseAmount,
     getBalance,
+    getMarketHistoryPrices,
     out$ = (typeof exports != 'undefined' && exports) || this,
     toString$ = {}.toString;
   Wallet = require('../node_modules_embed/vlx-wallet/Crypto/Wallet.js')[
@@ -301,6 +302,30 @@
         return cb(null, balance);
       });
     });
+  };
+  out$.getMarketHistoryPrices = getMarketHistoryPrices = function (config, cb) {
+    var network, coin, market;
+    (network = config.network), (coin = config.coin);
+    market = coin.market;
+    return get(market)
+      .timeout({
+        deadline: deadline,
+      })
+      .end(function (err, resp) {
+        var ref$;
+        if (err != null) {
+          return cb(
+            'cannot execute query - err ' +
+              ((ref$ = err.message) != null ? ref$ : err)
+          );
+        }
+        return jsonParse(resp.text, function (err, result) {
+          if (err != null) {
+            return cb(err);
+          }
+          return cb(null, result);
+        });
+      });
   };
   function curry$(f, bound) {
     var context,

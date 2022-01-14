@@ -27,11 +27,12 @@ import Images from '../Images.js';
 import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 import roundNumber from '../round-number.js';
+import roundHuman2 from '../wallet/round-human2';
 import roundHuman from '../wallet/round-human';
 import { SkypeIndicator } from 'react-native-indicators';
-import { DepositImage } from '../svg/depositImage.js';
-import { WithdrawImage2 } from '../svg/withdrawImage2.js';
+import walletsFuncs from '../wallet/wallets-funcs';
 import { Trx } from '../svg/trx.js';
+
 var ref$ = require('prelude-ls'),
   sortBy = ref$.sortBy,
   reverse = ref$.reverse,
@@ -74,6 +75,7 @@ function in$(x, xs) {
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
+  const wallets = walletsFuncs(store, web3t).wallets;
   const checkType = ({ type, to, txType }) => {
     if (txType) {
       return (
@@ -104,18 +106,18 @@ export default ({ store, web3t }) => {
 
   const index = (type) => {
     if (type === 'IN') return <Text>+ </Text>;
-    else if (type === 'OUT') return <Text>- </Text>;
+    return <Text>- </Text>;
   };
   const amountStyle = (type) => {
     if (type === 'IN') return styles.styleCoinIn;
-    else if (type === 'OUT') return styles.styleCoinOut;
+    return styles.styleCoinOut;
   };
   const thumbnail = (type) => {
     switch (type) {
       case 'IN':
-        return <DepositImage width={36} height={36} />;
+        return <Thumbnail small square source={Images.depositImage} />;
       case 'OUT':
-        return <WithdrawImage2 width={36} height={36} />;
+        return <Thumbnail small square source={Images.withdrawImage2} />;
       default:
         return null;
     }
@@ -143,44 +145,24 @@ export default ({ store, web3t }) => {
   };
 
   const renderTransaction = (transaction) => {
-    var r_amount = roundNumber(transaction.amount, { decimals: 2 });
-    var amount = roundHuman(r_amount);
-    const curr = transaction.token;
-    let currency_display = (function () {
-      switch (curr) {
-        case 'vlx_native':
-        case 'vlx_evm':
-        case 'vlx_evm_legacy':
-        case 'vlx2':
-        case 'vlx_erc20':
-        case 'vlx':
-          return 'VLX';
-        case 'usdt_erc20_legacy':
-        case 'usdt_erc20':
-          return 'USDT';
-        case 'eth_legacy':
-          return 'ETH';
-        default:
-          return transaction.token;
-      }
-    })();
-    currency_display = currency_display.toUpperCase();
-    const fee_currency_display = (function () {
-      switch (curr) {
-        case 'usdt':
-          return 'BTC';
-        case 'usdt_erc20':
-        case 'usdt_erc20_legacy':
-          return 'ETH';
-        case 'syx':
-        case 'syx2':
-          return 'VLX';
-        default:
-          return currency_display;
-      }
-    })();
-
-    const txFee = roundHuman(transaction.fee);
+    const { tx, amount, token, fee, type, time } = transaction;
+    const wallet = wallets.find((x) => x.coin.token === token);
+    if (!wallet) {
+      return null;
+    }
+    const r_amount = roundNumber(amount, { decimals: 2 });
+    const txAmount = roundHuman(r_amount);
+    const network = store.current.network;
+    if (!wallet.coin[network]) {
+      return null;
+    }
+    const txCurrency = (
+      wallet.coin.nickname || wallet.coin.token
+    ).toUpperCase();
+    const txFeeCurrency = (
+      wallet.coin[network].txFeeIn || wallet.coin.nickname
+    ).toUpperCase();
+    const txFee = roundHuman(fee);
 
     return (
       <ListItem
@@ -189,28 +171,26 @@ export default ({ store, web3t }) => {
         onPress={() => {
           showTransaction(transaction);
         }}
-        key={transaction.token + transaction.tx + transaction.type}
+        key={Date.now() + token + tx + type}
       >
-        <Left>{thumbnail(transaction.type)}</Left>
+        <Left>{thumbnail(type)}</Left>
         <Body style={{ paddingRight: 10 }}>
           <Text style={styles.txtSizeHistory}>{checkType(transaction)}</Text>
           <Text style={styles.constDate}>
-            {transaction.time
-              ? moment(transaction.time * 1000).format('MMM D YYYY h:mm A')
-              : null}
+            {time ? moment(time * 1000).format('MMM D YYYY h:mm A') : null}
           </Text>
         </Body>
         <Right>
-          <Text style={amountStyle(transaction.type)}>
-            {index(transaction.type)}
-            {amount}
+          <Text style={amountStyle(type)}>
+            {index(type)}
+            {txAmount}
             {'\u00A0'}
-            {currency_display}
+            {txCurrency}
             {Platform.OS === 'android' ? '\u00A0\u00A0' : null}
           </Text>
-          {transaction.fee ? (
+          {fee ? (
             <Text style={styles.constDate}>
-              ({lang.fee}: {txFee} {fee_currency_display})
+              ({lang.fee}: {txFee} {txFeeCurrency})
               {Platform.OS === 'android' ? '\u00A0\u00A0' : null}
             </Text>
           ) : null}
@@ -258,10 +238,6 @@ export default ({ store, web3t }) => {
         <View>
           {txs.length == 0 && (
             <View style={styles.footer}>
-              {/* <Image
-							source={Images.trx}
-							style={styles.styleLogo}
-						/> */}
               <Trx height={27.3 * 2} width={31.7 * 2} />
             </View>
           )}

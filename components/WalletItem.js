@@ -9,6 +9,8 @@ import { observer } from 'mobx-react';
 export default observer(({ store, wallet, ...props }) => {
   const lang = getLang(store);
 
+  const isNotLegacy = props.name.toLowerCase().indexOf('legacy') === -1;
+
   const typeBadge = (type) => {
     switch (type) {
       case 'active':
@@ -21,7 +23,7 @@ export default observer(({ store, wallet, ...props }) => {
   };
 
   const legacyBadge = () => {
-    if (props.name.toLowerCase().indexOf('legacy') === -1) return null;
+    if (isNotLegacy) return null;
     const legacyBadgeStyle = {
       fontFamily: 'Fontfabric-NexaRegular',
       fontSize: 12,
@@ -48,34 +50,11 @@ export default observer(({ store, wallet, ...props }) => {
   };
 
   const renderName = () => {
-    switch (true) {
-      case wallet.coin.token === 'vlx2':
-        return (
-          <Text style={style.styleTitle} numberOfLines={1}>
-            {props.name}
-          </Text>
-        );
-      // case (props.name).toLowerCase().indexOf('legacy') !== -1 && props.key !== 'vlx2':
-      // 	const index = (props.name).toLowerCase().indexOf('legacy');
-      // 	const baseName = props.name.substr(0, index);
-      //
-      // 	return (
-      // 	<View style={{ fontFamily: 'Fontfabric-NexaRegular'}}>
-      // 		<Text
-      // 			style={style.styleTitle}
-      // 		>
-      // 			{baseName}
-      // 		</Text>
-      // 	</View>
-      // 	)
-
-      default:
-        return (
-          <Text style={style.styleTitle} numberOfLines={1}>
-            {props.name}
-          </Text>
-        );
-    }
+    return (
+      <Text style={style.styleTitle} numberOfLines={1}>
+        {props.name}
+      </Text>
+    );
   };
 
   const badgeStatus = () => {
@@ -117,12 +96,7 @@ export default observer(({ store, wallet, ...props }) => {
       <Right style={style.rightSide}>
         {/*{badgeStatus()}*/}
         {/*{legacyBadge()}*/}
-        <Text
-          style={[
-            style.styleBalance,
-            { color: props.active ? Images.colorGreen : '#fff' },
-          ]}
-        >
+        <Text style={[style.styleBalance, { color: '#fff' }]}>
           {props.balance}
         </Text>
         <Text style={[style.styleSubTitle, { marginTop: 10 }]}>
@@ -150,7 +124,7 @@ const style = StyleSheet.create({
     fontFamily: 'Fontfabric-NexaRegular',
   },
   styleSubTitle: {
-    color: 'rgba(255, 255, 255, 0.3)',
+    color: 'rgba(122, 124, 199, 0.74)',
     fontSize: 13,
     textTransform: 'uppercase',
     marginTop: 10,

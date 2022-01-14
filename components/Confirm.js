@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; //import react in our code.
 import { ConfirmDialog } from 'react-native-simple-dialogs';
+import { View, Text } from 'native-base';
 import getLang from '../wallet/get-lang.js';
 
 export default ({ store, ...props }) => {
@@ -7,7 +8,7 @@ export default ({ store, ...props }) => {
   return (
     <ConfirmDialog
       title={lang.confirmDialog}
-      message={props.confirmation}
+      //message={props.confirmation}
       visible={true}
       onTouchOutside={props.onNo}
       titleStyle={{ fontFamily: 'Fontfabric-NexaBold', color: '#000' }}
@@ -20,6 +21,10 @@ export default ({ store, ...props }) => {
         title: lang.no,
         onPress: props.onNo,
       }}
-    />
+    >
+      <View>
+        <Text>{props.confirmation}</Text>
+      </View>
+    </ConfirmDialog>
   );
 };

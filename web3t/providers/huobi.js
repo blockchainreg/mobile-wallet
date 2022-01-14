@@ -13,6 +13,7 @@
     times,
     div,
     fromHex,
+    $toHex,
     get,
     post,
     Web3,
@@ -77,7 +78,8 @@
     (minus = ref$.minus),
     (times = ref$.times),
     (div = ref$.div),
-    (fromHex = ref$.fromHex);
+    (fromHex = ref$.fromHex),
+    ($toHex = ref$.$toHex);
   (ref$ = require('./superagent.js')), (get = ref$.get), (post = ref$.post);
   (ref$ = require('./deps.js')),
     (Web3 = ref$.Web3),
@@ -266,26 +268,63 @@
       }
     );
   };
-  getGasEstimate = function (arg$, cb) {
-    var network, query, gas;
-    (network = arg$.network), (query = arg$.query), (gas = arg$.gas);
+  getGasEstimate = function (config, cb) {
+    var network,
+      feeType,
+      account,
+      amount,
+      to,
+      data,
+      gas,
+      dec,
+      from,
+      $data,
+      val,
+      value,
+      query;
+    (network = config.network),
+      (feeType = config.feeType),
+      (account = config.account),
+      (amount = config.amount),
+      (to = config.to),
+      (data = config.data),
+      (gas = config.gas);
     if (gas != null) {
       return cb(null, gas);
     }
+    if (+amount === 0) {
+      return cb(null, '0');
+    }
+    dec = getDec(network);
+    from = account.address;
+    $data = (function () {
+      switch (false) {
+        case !(data != null && data !== '0x'):
+          return data;
+        default:
+          return '0x';
+      }
+    })();
+    val = times(amount, dec);
+    value = $toHex(val);
+    query = {
+      from: from,
+      to: to,
+      data: $data,
+      value: value,
+    };
     return makeQuery(
       network,
       'eth_estimateGas',
       [query],
       function (err, estimate) {
-        var estimateNormal;
         if (err != null) {
-          return cb(null, 1000000);
+          console.error('[getGasEstimate] error:', err);
         }
-        estimateNormal = fromHex(estimate);
-        if (+estimateNormal < 1000000) {
-          return cb(null, 1000000);
+        if (err != null) {
+          return cb(err);
         }
-        return cb(null, estimateNormal);
+        return cb(null, fromHex(estimate));
       }
     );
   };
@@ -299,9 +338,6 @@
       (data = arg$.data),
       (gasPrice = arg$.gasPrice),
       (gas = arg$.gas);
-    if (toString$.call(to).slice(8, -1) !== 'String' || to.length === 0) {
-      return cb(null);
-    }
     if (feeType !== 'auto') {
       return cb(null);
     }
@@ -334,17 +370,28 @@
         return getGasEstimate(
           {
             network: network,
-            query: query,
+            feeType: feeType,
+            account: account,
+            amount: amount,
+            to: to,
+            data: dataParsed,
             gas: gas,
           },
           function (err, estimate) {
             var res, val;
             if (err != null) {
-              return cb(err);
+              return cb(null, {
+                calcedFee: network.txFee,
+                gasPrice: gasPrice,
+              });
             }
             res = times(gasPrice, estimate);
             val = div(res, dec);
-            return cb(null, val);
+            return cb(null, {
+              calcedFee: val,
+              gasPrice: gasPrice,
+              gasEstimate: estimate,
+            });
           }
         );
       }
@@ -804,8 +851,11 @@
                     return getGasEstimate(
                       {
                         network: network,
-                        query: query,
-                        gas: gas,
+                        feeType: feeType,
+                        account: account,
+                        amount: amount,
+                        to: recipient,
+                        data: data,
                       },
                       function (err, gasEstimate) {
                         if (err != null) {
