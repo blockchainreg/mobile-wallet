@@ -1760,71 +1760,72 @@ module.exports = function ({ store, web3t }) {
   };
 
   const getBridgeInfo = function (cb) {
-    //try {
-    var chosenNetwork,
-      ref$,
-      ref1$,
-      token,
-      ref2$,
-      wallet,
-      network,
-      ref3$,
-      ref4$,
-      ref5$,
-      chosenNetwork =
-        store != null
-          ? (ref$ = store.current) != null
-            ? (ref1$ = ref$.send) != null
-              ? ref1$.chosenNetwork
+    setTimeout(() => {
+      var chosenNetwork,
+        ref$,
+        ref1$,
+        token,
+        ref2$,
+        wallet,
+        network,
+        ref3$,
+        ref4$,
+        ref5$,
+        chosenNetwork =
+          store != null
+            ? (ref$ = store.current) != null
+              ? (ref1$ = ref$.send) != null
+                ? ref1$.chosenNetwork
+                : void 8
               : void 8
-            : void 8
-          : void 8;
-    if (chosenNetwork == null) {
-      return cb(null);
-    }
-    token = store.current.send.coin.token;
-    if (
-      chosenNetwork == null ||
-      chosenNetwork.referTo === 'vlx_native' ||
-      (token === 'vlx_native' &&
-        ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
-          ref2$ === 'vlx2' ||
-          ref2$ === 'vlx_evm')) ||
-      ((token === 'vlx' || token === 'vlx_evm') &&
-        ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
-          ref2$ === 'vlx2')) ||
-      ((token === 'vlx2' || token === 'vlx_native' || token === 'vlx_evm') &&
-        ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
-          ref2$ === 'vlx2' ||
-          ref2$ === 'vlx_evm')) ||
-      (token === 'vlx_native' &&
-        ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
-          ref2$ === 'vlx2' ||
-          ref2$ === 'vlx_evm'))
-    ) {
-      store.current.send.homeFeePercent = 0;
-      return cb(null);
-    }
-    wallet = store.current.send.wallet;
-    network = wallet.network;
+            : void 8;
+      if (chosenNetwork == null) {
+        return cb(null);
+      }
+      token = store.current.send.coin.token;
+      if (
+        chosenNetwork == null ||
+        chosenNetwork.referTo === 'vlx_native' ||
+        (token === 'vlx_native' &&
+          ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
+            ref2$ === 'vlx2' ||
+            ref2$ === 'vlx_evm')) ||
+        ((token === 'vlx' || token === 'vlx_evm') &&
+          ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
+            ref2$ === 'vlx2')) ||
+        ((token === 'vlx2' || token === 'vlx_native' || token === 'vlx_evm') &&
+          ((ref2$ = chosenNetwork.referTo) === 'vlx_native' ||
+            ref2$ === 'vlx2' ||
+            ref2$ === 'vlx_evm')) ||
+        (token === 'vlx_native' &&
+          ((ref2$ = chosenNetwork.referTo) === 'vlx' ||
+            ref2$ === 'vlx2' ||
+            ref2$ === 'vlx_evm'))
+      ) {
+        store.current.send.homeFeePercent = 0;
+        return cb(null);
+      }
+      wallet = store.current.send.wallet;
+      network = wallet.network;
 
-    const { web3Provider, extraWeb3Providers } = network.api;
-    const web3Providers = commonProvider.getWeb3Providers(
-      web3Provider,
-      extraWeb3Providers
-    );
-    getHomeFeeWithAvaliableWeb3Provider({
-      web3Providers,
-      wallet,
-      ref2$,
-      ref3$,
-      ref4$,
-      ref5$,
-      chosenNetwork,
-      token,
-      store,
-      cb,
-    });
+      const { web3Provider, extraWeb3Providers } = network.api;
+      const web3Providers = commonProvider.getWeb3Providers(
+        web3Provider,
+        extraWeb3Providers
+      );
+      getHomeFeeWithAvaliableWeb3Provider({
+        web3Providers,
+        wallet,
+        ref2$,
+        ref3$,
+        ref4$,
+        ref5$,
+        chosenNetwork,
+        token,
+        store,
+        cb,
+      });
+    }, 1);
   };
 
   function import$(obj, src) {
