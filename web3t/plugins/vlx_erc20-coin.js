@@ -18,12 +18,12 @@
   mainnetConfig = {
     disabled: false,
     decimals: 18,
-    txFee: '0.0014',
+    txFee: '0.006',
     txFeeIn: 'eth',
     txBridgeFeeIn: 'eth',
     txFeeOptions: {
-      auto: '0.0020',
-      cheap: '0.00014',
+      auto: '0.006',
+      cheap: '0.006',
     },
     messagePrefix: 'Ethereum',
     mask: '0x0000000000000000000000000000000000000000',
@@ -52,10 +52,10 @@
   testnetConfig = {
     disabled: false,
     decimals: 18,
-    txFee: '0.0014',
+    txFee: '0.00014',
     txFeeOptions: {
-      auto: '0.0020',
-      cheap: '0.0020',
+      auto: '0.00014',
+      cheap: '0.00014',
     },
     messagePrefix: 'Ethereum',
     mask: '0x0000000000000000000000000000000000000000',
@@ -69,7 +69,8 @@
       '0x57C7f6CD50a432943F40F987a1448181D5B11307',
     api: {
       provider: 'velas_erc20',
-      web3Provider: 'https://geth.ropsten.velas.com',
+      web3Provider:
+        'https://ropsten.infura.io/v3/6a6c66740e9e4cea9cc8425869e9d106',
       url: 'https://ropsten.etherscan.io',
       apiUrl: 'https://api-ropsten.etherscan.io/api',
     },

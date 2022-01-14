@@ -82,6 +82,7 @@
     nothingToShow: 'Tiada apa untuk dilihat di sini!',
     makeTx: 'Buat transaksi pertama anda atau ubah penapis anda.',
     fee: 'Bayaran',
+    bridgeFee: 'Bridge fee',
     delete: 'padam',
     created: 'Dibuat',
     manageAccount: 'Urus Akaun',
@@ -263,5 +264,6 @@
     dontStake:
       'Don’t stake all coins, leave some (~1 VLX) to pay transaction fees in the future and be able to initiate stake withdrawals.',
     noticeTrying: 'You are trying to withdraw more funds than you have.',
+    chooseNetwork: 'Choose networks',
   };
 }.call(this));

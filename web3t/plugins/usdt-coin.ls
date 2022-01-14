@@ -23,6 +23,7 @@ export mainnet =
     pubKeyHash: 0x00
     scriptHash: 0x05
     wif: 0x80
+    group: 'Bitcoin'
 export testnet =
     tx-fee: \0.0001
     tx-fee-options:
@@ -47,6 +48,7 @@ export testnet =
     pubKeyHash: 0x6f
     scriptHash: 0xc4
     wif: 0xef
+    group: 'Bitcoin'
 export type = \coin
 export enabled = yes
 export token = \usdt

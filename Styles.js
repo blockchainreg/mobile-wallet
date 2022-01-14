@@ -50,20 +50,24 @@ export default StyleSheet.create({
     color: '#9d41eb',
   },
   footerHeight: {
+    borderWidth: 0,
     ...ifIphoneX(
       {
-        backgroundColor: Images.velasColor5,
+        // backgroundColor: Images.velasColor5,
+        backgroundColor: 'transparent',
         borderTopColor: 'transparent',
       },
       {
         ...Platform.select({
           ios: {
             borderTopColor: 'transparent',
-            backgroundColor: Images.velasColor5,
+            backgroundColor: 'transparent',
+            // backgroundColor: Images.velasColor5,
           },
           android: {
-            backgroundColor: Images.velasColor5,
+            // backgroundColor: Images.velasColor5,
             borderTopColor: 'transparent',
+            backgroundColor: 'transparent',
             // zIndex: 2
           },
         }),
@@ -2522,9 +2526,10 @@ export default StyleSheet.create({
 
   nameToken: {
     color: '#fff',
-    fontSize: 28,
     fontWeight: '200',
     fontFamily: 'Fontfabric-NexaBold',
+    // fontSize: 18,
+    opacity: 0.8,
   },
   conversionToken: {
     marginLeft: 20,
@@ -2701,7 +2706,8 @@ export default StyleSheet.create({
     ...ifIphoneX(
       {
         color: '#fff',
-        fontSize: 20,
+        fontSize: 13,
+        textTransform: 'uppercase',
         // fontSize: hp('2%'),
         fontWeight: '300',
         // marginLeft: 20,
@@ -2712,14 +2718,16 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             color: '#fff',
-            fontSize: 17,
+            fontSize: 13,
+            textTransform: 'uppercase',
             fontWeight: '300',
             fontFamily: 'Fontfabric-NexaBold',
             // marginLeft: 20,
           },
           android: {
             color: '#fff',
-            fontSize: 17,
+            fontSize: 13,
+            textTransform: 'uppercase',
             fontWeight: '300',
             marginTop: 20,
             fontFamily: 'Fontfabric-NexaBold',

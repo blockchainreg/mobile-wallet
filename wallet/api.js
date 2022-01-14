@@ -3,6 +3,7 @@
   var providers,
     apiErrorHandler,
     toJS,
+    toString$,
     ref$,
     pairsToObj,
     objToPairs,
@@ -17,6 +18,7 @@
     out$ = (typeof exports != 'undefined' && exports) || this;
   providers = require('./providers.js');
   apiErrorHandler = require('./api-error-handler.js');
+  toString$ = {}.toString;
   toJS = require('mobx').toJS;
   (ref$ = require('prelude-ls')),
     (pairsToObj = ref$.pairsToObj),
@@ -68,7 +70,14 @@
   //   }
   //   return caches[key](cb);
   // };
-
+  out$.getTransactionInfo = action(function (provider, config, cb) {
+    if (
+      toString$.call(provider.getTransactionInfo).slice(8, -1) !== 'Function'
+    ) {
+      return cb('method is not supported');
+    }
+    return provider.getTransactionInfo(config, cb);
+  });
   out$.getKeys = getKeys = action(function (provider, config, cb) {
     return provider.getKeys(config, cb);
   });

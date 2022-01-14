@@ -57,6 +57,7 @@
     nothingToShow: '¡Nada que mostrar aquí!',
     makeTx: 'Realice su primera transacción o cambie sus filtros.',
     fee: 'Comisión',
+    bridgeFee: 'Bridge fee',
     delete: 'eliminar',
     created: 'Creado',
     manageAccount: 'Administrar cuenta',
@@ -273,5 +274,6 @@
     currentBlock: 'Bloque actual',
     timeUntilEnd: 'Tiempo hasta finalizar',
     staking: 'Staking',
+    chooseNetwork: 'Choose networks',
   };
 }.call(this));

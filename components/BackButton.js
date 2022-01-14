@@ -1,10 +1,22 @@
 import React, { useEffect } from 'react';
-import { BackHandler } from 'react-native';
-import { Button, Icon } from 'native-base';
+import {
+  BackHandler,
+  Animated,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import { Icon } from 'native-base';
 
 import styles from '../Styles.js';
 
-export default ({ onBack, transparent, style }) => {
+const HIT_SLOP = {
+  bottom: 20,
+  left: 20,
+  right: 20,
+  top: 20,
+};
+
+export default ({ onBack, style }) => {
   const back = () => {
     onBack();
     return true;
@@ -15,18 +27,23 @@ export default ({ onBack, transparent, style }) => {
       BackHandler.removeEventListener('hardwareBackPress', back);
     };
   });
+
+  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
   return (
-    !transparent && (
-      <Button
-        transparent
-        style={styles.arrowHeaderLeft}
-        onPress={transparent ? () => {} : onBack}
-      >
+    <Animated.View>
+      <AnimatedTouchable onPress={onBack} hitSlop={HIT_SLOP}>
         <Icon
           name="ios-arrow-back"
-          style={style || [styles.arrowHeaderIconBlack, { color: '#fff' }]}
+          style={style || [styles.arrowHeaderIconBlack, styleOwn.arrowIcon]}
         />
-      </Button>
-    )
+      </AnimatedTouchable>
+    </Animated.View>
   );
 };
+
+const styleOwn = StyleSheet.create({
+  arrowIcon: {
+    color: '#fff',
+  },
+});

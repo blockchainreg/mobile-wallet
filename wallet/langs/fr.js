@@ -83,6 +83,7 @@
     nothingToShow: 'Nothing to see here!',
     makeTx: 'Make your first transaction or change the filters.',
     fee: 'Fee',
+    bridgeFee: 'Bridge fee',
     created: 'Created',
     manageAccount: 'Manage Account',
     copied: 'Copied to Clipboard!',
@@ -266,5 +267,6 @@
     dontStake:
       'Don’t stake all coins, leave some (~1 VLX) to pay transaction fees in the future and be able to initiate stake withdrawals.',
     noticeTrying: 'You are trying to withdraw more funds than you have.',
+    chooseNetwork: 'Choose networks',
   };
 }.call(this));

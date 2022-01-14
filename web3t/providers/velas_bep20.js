@@ -569,8 +569,8 @@
       {
         network: network,
         address: address,
-        page: page,
-        offset: offset,
+        //        page: page,
+        //        offset: offset,
       },
       function (err, external) {
         if (err != null) {

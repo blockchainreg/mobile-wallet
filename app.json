@@ -24,7 +24,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.velas.walletmobile",
-      "buildNumber": "199",
+      "buildNumber": "220",
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login",
         "NSCameraUsageDescription": "This app uses the camera to scan QR codes."
@@ -34,7 +34,7 @@
     },
     "android": {
       "package": "com.velas.mobile_wallet",
-      "versionCode": 203,
+      "versionCode": 220,
       "icon": "./assets/ic_launcher.png",
       "permissions": ["CAMERA", "USE_FINGERPRINT", "USE_BIOMETRIC", "VIBRATE"]
     },

@@ -177,7 +177,9 @@
       function (err, data) {
         var ids, dummy;
         if (err != null) {
-          return cb(err);
+          console.error(`getTransactions error, ${coin.token} token`, err);
+          /* Clear previous txs result in case error. */
+          data = [];
         }
         ids = map(function (it) {
           return it.tx.toUpperCase();

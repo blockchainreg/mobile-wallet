@@ -156,7 +156,9 @@
             return txFee;
         }
       })();
-      return cb(null, fee);
+      return cb(null, {
+        calcedFee: fee,
+      });
     });
   };
   makeQuery = function (network, method, params, cb) {
@@ -478,7 +480,7 @@
       (gas = config.gas),
       (swap = config.swap);
     dec = getDec(network);
-    var secretKey = decode(config.account.privateKey);
+    var secretKey = bs58.decode(config.account.privateKey);
     payAccount = new solanaWeb3.Account(secretKey);
     return getRecentBlockhash(network, function (err, recentBlockhash) {
       var transactionData, amount, transaction, toHex, encoded;

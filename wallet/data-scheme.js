@@ -48,6 +48,8 @@
       amountSendFee: '0',
       amountSendFeeUsd: '0',
       amountObtain: '0',
+      checkingAllowed: false,
+      checkingApproveTx: false,
       data: '',
       decodedData: '',
       showDataMode: 'encoded',
@@ -56,6 +58,10 @@
       sending: false,
       chekingBalance: null,
       chosenNetwork: null,
+      gasPrice: null,
+      gasPriceAuto: null,
+      gasPriceCustomAmount: '0',
+      gasPriceType: 'auto',
     };
   };
   store = {
