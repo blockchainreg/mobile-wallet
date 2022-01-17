@@ -192,21 +192,23 @@ function importAll$(obj, src) {
 /**
  * Recursively makes getHomeFee request untill find available web3Provider.
  */
-const getHomeFeeWithAvaliableWeb3Provider = ({
-  web3Providers,
-  wallet,
-  ref2$,
-  ref3$,
-  ref4$,
-  ref5$,
-  chosenNetwork,
-  token,
-  store,
-  cb,
-}) => {
+const getHomeFeeWithAvaliableWeb3Provider = (
+  {
+    web3Providers,
+    wallet,
+    ref2$,
+    ref3$,
+    ref4$,
+    ref5$,
+    chosenNetwork,
+    token,
+    walletTo,
+  },
+  cb
+) => {
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
   if (!web3Provider) {
-    retrun(cb(null));
+    return cb('[getHomeFeeWithAvaliableWeb3Provider] err: No web3Provider!');
   }
 
   const walletWithChangedWeb3Providers = {
@@ -278,18 +280,20 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
         (isExtraWeb3Providers && isErrorCausedByUnavailableWeb3Provider) ||
         (isExtraWeb3Providers && isSlowProvider)
       ) {
-        return getHomeFeeWithAvaliableWeb3Provider({
-          web3Providers: extraWeb3Providers,
-          wallet: walletWithChangedWeb3Providers,
-          ref2$,
-          ref3$,
-          ref4$,
-          ref5$,
-          chosenNetwork,
-          token,
-          store,
-          cb,
-        });
+        return getHomeFeeWithAvaliableWeb3Provider(
+          {
+            web3Providers: extraWeb3Providers,
+            wallet: walletWithChangedWeb3Providers,
+            ref2$,
+            ref3$,
+            ref4$,
+            ref5$,
+            chosenNetwork,
+            token,
+            walletTo,
+          },
+          cb
+        );
       }
 
       homeFee = 0;
@@ -298,11 +302,11 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
       homeFee,
       Math.pow(10, wallet != null ? wallet.network.decimals : void 8)
     );
-    store.current.send.homeFeePercent = homeFeePercent;
     contract.dailyLimit((err, dailyLimit) => {
-      dailyLimit = div(dailyLimit, Math.pow(10, wallet.network.decimals));
-      store.current.send.homeDailyLimit = dailyLimit;
-
+      const homeDailyLimit = div(
+        dailyLimit,
+        Math.pow(10, wallet.network.decimals)
+      );
       contract.getCurrentDay((err, currentDay) => {
         if (err) {
           currentDay = '0x';
@@ -312,7 +316,7 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
             totalSpentPerDay,
             Math.pow(10, wallet.network.decimals)
           );
-          const remainingDailyLimit = minus(dailyLimit, totalSpentPerDay);
+          const remainingDailyLimit = minus(homeDailyLimit, totalSpentPerDay);
 
           contract.minPerTx((err, minPerTxRaw) => {
             const minPerTx = div(
@@ -325,29 +329,22 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
                 Math.pow(10, wallet.network.decimals)
               );
 
-              importAll$(store.current.networkDetails, {
-                dailyLimit: dailyLimit,
-                homeFeePercent: homeFeePercent,
-                minPerTx: minPerTx,
-                maxPerTx: maxPerTx,
-                remainingDailyLimit: remainingDailyLimit,
-              });
               if (
                 token !== 'busd' &&
                 token !== 'usdc' &&
                 token !== 'usdt_erc20'
               ) {
-                return cb(null);
+                return cb(null, {
+                  homeFeePercent,
+                  minPerTx,
+                  maxPerTx,
+                  remainingDailyLimit,
+                  homeDailyLimit,
+                });
               }
-              var wallets = store.current.account.wallets;
-              var walletTo = find(function (it) {
-                return it.coin.token === chosenNetwork.referTo;
-              })(wallets);
+
               var ref4$ = walletTo.network,
-                HOME_BRIDGE = ref4$.HOME_BRIDGE,
-                FOREIGN_BRIDGE = ref4$.FOREIGN_BRIDGE,
-                BSC_SWAP__HOME_BRIDGE = ref4$.BSC_SWAP__HOME_BRIDGE,
-                HECO_SWAP__HOME_BRIDGE = ref4$.HECO_SWAP__HOME_BRIDGE;
+                HOME_BRIDGE = ref4$.HOME_BRIDGE;
               var web3 = new Web3(
                 new Web3.providers.HttpProvider(
                   walletTo != null
@@ -371,11 +368,14 @@ const getHomeFeeWithAvaliableWeb3Provider = ({
                   homeFee,
                   Math.pow(10, network.decimals)
                 );
-                store.current.send.homeFeePercent = homeFeePercent;
-                importAll$(store.current.networkDetails, {
-                  homeFeePercent: homeFeePercent,
+
+                return cb(null, {
+                  homeFeePercent,
+                  minPerTx,
+                  maxPerTx,
+                  remainingDailyLimit,
+                  homeDailyLimit,
                 });
-                return cb(null);
               });
             });
           });
@@ -1818,18 +1818,49 @@ module.exports = function ({ store, web3t }) {
       web3Provider,
       extraWeb3Providers
     );
-    getHomeFeeWithAvaliableWeb3Provider({
-      web3Providers,
-      wallet,
-      ref2$,
-      ref3$,
-      ref4$,
-      ref5$,
-      chosenNetwork,
-      token,
-      store,
-      cb,
-    });
+    const wallets = store.current.account.wallets;
+    const walletTo = find(function (it) {
+      return it.coin.token === chosenNetwork.referTo;
+    })(wallets);
+
+    getHomeFeeWithAvaliableWeb3Provider(
+      {
+        web3Providers,
+        wallet,
+        ref2$,
+        ref3$,
+        ref4$,
+        ref5$,
+        chosenNetwork,
+        token,
+        walletTo,
+      },
+      (
+        error,
+        {
+          homeFeePercent,
+          minPerTx,
+          maxPerTx,
+          remainingDailyLimit,
+          homeDailyLimit,
+        }
+      ) => {
+        if (error) {
+          return cb(`[getHomeFeeWithAvaliableWeb3Provider] error ${error}`);
+        }
+
+        store.current.send.homeFeePercent = homeFeePercent;
+        store.current.send.homeDailyLimit = homeDailyLimit;
+        importAll$(store.current.networkDetails, {
+          dailyLimit: homeDailyLimit,
+          homeFeePercent,
+          minPerTx: minPerTx,
+          maxPerTx: maxPerTx,
+          remainingDailyLimit: remainingDailyLimit,
+        });
+        return cb(null);
+      }
+    );
   };
 
   function import$(obj, src) {
