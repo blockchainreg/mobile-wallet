@@ -41,6 +41,7 @@
       if (val == null) {
         return '0';
       }
+      val = val === '' ? '0' : val;
       send = store.current.send;
       wallet = send.wallet;
       token = send.coin.token;
