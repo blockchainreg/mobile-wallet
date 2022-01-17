@@ -48,7 +48,7 @@ abis = {
   ForeignBridgeErcToErc:
     require('../web3t/contracts/ForeignBridgeErcToErc.json').abi,
 };
-const MAX_WAITING_RESPONE_TIME = 3000;
+const MAX_WAITING_RESPONE_TIME = 1500;
 
 const ABI = [
   {
