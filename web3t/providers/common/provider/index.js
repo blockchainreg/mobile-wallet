@@ -232,7 +232,8 @@ const isErrorCausedByUnavailableWeb3Provider = (error) => {
     message ===
       'Invalid JSON RPC response: "A server with the specified hostname could not be found."' ||
     message === 'Network request failed' ||
-    message === 'Invalid JSON RPC response: ""'
+    message === 'Invalid JSON RPC response: ""' ||
+    message.includes('Unable to resolve host')
   );
 };
 
