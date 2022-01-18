@@ -1,5 +1,5 @@
-// import Bugsnag from '@bugsnag/expo'
-// Bugsnag.start();
+//import Bugsnag from '@bugsnag/expo';
+//Bugsnag.start();
 
 import * as Font from 'expo-font';
 import './global.js';
@@ -12,7 +12,7 @@ import styles from './Styles.js';
 import Images from './Images.js';
 import { VelasLogo1 } from './svg/velas-logo1';
 import { Bg } from './svg/bg.js';
-// const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
+//const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 class App extends React.Component {
   state = {
@@ -82,9 +82,9 @@ class App extends React.Component {
 }
 
 export default () => (
-  // <ErrorBoundary FallbackComponent={ErrorView}>
+  //  <ErrorBoundary FallbackComponent={ErrorView}>
   <App />
-  // </ErrorBoundary>
+  //  </ErrorBoundary>
 );
 
 class ErrorView extends React.Component {

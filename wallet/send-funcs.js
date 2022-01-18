@@ -614,7 +614,7 @@ import roundNumber from '../round-number';
             hash: data,
           };
           store.current.send.amountSend = '';
-          store.current.send.amountSendUsd = '0';
+          store.current.send.amountSendUsd = '';
           navigate(store, web3t, 'sent');
           return web3t.refresh(function () {});
         });
@@ -695,6 +695,9 @@ import roundNumber from '../round-number';
     };
     getValue = function (event) {
       var value, ref$, value2;
+      if (event.target.value === '') {
+        return '';
+      }
       value =
         (ref$ = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)) != null
           ? ref$[0]
