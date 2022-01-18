@@ -1,6 +1,7 @@
 import { post } from '../../superagent';
 import ERC20BridgeToken from '../../../contracts/ERC20BridgeToken.json';
 import { div } from '../../../math';
+import { vlxToEth } from '../../../addresses';
 const ABI = [
   {
     constant: true,
@@ -381,7 +382,7 @@ const balanceOfWithAvailableWeb3Provider = function (
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
 
   if (!web3Provider) {
-    retrun(cb(null));
+    return cb(null);
   }
 
   const web3 = getWeb3ByProvider(web3Provider);
@@ -405,7 +406,7 @@ const balanceOfWithAvailableWeb3Provider = function (
 
     return balanceOf(address, function (err, number) {
       if (err != null) {
-        console.error('[getBalance] err', err);
+        console.error('[balanceOfWithAvailableWeb3Provider] err', err);
         if (extraWeb3Providers.length === 0) {
           return cb(err);
         }
@@ -421,7 +422,7 @@ const balanceOfWithAvailableWeb3Provider = function (
       return cb(null, balance);
     });
   } catch (err) {
-    console.error('[getBalance] err in catch', err);
+    console.error('[balanceOfWithAvailableWeb3Provider] err in catch', err);
     return cb(err);
   }
 };
@@ -432,7 +433,7 @@ const getBalance = (arg$, cb) => {
   const web3Providers = getWeb3Providers(web3Provider, extraWeb3Providers);
 
   return balanceOfWithAvailableWeb3Provider(
-    address,
+    !address.startsWith('V') ? address : vlxToEth(address),
     network,
     web3Providers,
     cb
