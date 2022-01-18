@@ -406,7 +406,7 @@ const balanceOfWithAvailableWeb3Provider = function (
 
     return balanceOf(address, function (err, number) {
       if (err != null) {
-        console.error('[getBalance] err', err);
+        console.error('[balanceOfWithAvailableWeb3Provider] err', err);
         if (extraWeb3Providers.length === 0) {
           return cb(err);
         }
@@ -422,7 +422,7 @@ const balanceOfWithAvailableWeb3Provider = function (
       return cb(null, balance);
     });
   } catch (err) {
-    console.error('[getBalance] err in catch', err);
+    console.error('[balanceOfWithAvailableWeb3Provider] err in catch', err);
     return cb(err);
   }
 };
