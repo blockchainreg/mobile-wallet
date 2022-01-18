@@ -226,6 +226,17 @@ const ABI = [
 
 const ERC20_ABI = ERC20BridgeToken.abi;
 
+const isErrorCausedByUnavailableWeb3Provider = (error) => {
+  const { message } = error;
+  return (
+    message ===
+      'Invalid JSON RPC response: "A server with the specified hostname could not be found."' ||
+    message === 'Network request failed' ||
+    message === 'Invalid JSON RPC response: ""' ||
+    message.includes('Unable to resolve host')
+  );
+};
+
 const getWeb3Providers = (web3Provider, extraWeb3Providers) => {
   if (
     !!extraWeb3Providers &&
@@ -395,7 +406,7 @@ const balanceOfWithAvailableWeb3Provider = function (
     return balanceOf(address, function (err, number) {
       if (err != null) {
         console.error('[getBalance] err', err);
-        if (extraWeb3Providers === 0) {
+        if (extraWeb3Providers.length === 0) {
           return cb(err);
         }
         return balanceOfWithAvailableWeb3Provider(
@@ -447,7 +458,7 @@ const web3EthGetBalanceWithAvailableWeb3Provider = (
   return web3.eth.getBalance(address, (err, balance) => {
     if (err != null) {
       console.error('[web3EthGetBalanceWithAvailableWeb3Provider] err', err);
-      if (extraWeb3Providers === 0) {
+      if (extraWeb3Providers.length === 0) {
         return cb(err);
       }
 
@@ -469,12 +480,14 @@ const web3EthGetBalance = (address, network, cb) => {
 };
 
 export default {
+  getWeb3Providers,
   makeQuery,
   getBalance,
   getContractInstanceWithAbi,
   getDec,
   getWeb3,
   web3EthGetBalance,
+  isErrorCausedByUnavailableWeb3Provider,
   ABI,
   ERC20_ABI,
 };
