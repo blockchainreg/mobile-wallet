@@ -421,7 +421,7 @@ const balanceOfWithAvailableWeb3Provider = function (
       return cb(null, balance);
     });
   } catch (err) {
-    console.error('[getBalance] err in cath', err);
+    console.error('[getBalance] err in catch', err);
     return cb(err);
   }
 };
