@@ -38,6 +38,7 @@ export default ({ store, web3t }) => {
   const availableNetworks = store.current.account.wallets.filter((it) => {
     return swapDirectionsArr.indexOf(it.coin.token) > -1;
   });
+  if (!wallet) return null;
   let hasSwap =
     swapDirections != null &&
     Object.keys(swapDirections).length > 0 &&
@@ -203,7 +204,10 @@ export default ({ store, web3t }) => {
     );
   };
 
-  const back = changePage('wallets');
+  const back = () => {
+    store.current.wallet = undefined;
+    store.current.page = 'wallets';
+  };
 
   const scanQRSend = () => {
     if (wallet.balance == '..') return;
