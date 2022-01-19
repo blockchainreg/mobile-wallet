@@ -91,7 +91,7 @@
               (it) => it.coin.token === walletToken
             );
           } else {
-            if (store.current.walletIndex < 0) return;
+            if (store.current.walletIndex < 0) store.current.walletIndex = 0;
             wallet = bgStore.current.account.wallets[store.current.walletIndex];
           }
           store.rates = bgStore.rates;
