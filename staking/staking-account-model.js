@@ -2,10 +2,9 @@ import BN from 'bn.js';
 import { when, decorate, observable } from 'mobx';
 import { RewardModel } from './reward-model';
 import { cachedCallWithRetries } from './utils';
-const solanaWeb3 = require('./index.cjs.js');
 
 class StakingAccountModel {
-  account = null;
+  parsedAccoount = null;
   myStake = null;
   network = null;
   isActivated = null;
@@ -19,15 +18,24 @@ class StakingAccountModel {
   latestReward = undefined;
 
   get address() {
-    return this.account.pubkey;
+    return this.parsedAccoount.pubkey.toBase58();
   }
 
   get publicKey() {
-    return this.account.pubkey;
+    return this.parsedAccoount.pubkey;
   }
 
   get validatorAddress() {
-    return this.account.voter;
+    const { account } = this.parsedAccoount;
+    if (
+      !account ||
+      !account.data.parsed.info ||
+      !account.data.parsed.info.stake
+    ) {
+      return null;
+    }
+    const { voter } = account.data.parsed.info.stake.delegation;
+    return voter;
   }
 
   get activeStake() {
@@ -71,12 +79,12 @@ class StakingAccountModel {
       [
         'getStakeActivation',
         this.connection,
-        new solanaWeb3.PublicKey(this.account.pubkey),
+        this.parsedAccoount.pubkey.toString(),
       ],
       async () => {
         try {
           return await this.connection.getStakeActivation(
-            new solanaWeb3.PublicKey(this.account.pubkey)
+            this.parsedAccoount.pubkey
           );
         } catch (e) {
           if (
@@ -160,22 +168,14 @@ class StakingAccountModel {
     this.rewardsStatus = 'LoadedAll';
   }
 
-  constructor(account, connection, network) {
+  constructor(parsedAccoount, connection, network) {
+    this.parsedAccoount = parsedAccoount;
     this.connection = connection;
     this.network = network;
-    this.account = account;
-    const {
-      lamports,
-      activationEpoch,
-      deactivationEpoch,
-      rentExemptReserve,
-      withdrawer,
-      stake,
-      pubkey,
-      staker,
-      voter,
-    } = account;
-    if (stake) {
+    const { account } = parsedAccoount;
+    const { lamports } = account;
+    if (account.data.parsed.info && account.data.parsed.info.stake) {
+      const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
       this.isActivated = deactivationEpoch === '18446744073709551615';
     } else {
       this.isActivated = false;
@@ -247,11 +247,13 @@ class StakingAccountModel {
       //   this.rewards = [];
       //   return;
       // }
-      //      if (!this.account.stake) {
-      //        this.latestReward = null;
-      //        return;
-      //      }
+      const { account } = this.parsedAccoount;
+      if (!account.data.parsed.info || !account.data.parsed.info.stake) {
+        this.latestReward = null;
+        return;
+      }
 
+      // const { activationEpoch } = account.data.parsed.info.stake.delegation;
       const {
         firstNormalEpoch,
         firstNormalSlot,
@@ -286,10 +288,16 @@ class StakingAccountModel {
   async getLastEpoch() {
     const info = await this.getEpochInfo();
     const { epoch } = info;
-    if (this.isActivated || !this.account || !this.account.stake) {
+    const { account } = this.parsedAccoount;
+    if (
+      this.isActivated ||
+      !account ||
+      !account.data.parsed.info ||
+      !account.data.parsed.info.stake
+    ) {
       return epoch;
     }
-    const { deactivationEpoch } = this.account;
+    const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
     return Math.min(parseInt(deactivationEpoch) + 1, epoch);
   }
 }
