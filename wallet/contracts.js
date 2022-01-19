@@ -209,7 +209,9 @@ const checkAllowanceWithAvailableWeb3Provider = (
 ) => {
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
   if (!web3Provider) {
-    return cb('[getHomeFeeWithAvaliableWeb3Provider] err: No web3Provider!');
+    return cb(
+      '[checkAllowanceWithAvailableWeb3Provider] err: No web3Provider!'
+    );
   }
 
   const walletWithChangedWeb3Providers = {
