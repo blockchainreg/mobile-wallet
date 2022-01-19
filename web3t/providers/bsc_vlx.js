@@ -826,7 +826,6 @@ import commonProvider from './common/provider';
       gasPrice,
       gas,
       swap,
-      web3,
       dec,
       privateKey;
     (network = config.network),
@@ -843,13 +842,11 @@ import commonProvider from './common/provider';
     if (!isAddress(recipient)) {
       return cb('address in not correct ethereum address');
     }
-    web3 = getWeb3(network);
     dec = getDec(network);
     privateKey = new Buffer(account.privateKey.replace(/^0x/, ''), 'hex');
-    return web3.eth.getTransactionCount(
-      account.address,
-      'pending',
-      function (err, nonce) {
+    return commonProvider.web3EthGetTransactionCount(
+      { address: account.address, status: 'pending', network },
+      function (err, { nonce, web3 }) {
         var contract, toWei, toWeiEth, toEth, value;
         if (err != null) {
           return cb(err);
