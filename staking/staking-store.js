@@ -238,7 +238,7 @@ class StakingStore {
       balanceRes,
       balanceEvmRes,
       validatorsFromBackendResult,
-      nativeAccounts,
+      nativeAccountsFromBackendResult,
     ] = await Promise.all([
       this.loadEpochInfo(),
       this.connection.getBalance(this.publicKey),
@@ -253,19 +253,14 @@ class StakingStore {
         }","latest"]}`,
       }),
       fetch(`${this.validatorsBackend}/v1/validators`),
-      this.connection.getParsedProgramAccounts(
-        solanaWeb3.StakeProgram.programId,
-        { filters: [filter], commitment: 'processed' }
-      ),
+      fetch(`${this.validatorsBackend}/v1/staking-accounts`),
     ]);
     const balanceEvmJson = await balanceEvmRes.json();
     const validatorsFromBackend = await validatorsFromBackendResult.json();
-    const filteredAccounts = nativeAccounts.filter(({ account }) => {
-      const authorized =
-        account.data.parsed.info &&
-        account.data.parsed.info.meta &&
-        account.data.parsed.info.meta.authorized;
-      return authorized && authorized.staker === this.publicKey58;
+    let nativeAccounts = await nativeAccountsFromBackendResult.json();
+    nativeAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];
+    const filteredAccounts = nativeAccounts.filter((it) => {
+      return it.staker === this.publicKey58;
     });
     const stakingAccounts = filteredAccounts.map(
       (account) =>
@@ -337,12 +332,8 @@ class StakingStore {
           commitment: 'processed',
         })
         .then(async (nativeAccounts) => {
-          const filteredAccounts = nativeAccounts.filter(({ account }) => {
-            const authorized =
-              account.data.parsed.info &&
-              account.data.parsed.info.meta &&
-              account.data.parsed.info.meta.authorized;
-            return authorized && authorized.staker === this.publicKey58;
+          const filteredAccounts = nativeAccounts.filter((account) => {
+            return account.staker === this.publicKey58;
           });
           const stakingAccounts = filteredAccounts.map(
             (account) =>
@@ -818,10 +809,7 @@ class StakingStore {
       .filter((a) => a.state === 'active' || a.state === 'activating')
       .filter((a) => {
         return (
-          !a.parsedAccoount.account.data.parsed.info.meta.lockup ||
-          new BN(
-            a.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp
-          ).lt(new BN(Date.now() / 1000))
+          !a.lockup || new BN(a.unixTimestamp).lt(new BN(Date.now() / 1000))
         );
       })
       .sort((a, b) => b.myStake.cmp(a.myStake));
@@ -865,15 +853,10 @@ class StakingStore {
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
       if (account.validatorAddress !== address) continue;
-      if (
-        account.parsedAccoount.account.data.parsed.info.meta.lockup
-          .unixTimestamp >
-        Date.now() / 1000
-      )
-        continue;
+      if (account.unixTimestamp > Date.now() / 1000) continue;
       try {
         const { inactive, state } = await this.connection.getStakeActivation(
-          account.publicKey
+          new solanaWeb3.PublicKey(account.publicKey)
         );
         if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
           continue;

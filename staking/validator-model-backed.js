@@ -133,9 +133,8 @@ class ValidatorModelBacked {
       if (acc.state !== 'activating' && acc.state !== 'active') {
         continue;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      const unixTimestamp = acc.unixTimestamp;
+      if (unixTimestamp) {
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
@@ -229,9 +228,8 @@ class ValidatorModelBacked {
       if (!acc.inactiveStake) {
         return null;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      const unixTimestamp = acc.unixTimestamp;
+      if (unixTimestamp) {
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
