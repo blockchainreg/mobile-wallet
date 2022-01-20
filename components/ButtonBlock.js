@@ -6,7 +6,6 @@ import Images from '../Images';
 
 export default (props) => {
   const netInfo = useNetInfo();
-  console.info('netInfo', netInfo);
   const validatorNet =
     !netInfo.details ||
     netInfo.isConnected ||

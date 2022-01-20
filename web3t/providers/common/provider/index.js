@@ -276,8 +276,8 @@ const tryParse = function (data, cb) {
 const postWithAvailableWeb3provider = function (web3Providers, query, cb) {
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
 
-  if (web3Provider == null) {
-    retrun(cb(null));
+  if (!web3Provider) {
+    return cb('[postWithAvailableWeb3provider] err: No web3Provider!');
   }
   return post(web3Provider, query).end(function (err, data) {
     if (err != null) {
@@ -382,7 +382,7 @@ const balanceOfWithAvailableWeb3Provider = function (
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
 
   if (!web3Provider) {
-    return cb(null);
+    return cb('[balanceOfWithAvailableWeb3Provider] err: No web3Provider!');
   }
 
   const web3 = getWeb3ByProvider(web3Provider);
@@ -451,7 +451,9 @@ const web3EthGetBalanceWithAvailableWeb3Provider = (
   const [web3Provider, ...extraWeb3Providers] = web3Providers;
 
   if (!web3Provider) {
-    retrun(cb(null));
+    return cb(
+      '[web3EthGetBalanceWithAvailableWeb3Provider] err: No web3Provider!'
+    );
   }
 
   const web3 = getWeb3ByProvider(web3Provider);
@@ -473,6 +475,42 @@ const web3EthGetBalanceWithAvailableWeb3Provider = (
   });
 };
 
+/**
+ * Recursively makes web3.eth.getTransactionCount request untill find available web3Provider.
+ */
+const web3EthGetTransactionCountWithAvailableWeb3Provider = (
+  { address, status, web3Providers },
+  cb
+) => {
+  const [web3Provider, ...extraWeb3Providers] = web3Providers;
+
+  const web3 = getWeb3ByProvider(web3Provider);
+
+  return web3.eth.getTransactionCount(address, status, (err, nonce) => {
+    if (err) {
+      if (extraWeb3Providers.length === 0) {
+        return cb(err);
+      }
+      return web3EthGetTransactionCountWithAvailableWeb3Provider(
+        { address, status, web3Providers: extraWeb3Providers },
+        cb
+      );
+    }
+
+    return cb(null, { nonce, web3 });
+  });
+};
+
+const web3EthGetTransactionCount = ({ address, status, network }, cb) => {
+  const { web3Provider, extraWeb3Providers } = network.api;
+  const web3Providers = getWeb3Providers(web3Provider, extraWeb3Providers);
+
+  return web3EthGetTransactionCountWithAvailableWeb3Provider(
+    { address, status, web3Providers },
+    cb
+  );
+};
+
 const web3EthGetBalance = (address, network, cb) => {
   const { web3Provider, extraWeb3Providers } = network.api;
   const web3Providers = getWeb3Providers(web3Provider, extraWeb3Providers);
@@ -488,6 +526,7 @@ export default {
   getDec,
   getWeb3,
   web3EthGetBalance,
+  web3EthGetTransactionCount,
   isErrorCausedByUnavailableWeb3Provider,
   ABI,
   ERC20_ABI,
