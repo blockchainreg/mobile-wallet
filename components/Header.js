@@ -31,7 +31,6 @@ export default (props) => {
     ) {
       return null;
     } else {
-      console.log('No Internet');
       Toast.show({
         text: 'No Internet Connection',
         position: 'top',

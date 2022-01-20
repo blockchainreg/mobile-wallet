@@ -273,7 +273,6 @@ import commonProvider from './common/provider';
       amountFee,
       feeType,
       txType,
-      web3,
       dec,
       privateKey,
       from;
@@ -287,7 +286,6 @@ import commonProvider from './common/provider';
     if (!isAddress(recipient)) {
       return cb('address in not correct ethereum address');
     }
-    web3 = getWeb3(network);
     dec = getDec(network);
     privateKey = new Buffer(account.privateKey.replace(/^0x/, ''), 'hex');
     from = account.address;
@@ -297,97 +295,102 @@ import commonProvider from './common/provider';
     if (recipient != null && recipient.startsWith('V')) {
       recipient = vlxToEth(recipient);
     }
-    return web3.eth.getTransactionCount(from, 'pending', function (err, nonce) {
-      var contract, toWei, toWeiEth, toEth, value;
-      if (err != null) {
-        return cb(err);
-      }
-      if (nonce == null) {
-        return cb('nonce is required');
-      }
-      contract = getContractInstance(web3, network.address);
-      toWei = function (it) {
-        return times(it, dec);
-      };
-      toWeiEth = function (it) {
-        return times(it, Math.pow(10, 18));
-      };
-      toEth = function (it) {
-        return div(it, Math.pow(10, 18));
-      };
-      value = toWei(amount);
-      return calcGasPrice(
-        {
-          web3: web3,
-          feeType: feeType,
-        },
-        function (err, gasPriceBn) {
-          var gasPrice, gasMinimal, gasEstimate;
-          gasPrice = gasPriceBn.toFixed();
-          if (err != null) {
-            return cb(err);
-          }
-          gasMinimal = div(toWeiEth(amountFee), gasPrice);
-          gasEstimate = round(times(gasMinimal, 5));
-          if (toString$.call(web3.eth.getBalance).slice(8, -1) !== 'Function') {
-            return cb('getBalance is not a function');
-          }
-          return commonProvider.web3EthGetBalance(
-            from,
-            network,
-            function (err, balance) {
-              var balanceEth;
-              if (err != null) {
-                return cb(err);
-              }
-              balanceEth = toEth(balance);
-              if (+balanceEth < +amountFee) {
-                return cb('Balance is not enough to send tx');
-              }
-              return getBalance(
-                {
-                  network: network,
-                  address: from,
-                },
-                function (err, ercBalance) {
-                  var data, tx, rawtx;
-                  if (err != null) {
-                    return cb(err);
-                  }
-                  if (+ercBalance < +amount) {
-                    return cb('Balance is not enough to send this amount');
-                  }
-                  data = (function () {
-                    switch (false) {
-                      case contract.methods == null:
-                        return contract.methods
-                          .transfer(recipient, value)
-                          .encodeABI();
-                      default:
-                        return contract.transfer.getData(recipient, value);
-                    }
-                  })();
-                  tx = new Tx({
-                    nonce: toHex(nonce),
-                    gasPrice: toHex(gasPrice),
-                    value: toHex('0'),
-                    gas: toHex(gasEstimate),
-                    to: network.address,
-                    from: from,
-                    data: data || '0x',
-                  });
-                  tx.sign(privateKey);
-                  rawtx = '0x' + tx.serialize().toString('hex');
-                  return cb(null, {
-                    rawtx: rawtx,
-                  });
-                }
-              );
-            }
-          );
+    return commonProvider.web3EthGetTransactionCount(
+      { address: from, status: 'pending', network },
+      function (err, { nonce, web3 }) {
+        var contract, toWei, toWeiEth, toEth, value;
+        if (err != null) {
+          return cb(err);
         }
-      );
-    });
+        if (nonce == null) {
+          return cb('nonce is required');
+        }
+        contract = getContractInstance(web3, network.address);
+        toWei = function (it) {
+          return times(it, dec);
+        };
+        toWeiEth = function (it) {
+          return times(it, Math.pow(10, 18));
+        };
+        toEth = function (it) {
+          return div(it, Math.pow(10, 18));
+        };
+        value = toWei(amount);
+        return calcGasPrice(
+          {
+            web3: web3,
+            feeType: feeType,
+          },
+          function (err, gasPriceBn) {
+            var gasPrice, gasMinimal, gasEstimate;
+            gasPrice = gasPriceBn.toFixed();
+            if (err != null) {
+              return cb(err);
+            }
+            gasMinimal = div(toWeiEth(amountFee), gasPrice);
+            gasEstimate = round(times(gasMinimal, 5));
+            if (
+              toString$.call(web3.eth.getBalance).slice(8, -1) !== 'Function'
+            ) {
+              return cb('getBalance is not a function');
+            }
+            return commonProvider.web3EthGetBalance(
+              from,
+              network,
+              function (err, balance) {
+                var balanceEth;
+                if (err != null) {
+                  return cb(err);
+                }
+                balanceEth = toEth(balance);
+                if (+balanceEth < +amountFee) {
+                  return cb('Balance is not enough to send tx');
+                }
+                return getBalance(
+                  {
+                    network: network,
+                    address: from,
+                  },
+                  function (err, ercBalance) {
+                    var data, tx, rawtx;
+                    if (err != null) {
+                      return cb(err);
+                    }
+                    if (+ercBalance < +amount) {
+                      return cb('Balance is not enough to send this amount');
+                    }
+                    data = (function () {
+                      switch (false) {
+                        case contract.methods == null:
+                          return contract.methods
+                            .transfer(recipient, value)
+                            .encodeABI();
+                        default:
+                          return contract.transfer.getData(recipient, value);
+                      }
+                    })();
+                    tx = new Tx({
+                      nonce: toHex(nonce),
+                      gasPrice: toHex(gasPrice),
+                      value: toHex('0'),
+                      gas: toHex(gasEstimate),
+                      to: network.address,
+                      from: from,
+                      data: data || '0x',
+                    });
+                    tx.sign(privateKey);
+                    rawtx = '0x' + tx.serialize().toString('hex');
+                    return cb(null, {
+                      rawtx: rawtx,
+                    });
+                  }
+                );
+              }
+            );
+          }
+        );
+      }
+    );
   });
   out$.checkDecodedData = checkDecodedData = function (decodedData, data) {
     if (!(decodedData != null ? decodedData : '').length === 0) {
