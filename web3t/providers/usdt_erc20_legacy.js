@@ -479,6 +479,7 @@ import commonProvider from './common/provider';
                 }
                 return commonProvider.web3EthGetBalance(
                   account.address,
+                  network,
                   function (err, balance) {
                     var balanceEth;
                     if (err != null) {
