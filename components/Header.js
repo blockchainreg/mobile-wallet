@@ -60,7 +60,7 @@ export default (props) => {
           {props.onBack && (
             <BackButton
               onBack={props.onBack}
-              style={props.greenBack ? styles.leftBtnColor : { color: '#fff' }}
+              style={props.greenBack ? styles.leftBtnColor : styles.leftBtnHeader}
             />
           )}
           {props.onBackHandlerOnly && (
@@ -76,14 +76,13 @@ export default (props) => {
             {props.title}
           </Title>
         </Body>
-        <Right>
+        <Right style={{paddingRight: 8}}>
           {props.identIcon && (
             <IdentIcon
               {...props}
               address={props.identIcon}
               size={20}
               backgroundColor={'rgba(22, 26, 63, 1)'}
-              //   marginRight={15}
             />
           )}
           {props.addWalletIcon && (
