@@ -997,12 +997,12 @@
                           switch (false) {
                             case !(config.data != null && config.data !== '0x'):
                               return config.data;
-                            case swap == null:
-                              return contract.transferAndCall.getData(
-                                recipient,
-                                value,
-                                '0x'
-                              );
+                            //                            case swap == null:
+                            //                              return contract.transferAndCall.getData(
+                            //                                recipient,
+                            //                                value,
+                            //                                '0x'
+                            //                              );
                             case contract.methods == null:
                               return contract.methods
                                 .transfer(recipient, value)
