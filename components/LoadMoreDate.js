@@ -31,6 +31,8 @@ import roundHuman2 from '../wallet/round-human2';
 import roundHuman from '../wallet/round-human';
 import { SkypeIndicator } from 'react-native-indicators';
 import walletsFuncs from '../wallet/wallets-funcs';
+import { DepositImage } from '../svg/depositImage.js';
+import { WithdrawImage2 } from '../svg/withdrawImage2.js';
 import { Trx } from '../svg/trx.js';
 
 var ref$ = require('prelude-ls'),
@@ -115,9 +117,9 @@ export default ({ store, web3t }) => {
   const thumbnail = (type) => {
     switch (type) {
       case 'IN':
-        return <Thumbnail small square source={Images.depositImage} />;
+        return <DepositImage width={36} height={36} />;
       case 'OUT':
-        return <Thumbnail small square source={Images.withdrawImage2} />;
+        return <WithdrawImage2 width={36} height={36} />;
       default:
         return null;
     }
