@@ -809,7 +809,8 @@ class StakingStore {
       .filter((a) => a.state === 'active' || a.state === 'activating')
       .filter((a) => {
         return (
-          !a.lockup || new BN(a.unixTimestamp).lt(new BN(Date.now() / 1000))
+          !a.unixTimestamp ||
+          new BN(a.unixTimestamp).lt(new BN(Date.now() / 1000))
         );
       })
       .sort((a, b) => b.myStake.cmp(a.myStake));
