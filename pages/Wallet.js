@@ -25,6 +25,10 @@ import {
 import { filter, map, objToPairs, pairsToObj } from 'prelude-ls';
 import tokenNetworks from '../wallet/swapping/networks';
 import contracts from '../wallet/contracts';
+import { WithdrawImage } from '../svg/withdraw-image.js';
+import normalize from 'react-native-normalize';
+import { SwapImage } from '../svg/swap-image.js';
+import { ScanImage } from '../svg/scanImage.js';
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -260,7 +264,16 @@ export default ({ store, web3t }) => {
             onPress={sendLocal}
             style={{ ...styles.touchables, backgroundColor: Images.colorBlue }}
           >
-            <Image source={Images.withdrawImage} style={styles.sizeIconBtn} />
+            {/* <Image
+                        source={Images.withdrawImage}
+                        style={styles.sizeIconBtn}
+                      /> */}
+            <WithdrawImage
+              style={styles.sizeIconBtn}
+              width={normalize(64 / 2.5)}
+              height={normalize(36 / 2.5)}
+              left={normalize(1)}
+            />
           </TouchableOpacity>
           <Text style={styles.textTouchable}>{lang.send}</Text>
         </View>
@@ -274,7 +287,15 @@ export default ({ store, web3t }) => {
                 backgroundColor: Images.colorBlue,
               }}
             >
-              <Image source={Images.swapImage} style={styles.sizeIconBtnSwap} />
+              {/* <Image
+                          source={Images.swapImage}
+                          style={styles.sizeIconBtnSwap}
+                        /> */}
+              <SwapImage
+                width={normalize(64 / 2.5)}
+                height={normalize(25)}
+                left={normalize(1)}
+              />
             </TouchableOpacity>
             <Text style={styles.textTouchable}>{lang.swapBtn || 'Swap'}</Text>
           </View>
@@ -282,7 +303,16 @@ export default ({ store, web3t }) => {
 
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity onPress={scanQRSend} style={styles.touchables}>
-            <Image source={Images.scanImage} style={styles.sizeIconScanBtn} />
+            {/* <Image
+                        source={Images.scanImage}
+                        style={styles.sizeIconScanBtn}
+                      /> */}
+            <ScanImage
+              width={normalize(65 / 2.5)}
+              height={normalize(65 / 2.5)}
+              left={0}
+              bottom={normalize(1)}
+            />
           </TouchableOpacity>
           <Text style={styles.textTouchable}>{lang.scan}</Text>
         </View>
@@ -292,12 +322,18 @@ export default ({ store, web3t }) => {
             onPress={changePage('invoice')}
             style={{ ...styles.touchables, backgroundColor: Images.colorGreen }}
           >
-            <Image
-              source={Images.withdrawImage}
+            {/* <Image
+                        source={Images.withdrawImage}
+                        style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]}
+                      /> */}
+            <WithdrawImage
               style={[
                 styles.sizeIconBtn,
                 { transform: [{ rotate: '180deg' }], left: 0, top: 2 },
               ]}
+              width={normalize(64 / 2.5)}
+              height={normalize(36 / 2.5)}
+              left={normalize(1)}
             />
           </TouchableOpacity>
           <Text style={styles.textTouchable}>{lang.receive}</Text>

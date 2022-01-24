@@ -206,9 +206,8 @@ class ValidatorModelBacked {
       if (!acc.activeStake) {
         return null;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      const unixTimestamp = acc.unixTimestamp;
+      if (unixTimestamp) {
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
