@@ -24,15 +24,13 @@
   (ref$ = require('./workflow.js')), (run = ref$.run), (task = ref$.task);
   round5 = require('./round5.js');
   calcWallet = function (store, cb) {
-    var wallets, rates, state, buildLoader, loaders, tasks;
+    var wallets, rates, buildLoader, loaders, tasks;
     if (store == null) {
       return cb('Store is required');
     }
     wallets = [...store.current.account.wallets];
     rates = store.rates;
-    state = {
-      balanceUsd: 0,
-    };
+
     if (typeof err != 'undefined' && err !== null) {
       return cb(err);
     }
@@ -80,19 +78,8 @@
               this$ = this;
             if (err != null) {
               console.log('build loader for ' + token + ' err', err);
-              //balance = 0;
             }
             pendingSent = 0;
-            // map(function(it){
-            //   return it.amount;
-            // })(
-            // filter(function(it){
-            //   return it.pending === true;
-            // })(
-            // filter(function(it){
-            //   return it.token === token;
-            // })(
-            // store.transactions.all))));
             wallet.pendingSent = pendingSent;
             wallet.balance = (function () {
               switch (false) {
@@ -113,7 +100,6 @@
             var walletBalanceUSD = isNaN(wallet.balanceUsd)
               ? 0
               : wallet.balanceUsd;
-            state.balanceUsd = plus(state.balanceUsd, walletBalanceUSD);
             return cb();
           }
         );
@@ -129,7 +115,15 @@
       if (typeof err != 'undefined' && err !== null) {
         return cb(err);
       }
-      store.current.balanceUsd = round5(state.balanceUsd);
+      const usdBalances = foldl(
+        plus,
+        0
+      )(
+        map(function (it) {
+          return it.balanceUsd;
+        })(store.current.account.wallets)
+      );
+      store.current.balanceUsd = round5(usdBalances);
       return cb(null);
     });
   };
