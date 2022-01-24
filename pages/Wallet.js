@@ -211,7 +211,10 @@ export default ({ store, web3t }) => {
 
   const scanQRSend = () => {
     if (wallet.balance == '..') return;
-    if (store.current.page === 'wallet') store.current.send.isSwap = false;
+    if (store.current.page === 'wallet') {
+      store.current.send.isSwap = false;
+      store.current.send.data = '0x';
+    }
     store.current.returnPage = 'wallet';
     return (store.current.page = 'Scanner');
     //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
