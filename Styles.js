@@ -6030,6 +6030,11 @@ export default StyleSheet.create({
   },
   leftBtnColor: {
     color: Images.colorGreen,
+    paddingHorizontal: 10,
+  },
+  leftBtnHeader: {
+    color: '#fff',
+    paddingHorizontal: 10,
   },
   viewNetInfo: {
     backgroundColor: 'orange',

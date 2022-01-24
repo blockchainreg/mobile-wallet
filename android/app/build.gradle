@@ -135,8 +135,8 @@ android {
         applicationId 'com.velas.mobile_wallet'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 221
-        versionName "2.2.1"
+        versionCode 225
+        versionName "2.2.5"
     }
     splits {
         abi {
