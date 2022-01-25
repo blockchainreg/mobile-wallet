@@ -216,6 +216,8 @@
       var dataBuilder = contractData({ store });
       dataBuilder.formContractData((err) => {
         if (err) {
+          send.error = err;
+          send.amountChanging = false;
           return cb(err);
         }
         var sendTo = send.to;
