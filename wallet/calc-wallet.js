@@ -121,7 +121,9 @@
       )(
         map(function (it) {
           return it.balanceUsd;
-        })(store.current.account.wallets)
+        })(store.current.account.wallets).filter(function (item) {
+          return !isNaN(item);
+        })
       );
       store.current.balanceUsd = round5(usdBalances);
       return cb(null);
