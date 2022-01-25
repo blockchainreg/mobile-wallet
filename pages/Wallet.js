@@ -213,7 +213,7 @@ export default ({ store, web3t }) => {
     if (wallet.balance == '..') return;
     if (store.current.page === 'wallet') {
       store.current.send.isSwap = false;
-      store.current.send.data = '0x';
+      setDefaultSendData();
     }
     store.current.returnPage = 'wallet';
     return (store.current.page = 'Scanner');
