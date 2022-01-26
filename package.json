@@ -3,6 +3,7 @@
   "scripts": {
     "start": "react-native start",
     "setup": "/usr/sbin/lsof -ti:8081 | xargs kill && adb reverse tcp:8081 tcp:8081",
+    "android:dev": "yarn setup && yarn android",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "eject": "expo eject",
@@ -10,7 +11,7 @@
     "pretty": "prettier --write .",
     "install": "pwd && cp scripts/pre-commit .git/hooks/ && chmod u+x .git/hooks/pre-commit && chmod u+x scripts/bump-version.sh",
     "clean:android": "rm -rf node_modules/ && yarn && cd android && ./gradlew clean",
-    "reset": "watchman watch-del-all && rm -rf node_modules && yarn && yarn start --reset-cache",
+    "reset": "watchman watch-del-all && rm -rf node_modules && yarn && yarn pod && yarn start --reset-cache",
     "pod": "cd ./ios && pod install && cd ..",
     "prepare": "husky install"
   },

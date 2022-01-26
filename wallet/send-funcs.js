@@ -638,8 +638,6 @@ import roundNumber from '../round-number';
       return executeContractData(function (err) {
         if (err != null) {
           store.current.send.error = err;
-        }
-        if (err != null) {
           return cb(err);
         }
         return sendMoney();
