@@ -68,3 +68,7 @@ buck-out/
 web-build/
 
 # @end expo-cli
+
+
+# e2e tests
+artifacts/

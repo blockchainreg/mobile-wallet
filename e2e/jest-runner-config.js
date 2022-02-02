@@ -12,7 +12,7 @@ module.exports = {
   ],
   testEnvironment: './environment',
   testRunner: 'jest-circus/runner',
-  testTimeout: 300000,
+  testTimeout: 30000,
   testRegex: '\\.test\\.(js|ts)$',
   verbose: true,
   // setupFilesAfterEnv: ['./jest-e2e.setup.js'],
