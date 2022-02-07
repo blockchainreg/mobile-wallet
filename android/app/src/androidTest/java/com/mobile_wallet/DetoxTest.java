@@ -34,5 +34,3 @@ public class DetoxTest {
         Detox.runTests(mActivityRule, detoxConfig);
     }
 }
-© 2022 GitHub, Inc.
-Terms
