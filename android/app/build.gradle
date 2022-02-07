@@ -137,7 +137,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 227
         versionName "2.2.7"
-        testBuildType System.getProperty('testBuildType', 'debug')
+        testBuildType System.getProperty('testBuildType', 'release')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }
@@ -165,7 +165,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             // Detox-specific additions to pro-guard
             proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
