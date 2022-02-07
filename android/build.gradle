@@ -11,10 +11,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {
-          // All of Detox' artifacts are provided via the npm module
-          url "$rootDir/../node_modules/detox/Detox-android"
-        }
     }
     dependencies {
         classpath('com.android.tools.build:gradle:4.1.2')
@@ -42,6 +38,11 @@ allprojects {
         }
 
         google()
+        maven {
+          // All of Detox' artifacts are provided via the npm module
+          url "$rootDir/../node_modules/detox/Detox-android"
+        }
+
         jcenter()
         maven { url 'https://www.jitpack.io' }
     }
