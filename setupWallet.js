@@ -11,12 +11,11 @@ import getLang from './wallet/get-lang.js';
 import initStaking from './initStaking.js';
 import ethLegacy from './registry/eth-legacy-coin';
 import usdtErc20Legacy from './registry/usdt_erc20_legacy-coin';
-import vlxEvmLegacy from './registry/vlx-evm-legacy-coin';
 import { filter, map } from 'prelude-ls';
 import walletsFuncs from './wallet/wallets-funcs';
 
 module.exports = (store, web3t) => {
-  const legacyTokens = [ethLegacy, usdtErc20Legacy, vlxEvmLegacy];
+  const legacyTokens = [ethLegacy, usdtErc20Legacy];
 
   function preinstallCoins([coin, ...coins], cb) {
     if (!coin) {
