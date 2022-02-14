@@ -6,14 +6,14 @@ export async function invalidateCache() {
   cacheMap.clear();
 }
 
-export async function cachedCallWithRetries(network, params, call) {
+export async function cachedCallWithRetries(network, params, call, maxTries) {
   var params$ = params;
   if (network && params$ && params$.unshift) {
     params$.unshift(network);
   }
   if (!cacheMap.has(params$)) {
-    const res = callWithRetries(call, params);
-    cacheMap.set(params, callWithRetries(call, params));
+    const res = callWithRetries(call, params, maxTries);
+    cacheMap.set(params, callWithRetries(call, params, maxTries));
     return res;
   } else {
     return cacheMap.get(params$);

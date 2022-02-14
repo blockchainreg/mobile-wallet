@@ -631,7 +631,6 @@
         deadline: deadline,
       })
       .end(function (err, data) {
-        debugger;
         var dec, num;
         if (err != null || data.text.length === 0) {
           return cb(err);
@@ -740,7 +739,6 @@
     };
   };
   transformOut = function (arg$, t) {
-    debugger;
     var net,
       address,
       tx,

@@ -201,7 +201,8 @@ class StakingStore {
     return await cachedCallWithRetries(
       this.network,
       ['getEpochInfo', this.connection],
-      () => this.connection.getEpochInfo()
+      () => this.connection.getEpochInfo(),
+      3
     );
   }
 
@@ -225,6 +226,7 @@ class StakingStore {
   };
 
   async reloadFromBackend() {
+    // massive method
     this.startRefresh();
     const filter = {
       memcmp: {
@@ -451,7 +453,6 @@ class StakingStore {
     if (!validator) {
       throw new Error('Validator not found');
     }
-    debugger;
     return {
       address: validatorAddress,
       identity: validator.identity,
