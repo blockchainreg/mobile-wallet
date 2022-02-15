@@ -13,7 +13,7 @@ export async function cachedCallWithRetries(network, params, call, maxTries) {
   }
   if (!cacheMap.has(params$)) {
     const res = callWithRetries(call, params, maxTries);
-    cacheMap.set(params, callWithRetries(call, params, maxTries));
+    cacheMap.set(params, res);
     return res;
   } else {
     return cacheMap.get(params$);
