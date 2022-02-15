@@ -14,7 +14,6 @@ export default observer(({ store, isStaked, selectedItem, ...props }) => {
   const epoch = 444;
 
   const EpochValue = () => {
-    const tooltipRef = useRef(null);
     const EpochDetail = () => {
       return (
         <View>
@@ -47,7 +46,6 @@ export default observer(({ store, isStaked, selectedItem, ...props }) => {
     };
     return (
       <Tooltip
-        ref={tooltipRef}
         withOverlay={false}
         containerStyle={style.tooltipContainerStyle}
         pointerColor="#27282C"

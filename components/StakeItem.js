@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { memo } from 'react';
 import {
   StyleSheet,
   Dimensions,
@@ -12,12 +12,8 @@ import { Avatar } from '../svg';
 import { Badge } from 'react-native-elements';
 import IdentIcon from './Identicon';
 import { formatStakeAmount } from '../utils/format-value';
-import getLang from '../wallet/get-lang.js';
-import { observer } from 'mobx-react';
 
-export default observer(({ store, ...props }) => {
-  const lang = getLang(store);
-
+export default memo(({ lang, ...props }) => {
   const typeBadge = (type) => {
     switch (type) {
       case 'active':
@@ -29,7 +25,7 @@ export default observer(({ store, ...props }) => {
     }
   };
 
-  const badgeStatus = () => {
+  const BadgeStatus = () => {
     return (
       <Badge
         value={
@@ -41,7 +37,7 @@ export default observer(({ store, ...props }) => {
       />
     );
   };
-  const isStaked = props.myStake > 0 ? true : false;
+  const isStaked = props.myStake > 0;
   return (
     <ListItem
       noBorder
@@ -52,7 +48,7 @@ export default observer(({ store, ...props }) => {
         style.listItemStyle,
         {
           backgroundColor: isStaked ? '#1F2853' : '#161A3F',
-          height: props.name && 100,
+          height: 100,
         },
       ]}
     >
@@ -97,7 +93,7 @@ export default observer(({ store, ...props }) => {
         </Text>
       </Body>
       <Right style={style.rightSide}>
-        {badgeStatus()}
+        <BadgeStatus />
         <Text
           style={[style.styleSubTitle, { marginTop: props.name ? 25 : 15 }]}
         >
