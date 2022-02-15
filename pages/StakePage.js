@@ -43,10 +43,8 @@ const ValidatorsList = memo(
     onPressItem,
     refreshControl,
   }) => {
-    const withDetailsValidatorTab = onPressItem('detailsValidator');
-
     const renderItem = ({ item }) => {
-      const goToDetailsValidator = () => withDetailsValidatorTab(item.address);
+      const goToDetailsValidator = () => onPressItem(item.address);
 
       return (
         <StakeItem
@@ -234,6 +232,8 @@ const StakePage = ({ store, web3t, props }) => {
   const stakedValidators = stakingStore.getStakedValidators();
   const notStakedValidators = stakingStore.getNotStakedValidators();
 
+  const goToDetailsValidatorTab = changePage('detailsValidator');
+
   return (
     <Container style={{ backgroundColor: Images.velasColor4 }}>
       <SearchHeader store={store} />
@@ -257,7 +257,7 @@ const StakePage = ({ store, web3t, props }) => {
               tintColor="transparent"
             />
           }
-          onPressItem={changePage}
+          onPressItem={goToDetailsValidatorTab}
         />
       )}
       <Footer store={store}></Footer>
