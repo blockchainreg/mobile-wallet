@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Vibration, Platform } from 'react-native';
-import * as Permissions from 'expo-permissions';
+import { RNCamera } from 'react-native-camera';
 
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import walletFuncs from '../wallet/wallet-funcs.js';
@@ -14,25 +14,17 @@ import { CameraEn } from '../svg/cameraEn.js';
 import { CameraDis } from '../svg/cameraDis.js';
 
 function Scanner({ onScan }) {
-  const [hasPermission, setHasPermission] = useState(null);
   const [onScanCalled, setOnScanCalled] = useState(false);
+  const [cameraStatus, setCameraStatus] = useState(
+    RNCamera.Constants.CameraStatus.PENDING_AUTHORIZATION
+  );
 
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.requestPermissionsAsync();
-  //     setHasPermission(status === 'granted');
-  //     if (status !== 'granted') {
-  //       setTimeout(() => {
-  //         if (!onScanCalled) {
-  //           onScan(false);
-  //           setOnScanCalled(true);
-  //         }
-  //       }, 2000);
-  //     }
-  //   })();
-  // }, []);
+  const handleCameraStatusChange = (event) => {
+    setCameraStatus(event.cameraStatus);
+  };
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const onBarCodeRead = (result) => {
+    const { data } = result;
     Vibration.vibrate(Platform.OS === 'android' ? [0, 500, 200, 500] : 500);
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     if (!onScanCalled) {
@@ -41,33 +33,14 @@ function Scanner({ onScan }) {
     }
   };
 
-  if (hasPermission === null) {
+  if (cameraStatus === RNCamera.Constants.CameraStatus.NOT_AUTHORIZED) {
     return (
       <View style={styles.viewFlex}>
         <View style={styles.imgScanCamera}>
-          {/* <Image
-        source={Images.cameraEn}
-        style={styles.styleLogoCamera}
-        /> */}
-          <CameraEn height={86 / 1.5} width={115 / 1.5} />
-          <Text style={{ color: '#fff', textAlign: 'center', paddingTop: 20 }}>
-            Requesting for camera permission
-          </Text>
-        </View>
-      </View>
-    );
-  }
-  if (hasPermission === false) {
-    return (
-      <View style={styles.viewFlex}>
-        <View style={styles.imgScanCamera}>
-          {/* <Image
-        source={Images.cameraDis}
-        style={styles.styleLogoCamera}
-        /> */}
           <CameraDis height={86 / 1.5} width={115 / 1.5} />
           <Text style={{ color: '#fff', textAlign: 'center', paddingTop: 20 }}>
-            No access to camera
+            No access to camera, to use camera go to seettings and allow access
+            to camera!
           </Text>
         </View>
       </View>
@@ -101,13 +74,14 @@ function Scanner({ onScan }) {
   };
   return (
     <View style={styles.viewFlex}>
-      <Text>Camera will be here</Text>
-      {/* <Camera
-        onBarCodeScanned={handleBarCodeScanned}
-        style={[StyleSheet.absoluteFill, styles.cameraContainer]}
-      >
-        {frame()}
-      </Camera> */}
+      <RNCamera
+        autoFocus
+        captureAudio={false}
+        style={{ flex: 1 }}
+        onBarCodeRead={onBarCodeRead}
+        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+        onStatusChange={handleCameraStatusChange}
+      />
     </View>
   );
 }
