@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Vibration, Platform } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 
 import walletsFuncs from '../wallet/wallets-funcs.js';
@@ -11,7 +10,6 @@ import { Text, View } from 'native-base';
 import Images from '../Images.js';
 import Header from '../components/Header';
 import Constants from 'expo-constants';
-import { Camera } from 'expo-camera';
 import { CameraEn } from '../svg/cameraEn.js';
 import { CameraDis } from '../svg/cameraDis.js';
 
@@ -19,20 +17,20 @@ function Scanner({ onScan }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [onScanCalled, setOnScanCalled] = useState(false);
 
-  React.useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-      if (status !== 'granted') {
-        setTimeout(() => {
-          if (!onScanCalled) {
-            onScan(false);
-            setOnScanCalled(true);
-          }
-        }, 2000);
-      }
-    })();
-  }, []);
+  // React.useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestPermissionsAsync();
+  //     setHasPermission(status === 'granted');
+  //     if (status !== 'granted') {
+  //       setTimeout(() => {
+  //         if (!onScanCalled) {
+  //           onScan(false);
+  //           setOnScanCalled(true);
+  //         }
+  //       }, 2000);
+  //     }
+  //   })();
+  // }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
     Vibration.vibrate(Platform.OS === 'android' ? [0, 500, 200, 500] : 500);
@@ -103,12 +101,13 @@ function Scanner({ onScan }) {
   };
   return (
     <View style={styles.viewFlex}>
-      <Camera
+      <Text>Camera will be here</Text>
+      {/* <Camera
         onBarCodeScanned={handleBarCodeScanned}
         style={[StyleSheet.absoluteFill, styles.cameraContainer]}
       >
         {frame()}
-      </Camera>
+      </Camera> */}
     </View>
   );
 }

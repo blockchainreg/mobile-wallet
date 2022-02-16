@@ -352,7 +352,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Base64\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/CodePush\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/EXBarCodeScanner\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/EXDevice\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/EXErrorRecovery\"",
