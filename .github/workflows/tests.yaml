@@ -7,15 +7,15 @@ concurrency:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        # working-directory: ./e2e
+    # defaults:
+    #   run:
+    #     working-directory: ./e2e
     steps:
-      - name: checkout JsWallet
+      - name: checkout repo
         uses: actions/checkout@v2
 
       - name: check dev domain presence is repo
-        working-directory: ./
+        # working-directory: ./
         run: |
           grep -Ri ${{secrets.SECRET_DOMAIN}} . \
           --exclude-dir node_modules \
