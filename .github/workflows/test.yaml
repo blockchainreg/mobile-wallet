@@ -1,0 +1,28 @@
+name: tests
+on:
+  pull_request:
+concurrency:
+  group: mobile-wallet-tests-${{github.event.pull_request.number}}
+  cancel-in-progress: true
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # working-directory: ./e2e
+    steps:
+      - name: checkout JsWallet
+        uses: actions/checkout@v2
+
+      - name: check dev domain presence is repo
+        working-directory: ./
+        run: |
+          grep -Ri ${{secrets.SECRET_DOMAIN}} . \
+          --exclude-dir node_modules \
+          --exclude-dir e2e/node_modules \
+          --exclude-dir .git || exit 0 && \
+          echo ' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -' && \
+          echo 'The development domain was found in repository code.' && \
+          echo 'See filename above. File content is hidden due to security.' && \
+          echo ' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -' && \
+          exit 13
