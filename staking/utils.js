@@ -20,7 +20,7 @@ export async function cachedCallWithRetries(network, params, call, maxTries) {
   }
 }
 
-export async function callWithRetries(call, params, maxTries = Infinity) {
+export async function callWithRetries(call, params, maxTries = 3) {
   let tries = 0;
   let timeout = null;
   while (true) {
