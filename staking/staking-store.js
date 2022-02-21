@@ -226,7 +226,6 @@ class StakingStore {
   };
 
   async reloadFromBackend() {
-    console.log('in reloadFromBackend');
     // massive method
     this.startRefresh();
     const filter = {
@@ -298,9 +297,6 @@ class StakingStore {
       validator.addStakingAccount(account);
     }
     const rent = await this.connection.getMinimumBalanceForRentExemption(200);
-    console.log('before endRefresh');
-    console.log('validators.length: ', validators.length);
-    console.log('stakingAccounts.length: ', stakingAccounts.length);
 
     this.endRefresh(
       balanceRes,
