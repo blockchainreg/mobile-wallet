@@ -90,7 +90,6 @@ class StakingStore {
     this.evmAPI = evmAPI;
     this.validatorsBackend = validatorsBackend;
     this.web3 = new Web3(new Web3.providers.HttpProvider(evmAPI));
-    rewardsStore.setConnection(this.connection, network);
     decorate(this, {
       connection: observable,
       validators: observable,
@@ -106,11 +105,12 @@ class StakingStore {
       slotIndex: observable,
       _currentSort: observable,
     });
-    // rewardsStore.loadLatestRewards(() => {
     this.startRefresh = action(this.startRefresh);
     this.endRefresh = action(this.endRefresh);
-    this.init();
-    // });
+
+    rewardsStore.setConnection(this.connection, network, () => {
+      this.init();
+    });
   }
 
   async init() {
@@ -226,6 +226,7 @@ class StakingStore {
   };
 
   async reloadFromBackend() {
+    console.log('in reloadFromBackend');
     // massive method
     this.startRefresh();
     const filter = {
@@ -297,6 +298,10 @@ class StakingStore {
       validator.addStakingAccount(account);
     }
     const rent = await this.connection.getMinimumBalanceForRentExemption(200);
+    console.log('before endRefresh');
+    console.log('validators.length: ', validators.length);
+    console.log('stakingAccounts.length: ', stakingAccounts.length);
+
     this.endRefresh(
       balanceRes,
       balanceEvmJson,
