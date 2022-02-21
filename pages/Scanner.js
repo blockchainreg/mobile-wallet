@@ -53,7 +53,7 @@ function Scanner({ onScan }) {
       setOnScanCalled(true);
     }
   };
-  const frame = () => {
+  const Frame = () => {
     return (
       <>
         <Header onBack={onBack} transparent />
@@ -81,7 +81,9 @@ function Scanner({ onScan }) {
         onBarCodeRead={onBarCodeRead}
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
         onStatusChange={handleCameraStatusChange}
-      />
+      >
+        <Frame />
+      </RNCamera>
     </View>
   );
 }
