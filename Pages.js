@@ -20,7 +20,6 @@ import LocalAuthenticationSettings from './pages/LocalAuthenticationSettings';
 import LocalAuthenticationEnable from './pages/LocalAuthenticationEnable';
 import LocalAuthenticationDisable from './pages/LocalAuthenticationDisable';
 import printseed from './pages/PrintSeed';
-import Scanner from './pages/Scanner';
 import stakePage from './pages/StakePage';
 import detailsValidator from './pages/DetailsValidator';
 import sendStake from './pages/SendStake';
@@ -32,7 +31,6 @@ import confirmWithdrawal from './pages/ConfirmWithdrawal';
 import searchStake from './pages/SearchStake';
 
 export default {
-  Scanner,
   generatedseed,
   restoreseed,
   restoreseedchoise,

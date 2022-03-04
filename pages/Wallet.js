@@ -3,7 +3,13 @@ import { Text, View } from 'native-base';
 import { transaction } from 'mobx';
 import { observer } from 'mobx-react';
 import styles from '../Styles.js';
-import { ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 //import ModalComponent from "react-native-modal-component";
 import moment from 'moment';
 import RefreshControl from '../components/RefreshControl.js';
@@ -211,19 +217,10 @@ export default ({ store, web3t }) => {
 
   const scanQRSend = () => {
     if (wallet.balance == '..') return;
-    if (store.current.page === 'wallet') {
-      store.current.send.isSwap = false;
-      setDefaultSendData();
-    }
-    store.current.returnPage = 'wallet';
-    return (store.current.page = 'Scanner');
-    //store.current.send.to = "VJWAMYt4A1o3pwSJLzvJqHBL1wxvLBSpsQ";
-    //store.current.send.wallet = wallet;
-    //store.current.send.coin = wallet.coin;
-    //store.current.send.network = wallet.network;
-    //navigate(store, web3t, "send", x=> {
-    //
-    //});
+    Alert.alert(
+      'Scanning QR code is not avaliable due to F-droid market policy!',
+      `To be able to scan QR code, please, download the app from Google Play.`
+    );
   };
 
   const handleBarCodeScanned = (ev) => {

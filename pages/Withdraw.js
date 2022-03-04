@@ -26,7 +26,13 @@ import getLang from '../wallet/get-lang.js';
 import BackButton from '../components/BackButton.js';
 import Background from '../components/Background.js';
 import Images from '../Images.js';
-import { Image, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Alert,
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
@@ -121,8 +127,10 @@ export default ({ store, web3t }) => {
 
   const scanQRSend = () => {
     if (isNaN(wallet.balance)) return;
-    store.current.returnPage = 'send';
-    return (store.current.page = 'Scanner');
+    Alert.alert(
+      'Scanning QR code is not avaliable due to F-droid market policy!',
+      `To be able to scan QR code, please, download the app from Google Play.`
+    );
   };
 
   const sendTx = async () => {

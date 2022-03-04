@@ -3,8 +3,6 @@ import { Text, Button } from 'native-base';
 import { Clipboard, Alert, Vibration, Share, View } from 'react-native';
 import styles from '../Styles.js';
 import RefreshControl from '../components/RefreshControl.js';
-// import { QRCode } from 'react-native-custom-qr-codes-expo';
-// import QRCode from 'react-native-qrcode';
 import QRCode from 'react-native-qrcode-svg';
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import getLang from '../wallet/get-lang.js';
