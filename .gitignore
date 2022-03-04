@@ -52,7 +52,13 @@ buck-out/
 !debug.keystore
 
 # Bundle artifacts
+*.bundle
 *.jsbundle
+*.jsbundle.map
+*.bundle.map
+*.ipa
+*.dSYM
+*.zip
 
 # CocoaPods
 /ios/Pods/
