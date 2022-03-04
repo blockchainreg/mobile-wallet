@@ -5,7 +5,7 @@ module.exports = (store) => {
     (it) => it.coin.token === 'vlx_native'
   );
   const walletEvm = store.current.account.wallets.find(
-    (it) => it.coin.token === 'vlx2'
+    (it) => it.coin.token === 'vlx_evm'
   );
   if (wallet == null || walletEvm == null) {
     return;
@@ -17,7 +17,7 @@ module.exports = (store) => {
     wallet.network.api.validatorsBackend,
     wallet.privateKey,
     wallet.publicKey,
-    walletEvm.address2, //evm address
+    walletEvm.address, //evm address
     walletEvm.privateKey,
     store.current.network
   );

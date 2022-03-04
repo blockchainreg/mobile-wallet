@@ -451,7 +451,7 @@ class StakingStore {
     if (!validator) {
       throw new Error('Validator not found');
     }
-    debugger;
+
     return {
       address: validatorAddress,
       identity: validator.identity,
