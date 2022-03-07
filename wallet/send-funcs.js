@@ -334,7 +334,10 @@ import roundNumber from '../round-number';
           : transaction.recipient;
       const recipient = (function () {
         switch (false) {
-          case !receiver.startsWith('V'):
+          case !(
+            store.current.send.coin.token !== 'vlx_native' &&
+            receiver.startsWith('V')
+          ):
             return toEthAddress(receiver);
           default:
             return receiver;
