@@ -158,7 +158,7 @@ export default ({ store, web3t }) => {
           value={store.signUpConfirmSeedField}
           onChangeText={changeSeed}
           keyboardAppearance="dark"
-          returnKeyType={'return'}
+          returnKeyType={'default'}
           keyboardType="default"
           autoFocus
           blurOnSubmit={true}
