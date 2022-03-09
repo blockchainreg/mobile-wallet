@@ -15,10 +15,10 @@ class RewardsStore {
     });
   }
 
-  setConnection(connection, network) {
+  setConnection(connection, network, cb) {
     this.network = network;
     this.connection = connection;
-    this.loadLatestRewards(() => {});
+    this.loadLatestRewards(cb);
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
