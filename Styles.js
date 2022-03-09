@@ -88,8 +88,8 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             borderRadius: 0,
-            height: 'auto',
-            backgroundColor: 'transparent',
+            height: 50,
+            backgroundColor: Images.colorDarkBlue,
           },
           android: {
             borderRadius: 0,
