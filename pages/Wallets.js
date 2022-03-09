@@ -350,6 +350,7 @@ export default ({ store, web3t }) => {
           web3t={web3t}
           listData={listData}
           renderItem={({ item }) => listItem(store, web3t, wallets, item)}
+          onRefresh={refreshBalance}
         />
       </View>
 
