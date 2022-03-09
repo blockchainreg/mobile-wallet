@@ -143,6 +143,9 @@ export default observer(({ store, web3t, ...props }) => {
 const styles = StyleSheet.create({
   heightContainer: {
     ...Platform.select({
+      ios: {
+        marginBottom: -50,
+      },
       android: {
         marginBottom: -50,
       },
