@@ -30,7 +30,10 @@ export default ({ children, swipeRefresh, store }) => {
         <RefreshControl
           refreshing={store.current.refreshingBalances}
           onRefresh={onRefresh}
-          tintColor="#fff"
+          tintColor="transparent"
+          colors={['transparent']}
+          style={{ backgroundColor: 'transparent' }}
+          progressBackgroundColor="transparent"
         />
       }
     >

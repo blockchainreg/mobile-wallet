@@ -124,7 +124,8 @@ const SearchHeader = ({ store }) => {
     stakingStore.openedValidatorAddress = validatorAddress;
     store.current.page = tab;
   };
-
+  const stakedValidators = stakingStore.getStakedValidators();
+  const notStakedValidators = stakingStore.getNotStakedValidators();
   const sortActiveStake = () => {
     spin(store, `Sort by: Total Staked`, async (cb) => {
       try {
@@ -169,7 +170,9 @@ const SearchHeader = ({ store }) => {
             {() => {
               return (
                 <>
-                  {stakingStore.isRefreshing
+                  {!stakedValidators ||
+                  !notStakedValidators ||
+                  stakingStore.isRefreshing
                     ? null
                     : PickerSortStake({
                         store,
@@ -191,7 +194,9 @@ const SearchHeader = ({ store }) => {
             {() => {
               return (
                 <>
-                  {stakingStore.isRefreshing ? null : (
+                  {!stakedValidators ||
+                  !notStakedValidators ||
+                  stakingStore.isRefreshing ? null : (
                     <>
                       <EpochComponent store={store} />
                       <Button transparent onPress={changePage('searchStake')}>
@@ -208,7 +213,6 @@ const SearchHeader = ({ store }) => {
           </Observer>
         </Right>
       </Headers>
-      {/* <ProgressBar store={store}/> */}
       <StatusBar />
     </>
   );
