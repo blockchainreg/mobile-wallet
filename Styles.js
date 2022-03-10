@@ -88,13 +88,13 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             borderRadius: 0,
-            height: 'auto',
-            backgroundColor: 'transparent',
+            height: 50,
+            backgroundColor: Images.colorDarkBlue,
           },
           android: {
             borderRadius: 0,
             height: 50,
-            backgroundColor: 'transparent',
+            backgroundColor: Images.colorDarkBlue,
           },
         }),
       }
@@ -6030,11 +6030,11 @@ export default StyleSheet.create({
   },
   leftBtnColor: {
     color: Images.colorGreen,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   leftBtnHeader: {
     color: '#fff',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   viewNetInfo: {
     backgroundColor: 'orange',
