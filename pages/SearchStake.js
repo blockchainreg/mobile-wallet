@@ -14,9 +14,6 @@ import StakeItem from '../components/StakeItem.js';
 import StatusBar from '../components/StatusBar.js';
 import { SearchBar } from 'react-native-elements';
 
-// LogBox.ignoreLogs([
-//   "VirtualizedLists should never be nested", // TODO: Remove when fixed
-// ]);
 export default ({ store }) => {
   const lang = getLang(store);
   const EmptyList = () => {
@@ -76,7 +73,7 @@ export default ({ store }) => {
           totalStaked={item.activeStake}
           apr={item.apr}
           onPress={changePage('detailsValidator', item.address)}
-          store={store}
+          lang={lang}
         />
       );
     };

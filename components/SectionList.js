@@ -11,6 +11,7 @@ import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { observer } from 'mobx-react';
 import getLang from '../wallet/get-lang';
 import spin from '../utils/spin';
+import { RefreshControl } from 'react-native';
 
 export default observer(({ store, web3t, ...props }) => {
   const { renderItem, listData } = props;
@@ -112,7 +113,7 @@ export default observer(({ store, web3t, ...props }) => {
   );
 
   return (
-    <View>
+    <View style={styles.heightContainer}>
       <SwipeListView
         useSectionList
         sections={listData}
@@ -127,12 +128,29 @@ export default observer(({ store, web3t, ...props }) => {
         onRowDidOpen={onRowDidOpen}
         stopLeftSwipe={-0.00001}
         stopRightSwipe={-70}
+        refreshControl={
+          <RefreshControl
+            refreshing={store.current.refreshingBalances}
+            onRefresh={props.onRefresh}
+            tintColor="#fff"
+          />
+        }
       />
     </View>
   );
 });
 
 const styles = StyleSheet.create({
+  heightContainer: {
+    ...Platform.select({
+      ios: {
+        marginBottom: -50,
+      },
+      android: {
+        marginBottom: -50,
+      },
+    }),
+  },
   networkStyle: {
     backgroundColor: Images.colorDarkBlue,
     color: '#fff',
