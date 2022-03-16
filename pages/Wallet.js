@@ -3,7 +3,13 @@ import { Text, View } from 'native-base';
 import { transaction } from 'mobx';
 import { observer } from 'mobx-react';
 import styles from '../Styles.js';
-import { ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Linking,
+} from 'react-native';
 //import ModalComponent from "react-native-modal-component";
 import moment from 'moment';
 import RefreshControl from '../components/RefreshControl.js';
@@ -14,7 +20,6 @@ import navigate from '../wallet/navigate.js';
 import getLang from '../wallet/get-lang.js';
 import Background from '../components/Background.js';
 import Images from '../Images.js';
-import { LinearGradient } from 'expo-linear-gradient';
 import roundNumber from '../round-number';
 import roundHuman from '../wallet/round-human';
 import Header from '../components/Header';
@@ -29,6 +34,7 @@ import { WithdrawImage } from '../svg/withdraw-image.js';
 import normalize from 'react-native-normalize';
 import { SwapImage } from '../svg/swap-image.js';
 import { ScanImage } from '../svg/scanImage.js';
+import { BuyImage } from '../svg/buyImage.js';
 
 export default ({ store, web3t }) => {
   const lang = getLang(store);
@@ -226,6 +232,19 @@ export default ({ store, web3t }) => {
     //});
   };
 
+  const locationWallet =
+    store.current.network == 'testnet' ? 'wallet_testnet' : 'wallet_mainnet';
+  const tokenDisplay = 'VLX';
+
+  const uri_prod = `https://buy.velas.com/?address=${wallet.address}&crypto_currency=${tokenDisplay}&env=${locationWallet}`;
+  const uri_test = `https://fiat-payments.testnet.velas.com/?address=${wallet.address}&crypto_currency=${tokenDisplay}&env=${locationWallet}`;
+
+  const uri_provider = store.current.network == 'testnet' ? uri_test : uri_prod;
+
+  const buyVlx = () => {
+    Linking.openURL(uri_provider);
+  };
+
   const handleBarCodeScanned = (ev) => {
     console.log(ev);
   };
@@ -301,31 +320,40 @@ export default ({ store, web3t }) => {
           </View>
         )}
 
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity onPress={scanQRSend} style={styles.touchables}>
-            {/* <Image
-                        source={Images.scanImage}
-                        style={styles.sizeIconScanBtn}
-                      /> */}
-            <ScanImage
-              width={normalize(65 / 2.5)}
-              height={normalize(65 / 2.5)}
-              left={0}
-              bottom={normalize(1)}
-            />
-          </TouchableOpacity>
-          <Text style={styles.textTouchable}>{lang.scan}</Text>
-        </View>
+        {wallet.coin.token == 'vlx_native' || wallet.coin.token == 'vlx_evm' ? (
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity
+              onPress={buyVlx}
+              style={[styles.touchables, { backgroundColor: '#9b55e0' }]}
+            >
+              <BuyImage
+                width={normalize(65 / 2.5)}
+                height={normalize(65 / 2.5)}
+                left={0}
+                bottom={normalize(1)}
+              />
+            </TouchableOpacity>
+            <Text style={styles.textTouchable}>Buy</Text>
+          </View>
+        ) : (
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={scanQRSend} style={styles.touchables}>
+              <ScanImage
+                width={normalize(65 / 2.5)}
+                height={normalize(65 / 2.5)}
+                left={0}
+                bottom={normalize(1)}
+              />
+            </TouchableOpacity>
+            <Text style={styles.textTouchable}>{lang.scan}</Text>
+          </View>
+        )}
 
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
             onPress={changePage('invoice')}
             style={{ ...styles.touchables, backgroundColor: Images.colorGreen }}
           >
-            {/* <Image
-                        source={Images.withdrawImage}
-                        style={[styles.sizeIconBtn, {transform: [{ rotate: "180deg" }], left: 0, top: 2}]}
-                      /> */}
             <WithdrawImage
               style={[
                 styles.sizeIconBtn,
@@ -346,7 +374,6 @@ export default ({ store, web3t }) => {
   );
 };
 
-//export default ({ store, web3t }) => <Wallet store={store} web3t={web3t} />;
 const style = StyleSheet.create({
   topView: {
     flex: 0.15,
