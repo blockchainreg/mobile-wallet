@@ -19,19 +19,25 @@ import {
   Keyboard,
 } from 'react-native';
 import Constants from 'expo-constants';
-import styles from '../Styles.js';
-import { set, check } from '../wallet/pin.js';
-import Images from '../Images.js';
-import getLang from '../wallet/get-lang.js';
 import * as SecureStore from 'expo-secure-store';
+
+import { set, check } from '../wallet/pin.js';
+import getLang from '../wallet/get-lang.js';
+
 import PickerSetLang from '../components/PickerSetLang.js';
 import Header from '../components/Header';
 import Input from '../components/InputSecure';
 import StatusBar from '../components/StatusBar.js';
+
 import { VelasLogo1 } from '../svg/velas-logo1.js';
 import { Bg } from '../svg/bg.js';
 
-const buttonActive = (store) => {
+import styles from '../Styles.js';
+import Images from '../Images.js';
+
+const REGEX_PIN = /[0-9a-zA-Z]{6,}/;
+
+const ButtonActive = (store) => {
   const lang = getLang(store);
 
   const changePage = (tab) => () => {
@@ -39,7 +45,10 @@ const buttonActive = (store) => {
   };
 
   const signup = async () => {
-    if (store.current.signUpInputPinField.length < 6) {
+    if (
+      !store.current.signUpInputPinField ||
+      store.current.signUpInputPinField.length < 6
+    ) {
       store.current.signUpInputPinField = '';
       return Toast.show({ text: lang.validPin });
     }
@@ -60,10 +69,13 @@ const buttonActive = (store) => {
   );
 };
 
-const buttonInactive = (store) => {
+const ButtonInactive = (store) => {
   const lang = getLang(store);
   const notice = () => {
-    if (store.current.signUpInputPinField.length < 6) {
+    if (
+      !store.current.signUpInputPinField ||
+      store.current.signUpInputPinField.length < 6
+    ) {
       store.current.signUpInputPinField = '';
       return Toast.show({ text: lang.validPin });
     }
@@ -98,15 +110,14 @@ export default ({ store }) => {
     store.current.signUpInputPinField = null;
   };
 
-  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPinSignUp =
     !store.current.signUpInputPinField ||
-    regexPin.test(store.current.signUpInputPinField);
+    REGEX_PIN.test(store.current.signUpInputPinField);
 
   const buttonsChangeSignUp =
     validInputPinSignUp && store.current.signUpInputPinField
-      ? buttonActive
-      : buttonInactive;
+      ? ButtonActive
+      : ButtonInactive;
 
   const handleChangePin = async (text) => {
     store.current.signUpInputPinField = text;
@@ -168,6 +179,7 @@ export default ({ store }) => {
     </KeyboardAvoidingView>
   );
 };
+
 const style = StyleSheet.create({
   container: {
     flex: 1,
