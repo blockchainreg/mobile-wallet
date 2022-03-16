@@ -116,19 +116,17 @@ export default ({ store, web3t }) => {
             <ScrollView>
               <View style={style.container}>
                 <ValidatorCard
-                  value={DOMINANCE_VALUE}
-                  subtitle={lang.dominance || 'DOMINANCE'}
-                  info={
-                    lang.info1 ||
-                    'Relative validator weight compared to the average. Lower is better'
+                  value={`${formatStakeAmount(details.activeStake)} VLX`}
+                  subtitle={lang.totalStake || 'TOTAL STAKE'}
+                  info={'Total stake of validator'}
+                  cardIcon={
+                    <ValidatorsIcon
+                      fill={Images.colorGreen}
+                      type={'STAKE'}
+                      width="17"
+                      height="17"
+                    />
                   }
-                  cardIcon={<ChartIcon />}
-                />
-                <ValidatorCard
-                  value={QUALITY_VALUE}
-                  subtitle={lang.quality || 'QUALITY'}
-                  info={lang.infoMeans || '0 means average'}
-                  cardIcon={<PlusIcon />}
                 />
                 <ValidatorCard
                   value={ANNUAL_RATE}
@@ -139,6 +137,29 @@ export default ({ store, web3t }) => {
                   }
                   cardIcon={<PercentIcon />}
                   subtitleSmall
+                />
+                <ValidatorCard
+                  value={DOMINANCE_VALUE}
+                  subtitle={lang.dominance || 'DOMINANCE'}
+                  info={
+                    lang.info1 ||
+                    'Relative validator weight compared to the average. Lower is better'
+                  }
+                  cardIcon={<ChartIcon />}
+                />
+                <ValidatorCard
+                  value={details.commission}
+                  subtitle={lang.validatorInterest || 'VALIDATOR INTEREST'}
+                  info={
+                    'A commission that you pay to validator from each reward'
+                  }
+                  cardIcon={<PercentIcon />}
+                />
+                {/* <ValidatorCard
+                  value={QUALITY_VALUE}
+                  subtitle={lang.quality || 'QUALITY'}
+                  info={lang.infoMeans || '0 means average'}
+                  cardIcon={<PlusIcon />}
                 />
                 <ValidatorCard
                   value={ACTIVE_STAKE}
@@ -153,7 +174,7 @@ export default ({ store, web3t }) => {
                   }
                   cardIcon={<PercentIcon />}
                   subtitleSmall
-                />
+                /> */}
               </View>
               <ButtonBlock
                 type={'STAKE_MORE'}
@@ -275,17 +296,41 @@ export default ({ store, web3t }) => {
               copyAddress={copyAddress}
               copyName={copyName}
               isActive={details.status === 'active' ? true : false}
-              value1={details.commission}
-              value2={
+              infoApr={
                 !details.myStake.isZero()
-                  ? `${formatStakeAmount(details.myStake)} VLX`
+                  ? false
+                  : lang.info3 ||
+                    'APR is calculated based on the results of the previous epoch'
+              }
+              infoActiveStake={
+                !details.myStake.isZero()
+                  ? lang.info4 ||
+                    'Only 25% of active stake can be activated per epoch. '
+                  : false
+              }
+              readMore={lang.read || 'Read more'}
+              link={
+                'https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown'
+              }
+              subtitle1={
+                !details.myStake.isZero()
+                  ? 'MY ACTIVE STAKE'
+                  : lang.totalStake || 'TOTAL STAKE'
+              }
+              value1={
+                !details.myStake.isZero()
+                  ? `${ACTIVE_STAKE} %`
                   : `${formatStakeAmount(details.activeStake)} VLX`
               }
-              subtitle1={lang.validatorInterest || 'VALIDATOR INTEREST'}
               subtitle2={
                 !details.myStake.isZero()
                   ? lang.myStake || 'MY STAKE'
-                  : lang.totalStake || 'TOTAL STAKE'
+                  : lang.annual || 'ANNUAL PERCENTAGE RATE'
+              }
+              value2={
+                !details.myStake.isZero()
+                  ? `${formatStakeAmount(details.myStake)} VLX`
+                  : `${ANNUAL_RATE} %`
               }
               store={store}
             />
@@ -310,11 +355,19 @@ export default ({ store, web3t }) => {
                     }
                     cardIcon={<ChartIcon />}
                   />
-                  <ValidatorCard
+                  {/* <ValidatorCard
                     value={QUALITY_VALUE}
                     subtitle={lang.quality || 'QUALITY'}
                     info={lang.infoMeans || '0 means average'}
                     cardIcon={<PlusIcon />}
+                  /> */}
+                  <ValidatorCard
+                    value={details.commission}
+                    subtitle={lang.validatorInterest || 'VALIDATOR INTEREST'}
+                    info={
+                      'A commission that you pay to validator from each reward'
+                    }
+                    cardIcon={<PercentIcon />}
                   />
                 </View>
                 <ButtonBlock

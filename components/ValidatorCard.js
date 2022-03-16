@@ -103,7 +103,14 @@ export default (props) => {
         <Left style={{ flex: 0 }} />
         <Body style={{ flex: 1 }}>
           {/* <Text style={style.textBody}>{!props.value ? '...' : props.value}</Text> */}
-          <Text style={style.textBody}>{props.value}</Text>
+          <Text
+            style={[
+              style.textBody,
+              { fontSize: props.value.length > 8 ? 16 : 20 },
+            ]}
+          >
+            {props.value}
+          </Text>
         </Body>
         <Right style={{ flex: 0 }} />
       </CardItem>
