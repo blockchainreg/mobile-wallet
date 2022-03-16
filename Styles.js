@@ -207,10 +207,11 @@ export default StyleSheet.create({
     ...Platform.select({
       ios: {
         flex: 1,
+        backgroundColor: Images.colorDarkBlue,
       },
       android: {
         flex: 1,
-        // backgroundColor: "#11155D"
+        backgroundColor: Images.colorDarkBlue,
       },
     }),
   },
@@ -5680,7 +5681,7 @@ export default StyleSheet.create({
   },
   containterBg1: {
     width: '100%',
-    height: '100%',
+    height: height,
   },
   fixedBg: {
     position: 'absolute',

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Footer, FooterTab, Button, Thumbnail } from 'native-base';
+import { Button } from 'native-base';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react';
-import styles from '../Styles.js';
+// import styles from '../Styles.js';
 import applyTransactions from '../wallet/apply-transactions.js';
 import getLang from '../wallet/get-lang.js';
 import Images from '../Images.js';
@@ -55,7 +56,32 @@ export default ({ store }) => {
   if (store.infoTransaction != null) return null;
   return (
     <>
-      <Footer style={styles.footerHeight}>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerTab} onPress={goToWallets}>
+          <WalletIcon
+            fill={store.current.page == 'wallets' && Images.colorGreen}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerTab} onPress={goToStaking}>
+          <StakeIcon
+            fill={store.current.page == 'stakePage' && Images.colorGreen}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerTab} onPress={goToHistory}>
+          <HistoryIcon
+            fill={store.current.page == 'history' && Images.colorGreen}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.footerTab}
+          onPress={changeTab('settings')}
+        >
+          <SettingsIcon
+            fill={store.current.page == 'settings' && Images.colorGreen}
+          />
+        </TouchableOpacity>
+      </View>
+      {/* <Footer style={styles.footerHeight}>
         <FooterTab style={styles.footerTab}>
           <Button
             active={store.current.page == 'wallets'}
@@ -100,8 +126,25 @@ export default ({ store }) => {
             />
           </Button>
         </FooterTab>
-      </Footer>
+      </Footer> */}
       {renderNetwork()}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  footer: {
+    backgroundColor: Images.velasColor1,
+    height: 50,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+  },
+  footerTab: {
+    flex: 1,
+    paddingTop: 15,
+    alignItems: 'center',
+  },
+});

@@ -6,7 +6,7 @@ import './global.js';
 import prngSync from './prng-sync.js';
 import localStoragePromise from './localStorage.js';
 import * as React from 'react';
-import { View, Image, Text, ImageBackground, TextInput } from 'react-native';
+import { View, Image, Text, SafeAreaView, TextInput } from 'react-native';
 import { Input } from 'native-base';
 import styles from './Styles.js';
 import Images from './Images.js';
@@ -74,9 +74,14 @@ class App extends React.Component {
       );
     }
     return (
-      <View style={[styles.viewFlex, { backgroundColor: '#05061f' }]}>
-        <AppReady />
-      </View>
+      <>
+        <SafeAreaView
+          style={{ flex: 0, backgroundColor: Images.colorDarkBlue }}
+        />
+        <SafeAreaView style={{ flex: 1, backgroundColor: Images.velasColor1 }}>
+          <AppReady />
+        </SafeAreaView>
+      </>
     );
   }
 }

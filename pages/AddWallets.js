@@ -45,6 +45,7 @@ import Background from '../components/Background.js';
 import { LinearGradient } from 'expo-linear-gradient';
 import Images from '../Images.js';
 import Header from '../components/Header';
+import { Dimensions, Platform } from 'react-native';
 
 let coinItems = [
   ltc,
@@ -66,6 +67,7 @@ let coinItems = [
   ethLegacy,
   usdtErc20Legacy,
 ];
+const { width, height } = Dimensions.get('window');
 
 const renderCoin = (store, web3t, item) => {
   const { token, name, image } = item;
@@ -104,7 +106,11 @@ const renderCoin = (store, web3t, item) => {
       key={token}
     >
       <Left>
-        <Thumbnail square source={{ uri: image }} style={[{ height: 40, width: 40 }]}/>
+        <Thumbnail
+          square
+          source={{ uri: image }}
+          style={[{ height: 40, width: 40 }]}
+        />
       </Left>
       <Body>
         <Text style={style.tokenName}>{tokenName}</Text>
@@ -157,28 +163,32 @@ export default ({ store, web3t }) => {
   });
 
   return (
-    <View style={styles.viewFlex}>
-      <Background fullscreen={true} />
-      {RefreshControl({
+    <View
+      style={[
+        styles.viewFlex,
+        { backgroundColor: Images.colorDarkBlue, height: height },
+      ]}
+    >
+      <Header title={lang.manageWallet} onBack={back} />
+
+      {/* {RefreshControl({
         swipeRefresh: refreshToken,
         store,
         children: (
           <>
-            <Header title={lang.manageWallet} onBack={back} />
+            <Header title={lang.manageWallet} onBack={back}/>
           </>
         ),
-      })}
-      <View style={[styles.viewMono1, { height: hp('85%') }]}>
-        <SectionList
-          style={[{ marginBottom: 50 }]}
-          sections={listData}
-          keyExtractor={(item, index) => item.token + index}
-          renderItem={({ item }) => renderCoin(store, web3t, item)}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={style.header}>{title} Network</Text>
-          )}
-        />
-      </View>
+      })} */}
+      <SectionList
+        style={[{ marginBottom: -30 }]}
+        sections={listData}
+        keyExtractor={(item, index) => item.token + index}
+        renderItem={({ item }) => renderCoin(store, web3t, item)}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={style.header}>{title} Network</Text>
+        )}
+      />
     </View>
   );
 };

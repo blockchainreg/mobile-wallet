@@ -60,7 +60,7 @@ export default ({ store, web3t }) => {
   };
   const back = changePage('wallet');
   return (
-    <View style={styles.viewFlex}>
+    <View style={[styles.viewFlex, { backgroundColor: 'red' }]}>
       <Background fullscreen={true} />
       <Header title={lang.receive} onBack={back} coin={wallet.coin.image} />
 

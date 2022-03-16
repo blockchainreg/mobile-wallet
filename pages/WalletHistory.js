@@ -23,7 +23,7 @@ export default ({ store, web3t }) => {
   return (
     <View style={styles.container}>
       <View style={styles.viewFlex}>
-        <Background fullscreen={true} />
+        {/* <Background fullscreen={true} /> */}
         <Header title={lang.history} />
         <Content style={{ backgroundColor: Images.velasColor4 }}>
           {LoadMoreDate({ store })}

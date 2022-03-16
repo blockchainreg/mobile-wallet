@@ -71,7 +71,7 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background fullscreen={true} />
+      {/* <Background fullscreen={true} /> */}
       <Header title={lang.settings} />
       <Content>
         <Separator bordered style={styles.seperatorStyle}>

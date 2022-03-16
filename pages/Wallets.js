@@ -331,7 +331,7 @@ export default ({ store, web3t }) => {
           title={lang.yourWallets}
           addWalletIcon
           onForward={changePage('add')}
-          transparent
+          // transparent
         />
         <View style={style.totalBalanceContainer}>
           <Text style={style.balance}>{lang.totalBalance}</Text>

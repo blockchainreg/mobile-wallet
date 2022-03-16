@@ -25,7 +25,7 @@ module.exports = ({ store }) => {
         <Header onBackHandlerOnly={back} />
       </View>
 
-      <View style={{ paddingTop: 50 }}>
+      <View style={{ backgroundColor: Images.colorDarkBlue }}>
         <Button
           onPress={() => {
             store.infoTransaction = null;
