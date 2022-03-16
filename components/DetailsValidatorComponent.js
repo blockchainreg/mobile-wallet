@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Touchable,
   TouchableOpacity,
   Text,
+  Linking,
 } from 'react-native';
 import {
   Container,
@@ -24,16 +25,19 @@ import {
   ListItem,
 } from 'native-base';
 import Images from '../Images';
+import { InfoIcon } from '../svg';
 import { Badge } from 'react-native-elements';
 import IdentIcon from './Identicon';
 import getLang from '../wallet/get-lang.js';
 import { CameraEn } from '../svg/cameraEn';
+import { Tooltip } from 'react-native-elements';
 
 var width = Dimensions.get('window').width;
 const BORDER_COLOR = 'rgba(255, 255, 255, 0.18)';
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.50)';
 
 export default ({ store, ...props }) => {
+  const tooltipRef = useRef(null);
   const lang = getLang(store);
 
   const badgeStatus = () => {
@@ -65,6 +69,10 @@ export default ({ store, ...props }) => {
       />
     );
   };
+  const onPressMore = () => {
+    Linking.openURL(props.link);
+    tooltipRef.current.toggleTooltip(false);
+  };
   return (
     <View>
       <View style={style.content}>
@@ -92,7 +100,48 @@ export default ({ store, ...props }) => {
       </View>
       <View style={style.row}>
         <View style={style.column}>
-          <Text style={style.value}>{props.value1}%</Text>
+          {props.infoActiveStake && (
+            <View
+              style={{
+                right: 5,
+                top: 3,
+                position: 'absolute',
+                zIndex: 99999,
+              }}
+            >
+              <Tooltip
+                ref={tooltipRef}
+                withOverlay={false}
+                containerStyle={style.tooltipContainerStyle}
+                pointerColor="#27282C"
+                withPointer={false}
+                popover={
+                  props.readMore ? (
+                    <Text style={style.txtInfo}>
+                      {props.infoActiveStake}{' '}
+                      <Text
+                        style={[
+                          style.txtInfo,
+                          {
+                            color: Images.colorGreen,
+                            textDecorationLine: 'underline',
+                          },
+                        ]}
+                        onPress={onPressMore}
+                      >
+                        {props.readMore}
+                      </Text>
+                    </Text>
+                  ) : (
+                    <Text style={style.txtInfo}>{props.infoActiveStake}</Text>
+                  )
+                }
+              >
+                <InfoIcon style={style.positionIcon} />
+              </Tooltip>
+            </View>
+          )}
+          <Text style={style.value}>{props.value1}</Text>
           <Text style={style.subtitle}>{props.subtitle1}</Text>
         </View>
         {props.value2 && (
@@ -102,6 +151,27 @@ export default ({ store, ...props }) => {
               { borderLeftWidth: 0.5, borderLeftColor: BORDER_COLOR },
             ]}
           >
+            {props.infoApr && (
+              <View
+                style={{
+                  right: 5,
+                  top: 3,
+                  position: 'absolute',
+                  zIndex: 99999,
+                }}
+              >
+                <Tooltip
+                  ref={tooltipRef}
+                  withOverlay={false}
+                  containerStyle={style.tooltipContainerStyle}
+                  pointerColor="#27282C"
+                  withPointer={false}
+                  popover={<Text style={style.txtInfo}>{props.infoApr}</Text>}
+                >
+                  <InfoIcon />
+                </Tooltip>
+              </View>
+            )}
             <Text style={style.value}>{props.value2}</Text>
             <Text style={style.subtitle}>{props.subtitle2}</Text>
           </View>
@@ -124,6 +194,17 @@ const style = StyleSheet.create({
     marginHorizontal: 30,
     textAlign: 'center',
     marginTop: 10,
+  },
+  tooltipContainerStyle: {
+    height: 'auto',
+    // marginTop: -20,
+    backgroundColor: '#27282C',
+    borderRadius: 0,
+  },
+  txtInfo: {
+    fontSize: 10,
+    color: '#fff',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   row: {
     marginTop: 10,
