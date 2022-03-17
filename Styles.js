@@ -53,21 +53,18 @@ export default StyleSheet.create({
     borderWidth: 0,
     ...ifIphoneX(
       {
-        // backgroundColor: Images.velasColor5,
-        backgroundColor: 'transparent',
+        backgroundColor: Images.colorDarkBlue,
         borderTopColor: 'transparent',
       },
       {
         ...Platform.select({
           ios: {
             borderTopColor: 'transparent',
-            backgroundColor: 'transparent',
-            // backgroundColor: Images.velasColor5,
+            backgroundColor: Images.colorDarkBlue,
           },
           android: {
-            // backgroundColor: Images.velasColor5,
+            backgroundColor: Images.colorDarkBlue,
             borderTopColor: 'transparent',
-            backgroundColor: 'transparent',
             // zIndex: 2
           },
         }),
@@ -89,12 +86,12 @@ export default StyleSheet.create({
           ios: {
             borderRadius: 0,
             height: 50,
-            backgroundColor: Images.colorDarkBlue,
+            backgroundColor: 'transparent',
           },
           android: {
             borderRadius: 0,
             height: 50,
-            backgroundColor: Images.colorDarkBlue,
+            backgroundColor: 'transparent',
           },
         }),
       }
