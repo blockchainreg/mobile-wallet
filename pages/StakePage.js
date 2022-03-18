@@ -9,18 +9,11 @@ import {
   Body,
   Title,
   Right,
+  Content,
 } from 'native-base';
 import { Header as Headers } from 'native-base';
 import Footer from './Footer.js';
-import {
-  StyleSheet,
-  View,
-  RefreshControl,
-  SectionList,
-  SafeAreaView,
-  PlatformColor,
-  Platform,
-} from 'react-native';
+import { StyleSheet, View, RefreshControl, SectionList } from 'react-native';
 import { Observer } from 'mobx-react';
 import getLang from '../wallet/get-lang.js';
 import Images from '../Images.js';
@@ -86,7 +79,7 @@ const ValidatorsList = memo(
       },
     ];
     return (
-      <SafeAreaView style={style.container}>
+      <View style={style.container}>
         <SectionList
           refreshControl={refreshControl}
           sections={
@@ -111,7 +104,7 @@ const ValidatorsList = memo(
           renderItem={renderItem}
           renderSectionHeader={renderSectionHeader}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 );
