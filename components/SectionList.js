@@ -120,6 +120,7 @@ export default observer(({ store, web3t, ...props }) => {
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}
         renderSectionHeader={renderSectionHeader}
+        ListFooterComponent={<View style={{ height: 50 }} />}
         // leftOpenValue={0}
         rightOpenValue={-70}
         previewRowKey={'0'}
