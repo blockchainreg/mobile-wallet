@@ -266,7 +266,7 @@ class StakingStore {
     // clean setStakingAccounts
     rewardsStore.setStakingAccounts(null);
 
-    if (nativeAccounts.length === 0) {
+    if (!nativeAccounts || nativeAccounts.length === 0) {
       const nativeAccountsFromBackendResult = await fetch(
           `${this.validatorsBackend}/v1/staking-accounts`
         ),
