@@ -4,7 +4,8 @@ module.exports = function (api) {
 
   const plugins = [];
   if (babelEnv !== 'development') {
-    plugins.push(['transform-remove-console']);
+    // Temporaty disabled for capturing logs for sentry crash reports
+    // plugins.push(['transform-remove-console']);
   }
   return {
     presets: ['babel-preset-expo'],

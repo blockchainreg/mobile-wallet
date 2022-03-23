@@ -59,7 +59,9 @@ export default (props) => {
           {props.onBack && (
             <BackButton
               onBack={props.onBack}
-              style={props.greenBack ? styles.leftBtnColor : styles.leftBtnHeader}
+              style={
+                props.greenBack ? styles.leftBtnColor : styles.leftBtnHeader
+              }
             />
           )}
           {props.onBackHandlerOnly && (
@@ -75,7 +77,7 @@ export default (props) => {
             {props.title}
           </Title>
         </Body>
-        <Right style={{paddingRight: 8}}>
+        <Right style={{ paddingRight: 8 }}>
           {props.identIcon && (
             <IdentIcon
               {...props}
