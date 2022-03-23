@@ -238,26 +238,22 @@ class StakingStore {
       },
     };
 
-    const [
-      epochInfo,
-      balanceRes,
-      balanceEvmRes,
-      validatorsFromBackendResult,
-    ] = await Promise.all([
-      this.loadEpochInfo(),
-      this.connection.getBalance(this.publicKey),
-      fetch(this.evmAPI, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${
-          this.evmAddress
-        }","latest"]}`,
-      }),
-      fetch(`${this.validatorsBackend}/v1/validators`),
-    ]);
+    const [epochInfo, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
+      await Promise.all([
+        this.loadEpochInfo(),
+        this.connection.getBalance(this.publicKey),
+        fetch(this.evmAPI, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: `{"jsonrpc":"2.0","id":${Date.now()},"method":"eth_getBalance","params":["${
+            this.evmAddress
+          }","latest"]}`,
+        }),
+        fetch(`${this.validatorsBackend}/v1/validators`),
+      ]);
     const balanceEvmJson = await balanceEvmRes.json();
     const validatorsFromBackend = await validatorsFromBackendResult.json();
 
@@ -265,14 +261,16 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    // use staking-accounts from rewards-store if they exists 
+    // use staking-accounts from rewards-store if they exists, to reduce time of staking loading
     let nativeAccounts = rewardsStore.getStakingAccounts();
-    if(nativeAccounts.length === 0) {
-      const nativeAccountsFromBackendResult = await fetch(`${this.validatorsBackend}/v1/staking-accounts`),
-      nativeAccounts = await nativeAccountsFromBackendResult.json();
+    if (nativeAccounts.length === 0) {
+      const nativeAccountsFromBackendResult = await fetch(
+          `${this.validatorsBackend}/v1/staking-accounts`
+        ),
+        nativeAccounts = await nativeAccountsFromBackendResult.json();
       nativeAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];
     }
-  
+
     const filteredAccounts = nativeAccounts.filter((it) => {
       return it.staker === this.publicKey58;
     });
