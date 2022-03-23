@@ -8,6 +8,7 @@ class RewardsStore {
   network = null;
   isLatestRewardsLoading = null;
   validatorsBackend = null;
+  stakingAccounts = null;
 
   constructor() {
     decorate(this, {
@@ -21,6 +22,14 @@ class RewardsStore {
     this.connection = connection;
     this.validatorsBackend = validatorsBackend;
     this.loadLatestRewards(cb);
+  }
+
+  setStakingAccounts(stakingAccounts) {
+    this.stakingAccounts = stakingAccounts;
+  }
+
+  getStakingAccounts() {
+    return this.stakingAccounts;
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
@@ -174,6 +183,7 @@ class RewardsStore {
     const stakingAccounts = nativeAccounts
       ? nativeAccounts.stakingAccounts
       : [];
+    this.setStakingAccounts(stakingAccounts);
     return stakingAccounts;
   }
 
