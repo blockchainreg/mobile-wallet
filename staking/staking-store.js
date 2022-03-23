@@ -243,7 +243,6 @@ class StakingStore {
       balanceRes,
       balanceEvmRes,
       validatorsFromBackendResult,
-      nativeAccountsFromBackendResult,
     ] = await Promise.all([
       this.loadEpochInfo(),
       this.connection.getBalance(this.publicKey),
@@ -258,12 +257,22 @@ class StakingStore {
         }","latest"]}`,
       }),
       fetch(`${this.validatorsBackend}/v1/validators`),
-      fetch(`${this.validatorsBackend}/v1/staking-accounts`),
     ]);
     const balanceEvmJson = await balanceEvmRes.json();
     const validatorsFromBackend = await validatorsFromBackendResult.json();
-    let nativeAccounts = await nativeAccountsFromBackendResult.json();
-    nativeAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];
+
+    if (!validatorsFromBackend.validators && !validatorsFromBackend.length) {
+      throw new Error('No validators loaded');
+    }
+
+    // use staking-accounts from rewards-store if they exists 
+    let nativeAccounts = rewardsStore.getStakingAccounts();
+    if(nativeAccounts.length === 0) {
+      const nativeAccountsFromBackendResult = await fetch(`${this.validatorsBackend}/v1/staking-accounts`),
+      nativeAccounts = await nativeAccountsFromBackendResult.json();
+      nativeAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];
+    }
+  
     const filteredAccounts = nativeAccounts.filter((it) => {
       return it.staker === this.publicKey58;
     });
@@ -272,9 +281,6 @@ class StakingStore {
         new StakingAccountModel(account, this.connection, this.network)
     );
 
-    if (!validatorsFromBackend.validators && !validatorsFromBackend.length) {
-      throw new Error('No validators loaded');
-    }
     const tmp = validatorsFromBackend.validators || validatorsFromBackend;
     const validators = tmp.map(
       (validator) =>
