@@ -137,7 +137,7 @@ class StakingStore {
       );
     } catch (e) {
       console.error(e);
-      //Cannot load from backend. Use slower method.
+      // Cannot load from backend. Use slower method.
       this.reload();
     }
     // );
@@ -268,9 +268,9 @@ class StakingStore {
 
     if (!nativeAccounts || nativeAccounts.length === 0) {
       const nativeAccountsFromBackendResult = await fetch(
-          `${this.validatorsBackend}/v1/staking-accounts`
-        ),
-        nativeAccounts = await nativeAccountsFromBackendResult.json();
+        `${this.validatorsBackend}/v1/staking-accounts`
+      );
+      nativeAccounts = await nativeAccountsFromBackendResult.json();
       nativeAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];
     }
 

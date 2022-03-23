@@ -2,6 +2,8 @@ import { decorate, observable, runInAction } from 'mobx';
 import fetch from 'cross-fetch';
 import { cachedCallWithRetries } from './utils';
 import { RewardModel } from './reward-model';
+import { callWithRetries } from './utils';
+const solanaWeb3 = require('./index.cjs.js');
 
 class RewardsStore {
   connection = null;
@@ -9,6 +11,7 @@ class RewardsStore {
   isLatestRewardsLoading = null;
   validatorsBackend = null;
   stakingAccounts = null;
+  isGetAccountsFromBackendWorks = true;
 
   constructor() {
     decorate(this, {
@@ -30,6 +33,14 @@ class RewardsStore {
 
   getStakingAccounts() {
     return this.stakingAccounts;
+  }
+
+  setIsGetAccountsFromBackendWorks(isGetAccountsFromBackendWorks) {
+    this.isGetAccountsFromBackendWorks = isGetAccountsFromBackendWorks;
+  }
+
+  getIsGetAccountsFromBackendWorks() {
+    return this.isGetAccountsFromBackendWorks;
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
@@ -76,9 +87,20 @@ class RewardsStore {
       this.getAccounts()
         .then((accounts) => {
           const accountMap = new Map();
-          for (let account of accounts) {
-            accountMap.set(account.pubkey, account);
+
+          const isGetAccountsFromBackendWorks =
+            this.getIsGetAccountsFromBackendWorks();
+
+          if (isGetAccountsFromBackendWorks) {
+            for (let account of accounts) {
+              accountMap.set(account.pubkey, account);
+            }
+          } else {
+            for (let account of accounts) {
+              accountMap.set(account.pubkey.toBase58(), account);
+            }
           }
+
           this.getEpochSchedule()
             .then((res) => {
               let firstNormalEpoch = res.firstNormalEpoch;
@@ -100,17 +122,38 @@ class RewardsStore {
                         .then((blockResult) => {
                           this.latestRewardsPerValidator = new observable.map();
                           const tmpMap = new Map();
-                          for (let reward of blockResult.rewards) {
-                            let account = accountMap.get(reward.pubkey);
-                            if (!account || !account.voter) {
-                              continue;
+
+                          if (isGetAccountsFromBackendWorks) {
+                            for (let reward of blockResult.rewards) {
+                              let account = accountMap.get(reward.pubkey);
+                              if (!account || !account.voter) {
+                                continue;
+                              }
+                              const { voter } = account;
+                              if (!tmpMap.has(voter)) {
+                                tmpMap.set(voter, []);
+                                continue;
+                              }
+                              tmpMap.get(voter).push(reward);
                             }
-                            const { voter } = account;
-                            if (!tmpMap.has(voter)) {
-                              tmpMap.set(voter, []);
-                              continue;
+                          } else {
+                            for (let reward of blockResult.rewards) {
+                              let account = accountMap.get(reward.pubkey);
+                              if (
+                                !account ||
+                                !account.account.data.parsed.info ||
+                                !account.account.data.parsed.info.stake
+                              )
+                                continue;
+                              const { voter } =
+                                account.account.data.parsed.info.stake
+                                  .delegation;
+                              if (!tmpMap.has(voter)) {
+                                tmpMap.set(voter, []);
+                                continue;
+                              }
+                              tmpMap.get(voter).push(reward);
                             }
-                            tmpMap.get(voter).push(reward);
                           }
                           this.setlatestRewardsPerValidator(
                             tmpMap,
@@ -175,7 +218,7 @@ class RewardsStore {
     );
   }
 
-  async getAccounts() {
+  async getAccountsFromBackend() {
     const nativeAccountsFromBackendResult = await fetch(
       `${this.validatorsBackend}/v1/staking-accounts`
     );
@@ -184,7 +227,40 @@ class RewardsStore {
       ? nativeAccounts.stakingAccounts
       : [];
     this.setStakingAccounts(stakingAccounts);
+    this.setIsGetAccountsFromBackendWorks(true);
+
     return stakingAccounts;
+  }
+
+  async getAccountsFromNodeRpc() {
+    const parsedProgramAccounts = await cachedCallWithRetries(
+      this.network,
+      [
+        'getParsedProgramAccounts',
+        this.connection,
+        solanaWeb3.StakeProgram.programId.toString(),
+      ],
+      () =>
+        this.connection.getParsedProgramAccounts(
+          solanaWeb3.StakeProgram.programId
+        )
+    );
+    this.setIsGetAccountsFromBackendWorks(false);
+    return parsedProgramAccounts;
+  }
+
+  async getAccounts() {
+    try {
+      return await callWithRetries(
+        async () => await this.getAccountsFromBackend(),
+        ['getAccountsFromBackend'],
+        5
+      );
+    } catch (error) {
+      console.error('[getAccounts] error: ', error);
+      // Cannot load from backend. Use slower method.
+      return await this.getAccountsFromNodeRpc();
+    }
   }
 
   getEpochTimeTs(epoch, cb) {
