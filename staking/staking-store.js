@@ -108,9 +108,12 @@ class StakingStore {
     this.startRefresh = action(this.startRefresh);
     this.endRefresh = action(this.endRefresh);
 
-    rewardsStore.setConnection(this.connection, network, () => {
-      this.init();
-    });
+    rewardsStore.setConnection(
+      { connection: this.connection, network, validatorsBackend },
+      () => {
+        this.init();
+      }
+    );
   }
 
   async init() {

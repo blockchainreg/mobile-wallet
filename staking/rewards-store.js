@@ -1,12 +1,13 @@
 import { decorate, observable, runInAction } from 'mobx';
+import fetch from 'cross-fetch';
 import { cachedCallWithRetries } from './utils';
 import { RewardModel } from './reward-model';
-const solanaWeb3 = require('./index.cjs.js');
 
 class RewardsStore {
   connection = null;
   network = null;
   isLatestRewardsLoading = null;
+  validatorsBackend = null;
 
   constructor() {
     decorate(this, {
@@ -15,9 +16,10 @@ class RewardsStore {
     });
   }
 
-  setConnection(connection, network, cb) {
+  setConnection({ connection, network, validatorsBackend }, cb) {
     this.network = network;
     this.connection = connection;
+    this.validatorsBackend = validatorsBackend;
     this.loadLatestRewards(cb);
   }
 
@@ -66,7 +68,7 @@ class RewardsStore {
         .then((accounts) => {
           const accountMap = new Map();
           for (let account of accounts) {
-            accountMap.set(account.pubkey.toBase58(), account);
+            accountMap.set(account.pubkey, account);
           }
           this.getEpochSchedule()
             .then((res) => {
@@ -91,14 +93,10 @@ class RewardsStore {
                           const tmpMap = new Map();
                           for (let reward of blockResult.rewards) {
                             let account = accountMap.get(reward.pubkey);
-                            if (
-                              !account ||
-                              !account.account.data.parsed.info ||
-                              !account.account.data.parsed.info.stake
-                            )
+                            if (!account || !account.voter) {
                               continue;
-                            const { voter } =
-                              account.account.data.parsed.info.stake.delegation;
+                            }
+                            const { voter } = account;
                             if (!tmpMap.has(voter)) {
                               tmpMap.set(voter, []);
                               continue;
@@ -169,18 +167,14 @@ class RewardsStore {
   }
 
   async getAccounts() {
-    return await cachedCallWithRetries(
-      this.network,
-      [
-        'getParsedProgramAccounts',
-        this.connection,
-        solanaWeb3.StakeProgram.programId.toString(),
-      ],
-      () =>
-        this.connection.getParsedProgramAccounts(
-          solanaWeb3.StakeProgram.programId
-        )
+    const nativeAccountsFromBackendResult = await fetch(
+      `${this.validatorsBackend}/v1/staking-accounts`
     );
+    const nativeAccounts = await nativeAccountsFromBackendResult.json();
+    const stakingAccounts = nativeAccounts
+      ? nativeAccounts.stakingAccounts
+      : [];
+    return stakingAccounts;
   }
 
   getEpochTimeTs(epoch, cb) {
