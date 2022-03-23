@@ -7,7 +7,7 @@ export mainnet =
         cheap: \0.002
     api:
         provider: \usdc
-        web3Provider : \http://geth.ethereum.veladev.net
+        web3Provider : \https://ropsten.infura.io/v3/6a6c66740e9e4cea9cc8425869e9d106
         url : \https://etherscan.io
         apiUrl : \https://api.etherscan.io/api
     group: 'Ethereum'
