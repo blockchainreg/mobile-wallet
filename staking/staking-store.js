@@ -263,6 +263,9 @@ class StakingStore {
 
     // use staking-accounts from rewards-store if they exists, to reduce time of staking loading
     let nativeAccounts = rewardsStore.getStakingAccounts();
+    // clean setStakingAccounts
+    rewardsStore.setStakingAccounts(null);
+
     if (nativeAccounts.length === 0) {
       const nativeAccountsFromBackendResult = await fetch(
           `${this.validatorsBackend}/v1/staking-accounts`
