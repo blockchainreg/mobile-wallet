@@ -222,7 +222,7 @@ const StakePage = ({ store, web3t, props }) => {
   const lang = getLang(store);
 
   const refreshStakeItem = () => {
-    stakingStore.reloadWithRetry();
+    stakingStore.reloadWithRetryAndCleanCache();
     // store.sort = null;
   };
 

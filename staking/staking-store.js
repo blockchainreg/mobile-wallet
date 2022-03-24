@@ -12,6 +12,7 @@ import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
 import { rewardsStore } from './rewards-store';
 import { cachedCallWithRetries } from './utils';
+import * as api from './api';
 
 const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
@@ -108,8 +109,13 @@ class StakingStore {
     this.startRefresh = action(this.startRefresh);
     this.endRefresh = action(this.endRefresh);
 
+    invalidateCache();
     rewardsStore.setConnection(
-      { connection: this.connection, network, validatorsBackend },
+      {
+        connection: this.connection,
+        network,
+        validatorsBackend,
+      },
       () => {
         this.init();
       }
@@ -121,12 +127,16 @@ class StakingStore {
     await this.reloadWithRetry();
   }
 
+  async reloadWithRetryAndCleanCache() {
+    invalidateCache();
+    await this.reloadWithRetry();
+  }
+
   async reloadWithRetry() {
     if (this.isRefreshing) {
       return await when(() => !this.isRefreshing);
     }
     this.isRefreshing = true;
-    invalidateCache();
     try {
       await callWithRetries(
         async () => {
@@ -261,23 +271,16 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    // use staking-accounts from rewards-store if they exists, to reduce time of staking loading
-    let nativeAccounts = rewardsStore.getStakingAccounts();
-    // clean setStakingAccounts
-    rewardsStore.setStakingAccounts(null);
+    const nativeAccounts =
+      await api.getStakingAccountsFromBackendCachedWithRetries({
+        network: this.network,
+        validatorsBackend: this.validatorsBackend,
+      });
 
-    if (!nativeAccounts || nativeAccounts.length === 0) {
-      const nativeAccountsFromBackendResult = await fetch(
-        `${this.validatorsBackend}/v1/staking-accounts`
-      );
-      nativeAccounts = await nativeAccountsFromBackendResult.json();
-      nativeAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];
-    }
-
-    const filteredAccounts = nativeAccounts.filter((it) => {
+    const nativeCurrentUserAccounts = nativeAccounts.filter((it) => {
       return it.staker === this.publicKey58;
     });
-    const stakingAccounts = filteredAccounts.map(
+    const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
         new StakingAccountModel(account, this.connection, this.network)
     );
@@ -733,7 +736,7 @@ class StakingStore {
     );
 
     const result = await this.sendTransaction(transaction);
-    await this.reloadWithRetry();
+    await this.reloadWithRetryAndCleanCache();
     return result;
   }
 
@@ -855,7 +858,7 @@ class StakingStore {
 
     await this.sendTransaction(transaction);
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    await this.reloadWithRetry();
+    await this.reloadWithRetryAndCleanCache();
   }
 
   async withdrawRequested(address) {
@@ -891,7 +894,7 @@ class StakingStore {
     }
     const res = await this.sendTransaction(transaction);
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    await this.reloadWithRetry();
+    await this.reloadWithRetryAndCleanCache();
     return res;
   }
 
