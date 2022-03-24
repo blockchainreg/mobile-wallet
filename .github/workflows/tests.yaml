@@ -5,17 +5,13 @@ concurrency:
   group: mobile-wallet-tests-${{github.event.pull_request.number}}
   cancel-in-progress: true
 jobs:
-  tests:
+  check-dev-domain-presence:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./e2e
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: check dev domain presence is repo
-        # working-directory: ./
+      - name: check dev domain presence in repository code
         run: |
           grep -Ri ${{secrets.SECRET_DOMAIN}} . \
           --exclude-dir node_modules \
