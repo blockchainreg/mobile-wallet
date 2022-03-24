@@ -17,7 +17,7 @@ export const initCrashreporting = () => {
   console.assert = stubArrowFunc;
 
   Sentry.init({
-    dsn: 'https://4c978e8a45e94d4c85b4419b2882b55b@o1175175.ingest.sentry.io/6271876',
+    dsn: 'https://59531c97e66149d0802197f1845b3a09@o1015695.ingest.sentry.io/6271737',
     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
     // We recommend adjusting this value in production.
     // tracesSampleRate: __DEV__ ? 1.0 : 0.5,
