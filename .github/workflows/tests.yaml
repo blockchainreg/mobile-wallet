@@ -20,5 +20,6 @@ jobs:
           echo ' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -' && \
           echo 'The development domain was found in repository code.' && \
           echo 'See filename(s) above.' && \
+          echo 'Domain is replaced with *** due to security.' && \
           echo ' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -' && \
           exit 13

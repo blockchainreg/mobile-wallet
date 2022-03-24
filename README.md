@@ -42,5 +42,3 @@ If have error
 ```
 rm -rf node_modules/ && yarn && cd android && ./gradlew clean && ./gradlew :app:bundleRelease
 ```
-
-veladev
