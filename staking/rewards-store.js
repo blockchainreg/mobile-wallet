@@ -2,7 +2,10 @@ import { decorate, observable, runInAction } from 'mobx';
 import fetch from 'cross-fetch';
 import { cachedCallWithRetries } from './utils';
 import { RewardModel } from './reward-model';
-import { callWithRetries } from './utils';
+import {
+  callWithRetries,
+  transformNodeRpcGetParsedProgramAccountsToBackendFormat,
+} from './utils';
 const solanaWeb3 = require('./index.cjs.js');
 
 class RewardsStore {
@@ -11,7 +14,6 @@ class RewardsStore {
   isLatestRewardsLoading = null;
   validatorsBackend = null;
   stakingAccounts = null;
-  isGetAccountsFromBackendWorks = true;
 
   constructor() {
     decorate(this, {
@@ -33,14 +35,6 @@ class RewardsStore {
 
   getStakingAccounts() {
     return this.stakingAccounts;
-  }
-
-  setIsGetAccountsFromBackendWorks(isGetAccountsFromBackendWorks) {
-    this.isGetAccountsFromBackendWorks = isGetAccountsFromBackendWorks;
-  }
-
-  getIsGetAccountsFromBackendWorks() {
-    return this.isGetAccountsFromBackendWorks;
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
@@ -88,17 +82,8 @@ class RewardsStore {
         .then((accounts) => {
           const accountMap = new Map();
 
-          const isGetAccountsFromBackendWorks =
-            this.getIsGetAccountsFromBackendWorks();
-
-          if (isGetAccountsFromBackendWorks) {
-            for (let account of accounts) {
-              accountMap.set(account.pubkey, account);
-            }
-          } else {
-            for (let account of accounts) {
-              accountMap.set(account.pubkey.toBase58(), account);
-            }
+          for (let account of accounts) {
+            accountMap.set(account.pubkey, account);
           }
 
           this.getEpochSchedule()
@@ -123,37 +108,17 @@ class RewardsStore {
                           this.latestRewardsPerValidator = new observable.map();
                           const tmpMap = new Map();
 
-                          if (isGetAccountsFromBackendWorks) {
-                            for (let reward of blockResult.rewards) {
-                              let account = accountMap.get(reward.pubkey);
-                              if (!account || !account.voter) {
-                                continue;
-                              }
-                              const { voter } = account;
-                              if (!tmpMap.has(voter)) {
-                                tmpMap.set(voter, []);
-                                continue;
-                              }
-                              tmpMap.get(voter).push(reward);
+                          for (let reward of blockResult.rewards) {
+                            let account = accountMap.get(reward.pubkey);
+                            if (!account || !account.voter) {
+                              continue;
                             }
-                          } else {
-                            for (let reward of blockResult.rewards) {
-                              let account = accountMap.get(reward.pubkey);
-                              if (
-                                !account ||
-                                !account.account.data.parsed.info ||
-                                !account.account.data.parsed.info.stake
-                              )
-                                continue;
-                              const { voter } =
-                                account.account.data.parsed.info.stake
-                                  .delegation;
-                              if (!tmpMap.has(voter)) {
-                                tmpMap.set(voter, []);
-                                continue;
-                              }
-                              tmpMap.get(voter).push(reward);
+                            const { voter } = account;
+                            if (!tmpMap.has(voter)) {
+                              tmpMap.set(voter, []);
+                              continue;
                             }
+                            tmpMap.get(voter).push(reward);
                           }
                           this.setlatestRewardsPerValidator(
                             tmpMap,
@@ -227,7 +192,6 @@ class RewardsStore {
       ? nativeAccounts.stakingAccounts
       : [];
     this.setStakingAccounts(stakingAccounts);
-    this.setIsGetAccountsFromBackendWorks(true);
 
     return stakingAccounts;
   }
@@ -243,10 +207,15 @@ class RewardsStore {
       () =>
         this.connection.getParsedProgramAccounts(
           solanaWeb3.StakeProgram.programId
-        )
+        ),
+      5
     );
-    this.setIsGetAccountsFromBackendWorks(false);
-    return parsedProgramAccounts;
+    const parsedProgramAccountsInBackendFormat = parsedProgramAccounts.map(
+      transformNodeRpcGetParsedProgramAccountsToBackendFormat
+    );
+
+    this.setStakingAccounts(parsedProgramAccountsInBackendFormat);
+    return parsedProgramAccountsInBackendFormat;
   }
 
   async getAccounts() {

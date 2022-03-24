@@ -132,7 +132,7 @@ class StakingStore {
         async () => {
           await this.reloadFromBackend();
         },
-        null,
+        ['reloadFromBackend'],
         5
       );
     } catch (e) {

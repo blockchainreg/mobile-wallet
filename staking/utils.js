@@ -37,3 +37,29 @@ export async function callWithRetries(call, params, maxTries = 3) {
     }
   }
 }
+
+export const transformNodeRpcGetParsedProgramAccountsToBackendFormat = (
+  nodeRpcStakingAccount
+) => {
+  const { account, pubkey } = nodeRpcStakingAccount;
+
+  return {
+    voter: account?.data?.parsed?.info?.stake?.delegation?.voter || null,
+    activationEpoch:
+      account?.data?.parsed?.info?.stake?.delegation?.activationEpoch || null,
+    deactivationEpoch:
+      account?.data?.parsed?.info?.stake?.delegation?.deactivationEpoch || null,
+    rentExemptReserve:
+      account?.data?.parsed?.info?.meta?.rentExemptReserve || null,
+    pubkey: pubkey?.toBase58() || null,
+    lamports: account?.lamportsStr || account?.lamports,
+    staker: account?.data?.parsed?.info?.meta?.authorized?.staker || null,
+    withdrawer:
+      account?.data?.parsed?.info?.meta?.authorized?.withdrawer || null,
+    custodian: account?.data?.parsed?.info?.meta?.lockup?.custodian || null,
+    epoch: account?.data?.parsed?.info?.meta?.lockup?.epoch,
+    lockupUnixTimestamp:
+      account?.data?.parsed?.info?.meta?.lockup?.unixTimestamp,
+    creditsObserved: account?.data?.parsed?.info?.stake?.creditsObserved,
+  };
+};
