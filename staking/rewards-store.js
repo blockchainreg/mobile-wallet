@@ -1,11 +1,8 @@
 import { decorate, observable, runInAction } from 'mobx';
-import fetch from 'cross-fetch';
+import * as api from './api';
 import { cachedCallWithRetries } from './utils';
 import { RewardModel } from './reward-model';
-import {
-  callWithRetries,
-  transformNodeRpcGetParsedProgramAccountsToBackendFormat,
-} from './utils';
+import { transformNodeRpcGetParsedProgramAccountsToBackendFormat } from './utils';
 const solanaWeb3 = require('./index.cjs.js');
 
 class RewardsStore {
@@ -27,14 +24,6 @@ class RewardsStore {
     this.connection = connection;
     this.validatorsBackend = validatorsBackend;
     this.loadLatestRewards(cb);
-  }
-
-  setStakingAccounts(stakingAccounts) {
-    this.stakingAccounts = stakingAccounts;
-  }
-
-  getStakingAccounts() {
-    return this.stakingAccounts;
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
@@ -184,14 +173,11 @@ class RewardsStore {
   }
 
   async getAccountsFromBackend() {
-    const nativeAccountsFromBackendResult = await fetch(
-      `${this.validatorsBackend}/v1/staking-accounts`
-    );
-    const nativeAccounts = await nativeAccountsFromBackendResult.json();
-    const stakingAccounts = nativeAccounts
-      ? nativeAccounts.stakingAccounts
-      : [];
-    this.setStakingAccounts(stakingAccounts);
+    const stakingAccounts =
+      await api.getStakingAccountsFromBackendCachedWithRetries({
+        network: this.network,
+        validatorsBackend: this.validatorsBackend,
+      });
 
     return stakingAccounts;
   }
@@ -214,17 +200,12 @@ class RewardsStore {
       transformNodeRpcGetParsedProgramAccountsToBackendFormat
     );
 
-    this.setStakingAccounts(parsedProgramAccountsInBackendFormat);
     return parsedProgramAccountsInBackendFormat;
   }
 
   async getAccounts() {
     try {
-      return await callWithRetries(
-        async () => await this.getAccountsFromBackend(),
-        ['getAccountsFromBackend'],
-        5
-      );
+      return await this.getAccountsFromBackend();
     } catch (error) {
       console.error('[getAccounts] error: ', error);
       // Cannot load from backend. Use slower method.
