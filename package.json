@@ -99,6 +99,7 @@
     "react-native-iphone-x-helper": "1.2.1",
     "react-native-jdenticon": "^0.0.3",
     "react-native-loading-spinner-overlay": "1.0.1",
+    "react-native-local-resource": "^0.1.6",
     "react-native-markdown-display": "^5.1.0",
     "react-native-masked-text": "1.13.0",
     "react-native-messages": "^0.3.0",
