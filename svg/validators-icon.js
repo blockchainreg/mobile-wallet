@@ -32,7 +32,12 @@ export const ValidatorsIcon = (props) => {
     }
   };
   return (
-    <Svg width={13} height={13} viewBox="0 0 13 13" fill="none">
+    <Svg
+      width={props.width || 13}
+      height={props.height || 13}
+      viewBox="0 0 13 13"
+      fill="none"
+    >
       {checkType(props.type)}
     </Svg>
   );

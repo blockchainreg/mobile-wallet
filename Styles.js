@@ -53,21 +53,18 @@ export default StyleSheet.create({
     borderWidth: 0,
     ...ifIphoneX(
       {
-        // backgroundColor: Images.velasColor5,
-        backgroundColor: 'transparent',
+        backgroundColor: Images.colorDarkBlue,
         borderTopColor: 'transparent',
       },
       {
         ...Platform.select({
           ios: {
             borderTopColor: 'transparent',
-            backgroundColor: 'transparent',
-            // backgroundColor: Images.velasColor5,
+            backgroundColor: Images.colorDarkBlue,
           },
           android: {
-            // backgroundColor: Images.velasColor5,
+            backgroundColor: Images.colorDarkBlue,
             borderTopColor: 'transparent',
-            backgroundColor: 'transparent',
             // zIndex: 2
           },
         }),
@@ -88,7 +85,7 @@ export default StyleSheet.create({
         ...Platform.select({
           ios: {
             borderRadius: 0,
-            height: 'auto',
+            height: 50,
             backgroundColor: 'transparent',
           },
           android: {
@@ -6030,11 +6027,11 @@ export default StyleSheet.create({
   },
   leftBtnColor: {
     color: Images.colorGreen,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   leftBtnHeader: {
     color: '#fff',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   viewNetInfo: {
     backgroundColor: 'orange',

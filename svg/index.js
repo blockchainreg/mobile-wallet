@@ -34,3 +34,4 @@ export * from './cameraEn';
 export * from './cameraDis';
 export * from './fingerPrint';
 export * from './scan';
+export * from './buyImage';

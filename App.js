@@ -1,18 +1,18 @@
 //import Bugsnag from '@bugsnag/expo';
-//Bugsnag.start();
-
+import * as React from 'react';
 import * as Font from 'expo-font';
+import { View, Image, Text, ImageBackground, TextInput } from 'react-native';
+import { Input } from 'native-base';
+
 import './global.js';
 import prngSync from './prng-sync.js';
 import localStoragePromise from './localStorage.js';
-import * as React from 'react';
-import { View, Image, Text, ImageBackground, TextInput } from 'react-native';
-import { Input } from 'native-base';
 import styles from './Styles.js';
 import Images from './Images.js';
 import { VelasLogo1 } from './svg/velas-logo1';
 import { Bg } from './svg/bg.js';
-//const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
+import { initCrashreporting } from './utils/errors';
+import { appUsageAnalyticsHoc } from './utils/usageAnalytics';
 
 class App extends React.Component {
   state = {
@@ -37,9 +37,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    Promise.all([prngSync, localStoragePromise, this.loadFonts()]).then(() => {
-      this.setState({ AppReady: require('./App-ready.js').default });
-    });
+    Promise.all([prngSync, localStoragePromise, this.loadFonts()])
+      .then(() => {
+        this.setState({ AppReady: require('./App-ready.js').default });
+      })
+      .finally(initCrashreporting);
     if (Text.defaultProps == null) {
       Text.defaultProps = {};
     }
@@ -81,11 +83,7 @@ class App extends React.Component {
   }
 }
 
-export default () => (
-  //  <ErrorBoundary FallbackComponent={ErrorView}>
-  <App />
-  //  </ErrorBoundary>
-);
+export default appUsageAnalyticsHoc(App);
 
 class ErrorView extends React.Component {
   render() {

@@ -351,12 +351,18 @@ PODS:
   - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
+  - RNSentry (3.3.5):
+    - React-Core
+    - Sentry (= 7.11.0)
   - RNSVG (12.1.1):
     - React
   - RNToastNative (1.0.0):
     - React
   - RNVectorIcons (6.4.2):
     - React
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - UMAppLoader (2.2.0)
   - UMCore (7.1.2)
   - UMReactNativeAdapter (6.3.9):
@@ -429,6 +435,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNToastNative (from `../node_modules/react-native-toast-native/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -441,6 +448,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - Sentry
     - ZXingObjC
 
 EXTERNAL SOURCES:
@@ -552,6 +560,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNToastNative:
@@ -625,9 +635,11 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 8744fb15baf4c582367d910f4f32f5097fb350cb
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNSentry: 3e7f2504006c19fa07027a7c4fbe83d88e69125a
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNToastNative: 8e13746609df4654aefe14af8596c598e1569c93
   RNVectorIcons: 6607bd3a30291d0edb56f9bbe7ae411ee2b928b0
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
   UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785
@@ -637,4 +649,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cb584fbb12dc0ecf7ad2482f8a89f49c7d72bc0b
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
