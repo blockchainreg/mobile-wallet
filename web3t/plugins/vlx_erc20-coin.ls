@@ -31,7 +31,7 @@ testnet-config =
     ERC20BridgeToken: "0xfEFF2e74eC612A288Ae55fe9F6e40c52817a1B6C"
     api:
         provider: \velas_erc20 
-        web3Provider: 'https://ropsten-rpc.devnet.veladev.net',
+        web3Provider: 'https://ropsten.infura.io/v3/009278d1b77a4af48536f1f772926648',
         url: 'https://ropsten.etherscan.io',
         apiUrl: 'https://api-ropsten.etherscan.io/api'
     networks:
