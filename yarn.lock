@@ -15063,6 +15063,11 @@ react-native-loading-spinner-overlay@1.0.1:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-local-resource@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/react-native-local-resource/-/react-native-local-resource-0.1.6.tgz#9aea39488c7b3f3d107e9459d3d83c3ac707d24e"
+  integrity sha512-uDT6Ig8w6WkmA7ReIUG8soBkWJ94b/d1cnFHnlEMvMPlBf6fhPHh90mVdNTTYf95oT4sL09mBN5MYFDX4hRIiQ==
+
 react-native-markdown-display@^5.1.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-native-markdown-display/-/react-native-markdown-display-5.1.1.tgz#ba80b8886048ebf88fe873f3e9289a9a449a3433"

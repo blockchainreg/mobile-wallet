@@ -12,6 +12,8 @@ import Spinner from '../utils/spinner.js';
 import setupWallet from '../setupWallet.js';
 import Header from '../components/Header';
 import { VelasLogo1 } from '../svg/velas-logo1.js';
+import loadLocalResource from 'react-native-local-resource';
+import termsMd from '../TERMS.md';
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -23,10 +25,9 @@ async function loadTerms(store) {
 
 async function loadTermsRecusion(store) {
   try {
-    const response = await fetch(
-      'https://raw.githubusercontent.com/velas/mobile-wallet/master/TERMS.md'
-    );
-    store.current.termsMarkdown = await response.text();
+    const termsText = await loadLocalResource(termsMd);
+
+    store.current.termsMarkdown = termsText;
   } catch (e) {
     console.error(e);
     setTimeout(loadTerms.bind(this, store), 1000);
