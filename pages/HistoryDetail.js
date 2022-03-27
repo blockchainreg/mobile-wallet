@@ -4,7 +4,6 @@ import styles from '../Styles.js';
 import { ScrollView } from 'react-native';
 import walletUserHistoryDetail from '../components/walletUserHistoryDetail.js';
 import getLang from '../wallet/get-lang.js';
-import { LinearGradient } from 'expo-linear-gradient';
 import Images from '../Images.js';
 import Header from '../components/Header.js';
 
@@ -19,13 +18,16 @@ module.exports = ({ store }) => {
 
   return (
     <View
-      style={[styles.viewMonoHistory, { backgroundColor: Images.velasColor4 }]}
+      style={[
+        styles.viewMonoHistory,
+        { backgroundColor: Images.colorDarkBlue },
+      ]}
     >
       <View style={{ display: 'none' }}>
         <Header onBackHandlerOnly={back} />
       </View>
 
-      <View style={{ paddingTop: 50 }}>
+      <View style={styles.btnDoneHistory}>
         <Button
           onPress={() => {
             store.infoTransaction = null;

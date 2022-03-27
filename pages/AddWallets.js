@@ -9,12 +9,12 @@ import {
   Button,
   View,
   Icon,
+  Container,
 } from 'native-base';
 import styles from '../Styles.js';
 import { SectionList, StyleSheet } from 'react-native';
 import RefreshControl from '../components/RefreshControl.js';
 import spin from '../utils/spin.js';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { filter, groupBy, keys } from 'prelude-ls';
 
 import dash from '../registry/dash.json';
@@ -41,8 +41,6 @@ import vlxErc20 from '../web3t/plugins/vlx_erc20-coin.js';
 
 import walletsFuncs from '../wallet/wallets-funcs.js';
 import getLang from '../wallet/get-lang.js';
-import Background from '../components/Background.js';
-import { LinearGradient } from 'expo-linear-gradient';
 import Images from '../Images.js';
 import Header from '../components/Header';
 
@@ -162,27 +160,16 @@ export default ({ store, web3t }) => {
 
   return (
     <View style={styles.viewFlex}>
-      <Background fullscreen={true} />
-      {RefreshControl({
-        swipeRefresh: refreshToken,
-        store,
-        children: (
-          <>
-            <Header title={lang.manageWallet} onBack={back} />
-          </>
-        ),
-      })}
-      <View style={[styles.viewMono1, { height: hp('85%') }]}>
-        <SectionList
-          style={[{ marginBottom: 50 }]}
-          sections={listData}
-          keyExtractor={(item, index) => item.token + index}
-          renderItem={({ item }) => renderCoin(store, web3t, item)}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={style.header}>{title} Network</Text>
-          )}
-        />
-      </View>
+      <Header title={lang.manageWallet} onBack={back} />
+      <SectionList
+        // style={[{ marginBottom: 50 }]}
+        sections={listData}
+        keyExtractor={(item, index) => item.token + index}
+        renderItem={({ item }) => renderCoin(store, web3t, item)}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={style.header}>{title} Network</Text>
+        )}
+      />
     </View>
   );
 };

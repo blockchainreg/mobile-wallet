@@ -1,14 +1,13 @@
 //import Bugsnag from '@bugsnag/expo';
 import * as React from 'react';
 import * as Font from 'expo-font';
-import { View, Image, Text, ImageBackground, TextInput } from 'react-native';
+import { View, Image, Text, SafeAreaView, TextInput } from 'react-native';
 import { Input } from 'native-base';
 
 import './global.js';
 import prngSync from './prng-sync.js';
 import localStoragePromise from './localStorage.js';
 import styles from './Styles.js';
-import Images from './Images.js';
 import { VelasLogo1 } from './svg/velas-logo1';
 import { Bg } from './svg/bg.js';
 import { initCrashreporting } from './utils/errors';
@@ -77,7 +76,9 @@ class App extends React.Component {
     }
     return (
       <View style={[styles.viewFlex, { backgroundColor: '#05061f' }]}>
-        <AppReady />
+        <SafeAreaView style={styles.safeArea}>
+          <AppReady />
+        </SafeAreaView>
       </View>
     );
   }
