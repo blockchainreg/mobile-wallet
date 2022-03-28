@@ -6,6 +6,10 @@ export async function invalidateCache() {
   cacheMap.clear();
 }
 
+export function deleteCacheByKey(keys) {
+  return cacheMap.delete(keys);
+}
+
 export async function cachedCallWithRetries(network, params, call, maxTries) {
   var params$ = params;
   if (network && params$ && params$.unshift) {
