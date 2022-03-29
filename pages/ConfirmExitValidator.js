@@ -24,7 +24,7 @@ export default ({ store, web3t, props }) => {
       lang.progressValidator || 'Validator is loading',
       async (cb) => {
         try {
-          const result = await stakingStore.reloadWithRetry();
+          const result = await stakingStore.reloadWithRetryAndCleanCache();
           cb(null, result);
         } catch (err) {
           cb(err);

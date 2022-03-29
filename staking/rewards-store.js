@@ -1,12 +1,16 @@
 import { decorate, observable, runInAction } from 'mobx';
+import * as api from './api';
 import { cachedCallWithRetries } from './utils';
 import { RewardModel } from './reward-model';
+import { transformNodeRpcGetParsedProgramAccountsToBackendFormat } from './utils';
 const solanaWeb3 = require('./index.cjs.js');
 
 class RewardsStore {
   connection = null;
   network = null;
   isLatestRewardsLoading = null;
+  validatorsBackend = null;
+  stakingAccounts = null;
 
   constructor() {
     decorate(this, {
@@ -15,9 +19,10 @@ class RewardsStore {
     });
   }
 
-  setConnection(connection, network, cb) {
+  setConnection({ connection, network, validatorsBackend }, cb) {
     this.network = network;
     this.connection = connection;
+    this.validatorsBackend = validatorsBackend;
     this.loadLatestRewards(cb);
   }
 
@@ -65,9 +70,11 @@ class RewardsStore {
       this.getAccounts()
         .then((accounts) => {
           const accountMap = new Map();
+
           for (let account of accounts) {
-            accountMap.set(account.pubkey.toBase58(), account);
+            accountMap.set(account.pubkey, account);
           }
+
           this.getEpochSchedule()
             .then((res) => {
               let firstNormalEpoch = res.firstNormalEpoch;
@@ -89,16 +96,13 @@ class RewardsStore {
                         .then((blockResult) => {
                           this.latestRewardsPerValidator = new observable.map();
                           const tmpMap = new Map();
+
                           for (let reward of blockResult.rewards) {
                             let account = accountMap.get(reward.pubkey);
-                            if (
-                              !account ||
-                              !account.account.data.parsed.info ||
-                              !account.account.data.parsed.info.stake
-                            )
+                            if (!account || !account.voter) {
                               continue;
-                            const { voter } =
-                              account.account.data.parsed.info.stake.delegation;
+                            }
+                            const { voter } = account;
                             if (!tmpMap.has(voter)) {
                               tmpMap.set(voter, []);
                               continue;
@@ -168,8 +172,18 @@ class RewardsStore {
     );
   }
 
-  async getAccounts() {
-    return await cachedCallWithRetries(
+  async getAccountsFromBackend() {
+    const stakingAccounts =
+      await api.getStakingAccountsFromBackendCachedWithRetries({
+        network: this.network,
+        validatorsBackend: this.validatorsBackend,
+      });
+
+    return stakingAccounts;
+  }
+
+  async getAccountsFromNodeRpc() {
+    const parsedProgramAccounts = await cachedCallWithRetries(
       this.network,
       [
         'getParsedProgramAccounts',
@@ -179,8 +193,24 @@ class RewardsStore {
       () =>
         this.connection.getParsedProgramAccounts(
           solanaWeb3.StakeProgram.programId
-        )
+        ),
+      5
     );
+    const parsedProgramAccountsInBackendFormat = parsedProgramAccounts.map(
+      transformNodeRpcGetParsedProgramAccountsToBackendFormat
+    );
+
+    return parsedProgramAccountsInBackendFormat;
+  }
+
+  async getAccounts() {
+    try {
+      return await this.getAccountsFromBackend();
+    } catch (error) {
+      console.error('[getAccounts] error: ', error);
+      // Cannot load from backend. Use slower method.
+      return await this.getAccountsFromNodeRpc();
+    }
   }
 
   getEpochTimeTs(epoch, cb) {

@@ -226,7 +226,7 @@ export default ({ store, web3t }) => {
   const refreshBalance = () => {
     store.current.refreshingBalances = true;
     //TODO: make reloadWithRetry query non-blocking main thread
-    //stakingStore.reloadWithRetry();
+    //stakingStore.reloadWithRetryAndCleanCache();
     web3t.refresh((err, data) => {
       store.current.refreshingBalances = false;
     });

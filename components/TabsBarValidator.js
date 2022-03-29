@@ -78,7 +78,8 @@ export default ({ store, web3t }) => {
             async (cb) => {
               try {
                 const result = await stakingStore.withdrawRequested(ADDRESS);
-                const result1 = await stakingStore.reloadWithRetry();
+                const result1 =
+                  await stakingStore.reloadWithRetryAndCleanCache();
                 cb(null, result, result1);
               } catch (err) {
                 cb(err);
