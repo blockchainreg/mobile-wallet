@@ -745,9 +745,7 @@ class StakingStore {
 
   getSwapAmountByStakeAmount(amountStr) {
     const amount =
-      typeof amountStr === 'string'
-        ? new BN((amountStr * 1e9).toString(), 10)
-        : amountStr;
+      typeof amountStr === 'string' ? new BN(amountStr * 1e9) : amountStr;
     if (!this.vlxNativeBalance) {
       return null;
     }
