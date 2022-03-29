@@ -211,6 +211,17 @@ export default StyleSheet.create({
       },
     }),
   },
+  btnDoneHistory: {
+    ...Platform.select({
+      android: {
+        paddingTop: 50,
+      },
+    }),
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: Images.colorDarkBlue,
+  },
   viewFlexHeader: {
     ...Platform.select({
       ios: {
@@ -1278,28 +1289,11 @@ export default StyleSheet.create({
   },
   // FaqAll
   viewMono1: {
-    ...ifIphoneX(
-      {
-        flex: 1,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: hp('75%'),
-      },
-      {
-        flex: 1,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: hp('75%'),
-      }
-    ),
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 
   numbersFaq: {

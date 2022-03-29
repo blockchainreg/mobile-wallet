@@ -207,7 +207,7 @@ export default ({ store, web3t }) => {
         <ScrollView>
           <View style={styles.viewPt} />
           {LoadMoreDate({ store })}
-          <View style={{ paddingBottom: 150 }} />
+          {/* <View style={{ paddingBottom: 150 }} /> */}
         </ScrollView>
       </View>
     );
@@ -255,8 +255,8 @@ export default ({ store, web3t }) => {
       <View
         style={{
           backgroundColor: 'transparent',
-          height: '16%',
-          marginTop: hp('5%'),
+          height: '20%',
+          // marginTop: hp('5%'),
           alignSelf: 'center',
           width: '66%',
           zIndex: 999,
