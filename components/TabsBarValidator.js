@@ -289,6 +289,7 @@ export default ({ store, web3t }) => {
             }}
           />
         );
+        const isMyStake = !details.myStake.isZero();
         return (
           <>
             <DetailsValidatorComponent
@@ -296,15 +297,15 @@ export default ({ store, web3t }) => {
               name={details.name}
               copyAddress={copyAddress}
               copyName={copyName}
-              isActive={details.status === 'active' ? true : false}
+              isActive={details.status === 'active'}
               infoApr={
-                !details.myStake.isZero()
+                isMyStake
                   ? false
                   : lang.info3 ||
                     'APR is calculated based on the results of the previous epoch'
               }
               infoActiveStake={
-                !details.myStake.isZero()
+                isMyStake
                   ? lang.info4 ||
                     'Only 25% of active stake can be activated per epoch. '
                   : false
@@ -314,28 +315,26 @@ export default ({ store, web3t }) => {
                 'https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown'
               }
               subtitle1={
-                !details.myStake.isZero()
-                  ? 'MY ACTIVE STAKE'
-                  : lang.totalStake || 'TOTAL STAKE'
+                isMyStake ? 'MY ACTIVE STAKE' : lang.totalStake || 'TOTAL STAKE'
               }
               value1={
-                !details.myStake.isZero()
+                isMyStake
                   ? `${ACTIVE_STAKE} %`
                   : `${formatStakeAmount(details.activeStake)} VLX`
               }
               subtitle2={
-                !details.myStake.isZero()
+                isMyStake
                   ? lang.myStake || 'MY STAKE'
                   : lang.annual || 'ANNUAL PERCENTAGE RATE'
               }
               value2={
-                !details.myStake.isZero()
+                isMyStake
                   ? `${formatStakeAmount(details.myStake)} VLX`
                   : `${ANNUAL_RATE} %`
               }
               store={store}
             />
-            {!details.myStake.isZero() ? (
+            {isMyStake ? (
               <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
