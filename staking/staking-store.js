@@ -573,7 +573,7 @@ class StakingStore {
   }
 
   getAnnualRate(validator) {
-    return !!validator.apr && (validator.apr * 100).toFixed(2);
+    return validator.apr ? (validator.apr * 100).toFixed(2) : 0;
   }
 
   async getNextSeed() {
