@@ -332,9 +332,19 @@ import roundNumber from '../round-number';
         store.current.send.contractAddress != null
           ? store.current.send.contractAddress
           : transaction.recipient;
+      const chosenNetwork = store.current.send.chosenNetwork;
+      const referTo = chosenNetwork != null ? chosenNetwork.referTo : void 8;
       const recipient = (function () {
         switch (false) {
-          case !receiver.startsWith('V'):
+          case !(
+            referTo != null &&
+            referTo !== 'vlx_native' &&
+            receiver.startsWith('V')
+          ):
+            return toEthAddress(receiver);
+          case !(
+            transaction.coin.token !== 'vlx_native' && receiver.startsWith('V')
+          ):
             return toEthAddress(receiver);
           default:
             return receiver;

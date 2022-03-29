@@ -84,7 +84,7 @@ export default ({ store, web3t, props }) => {
                 // text={lang.stepItem1 || "Convert 1,000,000 VLX to VLX Native"}
                 text={`Convert ${formatStakeAmount(
                   swapAmount
-                )} VLX Legacy to VLX Native`}
+                )} VLX EVM to VLX Native`}
                 address={stakingStore.publicKey58}
               />
               <StepItem
