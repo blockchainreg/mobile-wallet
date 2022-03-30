@@ -69,6 +69,10 @@ export default class InputAmount extends Component {
   };
 
   handleTextChange = (text) => {
+    if (text[text.length - 1] === ',') {
+      text = text.slice(0, text.length - 1) + '.';
+    }
+
     if (this.state.skipOnChange) {
       this.setState({ skipOnChange: false });
       return;
@@ -96,28 +100,10 @@ export default class InputAmount extends Component {
       this.props.onChangeText(this.getNormalizedValue(value));
   };
 
-  handleKeyPress = (event) => {
-    if (event.nativeEvent.key === ',') {
-      const { value } = this.state;
-      const { start, end } = this.state.selection;
-      const newValue = [
-        value.slice(0, this.state.selection.start),
-        '.',
-        value.slice(this.state.selection.end),
-      ].join('');
-      this.handleTextChange(newValue);
-      this.setState({ skipOnChange: true });
-      setTimeout(() => {
-        this.setState({ skipOnChange: false });
-      }, 1);
-    }
-  };
-
   render() {
     return (
       <TextInput
         value={this.state.value}
-        onKeyPress={this.handleKeyPress}
         placeholder={this.props.placeholder}
         onSelectionChange={this.handleSelectionChange}
         onChangeText={this.handleTextChange}
