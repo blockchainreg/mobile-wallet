@@ -12,26 +12,14 @@ import Spinner from '../utils/spinner.js';
 import setupWallet from '../setupWallet.js';
 import Header from '../components/Header';
 import { VelasLogo1 } from '../svg/velas-logo1.js';
-import loadLocalResource from 'react-native-local-resource';
-import termsMd from '../TERMS.md';
+import TERMS_MD from '../TERMS.md';
 
 async function loadTerms(store) {
   await new Promise((resolve) => setTimeout(resolve, 0));
   const lang = getLang(store);
   const spinner = new Spinner(store, lang.loadingTerms);
-  await loadTermsRecusion(store);
+  store.current.termsMarkdown = TERMS_MD;
   spinner.finish();
-}
-
-async function loadTermsRecusion(store) {
-  try {
-    const termsText = await loadLocalResource(termsMd);
-
-    store.current.termsMarkdown = termsText;
-  } catch (e) {
-    console.error(e);
-    setTimeout(loadTerms.bind(this, store), 1000);
-  }
 }
 
 let loadTermsPromise = null;

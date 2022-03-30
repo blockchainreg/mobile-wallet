@@ -1,7 +1,7 @@
 const nodeLibs = require('node-libs-browser');
 const blacklist = require('metro-config/src/defaults/blacklist');
-const defaultAssetExts =
-  require('metro-config/src/defaults/defaults').assetExts;
+const defaultSourceExts =
+  require('metro-config/src/defaults/defaults').sourceExts;
 
 module.exports = {
   resolver: {
@@ -9,6 +9,6 @@ module.exports = {
     blacklistRE: blacklist([
       /node_modules\/.*\/node_modules\/react-native\/.*/,
     ]),
-    assetExts: [...defaultAssetExts, 'md'],
+    sourceExts: [...defaultSourceExts, 'md'],
   },
 };
