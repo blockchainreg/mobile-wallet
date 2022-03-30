@@ -88,7 +88,7 @@
     "react-native-deprecated-custom-components": "^0.1.1",
     "react-native-device-info": ">=0.24.0",
     "react-native-easy-grid": "^0.2.2",
-    "react-native-elements": "1.1.0",
+    "react-native-elements": "^3.4.2",
     "react-native-flip-card": "3.5.5",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-gradient-buttons": "^2.0.1",
