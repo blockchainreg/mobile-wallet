@@ -14,59 +14,51 @@ const networkItems = [
   },
 ];
 
+const inputStyle = {
+  color: '#fff',
+  fontSize: 17,
+  fontFamily: 'Fontfabric-NexaRegular',
+};
+
 export default ({ store, web3t }) => {
-  const prevNetworkRef = useRef(store.current.network);
+  const onChangeNetwork = useCallback((network) => {
+    if (!!network && network !== store.current.network) {
+      store.current.network = network;
+
+      spin(
+        store,
+        `Changing network to ${network.toUpperCase()}`,
+        web3t.refresh.bind(web3t)
+      )((err, data) => {});
+    }
+  }, []);
+
   const [network, setNetwork] = useState(store.current.network);
 
-  const changeNetwork = useCallback(() => {
-    store.current.network = network;
-    spin(
-      store,
-      `Changing network to ${store.current.network.toUpperCase()}`,
-      web3t.refresh.bind(web3t)
-    )((err, data) => {});
+  const onClose = useCallback(() => {
+    onChangeNetwork(network);
   }, [network]);
-
-  const onValueChange = useCallback(
-    (value) => {
-      setNetwork(value);
-
-      if (Platform.OS === 'android') {
-        prevNetworkRef.current = value;
-        changeNetwork();
-      }
-    },
-    [changeNetwork]
-  );
-
-  // for IOS only
-  const onDonePress = useCallback(() => {
-    if (prevNetworkRef.current !== network) {
-      prevNetworkRef.current = network;
-      changeNetwork();
-    }
-  }, [changeNetwork, network]);
 
   return (
     <RNPickerSelect
-      placeholder={{}}
-      onValueChange={onValueChange}
-      useNativeAndroidPickerStyle={false}
-      value={network}
       items={networkItems}
+      placeholder={{}}
       style={{
-        inputIOS: {
-          color: '#fff',
-          fontSize: 17,
-          fontFamily: 'Fontfabric-NexaRegular',
-        },
-        inputAndroid: {
-          color: '#fff',
-          fontSize: 17,
-          fontFamily: 'Fontfabric-NexaRegular',
-        },
+        inputAndroid: inputStyle,
+        inputIOS: inputStyle,
       }}
-      onDonePress={onDonePress}
+      useNativeAndroidPickerStyle={false}
+      {...Platform.select({
+        android: {
+          onValueChange: onChangeNetwork,
+          value: store.current.network,
+        },
+        ios: {
+          onClose,
+          onValueChange: setNetwork,
+          value: network,
+        },
+      })}
     />
   );
 };
