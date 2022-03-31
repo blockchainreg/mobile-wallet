@@ -14,7 +14,6 @@ import { rewardsStore } from './rewards-store';
 import { cachedCallWithRetries } from './utils';
 import * as api from './api';
 
-const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
 import { abi as EvmToNativeBridgeAbi } from './EvmToNativeBridge.json';
 import * as ethereum from 'ethereumjs-tx';
@@ -263,15 +262,13 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    const nativeAccounts =
+    const nativeCurrentUserAccounts =
       await api.getStakingAccountsFromBackendCachedWithRetries({
         network: this.network,
         validatorsBackend: this.validatorsBackend,
+        params: { staker: this.publicKey58 },
       });
 
-    const nativeCurrentUserAccounts = nativeAccounts.filter((it) => {
-      return it.staker === this.publicKey58;
-    });
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
         new StakingAccountModel(account, this.connection, this.network)
