@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import spin from '../utils/spin.js';
