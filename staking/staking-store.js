@@ -110,16 +110,7 @@ class StakingStore {
     this.endRefresh = action(this.endRefresh);
 
     invalidateCache();
-    rewardsStore.setConnection(
-      {
-        connection: this.connection,
-        network,
-        validatorsBackend,
-      },
-      () => {
-        this.init();
-      }
-    );
+    this.init();
   }
 
   async init() {
@@ -148,7 +139,16 @@ class StakingStore {
     } catch (e) {
       console.error(e);
       // Cannot load from backend. Use slower method.
-      this.reload();
+      rewardsStore.setConnection(
+        {
+          connection: this.connection,
+          network: this.network,
+          validatorsBackend: this.validatorsBackend,
+        },
+        () => {
+          this.reloadFromNodeRpc();
+        }
+      );
     }
     // );
     //if (this.validators.length > 0) {
@@ -219,14 +219,6 @@ class StakingStore {
     );
   }
 
-  // async getConfirmedBlock(blockNumber) {
-  //   return await cachedCallWithRetries(
-  //     this.network,
-  //     ['getConfirmedBlock', this.connection, blockNumber],
-  //     () => this.connection.getConfirmedBlock(blockNumber, 1),
-  //   );
-  // }
-
   loadEpochInfo = async () => {
     const info = await this.getEpochInfo();
     const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
@@ -248,7 +240,7 @@ class StakingStore {
       },
     };
 
-    const [epochInfo, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
+    const [, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
       await Promise.all([
         this.loadEpochInfo(),
         this.connection.getBalance(this.publicKey),
@@ -323,7 +315,7 @@ class StakingStore {
     );
   }
 
-  async reload() {
+  async reloadFromNodeRpc() {
     this.startRefresh();
     await this.loadEpochInfo();
     const balanceRes = await this.connection.getBalance(this.publicKey);

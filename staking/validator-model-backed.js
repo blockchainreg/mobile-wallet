@@ -1,9 +1,6 @@
-import { decorate, observable, action, when } from 'mobx';
+import { decorate, observable } from 'mobx';
 import BN from 'bn.js';
 import { StakingAccountModel } from './staking-account-model.js';
-import { cachedCallWithRetries } from './utils';
-import { rewardsStore } from './rewards-store';
-const solanaWeb3 = require('./index.cjs.js');
 
 class ValidatorModelBacked {
   network = null;
