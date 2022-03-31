@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import spin from '../utils/spin.js';
 
@@ -19,6 +19,11 @@ const inputStyle = {
   fontSize: 17,
   fontFamily: 'Fontfabric-NexaRegular',
 };
+
+const pickerSelectStyle = StyleSheet.create({
+  inputAndroid: inputStyle,
+  inputIOS: inputStyle,
+});
 
 export default ({ store, web3t }) => {
   const onChangeNetwork = useCallback((network) => {
@@ -43,10 +48,7 @@ export default ({ store, web3t }) => {
     <RNPickerSelect
       items={networkItems}
       placeholder={{}}
-      style={{
-        inputAndroid: inputStyle,
-        inputIOS: inputStyle,
-      }}
+      style={pickerSelectStyle}
       useNativeAndroidPickerStyle={false}
       {...Platform.select({
         android: {
