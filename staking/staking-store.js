@@ -7,14 +7,13 @@ import { ValidatorModelBacked } from './validator-model-backed.js';
 import { StakingAccountModel } from './staking-account-model.js';
 import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
-import { callWithRetries, invalidateCache, deleteCacheByKey } from './utils';
+import { callWithRetries, invalidateCache } from './utils';
 import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
 import { rewardsStore } from './rewards-store';
 import { cachedCallWithRetries } from './utils';
 import * as api from './api';
 
-const SOL = new BN('1000000000', 10);
 const PRESERVE_BALANCE = new BN('1000000000', 10);
 import { abi as EvmToNativeBridgeAbi } from './EvmToNativeBridge.json';
 import * as ethereum from 'ethereumjs-tx';
@@ -110,16 +109,7 @@ class StakingStore {
     this.endRefresh = action(this.endRefresh);
 
     invalidateCache();
-    rewardsStore.setConnection(
-      {
-        connection: this.connection,
-        network,
-        validatorsBackend,
-      },
-      () => {
-        this.init();
-      }
-    );
+    this.init();
   }
 
   async init() {
@@ -148,7 +138,16 @@ class StakingStore {
     } catch (e) {
       console.error(e);
       // Cannot load from backend. Use slower method.
-      this.reload();
+      rewardsStore.setConnection(
+        {
+          connection: this.connection,
+          network: this.network,
+          validatorsBackend: this.validatorsBackend,
+        },
+        () => {
+          this.reloadFromNodeRpc();
+        }
+      );
     }
     // );
     //if (this.validators.length > 0) {
@@ -219,14 +218,6 @@ class StakingStore {
     );
   }
 
-  // async getConfirmedBlock(blockNumber) {
-  //   return await cachedCallWithRetries(
-  //     this.network,
-  //     ['getConfirmedBlock', this.connection, blockNumber],
-  //     () => this.connection.getConfirmedBlock(blockNumber, 1),
-  //   );
-  // }
-
   loadEpochInfo = async () => {
     const info = await this.getEpochInfo();
     const { epoch, blockHeight, slotIndex, slotsInEpoch } = info;
@@ -248,7 +239,7 @@ class StakingStore {
       },
     };
 
-    const [epochInfo, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
+    const [, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
       await Promise.all([
         this.loadEpochInfo(),
         this.connection.getBalance(this.publicKey),
@@ -271,15 +262,13 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    const nativeAccounts =
+    const nativeCurrentUserAccounts =
       await api.getStakingAccountsFromBackendCachedWithRetries({
         network: this.network,
         validatorsBackend: this.validatorsBackend,
+        params: { staker: this.publicKey58 },
       });
 
-    const nativeCurrentUserAccounts = nativeAccounts.filter((it) => {
-      return it.staker === this.publicKey58;
-    });
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
         new StakingAccountModel(account, this.connection, this.network)
@@ -311,9 +300,6 @@ class StakingStore {
     }
     const rent = await this.connection.getMinimumBalanceForRentExemption(200);
 
-    // remove `getStakingAccountsFromBackend` cache because it used only to speed up init staking
-    deleteCacheByKey([this.network, 'getStakingAccountsFromBackend']);
-
     this.endRefresh(
       balanceRes,
       balanceEvmJson,
@@ -323,7 +309,7 @@ class StakingStore {
     );
   }
 
-  async reload() {
+  async reloadFromNodeRpc() {
     this.startRefresh();
     await this.loadEpochInfo();
     const balanceRes = await this.connection.getBalance(this.publicKey);
