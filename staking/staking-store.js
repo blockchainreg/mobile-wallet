@@ -7,7 +7,7 @@ import { ValidatorModelBacked } from './validator-model-backed.js';
 import { StakingAccountModel } from './staking-account-model.js';
 import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
-import { callWithRetries, invalidateCache, deleteCacheByKey } from './utils';
+import { callWithRetries, invalidateCache } from './utils';
 import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
 import { rewardsStore } from './rewards-store';
@@ -299,9 +299,6 @@ class StakingStore {
       validator.addStakingAccount(account);
     }
     const rent = await this.connection.getMinimumBalanceForRentExemption(200);
-
-    // remove `getStakingAccountsFromBackend` cache because it used only to speed up init staking
-    deleteCacheByKey([this.network, 'getStakingAccountsFromBackend']);
 
     this.endRefresh(
       balanceRes,
