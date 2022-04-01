@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -30,12 +30,260 @@ import { TabView, TabBar } from 'react-native-tab-view';
 
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.18)';
 
-export default ({ store, web3t }) => {
-  const { stakingStore } = store;
+const GenericValidatorCard = observer(
+  ({ getValue, getSubtitle, getInfo, subtitleSmall, cardIcon }) => (
+    <ValidatorCard
+      value={getValue()}
+      subtitle={getSubtitle()}
+      cardIcon={cardIcon}
+      info={getInfo()}
+      subtitleSmall={subtitleSmall}
+    />
+  )
+);
 
-  const changePage = (tab) => () => {
-    store.current.page = tab;
-  };
+const Stake = observer(({ details, lang, changePage, stakingStore }) => {
+  return (
+    <ScrollView>
+      <View style={style.container}>
+        <GenericValidatorCard
+          getValue={() => `${formatStakeAmount(details.activeStake)} VLX`}
+          getSubtitle={() => lang.totalStake || 'TOTAL STAKE'}
+          getInfo={() => 'Total stake of validator'}
+          cardIcon={
+            <ValidatorsIcon
+              fill={Images.colorGreen}
+              type={'STAKE'}
+              width="17"
+              height="17"
+            />
+          }
+        />
+        <GenericValidatorCard
+          getValue={() =>
+            details.annualPercentageRate === null
+              ? '...'
+              : details.annualPercentageRate
+          }
+          getSubtitle={() => lang.annual || 'ANNUAL PERCENTAGE RATE'}
+          getInfo={() =>
+            lang.info3 ||
+            'APR is calculated based on the results of the previous epoch'
+          }
+          cardIcon={<PercentIcon />}
+          subtitleSmall
+        />
+        <GenericValidatorCard
+          getValue={() =>
+            details.dominance === null ? '...' : details.dominance.toFixed(4)
+          }
+          getSubtitle={() => lang.dominance || 'DOMINANCE'}
+          getInfo={() =>
+            lang.info1 ||
+            'Relative validator weight compared to the average. Lower is better'
+          }
+          cardIcon={<ChartIcon />}
+        />
+
+        <GenericValidatorCard
+          getValue={() => details.commission}
+          getSubtitle={() => lang.validatorInterest || 'VALIDATOR INTEREST'}
+          getInfo={() =>
+            'A commission that you pay to validator from each reward'
+          }
+          cardIcon={<PercentIcon />}
+        />
+      </View>
+      <ButtonBlock
+        type={'STAKE_MORE'}
+        text={
+          details.totalActiveStake
+            ? lang.stakeMore || 'Stake More'
+            : 'Loading...'
+        }
+        onPress={changePage('sendStake')}
+      />
+      {details.totalAvailableForWithdrawRequestStake &&
+        details.totalAvailableForWithdrawRequestStake.gte(
+          stakingStore.rent
+        ) && (
+          <ButtonBlock
+            type={'REQUEST_WITHDRAW'}
+            text={lang.requestWithdraw || 'Request Withdraw'}
+            onPress={changePage('exitValidator')}
+          />
+        )}
+    </ScrollView>
+  );
+});
+
+const Withdrawals = observer(({ lang, details, onPress }) => (
+  <ScrollView>
+    <View style={style.container}>
+      <GenericValidatorCard
+        getValue={() =>
+          details.totalWithdrawRequested
+            ? formatStakeAmount(details.totalWithdrawRequested)
+            : '...'
+        }
+        getSubtitle={() => lang.totalWithdraw || 'TOTAL WITHDRAW REQUESTED'}
+        getInfo={() => lang.totalWithdraw || 'TOTAL WITHDRAW REQUESTED'}
+        cardIcon={<VelasIcon />}
+        subtitleSmall
+      />
+      <GenericValidatorCard
+        getValue={() =>
+          details.availableWithdrawRequested
+            ? formatStakeAmount(details.availableWithdrawRequested)
+            : '...'
+        }
+        getSubtitle={() => lang.availableWithdraw || 'AVAILABLE FOR WITHDRAW'}
+        getInfo={() => lang.availableWithdraw || 'AVAILABLE FOR WITHDRAW'}
+        cardIcon={<VelasIcon />}
+        subtitleSmall
+      />
+    </View>
+    {!details.availableWithdrawRequested ||
+    details.availableWithdrawRequested.isZero() ? null : (
+      <ButtonBlock
+        type={'WITHDRAW'}
+        text={lang.withdraw || 'Withdraw'}
+        onPress={onPress}
+      />
+    )}
+  </ScrollView>
+));
+
+const Rewards = observer(({ store }) => {
+  return (
+    <>
+      <TableRewards store={store} />
+    </>
+  );
+});
+
+const DetailsValidatorObserver = observer(
+  ({ details, lang, copyAddress, copyName, store }) => {
+    const isMyStake = !details.myStake.isZero();
+
+    return (
+      <DetailsValidatorComponent
+        address={details.address}
+        name={details.name}
+        copyAddress={copyAddress}
+        copyName={copyName}
+        isActive={details.status === 'active'}
+        infoApr={
+          isMyStake
+            ? false
+            : lang.info3 ||
+              'APR is calculated based on the results of the previous epoch'
+        }
+        infoActiveStake={
+          isMyStake
+            ? lang.info4 ||
+              'Only 25% of active stake can be activated per epoch. '
+            : false
+        }
+        readMore={lang.read || 'Read more'}
+        link={
+          'https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown'
+        }
+        subtitle1={
+          isMyStake ? 'MY ACTIVE STAKE' : lang.totalStake || 'TOTAL STAKE'
+        }
+        value1={
+          isMyStake
+            ? `${
+                details.myActiveStake === null ? '...' : details.myActiveStake
+              } %`
+            : `${formatStakeAmount(details.activeStake)} VLX`
+        }
+        subtitle2={
+          isMyStake
+            ? lang.myStake || 'MY STAKE'
+            : lang.annual || 'ANNUAL PERCENTAGE RATE'
+        }
+        value2={
+          isMyStake
+            ? `${formatStakeAmount(details.myStake)} VLX`
+            : `${
+                details.annualPercentageRate === null
+                  ? '...'
+                  : details.annualPercentageRate
+              } %`
+        }
+        store={store}
+      />
+    );
+  }
+);
+
+const NotStakedValidatorBody = observer(({ lang, details, changePage }) => (
+  <ScrollView>
+    <View style={style.container}>
+      <GenericValidatorCard
+        getValue={() =>
+          details.dominance === null ? '...' : details.dominance.toFixed(4)
+        }
+        getSubtitle={() => lang.dominance || 'DOMINANCE'}
+        getInfo={() =>
+          lang.info1 ||
+          'Relative validator weight compared to the average. Lower is better'
+        }
+        cardIcon={<ChartIcon />}
+      />
+      <GenericValidatorCard
+        getValue={() => details.commission}
+        getSubtitle={() => lang.validatorInterest || 'VALIDATOR INTEREST'}
+        getInfo={() =>
+          'A commission that you pay to validator from each reward'
+        }
+        cardIcon={<PercentIcon />}
+      />
+    </View>
+    <ButtonBlock
+      type={'STAKE'}
+      text={lang.stake || 'Stake'}
+      onPress={changePage('sendStake')}
+    />
+  </ScrollView>
+));
+
+const renderTabBar = (props) => (
+  <TabBar
+    {...props}
+    renderIcon={({ route, focused }) => (
+      <ValidatorsIcon
+        fill={focused ? Images.colorGreen : GRAY_COLOR}
+        type={route.type}
+      />
+    )}
+    renderLabel={({ route, focused, color }) => (
+      <Text
+        style={{
+          color: focused ? Images.colorGreen : GRAY_COLOR,
+          fontFamily: 'Fontfabric-NexaRegular',
+          fontSize: 14,
+        }}
+      >
+        {route.title}
+      </Text>
+    )}
+    indicatorStyle={{ backgroundColor: Images.colorGreen }}
+    style={{ backgroundColor: Images.velasColor4 }}
+    activeColor={Images.colorGreen}
+    inactiveColor={GRAY_COLOR}
+    tabStyle={{
+      flexDirection: 'row',
+      borderBottomColor: GRAY_COLOR,
+      borderBottomWidth: 0.5,
+    }}
+  />
+);
+
+const TabsBarValidator = ({ store }) => {
+  const { stakingStore } = store;
 
   const [index, setIndex] = React.useState(0);
   const lang = getLang(store);
@@ -48,28 +296,31 @@ export default ({ store, web3t }) => {
     },
     { key: 'third', title: lang.tabRewards || 'Rewards', type: 'REWARDS' },
   ]);
+  const changePage = (tab) => () => {
+    store.current.page = tab;
+  };
 
-  // const lang = getLang(store);
   return (
     <Observer>
       {() => {
         if (stakingStore.isRefreshing) return null;
         const details = stakingStore.getValidatorDetails();
-        const DOMINANCE_VALUE =
-          details.dominance === null ? '...' : details.dominance.toFixed(4);
-        const QUALITY_VALUE =
-          details.quality >= -10 && details.quality <= 10 ? 0 : details.quality;
-        const ANNUAL_RATE =
-          details.annualPercentageRate === null
-            ? '...'
-            : details.annualPercentageRate;
-        const ACTIVE_STAKE =
-          details.myActiveStake === null ? '...' : details.myActiveStake;
-
-        const WITHDRAW_REQUESTED = details.totalWithdrawRequested;
-        const AVAILABLE_WITHDRAW = details.availableWithdrawRequested;
 
         const ADDRESS = details.address;
+
+        const copyAddress = async () => {
+          const DURATION = 1000 / 10;
+          await Clipboard.setString(details.address);
+          Vibration.vibrate(DURATION);
+          Alert.alert(lang.copied, '', [{ text: lang.ok }]);
+        };
+        const copyName = async () => {
+          const DURATION = 1000 / 10;
+          await Clipboard.setString(details.name);
+          Vibration.vibrate(DURATION);
+          Alert.alert(lang.copied, '', [{ text: lang.ok }]);
+        };
+
         const onPressWithdraw = async () => {
           if (!details.availableWithdrawRequested) return null;
           spin(
@@ -100,242 +351,44 @@ export default ({ store, web3t }) => {
           });
         };
 
-        const copyAddress = async () => {
-          const DURATION = 1000 / 10;
-          await Clipboard.setString(details.address);
-          Vibration.vibrate(DURATION);
-          Alert.alert(lang.copied, '', [{ text: lang.ok }]);
-        };
-        const copyName = async () => {
-          const DURATION = 1000 / 10;
-          await Clipboard.setString(details.name);
-          Vibration.vibrate(DURATION);
-          Alert.alert(lang.copied, '', [{ text: lang.ok }]);
-        };
-        const Stake = observer(() => {
-          return (
-            <ScrollView>
-              <View style={style.container}>
-                <ValidatorCard
-                  value={`${formatStakeAmount(details.activeStake)} VLX`}
-                  subtitle={lang.totalStake || 'TOTAL STAKE'}
-                  info={'Total stake of validator'}
-                  cardIcon={
-                    <ValidatorsIcon
-                      fill={Images.colorGreen}
-                      type={'STAKE'}
-                      width="17"
-                      height="17"
-                    />
-                  }
-                />
-                <ValidatorCard
-                  value={ANNUAL_RATE}
-                  subtitle={lang.annual || 'ANNUAL PERCENTAGE RATE'}
-                  info={
-                    lang.info3 ||
-                    'APR is calculated based on the results of the previous epoch'
-                  }
-                  cardIcon={<PercentIcon />}
-                  subtitleSmall
-                />
-                <ValidatorCard
-                  value={DOMINANCE_VALUE}
-                  subtitle={lang.dominance || 'DOMINANCE'}
-                  info={
-                    lang.info1 ||
-                    'Relative validator weight compared to the average. Lower is better'
-                  }
-                  cardIcon={<ChartIcon />}
-                />
-                <ValidatorCard
-                  value={details.commission}
-                  subtitle={lang.validatorInterest || 'VALIDATOR INTEREST'}
-                  info={
-                    'A commission that you pay to validator from each reward'
-                  }
-                  cardIcon={<PercentIcon />}
-                />
-                {/* <ValidatorCard
-                  value={QUALITY_VALUE}
-                  subtitle={lang.quality || 'QUALITY'}
-                  info={lang.infoMeans || '0 means average'}
-                  cardIcon={<PlusIcon />}
-                />
-                <ValidatorCard
-                  value={ACTIVE_STAKE}
-                  subtitle={lang.activeStake || 'YOUR ACTIVE STAKE'}
-                  info={
-                    lang.info4 ||
-                    'Only 25% of active stake can be activated per epoch. '
-                  }
-                  readMore={lang.read || 'Read more'}
-                  link={
-                    'https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown'
-                  }
-                  cardIcon={<PercentIcon />}
-                  subtitleSmall
-                /> */}
-              </View>
-              <ButtonBlock
-                type={'STAKE_MORE'}
-                text={
-                  details.totalActiveStake
-                    ? lang.stakeMore || 'Stake More'
-                    : 'Loading...'
-                }
-                onPress={changePage('sendStake')}
-              />
-              {details.totalAvailableForWithdrawRequestStake &&
-                details.totalAvailableForWithdrawRequestStake.gte(
-                  stakingStore.rent
-                ) && (
-                  <ButtonBlock
-                    type={'REQUEST_WITHDRAW'}
-                    text={lang.requestWithdraw || 'Request Withdraw'}
-                    onPress={changePage('exitValidator')}
-                  />
-                )}
-            </ScrollView>
-          );
-        });
-        const Withdrawals = observer(() => {
-          return (
-            <ScrollView>
-              <View style={style.container}>
-                <ValidatorCard
-                  value={
-                    WITHDRAW_REQUESTED
-                      ? formatStakeAmount(WITHDRAW_REQUESTED)
-                      : '...'
-                  }
-                  subtitle={lang.totalWithdraw || 'TOTAL WITHDRAW REQUESTED'}
-                  cardIcon={<VelasIcon />}
-                  info={lang.totalWithdraw || 'TOTAL WITHDRAW REQUESTED'}
-                  subtitleSmall
-                />
-                <ValidatorCard
-                  value={
-                    AVAILABLE_WITHDRAW
-                      ? formatStakeAmount(AVAILABLE_WITHDRAW)
-                      : '...'
-                  }
-                  subtitle={lang.availableWithdraw || 'AVAILABLE FOR WITHDRAW'}
-                  cardIcon={<VelasIcon />}
-                  info={lang.availableWithdraw || 'AVAILABLE FOR WITHDRAW'}
-                  subtitleSmall
-                />
-              </View>
-              {!details.availableWithdrawRequested ||
-              details.availableWithdrawRequested.isZero() ? null : (
-                <ButtonBlock
-                  type={'WITHDRAW'}
-                  text={lang.withdraw || 'Withdraw'}
-                  onPress={onPressWithdraw}
-                />
-              )}
-            </ScrollView>
-          );
-        });
-        const Rewards = () => {
-          return (
-            <>
-              <TableRewards store={store} />
-            </>
-          );
-        };
         const renderScene = ({ route }) => {
           switch (route.key) {
             case 'first':
-              return <Stake />;
-            case 'second':
-              return <Withdrawals />;
+              return (
+                <Stake
+                  details={details}
+                  lang={lang}
+                  changePage={changePage}
+                  stakingStore={stakingStore}
+                />
+              );
+            case 'second': {
+              return (
+                <Withdrawals
+                  onPress={onPressWithdraw}
+                  lang={lang}
+                  details={details}
+                />
+              );
+            }
             case 'third':
-              return <Rewards />;
+              return <Rewards store={store} />;
             default:
               return null;
           }
         };
-        const BORDER_COLOR = 'rgba(255, 255, 255, 0.18)';
 
-        const renderTabBar = (props) => (
-          <TabBar
-            {...props}
-            renderIcon={({ route, focused }) => (
-              <ValidatorsIcon
-                fill={focused ? Images.colorGreen : GRAY_COLOR}
-                type={route.type}
-              />
-            )}
-            renderLabel={({ route, focused, color }) => (
-              <Text
-                style={{
-                  color: focused ? Images.colorGreen : GRAY_COLOR,
-                  fontFamily: 'Fontfabric-NexaRegular',
-                  fontSize: 14,
-                }}
-              >
-                {route.title}
-              </Text>
-            )}
-            indicatorStyle={{ backgroundColor: Images.colorGreen }}
-            style={{ backgroundColor: Images.velasColor4 }}
-            activeColor={Images.colorGreen}
-            inactiveColor={GRAY_COLOR}
-            tabStyle={{
-              flexDirection: 'row',
-              borderBottomColor: BORDER_COLOR,
-              borderBottomWidth: 0.5,
-            }}
-          />
-        );
+        const isMyStake = !details.myStake.isZero();
         return (
           <>
-            <DetailsValidatorComponent
-              address={details.address}
-              name={details.name}
+            <DetailsValidatorObserver
+              details={details}
+              lang={lang}
               copyAddress={copyAddress}
               copyName={copyName}
-              isActive={details.status === 'active' ? true : false}
-              infoApr={
-                !details.myStake.isZero()
-                  ? false
-                  : lang.info3 ||
-                    'APR is calculated based on the results of the previous epoch'
-              }
-              infoActiveStake={
-                !details.myStake.isZero()
-                  ? lang.info4 ||
-                    'Only 25% of active stake can be activated per epoch. '
-                  : false
-              }
-              readMore={lang.read || 'Read more'}
-              link={
-                'https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown'
-              }
-              subtitle1={
-                !details.myStake.isZero()
-                  ? 'MY ACTIVE STAKE'
-                  : lang.totalStake || 'TOTAL STAKE'
-              }
-              value1={
-                !details.myStake.isZero()
-                  ? `${ACTIVE_STAKE} %`
-                  : `${formatStakeAmount(details.activeStake)} VLX`
-              }
-              subtitle2={
-                !details.myStake.isZero()
-                  ? lang.myStake || 'MY STAKE'
-                  : lang.annual || 'ANNUAL PERCENTAGE RATE'
-              }
-              value2={
-                !details.myStake.isZero()
-                  ? `${formatStakeAmount(details.myStake)} VLX`
-                  : `${ANNUAL_RATE} %`
-              }
               store={store}
             />
-            {!details.myStake.isZero() ? (
+            {isMyStake ? (
               <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
@@ -345,38 +398,11 @@ export default ({ store, web3t }) => {
                 renderTabBar={renderTabBar}
               />
             ) : (
-              <ScrollView>
-                <View style={style.container}>
-                  <ValidatorCard
-                    value={DOMINANCE_VALUE}
-                    subtitle={lang.dominance || 'DOMINANCE'}
-                    info={
-                      lang.info1 ||
-                      'Relative validator weight compared to the average. Lower is better'
-                    }
-                    cardIcon={<ChartIcon />}
-                  />
-                  {/* <ValidatorCard
-                    value={QUALITY_VALUE}
-                    subtitle={lang.quality || 'QUALITY'}
-                    info={lang.infoMeans || '0 means average'}
-                    cardIcon={<PlusIcon />}
-                  /> */}
-                  <ValidatorCard
-                    value={details.commission}
-                    subtitle={lang.validatorInterest || 'VALIDATOR INTEREST'}
-                    info={
-                      'A commission that you pay to validator from each reward'
-                    }
-                    cardIcon={<PercentIcon />}
-                  />
-                </View>
-                <ButtonBlock
-                  type={'STAKE'}
-                  text={lang.stake || 'Stake'}
-                  onPress={changePage('sendStake')}
-                />
-              </ScrollView>
+              <NotStakedValidatorBody
+                lang={lang}
+                details={details}
+                changePage={changePage}
+              />
             )}
           </>
         );
@@ -384,6 +410,8 @@ export default ({ store, web3t }) => {
     </Observer>
   );
 };
+
+export default TabsBarValidator;
 
 const style = StyleSheet.create({
   activeTextStyle: {

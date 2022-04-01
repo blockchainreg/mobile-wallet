@@ -1,61 +1,66 @@
-import React from 'react';
-import { Platform } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Platform, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import spin from '../utils/spin.js';
 
-export default ({ store, web3t }) => {
-  const onValueChangeValue = async (value) => {
-    store.current.network = value;
-    Platform.OS === 'android'
-      ? spin(
-          store,
-          `Changing network to ${store.current.network.toUpperCase()}`,
-          web3t.refresh.bind(web3t)
-        )((err, data) => {})
-      : null;
-  };
-  // for IOS
-  const onDone = () => {
-    spin(
-      store,
-      `Changing network to ${store.current.network.toUpperCase()}`,
-      web3t.refresh.bind(web3t)
-    )((err, data) => {});
-  };
+const networkItems = [
+  {
+    label: 'Mainnet',
+    value: 'mainnet',
+  },
+  {
+    label: 'TestNet',
+    value: 'testnet',
+  },
+];
 
-  const networkItems = [
-    {
-      label: 'Mainnet',
-      value: 'mainnet',
-    },
-    {
-      label: 'TestNet',
-      value: 'testnet',
-    },
-  ];
+const inputStyle = {
+  color: '#fff',
+  fontSize: 17,
+  fontFamily: 'Fontfabric-NexaRegular',
+};
+
+const pickerSelectStyle = StyleSheet.create({
+  inputAndroid: inputStyle,
+  inputIOS: inputStyle,
+});
+
+export default ({ store, web3t }) => {
+  const onChangeNetwork = useCallback((network) => {
+    if (!!network && network !== store.current.network) {
+      store.current.network = network;
+
+      spin(
+        store,
+        `Changing network to ${network.toUpperCase()}`,
+        web3t.refresh.bind(web3t)
+      )((err, data) => {});
+    }
+  }, []);
+
+  const [network, setNetwork] = useState(store.current.network);
+
+  const onClose = useCallback(() => {
+    onChangeNetwork(network);
+  }, [network]);
 
   return (
     <RNPickerSelect
-      placeholder={{}}
-      onValueChange={(value) => {
-        onValueChangeValue(value);
-      }}
-      useNativeAndroidPickerStyle={false}
-      value={store.current.network}
       items={networkItems}
-      style={{
-        inputIOS: {
-          color: '#fff',
-          fontSize: 17,
-          fontFamily: 'Fontfabric-NexaRegular',
+      placeholder={{}}
+      style={pickerSelectStyle}
+      useNativeAndroidPickerStyle={false}
+      {...Platform.select({
+        android: {
+          onValueChange: onChangeNetwork,
+          value: store.current.network,
         },
-        inputAndroid: {
-          color: '#fff',
-          fontSize: 17,
-          fontFamily: 'Fontfabric-NexaRegular',
+        ios: {
+          onClose,
+          onValueChange: setNetwork,
+          value: network,
         },
-      }}
-      onDonePress={onDone}
+      })}
     />
   );
 };

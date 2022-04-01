@@ -180,7 +180,7 @@ export default ({ store, web3t }) => {
             <NetworkIcon />
           </Left>
           <Body style={styles.heightListItem}>
-            {PickerSetNetwork({ store, web3t })}
+            <PickerSetNetwork {...{ store, web3t }} />
           </Body>
           <Right style={styles.heightListItem} />
         </ListItem>
