@@ -15,7 +15,12 @@ export default class app extends Component {
       );
     }
     return (
-      <StatusBar barStyle="light-content" translucent={true} {...this.props} />
+      <StatusBar
+        barStyle="light-content"
+        translucent={true}
+        backgroundColor={Platform.OS === 'android' && 'black'}
+        {...this.props}
+      />
     );
   }
 }
