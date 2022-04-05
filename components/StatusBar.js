@@ -17,8 +17,8 @@ export default class app extends Component {
     return (
       <StatusBar
         barStyle="light-content"
-        backgroundColor="transparent"
         translucent={true}
+        backgroundColor={Platform.OS === 'android' && 'black'}
         {...this.props}
       />
     );

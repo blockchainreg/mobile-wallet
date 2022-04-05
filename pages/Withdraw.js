@@ -198,11 +198,7 @@ export default ({ store, web3t }) => {
     <View style={[styles.viewFlex]}>
       <Background fullscreen={true} />
       <Header title={ScreenTitle} onBack={back} coin={wallet.coin.image} />
-      <StatusBar
-        barStyle="light-content"
-        translucent={true}
-        backgroundColor={'transparent'}
-      />
+      <StatusBar barStyle="light-content" translucent={true} />
       {RefreshControl({
         swipeRefresh: refreshToken,
         store,

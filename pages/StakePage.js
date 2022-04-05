@@ -13,7 +13,13 @@ import {
 } from 'native-base';
 import { Header as Headers } from 'native-base';
 import Footer from './Footer.js';
-import { StyleSheet, View, RefreshControl, SectionList } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  RefreshControl,
+  SectionList,
+  Platform,
+} from 'react-native';
 import { Observer } from 'mobx-react';
 import getLang from '../wallet/get-lang.js';
 import Images from '../Images.js';
