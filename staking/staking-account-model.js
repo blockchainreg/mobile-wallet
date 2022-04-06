@@ -16,7 +16,6 @@ class StakingAccountModel {
   _activeStake = null;
   _inactiveStake = null;
   _state = null;
-  latestReward = undefined;
 
   get address() {
     return this.account.pubkey;
@@ -106,10 +105,6 @@ class StakingAccountModel {
   async loadMoreRewards() {
     switch (this.rewardsStatus) {
       case 'NotLoaded':
-        await when(() => this.rewardsStatus === '1Loaded');
-        if (this.rewardsStatus !== '1Loaded') {
-          return;
-        }
         break;
       case '1Loaded':
         break;
@@ -181,7 +176,6 @@ class StakingAccountModel {
       this.isActivated = false;
     }
     this.myStake = new BN(lamports + '', 10);
-    this.loadRewards();
 
     decorate(this, {
       rewardsStatus: observable,
@@ -189,7 +183,6 @@ class StakingAccountModel {
       _activeStake: observable,
       _inactiveStake: observable,
       _state: observable,
-      latestReward: observable,
     });
   }
   // fetchEpochRewards = (address, activationEpoch, cb)->
@@ -239,48 +232,6 @@ class StakingAccountModel {
       ['getConfirmedBlock', this.connection, blockNumber],
       () => this.connection.getConfirmedBlock(blockNumber, 1)
     );
-  }
-
-  async loadRewards() {
-    try {
-      // if (this.myStake.lt(new BN('1200000000', 10))) {
-      //   this.rewards = [];
-      //   return;
-      // }
-      //      if (!this.account.stake) {
-      //        this.latestReward = null;
-      //        return;
-      //      }
-
-      const {
-        firstNormalEpoch,
-        firstNormalSlot,
-        leaderScheduleSlotOffset,
-        slotsPerEpoch,
-        warmup,
-      } = await this.getEpochSchedule();
-      const { epoch } = await this.getEpochInfo();
-      const firstSlotInEpoch =
-        (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot;
-      const blockNumberResult = await this.getConfirmedBlocksWithLimit(
-        firstSlotInEpoch
-      );
-      const blockResult = await this.getConfirmedBlock(
-        blockNumberResult.result[0]
-      );
-      const address = this.address;
-      this.latestReward =
-        blockResult.rewards
-          .filter((r) => r.pubkey === address)
-          .slice(0, 1)
-          .map(
-            (reward) =>
-              new RewardModel(reward, epoch - 1, this.connection, this.network)
-          )[0] || null;
-      this.rewardsStatus = '1Loaded';
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   async getLastEpoch() {
