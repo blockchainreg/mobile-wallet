@@ -506,7 +506,7 @@ class StakingStore {
     };
   }
 
-  loadMoreRewards() {
+  async loadMoreRewards() {
     const validatorAddress = this.openedValidatorAddress;
     if (typeof validatorAddress !== 'string' || !this.validators) {
       return;
@@ -517,7 +517,7 @@ class StakingStore {
     if (!validator) {
       return;
     }
-    validator.loadMoreRewards();
+    await validator.loadMoreRewards();
   }
 
   getDominance(validator) {

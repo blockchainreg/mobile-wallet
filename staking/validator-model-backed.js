@@ -235,9 +235,9 @@ class ValidatorModelBacked {
     return totalInactive;
   }
 
-  loadMoreRewards() {
-    return Promise.all(
-      this.stakingAccounts.map((acc) => acc.loadMoreRewards())
+  async loadMoreRewards() {
+    return await Promise.all(
+      this.stakingAccounts.map(async (acc) => await acc.loadMoreRewards())
     );
   }
 
