@@ -38,6 +38,7 @@ import commonProvider from './common/provider';
     getCalcFeeFunc,
     calcFeePrivate,
     calcFeeInstantx,
+    isValidAddress,
     calcFee,
     getKeys,
     extend,
@@ -96,6 +97,7 @@ import commonProvider from './common/provider';
   jsonParse = require('../json-parse.js');
   deadline = require('../deadline.js');
   decode = require('bs58').decode;
+  WAValidator = require('multicoin-address-validator');
   segwitAddress = function (publicKey) {
     var witnessScript, scriptPubKey;
     witnessScript = BitcoinLib.script.witnessPubKeyHash.output.encode(
@@ -1053,6 +1055,15 @@ import commonProvider from './common/provider';
     var network, tx;
     (network = arg$.network), (tx = arg$.tx);
     return cb('Not Implemented');
+  };
+  out$.isValidAddress = isValidAddress = function (arg$, cb) {
+    var address, network, token;
+    (address = arg$.address), (network = arg$.network), (token = arg$.token);
+    var valid = WAValidator.validate(address, token, network);
+    if (!valid) {
+      return cb('Address is not valid');
+    }
+    return cb(null, address);
   };
   out$.getTransactions = getTransactions = function (arg$, cb) {
     var network, address, ref$;
