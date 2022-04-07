@@ -271,7 +271,12 @@ class StakingStore {
 
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
-        new StakingAccountModel(account, this.connection, this.network)
+        new StakingAccountModel(
+          account,
+          this.connection,
+          this.network,
+          this.validatorsBackend
+        )
     );
 
     const tmp = validatorsFromBackend.validators || validatorsFromBackend;
@@ -342,7 +347,12 @@ class StakingStore {
           });
           const stakingAccounts = filteredAccounts.map(
             (account) =>
-              new StakingAccountModel(account, this.connection, this.network)
+              new StakingAccountModel(
+                account,
+                this.connection,
+                this.network,
+                null
+              )
           );
           //console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
           //await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
