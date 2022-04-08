@@ -36,7 +36,7 @@ export const getStakingAccountsFromBackendCachedWithRetries = async ({
 }) =>
   await cachedCallWithRetries(
     network,
-    ['getStakingAccountsFromBackend', validatorsBackend, params],
+    ['getStakingAccountsFromBackend', validatorsBackend, params?.staker],
     async () =>
       await getStakingAccountsFromBackend({ validatorsBackend, params }),
     5
@@ -49,7 +49,7 @@ export const getRewardsFromBackendCachedWithRetries = async ({
 }) =>
   await cachedCallWithRetries(
     network,
-    ['getRewardsFromBackend', validatorsBackend, params],
+    ['getRewardsFromBackend', validatorsBackend, params?.staker, params?.voter],
     async () => await getRewardsFromBackend({ validatorsBackend, params }),
     3
   );
