@@ -16,7 +16,14 @@ import { formatReward, formatStakeAmount } from '../utils/format-value';
 
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.18)';
 const URL = 'https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q';
-export default observer(({ rewards, lang }) => {
+export default observer(({ store }) => {
+  setTimeout(() => {
+    stakingStore.loadMoreRewards();
+  }, 0);
+  const lang = getLang(store);
+  const { stakingStore } = store;
+
+  const rewards = stakingStore.getRewards();
   const columns = [
     lang.epoch || '# Epoch',
     lang.reward || 'Reward',
@@ -73,7 +80,7 @@ export default observer(({ rewards, lang }) => {
     <View style={styles.container}>
       <FlatList
         // data={epoch.slice(0, 10)}
-        data={rewards}
+        data={rewards.rewards}
         style={{
           width: '100%',
           paddingHorizontal: 20,
@@ -81,9 +88,11 @@ export default observer(({ rewards, lang }) => {
           flexDirection: 'column',
           height: '100%',
         }}
-        ListEmptyComponent={() => (!rewards.length ? <ListEmpty /> : null)}
+        ListEmptyComponent={() =>
+          !rewards.rewards.length ? <ListEmpty /> : null
+        }
         keyExtractor={(item, index) => index + ''}
-        ListHeaderComponent={!rewards.length ? false : tableHeader}
+        ListHeaderComponent={!rewards.rewards.length ? false : tableHeader}
         //stickyHeaderIndices={[0]} - this causes Androids to crash
         renderItem={({ item, index }) => {
           return (
