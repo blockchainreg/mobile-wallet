@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -154,31 +154,13 @@ const Withdrawals = observer(({ lang, details, onPress }) => (
   </ScrollView>
 ));
 
-const Rewards = ({ store }) => {
-  const { stakingStore } = store;
-  const lang = getLang(store);
-
-  useEffect(() => {
-    const loadRewards = async () => {
-      try {
-        await stakingStore.loadMoreRewards();
-      } catch (error) {
-        console.log('stakingStore.loadMoreRewards error: ', error);
-      }
-    };
-
-    loadRewards();
-  }, []);
-
+const Rewards = observer(({ store }) => {
   return (
-    <Observer>
-      {() => {
-        const rewards = stakingStore.getRewards().rewards || [];
-        return <TableRewards rewards={rewards} lang={lang} />;
-      }}
-    </Observer>
+    <>
+      <TableRewards store={store} />
+    </>
   );
-};
+});
 
 const DetailsValidatorObserver = observer(
   ({ details, lang, copyAddress, copyName, store }) => {

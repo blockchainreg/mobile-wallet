@@ -271,12 +271,7 @@ class StakingStore {
 
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
-        new StakingAccountModel(
-          account,
-          this.connection,
-          this.network,
-          this.validatorsBackend
-        )
+        new StakingAccountModel(account, this.connection, this.network)
     );
 
     const tmp = validatorsFromBackend.validators || validatorsFromBackend;
@@ -347,12 +342,7 @@ class StakingStore {
           });
           const stakingAccounts = filteredAccounts.map(
             (account) =>
-              new StakingAccountModel(
-                account,
-                this.connection,
-                this.network,
-                null
-              )
+              new StakingAccountModel(account, this.connection, this.network)
           );
           //console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
           //await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
@@ -516,7 +506,7 @@ class StakingStore {
     };
   }
 
-  async loadMoreRewards() {
+  loadMoreRewards() {
     const validatorAddress = this.openedValidatorAddress;
     if (typeof validatorAddress !== 'string' || !this.validators) {
       return;
@@ -527,7 +517,7 @@ class StakingStore {
     if (!validator) {
       return;
     }
-    await validator.loadMoreRewards();
+    validator.loadMoreRewards();
   }
 
   getDominance(validator) {
