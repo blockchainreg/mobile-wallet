@@ -11,20 +11,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/libs/SafeMath.sol",
     "exportedSymbols": {
-      "SafeMath": [
-        12657
-      ]
+      "SafeMath": [12657]
     },
     "id": 12658,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12555,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:29"
       },
@@ -35,9 +29,7 @@
         "documentation": "@title SafeMath\n@dev Math operations with safety checks that revert on error",
         "fullyImplemented": true,
         "id": 12657,
-        "linearizedBaseContracts": [
-          12657
-        ],
+        "linearizedBaseContracts": [12657],
         "name": "SafeMath",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -135,9 +127,7 @@
                   }
                 },
                 {
-                  "assignments": [
-                    12572
-                  ],
+                  "assignments": [12572],
                   "declarations": [
                     {
                       "constant": false,
@@ -307,10 +297,7 @@
                       "id": 12577,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "297:7:29",
                       "typeDescriptions": {
@@ -533,10 +520,7 @@
                       "id": 12597,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "489:7:29",
                       "typeDescriptions": {
@@ -563,9 +547,7 @@
                   "src": "489:14:29"
                 },
                 {
-                  "assignments": [
-                    12604
-                  ],
+                  "assignments": [12604],
                   "declarations": [
                     {
                       "constant": false,
@@ -835,10 +817,7 @@
                       "id": 12621,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "723:7:29",
                       "typeDescriptions": {
@@ -1029,9 +1008,7 @@
               "src": "839:77:29",
               "statements": [
                 {
-                  "assignments": [
-                    12642
-                  ],
+                  "assignments": [12642],
                   "declarations": [
                     {
                       "constant": false,
@@ -1169,10 +1146,7 @@
                       "id": 12647,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "876:7:29",
                       "typeDescriptions": {
@@ -1334,20 +1308,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/libs/SafeMath.sol",
     "exportedSymbols": {
-      "SafeMath": [
-        12657
-      ]
+      "SafeMath": [12657]
     },
     "id": 12658,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12555,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:29"
       },
@@ -1358,9 +1326,7 @@
         "documentation": "@title SafeMath\n@dev Math operations with safety checks that revert on error",
         "fullyImplemented": true,
         "id": 12657,
-        "linearizedBaseContracts": [
-          12657
-        ],
+        "linearizedBaseContracts": [12657],
         "name": "SafeMath",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1458,9 +1424,7 @@
                   }
                 },
                 {
-                  "assignments": [
-                    12572
-                  ],
+                  "assignments": [12572],
                   "declarations": [
                     {
                       "constant": false,
@@ -1630,10 +1594,7 @@
                       "id": 12577,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "297:7:29",
                       "typeDescriptions": {
@@ -1856,10 +1817,7 @@
                       "id": 12597,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "489:7:29",
                       "typeDescriptions": {
@@ -1886,9 +1844,7 @@
                   "src": "489:14:29"
                 },
                 {
-                  "assignments": [
-                    12604
-                  ],
+                  "assignments": [12604],
                   "declarations": [
                     {
                       "constant": false,
@@ -2158,10 +2114,7 @@
                       "id": 12621,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "723:7:29",
                       "typeDescriptions": {
@@ -2352,9 +2305,7 @@
               "src": "839:77:29",
               "statements": [
                 {
-                  "assignments": [
-                    12642
-                  ],
+                  "assignments": [12642],
                   "declarations": [
                     {
                       "constant": false,
@@ -2492,10 +2443,7 @@
                       "id": 12647,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        13015,
-                        13016
-                      ],
+                      "overloadedDeclarations": [13015, 13016],
                       "referencedDeclaration": 13015,
                       "src": "876:7:29",
                       "typeDescriptions": {

@@ -1,13 +1,11 @@
-import React from "react";
-import { Text, Button, View } from "native-base";
-import styles from "../Styles.js";
-import { ScrollView } from "react-native";
-import walletUserHistoryDetail from "../components/walletUserHistoryDetail.js";
-import getLang from "../wallet/get-lang.js";
-import { LinearGradient } from "expo-linear-gradient";
+import React from 'react';
+import { Text, Button, View } from 'native-base';
+import styles from '../Styles.js';
+import { ScrollView } from 'react-native';
+import walletUserHistoryDetail from '../components/walletUserHistoryDetail.js';
+import getLang from '../wallet/get-lang.js';
 import Images from '../Images.js';
-import Header from "../components/Header.js";
-
+import Header from '../components/Header.js';
 
 module.exports = ({ store }) => {
   if (store.infoTransaction == null) return null;
@@ -18,25 +16,32 @@ module.exports = ({ store }) => {
   };
   const back = changePage();
 
-
   return (
-    <View style={[styles.viewMonoHistory, {backgroundColor: Images.velasColor4}]}>
-      <View style={{display: "none"}}><Header onBackHandlerOnly={back}/></View>
+    <View
+      style={[
+        styles.viewMonoHistory,
+        { backgroundColor: Images.colorDarkBlue },
+      ]}
+    >
+      <View style={{ display: 'none' }}>
+        <Header onBackHandlerOnly={back} />
+      </View>
 
-      <View style={{ paddingTop: 50 }}>
+      <View style={styles.btnDoneHistory}>
         <Button
           onPress={() => {
             store.infoTransaction = null;
           }}
           transparent
         >
-          <Text style={{color: "#fff", fontFamily: "Fontfabric-NexaRegular"}}>{lang.done}</Text>
+          <Text style={{ color: '#fff', fontFamily: 'Fontfabric-NexaRegular' }}>
+            {lang.done}
+          </Text>
         </Button>
         <ScrollView style={{ paddingHorizontal: 20 }}>
           {walletUserHistoryDetail(store)}
         </ScrollView>
       </View>
-
     </View>
   );
 };

@@ -30,20 +30,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/ITxPermission.sol",
     "exportedSymbols": {
-      "ITxPermission": [
-        12370
-      ]
+      "ITxPermission": [12370]
     },
     "id": 12371,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12361,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:26"
       },
@@ -54,9 +48,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12370,
-        "linearizedBaseContracts": [
-          12370
-        ],
+        "linearizedBaseContracts": [12370],
         "name": "ITxPermission",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -162,20 +154,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/ITxPermission.sol",
     "exportedSymbols": {
-      "ITxPermission": [
-        12370
-      ]
+      "ITxPermission": [12370]
     },
     "id": 12371,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12361,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:26"
       },
@@ -186,9 +172,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12370,
-        "linearizedBaseContracts": [
-          12370
-        ],
+        "linearizedBaseContracts": [12370],
         "name": "ITxPermission",
         "nodeType": "ContractDefinition",
         "nodes": [

@@ -1,38 +1,40 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Left, Body, Right, ListItem, Thumbnail } from "native-base";
-import Images from "../Images";
-import { Badge } from "react-native-elements";
-import getLang from "../wallet/get-lang.js";
-import { observer } from "mobx-react";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Left, Body, Right, ListItem, Thumbnail } from 'native-base';
+import Images from '../Images';
+import { Badge } from 'react-native-elements';
+import getLang from '../wallet/get-lang.js';
+import { observer } from 'mobx-react';
 
 export default observer(({ store, wallet, ...props }) => {
   const lang = getLang(store);
 
+  const isNotLegacy = props.name.toLowerCase().indexOf('legacy') === -1;
+
   const typeBadge = (type) => {
     switch (type) {
-      case "active":
-        return lang.badgeActive || "Active";
-      case "inactive":
-        return lang.badgeInactive || "Inactive";
+      case 'active':
+        return lang.badgeActive || 'Active';
+      case 'inactive':
+        return lang.badgeInactive || 'Inactive';
       default:
         return null;
     }
   };
 
   const legacyBadge = () => {
-    if (props.name.toLowerCase().indexOf("legacy") === -1) return null;
+    if (isNotLegacy) return null;
     const legacyBadgeStyle = {
-      fontFamily: "Fontfabric-NexaRegular",
+      fontFamily: 'Fontfabric-NexaRegular',
       fontSize: 12,
-      backgroundColor: "gray",
+      backgroundColor: 'gray',
       width: 60,
-      textAlign: "center",
-      color: "white",
+      textAlign: 'center',
+      color: 'white',
       padding: 5,
       paddingBottom: 2,
       paddingTop: 1,
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       right: 0,
       zIndex: 1,
@@ -48,34 +50,11 @@ export default observer(({ store, wallet, ...props }) => {
   };
 
   const renderName = () => {
-    switch (true) {
-      case wallet.coin.token === "vlx2":
-        return (
-          <Text style={style.styleTitle} numberOfLines={1}>
-            {props.name}
-          </Text>
-        );
-      // case (props.name).toLowerCase().indexOf('legacy') !== -1 && props.key !== 'vlx2':
-      // 	const index = (props.name).toLowerCase().indexOf('legacy');
-      // 	const baseName = props.name.substr(0, index);
-      //
-      // 	return (
-      // 	<View style={{ fontFamily: 'Fontfabric-NexaRegular'}}>
-      // 		<Text
-      // 			style={style.styleTitle}
-      // 		>
-      // 			{baseName}
-      // 		</Text>
-      // 	</View>
-      // 	)
-
-      default:
-        return (
-          <Text style={style.styleTitle} numberOfLines={1}>
-            {props.name}
-          </Text>
-        );
-    }
+    return (
+      <Text style={style.styleTitle} numberOfLines={1}>
+        {props.name}
+      </Text>
+    );
   };
 
   const badgeStatus = () => {
@@ -97,8 +76,8 @@ export default observer(({ store, wallet, ...props }) => {
       onPress={props.onPress}
       style={[
         style.listItemStyle,
-        { opacity: props.active ? 1 : 0.4, position: "relative" },
-        { backgroundColor: "#1F2853", marginBottom: 10 },
+        { opacity: props.active ? 1 : 0.4, position: 'relative' },
+        { backgroundColor: '#1F2853', marginBottom: 10 },
       ]}
     >
       <Left style={style.leftSide}>
@@ -117,12 +96,7 @@ export default observer(({ store, wallet, ...props }) => {
       <Right style={style.rightSide}>
         {/*{badgeStatus()}*/}
         {/*{legacyBadge()}*/}
-        <Text
-          style={[
-            style.styleBalance,
-            { color: props.active ? Images.colorGreen : "#fff" },
-          ]}
-        >
+        <Text style={[style.styleBalance, { color: '#fff' }]}>
           {props.balance}
         </Text>
         <Text style={[style.styleSubTitle, { marginTop: 10 }]}>
@@ -135,9 +109,9 @@ export default observer(({ store, wallet, ...props }) => {
 
 const style = StyleSheet.create({
   styleTitle: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: 'Fontfabric-NexaRegular',
     marginTop: 3,
   },
   styleBalance: {
@@ -146,15 +120,15 @@ const style = StyleSheet.create({
     // textShadowColor: 'rgba(255, 255, 255, 0.3)',
     // textShadowRadius: 10,
     // textShadowOffset: { width: 0, height: 0 },
-    fontWeight: "800",
-    fontFamily: "Fontfabric-NexaRegular",
+    fontWeight: '800',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   styleSubTitle: {
-    color: "rgba(255, 255, 255, 0.3)",
+    color: 'rgba(122, 124, 199, 0.74)',
     fontSize: 13,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     marginTop: 10,
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   active: {
     backgroundColor: Images.colorGreen,
@@ -166,14 +140,14 @@ const style = StyleSheet.create({
     borderTopLeftRadius: 0,
     marginTop: -11,
     marginRight: -9,
-    position: "absolute",
-    right: "0%",
-    top: "0%",
+    position: 'absolute',
+    right: '0%',
+    top: '0%',
     zIndex: 2,
   },
   inactive: {
-    backgroundColor: "#8A8A8A",
-    borderColor: "#8A8A8A",
+    backgroundColor: '#8A8A8A',
+    borderColor: '#8A8A8A',
     paddingHorizontal: 3,
     height: 11,
     borderRadius: 5,
@@ -181,16 +155,16 @@ const style = StyleSheet.create({
     borderTopLeftRadius: 0,
     marginTop: -11,
     marginRight: -9,
-    position: "absolute",
-    right: "0%",
-    top: "0%",
+    position: 'absolute',
+    right: '0%',
+    top: '0%',
     zIndex: 2,
   },
   txtStyleBadge: {
-    color: "#0B0B25",
+    color: '#0B0B25',
     fontSize: 6,
-    textTransform: "uppercase",
-    fontFamily: "Fontfabric-NexaRegular",
+    textTransform: 'uppercase',
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   listItemStyle: {
     marginHorizontal: 0,

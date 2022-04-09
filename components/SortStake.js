@@ -1,21 +1,25 @@
-import React, { Component } from "react";
-import { Text, TouchableOpacity, StyleSheet, View, Alert } from "react-native";
-import Modal from "react-native-modal"; // 2.4.0
-import { ListItem } from "native-base";
-import style from "../Styles.js";
-import { Button, Icon, Left, Body, Right } from "native-base";
-import Images from "../Images.js";
-import { CheckBox } from "react-native-elements";
+import React, { Component } from 'react';
+import { Text, TouchableOpacity, StyleSheet, View, Alert } from 'react-native';
+import Modal from 'react-native-modal'; // 2.4.0
+import { ListItem } from 'native-base';
+import style from '../Styles.js';
+import { Button, Icon, Left, Body, Right } from 'native-base';
+import Images from '../Images.js';
+import { CheckBox } from 'react-native-elements';
 
 class App extends Component {
   constructor(props, store) {
     super(props);
-    this.state = { visibleModal: null, checked1: this.props.checked1, checked2: this.props.checked2 };
-    console.log('props.checked1', props.checked1)
-    console.log('props.checked2', props.checked2)
+    this.state = {
+      visibleModal: null,
+      checked1: this.props.checked1,
+      checked2: this.props.checked2,
+    };
+    console.log('props.checked1', props.checked1);
+    console.log('props.checked2', props.checked2);
   }
   _onPressTotal = () => {
-    this.setState({ checked1: !this.state.checked1});
+    this.setState({ checked1: !this.state.checked1 });
     this.props.onPressTotal();
   };
   _onPressApr = () => {
@@ -24,7 +28,7 @@ class App extends Component {
   };
   _closeModal = () => {
     this.setState({ visibleModal: null });
-  }
+  };
 
   _renderButton = (onPress) => (
     <Button transparent onPress={onPress}>
@@ -39,7 +43,7 @@ class App extends Component {
     return (
       <View style={styles.CheckBox}>
         <CheckBox
-          title={"Total staked"}
+          title={'Total staked'}
           iconRight
           containerStyle={styles.checkBox}
           textStyle={styles.text}
@@ -48,7 +52,7 @@ class App extends Component {
           onPress={this._onPressTotal}
         />
         <CheckBox
-          title={"APR"}
+          title={'APR'}
           iconRight
           containerStyle={styles.checkBox}
           textStyle={styles.text}
@@ -111,34 +115,34 @@ const styles = StyleSheet.create({
     flex: 0.3,
   },
   bottomModal: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     margin: 0,
   },
   CheckBox: {
     borderBottomWidth: 0.3,
-    borderBottomColor: "#ffffff20",
+    borderBottomColor: '#ffffff20',
   },
   checkBox: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     borderWidth: 0,
   },
   text: {
-    color: "#fff",
+    color: '#fff',
     flex: 1,
     fontSize: 18,
     marginLeft: 0,
-    fontFamily: "Fontfabric-NexaRegular",
+    fontFamily: 'Fontfabric-NexaRegular',
   },
   titleText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontFamily: "Fontfabric-NexaBold",
+    fontFamily: 'Fontfabric-NexaBold',
   },
   listItemHeader: {
     backgroundColor: Images.velasColor4,
     paddingTop: 20,
     paddingBottom: 20,
     borderBottomWidth: 0.3,
-    borderBottomColor: "#ffffff40",
+    borderBottomColor: '#ffffff40',
   },
 });

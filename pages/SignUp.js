@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Text,
   Button,
@@ -9,7 +9,7 @@ import {
   Left,
   Right,
   Toast,
-} from "native-base";
+} from 'native-base';
 import {
   Image,
   ImageBackground,
@@ -17,21 +17,27 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Keyboard,
-} from "react-native";
-import Constants from "expo-constants";
-import styles from "../Styles.js";
-import { set, check } from "../wallet/pin.js";
-import Images from "../Images.js";
-import getLang from "../wallet/get-lang.js";
-import * as SecureStore from "expo-secure-store";
-import PickerSetLang from "../components/PickerSetLang.js";
-import Header from "../components/Header";
-import Input from "../components/InputSecure";
-import StatusBar from "../components/StatusBar.js";
-import { VelasLogo1 } from "../svg/velas-logo1.js";
-import { Bg } from "../svg/bg.js";
+} from 'react-native';
+import Constants from 'expo-constants';
+import * as SecureStore from 'expo-secure-store';
 
-const buttonActive = (store) => {
+import { set, check } from '../wallet/pin.js';
+import getLang from '../wallet/get-lang.js';
+
+import PickerSetLang from '../components/PickerSetLang.js';
+import Header from '../components/Header';
+import Input from '../components/InputSecure';
+import StatusBar from '../components/StatusBar.js';
+
+import { VelasLogo1 } from '../svg/velas-logo1.js';
+import { Bg } from '../svg/bg.js';
+
+import styles from '../Styles.js';
+import Images from '../Images.js';
+
+const REGEX_PIN = /[0-9a-zA-Z]{6,}/;
+
+const ButtonActive = (store) => {
   const lang = getLang(store);
 
   const changePage = (tab) => () => {
@@ -39,17 +45,20 @@ const buttonActive = (store) => {
   };
 
   const signup = async () => {
-    if (store.current.signUpInputPinField.length < 6) {
-      store.current.signUpInputPinField = "";
+    if (
+      !store.current.signUpInputPinField ||
+      store.current.signUpInputPinField.length < 6
+    ) {
+      store.current.signUpInputPinField = '';
       return Toast.show({ text: lang.validPin });
     }
     await localStorage.clear();
     set(store.current.signUpInputPinField);
     check(store.current.signUpInputPinField);
-    await SecureStore.deleteItemAsync("localAuthToken");
-    store.current.page = "newseed";
-    store.current.newseedstep = "ask";
-    store.current.signUpInputPinField = "";
+    await SecureStore.deleteItemAsync('localAuthToken');
+    store.current.page = 'newseed';
+    store.current.newseedstep = 'ask';
+    store.current.signUpInputPinField = '';
     // store.current.page = "locked";
   };
 
@@ -60,14 +69,17 @@ const buttonActive = (store) => {
   );
 };
 
-const buttonInactive = (store) => {
+const ButtonInactive = (store) => {
   const lang = getLang(store);
   const notice = () => {
-    if (store.current.signUpInputPinField.length < 6) {
-      store.current.signUpInputPinField = "";
+    if (
+      !store.current.signUpInputPinField ||
+      store.current.signUpInputPinField.length < 6
+    ) {
+      store.current.signUpInputPinField = '';
       return Toast.show({ text: lang.validPin });
     }
-  }
+  };
   return (
     <Button block style={styles.buttonInactive} onPress={notice}>
       <Text style={styles.buttonTextInactive}>{lang.continue}</Text>
@@ -98,15 +110,14 @@ export default ({ store }) => {
     store.current.signUpInputPinField = null;
   };
 
-  const regexPin = /[0-9a-zA-Z]{6,}/;
   const validInputPinSignUp =
     !store.current.signUpInputPinField ||
-    regexPin.test(store.current.signUpInputPinField);
+    REGEX_PIN.test(store.current.signUpInputPinField);
 
   const buttonsChangeSignUp =
     validInputPinSignUp && store.current.signUpInputPinField
-      ? buttonActive
-      : buttonInactive;
+      ? ButtonActive
+      : ButtonInactive;
 
   const handleChangePin = async (text) => {
     store.current.signUpInputPinField = text;
@@ -115,7 +126,7 @@ export default ({ store }) => {
   const inputSuccessPin = (store) => {
     return (
       <Item style={styles.borderItem}>
-        <Icon active name="lock" style={{ color: "#fff" }} />
+        <Icon active name="lock" style={{ color: '#fff' }} />
         <Input
           value={store.current.signUpInputPinField}
           onChangeText={(text) => handleChangePin(text)}
@@ -127,19 +138,24 @@ export default ({ store }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={style.container}
     >
       <View style={styles.image}>
-      <StatusBar />
+        <StatusBar />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={style.inner}>
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: 'center' }}>
               {/* <Image source={Images.logo} style={[styles.styleLogo, { alignSelf: "center" }]} /> */}
-              <VelasLogo1 style={[styles.styleLogo, { alignSelf: "center" }]} width="72" height="63" viewBox="0 0 72 63"/>
+              <VelasLogo1
+                style={[styles.styleLogo, { alignSelf: 'center' }]}
+                width="72"
+                height="63"
+                viewBox="0 0 72 63"
+              />
               <View style={styles.styleVersion}>
                 <Text
-                  style={[styles.styleTxtSeparator, { textAlign: "center" }]}
+                  style={[styles.styleTxtSeparator, { textAlign: 'center' }]}
                 >
                   v.{Constants.nativeAppVersion}
                 </Text>
@@ -153,25 +169,28 @@ export default ({ store }) => {
             )} */}
               <View style={styles.marginBtn}>{buttonsChangeSignUp(store)}</View>
             </View>
-            <View style={styles.marginBtn1}>{PickerSetLang({ store, width: '100%', align: 'center' })}</View>
+            <View style={styles.marginBtn1}>
+              {PickerSetLang({ store, width: '100%', align: 'center' })}
+            </View>
           </View>
         </TouchableWithoutFeedback>
-        <Bg style={styles.bgMain}/>
-        </View>
+        <Bg style={styles.bgMain} />
+      </View>
     </KeyboardAvoidingView>
   );
 };
+
 const style = StyleSheet.create({
   container: {
     flex: 1,
   },
   inner: {
     flex: 0.7,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   marginBtn: {
-    alignItems: "center",
-    width: "100%",
+    alignItems: 'center',
+    width: '100%',
   },
   paddingBlock: {
     paddingHorizontal: 20,

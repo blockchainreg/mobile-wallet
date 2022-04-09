@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
 
 export const PercentIcon = (props) => {
   return (
@@ -16,6 +16,5 @@ export const PercentIcon = (props) => {
         fill="#0BFFB7"
       />
     </Svg>
-  )
-}
-
+  );
+};

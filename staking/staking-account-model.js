@@ -1,12 +1,17 @@
-import BN from "bn.js";
-import { when, decorate, observable } from "mobx";
-import { RewardModel } from "./reward-model";
+import BN from 'bn.js';
+import { when, decorate, observable } from 'mobx';
+import { RewardModel } from './reward-model';
+import { RewardModelBackend } from './reward-model-backend';
+
 import { cachedCallWithRetries } from './utils';
+import * as api from './api';
+const solanaWeb3 = require('./index.cjs.js');
 
 class StakingAccountModel {
-  parsedAccoount = null;
+  account = null;
   myStake = null;
   network = null;
+  validatorsBackend = null;
   isActivated = null;
   connection = null;
   rewards = null;
@@ -15,23 +20,17 @@ class StakingAccountModel {
   _activeStake = null;
   _inactiveStake = null;
   _state = null;
-  latestReward = undefined;
 
   get address() {
-    return this.parsedAccoount.pubkey.toBase58();
+    return this.account.pubkey;
   }
 
   get publicKey() {
-    return this.parsedAccoount.pubkey;
+    return this.account.pubkey;
   }
 
   get validatorAddress() {
-    const { account } = this.parsedAccoount;
-    if (!account || !account.data.parsed.info || !account.data.parsed.info.stake) {
-      return null;
-    }
-    const { voter } = account.data.parsed.info.stake.delegation;
-    return voter;
+    return this.account.voter;
   }
 
   get activeStake() {
@@ -51,13 +50,13 @@ class StakingAccountModel {
 
   get isRewardsLoading() {
     switch (this.rewardsStatus) {
-      case "NotLoaded":
+      case 'NotLoaded':
         return true;
-      case "1Loaded":
+      case '1Loaded':
         return false;
-      case "LoadingMore":
+      case 'LoadingMore':
         return true;
-      case "LoadedAll":
+      case 'LoadedAll':
         return false;
     }
     console.error('Invalid rewardsStatus', this.rewardsStatus);
@@ -71,13 +70,22 @@ class StakingAccountModel {
     this.isActivationRequested = true;
 
     const activationRes = await cachedCallWithRetries(
-	   this.network,
-      ['getStakeActivation', this.connection, this.parsedAccoount.pubkey.toString()],
+      this.network,
+      [
+        'getStakeActivation',
+        this.connection,
+        new solanaWeb3.PublicKey(this.account.pubkey),
+      ],
       async () => {
         try {
-          return await this.connection.getStakeActivation(this.parsedAccoount.pubkey);
-        } catch(e) {
-          if (!e.message || !e.message.includes('failed to get Stake Activation')) {
+          return await this.connection.getStakeActivation(
+            new solanaWeb3.PublicKey(this.account.pubkey)
+          );
+        } catch (e) {
+          if (
+            !e.message ||
+            !e.message.includes('failed to get Stake Activation')
+          ) {
             throw e;
           }
           console.warn(e);
@@ -98,35 +106,48 @@ class StakingAccountModel {
     this._state = state;
   }
 
-  async loadMoreRewards() {
+  async loadMoreRewardsFromNodeRpc() {
     switch (this.rewardsStatus) {
-      case "NotLoaded":
-        await when(() => this.rewardsStatus === '1Loaded');
-        if (this.rewardsStatus !== '1Loaded') {
-          return;
-        }
+      case 'NotLoaded':
         break;
-      case "1Loaded":
+      case '1Loaded':
         break;
-      case "LoadingMore":
+      case 'LoadingMore':
         return;
-      case "LoadedAll":
+      case 'LoadedAll':
         return;
     }
     this.rewards = [];
-    this.rewardsStatus = "LoadingMore";
+    this.rewardsStatus = 'LoadingMore';
     for (let i = 0; i < 10; i++) {
-      const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
+      const {
+        firstNormalEpoch,
+        firstNormalSlot,
+        leaderScheduleSlotOffset,
+        slotsPerEpoch,
+        warmup,
+      } = await this.getEpochSchedule();
       const epoch = await this.getLastEpoch();
-      const firstSlotInEpoch = (epoch - i - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
-      const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
-      const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
-      const address = this.address;
-      const rewards = (
-        blockResult.rewards
-          .filter(r => r.pubkey === address)
-          .map(reward => new RewardModel(reward, epoch - i - 1, this.connection, this.network))
+      const firstSlotInEpoch =
+        (epoch - i - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot;
+      const blockNumberResult = await this.getConfirmedBlocksWithLimit(
+        firstSlotInEpoch
       );
+      const blockResult = await this.getConfirmedBlock(
+        blockNumberResult.result[0]
+      );
+      const address = this.address;
+      const rewards = blockResult.rewards
+        .filter((r) => r.pubkey === address)
+        .map(
+          (reward) =>
+            new RewardModel(
+              reward,
+              epoch - i - 1,
+              this.connection,
+              this.network
+            )
+        );
       if (rewards.length === 0) {
         break;
       }
@@ -135,23 +156,76 @@ class StakingAccountModel {
       //   this.rewards.push(reward);
       // }
     }
-    this.rewardsStatus = "LoadedAll";
+    this.rewardsStatus = 'LoadedAll';
   }
 
-  constructor(parsedAccoount, connection, network) {
-    this.parsedAccoount = parsedAccoount;
+  async loadRewardsFromBackend() {
+    switch (this.rewardsStatus) {
+      case 'NotLoaded':
+        break;
+      case '1Loaded':
+        break;
+      case 'LoadingMore':
+        return;
+      case 'LoadedAll':
+        return;
+    }
+    if (!this.validatorsBackend) {
+      throw new Error('No validatorsBackend url!');
+    }
+    this.rewards = [];
+    this.rewardsStatus = 'LoadingMore';
+    const { staker, voter } = this.account;
+
+    const rewards = await api.getRewardsFromBackendCachedWithRetries({
+      network: this.network,
+      validatorsBackend: this.validatorsBackend,
+      params: { staker, voter },
+    });
+    this.rewards = rewards.map(
+      (reward) =>
+        new RewardModelBackend(
+          reward.lamports,
+          reward.postBalance,
+          reward.epoch,
+          reward.apr
+        )
+    );
+    this.rewardsStatus = 'LoadedAll';
+  }
+
+  async loadMoreRewards() {
+    try {
+      await this.loadRewardsFromBackend();
+    } catch (error) {
+      console.log('loadRewardsFromBackend error: ', error);
+      // Use slower nethod
+      await this.loadMoreRewardsFromNodeRpc();
+    }
+  }
+
+  constructor(account, connection, network, validatorsBackend = null) {
     this.connection = connection;
     this.network = network;
-    const { account } = parsedAccoount;
-    const { lamports } = account;
-    if (account.data.parsed.info && account.data.parsed.info.stake) {
-      const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
+    this.account = account;
+    this.validatorsBackend = validatorsBackend;
+    const {
+      lamports,
+      activationEpoch,
+      deactivationEpoch,
+      rentExemptReserve,
+      withdrawer,
+      stake,
+      pubkey,
+      staker,
+      voter,
+    } = account;
+    if (stake) {
       this.isActivated = deactivationEpoch === '18446744073709551615';
     } else {
       this.isActivated = false;
     }
-    this.myStake = new BN(lamports+'', 10);
-    this.loadRewards();
+    this.myStake = new BN(lamports + '', 10);
 
     decorate(this, {
       rewardsStatus: observable,
@@ -159,7 +233,6 @@ class StakingAccountModel {
       _activeStake: observable,
       _inactiveStake: observable,
       _state: observable,
-      latestReward: observable
     });
   }
   // fetchEpochRewards = (address, activationEpoch, cb)->
@@ -181,75 +254,43 @@ class StakingAccountModel {
 
   async getEpochSchedule() {
     return await cachedCallWithRetries(
-       this.network,
+      this.network,
       ['getEpochSchedule', this.connection],
-      () => this.connection.getEpochSchedule(),
+      () => this.connection.getEpochSchedule()
     );
   }
 
   async getEpochInfo() {
     return await cachedCallWithRetries(
-	  this.network,
+      this.network,
       ['getEpochInfo', this.connection],
-      () => this.connection.getEpochInfo(),
+      () => this.connection.getEpochInfo()
     );
   }
 
   async getConfirmedBlocksWithLimit(firstSlotInEpoch) {
     return await cachedCallWithRetries(
-	  this.network,
+      this.network,
       ['getConfirmedBlocksWithLimit', this.connection, firstSlotInEpoch, 1],
-      () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1),
+      () => this.connection.getConfirmedBlocksWithLimit(firstSlotInEpoch, 1)
     );
   }
-  
+
   async getConfirmedBlock(blockNumber) {
     return await cachedCallWithRetries(
-	  this.network,
+      this.network,
       ['getConfirmedBlock', this.connection, blockNumber],
-      () => this.connection.getConfirmedBlock(blockNumber, 1),
+      () => this.connection.getConfirmedBlock(blockNumber, 1)
     );
-  }
-
-  async loadRewards() {
-    try {
-      // if (this.myStake.lt(new BN('1200000000', 10))) {
-      //   this.rewards = [];
-      //   return;
-      // }
-      const { account } = this.parsedAccoount;
-      if (!account.data.parsed.info || !account.data.parsed.info.stake) {
-        this.latestReward = null;
-        return;
-      }
-
-      // const { activationEpoch } = account.data.parsed.info.stake.delegation;
-      const {firstNormalEpoch, firstNormalSlot, leaderScheduleSlotOffset, slotsPerEpoch, warmup} = await this.getEpochSchedule();
-      const { epoch } = await this.getEpochInfo();
-      const firstSlotInEpoch = (epoch - firstNormalEpoch) * slotsPerEpoch + firstNormalSlot
-      const blockNumberResult = await this.getConfirmedBlocksWithLimit(firstSlotInEpoch);
-      const blockResult = await this.getConfirmedBlock(blockNumberResult.result[0]);
-      const address = this.address;
-      this.latestReward = (
-        blockResult.rewards
-          .filter(r => r.pubkey === address)
-          .slice(0, 1)
-          .map(reward => new RewardModel(reward, epoch - 1, this.connection, this.network))
-      )[0] || null;
-      this.rewardsStatus = '1Loaded';
-    } catch(e) {
-      console.error(e);
-    }
   }
 
   async getLastEpoch() {
     const info = await this.getEpochInfo();
     const { epoch } = info;
-    const { account } = this.parsedAccoount;
-    if (this.isActivated || !account || !account.data.parsed.info || !account.data.parsed.info.stake) {
+    if (this.isActivated || !this.account || !this.account.stake) {
       return epoch;
     }
-    const { deactivationEpoch } = account.data.parsed.info.stake.delegation;
+    const { deactivationEpoch } = this.account;
     return Math.min(parseInt(deactivationEpoch) + 1, epoch);
   }
 }

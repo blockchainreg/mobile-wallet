@@ -1,8 +1,8 @@
-import React from "react";
-import { Text, View, TouchableOpacity, Linking } from "react-native";
-import Modal from "react-native-modal";
-import { Image } from "react-native";
-import styles from "../Styles.js";
+import React from 'react';
+import { Text, View, TouchableOpacity, Linking } from 'react-native';
+import Modal from 'react-native-modal';
+import { Image } from 'react-native';
+import styles from '../Styles.js';
 import getLang from '../wallet/get-lang.js';
 import {
   List,
@@ -15,8 +15,8 @@ import {
   Title,
   Icon,
   Content,
-  Header
-} from "native-base";
+  Header,
+} from 'native-base';
 
 // export default ({ store }) => {
 //   const handleOpenModalPress = store => {
@@ -28,18 +28,17 @@ import {
 //   };
 //   const url = store.current.lastTxUrl;
 //
-  const handleCloseModalPress = store => {
-    const lang = getLang(store);
-    return (
-      <TouchableOpacity
-        style={styles.btnClose}
-        onPress={() => (store.current.page = "wallets")}
-      >
-        <Text style={styles.btnTextClose}>{lang.close}</Text>
-      </TouchableOpacity>
-    );
-  };
-
+const handleCloseModalPress = (store) => {
+  const lang = getLang(store);
+  return (
+    <TouchableOpacity
+      style={styles.btnClose}
+      onPress={() => (store.current.page = 'wallets')}
+    >
+      <Text style={styles.btnTextClose}>{lang.close}</Text>
+    </TouchableOpacity>
+  );
+};
 
 export default ({ store }) => {
   const lang = getLang(store);
@@ -48,9 +47,7 @@ export default ({ store }) => {
       <Modal isVisible={true} hasBackdrop={true}>
         <View style={styles.modalContent2}>
           <Text style={styles.textModalRender}>{lang.oops}</Text>
-          <Text style={styles.textModalStyle}>
-              {store.current.error}
-          </Text>
+          <Text style={styles.textModalStyle}>{store.current.error}</Text>
           {handleCloseModalPress(store)}
         </View>
       </Modal>
@@ -59,8 +56,6 @@ export default ({ store }) => {
 };
 
 // add new styles
-
-
 
 // paste to Store.js
 

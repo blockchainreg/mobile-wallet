@@ -1,4 +1,4 @@
-import { ManyKeysMap } from "./many-keys-map.js"
+import { ManyKeysMap } from './many-keys-map.js';
 
 const cacheMap = new ManyKeysMap();
 
@@ -6,32 +6,64 @@ export async function invalidateCache() {
   cacheMap.clear();
 }
 
-export async function cachedCallWithRetries(network, params, call) {
+export function deleteCacheByKey(keys) {
+  return cacheMap.delete(keys);
+}
+
+export async function cachedCallWithRetries(network, params, call, maxTries) {
   var params$ = params;
-  if (network && params$ && params$.unshift){
-		params$.unshift(network);
+  if (network && params$ && params$.unshift) {
+    params$.unshift(network);
   }
   if (!cacheMap.has(params$)) {
-  	const res = callWithRetries(call, params);
-		cacheMap.set(params,  callWithRetries(call, params));
-		return res;
+    const res = callWithRetries(call, params, maxTries);
+    cacheMap.set(params, res);
+    return res;
   } else {
-	  return cacheMap.get(params$);
+    return cacheMap.get(params$);
   }
 }
 
-export async function callWithRetries(call, params, maxTries = Infinity) {
+export async function callWithRetries(call, params, maxTries = 3) {
   let tries = 0;
   let timeout = null;
-  while(true) {
+  while (true) {
     try {
       return await call();
-    } catch(e) {
-      console.error(e, params && params.map(o => o.toString()).join());
+    } catch (e) {
+      console.error(e, params && params.map((o) => o.toString()).join());
       tries++;
       if (tries >= maxTries) throw e;
-      console.log("[callWithRetries] try # ", tries, ' of ', maxTries);
-	    await new Promise(resolve => timeout = setTimeout(resolve, 1000*tries));
+      console.log('[callWithRetries] try # ', tries, ' of ', maxTries);
+      await new Promise(
+        (resolve) => (timeout = setTimeout(resolve, 1000 * tries))
+      );
     }
   }
 }
+
+export const transformNodeRpcGetParsedProgramAccountsToBackendFormat = (
+  nodeRpcStakingAccount
+) => {
+  const { account, pubkey } = nodeRpcStakingAccount;
+
+  return {
+    voter: account?.data?.parsed?.info?.stake?.delegation?.voter || null,
+    activationEpoch:
+      account?.data?.parsed?.info?.stake?.delegation?.activationEpoch || null,
+    deactivationEpoch:
+      account?.data?.parsed?.info?.stake?.delegation?.deactivationEpoch || null,
+    rentExemptReserve:
+      account?.data?.parsed?.info?.meta?.rentExemptReserve || null,
+    pubkey: pubkey?.toBase58() || null,
+    lamports: account?.lamportsStr || account?.lamports,
+    staker: account?.data?.parsed?.info?.meta?.authorized?.staker || null,
+    withdrawer:
+      account?.data?.parsed?.info?.meta?.authorized?.withdrawer || null,
+    custodian: account?.data?.parsed?.info?.meta?.lockup?.custodian || null,
+    epoch: account?.data?.parsed?.info?.meta?.lockup?.epoch,
+    lockupUnixTimestamp:
+      account?.data?.parsed?.info?.meta?.lockup?.unixTimestamp,
+    creditsObserved: account?.data?.parsed?.info?.stake?.creditsObserved,
+  };
+};

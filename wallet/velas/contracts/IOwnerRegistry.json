@@ -87,20 +87,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IOwnerRegistry.sol",
     "exportedSymbols": {
-      "IOwnerRegistry": [
-        12111
-      ]
+      "IOwnerRegistry": [12111]
     },
     "id": 12112,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12083,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:21"
       },
@@ -111,9 +105,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12111,
-        "linearizedBaseContracts": [
-          12111
-        ],
+        "linearizedBaseContracts": [12111],
         "name": "IOwnerRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -447,20 +439,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IOwnerRegistry.sol",
     "exportedSymbols": {
-      "IOwnerRegistry": [
-        12111
-      ]
+      "IOwnerRegistry": [12111]
     },
     "id": 12112,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12083,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:21"
       },
@@ -471,9 +457,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12111,
-        "linearizedBaseContracts": [
-          12111
-        ],
+        "linearizedBaseContracts": [12111],
         "name": "IOwnerRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [

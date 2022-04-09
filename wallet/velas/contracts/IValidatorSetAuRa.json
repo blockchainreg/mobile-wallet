@@ -423,20 +423,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IValidatorSetAuRa.sol",
     "exportedSymbols": {
-      "IValidatorSetAuRa": [
-        12534
-      ]
+      "IValidatorSetAuRa": [12534]
     },
     "id": 12535,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12372,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:27"
       },
@@ -447,9 +441,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12534,
-        "linearizedBaseContracts": [
-          12534
-        ],
+        "linearizedBaseContracts": [12534],
         "name": "IValidatorSetAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -2305,20 +2297,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/interfaces/IValidatorSetAuRa.sol",
     "exportedSymbols": {
-      "IValidatorSetAuRa": [
-        12534
-      ]
+      "IValidatorSetAuRa": [12534]
     },
     "id": 12535,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12372,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:27"
       },
@@ -2329,9 +2315,7 @@
         "documentation": null,
         "fullyImplemented": false,
         "id": 12534,
-        "linearizedBaseContracts": [
-          12534
-        ],
+        "linearizedBaseContracts": [12534],
         "name": "IValidatorSetAuRa",
         "nodeType": "ContractDefinition",
         "nodes": [

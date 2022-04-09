@@ -1,10 +1,10 @@
-import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
-import GradientButton from "../components/GradientButton.js";
-import { Container, Content, Icon, Button } from "native-base";
-import { Image } from "react-native";
-import styles from "../Styles.js";
+import React from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import Modal from 'react-native-modal';
+import GradientButton from '../components/GradientButton.js';
+import { Container, Content, Icon, Button } from 'native-base';
+import { Image } from 'react-native';
+import styles from '../Styles.js';
 import getLang from '../wallet/get-lang.js';
 
 export default ({ store }) => {
@@ -13,14 +13,14 @@ export default ({ store }) => {
     store.tab = tab;
     store.footerVisible = visible;
   };
-  const handleOpenModalPress = store => {
+  const handleOpenModalPress = (store) => {
     return (
       <TouchableOpacity onPress={() => (store.seedModal = true)}>
         <Text style={styles.textLoginStyle}>{lang.continue}</Text>
       </TouchableOpacity>
     );
   };
-  const buttonPressLogout = store => {
+  const buttonPressLogout = (store) => {
     const onPress = () => {
       store.saveBtnSeed.pressing = true;
     };
@@ -38,14 +38,14 @@ export default ({ store }) => {
         gradientEnd="#009EFD"
         gradientDirection="diagonal"
         height={56}
-        width={"100%"}
+        width={'100%'}
         radius={0}
-        onPressAction={changePage("UniquePassword", false)}
+        onPressAction={changePage('UniquePassword', false)}
       />
     );
   };
 
-  const handleCloseModalPress = store => {
+  const handleCloseModalPress = (store) => {
     return (
       <TouchableOpacity
         style={styles.btnClose}
@@ -61,9 +61,7 @@ export default ({ store }) => {
       {handleOpenModalPress(store)}
       <Modal isVisible={store.seedModal} hasBackdrop={true}>
         <View style={styles.modalContent}>
-          <Text style={styles.textSnackBar}>
-            {lang.phraseSafePlace}
-          </Text>
+          <Text style={styles.textSnackBar}>{lang.phraseSafePlace}</Text>
           {buttonPressLogout(store)}
           {handleCloseModalPress(store)}
         </View>

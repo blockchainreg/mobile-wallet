@@ -11,20 +11,14 @@
   "ast": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/UpgradeabilityAdmin.sol",
     "exportedSymbols": {
-      "UpgradeabilityAdmin": [
-        12930
-      ]
+      "UpgradeabilityAdmin": [12930]
     },
     "id": 12931,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12915,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:34"
       },
@@ -35,9 +29,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 12930,
-        "linearizedBaseContracts": [
-          12930
-        ],
+        "linearizedBaseContracts": [12930],
         "name": "UpgradeabilityAdmin",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -91,9 +83,7 @@
               "src": "424:102:34",
               "statements": [
                 {
-                  "assignments": [
-                    12924
-                  ],
+                  "assignments": [12924],
                   "declarations": [
                     {
                       "constant": false,
@@ -230,20 +220,14 @@
   "legacyAST": {
     "absolutePath": "/home/jack/prog/blkchn/velas/posdao-test-setup/posdao-contracts/contracts/upgradeability/UpgradeabilityAdmin.sol",
     "exportedSymbols": {
-      "UpgradeabilityAdmin": [
-        12930
-      ]
+      "UpgradeabilityAdmin": [12930]
     },
     "id": 12931,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 12915,
-        "literals": [
-          "solidity",
-          "0.5",
-          ".10"
-        ],
+        "literals": ["solidity", "0.5", ".10"],
         "nodeType": "PragmaDirective",
         "src": "0:23:34"
       },
@@ -254,9 +238,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 12930,
-        "linearizedBaseContracts": [
-          12930
-        ],
+        "linearizedBaseContracts": [12930],
         "name": "UpgradeabilityAdmin",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -310,9 +292,7 @@
               "src": "424:102:34",
               "statements": [
                 {
-                  "assignments": [
-                    12924
-                  ],
+                  "assignments": [12924],
                   "declarations": [
                     {
                       "constant": false,
