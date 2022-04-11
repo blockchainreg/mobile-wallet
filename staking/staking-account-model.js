@@ -148,13 +148,7 @@ class StakingAccountModel {
               this.network
             )
         );
-      if (rewards.length === 0) {
-        break;
-      }
       this.rewards = this.rewards.concat(rewards);
-      // for (let reward of rewards) {
-      //   this.rewards.push(reward);
-      // }
     }
     this.rewardsStatus = 'LoadedAll';
   }
