@@ -38,6 +38,22 @@
           if (err != null) {
             return cb(err);
           }
+          // Do not set wallet with default values if it is present in the added list
+          // and there is no network change or account index change (just simple wallet reload).
+          var foundWallet = (store.current.account.wallets || []).find(
+            (it) => it.coin.token === coin.token
+          );
+          if (
+            store.walletStarted &&
+            foundWallet &&
+            store.current.account.wallets &&
+            !store.changingAccountIndex &&
+            !store.changingNetwork
+          ) {
+            console.warn(`Take ${coin.token} wallet from cache`);
+            return cb(null, foundWallet);
+          }
+          store.walletStarted = true;
           balance = '..';
           balanceUsd = '..';
           usdRate = '..';
