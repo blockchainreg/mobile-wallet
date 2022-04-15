@@ -619,7 +619,10 @@ import roundNumber from '../round-number';
               ((ref$ = err.message) != null ? ref$ : err) + '');
           }
           notifyFormResult(send.id, null, data);
-          store.current.lastTxUrl = send.network.api.url + '/tx/' + data;
+          store.current.lastTxUrl =
+            send.coin.token === 'btc'
+              ? send.network.api.linktx.replace(':hash', data)
+              : send.network.api.url + '/tx/' + data;
           store.current.transaction = {
             hash: data,
           };
