@@ -44,12 +44,14 @@ export default ({ store, web3t }) => {
     if (store.current.accountIndex === value) {
       return;
     }
+    store.changingAccountIndex = true;
     store.current.accountIndex = value;
     spin(
       store,
       `Updating account index`,
       web3t.refresh.bind(web3t)
     )((err, data) => {
+      store.changingAccountIndex = false;
       console.log('Updating account index finished');
       //initStaking(store);
       console.log('Updating total balance finished');
