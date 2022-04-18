@@ -15,7 +15,8 @@ import { observer } from 'mobx-react';
 import { formatReward, formatStakeAmount } from '../utils/format-value';
 
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.18)';
-const URL = 'https://support.velas.com/hc/en-150/articles/360014994819-F-A-Q';
+const URL =
+  'https://support.velas.com/hc/en-150/articles/360021071360-How-To-Delegate-Undelegate-and-Claim-the-Rewards-Using-UI-Wallet';
 export default observer(({ rewards, lang }) => {
   const columns = [
     lang.epoch || '# Epoch',
