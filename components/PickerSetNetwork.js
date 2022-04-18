@@ -28,16 +28,13 @@ const pickerSelectStyle = StyleSheet.create({
 export default ({ store, web3t }) => {
   const onChangeNetwork = useCallback((network) => {
     if (!!network && network !== store.current.network) {
-      store.changingNetwork = true;
       store.current.network = network;
 
       spin(
         store,
         `Changing network to ${network.toUpperCase()}`,
         web3t.refresh.bind(web3t)
-      )((err, data) => {
-        store.changingNetwork = false;
-      });
+      )((err, data) => {});
     }
   }, []);
 

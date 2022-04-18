@@ -9,7 +9,7 @@ const FETCH_BALANCE_TIMEOUT = 10000;
 const EUR_RATE = 0.893191;
 const NO_BALANCE_PLACEHOLDER = '..';
 
-const fetchBalanceFromApi = (store, cb, wallet, token, usdRate, state) => {
+const fetchBalanceFromApi = (cb, wallet, token, usdRate, state) => {
   let requestHasBeenHandled = false;
   let requestTimeoutID;
 
@@ -37,15 +37,10 @@ const fetchBalanceFromApi = (store, cb, wallet, token, usdRate, state) => {
     // })(
     // store.transactions.all))));
     wallet.pendingSent = pendingSent;
-    var prevBalance = (store.current.account.wallets || []).find(
-      (it) => it.coin.token === token
-    ).balance;
 
     wallet.balance = (() => {
-      switch (true) {
-        case isNaN(balance) && !isNaN(prevBalance):
-          return prevBalance + '';
-        case isNaN(balance):
+      switch (false) {
+        case !isNaN(balance):
           return NO_BALANCE_PLACEHOLDER;
         default:
           return balance + '';
@@ -90,6 +85,7 @@ const fetchBalanceFromApi = (store, cb, wallet, token, usdRate, state) => {
 
 async function calcWallet(store, cb) {
   const start = Date.now();
+  console.log('calcWallet.......');
   if (store == null) {
     return cb('Store is required');
   }
@@ -121,7 +117,7 @@ async function calcWallet(store, cb) {
         return round5(times(usdRate, EUR_RATE));
       })();
 
-      return fetchBalanceFromApi(store, cb, wallet, token, usdRate, state);
+      return fetchBalanceFromApi(cb, wallet, token, usdRate, state);
     });
   };
 
