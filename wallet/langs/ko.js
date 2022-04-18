@@ -268,5 +268,8 @@
     timeUntilEnd: '종료까지 시간',
     staking: '스테이킹',
     chooseNetwork: 'Choose networks',
+    myActiveStake: '내 스테이킹 양',
+    infoTotalStake: 'Validato의 총 지분입니다.',
+    infoCommission: '각 보상에서 검증자에게 지불하는 수수료입니다.',
   };
 }.call(this));

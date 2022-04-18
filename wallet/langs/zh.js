@@ -261,5 +261,8 @@
     timeUntilEnd: '到结束的时间',
     staking: '质押',
     chooseNetwork: 'Choose network',
+    myActiveStake: '我的已激活的质押',
+    infoTotalStake: '验证者的总质押',
+    infoCommission: '您从每次奖励中支付给验证者的佣金',
   };
 }.call(this));

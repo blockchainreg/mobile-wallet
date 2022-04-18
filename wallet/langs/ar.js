@@ -270,5 +270,8 @@
     timeUntilEnd: 'الوقت حتى النهاية',
     staking: 'تحصيص',
     chooseNetwork: 'Choose networks',
+    myActiveStake: 'حصتي النشطة',
+    infoTotalStake: 'إجمالي حصة المدقق',
+    infoCommission: 'عمولة تدفعها للمدقق من كل مكافأة',
   };
 }.call(this));

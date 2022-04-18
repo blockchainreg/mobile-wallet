@@ -268,5 +268,8 @@
       'Don’t stake all coins, leave some (~1 VLX) to pay transaction fees in the future and be able to initiate stake withdrawals.',
     noticeTrying: 'You are trying to withdraw more funds than you have.',
     chooseNetwork: 'Choose networks',
+    myActiveStake: 'My active stake',
+    infoTotalStake: 'Total stake of validator',
+    infoCommission: 'A commission that you pay to validator from each reward',
   };
 }.call(this));

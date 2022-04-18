@@ -271,5 +271,8 @@
     timeUntilEnd: 'Akoko titi di opin',
     staking: 'okowo',
     chooseNetwork: 'Choose network',
+    myActiveStake: 'Awọn Okòwò mí',
+    infoTotalStake: 'Lapapọ igi ti afọwọsi',
+    infoCommission: 'Igbimo ti o san lati sooto lati kọọkan ere',
   };
 }.call(this));
