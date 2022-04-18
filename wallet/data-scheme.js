@@ -65,9 +65,6 @@
     };
   };
   store = {
-    walletStarted: false,
-    changingNetwork: false,
-    changingAccountIndex: false,
     root: null,
     theme: 'velas',
     lang: 'en',
