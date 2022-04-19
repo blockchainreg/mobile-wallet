@@ -103,8 +103,21 @@ export default ({ store, web3t }) => {
   const ScreenTitle = send.isSwap ? lang.swapBtn : lang.send;
   const token = wallet.coin.nickname || wallet.coin.token;
   const bridgeFeeNumber = store.current.send.homeFeePercent || 0;
-  const bridgeFee = math.times(bridgeFeeNumber, 100);
   const tokenFee = roundNumber(send.amountSendFee, { decimals: 9 });
+  const bridgeFee = (() => {
+    switch (true) {
+      case store.current.send.feeMode === 'fixed':
+        return bridgeFeeNumber;
+      default:
+        return math.times(bridgeFeeNumber, 100);
+    }
+  })();
+  const bridgeFeeData =
+    bridgeFee > 0
+      ? store.current.send.feeMode === 'fixed'
+        ? `${bridgeFeeNumber} ${token.toUpperCase()}`
+        : `${math.times(bridgeFeeNumber, 100)} %`
+      : null;
   const amountSendFeeUsd = roundNumber(send.amountSendFeeUsd, { decimals: 2 });
 
   /* Methods */
@@ -317,7 +330,7 @@ export default ({ store, web3t }) => {
                     {tokenFee} {feeToken} (${amountSendFeeUsd})
                   </Text>
                 </View>
-                {bridgeFee > 0 && (
+                {bridgeFeeData && (
                   <View
                     style={[
                       style.alignHorizontal,
@@ -330,8 +343,7 @@ export default ({ store, web3t }) => {
                     </View>
 
                     <Text style={[style.tokenStyle, { width: '20%' }]}>
-                      {bridgeFee}
-                      {'%'}
+                      {bridgeFeeData}
                     </Text>
                   </View>
                 )}

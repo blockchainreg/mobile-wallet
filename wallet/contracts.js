@@ -182,6 +182,20 @@ const ABI = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    constant: true,
+    inputs: [],
+    name: 'feeManagerContract',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
 ];
 
 function importAll$(obj, src) {
@@ -322,6 +336,77 @@ const checkAllowanceWithAvailableWeb3Provider = (
   );
 };
 
+const FIXED_FEE = '0xc76cdb54';
+const PERCENTAGE_FEE = '0x40c62b8f';
+/**/
+const getFeeMode = function (
+  wallet,
+  evm_wallet,
+  token,
+  feeManagerContract,
+  cb
+) {
+  var ref$, ref1$, ref2$, ref3$;
+  var mode = 'percent';
+
+  if (feeManagerContract === '0x') {
+    return cb('feeManagerContract is not valid address');
+  }
+  if (wallet == null) {
+    return cb(null, mode);
+  }
+  if (feeManagerContract == null) {
+    return cb(null, mode);
+  }
+  var abi = [
+    {
+      constant: true,
+      inputs: [],
+      name: 'getFeeMode',
+      outputs: [
+        {
+          name: '',
+          type: 'bytes4',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+  ];
+  var web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      evm_wallet != null
+        ? (ref$ = evm_wallet.network) != null
+          ? (ref1$ = ref$.api) != null
+            ? ref1$.web3Provider
+            : void 8
+          : void 8
+        : void 8
+    )
+  );
+  web3.eth.providerUrl =
+    evm_wallet != null
+      ? (ref2$ = evm_wallet.network) != null
+        ? (ref3$ = ref2$.api) != null
+          ? ref3$.web3Provider
+          : void 8
+        : void 8
+      : void 8;
+  var addr = feeManagerContract;
+  if (addr == null) {
+    return cb(null, mode);
+  }
+
+  var contract = web3.eth.contract(abi).at(addr);
+  contract.getFeeMode(function (err, feeMode) {
+    if (feeMode !== FIXED_FEE && feeMode !== PERCENTAGE_FEE) {
+      console.log('feeMode was not recognized properly ', feeMode);
+    }
+    return cb(null, feeMode === FIXED_FEE ? 'fixed' : 'percent');
+  });
+};
+
 /**
  * Recursively makes getHomeFee request untill find available web3Provider.
  */
@@ -329,6 +414,7 @@ const getHomeFeeWithAvaliableWeb3Provider = (
   {
     web3Providers,
     wallet,
+    walletEvm,
     ref2$,
     ref3$,
     ref4$,
@@ -396,125 +482,201 @@ const getHomeFeeWithAvaliableWeb3Provider = (
     }
   })();
   const contract = web3.eth.contract(ABI).at(addr);
+  let feeMode = 'percent';
 
-  const beforeStartGetHomeFeeTime = performance.now();
-  contract.getHomeFee((err, homeFee) => {
-    if (err) {
-      const isErrorCausedByUnavailableWeb3Provider =
-        commonProvider.isErrorCausedByUnavailableWeb3Provider(err);
-      const startGetHomeFeeTime = performance.now();
-      // Slow provider 4466-6000 milliseconds on dev simulator
-      // Fast 143-400 milliseconds on dev simulator
-      const isSlowProvider =
-        startGetHomeFeeTime - beforeStartGetHomeFeeTime >
-        MAX_WAITING_RESPONE_TIME;
-      const isExtraWeb3Providers = extraWeb3Providers.length !== 0;
-      if (
-        (isExtraWeb3Providers && isErrorCausedByUnavailableWeb3Provider) ||
-        (isExtraWeb3Providers && isSlowProvider)
-      ) {
-        return getHomeFeeWithAvaliableWeb3Provider(
-          {
-            web3Providers: extraWeb3Providers,
-            wallet: walletWithChangedWeb3Providers,
-            ref2$,
-            ref3$,
-            ref4$,
-            ref5$,
-            chosenNetwork,
-            token,
-            walletTo,
-          },
-          cb
-        );
-      }
-
-      homeFee = 0;
-    }
-    const homeFeePercent = div(
-      homeFee,
-      Math.pow(10, wallet != null ? wallet.network.decimals : void 8)
-    );
-    contract.dailyLimit((err, dailyLimit) => {
-      const homeDailyLimit = div(
-        dailyLimit,
-        Math.pow(10, wallet.network.decimals)
-      );
-      contract.getCurrentDay((err, currentDay) => {
-        if (err) {
-          currentDay = '0x';
-        }
-        contract.totalSpentPerDay(currentDay, (err, totalSpentPerDay) => {
-          totalSpentPerDay = div(
-            totalSpentPerDay,
+  return contract.feeManagerContract(function (err, feeManagerContract) {
+    const beforeStartGetHomeFeeTime = performance.now();
+    getFeeMode(
+      wallet,
+      walletEvm,
+      token,
+      feeManagerContract,
+      function (err, feeMode) {
+        return contract.getHomeFee(function (err, bridgeHomeFee) {
+          if (err) {
+            const isErrorCausedByUnavailableWeb3Provider =
+              commonProvider.isErrorCausedByUnavailableWeb3Provider(err);
+            const startGetHomeFeeTime = performance.now();
+            // Slow provider 4466-6000 milliseconds on dev simulator
+            // Fast 143-400 milliseconds on dev simulator
+            const isSlowProvider =
+              startGetHomeFeeTime - beforeStartGetHomeFeeTime >
+              MAX_WAITING_RESPONE_TIME;
+            const isExtraWeb3Providers = extraWeb3Providers.length !== 0;
+            if (
+              (isExtraWeb3Providers &&
+                isErrorCausedByUnavailableWeb3Provider) ||
+              (isExtraWeb3Providers && isSlowProvider)
+            ) {
+              return getHomeFeeWithAvaliableWeb3Provider(
+                {
+                  web3Providers: extraWeb3Providers,
+                  wallet: walletWithChangedWeb3Providers,
+                  walletEvm,
+                  ref2$,
+                  ref3$,
+                  ref4$,
+                  ref5$,
+                  chosenNetwork,
+                  token,
+                  walletTo,
+                },
+                cb
+              );
+            }
+          }
+          var homeFeePercent = div(
+            bridgeHomeFee || 0,
             Math.pow(10, wallet.network.decimals)
           );
-          const remainingDailyLimit = minus(homeDailyLimit, totalSpentPerDay);
 
-          contract.minPerTx((err, minPerTxRaw) => {
-            const minPerTx = div(
-              minPerTxRaw,
-              Math.pow(10, wallet.network.decimals)
-            );
-            contract.maxPerTx((err, maxPerTxRaw) => {
-              const maxPerTx = div(
-                maxPerTxRaw,
-                Math.pow(10, wallet.network.decimals)
-              );
+          contract.dailyLimit(function (err, dailyLimit) {
+            var currentDay, totalSpentPerDay, remainingDailyLimit;
+            dailyLimit = div(dailyLimit, Math.pow(10, wallet.network.decimals));
 
-              if (
-                token !== 'busd' &&
-                token !== 'usdc' &&
-                token !== 'usdt_erc20'
-              ) {
-                return cb(null, {
-                  homeFeePercent,
-                  minPerTx,
-                  maxPerTx,
-                  remainingDailyLimit,
-                  homeDailyLimit,
-                });
-              }
+            contract.getCurrentDay(function (err, currentDay) {
+              contract.totalSpentPerDay(
+                currentDay || 0,
+                function (err, totalSpentPerDay) {
+                  totalSpentPerDay = div(
+                    totalSpentPerDay,
+                    Math.pow(10, wallet.network.decimals)
+                  );
+                  remainingDailyLimit = minus(dailyLimit, totalSpentPerDay);
+                  return contract.maxAvailablePerTx(function (
+                    err,
+                    maxAvailablePerTx
+                  ) {
+                    maxAvailablePerTx = div(
+                      maxAvailablePerTx,
+                      Math.pow(10, wallet.network.decimals)
+                    );
+                    return contract.minPerTx(function (err, minPerTxRaw) {
+                      var minPerTx = div(
+                        minPerTxRaw != null ? minPerTxRaw : 0,
+                        Math.pow(10, wallet.network.decimals)
+                      );
+                      return contract.maxPerTx(function (err, maxPerTxRaw) {
+                        var maxPerTx,
+                          wallets,
+                          ref$,
+                          HOME_BRIDGE,
+                          FOREIGN_BRIDGE,
+                          BSC_SWAP__HOME_BRIDGE,
+                          HECO_SWAP__HOME_BRIDGE,
+                          web3,
+                          ref1$,
+                          addr,
+                          contract,
+                          network;
+                        maxPerTx = div(
+                          maxPerTxRaw != null ? maxPerTxRaw : 0,
+                          Math.pow(10, wallet.network.decimals)
+                        );
+                        if (
+                          token !== 'busd' &&
+                          token !== 'usdc' &&
+                          token !== 'usdt_erc20'
+                        ) {
+                          return cb(null, {
+                            feeMode: feeMode,
+                            homeFeePercent,
+                            minPerTx,
+                            maxPerTx,
+                            remainingDailyLimit,
+                            homeDailyLimit: dailyLimit,
+                          });
+                        }
 
-              var ref4$ = walletTo.network,
-                HOME_BRIDGE = ref4$.HOME_BRIDGE;
-              var web3 = new Web3(
-                new Web3.providers.HttpProvider(
-                  walletTo != null
-                    ? (ref4$ = walletTo.network) != null
-                      ? (ref5$ = ref4$.api) != null
-                        ? ref5$.web3Provider
-                        : void 8
-                      : void 8
-                    : void 8
-                )
-              );
-              web3.eth.providerUrl = walletTo.network.api.web3Provider;
-              var addr = HOME_BRIDGE;
-              var contract = web3.eth.contract(ABI).at(addr);
-              var network = walletTo.network;
-              contract.getForeignFee((err, homeFee) => {
-                if (err) {
-                  homeFee = 0;
+                        (ref$ = walletTo.network),
+                          (HOME_BRIDGE = ref$.HOME_BRIDGE),
+                          (FOREIGN_BRIDGE = ref$.FOREIGN_BRIDGE),
+                          (BSC_SWAP__HOME_BRIDGE = ref$.BSC_SWAP__HOME_BRIDGE),
+                          (HECO_SWAP__HOME_BRIDGE =
+                            ref$.HECO_SWAP__HOME_BRIDGE);
+                        web3 = new Web3(
+                          new Web3.providers.HttpProvider(
+                            walletTo != null
+                              ? (ref$ = walletTo.network) != null
+                                ? (ref1$ = ref$.api) != null
+                                  ? ref1$.web3Provider
+                                  : void 8
+                                : void 8
+                              : void 8
+                          )
+                        );
+                        web3.eth.providerUrl =
+                          walletTo.network.api.web3Provider;
+                        addr = (() => {
+                          switch (false) {
+                            case !(
+                              token === 'usdt_erc20' &&
+                              chosenNetwork.referTo === 'vlx_usdt'
+                            ):
+                              return HOME_BRIDGE;
+                            case !(
+                              token === 'usdc' &&
+                              chosenNetwork.referTo === 'vlx_usdc'
+                            ):
+                              return HOME_BRIDGE;
+                            case !(
+                              token === 'busd' &&
+                              chosenNetwork.referTo === 'vlx_busd'
+                            ):
+                              return HOME_BRIDGE;
+                          }
+                        })();
+                        contract = web3.eth.contract(ABI).at(addr);
+                        network = walletTo.network;
+                        /* Retrieve maxPerTx, minPerTx, dailyLimit, brridgeFee */
+                        return contract.feeManagerContract(function (
+                          err,
+                          feeManagerContract
+                        ) {
+                          var feeMode, bridgeHomeFee, homeFeePercent;
+                          getFeeMode(
+                            wallet,
+                            walletEvm,
+                            token,
+                            feeManagerContract,
+                            function (err, feeMode) {
+                              contract.getForeignFee(function (
+                                err,
+                                bridgeHomeFee
+                              ) {
+                                homeFeePercent = (() => {
+                                  switch (true) {
+                                    case err:
+                                      return 0;
+                                    default:
+                                      return div(
+                                        bridgeHomeFee,
+                                        Math.pow(10, walletTo.network.decimals)
+                                      );
+                                  }
+                                })();
+                                return cb(null, {
+                                  feeMode: feeMode,
+                                  homeFeePercent,
+                                  minPerTx,
+                                  maxPerTx,
+                                  remainingDailyLimit,
+                                  homeDailyLimit: dailyLimit,
+                                });
+                              });
+                            }
+                          );
+                        });
+                      });
+                    });
+                  });
                 }
-                const homeFeePercent = div(
-                  homeFee,
-                  Math.pow(10, network.decimals)
-                );
-
-                return cb(null, {
-                  homeFeePercent,
-                  minPerTx,
-                  maxPerTx,
-                  remainingDailyLimit,
-                  homeDailyLimit,
-                });
-              });
+              );
             });
           });
         });
-      });
-    });
+      }
+    );
   });
 };
 
@@ -1921,6 +2083,9 @@ module.exports = function ({ store, web3t }) {
     }
     wallet = store.current.send.wallet;
     network = wallet.network;
+    const walletEvm = store.current.account.wallets.find(
+      (it) => it.coin.token === 'vlx_evm'
+    );
 
     const { web3Provider, extraWeb3Providers } = network.api;
     const web3Providers = commonProvider.getWeb3Providers(
@@ -1936,6 +2101,7 @@ module.exports = function ({ store, web3t }) {
       {
         web3Providers,
         wallet,
+        walletEvm,
         ref2$,
         ref3$,
         ref4$,
@@ -1947,6 +2113,7 @@ module.exports = function ({ store, web3t }) {
       (
         error,
         {
+          feeMode,
           homeFeePercent,
           minPerTx,
           maxPerTx,
@@ -1957,7 +2124,7 @@ module.exports = function ({ store, web3t }) {
         if (error) {
           return cb(`[getHomeFeeWithAvaliableWeb3Provider] error ${error}`);
         }
-
+        store.current.send.feeMode = feeMode;
         store.current.send.homeFeePercent = homeFeePercent;
         store.current.send.homeDailyLimit = homeDailyLimit;
         importAll$(store.current.networkDetails, {

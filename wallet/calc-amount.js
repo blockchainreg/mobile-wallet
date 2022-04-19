@@ -192,6 +192,21 @@
         }
       }
       send.amountChanging = true;
+
+      let homeFee = (function () {
+        switch (true) {
+          case store.current.send.feeMode === 'fixed':
+            return div(store.current.send.homeFeePercent, Math.pow(10, 18));
+          default:
+            return times(
+              store.current.send.amountSend || 0,
+              times(store.current.send.homeFeePercent, 100)
+            );
+        }
+      })();
+      store.current.send.homeFee = homeFee;
+      store.current.send.homeFeeUsd = times(homeFee, wallet.usdRate);
+
       resultAmountSend =
         amountSend != null && amountSend !== '' ? amountSend : 0;
       (ref$ = store.current.send),
@@ -226,10 +241,6 @@
           sendTo = send.contractAddress ? send.contractAddress : send.to;
         } else if (send.to.trim().length === 0) {
           sendTo = send.wallet.address;
-        }
-        if (!sendTo) {
-          //          send.error = "sendTo cannot be null"
-          //          return;
         }
 
         if (!skipUpdateFiat) {
@@ -325,6 +336,18 @@
                   return 'Balance is not yet loaded';
                 case !(parseFloat(amountToCharge) < 0):
                   return lang.insufficientFunds;
+                case !(
+                  +send.amountCharged > 0 &&
+                  store.current.send.feeMode === 'fixed' &&
+                  +send.amountCharged < +store.current.send.homeFeePercent
+                ):
+                  return (
+                    'Amount ' +
+                    send.amountCharged +
+                    ' is less than bridge fee (' +
+                    store.current.send.homeFeePercent +
+                    ')'
+                  );
                 default:
                   return '';
               }

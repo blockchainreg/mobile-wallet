@@ -372,7 +372,21 @@ import roundNumber from '../round-number';
         var currency = (
           transaction.coin.nickname || transaction.coin.token
         ).toUpperCase();
-        const amount = roundHuman(transaction.amount);
+        const homeFeePercent = store.current.send.homeFeePercent;
+        const homeFee = (function () {
+          switch (false) {
+            case store.current.send.feeMode !== 'fixed':
+              return store.current.send.homeFeePercent;
+            default:
+              return times(
+                store.current.send.amountSend,
+                store.current.send.homeFeePercent
+              );
+          }
+        })();
+        const amount = roundHuman(minus(transaction.amount, homeFee), {
+          decimals: store.current.send.network.decimals,
+        });
         /* Important cover sending tx in setImmediate to avoid "send freezing" screen (for solana derivatives tokens). */
         setImmediate(() => {
           let confirmComponent = () => {
