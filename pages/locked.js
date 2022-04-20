@@ -201,6 +201,7 @@ export default ({ store, web3t }) => {
 
       login(get());
       store.current.pin = '';
+      store.walletStarted = false;
       store.userWallet = 200;
     });
     return (
@@ -226,6 +227,7 @@ export default ({ store, web3t }) => {
     const anotherAccount = () => {
       confirm(store, lang.dataOverridden, (sure) => {
         if (sure) {
+          store.walletStarted = false;
           store.current.page = 'register';
         }
       });

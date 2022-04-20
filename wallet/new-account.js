@@ -26,7 +26,7 @@
         return cb(null);
       }
       index = store.current.accountIndex;
-      return getKeys(
+      getKeys(
         {
           index: index,
           network: network,
@@ -38,6 +38,22 @@
           if (err != null) {
             return cb(err);
           }
+          // Do not set wallet with default values if it is present in the added list
+          // and there is no network change or account index change (just simple wallet reload).
+          var foundWallet = (store.current.account.wallets || []).find(
+            (it) => it.coin.token === coin.token
+          );
+          if (
+            store.walletStarted &&
+            foundWallet &&
+            store.current.account.wallets &&
+            !store.changingAccountIndex &&
+            !store.changingNetwork
+          ) {
+            console.log(`Take ${coin.token} wallet from cache`);
+            return cb(null, foundWallet);
+          }
+
           balance = '..';
           balanceUsd = '..';
           usdRate = '..';
@@ -92,6 +108,8 @@
       if (err != null) {
         return cb(err);
       }
+      console.log('.... set store.walletStarted = true;');
+      store.walletStarted = true;
       return cb(null, {
         mnemonic: mnemonic,
         wallets: wallets,
