@@ -13,7 +13,6 @@ export default ({ store, ...props }) => {
   }
   const { homeFeePercent, minPerTx, maxPerTx, remainingDailyLimit, wallet } =
     props.data;
-  const bridgeFeePercent = homeFeePercent ? times(homeFeePercent, 100) : '..';
 
   const $minPerTx = minPerTx ? roundHuman(minPerTx, { decimals: 8 }) : '..';
   const $maxPerTx = isNaN(maxPerTx)
@@ -44,6 +43,16 @@ export default ({ store, ...props }) => {
   const resetCurrentNetworkDetails = () => {
     store.current.currentNetworkDetails = null;
   };
+  const bridgeFeePercent = (() => {
+    switch (true) {
+      case !homeFeePercent || +homeFeePercent === 0:
+        return null;
+      case store.current.send.feeMode === 'fixed':
+        return roundHuman(homeFeePercent) + ' ' + currency;
+      default:
+        return times(homeFeePercent, 100) + '%';
+    }
+  })();
 
   return (
     <Dialog
@@ -72,13 +81,10 @@ export default ({ store, ...props }) => {
             {$minPerTx} {currency}
           </Text>
         </View>
-        {bridgeFeePercent > 0 && (
+        {bridgeFeePercent && (
           <View style={style.item}>
             <Text style={style.title}>{'Bridge fee:'}</Text>
-            <Text style={style.value}>
-              {bridgeFeePercent}
-              {'%'}
-            </Text>
+            <Text style={style.value}>{bridgeFeePercent}</Text>
           </View>
         )}
       </ScrollView>

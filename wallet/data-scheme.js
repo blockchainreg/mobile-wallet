@@ -55,6 +55,8 @@
       showDataMode: 'encoded',
       error: '',
       errorParse: null,
+      feeMode: 'percent',
+      homeFeePercent: 0,
       sending: false,
       chekingBalance: null,
       chosenNetwork: null,
