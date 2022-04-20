@@ -271,5 +271,8 @@
     timeUntilEnd: 'Час до кінця',
     staking: 'Стейкінг',
     chooseNetwork: 'Виберіть мережу',
+    myActiveStake: 'Мій активний стейк',
+    infoTotalStake: 'Загальний стейк валідатора',
+    infoCommission: 'Комісія, яку ви оплачуєте валідатору з кожної винагороди',
   };
 }.call(this));

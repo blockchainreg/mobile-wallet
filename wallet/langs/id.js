@@ -276,5 +276,8 @@
     timeUntilEnd: 'Waktu sampai akhir',
     staking: 'Staking',
     chooseNetwork: 'Choose networks',
+    myActiveStake: 'Jumlah staking saya yang aktif',
+    infoTotalStake: 'Total staking oleh validator',
+    infoCommission: 'Komisi yang Anda bayarkan ke validator dari setiap hadiah',
   };
 }.call(this));

@@ -274,5 +274,9 @@
     timeUntilEnd: 'अंत तक का समय',
     staking: 'जताया',
     chooseNetwork: 'Choose networks',
+    myActiveStake: 'मेरे ऐक्टिव स्टेक',
+    infoTotalStake: 'सत्यापनकर्ता की कुल हिस्सेदारी',
+    infoCommission:
+      'एक कमीशन जो आप सत्यापनकर्ता को प्रत्येक पुरस्कार से भुगतान करते हैं',
   };
 }.call(this));

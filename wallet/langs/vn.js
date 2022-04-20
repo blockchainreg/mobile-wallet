@@ -276,5 +276,9 @@
     timeUntilEnd: 'Thời gian cho đến khi kết thúc',
     staking: 'Staking',
     chooseNetwork: 'Choose network',
+    myActiveStake: 'Stake đang hoạt động của tôi',
+    infoTotalStake: 'Tổng stake của validator',
+    infoCommission:
+      'Một khoản hoa hồng mà bạn trả cho validator từ mỗi phần thưởng',
   };
 }.call(this));

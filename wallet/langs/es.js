@@ -275,5 +275,8 @@
     timeUntilEnd: 'Tiempo hasta finalizar',
     staking: 'Staking',
     chooseNetwork: 'Choose networks',
+    myActiveStake: 'Mi stake activo',
+    infoTotalStake: 'Staking total del validador',
+    infoCommission: 'Una comisión que se paga al validador por cada recompensa',
   };
 }.call(this));

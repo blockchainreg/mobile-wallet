@@ -279,5 +279,8 @@
     timeUntilEnd: 'Oras hanggang sa matapos',
     staking: 'Staking',
     chooseNetwork: 'Choose networks',
+    myActiveStake: 'Aking aktibong stake',
+    infoTotalStake: 'Kabuoang stake ng validator',
+    infoCommission: 'Ang kumisyon na iyong babayaran sa validator kada reward.',
   };
 }.call(this));

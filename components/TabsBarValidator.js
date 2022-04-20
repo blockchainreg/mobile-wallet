@@ -49,7 +49,7 @@ const Stake = observer(({ details, lang, changePage, stakingStore }) => {
         <GenericValidatorCard
           getValue={() => `${formatStakeAmount(details.activeStake)} VLX`}
           getSubtitle={() => lang.totalStake || 'TOTAL STAKE'}
-          getInfo={() => 'Total stake of validator'}
+          getInfo={() => lang.infoTotalStake || 'Total stake of validator'}
           cardIcon={
             <ValidatorsIcon
               fill={Images.colorGreen}
@@ -89,6 +89,7 @@ const Stake = observer(({ details, lang, changePage, stakingStore }) => {
           getValue={() => details.commission}
           getSubtitle={() => lang.validatorInterest || 'VALIDATOR INTEREST'}
           getInfo={() =>
+            lang.infoCommission ||
             'A commission that you pay to validator from each reward'
           }
           cardIcon={<PercentIcon />}
@@ -208,7 +209,9 @@ const DetailsValidatorObserver = observer(
           'https://support.velas.com/hc/en-150/articles/360021044820-Delegation-Warmup-and-Cooldown'
         }
         subtitle1={
-          isMyStake ? 'MY ACTIVE STAKE' : lang.totalStake || 'TOTAL STAKE'
+          isMyStake
+            ? lang.myActiveStake || 'MY ACTIVE STAKE'
+            : lang.totalStake || 'TOTAL STAKE'
         }
         value1={
           isMyStake
@@ -255,6 +258,7 @@ const NotStakedValidatorBody = observer(({ lang, details, changePage }) => (
         getValue={() => details.commission}
         getSubtitle={() => lang.validatorInterest || 'VALIDATOR INTEREST'}
         getInfo={() =>
+          lang.infoCommission ||
           'A commission that you pay to validator from each reward'
         }
         cardIcon={<PercentIcon />}
