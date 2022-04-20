@@ -71,7 +71,7 @@
     store.current.refreshing = true;
     bgStore = toJS(store);
     return refreshAccount(web3, bgStore, function (err) {
-      state = {
+      var state = {
         err: null,
         data: null,
       };
