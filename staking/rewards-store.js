@@ -4,6 +4,7 @@ import { cachedCallWithRetries } from './utils';
 import { RewardModel } from './reward-model';
 import { transformNodeRpcGetParsedProgramAccountsToBackendFormat } from './utils';
 const solanaWeb3 = require('./index.cjs.js');
+import { promisify } from './utils';
 
 class RewardsStore {
   connection = null;
@@ -19,11 +20,11 @@ class RewardsStore {
     });
   }
 
-  setConnection({ connection, network, validatorsBackend }, cb) {
+  async setConnection({ connection, network, validatorsBackend }) {
     this.network = network;
     this.connection = connection;
     this.validatorsBackend = validatorsBackend;
-    this.loadLatestRewards(cb);
+    await promisify(this.loadLatestRewards, null, this)();
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
@@ -178,7 +179,6 @@ class RewardsStore {
         network: this.network,
         validatorsBackend: this.validatorsBackend,
       });
-
     return stakingAccounts;
   }
 

@@ -11,7 +11,10 @@ import { callWithRetries, invalidateCache } from './utils';
 import crypto from 'isomorphic-webcrypto';
 import Web3 from 'web3';
 import { rewardsStore } from './rewards-store';
-import { cachedCallWithRetries } from './utils';
+import {
+  cachedCallWithRetries,
+  transformNodeRpcGetParsedProgramAccountsToBackendFormat,
+} from './utils';
 import * as api from './api';
 
 const PRESERVE_BALANCE = new BN('1000000000', 10);
@@ -138,19 +141,13 @@ class StakingStore {
     } catch (e) {
       console.error(e);
       // Cannot load from backend. Use slower method.
-      rewardsStore.setConnection(
-        {
-          connection: this.connection,
-          network: this.network,
-          validatorsBackend: this.validatorsBackend,
-        },
-        () => {
-          this.reloadFromNodeRpc();
-        }
-      );
+      await rewardsStore.setConnection({
+        connection: this.connection,
+        network: this.network,
+        validatorsBackend: this.validatorsBackend,
+      });
+      await this.reloadFromNodeRpc();
     }
-    // );
-    //if (this.validators.length > 0) {
     await when(() => this.validators && this.validators.length > 0);
     this.sort === 'total_staked'
       ? this.validators.replace(
@@ -232,12 +229,6 @@ class StakingStore {
   async reloadFromBackend() {
     // massive method
     this.startRefresh();
-    const filter = {
-      memcmp: {
-        offset: 0xc,
-        bytes: this.publicKey58,
-      },
-    };
 
     const [, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
       await Promise.all([
@@ -343,12 +334,17 @@ class StakingStore {
         })
         .then(async (nativeAccounts) => {
           const filteredAccounts = nativeAccounts.filter((account) => {
-            return account.staker === this.publicKey58;
+            return (
+              account?.account?.data?.parsed?.info?.meta?.authorized?.staker ===
+              this.publicKey58
+            );
           });
           const stakingAccounts = filteredAccounts.map(
             (account) =>
               new StakingAccountModel(
-                account,
+                transformNodeRpcGetParsedProgramAccountsToBackendFormat(
+                  account
+                ),
                 this.connection,
                 this.network,
                 null

@@ -40,7 +40,7 @@ export default ({ store, ...props }) => {
   const tooltipRef = useRef(null);
   const lang = getLang(store);
 
-  const badgeStatus = () => {
+  const BadgeStatus = () => {
     return (
       <Badge
         value={
@@ -81,13 +81,13 @@ export default ({ store, ...props }) => {
           size={props.name ? 65 : 80}
           backgroundColor={'rgba(22, 26, 63, 1)'}
         />
-        {badgeStatus()}
-        {props.name && (
+        <BadgeStatus />
+        {props.name ? (
           // <Text style={style.addressStyle} onPress={props.copyName}>{props.name}<CameraEn height={10} width={15}/></Text>
           <Text style={style.addressStyle} onPress={props.copyName}>
             {props.name}
           </Text>
-        )}
+        ) : null}
         <Text
           style={[
             style.addressStyle,
@@ -100,7 +100,7 @@ export default ({ store, ...props }) => {
       </View>
       <View style={style.row}>
         <View style={style.column}>
-          {props.infoActiveStake && (
+          {props.infoActiveStake ? (
             <View
               style={{
                 right: 5,
@@ -140,18 +140,18 @@ export default ({ store, ...props }) => {
                 <InfoIcon style={style.positionIcon} />
               </Tooltip>
             </View>
-          )}
+          ) : null}
           <Text style={style.value}>{props.value1}</Text>
           <Text style={style.subtitle}>{props.subtitle1}</Text>
         </View>
-        {props.value2 && (
+        {props.value2 ? (
           <View
             style={[
               style.column,
               { borderLeftWidth: 0.5, borderLeftColor: BORDER_COLOR },
             ]}
           >
-            {props.infoApr && (
+            {props.infoApr ? (
               <View
                 style={{
                   right: 5,
@@ -171,11 +171,11 @@ export default ({ store, ...props }) => {
                   <InfoIcon />
                 </Tooltip>
               </View>
-            )}
+            ) : null}
             <Text style={style.value}>{props.value2}</Text>
             <Text style={style.subtitle}>{props.subtitle2}</Text>
           </View>
-        )}
+        ) : null}
       </View>
     </View>
   );

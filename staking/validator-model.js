@@ -141,9 +141,8 @@ class ValidatorModel {
       if (acc.state !== 'activating' && acc.state !== 'active') {
         continue;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      if (acc.lockupUnixTimestamp) {
+        const unixTimestamp = acc.lockupUnixTimestamp;
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
@@ -214,9 +213,8 @@ class ValidatorModel {
       if (!acc.activeStake) {
         return null;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      if (acc.unixTimestamp) {
+        const unixTimestamp = acc.unixTimestamp;
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
@@ -237,9 +235,8 @@ class ValidatorModel {
       if (!acc.inactiveStake) {
         return null;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      if (acc.lockupUnixTimestamp) {
+        const unixTimestamp = acc.lockupUnixTimestamp;
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
