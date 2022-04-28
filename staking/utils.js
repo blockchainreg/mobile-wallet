@@ -68,14 +68,14 @@ export const transformNodeRpcGetParsedProgramAccountsToBackendFormat = (
   };
 };
 
-export const promisify = (f, manyArgs = false, that = this) => {
+export const promisify = (f, that = this) => {
   return function (...args) {
     return new Promise((resolve, reject) => {
       function callback(err, ...results) {
         if (err) {
           return reject(err);
         } else {
-          resolve(manyArgs ? results : results[0]);
+          resolve(results.length === 1 ? results[0] : results);
         }
       }
 

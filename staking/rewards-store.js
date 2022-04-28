@@ -24,7 +24,7 @@ class RewardsStore {
     this.network = network;
     this.connection = connection;
     this.validatorsBackend = validatorsBackend;
-    await promisify(this.loadLatestRewards, null, this)();
+    await promisify(this.loadLatestRewards, this)();
   }
 
   setlatestRewardsPerValidator = (tmpMap, epoch, cb) => {
@@ -207,7 +207,10 @@ class RewardsStore {
     try {
       return await this.getAccountsFromBackend();
     } catch (error) {
-      console.error('[getAccounts] error: ', error);
+      console.warn(
+        '[getAccountsFromBackend] error, will load from node rpc: ',
+        error
+      );
       // Cannot load from backend. Use slower method.
       return await this.getAccountsFromNodeRpc();
     }

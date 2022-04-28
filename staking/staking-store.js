@@ -136,10 +136,10 @@ class StakingStore {
           await this.reloadFromBackend();
         },
         ['reloadFromBackend'],
-        5
+        3
       );
     } catch (e) {
-      console.error(e);
+      console.warn('[reloadFromBackend] error, will load from node rpc: ', e);
       // Cannot load from backend. Use slower method.
       await rewardsStore.setConnection({
         connection: this.connection,
@@ -253,12 +253,18 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    const nativeCurrentUserAccounts =
-      await api.getStakingAccountsFromBackendCachedWithRetries({
-        network: this.network,
-        validatorsBackend: this.validatorsBackend,
-        params: { staker: this.publicKey58 },
-      });
+    let nativeCurrentUserAccounts = [];
+
+    try {
+      nativeCurrentUserAccounts =
+        await api.getStakingAccountsFromBackendCachedWithRetries({
+          network: this.network,
+          validatorsBackend: this.validatorsBackend,
+          params: { staker: this.publicKey58 },
+        });
+    } catch (error) {
+      throw new Error(error);
+    }
 
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
