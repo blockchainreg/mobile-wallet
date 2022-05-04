@@ -35,6 +35,11 @@ const formatReward = (n) => {
   return n.toFixed(4);
 };
 
+const formatToFixed = (num) => {
+  const numStr = num.toString();
+  return Number(numStr.slice(0, numStr.indexOf('.') + 3));
+};
+
 export {
   formatBalance,
   formatValue,
@@ -42,4 +47,5 @@ export {
   formatStakeAmount,
   formatReward,
   formatAmount,
+  formatToFixed,
 };

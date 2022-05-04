@@ -12,7 +12,7 @@ class ValidatorModel {
   totalStakers = null;
   network = null;
   apr$ = null;
-  name = '';
+  name = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -252,7 +252,7 @@ class ValidatorModel {
     );
   }
 
-  constructor(solanaValidator, isDelinquent, connection, network) {
+  constructor(solanaValidator, isDelinquent, connection, network, config) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');
     }
@@ -265,6 +265,7 @@ class ValidatorModel {
     this.connection = connection;
     this.solanaValidator = solanaValidator;
     this.network = network;
+    this.name = config?.account?.data?.parsed?.info?.configData?.name || null;
     decorate(this, {
       solanaValidator: observable,
       status: observable,

@@ -1,21 +1,23 @@
 import { decorate, observable, action, when } from 'mobx';
 import BN from 'bn.js';
-// import * as solanaWeb3 from ;
+import fetch from 'cross-fetch';
 import bs58 from 'bs58';
+import crypto from 'isomorphic-webcrypto';
+import Web3 from 'web3';
+
 import { ValidatorModel } from './validator-model.js';
 import { ValidatorModelBacked } from './validator-model-backed.js';
 import { StakingAccountModel } from './staking-account-model.js';
-import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
-import { callWithRetries, invalidateCache } from './utils';
-import crypto from 'isomorphic-webcrypto';
-import Web3 from 'web3';
-import { rewardsStore } from './rewards-store';
 import {
-  cachedCallWithRetries,
+  callWithRetries,
+  invalidateCache,
   transformNodeRpcGetParsedProgramAccountsToBackendFormat,
+  cachedCallWithRetries,
 } from './utils';
+import { rewardsStore } from './rewards-store';
 import * as api from './api';
+import { formatToFixed } from '../utils/format-value';
 
 const PRESERVE_BALANCE = new BN('1000000000', 10);
 import { abi as EvmToNativeBridgeAbi } from './EvmToNativeBridge.json';
@@ -226,6 +228,23 @@ class StakingStore {
     // this.currentTime = currentTime;
   };
 
+  async getConfigsMap() {
+    const configs = await this.connection.getParsedProgramAccounts(
+      new solanaWeb3.PublicKey('Config1111111111111111111111111111111111111')
+    );
+    const configPerValidator = new Map();
+    for (let config of configs) {
+      if (Buffer.isBuffer(config.account)) continue;
+      const keys = config?.account?.data?.parsed?.info?.keys;
+      if (!keys || keys.length < 2) continue;
+      const signer = keys[1];
+      if (!signer.signer) continue;
+
+      configPerValidator.set(signer.pubkey, config);
+    }
+    return configPerValidator;
+  }
+
   async reloadFromBackend() {
     // massive method
     this.startRefresh();
@@ -359,16 +378,18 @@ class StakingStore {
           //console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
           //await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
           //console.log("Now isLatestRewardsLoading is false");
+          const configPerValidator = await this.getConfigsMap();
           const validators = current
-            .map(
-              (validator) =>
-                new ValidatorModel(
-                  validator,
-                  false,
-                  this.connection,
-                  this.network
-                )
-            )
+            .map((validator) => {
+              console.log('validator: ', validator);
+              return new ValidatorModel(
+                validator,
+                false,
+                this.connection,
+                this.network,
+                configPerValidator.get(validator.nodePubkey)
+              );
+            })
             .concat(
               delinquent.map(
                 (validator) =>
@@ -376,7 +397,8 @@ class StakingStore {
                     validator,
                     true,
                     this.connection,
-                    this.network
+                    this.network,
+                    configPerValidator.get(validator.nodePubkey)
                   )
               )
             );
@@ -571,7 +593,7 @@ class StakingStore {
   }
 
   getAnnualRate(validator) {
-    return validator.apr ? (validator.apr * 100).toFixed(2) : 0;
+    return validator.apr ? formatToFixed(validator.apr * 100) : 0;
   }
 
   async getNextSeed() {

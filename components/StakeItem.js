@@ -11,7 +11,7 @@ import Images from '../Images';
 import { Avatar } from '../svg';
 import { Badge } from 'react-native-elements';
 import IdentIcon from './Identicon';
-import { formatStakeAmount } from '../utils/format-value';
+import { formatStakeAmount, formatToFixed } from '../utils/format-value';
 
 export default memo(({ lang, ...props }) => {
   const typeBadge = (type) => {
@@ -102,7 +102,7 @@ export default memo(({ lang, ...props }) => {
           {'%'}
         </Text>
         <Text style={style.styleTitle}>
-          {null !== props.apr && (props.apr * 100).toFixed(2) + '%'}
+          {null !== props.apr && formatToFixed(props.apr * 100) + '%'}
           {null === props.apr &&
             (Platform.OS === 'android' ? '...' : <ActivityIndicator />)}
         </Text>
