@@ -282,6 +282,7 @@ class StakingStore {
     }
 
     runInAction(() => (this.loaderText = 'Searching staking accounts'));
+    let nativeCurrentUserAccounts = [];
     try {
       nativeCurrentUserAccounts =
         await api.getStakingAccountsFromBackendCachedWithRetries({
