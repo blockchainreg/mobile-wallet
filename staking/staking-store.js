@@ -1,4 +1,4 @@
-import { decorate, observable, action, when } from 'mobx';
+import { decorate, observable, action, when, runInAction } from 'mobx';
 import BN from 'bn.js';
 import fetch from 'cross-fetch';
 import bs58 from 'bs58';
@@ -70,6 +70,7 @@ class StakingStore {
   network = null;
   evmAPI = '';
   _currentSort = null;
+  loaderText = '';
 
   constructor(
     API_HOST,
@@ -109,6 +110,7 @@ class StakingStore {
       slotsInEpoch: observable,
       slotIndex: observable,
       _currentSort: observable,
+      loaderText: observable,
     });
     this.startRefresh = action(this.startRefresh);
     this.endRefresh = action(this.endRefresh);
@@ -133,6 +135,9 @@ class StakingStore {
     }
     this.isRefreshing = true;
     try {
+      runInAction(() => {
+        this.loaderText = 'Connecting to servers';
+      });
       await callWithRetries(
         async () => {
           await this.reloadFromBackend();
@@ -142,6 +147,9 @@ class StakingStore {
       );
     } catch (e) {
       console.warn('[reloadFromBackend] error, will load from node rpc: ', e);
+      runInAction(() => {
+        this.loaderText = `Couldn't connect to servers. Connecting to node rpc`;
+      });
       // Cannot load from backend. Use slower method.
       await rewardsStore.setConnection({
         connection: this.connection,
@@ -176,6 +184,7 @@ class StakingStore {
         );
     //}
     this.isRefreshing = false;
+    this.loaderText = '';
   }
 
   async sortActiveStake() {
@@ -272,8 +281,7 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    let nativeCurrentUserAccounts = [];
-
+    runInAction(() => (this.loaderText = 'Searching staking accounts'));
     try {
       nativeCurrentUserAccounts =
         await api.getStakingAccountsFromBackendCachedWithRetries({
@@ -285,6 +293,7 @@ class StakingStore {
       throw new Error(error);
     }
 
+    runInAction(() => (this.loaderText = 'Setting your staking accounts'));
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
         new StakingAccountModel(
@@ -332,7 +341,13 @@ class StakingStore {
 
   async reloadFromNodeRpc() {
     this.startRefresh();
+    runInAction(() => {
+      this.loaderText = 'Getting epoch info';
+    });
     await this.loadEpochInfo();
+    runInAction(() => {
+      this.loaderText = 'Checking out balances';
+    });
     const balanceRes = await this.connection.getBalance(this.publicKey);
     const balanceEvmRes = await fetch(this.evmAPI, {
       method: 'POST',
@@ -345,6 +360,9 @@ class StakingStore {
       }","latest"]}`,
     });
     const balanceEvmJson = await balanceEvmRes.json();
+    runInAction(() => {
+      this.loaderText = 'Monitoring validators';
+    });
     this.connection.getVoteAccounts().then(({ current, delinquent }) => {
       const filter = {
         memcmp: {
@@ -352,12 +370,17 @@ class StakingStore {
           bytes: this.publicKey58,
         },
       };
+      runInAction(() => (this.loaderText = 'Searching staking accounts'));
+
       this.connection
         .getParsedProgramAccounts(solanaWeb3.StakeProgram.programId, {
           filters: [filter],
           commitment: 'processed',
         })
         .then(async (nativeAccounts) => {
+          runInAction(
+            () => (this.loaderText = 'Setting your staking accounts')
+          );
           const filteredAccounts = nativeAccounts.filter((account) => {
             return (
               account?.account?.data?.parsed?.info?.meta?.authorized?.staker ===
@@ -381,7 +404,6 @@ class StakingStore {
           const configPerValidator = await this.getConfigsMap();
           const validators = current
             .map((validator) => {
-              console.log('validator: ', validator);
               return new ValidatorModel(
                 validator,
                 false,

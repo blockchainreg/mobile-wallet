@@ -12,7 +12,7 @@ import Images from '../Images';
 import getLang from '../wallet/get-lang.js';
 import BN from 'bn.js';
 import { observer } from 'mobx-react';
-import { formatReward, formatStakeAmount } from '../utils/format-value';
+import { formatReward, formatToFixed } from '../utils/format-value';
 
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.18)';
 const URL =
@@ -111,7 +111,9 @@ export default observer(({ rewards, lang }) => {
                   backgroundColor: index % 2 == 1 ? '#252847' : '#161A3F',
                 }}
               >
-                {!item.apr ? '...' : !!item.apr && (item.apr * 100).toFixed(2)}
+                {!item.apr
+                  ? '...'
+                  : !!item.apr && formatToFixed(item.apr * 100)}
               </Text>
             </View>
           );
