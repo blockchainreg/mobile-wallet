@@ -23,7 +23,7 @@ Store.current.seedIndex = 0;
 Store.current.seedIndexes = [];
 Store.current.seedWords = [];
 Store.lang = localStorage.getItem('lang') || 'en';
-Store.sort = localStorage.getItem('sort') || '';
+Store.sort = localStorage.getItem('sort') || 'apr';
 Store.current.auth = {
   isLocalAuthEnabled: null,
   isAuthenticating: false,

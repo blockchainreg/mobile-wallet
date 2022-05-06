@@ -141,34 +141,7 @@ const SearchHeader = ({ store }) => {
   };
   const stakedValidators = stakingStore.getStakedValidators();
   const notStakedValidators = stakingStore.getNotStakedValidators();
-  const sortActiveStake = () => {
-    spin(store, `Sort by: Total Staked`, async (cb) => {
-      try {
-        await stakingStore.sortActiveStake();
-        setTimeout(() => {
-          cb(null);
-        }, 1000);
-      } catch (err) {
-        cb(err);
-      }
-    })((err, data) => {
-      console.log('Sort by Total Staked');
-    });
-  };
-  const sortApr = () => {
-    spin(store, `Sort by: APR`, async (cb) => {
-      try {
-        await stakingStore.sortApr();
-        setTimeout(() => {
-          cb(null);
-        }, 1000);
-      } catch (err) {
-        cb(err);
-      }
-    })((err, data) => {
-      console.log('Sort by APR');
-    });
-  };
+
   return (
     <>
       <Headers
@@ -191,10 +164,6 @@ const SearchHeader = ({ store }) => {
                     ? null
                     : PickerSortStake({
                         store,
-                        onDonePress: () =>
-                          stakingStore.sort === 'total_staked'
-                            ? sortActiveStake()
-                            : sortApr(),
                       })}
                 </>
               );
