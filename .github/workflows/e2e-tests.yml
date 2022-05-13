@@ -40,34 +40,34 @@ jobs:
             ios-test-report
             artifacts/
 
-  android-tests:
-    runs-on: macos-internal2
-    steps:
-      - name: fix up git URLs
-        run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
+  # android-tests:
+  #   runs-on: macos-internal2
+  #   steps:
+  #     - name: fix up git URLs
+  #       run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
 
-      - name: fix git URLs
-        run: git config --global url."https://github.com/".insteadOf git://github.com/ --replace-all
+  #     - name: fix git URLs
+  #       run: git config --global url."https://github.com/".insteadOf git://github.com/ --replace-all
 
-      - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v2
 
-      - name: create sentry props
-        run: printf "defaults.url=https://sentry.io/\ndefaults.org=velas-6g\ndefaults.project=wallet\nauth.token=${{secrets.SENTRY_AUTH_TOKEN}}" > sentry.properties && cp sentry.properties ios/sentry.properties && cp sentry.properties android/sentry.properties
+  #     - name: create sentry props
+  #       run: printf "defaults.url=https://sentry.io/\ndefaults.org=velas-6g\ndefaults.project=wallet\nauth.token=${{secrets.SENTRY_AUTH_TOKEN}}" > sentry.properties && cp sentry.properties ios/sentry.properties && cp sentry.properties android/sentry.properties
 
-      - name: yarn install
-        run: yarn install
+  #     - name: yarn install
+  #       run: yarn install
 
-      - name: build android app
-        run: npx detox build -c android || npx detox build -c android || npx detox build -c android || (exit 13 && echo " - - - - - Failed to build android app - - - - -")
+  #     - name: build android app
+  #       run: npx detox build -c android || npx detox build -c android || npx detox build -c android || (echo " - - - - - Failed to build android app - - - - -" && exit 13)
 
-      - name: run e2e tests android
-        run: REPORT_DIR=android-test-report npx detox test -c android
+  #     - name: run e2e tests android
+  #       run: REPORT_DIR=android-test-report npx detox test -c android
 
-      - name: upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: android-test-report
-          path: |
-            android-test-report
-            artifacts/
+  #     - name: upload artifacts
+  #       if: always()
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: android-test-report
+  #         path: |
+  #           android-test-report
+  #           artifacts/

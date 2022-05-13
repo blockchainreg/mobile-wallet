@@ -333,7 +333,7 @@ export default ({ store, web3t }) => {
           onForward={changePage('add')}
           transparent
         />
-        <View style={style.totalBalanceContainer}>
+        <View style={style.totalBalanceContainer} testID="totalBalance">
           <Text style={style.balance}>{lang.totalBalance}</Text>
           {totalBalance()}
           {/* <Text style={style.balanceAmount}>

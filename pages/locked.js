@@ -274,7 +274,7 @@ export default ({ store, web3t }) => {
   };
   const inputSuccessPin = (store) => {
     return (
-      <Item style={styles.borderItem}>
+      <Item style={styles.borderItem} testID="passwordInputOnLocked">
         <Icon active name="lock" style={{ color: '#fff' }} />
         <Input
           placeholder={lang.placeholderSignup}

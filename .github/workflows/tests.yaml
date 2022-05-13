@@ -11,7 +11,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: check dev domain presence in repository code
+      - name: check dev domain absence in repository code
         run: |
           grep -Ri ${{secrets.SECRET_DOMAIN}} . \
           --exclude-dir node_modules \

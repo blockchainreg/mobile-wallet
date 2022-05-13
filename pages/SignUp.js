@@ -125,7 +125,7 @@ export default ({ store }) => {
   };
   const inputSuccessPin = (store) => {
     return (
-      <Item style={styles.borderItem}>
+      <Item style={styles.borderItem} testID="passwordInputOnSignup">
         <Icon active name="lock" style={{ color: '#fff' }} />
         <Input
           value={store.current.signUpInputPinField}
