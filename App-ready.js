@@ -37,6 +37,7 @@ Store.current.loadingDescriptions = [];
 Store.current.loadingSpinners = [];
 Store.current.networkDetails = {};
 Store.current.currentNetworkDetails = null;
+Store.current.idleTimer = null;
 
 //module specific defaults (end)
 //------------------------------
@@ -128,33 +129,25 @@ const Main = observer(({ store, current }) => {
   );
 });
 
-const state = {
-  timer: null,
+const ALLOWED_IDLE_TIME_MS = 60 * 1000;
+
+const lockWallet = () => {
+  store.current.page = 'locked';
 };
 
-observe(store.current, 'page', () => {
-  resetTimer();
-});
-
-observe(store.current.loadingSpinners, () => {
-  resetTimer();
-});
-
-const resetTimer = () => {
-  clearTimeout(state.timer);
+const resetIdleTimer = () => {
+  if (store.current.idleTimer) {
+    clearTimeout(store.current.idleTimer);
+  }
   if (store.current.loadingSpinners.length === 0) {
-    state.timer = setTimeout(lockWallet, 60000);
+    store.current.idleTimer = setTimeout(lockWallet, ALLOWED_IDLE_TIME_MS);
   }
   return true;
 };
 
-const lockWallet = () => {
-  if (store.current.page !== 'wallets') return resetTimer();
-  //console.log("lang",localStorage.getItem("lang"));
-  //if (!localStorage.getItem("lang"))
-  //   store.current.page = "LangPage";
-  resetTimer();
-};
+observe(store.current, 'page', resetIdleTimer);
+
+observe(store.current.loadingSpinners, resetIdleTimer);
 
 export default class AppReady extends React.Component {
   constructor(props) {
@@ -170,14 +163,14 @@ export default class AppReady extends React.Component {
     store.current.page = saved() === true ? 'locked' : 'register';
 
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: resetTimer,
-      onMoveShouldSetPanResponder: resetTimer,
-      onStartShouldSetPanResponderCapture: resetTimer,
-      onMoveShouldSetPanResponderCapture: resetTimer,
-      onPanResponderTerminationRequest: resetTimer,
-      onShouldBlockNativeResponder: resetTimer,
+      onStartShouldSetPanResponder: resetIdleTimer,
+      onMoveShouldSetPanResponder: resetIdleTimer,
+      onStartShouldSetPanResponderCapture: resetIdleTimer,
+      onMoveShouldSetPanResponderCapture: resetIdleTimer,
+      onPanResponderTerminationRequest: resetIdleTimer,
+      onShouldBlockNativeResponder: resetIdleTimer,
     });
-    resetTimer();
+    resetIdleTimer();
   }
 
   render() {
