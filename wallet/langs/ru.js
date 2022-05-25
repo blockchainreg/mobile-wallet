@@ -206,6 +206,7 @@
     availableWithdraw: 'ДОСТУПНО ДЛЯ ВЫВОДА',
     enterAmount: 'Введите сумму',
     stakeMore: 'Добавить к стейку',
+    request: 'Запросить',
     requestWithdraw: 'Запросить вывод',
     withdraw: 'Вывести',
     stake: 'Стейк',

@@ -208,6 +208,7 @@
     availableWithdraw: 'MAAARING MA-WITHDRAW',
     enterAmount: 'Ilagay ang halaga',
     stakeMore: 'Mag stake pa',
+    request: 'Hilingin',
     requestWithdraw: 'Hilingin na mag-withdraw',
     withdraw: 'Withdraw',
     stake: 'Stake',

@@ -201,6 +201,7 @@
     availableWithdraw: '출금 가능한',
     enterAmount: '수량 입력',
     stakeMore: '스테이킹 추가하기',
+    request: '요구',
     requestWithdraw: '출금 요청하기',
     withdraw: '출금',
     stake: '스테이킹',

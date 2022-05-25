@@ -203,6 +203,7 @@
     availableWithdraw: 'Wa FUN IWỌ',
     enterAmount: 'Tẹ Iye',
     stakeMore: 'Okowo Die',
+    request: 'Ibere',
     requestWithdraw: 'Bere fun Yiyọ',
     withdraw: 'Yọkuro',
     stake: 'Okowo',

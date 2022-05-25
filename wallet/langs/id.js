@@ -206,6 +206,7 @@
     availableWithdraw: 'TERSEDIA UNTUK PENARIKAN',
     enterAmount: 'Masukan jumlah',
     stakeMore: 'Stake Lebih Banyak',
+    request: 'Permintaan',
     requestWithdraw: 'Permintaan Penarikan',
     withdraw: 'Menarik',
     stake: 'Stake',

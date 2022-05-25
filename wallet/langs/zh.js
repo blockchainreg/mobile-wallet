@@ -199,6 +199,7 @@
     availableWithdraw: '可提现',
     enterAmount: '输入金额',
     stakeMore: '质押更多',
+    request: '要求',
     requestWithdraw: '请求提现',
     withdraw: '提现',
     stake: '质押',
