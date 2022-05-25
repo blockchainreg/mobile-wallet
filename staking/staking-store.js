@@ -342,13 +342,7 @@ class StakingStore {
 
   async reloadFromNodeRpc() {
     this.startRefresh();
-    runInAction(() => {
-      this.loaderText = 'Getting epoch info';
-    });
     await this.loadEpochInfo();
-    runInAction(() => {
-      this.loaderText = 'Checking out balances';
-    });
     const balanceRes = await this.connection.getBalance(this.publicKey);
     const balanceEvmRes = await fetch(this.evmAPI, {
       method: 'POST',
@@ -361,9 +355,6 @@ class StakingStore {
       }","latest"]}`,
     });
     const balanceEvmJson = await balanceEvmRes.json();
-    runInAction(() => {
-      this.loaderText = 'Monitoring validators';
-    });
     this.connection.getVoteAccounts().then(({ current, delinquent }) => {
       const filter = {
         memcmp: {
