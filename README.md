@@ -30,6 +30,12 @@ yarn ios
 yarn android
 ```
 
+5. Setup Sentry (ask developers for credentials)
+
+```
+yarn sentry-wizard -i reactNative -p ios android
+```
+
 # Problem solving
 
 ## Android

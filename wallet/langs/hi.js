@@ -205,6 +205,7 @@
     availableWithdraw: 'निकासी के लिए उपलब्ध',
     enterAmount: 'राशि दर्ज करें',
     stakeMore: 'हिस्सेदारी अधिक',
+    request: 'गुजारिश',
     requestWithdraw: 'अनुरोध निकासी लेने के लिए',
     withdraw: 'निकासी',
     stake: 'हिस्सेदारी',

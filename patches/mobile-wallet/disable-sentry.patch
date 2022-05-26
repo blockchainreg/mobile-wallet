@@ -1,0 +1,38 @@
+diff --git a/android/app/build.gradle b/android/app/build.gradle
+index ea11212fb..1b2ada47a 100644
+--- a/android/app/build.gradle
++++ b/android/app/build.gradle
+@@ -83,7 +83,6 @@ project.ext.react = [
+ 
+ apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
+ apply from: "../../node_modules/react-native/react.gradle"
+-apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
+ apply from: "../../node_modules/expo-constants/scripts/get-app-config-android.gradle"
+ apply from: "../../node_modules/expo-updates/scripts/create-manifest-android.gradle"
+ 
+diff --git a/ios/Velaswallet.xcodeproj/project.pbxproj b/ios/Velaswallet.xcodeproj/project.pbxproj
+index f27f0fd29..1643a2cad 100644
+--- a/ios/Velaswallet.xcodeproj/project.pbxproj
++++ b/ios/Velaswallet.xcodeproj/project.pbxproj
+@@ -230,7 +230,7 @@
+ 			);
+ 			runOnlyForDeploymentPostprocessing = 0;
+ 			shellPath = /bin/sh;
+-			shellScript = "# First set the path to sentry.properties\nexport SENTRY_PROPERTIES=sentry.properties\n\n# Setup nvm and set node\n[ -z \"$NVM_DIR\" ] && export NVM_DIR=\"$HOME/.nvm\"\n\nif [[ -s \"$HOME/.nvm/nvm.sh\" ]]; then\n. \"$HOME/.nvm/nvm.sh\"\nelif [[ -x \"$(command -v brew)\" && -s \"$(brew --prefix nvm)/nvm.sh\" ]]; then\n. \"$(brew --prefix nvm)/nvm.sh\"\nfi\n\n# Set up the nodenv node version manager if present\nif [[ -x \"$HOME/.nodenv/bin/nodenv\" ]]; then\neval \"$(\"$HOME/.nodenv/bin/nodenv\" init -)\"\nfi\n\n# Set up the fnm node version manager if present\nif [[ -s \"$HOME/.fnm/fnm\" ]]; then\n  eval \"`$HOME/.fnm/fnm env --multi`\"\nfi\n\n# Trying notion\nif [ -z \"$NODE_BINARY\" ]; then\nif [[ -s \"$HOME/.notion/bin/node\" ]]; then\nexport NODE_BINARY=\"$HOME/.notion/bin/node\"\nfi\nfi\n\n[ -z \"$NODE_BINARY\" ] && export NODE_BINARY=\"node\"\n\n# Run sentry cli script to upload debug symbols\n$NODE_BINARY ../node_modules/@sentry/cli/bin/sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\"\n";
++			shellScript = "# First set the path to sentry.properties\nexport SENTRY_PROPERTIES=sentry.properties\n\n# Setup nvm and set node\n[ -z \"$NVM_DIR\" ] && export NVM_DIR=\"$HOME/.nvm\"\n\nif [[ -s \"$HOME/.nvm/nvm.sh\" ]]; then\n. \"$HOME/.nvm/nvm.sh\"\nelif [[ -x \"$(command -v brew)\" && -s \"$(brew --prefix nvm)/nvm.sh\" ]]; then\n. \"$(brew --prefix nvm)/nvm.sh\"\nfi\n\n# Set up the nodenv node version manager if present\nif [[ -x \"$HOME/.nodenv/bin/nodenv\" ]]; then\neval \"$(\"$HOME/.nodenv/bin/nodenv\" init -)\"\nfi\n\n# Set up the fnm node version manager if present\nif [[ -s \"$HOME/.fnm/fnm\" ]]; then\n  eval \"`$HOME/.fnm/fnm env --multi`\"\nfi\n\n# Trying notion\nif [ -z \"$NODE_BINARY\" ]; then\nif [[ -s \"$HOME/.notion/bin/node\" ]]; then\nexport NODE_BINARY=\"$HOME/.notion/bin/node\"\nfi\nfi\n\n[ -z \"$NODE_BINARY\" ] && export NODE_BINARY=\"node\"\n\n# Run sentry cli script to upload debug symbols\n#$NODE_BINARY ../node_modules/@sentry/cli/bin/sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\"\n";
+ 		};
+ 		25BB29EFD27A34E152FF3A6E /* [CP] Check Pods Manifest.lock */ = {
+ 			isa = PBXShellScriptBuildPhase;
+diff --git a/utils/errors/crashreporting.js b/utils/errors/crashreporting.js
+index 0fbaef104..e875ce6e8 100644
+--- a/utils/errors/crashreporting.js
++++ b/utils/errors/crashreporting.js
+@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react-native';
+ import { ExtraErrorData as ExtraErrorDataIntegration } from '@sentry/integrations';
+ 
+ export const initCrashreporting = () => {
+-  if (__DEV__) {
++  if (true) {
+     // do not init sentry in dev mode
+     return;
+   }

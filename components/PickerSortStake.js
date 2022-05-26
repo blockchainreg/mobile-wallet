@@ -38,19 +38,18 @@ export default ({ store, web3t, ...props }) => {
     });
   };
   const onValueChangeValue = async (value) => {
-    store.stakingStore.sort = value;
-    if (Platform.OS === 'android') {
-      value === 'total_staked' ? sortActiveStake() : sortApr();
-    }
+    store.sort = value;
+    localStorage.setItem('sort', value);
+    value === 'total_staked' ? sortActiveStake() : sortApr();
   };
   const sortItems = [
     {
-      label: 'Total Staked',
-      value: 'total_staked',
-    },
-    {
       label: 'Apr',
       value: 'apr',
+    },
+    {
+      label: 'Total Staked',
+      value: 'total_staked',
     },
   ];
   return (
@@ -60,14 +59,17 @@ export default ({ store, web3t, ...props }) => {
         onValueChangeValue(value);
       }}
       useNativeAndroidPickerStyle={false}
-      value={store.stakingStore.sort}
+      value={store.sort}
       items={sortItems}
       Icon={() => {
         return (
           <Icon
             type="MaterialCommunityIcons"
             name="sort"
-            style={[style.refreshHeaderIcon, { fontSize: 28, color: 'white' }]}
+            style={[
+              style.refreshHeaderIcon,
+              { fontSize: 28, color: 'white', width: 'auto' },
+            ]}
           />
         );
       }}
@@ -76,7 +78,6 @@ export default ({ store, web3t, ...props }) => {
         fontFamily: 'Fontfabric-NexaRegular',
         iconContainer: {
           left: 5,
-          // top: Platform.OS === 'android' ? 0 : -5,
           backgroundColor: Images.colorDarkBlue,
           maxWidth: 50,
         },

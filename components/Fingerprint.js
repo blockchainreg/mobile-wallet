@@ -37,6 +37,7 @@ export default class Fingerprint extends React.Component {
           'Please Authenticate yourself using Fingerprint or Face ID',
         fallbackLabel: '',
       });
+
       if (results.success) {
         this.setState({
           modalVisible: false,
@@ -46,6 +47,11 @@ export default class Fingerprint extends React.Component {
         this.props.onSuccess();
       } else {
         console.log('authenticateAsync failed', result);
+
+        if (results.error === 'user_cancel') {
+          this.clearState();
+          return;
+        }
 
         if (results.error === 'lockout') {
           alert('Too many failed tries. Restart wallet and try again.');

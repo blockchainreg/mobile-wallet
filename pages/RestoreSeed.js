@@ -162,6 +162,7 @@ export default ({ store, web3t }) => {
           keyboardType="default"
           autoFocus
           blurOnSubmit={true}
+          testID="restoreSeedPhraseInput"
         />
       </View>
     );

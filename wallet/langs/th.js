@@ -200,6 +200,7 @@
     availableWithdraw: 'Available for withdraw',
     enterAmount: 'Enter Amount',
     stakeMore: 'Stake More',
+    request: 'Request',
     requestWithdraw: 'Request Withdraw',
     withdraw: 'Withdraw',
     stake: 'Stake',

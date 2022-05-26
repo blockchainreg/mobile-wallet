@@ -203,6 +203,7 @@
     availableWithdraw: 'ДОСТУПНО ДЛЯ ВИВЕДЕННЯ',
     enterAmount: 'Введіть суму',
     stakeMore: 'Додати до стейку',
+    request: 'Запит',
     requestWithdraw: 'Запит на виведення',
     withdraw: 'Вивести',
     stake: 'Стейк',

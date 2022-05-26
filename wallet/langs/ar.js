@@ -202,6 +202,7 @@
     availableWithdraw: 'متاح للسحب',
     enterAmount: 'أدخل المبلغ',
     stakeMore: 'حصص أكثر',
+    request: 'طلب',
     requestWithdraw: 'طلب سحب',
     withdraw: 'سحب',
     stake: 'حصة',

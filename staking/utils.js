@@ -67,3 +67,21 @@ export const transformNodeRpcGetParsedProgramAccountsToBackendFormat = (
     creditsObserved: account?.data?.parsed?.info?.stake?.creditsObserved,
   };
 };
+
+export const promisify = (f, that = this) => {
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      function callback(err, ...results) {
+        if (err) {
+          return reject(err);
+        } else {
+          resolve(results.length === 1 ? results[0] : results);
+        }
+      }
+
+      args.push(callback);
+
+      f.call(that, ...args);
+    });
+  };
+};

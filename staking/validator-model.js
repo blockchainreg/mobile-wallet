@@ -12,7 +12,7 @@ class ValidatorModel {
   totalStakers = null;
   network = null;
   apr$ = null;
-  name = '';
+  name = null;
 
   get address() {
     return this.solanaValidator.votePubkey;
@@ -141,9 +141,8 @@ class ValidatorModel {
       if (acc.state !== 'activating' && acc.state !== 'active') {
         continue;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      if (acc.lockupUnixTimestamp) {
+        const unixTimestamp = acc.lockupUnixTimestamp;
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
@@ -214,9 +213,8 @@ class ValidatorModel {
       if (!acc.activeStake) {
         return null;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      if (acc.unixTimestamp) {
+        const unixTimestamp = acc.unixTimestamp;
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
@@ -237,9 +235,8 @@ class ValidatorModel {
       if (!acc.inactiveStake) {
         return null;
       }
-      if (acc.parsedAccoount.account.data.parsed.info.meta.lockup) {
-        const unixTimestamp =
-          acc.parsedAccoount.account.data.parsed.info.meta.lockup.unixTimestamp;
+      if (acc.lockupUnixTimestamp) {
+        const unixTimestamp = acc.lockupUnixTimestamp;
         const now = Date.now() / 1000;
         if (unixTimestamp > now) continue;
       }
@@ -255,7 +252,7 @@ class ValidatorModel {
     );
   }
 
-  constructor(solanaValidator, isDelinquent, connection, network) {
+  constructor(solanaValidator, isDelinquent, connection, network, config) {
     if (!solanaValidator || !solanaValidator.votePubkey) {
       throw new Error('solanaValidator invalid');
     }
@@ -268,6 +265,7 @@ class ValidatorModel {
     this.connection = connection;
     this.solanaValidator = solanaValidator;
     this.network = network;
+    this.name = config?.account?.data?.parsed?.info?.configData?.name || null;
     decorate(this, {
       solanaValidator: observable,
       status: observable,

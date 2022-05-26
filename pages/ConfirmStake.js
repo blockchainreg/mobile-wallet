@@ -10,6 +10,7 @@ import Header from '../components/Header';
 import { formatStakeAmount } from '../utils/format-value.js';
 import spin from '../utils/spin.js';
 import BN from 'bn.js';
+import { ErrorParser } from '../utils/errorParser';
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
@@ -32,18 +33,12 @@ export default ({ store, web3t, props }) => {
         console.log('Stake done!');
         cb(null, result);
       } catch (err) {
-        cb(err);
+        const errMessage = ErrorParser.parse(err);
+        cb(errMessage);
       }
     })((err, result) => {
       if (err) {
-        setTimeout(() => {
-          Alert.alert(
-            lang.wrong ||
-              'Something went wrong. Please contact support. You can still use web interface for full staking support.'
-          );
-        }, 1000);
-        console.error(err);
-        return;
+        return Alert.alert('Error', err);
       }
       console.log('Switch page!');
       changePage('stakingEnterance')();

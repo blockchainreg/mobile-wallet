@@ -34,6 +34,7 @@ export default ({ store, web3t, props }) => {
       if (err) {
         setTimeout(() => {
           Alert.alert(
+            'Error',
             lang.wrong ||
               'Something went wrong. Please contact support. You can still use web interface for full staking support.'
           );

@@ -71,3 +71,9 @@ web-build/
 
 # Sentry
 sentry.properties
+
+# e2e tests
+artifacts/
+
+# Detox
+jest-stare/

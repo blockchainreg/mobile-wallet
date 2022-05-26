@@ -207,6 +207,7 @@
     availableWithdraw: 'CÓ SẴN ĐỂ RÚT TIỀN',
     enterAmount: 'Nhập số tiền',
     stakeMore: 'Stake thêm',
+    request: 'Yêu cầu',
     requestWithdraw: 'Yêu cầu rút tiền',
     withdraw: 'Rút tiền',
     stake: 'Stake',

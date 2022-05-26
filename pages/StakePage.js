@@ -19,6 +19,7 @@ import {
   RefreshControl,
   SectionList,
   Platform,
+  FlatList,
 } from 'react-native';
 import { Observer } from 'mobx-react';
 import getLang from '../wallet/get-lang.js';
@@ -33,6 +34,21 @@ import ProgressBar from '../components/ProgressBar.js';
 import PickerSortStake from '../components/PickerSortStake.js';
 import { EpochCurrrent } from '../svg/epoch-current.js';
 import spin from '../utils/spin.js';
+
+const LoaderText = ({ text }) => <Text style={style.loaderText}>{text}</Text>;
+
+const SplittedText = ({ text }) => {
+  const textParts = text.split('.');
+
+  const renderItem = ({ item: textPart }) => <LoaderText text={textPart} />;
+  return (
+    <FlatList
+      data={textParts}
+      keyExtractor={(textPart, index) => `${textPart} ${index.toString()}`}
+      renderItem={renderItem}
+    />
+  );
+};
 
 const ValidatorsList = memo(
   ({
@@ -125,34 +141,7 @@ const SearchHeader = ({ store }) => {
   };
   const stakedValidators = stakingStore.getStakedValidators();
   const notStakedValidators = stakingStore.getNotStakedValidators();
-  const sortActiveStake = () => {
-    spin(store, `Sort by: Total Staked`, async (cb) => {
-      try {
-        await stakingStore.sortActiveStake();
-        setTimeout(() => {
-          cb(null);
-        }, 1000);
-      } catch (err) {
-        cb(err);
-      }
-    })((err, data) => {
-      console.log('Sort by Total Staked');
-    });
-  };
-  const sortApr = () => {
-    spin(store, `Sort by: APR`, async (cb) => {
-      try {
-        await stakingStore.sortApr();
-        setTimeout(() => {
-          cb(null);
-        }, 1000);
-      } catch (err) {
-        cb(err);
-      }
-    })((err, data) => {
-      console.log('Sort by APR');
-    });
-  };
+
   return (
     <>
       <Headers
@@ -175,10 +164,6 @@ const SearchHeader = ({ store }) => {
                     ? null
                     : PickerSortStake({
                         store,
-                        onDonePress: () =>
-                          stakingStore.sort === 'total_staked'
-                            ? sortActiveStake()
-                            : sortApr(),
                       })}
                 </>
               );
@@ -243,10 +228,23 @@ const StakePage = ({ store, web3t, props }) => {
       {!stakedValidators ||
       !notStakedValidators ||
       stakingStore.isRefreshing ? (
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <View>
-            <SkypeIndicator color={'white'} />
-          </View>
+        <View style={{ flex: 1, alignItems: 'center', alignContent: 'center' }}>
+          <SkypeIndicator color={'white'} />
+          {stakingStore.loaderText ? (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                alignContent: 'center',
+              }}
+            >
+              {!stakingStore.loaderText.includes('.') ? (
+                <LoaderText text={stakingStore.loaderText} />
+              ) : (
+                <SplittedText text={stakingStore.loaderText} />
+              )}
+            </View>
+          ) : null}
         </View>
       ) : (
         <ValidatorsList
@@ -275,6 +273,12 @@ const style = StyleSheet.create({
     flex: 1,
   },
   titleText: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Fontfabric-NexaBold',
+  },
+  loaderText: {
+    textAlign: 'center',
     color: '#fff',
     fontSize: 18,
     fontFamily: 'Fontfabric-NexaBold',

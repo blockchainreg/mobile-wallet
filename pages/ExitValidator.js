@@ -13,6 +13,9 @@ import {
   formatValue,
 } from '../utils/format-value';
 import spin from '../utils/spin.js';
+import { ErrorParser } from '../utils/errorParser';
+
+const WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE = 102;
 
 export default ({ store, web3t, props }) => {
   const changePage = (tab) => () => {
@@ -54,15 +57,25 @@ export default ({ store, web3t, props }) => {
           cb(err);
         }
       }
-    )((err, result) => {
+    )(async (err, result) => {
+      if (result.error) {
+        if (
+          result.code &&
+          result.code === WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE
+        ) {
+          return changePage('confirmExtraExit')();
+        }
+        await stakingStore.reloadWithRetryAndCleanCache();
+        const errMessage = ErrorParser.parse(
+          result.description || result.error
+        );
+        return Alert.alert('Error', errMessage);
+      }
       if (err) {
+        const errMessage = ErrorParser.parse(err);
         setTimeout(() => {
-          Alert.alert(
-            lang.wrong ||
-              'Something went wrong. Please contact support. You can still use web interface for full staking support.'
-          );
+          Alert.alert('Error', errMessage || lang.wrong);
         }, 1000);
-        console.error(err);
         return;
       }
       changePage('confirmExit')();

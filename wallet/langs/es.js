@@ -205,6 +205,7 @@
     availableWithdraw: 'DISPONIBLE PARA RETIRO',
     enterAmount: 'Ingrese la cantidad',
     stakeMore: 'Stakear más',
+    request: 'Petición',
     requestWithdraw: 'Solicitar Retiro',
     withdraw: 'Retirar',
     stake: 'Stake',

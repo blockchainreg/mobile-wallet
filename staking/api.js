@@ -3,13 +3,15 @@ import { cachedCallWithRetries } from './utils';
 
 export const getStakingAccountsFromBackend = async ({
   validatorsBackend,
-  params,
+  params = null,
 }) => {
   const nativeAccountsFromBackendResult = await fetch(
-    `${validatorsBackend}/v1/staking-accounts?` +
-      new URLSearchParams({
-        staker: params?.staker,
-      })
+    params
+      ? `${validatorsBackend}/v1/staking-accounts?` +
+          new URLSearchParams({
+            staker: params?.staker,
+          })
+      : `${validatorsBackend}/v1/staking-accounts`
   );
   const nativeAccounts = await nativeAccountsFromBackendResult.json();
   const stakingAccounts = nativeAccounts ? nativeAccounts.stakingAccounts : [];

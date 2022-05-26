@@ -1,24 +1,35 @@
-import { decorate, observable, action, when } from 'mobx';
+import { decorate, observable, action, when, runInAction } from 'mobx';
 import BN from 'bn.js';
-// import * as solanaWeb3 from ;
+import fetch from 'cross-fetch';
 import bs58 from 'bs58';
+import crypto from 'isomorphic-webcrypto';
+import Web3 from 'web3';
+
+import { sleep } from '../utils/functions';
 import { ValidatorModel } from './validator-model.js';
 import { ValidatorModelBacked } from './validator-model-backed.js';
 import { StakingAccountModel } from './staking-account-model.js';
-import fetch from 'cross-fetch';
 const solanaWeb3 = require('./index.cjs.js');
-import { callWithRetries, invalidateCache } from './utils';
-import crypto from 'isomorphic-webcrypto';
-import Web3 from 'web3';
+import {
+  callWithRetries,
+  invalidateCache,
+  transformNodeRpcGetParsedProgramAccountsToBackendFormat,
+  cachedCallWithRetries,
+} from './utils';
 import { rewardsStore } from './rewards-store';
-import { cachedCallWithRetries } from './utils';
 import * as api from './api';
+import { formatToFixed } from '../utils/format-value';
 
-const PRESERVE_BALANCE = new BN('1000000000', 10);
 import { abi as EvmToNativeBridgeAbi } from './EvmToNativeBridge.json';
 import * as ethereum from 'ethereumjs-tx';
 import Common from 'ethereumjs-common';
 // import Store from "../wallet/data-scheme.js";
+
+const PRESERVE_BALANCE = new BN('1000000000', 10);
+const MAX_INSTRUCTIONS_PER_WITHDRAW = 18;
+const WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE = 102;
+const ONE_MINUTE = 60000;
+const ONE_SECOND = 1000;
 
 // const  = mobx;
 async function tryFixCrypto() {
@@ -65,6 +76,10 @@ class StakingStore {
   network = null;
   evmAPI = '';
   _currentSort = null;
+  getValidatorsError = null;
+  isLoading = false;
+  txsArr = new Array(20).fill({ state: '' });
+  loaderText = '';
 
   constructor(
     API_HOST,
@@ -89,6 +104,12 @@ class StakingStore {
     this.network = network;
     this.evmAPI = evmAPI;
     this.validatorsBackend = validatorsBackend;
+    this.validatorDetailsLoading = false;
+    this.fetchAccountsFromBackend = true;
+    this.getValidatorsError = null;
+    this.isLoading = false;
+    this.txsProgress = this.txsArr;
+    this.actionLabel = null;
     this.web3 = new Web3(new Web3.providers.HttpProvider(evmAPI));
     decorate(this, {
       connection: observable,
@@ -104,6 +125,12 @@ class StakingStore {
       slotsInEpoch: observable,
       slotIndex: observable,
       _currentSort: observable,
+      loaderText: observable,
+      getValidatorsError: observable,
+      isLoading: observable,
+      txsProgress: observable,
+      actionLabel: observable,
+      refresh: observable,
     });
     this.startRefresh = action(this.startRefresh);
     this.endRefresh = action(this.endRefresh);
@@ -128,29 +155,29 @@ class StakingStore {
     }
     this.isRefreshing = true;
     try {
+      runInAction(() => {
+        this.loaderText = 'Connecting to servers';
+      });
       await callWithRetries(
         async () => {
           await this.reloadFromBackend();
         },
         ['reloadFromBackend'],
-        5
+        3
       );
     } catch (e) {
-      console.error(e);
+      console.warn('[reloadFromBackend] error, will load from node rpc: ', e);
+      runInAction(() => {
+        this.loaderText = `Couldn't connect to servers. Connecting to node rpc`;
+      });
       // Cannot load from backend. Use slower method.
-      rewardsStore.setConnection(
-        {
-          connection: this.connection,
-          network: this.network,
-          validatorsBackend: this.validatorsBackend,
-        },
-        () => {
-          this.reloadFromNodeRpc();
-        }
-      );
+      await rewardsStore.setConnection({
+        connection: this.connection,
+        network: this.network,
+        validatorsBackend: this.validatorsBackend,
+      });
+      await this.reloadFromNodeRpc();
     }
-    // );
-    //if (this.validators.length > 0) {
     await when(() => this.validators && this.validators.length > 0);
     this.sort === 'total_staked'
       ? this.validators.replace(
@@ -177,6 +204,7 @@ class StakingStore {
         );
     //}
     this.isRefreshing = false;
+    this.loaderText = '';
   }
 
   async sortActiveStake() {
@@ -229,15 +257,26 @@ class StakingStore {
     // this.currentTime = currentTime;
   };
 
+  async getConfigsMap() {
+    const configs = await this.connection.getParsedProgramAccounts(
+      new solanaWeb3.PublicKey('Config1111111111111111111111111111111111111')
+    );
+    const configPerValidator = new Map();
+    for (let config of configs) {
+      if (Buffer.isBuffer(config.account)) continue;
+      const keys = config?.account?.data?.parsed?.info?.keys;
+      if (!keys || keys.length < 2) continue;
+      const signer = keys[1];
+      if (!signer.signer) continue;
+
+      configPerValidator.set(signer.pubkey, config);
+    }
+    return configPerValidator;
+  }
+
   async reloadFromBackend() {
     // massive method
     this.startRefresh();
-    const filter = {
-      memcmp: {
-        offset: 0xc,
-        bytes: this.publicKey58,
-      },
-    };
 
     const [, balanceRes, balanceEvmRes, validatorsFromBackendResult] =
       await Promise.all([
@@ -262,13 +301,20 @@ class StakingStore {
       throw new Error('No validators loaded');
     }
 
-    const nativeCurrentUserAccounts =
-      await api.getStakingAccountsFromBackendCachedWithRetries({
-        network: this.network,
-        validatorsBackend: this.validatorsBackend,
-        params: { staker: this.publicKey58 },
-      });
+    runInAction(() => (this.loaderText = 'Searching staking accounts'));
+    let nativeCurrentUserAccounts = [];
+    try {
+      nativeCurrentUserAccounts =
+        await api.getStakingAccountsFromBackendCachedWithRetries({
+          network: this.network,
+          validatorsBackend: this.validatorsBackend,
+          params: { staker: this.publicKey58 },
+        });
+    } catch (error) {
+      throw new Error(error);
+    }
 
+    runInAction(() => (this.loaderText = 'Setting your staking accounts'));
     const stakingAccounts = nativeCurrentUserAccounts.map(
       (account) =>
         new StakingAccountModel(
@@ -336,19 +382,29 @@ class StakingStore {
           bytes: this.publicKey58,
         },
       };
+      runInAction(() => (this.loaderText = 'Searching staking accounts'));
+
       this.connection
         .getParsedProgramAccounts(solanaWeb3.StakeProgram.programId, {
           filters: [filter],
           commitment: 'processed',
         })
         .then(async (nativeAccounts) => {
+          runInAction(
+            () => (this.loaderText = 'Setting your staking accounts')
+          );
           const filteredAccounts = nativeAccounts.filter((account) => {
-            return account.staker === this.publicKey58;
+            return (
+              account?.account?.data?.parsed?.info?.meta?.authorized?.staker ===
+              this.publicKey58
+            );
           });
           const stakingAccounts = filteredAccounts.map(
             (account) =>
               new StakingAccountModel(
-                account,
+                transformNodeRpcGetParsedProgramAccountsToBackendFormat(
+                  account
+                ),
                 this.connection,
                 this.network,
                 null
@@ -357,16 +413,17 @@ class StakingStore {
           //console.log("waiting till isLatestRewardsLoading is false", rewardsStore.isLatestRewardsLoading);
           //await when( () =>{ rewardsStore.isLatestRewardsLoading === false });
           //console.log("Now isLatestRewardsLoading is false");
+          const configPerValidator = await this.getConfigsMap();
           const validators = current
-            .map(
-              (validator) =>
-                new ValidatorModel(
-                  validator,
-                  false,
-                  this.connection,
-                  this.network
-                )
-            )
+            .map((validator) => {
+              return new ValidatorModel(
+                validator,
+                false,
+                this.connection,
+                this.network,
+                configPerValidator.get(validator.nodePubkey)
+              );
+            })
             .concat(
               delinquent.map(
                 (validator) =>
@@ -374,7 +431,8 @@ class StakingStore {
                     validator,
                     true,
                     this.connection,
-                    this.network
+                    this.network,
+                    configPerValidator.get(validator.nodePubkey)
                   )
               )
             );
@@ -569,7 +627,7 @@ class StakingStore {
   }
 
   getAnnualRate(validator) {
-    return validator.apr ? (validator.apr * 100).toFixed(2) : 0;
+    return validator.apr ? formatToFixed(validator.apr * 100) : 0;
   }
 
   async getNextSeed() {
@@ -723,7 +781,7 @@ class StakingStore {
     };
     if (!swapAmount.isZero()) {
       await this.swapEvmToNative(swapAmount);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await sleep(2000);
     }
     transaction.add(solanaWeb3.StakeProgram.createAccountWithSeed(config));
     transaction.add(
@@ -808,11 +866,25 @@ class StakingStore {
     // return await this.sendTransaction(transaction);
   }
 
+  updateTx(tx, arrIndex) {
+    this.txsProgress[arrIndex].transaction = tx.transaction;
+    this.txsProgress[arrIndex].sendAmount = tx.sendAmount;
+    this.txsProgress[arrIndex].state = tx.state;
+  }
+
   async requestWithdraw(address, amount) {
     if (!this.validators) {
       throw new Error('Not loaded');
     }
-    const transaction = new solanaWeb3.Transaction();
+    this.actionLabel = 'request_withdraw';
+    let transaction = null;
+    this.txsProgress = this.txsArr;
+    //const transaction = new solanaWeb3.Transaction();
+    let sendAmount = new BN('0');
+    const authorizedPubkey = this.publicKey;
+    const { blockhash } = await this.connection.getRecentBlockhash();
+    let txs = [];
+    let arrIndex = 0;
     const validator = this.validators.find((v) => v.address === address);
     if (!validator) {
       throw new Error('Not found');
@@ -820,10 +892,11 @@ class StakingStore {
     const sortedAccounts = validator.stakingAccounts
       .filter((a) => a.state === 'active' || a.state === 'activating')
       .filter((a) => {
-        return (
-          !a.unixTimestamp ||
-          new BN(a.unixTimestamp).lt(new BN(Date.now() / 1000))
+        var unixTimestamp = a.unixTimestamp || a.account.lockupUnixTimestamp;
+        const ACCOUNT_IS_NOT_LOCKED = new BN(unixTimestamp).lt(
+          new BN(Date.now() / 1000)
         );
+        return !unixTimestamp || ACCOUNT_IS_NOT_LOCKED;
       })
       .sort((a, b) => b.myStake.cmp(a.myStake));
     let totalStake = new BN(0);
@@ -836,8 +909,24 @@ class StakingStore {
     if (totalStake.sub(new BN(10000000)).lt(amount)) {
       amount = totalStake;
     }
+    let i = 0;
     while (!amount.isZero() && !amount.isNeg()) {
       const account = sortedAccounts.pop();
+      if (!transaction) {
+        transaction = new Transaction();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = authorizedPubkey;
+      }
+      if (i !== 0 && i % MAX_INSTRUCTIONS_PER_WITHDRAW === 0) {
+        this.updateTx({ transaction, sendAmount, state: '' }, arrIndex);
+        arrIndex++;
+        sendAmount = new BN('0');
+        transaction = new Transaction();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = authorizedPubkey;
+      }
+      i++;
+      sendAmount = sendAmount.add(account.myStake);
       if (amount.gte(account.myStake)) {
         transaction.add(await this.undelegateTransaction(account.publicKey));
         amount = amount.sub(account.myStake);
@@ -853,35 +942,136 @@ class StakingStore {
       }
     }
 
-    await this.sendTransaction(transaction);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    await this.reloadWithRetryAndCleanCache();
+    this.updateTx({ transaction, sendAmount, state: '' }, arrIndex);
+    arrIndex++;
+    const HAS_MULTIPLE_TRANSACTIONS =
+      this.txsProgress.filter((it) => it.transaction).length > 1;
+    if (HAS_MULTIPLE_TRANSACTIONS)
+      return { error: true, code: WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE };
+
+    try {
+      const res = await this.sendTransaction(transaction);
+      if (res.error) {
+        return res;
+      }
+      await sleep(2000);
+      await this.reloadWithRetryAndCleanCache();
+      return res;
+    } catch (err) {
+      return { error: err };
+    }
+  }
+
+  checkTxConfirmation(arg$, cb) {
+    const start = arg$.start;
+    const tx = arg$.tx;
+    const conn = this.connection;
+    return async function () {
+      if (Date.now() > start + ONE_MINUTE) {
+        return cb(
+          'Transaction checkTxConfirmation timeout has expired. Try to repeat later.'
+        );
+      }
+      if (!conn) return cb('this.connection is not defined');
+      try {
+        const info = await conn.getConfirmedTransaction(tx);
+        if (info && info.meta && info.meta.err) {
+          return cb(info.meta.err);
+        }
+        if (
+          info &&
+          info.transaction &&
+          info.transaction.signatures &&
+          info.transaction.signatures.length > 0
+        ) {
+          return cb(null, info);
+        }
+      } catch (err) {
+        return cb(err);
+      }
+    };
+  }
+
+  checkTx(arg$, cb) {
+    const start = arg$.start;
+    const tx = arg$.tx;
+    const $this = this;
+    const timerCb = function (err, res) {
+      clearInterval($this.checkTx['timer_' + tx]);
+      return cb(err, res);
+    };
+    return ($this.checkTx['timer_' + tx] = setInterval(
+      this.checkTxConfirmation(
+        {
+          start: start,
+          tx: tx,
+        },
+        timerCb
+      ),
+      ONE_SECOND
+    ));
   }
 
   async withdrawRequested(address) {
-    const transaction = new solanaWeb3.Transaction();
+    let transaction = null;
+    let sendAmount = new BN('0');
     const authorizedPubkey = this.publicKey;
+    const { blockhash } = await this.connection.getRecentBlockhash();
+
+    this.txsProgress = this.txsArr;
+    let txs = [];
+    let arrIndex = 0;
+    this.actionLabel = 'withdraw';
 
     await when(() => !!this.accounts);
+    var filteredAccounts = [];
     for (let i = 0; i < this.accounts.length; i++) {
       const account = this.accounts[i];
+      var unixTimestamp =
+        account.unixTimestamp || account.account.lockupUnixTimestamp;
+
       if (account.validatorAddress !== address) continue;
-      if (account.unixTimestamp > Date.now() / 1000) continue;
+      if (unixTimestamp > Date.now() / 1000) continue;
+
+      const { inactive, state } = await this.connection.getStakeActivation(
+        new solanaWeb3.PublicKey(account.publicKey)
+      );
+      if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
+        continue;
+      }
+      filteredAccounts.push(account);
+    }
+
+    for (let i = 0; i < filteredAccounts.length; i++) {
+      const account = filteredAccounts[i];
+      if (!transaction) {
+        transaction = new Transaction();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = authorizedPubkey;
+      }
+      if (i !== 0 && i % MAX_INSTRUCTIONS_PER_WITHDRAW === 0) {
+        this.updateTx({ transaction, sendAmount, state: '' }, arrIndex);
+        arrIndex++;
+
+        sendAmount = new BN('0');
+        transaction = new Transaction();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = authorizedPubkey;
+      }
+
+      sendAmount = sendAmount.add(account.myStake);
+
       try {
-        const { inactive, state } = await this.connection.getStakeActivation(
-          new solanaWeb3.PublicKey(account.publicKey)
-        );
-        if (!inactive || (state !== 'inactive' && state !== 'deactivating')) {
-          continue;
-        }
         transaction.add(
           solanaWeb3.StakeProgram.withdraw({
             authorizedPubkey,
             stakePubkey: account.publicKey,
             lamports:
-              state === 'inactive'
+              account._state === 'inactive'
                 ? parseFloat(account.myStake.toString(10))
-                : inactive + this.rent.toNumber(),
+                : parseFloat(
+                    account._inactiveStake.add(this.rent).toString(10)
+                  ),
             toPubkey: authorizedPubkey,
           })
         );
@@ -889,10 +1079,23 @@ class StakingStore {
         console.warn(e);
       }
     }
-    const res = await this.sendTransaction(transaction);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    await this.reloadWithRetryAndCleanCache();
-    return res;
+    this.updateTx({ transaction, sendAmount, state: '' }, arrIndex);
+    arrIndex++;
+    const HAS_MULTIPLE_TRANSACTIONS =
+      this.txsProgress.filter((it) => it.transaction).length > 1;
+    if (HAS_MULTIPLE_TRANSACTIONS)
+      return { error: true, code: WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE };
+    try {
+      const res = await this.sendTransaction(transaction);
+      if (res.error) {
+        return res;
+      }
+      await sleep(2000);
+      await this.reloadWithRetryAndCleanCache();
+      return res;
+    } catch (err) {
+      return { error: err };
+    }
   }
 
   get sort() {

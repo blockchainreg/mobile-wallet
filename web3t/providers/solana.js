@@ -712,7 +712,6 @@ import commonProvider from './common/provider';
         transaction,
         accountKeys,
         instructions,
-        type,
         ref1$,
         dec,
         ref2$,
@@ -759,15 +758,104 @@ import commonProvider from './common/provider';
         (ref$ = transaction.message),
           (accountKeys = ref$.accountKeys),
           (instructions = ref$.instructions);
-        type =
-          (ref$ = instructions[0]) != null
-            ? (ref1$ = ref$.parsed) != null
-              ? ref1$.type
-              : void 8
-            : void 8;
+
+        const UNKNOWN_TYPE = 'unknown';
+        const EVM_TO_NATIVE_SWAP = 'evmTransaction';
+        const NATIVE_TO_EVM_SWAP = 'swapNativeToEvm';
+        const CREATE_ACCOUNT_TYPE = 'createAccountWithSeed';
+        const DEFAULT_TYPE =
+          (instructions[instructions.length - 1] &&
+            instructions[instructions.length - 1].parsed &&
+            instructions[instructions.length - 1].parsed.type) ||
+          UNKNOWN_TYPE;
+
+        const IS_UNKNOWN_TYPE =
+          !instructions[instructions.length - 1].parsed ||
+          !instructions[instructions.length - 1].parsed.type;
+
+        const IS_NATIVE_TO_EVM_SWAP_TYPE =
+          instructions[1] &&
+          instructions[1].parsed &&
+          instructions[1].parsed.type === NATIVE_TO_EVM_SWAP;
+
+        const IS_CREATE_ACCOUNT_TYPE =
+          instructions[0] &&
+          instructions[0].parsed &&
+          instructions[0].parsed.type === CREATE_ACCOUNT_TYPE &&
+          instructions[1] &&
+          instructions[1].parsed &&
+          instructions[1].parsed.type === 'initialize' &&
+          instructions.length === 2;
+
+        const type = (function () {
+          switch (true) {
+            case IS_UNKNOWN_TYPE:
+              return UNKNOWN_TYPE;
+            case IS_NATIVE_TO_EVM_SWAP_TYPE:
+              return NATIVE_TO_EVM_SWAP;
+            case IS_CREATE_ACCOUNT_TYPE:
+              return CREATE_ACCOUNT_TYPE;
+            default:
+              return DEFAULT_TYPE;
+          }
+        })();
         dec = getDec(network);
         try {
-          if (type === 'evmTransaction') {
+          if (type === UNKNOWN_TYPE) {
+            var findIndex = (arr, func) => {
+              var result = -1;
+              for (var i = 0; i < arr.length; i++) {
+                if (func(arr[i])) {
+                  return i;
+                }
+              }
+              return result;
+            };
+            var foundParticipantIndex = (func) => {
+              const preBalances = txData.meta.preBalances;
+              const postBalances = txData.meta.postBalances;
+              for (var i = 0; i < preBalances.length; i++) {
+                var preBalance = preBalances[i];
+                var postBalance = postBalances[i];
+                var diff = preBalance - postBalance;
+                if (func(diff)) {
+                  return i;
+                }
+              }
+              return -1;
+            };
+            const foundIndex = findIndex(accountKeys, (it) => {
+              return it.pubkey === address;
+            });
+            const preBalance = txData.meta.preBalances[foundIndex];
+            const postBalance = txData.meta.postBalances[foundIndex];
+            const _amount = foundIndex > -1 ? postBalance - preBalance : 0;
+            amount = Math.abs(_amount);
+
+            const participantIndex = foundParticipantIndex((it) => {
+              return Math.abs(it) === amount;
+            });
+            sender =
+              _amount < 0
+                ? address
+                : participantIndex > -1
+                ? accountKeys[participantIndex].pubkey
+                : 'unknown';
+            receiver =
+              _amount < 0
+                ? participantIndex > -1
+                  ? accountKeys[participantIndex].pubkey
+                  : 'unknown'
+                : address;
+            hash = transaction.signatures[0];
+          }
+          if (type === NATIVE_TO_EVM_SWAP) {
+            sender = instructions[1].parsed.info.fromNativeAccount;
+            receiver = instructions[1].parsed.info.toEvmAccount;
+            amount = instructions[1].parsed.info.lamports;
+            hash = transaction.signatures[0];
+          }
+          if (type === EVM_TO_NATIVE_SWAP) {
             (ref2$ = instructions[0].parsed.info.transaction),
               (from = ref2$.from),
               (to = ref2$.to),
@@ -808,7 +896,7 @@ import commonProvider from './common/provider';
             amount =
               (ref2$ = getSentAmount(txData)[sender]) != null ? ref2$ : 0;
           }
-          if (type === 'createAccountWithSeed') {
+          if (type === CREATE_ACCOUNT_TYPE) {
             sender = instructions[0].parsed.info.base;
             receiver = instructions[0].parsed.info.newAccount;
             amount = instructions[0].parsed.info.lamports;
@@ -888,36 +976,39 @@ import commonProvider from './common/provider';
                 ? ref6$.type
                 : void 8
               : void 8) === 'stake' ||
-          ref2$ === 'createAccountWithSeed' ||
+          ref2$ === CREATE_ACCOUNT_TYPE ||
           ref2$ === 'delegate' ||
           ref2$ === 'deactivate';
         txType = (function () {
           var ref$;
-          switch (false) {
-            case !(
-              type != null &&
+          switch (true) {
+            case type != null &&
               (type === 'stake' ||
                 type === 'delegate' ||
                 type === 'deactivate' ||
-                type === 'withdraw')
-            ):
+                type === 'withdraw'):
               return (type + ' Stake').toUpperCase();
-            case !(
-              type != null &&
-              (type === 'createAccount' || type === 'createAccountWithSeed')
-            ):
+            case type != null &&
+              (type === 'createAccount' || type === CREATE_ACCOUNT_TYPE):
               return 'create stake account'.toUpperCase();
-            case !(type != null && type !== 'transfer' && type !== 'assign'):
+            case type != null &&
+              type !== 'transfer' &&
+              type !== 'assign' &&
+              type !== 'buy' &&
+              type !== 'unknown' &&
+              type !== NATIVE_TO_EVM_SWAP &&
+              type !== EVM_TO_NATIVE_SWAP:
               return type.toUpperCase();
-            case !(
-              type != null &&
+            case type != null &&
               type === 'assign' &&
-              receiver === 'EVM1111111111111111111111111111111111111111'
-            ):
+              receiver === 'EVM1111111111111111111111111111111111111111':
+            case type === NATIVE_TO_EVM_SWAP:
               return 'Native → EVM Swap';
             case ((ref$ = instructions[0]) != null
               ? ref$.programId
-              : void 8) !== 'EVM1111111111111111111111111111111111111111':
+              : void 8) === 'EVM1111111111111111111111111111111111111111':
+              return 'EVM → Native Swap';
+            case type === EVM_TO_NATIVE_SWAP:
               return 'EVM → Native Swap';
             default:
               return null;

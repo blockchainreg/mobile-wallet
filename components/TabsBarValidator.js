@@ -27,8 +27,10 @@ import getLang from '../wallet/get-lang.js';
 import { formatStakeAmount } from '../utils/format-value';
 import spin from '../utils/spin.js';
 import { TabView, TabBar } from 'react-native-tab-view';
+import { ErrorParser } from '../utils/errorParser';
 
 const GRAY_COLOR = 'rgba(255, 255, 255, 0.18)';
+const WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE = 102;
 
 const GenericValidatorCard = observer(
   ({ getValue, getSubtitle, getInfo, subtitleSmall, cardIcon }) => (
@@ -351,22 +353,26 @@ const TabsBarValidator = ({ store }) => {
             async (cb) => {
               try {
                 const result = await stakingStore.withdrawRequested(ADDRESS);
-                const result1 =
-                  await stakingStore.reloadWithRetryAndCleanCache();
-                cb(null, result, result1);
+                cb(null, result);
               } catch (err) {
-                cb(err);
+                return cb(err);
               }
             }
-          )((err, result, result1) => {
+          )(async (err, result) => {
+            if (result.error) {
+              if (
+                result.code &&
+                result.code === WITHDRAW_TX_SIZE_MORE_THAN_EXPECTED_CODE
+              ) {
+                return changePage('confirmExtraExit')();
+              }
+              const errMessage = ErrorParser.parse(result.error);
+              return Alert.alert('Error', errMessage);
+              const result1 = await stakingStore.reloadWithRetryAndCleanCache();
+            }
             if (err) {
-              setTimeout(() => {
-                Alert.alert(
-                  lang.wrong ||
-                    'Something went wrong. Please contact support. You can still use web interface for full staking support.'
-                );
-              }, 1000);
-              console.error(err);
+              const errMessage = ErrorParser.parse(err);
+              Alert.alert('Error', errMessage || lang.wrong);
               return;
             }
             changePage('confirmWithdrawal')();
